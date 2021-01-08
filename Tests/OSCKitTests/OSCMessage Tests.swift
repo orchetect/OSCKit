@@ -8,6 +8,7 @@
 
 import XCTest
 @testable import OSCKit
+import SwiftRadix
 
 class OSCMessageTests: XCTestCase {
 	
@@ -55,7 +56,7 @@ class OSCMessageTests: XCTestCase {
 		
 		XCTAssertEqual(decoded.values.count, 4)
 		
-		guard case .int32  (let val1) = decoded.values[safe: 0] else { XCTFail() ; return }
+		guard case .int32(let val1) = decoded.values[safe: 0] else { XCTFail() ; return }
 		XCTAssertEqual(val1, 123)
 		
 		guard case .float32(let val2) = decoded.values[safe: 1] else { XCTFail() ; return }
@@ -64,7 +65,7 @@ class OSCMessageTests: XCTestCase {
 		guard case .string(let val3) = decoded.values[safe: 2] else { XCTFail() ; return }
 		XCTAssertEqual(val3, "A test string.")
 		
-		guard case .blob  (let val4) = decoded.values[safe: 3] else { XCTFail() ; return }
+		guard case .blob(let val4) = decoded.values[safe: 3] else { XCTFail() ; return }
 		XCTAssertEqual(val4, Data([0,1,2]))
 		
 	}

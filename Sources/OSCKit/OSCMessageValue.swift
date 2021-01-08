@@ -3,12 +3,12 @@
 //  OSCKit
 //
 //  Created by Steffan Andrews on 2016-06-17.
-//  Copyright © 2016 orchsoft. All rights reserved.
+//  Copyright © 2016 Steffan Andrews. All rights reserved.
 //
 
 import Foundation
-import OTCore
-import SwiftRadix
+@_implementationOnly import OTCore
+@_implementationOnly import SwiftRadix
 
 /// Concrete value types that can be used in an `OSCMessage`.
 public enum OSCMessageValue {
