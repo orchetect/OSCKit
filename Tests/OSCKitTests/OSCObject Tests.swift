@@ -6,6 +6,8 @@
 //  Copyright © 2017 Steffan Andrews. All rights reserved.
 //
 
+#if !os(watchOS)
+
 import XCTest
 @testable import OSCKit
 
@@ -33,3 +35,5 @@ class OSCObjectTests: XCTestCase {
 	}
 	
 }
+
+#endif

@@ -7,6 +7,8 @@ let package = Package(
 	
     name: "OSCKit",
 	
+	platforms: [.macOS(.v10_12), .iOS(.v10), .tvOS(.v10), .watchOS(.v3)],
+	
     products: [
         .library(
             name: "OSCKit",
@@ -14,7 +16,7 @@ let package = Package(
     ],
 	
     dependencies: [
-		.package(url: "https://github.com/orchetect/OTCore", from: "1.0.0"),
+		.package(url: "https://github.com/orchetect/OTCore", from: "1.1.0"),
 		.package(url: "https://github.com/orchetect/SwiftRadix", from: "1.0.0")
 		
     ],

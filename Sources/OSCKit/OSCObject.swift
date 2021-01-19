@@ -8,10 +8,9 @@
 
 import Foundation
 
-
 // MARK: - OSCObject
 
-/// Protocl applied to OSC data objects
+/// Protocol applied to OSC data objects
 public protocol OSCObject {
 	
 	/// Get: constructs a raw UDP data packet from properties.
@@ -29,7 +28,7 @@ public extension Data {
 	///
 	/// Returns a type if validation succeeds, otherwise:
 	/// Returns nil if neither.
-	var appearsToBeOSCObject: OSCObject.Type? {
+	@inlinable var appearsToBeOSCObject: OSCObject.Type? {
 		
 		if appearsToBeOSCBundle {
 			return OSCBundle.self

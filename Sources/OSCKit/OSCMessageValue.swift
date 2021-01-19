@@ -31,7 +31,7 @@ public enum OSCMessageValue {
 	case `null`
 	
 	/// Returns a string representation of the value. Optionally includes a value-type label.
-	public func stringValue(withLabel: Bool = false) -> String {
+	@inlinable public func stringValue(withLabel: Bool = false) -> String {
 		
 		var prefixString = ""
 		var suffixString = ""
@@ -69,8 +69,7 @@ public extension Sequence where Iterator.Element == OSCMessageValue {
 	/// Convenience: maps a sequence of `OSCMessageValue`s to a flat string, for logging/debug purposes.
 	func mapDebugString(withLabel: Bool = true, separator: String = ", ") -> String {
 		
-		self
-			.map { $0.stringValue(withLabel: withLabel) }
+		self.map { $0.stringValue(withLabel: withLabel) }
 			.joined(separator: separator)
 		
 	}
@@ -85,7 +84,7 @@ public extension OSCMessageValue {
 	/// Convenience: If passed value can be converted to an Int, an Int will be returned. Used in cases where you mask an OSC message value set with .number or .numberOptional and want to get a value out without caring about preserving type.
 	/// - parameter testValue: Any numerical value type that OSC supports.
 	/// - returns: Double, or nil if value can't be converted.
-	static func NumberAsInt(_ testValue: Any?) -> Int? {
+	@inlinable static func NumberAsInt(_ testValue: Any?) -> Int? {
 		
 		// core types
 		if let v = testValue as? Int     { return v }
@@ -103,7 +102,7 @@ public extension OSCMessageValue {
 	/// Convenience: If passed value can be converted to a Double, a Double will be returned. Used in cases where you mask an OSC message value set with .number or .numberOptional and want to get a value out without caring about preserving type.
 	/// - parameter testValue: Any numerical value type that OSC supports.
 	/// - returns: Double, or nil if value can't be converted.
-	static func NumberAsDouble(_ testValue: Any?) -> Double? {
+	@inlinable static func NumberAsDouble(_ testValue: Any?) -> Double? {
 		
 		// core types
 		if let v = testValue as? Int     { return Double(exactly: v) }
@@ -125,17 +124,29 @@ public extension OSCMessageValue {
 
 public struct OSCMIDIMessage: Equatable, CustomStringConvertible {
 	
-	var portID: UInt8
-	var status: UInt8
-	var data1: UInt8
-	var data2: UInt8
+	public var portID: UInt8
+	public var status: UInt8
+	public var data1: UInt8
+	public var data2: UInt8
 	
-	public static func == (lhs: Self, rhs: Self) -> Bool {
+	@inlinable public static func == (lhs: Self, rhs: Self) -> Bool {
 		
 		lhs.portID == rhs.portID &&
 			lhs.status == rhs.status &&
 			lhs.data1 == rhs.data1 &&
 			lhs.data2 == rhs.data2
+		
+	}
+	
+	@inlinable public init(portID: UInt8,
+						   status: UInt8,
+						   data1: UInt8 = 0x00,
+						   data2: UInt8 = 0x00) {
+		
+		self.portID = portID
+		self.status = status
+		self.data1 = data1
+		self.data2 = data2
 		
 	}
 	

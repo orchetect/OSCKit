@@ -10,7 +10,6 @@ import Foundation
 
 // Abstraction used to add optional and meta types of existing concrete types
 
-
 // MARK: - OSCMessageValueType
 
 /// Value types that can be used in an `OSCMessage` including optional variants and meta types useful for masking sequences of values.
@@ -69,7 +68,7 @@ public enum OSCMessageValueType: Int, CaseIterable {
 public extension OSCMessageValueType {
 	
 	/// Returns base type `OSCMessageValueType` (by removing 'optional' component)
-	var baseType: OSCMessageValueType {
+	@inlinable var baseType: OSCMessageValueType {
 		
 		switch self {
 		// core types
@@ -95,7 +94,7 @@ public extension OSCMessageValueType {
 	}
 	
 	/// Tests if a OSCMessageValueType is optional (has default) or not.
-	var isOptional: Bool {
+	@inlinable var isOptional: Bool {
 		
 		switch self {
 		// concrete types
@@ -128,7 +127,7 @@ public extension OSCMessageValue {
 	///   - If `true`, only exact matches will return `true` (`.int32` matches only `.int32` and not `.number` "meta" type; `.number` only matches `.number`).
 	///   - If `false`, "meta" types matches will return true (ie: `.int32` or `.float32` will return true if `type` = `.number`).
 	///   - (default = `false`)
-	func baseTypeMatches(type: OSCMessageValueType, canMatchMetaTypes: Bool = false) -> Bool {
+	@inlinable func baseTypeMatches(type: OSCMessageValueType, canMatchMetaTypes: Bool = false) -> Bool {
 		
 		// if types explicitly match, return true
 		
@@ -166,7 +165,7 @@ public extension OSCMessageValue {
 	}
 	
 	/// Returns base type of `OSCMessageValue` as an `OSCMessageValueType` (by removing 'optional' component)
-	var baseType: OSCMessageValueType {
+	@inlinable var baseType: OSCMessageValueType {
 		
 		switch self {
 		// core types
@@ -217,7 +216,7 @@ public extension Array where Element == OSCMessageValue {
 	/// Some meta type(s) are available:
 	///   - `number` & `numberOptional`: Accepts int32 or float32 as a value.
 	/// - parameter expectedMask: OSCMessageValueType array representing a positive mask match
-	func matchesValueMask(expectedMask: [OSCMessageValueType]) -> Bool {
+	@inlinable func matchesValueMask(expectedMask: [OSCMessageValueType]) -> Bool {
 		
 		if self.count > expectedMask.count { return false } // should not contain more values than mask
 		
@@ -227,14 +226,25 @@ public extension Array where Element == OSCMessageValue {
 			let idxOptional = expectedMask[idx].isOptional // can be a concrete type or meta type
 			
 			if self.indices.contains(idx) {
-				switch self[idx].baseTypeMatches(type: expectedMask[idx].baseType, canMatchMetaTypes: true) {
-				case true: matchCount += 1 ; continue
-				case false: return false
+				switch self[idx].baseTypeMatches(type: expectedMask[idx].baseType,
+												 canMatchMetaTypes: true) {
+				case true:
+					matchCount += 1
+					continue
+					
+				case false:
+					return false
+					
 				}
 			} else {
 				switch idxOptional {
-				case true: matchCount += 1 ; continue
-				case false: return false
+				case true:
+					matchCount += 1
+					continue
+					
+				case false:
+					return false
+					
 				}
 			}
 		}
@@ -254,7 +264,7 @@ public extension Array where Element == OSCMessageValue {
 	/// - `.string(...)` as `String`
 	/// - `.blob(...)` as `Data`
 	/// - parameter expectedMask: OSCMessageValueType array representing a positive mask match
-	func valuesFromValueMask(expectedMask: [OSCMessageValueType]) -> [OSCMessageValueProtocol?]? {
+	@inlinable func valuesFromValueMask(expectedMask: [OSCMessageValueType]) -> [OSCMessageValueProtocol?]? {
 		
 		if self.count > expectedMask.count { return nil } // should not contain more values than mask
 		
@@ -265,7 +275,10 @@ public extension Array where Element == OSCMessageValue {
 		
 			if self.indices.contains(idx) {
 				// check if it's the correct base type
-				if !self[idx].baseTypeMatches(type: expectedMask[idx].baseType, canMatchMetaTypes: true) { return nil }
+				if !self[idx].baseTypeMatches(type: expectedMask[idx].baseType,
+											  canMatchMetaTypes: true) {
+					return nil
+				}
 				
 				switch self[idx] {
 				// core types

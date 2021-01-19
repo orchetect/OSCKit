@@ -6,6 +6,8 @@
 //  Copyright © 2019 Steffan Andrews. All rights reserved.
 //
 
+#if !os(watchOS)
+
 import XCTest
 @testable import OSCKit
 import SwiftRadix
@@ -544,3 +546,5 @@ class OSCMessageTests: XCTestCase {
 	}
 	
 }
+
+#endif

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+@_implementationOnly import OTCore
 
 // MARK: - OSCBundle
 
@@ -29,14 +30,14 @@ public struct OSCBundle: OSCObject {
 	
 	// MARK: - init
 	
-	public init() { } // empty bundle
+	@inlinable public init() { } // empty bundle
 	
-	public init(withElements: [OSCObject] = [], withTimeTag: Int64 = 1) {
+	@inlinable public init(withElements: [OSCObject] = [], withTimeTag: Int64 = 1) {
 		timeTag = withTimeTag
 		elements = withElements
 	}
 	
-	public init(withRawData: Data) {
+	@inlinable public init(withRawData: Data) {
 		rawData = withRawData
 	}
 	
@@ -60,13 +61,13 @@ public struct OSCBundle: OSCObject {
 				case is OSCBundle, is OSCMessage:
 					let theElement = element
 					guard let raw = theElement.rawData else {
-						print("Could not get rawData from OSC chunk.")
+						Log.debug("Could not get rawData from OSC chunk.")
 						return nil
 					}
 					data.append(raw.count.int32.toData(.bigEndian))
 					data.append(raw)
 				default:
-					print("Unexpected element found while building bundle rawData.")
+					Log.debug("Unexpected element found while building bundle rawData.")
 				}
 			}
 			
@@ -82,12 +83,12 @@ public struct OSCBundle: OSCObject {
 			
 			// validation: length. all bundles must include the header (8 bytes) and timetag (8 bytes).
 			if len < 16 {
-				print("OSCBundle parse error: data length too short. (Length is \(len)) Aborting.")
+				Log.debug("OSCBundle parse error: data length too short. (Length is \(len)) Aborting.")
 				return
 			}
 			// validation: check header
 			if newValue!.subdata(in: Range(ppos...ppos+7)) != OSCBundle.header {
-				print("OSCBundle parse error: bundle header is not present/correct. Aborting.")
+				Log.debug("OSCBundle parse error: bundle header is not present/correct. Aborting.")
 				return
 			}
 			
@@ -97,20 +98,21 @@ public struct OSCBundle: OSCObject {
 			ppos += 8
 			
 			guard let extractedTimeTag = newValue!.subdata(in: ppos..<ppos+8).toInt64(from: .bigEndian) else {
-				print("OSCBundle parse error: Could not convert timetag to Int64. Aborting.")
+				Log.debug("OSCBundle parse error: Could not convert timetag to Int64. Aborting.")
 				return
 			}
 			
 			ppos += 8
 			
 			while ppos < len {
+				
 				//int32 size chunk
 				if newValue!.count - (ppos+3) < 0 { // failsafe for malformed message
-					print("OSCBundle parse error: data stream ended earlier than expected. Aborting.")
+					Log.debug("OSCBundle parse error: data stream ended earlier than expected. Aborting.")
 					return
 				}
 				guard let elementSize = newValue!.subdata(in: ppos..<ppos+4).toInt32(from: .bigEndian)?.int else {
-					print("OSCBundle parse error: Could not convert element size to Int32. Aborting.")
+					Log.debug("OSCBundle parse error: Could not convert element size to Int32. Aborting.")
 					return
 				}
 				
@@ -118,7 +120,7 @@ public struct OSCBundle: OSCObject {
 				
 				// test for bundle or message
 				if newValue!.count - (ppos+elementSize) < 0 { // fialsafe for malformed message
-					print("OSCBundle parse error: data stream ended earlier than expected. Aborting.")
+					Log.debug("OSCBundle parse error: data stream ended earlier than expected. Aborting.")
 					return
 				}
 				let elementContents = newValue!.subdata(in: ppos..<ppos+elementSize)
@@ -128,9 +130,10 @@ public struct OSCBundle: OSCObject {
 				case is OSCMessage.Type?:
 					extractedElements.append(OSCMessage(withRawData: elementContents))
 				default:
-					print("OSCBundle parse error: unexpected element found.")
+					Log.debug("OSCBundle parse error: unexpected element found.")
 				}
 				ppos += elementSize
+				
 			}
 			
 			// update exposed properties
@@ -190,7 +193,7 @@ extension Data {
 	
 	/// A fast function to test if Data() begins with an OSC bundle header
 	/// (Note: Does NOT do extensive checks to ensure data block isn't malformed)
-	var appearsToBeOSCBundle: Bool {
+	@inlinable var appearsToBeOSCBundle: Bool {
 		
 		self.starts(with: OSCBundle.header)
 		

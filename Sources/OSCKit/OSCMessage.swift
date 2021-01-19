@@ -7,6 +7,7 @@
 //
 
 import Foundation
+@_implementationOnly import OTCore
 
 // MARK: - OSCMessage
 
@@ -28,14 +29,14 @@ public struct OSCMessage: OSCObject {
 	
 	// MARK: - init
 	
-	public init() { } // empty message
+	@inlinable public init() { } // empty message
     
-	public init(withAddress: String, withValues: [OSCMessageValue] = []) {
+	@inlinable public init(withAddress: String, withValues: [OSCMessageValue] = []) {
 		address = withAddress
 		values = withValues
 	}
     
-	public init(withRawData: Data) {
+	@inlinable public init(withRawData: Data) {
 		rawData = withRawData
 	}
 	
@@ -57,7 +58,7 @@ public struct OSCMessage: OSCObject {
 			
 			// add OSC address
 			guard let addressData = address.toData(using: .nonLossyASCII) else {
-				print("OSCMessage rawData error: could not encode address as Data. Address string may contain invalid non-ASCII characters.")
+				Log.debug("OSCMessage rawData error: could not encode address as Data. Address string may contain invalid non-ASCII characters.")
 				return nil
 			}
 			data.append(addressData.fourNullBytePadded)
@@ -78,7 +79,7 @@ public struct OSCMessage: OSCObject {
 					buildDataTypes += "s"
 					
 					guard let valData = val.toData(using: .nonLossyASCII) else {
-						print("OSCMessage rawData error: could not encode string value as Data.")
+						Log.debug("OSCMessage rawData error: could not encode string value as Data.")
 						return nil
 					}
 					
@@ -107,7 +108,7 @@ public struct OSCMessage: OSCObject {
 					buildDataTypes += "S"
 					
 					guard let valData = val.toData(using: .nonLossyASCII) else {
-						print("OSCMessage rawData error: could not encode stringAlt value as Data.")
+						Log.debug("OSCMessage rawData error: could not encode stringAlt value as Data.")
 						return nil
 					}
 					
@@ -116,7 +117,7 @@ public struct OSCMessage: OSCObject {
 				case let .character(val):
 					buildDataTypes += "c"
 					guard let asciiCharNum = val.asciiValue else {
-						print("OSCMessage rawData error: could not convert character to ASCII char number. It may not be a valid ASCII character.")
+						Log.debug("OSCMessage rawData error: could not convert character to ASCII char number. It may not be a valid ASCII character.")
 						return nil
 					}
 					buildValues += asciiCharNum.int32.toData(.bigEndian)
@@ -140,6 +141,7 @@ public struct OSCMessage: OSCObject {
 			
 			// return data
 			return data
+			
 		}
 		
 		set {
@@ -152,12 +154,12 @@ public struct OSCMessage: OSCObject {
 			
 			// validation: length. all bundles must include the header (8 bytes) and timetag (8 bytes).
 			if len % 4 != 0 { // isn't a multiple of 4 bytes (as per OSC spec)
-				print("OSCMessage parse error: length not a multiple of 4 bytes.")
+				Log.debug("OSCMessage parse error: length not a multiple of 4 bytes.")
 				return
 			}
 			// validation: check header
 			if newValue!.appearsToBeOSCMessage == false {
-				print("OSCMessage parse error: does not start with an address. Aborting.")
+				Log.debug("OSCMessage parse error: does not start with an address. Aborting.")
 				return
 			}
 			
@@ -167,7 +169,7 @@ public struct OSCMessage: OSCObject {
 				extractedAddress = pull.stringValue
 				ppos += pull.byteCount
 			} else {
-				print("OSCMessage parse error: address string could not be parsed. Aborting.")
+				Log.debug("OSCMessage parse error: address string could not be parsed. Aborting.")
 				return
 			}
 			
@@ -181,7 +183,7 @@ public struct OSCMessage: OSCObject {
 				extractedOSCtypes = pull.stringValue
 				ppos += pull.byteCount
 			} else {
-				print("OSCMessage parse error: couldn't extract OSC-type chunk.")
+				Log.debug("OSCMessage parse error: couldn't extract OSC-type chunk.")
 				return
 			}
 			
@@ -197,7 +199,7 @@ public struct OSCMessage: OSCObject {
 						extractedValues.append(.int32(pull.int32Value))
 						ppos += pull.byteCount
 					} else {
-						print("OSCMessage parse error: int32 value couldn't be read. Aborting.")
+						Log.debug("OSCMessage parse error: int32 value couldn't be read. Aborting.")
 						return
 					}
 					
@@ -206,7 +208,7 @@ public struct OSCMessage: OSCObject {
 						extractedValues.append(.float32(pull.float32Value))
 						ppos += pull.byteCount
 					} else {
-						print("OSCMessage parse error: float32 value couldn't be read. Aborting.")
+						Log.debug("OSCMessage parse error: float32 value couldn't be read. Aborting.")
 						return
 					}
 					
@@ -215,7 +217,7 @@ public struct OSCMessage: OSCObject {
 						extractedValues.append(.string(pull.stringValue))
 						ppos += pull.byteCount
 					} else {
-						print("OSCMessage parse error: string value couldn't be read. Aborting.")
+						Log.debug("OSCMessage parse error: string value couldn't be read. Aborting.")
 						return
 					}
 					
@@ -224,7 +226,7 @@ public struct OSCMessage: OSCObject {
 						extractedValues.append(.blob(pull.blobValue))
 						ppos += pull.byteCount
 					} else {
-						print("OSCMessage parse error: blob data couldn't be read. Aborting.")
+						Log.debug("OSCMessage parse error: blob data couldn't be read. Aborting.")
 						return
 					}
 					
@@ -235,7 +237,7 @@ public struct OSCMessage: OSCObject {
 						extractedValues.append(.int64(pull.int64Value))
 						ppos += pull.byteCount
 					} else {
-						print("OSCMessage parse error: int64 value couldn't be read. Aborting.")
+						Log.debug("OSCMessage parse error: int64 value couldn't be read. Aborting.")
 						return
 					}
 					
@@ -244,7 +246,7 @@ public struct OSCMessage: OSCObject {
 						extractedValues.append(.timeTag(pull.int64Value))
 						ppos += pull.byteCount
 					} else {
-						print("OSCMessage parse error: timeTag value couldn't be read. Aborting.")
+						Log.debug("OSCMessage parse error: timeTag value couldn't be read. Aborting.")
 						return
 					}
 					
@@ -253,7 +255,7 @@ public struct OSCMessage: OSCObject {
 						extractedValues.append(.double(pull.doubleValue))
 						ppos += pull.byteCount
 					} else {
-						print("OSCMessage parse error: double value couldn't be read. Aborting.")
+						Log.debug("OSCMessage parse error: double value couldn't be read. Aborting.")
 						return
 					}
 					
@@ -262,24 +264,24 @@ public struct OSCMessage: OSCObject {
 						extractedValues.append(.stringAlt(pull.stringValue))
 						ppos += pull.byteCount
 					} else {
-						print("OSCMessage parse error: string value couldn't be read. Aborting.")
+						Log.debug("OSCMessage parse error: string value couldn't be read. Aborting.")
 						return
 					}
 					
 				case "c":
 					if let pull = remainingData.extractInt32() {
 						guard let asciiCharNum = Int(exactly: pull.int32Value) else {
-							print("OSCMessage parse error: char data couldn't be read. Aborting.")
+							Log.debug("OSCMessage parse error: char data couldn't be read. Aborting.")
 							return
 						}
 						guard let scalar = UnicodeScalar(asciiCharNum) else {
-							print("OSCMessage parse error: char data couldn't be read. Aborting.")
+							Log.debug("OSCMessage parse error: char data couldn't be read. Aborting.")
 							return
 						}
 						extractedValues.append(.character(Character(scalar)))
 						ppos += pull.byteCount
 					} else {
-						print("OSCMessage parse error: char value couldn't be read. Aborting.")
+						Log.debug("OSCMessage parse error: char value couldn't be read. Aborting.")
 						return
 					}
 					
@@ -288,7 +290,7 @@ public struct OSCMessage: OSCObject {
 						extractedValues.append(.midi(OSCMIDIMessage(portID: pull[0], status: pull[1], data1: pull[2], data2: pull[3])))
 						ppos += 4
 					} else {
-						print("OSCMessage parse error: midi value couldn't be read. Aborting.")
+						Log.debug("OSCMessage parse error: midi value couldn't be read. Aborting.")
 						return
 					}
 					
@@ -305,7 +307,7 @@ public struct OSCMessage: OSCObject {
 					break // ignore
 					
 				default:
-					print("OSCMessage parse error: unexpected osc-type encountered: \"\(char)\". Aborting.")
+					Log.debug("OSCMessage parse error: unexpected osc-type encountered: \"\(char)\". Aborting.")
 					return
 					
 				}
@@ -358,9 +360,11 @@ extension Data {
 	
 	/// A fast test if Data() appears tor be an OSC message
 	/// (Note: Does NOT do extensive checks to ensure message isn't malformed)
-	public var appearsToBeOSCMessage: Bool {
+	@inlinable public var appearsToBeOSCMessage: Bool {
+		
 		// it's possible an OSC address won't start with "/", but it should!
 		self.starts(with: OSCMessage.header)
+		
 	}
 	
 }

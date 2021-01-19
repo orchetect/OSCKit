@@ -14,7 +14,7 @@ import Foundation
 internal extension Data {
 	
 	/// Internal helper function.
-	func extractInt32() -> (int32Value: Int32, byteCount: Int)? {
+	@inlinable func extractInt32() -> (int32Value: Int32, byteCount: Int)? {
 		
 		if self.count < 4 { return nil }
 		
@@ -28,7 +28,7 @@ internal extension Data {
 	}
 	
 	/// Internal helper function.
-	func extractInt64() -> (int64Value: Int64, byteCount: Int)? {
+	@inlinable func extractInt64() -> (int64Value: Int64, byteCount: Int)? {
 		
 		if self.count < 8 { return nil }
 		
@@ -43,7 +43,7 @@ internal extension Data {
 	
 	/// Internal helper function.
 	/// aka Float
-	func extractFloat32() -> (float32Value: Float32, byteCount: Int)? {
+	@inlinable func extractFloat32() -> (float32Value: Float32, byteCount: Int)? {
 		
 		if self.count < 4 { return nil }
 		
@@ -58,7 +58,7 @@ internal extension Data {
 	
 	/// Internal helper function.
 	/// aka Float64
-	func extractDouble() -> (doubleValue: Double, byteCount: Int)? {
+	@inlinable func extractDouble() -> (doubleValue: Double, byteCount: Int)? {
 		
 		if self.count < 8 { return nil }
 		
@@ -72,7 +72,7 @@ internal extension Data {
 	}
 	
 	/// Internal helper function.
-	func extractNull4ByteTerminatedString() -> (stringValue: String, byteCount: Int)? {
+	@inlinable func extractNull4ByteTerminatedString() -> (stringValue: String, byteCount: Int)? {
 		
 		// extractNull4ByteTerminatedData takes care of data size validation so we don't need to do it here
 		guard let chunk = self.extractNull4ByteTerminatedData()
@@ -86,7 +86,7 @@ internal extension Data {
 	}
 	
 	/// Internal helper function.
-	func extractNull4ByteTerminatedData() -> (data: Data, byteCount: Int)? {
+	@inlinable func extractNull4ByteTerminatedData() -> (data: Data, byteCount: Int)? {
 		
 		// ensure minimum of 4 bytes to work with
 		if self.count < 4 { return nil }
@@ -110,7 +110,7 @@ internal extension Data {
 	}
 	
 	/// Internal helper function.
-	func extractBlob() -> (blobValue: Data, byteCount: Int)? {
+	@inlinable func extractBlob() -> (blobValue: Data, byteCount: Int)? {
 		
 		// check for int32 length chunk
 		guard let pull = self.extractInt32()
@@ -134,7 +134,7 @@ internal extension Data {
 	}
 	
 	/// Internal helper function.
-	func extract(byteCount: Int) -> Data? {
+	@inlinable func extract(byteCount: Int) -> Data? {
 		
 		if byteCount < 0 || byteCount > self.count { return nil }
 		
@@ -148,7 +148,7 @@ internal extension Data {
 	
 	/// Internal helper function.
 	/// Conforms a data bock representing a string to 4-byte null-padded OSC-string formatting
-	var fourNullBytePadded: Data {
+	@inlinable var fourNullBytePadded: Data {
 		
 		var retval = self
 		let appendval = Data([UInt8](repeating: 00, count: (4 - (self.count % 4))))
