@@ -29,25 +29,25 @@ class OSCBundleTests: XCTestCase {
 		
 		// timetag only
 		
-		let timeTagOnly = OSCBundle(withTimeTag: 20)
+		let timeTagOnly = OSCBundle(timeTag: 20)
 		XCTAssertEqual(timeTagOnly.timeTag, 20)
 		XCTAssertEqual(timeTagOnly.elements.count, 0)
 		
 		// elements only
 		
-		let elementsOnly = OSCBundle(withElements: [OSCMessage()])
+		let elementsOnly = OSCBundle(elements: [OSCMessage()])
 		XCTAssertEqual(elementsOnly.timeTag, 1)
 		XCTAssertEqual(elementsOnly.elements.count, 1)
 		
 		// timetag and elements
 		
-		let elementsAndTT = OSCBundle(withElements: [OSCMessage()], withTimeTag: 20)
+		let elementsAndTT = OSCBundle(elements: [OSCMessage()], timeTag: 20)
 		XCTAssertEqual(elementsAndTT.timeTag, 20)
 		XCTAssertEqual(elementsAndTT.elements.count, 1)
 		
 		// raw data
 		
-		let rawData = OSCBundle(withRawData: OSCBundle.header + 20.int64.toData(.bigEndian))
+		let rawData = OSCBundle(from: OSCBundle.header + 20.int64.toData(.bigEndian))
 		XCTAssertEqual(rawData.timeTag, 20)
 		XCTAssertEqual(rawData.elements.count, 0)
 		
@@ -73,7 +73,7 @@ class OSCBundleTests: XCTestCase {
 		
 		// decode
 		
-		let bundle = OSCBundle(withRawData: knownGoodOSCRawBytes.data)
+		let bundle = OSCBundle(from: knownGoodOSCRawBytes.data)
 		
 		XCTAssertEqual(bundle.timeTag, 1)
 		XCTAssertEqual(bundle.elements.count, 0)
@@ -115,7 +115,7 @@ class OSCBundleTests: XCTestCase {
 		
 		// decode
 		
-		let bundle = OSCBundle(withRawData: knownGoodOSCRawBytes.data)
+		let bundle = OSCBundle(from: knownGoodOSCRawBytes.data)
 		
 		XCTAssertEqual(bundle.timeTag, 1)
 		XCTAssertEqual(bundle.elements.count, 1)
@@ -145,18 +145,20 @@ class OSCBundleTests: XCTestCase {
 		
 		// element 1
 		var bundle1 = OSCBundle()
-		bundle1.elements.append(OSCMessage(withAddress: "/bundle1/msg"))
+		bundle1.elements.append(OSCMessage(address: "/bundle1/msg"))
 		oscBundle.elements.append(bundle1)
 		
 		// element 2
 		var bundle2 = OSCBundle()
-		bundle2.elements.append(OSCMessage(withAddress: "/bundle2/msg1", withValues: [.int32(500000), .string("some string here")]))
-		bundle2.elements.append(OSCMessage(withAddress: "/bundle2/msg2", withValues: [.float32(8795.4556), .int32(75)]))
+		bundle2.elements.append(OSCMessage(address: "/bundle2/msg1",
+										   values: [.int32(500000), .string("some string here")]))
+		bundle2.elements.append(OSCMessage(address: "/bundle2/msg2",
+										   values: [.float32(8795.4556), .int32(75)]))
 		oscBundle.elements.append(bundle2)
 		
 		// element 3
-		oscBundle.elements.append(OSCMessage(withAddress: "/msg1",
-											 withValues: [.blob(Data([1,2,3]))]))
+		oscBundle.elements.append(OSCMessage(address: "/msg1",
+											 values: [.blob(Data([1,2,3]))]))
 		
 		// element 4
 		oscBundle.elements.append(OSCBundle())
@@ -167,7 +169,7 @@ class OSCBundleTests: XCTestCase {
 		
 		// decode
 		
-		let decodedOSCbundle = OSCBundle(withRawData: encodedOSCbundle)
+		let decodedOSCbundle = OSCBundle(from: encodedOSCbundle)
 		
 		// verify contents
 		
@@ -233,8 +235,8 @@ class OSCBundleTests: XCTestCase {
 		
 		var bundle = OSCBundle()
 		
-		let msg = OSCMessage(withAddress: "/address",
-							 withValues: [.int32(123), .string("A string")])
+		let msg = OSCMessage(address: "/address",
+							 values: [.int32(123), .string("A string")])
 		
 		bundle.elements.append(msg)
 		
@@ -248,8 +250,8 @@ class OSCBundleTests: XCTestCase {
 		
 		var bundle = OSCBundle()
 		
-		let msg = OSCMessage(withAddress: "/address",
-							 withValues: [.int32(123), .string("A string")])
+		let msg = OSCMessage(address: "/address",
+							 values: [.int32(123), .string("A string")])
 		
 		bundle.elements.append(msg)
 		

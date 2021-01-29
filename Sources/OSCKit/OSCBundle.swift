@@ -30,15 +30,18 @@ public struct OSCBundle: OSCObject {
 	
 	// MARK: - init
 	
-	@inlinable public init() { } // empty bundle
+	/// Initialize with default timeTag of 1 and no elements.
+	@inlinable public init() { }
 	
-	@inlinable public init(withElements: [OSCObject] = [], withTimeTag: Int64 = 1) {
-		timeTag = withTimeTag
-		elements = withElements
+	@inlinable public init(elements: [OSCObject] = [],
+						   timeTag: Int64 = 1) {
+		self.timeTag = timeTag
+		self.elements = elements
 	}
 	
-	@inlinable public init(withRawData: Data) {
-		rawData = withRawData
+	/// Initialize by parsing raw OSC bundle data bytes.
+	@inlinable public init(from rawData: Data) {
+		self.rawData = rawData
 	}
 	
 	
@@ -53,7 +56,7 @@ public struct OSCBundle: OSCObject {
 			
 			// returns a raw OSC packet constructed out of the class's properties
 			
-			var data = OSCBundle.header // prime header
+			var data = OSCBundle.header // prime the header
             data.append(timeTag.toData(.bigEndian)) // add timetag
 			
 			for element in elements {
@@ -97,7 +100,9 @@ public struct OSCBundle: OSCObject {
 			
 			ppos += 8
 			
-			guard let extractedTimeTag = newValue!.subdata(in: ppos..<ppos+8).toInt64(from: .bigEndian) else {
+			guard let extractedTimeTag = newValue!
+					.subdata(in: ppos..<ppos+8)
+					.toInt64(from: .bigEndian) else {
 				Log.debug("OSCBundle parse error: Could not convert timetag to Int64. Aborting.")
 				return
 			}
@@ -111,7 +116,9 @@ public struct OSCBundle: OSCObject {
 					Log.debug("OSCBundle parse error: data stream ended earlier than expected. Aborting.")
 					return
 				}
-				guard let elementSize = newValue!.subdata(in: ppos..<ppos+4).toInt32(from: .bigEndian)?.int else {
+				guard let elementSize = newValue!
+						.subdata(in: ppos..<ppos+4)
+						.toInt32(from: .bigEndian)?.int else {
 					Log.debug("OSCBundle parse error: Could not convert element size to Int32. Aborting.")
 					return
 				}
@@ -123,15 +130,18 @@ public struct OSCBundle: OSCObject {
 					Log.debug("OSCBundle parse error: data stream ended earlier than expected. Aborting.")
 					return
 				}
+				
 				let elementContents = newValue!.subdata(in: ppos..<ppos+elementSize)
+				
 				switch elementContents.appearsToBeOSCObject {
-				case is OSCBundle.Type?:
-					extractedElements.append(OSCBundle(withRawData: elementContents))
-				case is OSCMessage.Type?:
-					extractedElements.append(OSCMessage(withRawData: elementContents))
+				case .bundle:
+					extractedElements.append(OSCBundle(from: elementContents))
+				case .message:
+					extractedElements.append(OSCMessage(from: elementContents))
 				default:
 					Log.debug("OSCBundle parse error: unexpected element found.")
 				}
+				
 				ppos += elementSize
 				
 			}

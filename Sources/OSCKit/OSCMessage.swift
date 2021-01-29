@@ -29,15 +29,17 @@ public struct OSCMessage: OSCObject {
 	
 	// MARK: - init
 	
-	@inlinable public init() { } // empty message
+	/// Initialize with default "/" address and no values.
+	@inlinable public init() { }
     
-	@inlinable public init(withAddress: String, withValues: [OSCMessageValue] = []) {
-		address = withAddress
-		values = withValues
+	@inlinable public init(address: String, values: [OSCMessageValue] = []) {
+		self.address = address
+		self.values = values
 	}
     
-	@inlinable public init(withRawData: Data) {
-		rawData = withRawData
+	/// Initialize by parsing raw OSC message data bytes.
+	@inlinable public init(from rawData: Data) {
+		self.rawData = rawData
 	}
 	
 	

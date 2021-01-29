@@ -127,7 +127,8 @@ public extension OSCMessageValue {
 	///   - If `true`, only exact matches will return `true` (`.int32` matches only `.int32` and not `.number` "meta" type; `.number` only matches `.number`).
 	///   - If `false`, "meta" types matches will return true (ie: `.int32` or `.float32` will return true if `type` = `.number`).
 	///   - (default = `false`)
-	@inlinable func baseTypeMatches(type: OSCMessageValueType, canMatchMetaTypes: Bool = false) -> Bool {
+	@inlinable func baseTypeMatches(type: OSCMessageValueType,
+									canMatchMetaTypes: Bool = false) -> Bool {
 		
 		// if types explicitly match, return true
 		
@@ -218,7 +219,8 @@ public extension Array where Element == OSCMessageValue {
 	/// - parameter expectedMask: OSCMessageValueType array representing a positive mask match
 	@inlinable func matchesValueMask(expectedMask: [OSCMessageValueType]) -> Bool {
 		
-		if self.count > expectedMask.count { return false } // should not contain more values than mask
+		// should not contain more values than mask
+		if self.count > expectedMask.count { return false }
 		
 		var matchCount = 0
 		
@@ -266,7 +268,8 @@ public extension Array where Element == OSCMessageValue {
 	/// - parameter expectedMask: OSCMessageValueType array representing a positive mask match
 	@inlinable func valuesFromValueMask(expectedMask: [OSCMessageValueType]) -> [OSCMessageValueProtocol?]? {
 		
-		if self.count > expectedMask.count { return nil } // should not contain more values than mask
+		// should not contain more values than mask
+		if self.count > expectedMask.count { return nil }
 		
 		var values = [OSCMessageValueProtocol?]()
 		

@@ -709,7 +709,7 @@ class ValueMasksTests: XCTestCase {
 		let result3 = [OSCMessageValue]([.int64(123)])
 			.valuesFromValueMask(expectedMask: mask)
 		XCTAssertEqual(result3?.count, 1)
-		XCTAssertEqual(OSCMessageValue.NumberAsInt(result3?[safe: 0]!), 123)
+		XCTAssertEqual(OSCMessageValue.numberAsInt(result3?[safe: 0]!), 123)
 		
 		// fail - matches but too many values
 		let result4 = [OSCMessageValue]([.int32(123), .int32(123)])
@@ -738,7 +738,7 @@ class ValueMasksTests: XCTestCase {
 		let result3 = [OSCMessageValue]([.int64(123)])
 			.valuesFromValueMask(expectedMask: mask)
 		XCTAssertEqual(result3?.count, 1)
-		XCTAssertEqual(OSCMessageValue.NumberAsInt(result3?[safe: 0]!), 123)
+		XCTAssertEqual(OSCMessageValue.numberAsInt(result3?[safe: 0]!), 123)
 		
 		// fail - matches but too many values
 		let result4 = [OSCMessageValue]([.int32(123), .int32(123)])
