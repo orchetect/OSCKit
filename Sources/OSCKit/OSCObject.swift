@@ -24,20 +24,28 @@ public protocol OSCObject {
 
 public extension Data {
 	
-	/// Test if Data appears to be an OSC bundle or OSC message. (Basic validation)
+	/// Test if `Data` appears to be an OSC bundle or OSC message. (Basic validation)
 	///
 	/// Returns a type if validation succeeds, otherwise:
-	/// Returns nil if neither.
-	@inlinable var appearsToBeOSCObject: OSCObject.Type? {
+	/// Returns `nil` if neither.
+	@inlinable var appearsToBeOSCObject: OSCObjectType? {
 		
 		if appearsToBeOSCBundle {
-			return OSCBundle.self
+			return .bundle
 		} else if appearsToBeOSCMessage {
-			return OSCMessage.self
+			return .message
 		}
 		
 		return nil
 		
 	}
+	
+}
+
+/// Enum describing an OSC message type.
+public enum OSCObjectType {
+	
+	case message
+	case bundle
 	
 }

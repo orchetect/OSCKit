@@ -24,13 +24,19 @@ class OSCObjectTests: XCTestCase {
 		let bundle = OSCBundle().rawData!
 		let msg    = OSCMessage().rawData!
 		
-		XCTAssert(     bundle.appearsToBeOSCObject is OSCBundle.Type)
-		XCTAssertFalse(bundle.appearsToBeOSCObject is OSCMessage.Type)
+		// OSC bundle
+		XCTAssert(     bundle.appearsToBeOSCObject == .bundle)
+		XCTAssertFalse(bundle.appearsToBeOSCObject == .message)
 		
-		XCTAssert(     msg   .appearsToBeOSCObject is OSCMessage.Type)
-		XCTAssertFalse(msg   .appearsToBeOSCObject is OSCBundle.Type)
+		// OSC message
+		XCTAssert(     msg   .appearsToBeOSCObject == .message)
+		XCTAssertFalse(msg   .appearsToBeOSCObject == .bundle)
 		
+		// empty bytes
 		XCTAssertNil(  Data().appearsToBeOSCObject)
+		
+		// garbage bytes
+		XCTAssertNil(  Data([0x98, 0x42, 0x01, 0x7E]).appearsToBeOSCObject)
 		
 	}
 	
