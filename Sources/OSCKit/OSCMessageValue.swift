@@ -11,7 +11,7 @@ import Foundation
 @_implementationOnly import SwiftRadix
 
 /// Concrete value types that can be used in an `OSCMessage`.
-public enum OSCMessageValue {
+public enum OSCMessageValue: Equatable, Hashable {
 	
 	// core types:
 	
@@ -56,10 +56,66 @@ public enum OSCMessageValue {
 		}
 		
 		switch withLabel {
-		case true: return prefixString + outputString + suffixString
-		case false: return outputString
+		case true:
+			return prefixString + outputString + suffixString
+		case false:
+			return outputString
 		}
 		
+	}
+	
+}
+
+
+
+public extension OSCMessageValue {
+	
+	// core types
+	
+	init(_ source: Int32) {
+		self = .int32(source)
+	}
+	
+	init(_ source: Float32) {
+		self = .float32(source)
+	}
+	
+	init(_ source: String) {
+		self = .string(source)
+	}
+	
+	init(_ source: Data) {
+		self = .blob(source)
+	}
+	
+	// extended types
+	
+	init(_ source: Int64) {
+		self = .int64(source)
+	}
+	
+	init(timeTag source: Int64) {
+		self = .timeTag(source)
+	}
+	
+	init(_ source: Double) {
+		self = .double(source)
+	}
+	
+	init(stringAlt source: String) {
+		self = .stringAlt(source)
+	}
+	
+	init(_ source: Character) {
+		self = .character(source)
+	}
+	
+	init(_ source: OSCMIDIMessage) {
+		self = .midi(source)
+	}
+	
+	init(_ source: Bool) {
+		self = .bool(source)
 	}
 	
 }
@@ -84,7 +140,7 @@ public extension OSCMessageValue {
 	/// Convenience: If passed value can be converted to an Int, an Int will be returned. Used in cases where you mask an OSC message value set with .number or .numberOptional and want to get a value out without caring about preserving type.
 	/// - parameter testValue: Any numerical value type that OSC supports.
 	/// - returns: Double, or nil if value can't be converted.
-	@inlinable static func NumberAsInt(_ testValue: Any?) -> Int? {
+	@inlinable static func numberAsInt(_ testValue: Any?) -> Int? {
 		
 		// core types
 		if let v = testValue as? Int     { return v }
@@ -102,7 +158,7 @@ public extension OSCMessageValue {
 	/// Convenience: If passed value can be converted to a Double, a Double will be returned. Used in cases where you mask an OSC message value set with .number or .numberOptional and want to get a value out without caring about preserving type.
 	/// - parameter testValue: Any numerical value type that OSC supports.
 	/// - returns: Double, or nil if value can't be converted.
-	@inlinable static func NumberAsDouble(_ testValue: Any?) -> Double? {
+	@inlinable static func numberAsDouble(_ testValue: Any?) -> Double? {
 		
 		// core types
 		if let v = testValue as? Int     { return Double(exactly: v) }
@@ -122,21 +178,12 @@ public extension OSCMessageValue {
 
 // MARK: - Peculiar OSC Values
 
-public struct OSCMIDIMessage: Equatable, CustomStringConvertible {
+public struct OSCMIDIMessage: Equatable, Hashable, CustomStringConvertible {
 	
 	public var portID: UInt8
 	public var status: UInt8
 	public var data1: UInt8
 	public var data2: UInt8
-	
-	@inlinable public static func == (lhs: Self, rhs: Self) -> Bool {
-		
-		lhs.portID == rhs.portID &&
-			lhs.status == rhs.status &&
-			lhs.data1 == rhs.data1 &&
-			lhs.data2 == rhs.data2
-		
-	}
 	
 	@inlinable public init(portID: UInt8,
 						   status: UInt8,

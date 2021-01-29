@@ -57,25 +57,25 @@ class OSCMessageValueTests: XCTestCase {
 	
 	func testOSCMessageValueStringValue_int64() {
 		
-		let val05 = OSCMessageValue.int64(123)
-		XCTAssertEqual(val05.stringValue(),					      "123")
-		XCTAssertEqual(val05.stringValue(withLabel: true),	"int64:123")
+		let val = OSCMessageValue.int64(123)
+		XCTAssertEqual(val.stringValue(),					      "123")
+		XCTAssertEqual(val.stringValue(withLabel: true),	"int64:123")
 		
 	}
 	
 	func testOSCMessageValueStringValue_timeTag() {
 		
-		let val06 = OSCMessageValue.timeTag(123)
-		XCTAssertEqual(val06.stringValue(),					        "123")
-		XCTAssertEqual(val06.stringValue(withLabel: true),	"timeTag:123")
+		let val = OSCMessageValue.timeTag(123)
+		XCTAssertEqual(val.stringValue(),					        "123")
+		XCTAssertEqual(val.stringValue(withLabel: true),	"timeTag:123")
 		
 	}
 	
 	func testOSCMessageValueStringValue_double() {
 		
-		let val07 = OSCMessageValue.double(123.45)
-		XCTAssertEqual(val07.stringValue(),					       "123.45")
-		XCTAssertEqual(val07.stringValue(withLabel: true),	"double:123.45")
+		let val = OSCMessageValue.double(123.45)
+		XCTAssertEqual(val.stringValue(),					       "123.45")
+		XCTAssertEqual(val.stringValue(withLabel: true),	"double:123.45")
 		
 	}
 	
@@ -124,43 +124,134 @@ class OSCMessageValueTests: XCTestCase {
 	}
 	
 	
+	// MARK: - Initializers
+	
+	func testOSCMessageValueInit_int32() {
+		
+		let val = OSCMessageValue(Int32(123))
+		XCTAssertEqual(val, .int32(123))
+		
+	}
+	
+	func testOSCMessageValueInit_float32() {
+		
+		let val = OSCMessageValue(Float32(123.45))
+		XCTAssertEqual(val, .float32(123.45))
+		
+	}
+	
+	func testOSCMessageValueInit_string() {
+		
+		let val = OSCMessageValue("A string")
+		XCTAssertEqual(val, .string("A string"))
+		
+	}
+	
+	func testOSCMessageValueInit_blob() {
+		
+		let val = OSCMessageValue(Data([1,2,3,4]))
+		XCTAssertEqual(val, .blob(Data([1,2,3,4])))
+		
+	}
+	
+	// MARK: -- Extended types
+	
+	func testOSCMessageValueInit_int64() {
+		
+		let val = OSCMessageValue(Int64(123))
+		XCTAssertEqual(val, .int64(123))
+		
+	}
+	
+	func testOSCMessageValueInit_timeTag() {
+		
+		let val = OSCMessageValue(timeTag: 123)
+		XCTAssertEqual(val, .timeTag(123))
+		
+	}
+	
+	func testOSCMessageValueInit_double() {
+		
+		let val = OSCMessageValue(123.45)
+		XCTAssertEqual(val, .double(123.45))
+		
+	}
+	
+	func testOSCMessageValueInit_stringAlt() {
+		
+		let val = OSCMessageValue(stringAlt: "A string")
+		XCTAssertEqual(val, .stringAlt("A string"))
+		
+	}
+	
+	func testOSCMessageValueInit_character() {
+		
+		let val = OSCMessageValue(Character("A"))
+		XCTAssertEqual(val, .character(Character("A")))
+		
+	}
+	
+	func testOSCMessageValueInit_midi() {
+		
+		let val = OSCMessageValue(OSCMIDIMessage(portID: 0x80,
+												 status: 0x50,
+												 data1: 0x40,
+												 data2: 0x50))
+		XCTAssertEqual(val, .midi(OSCMIDIMessage(portID: 0x80,
+												 status: 0x50,
+												 data1: 0x40,
+												 data2: 0x50)))
+		
+	}
+	
+	func testOSCMessageValueInit_bool() {
+		
+		let val1 = OSCMessageValue(true)
+		XCTAssertEqual(val1, .bool(true))
+		
+		let val2 = OSCMessageValue(false)
+		XCTAssertEqual(val2, .bool(false))
+		
+	}
+	
+	
 	// MARK: - Utility functions
 	
 	func testNumberAsInt() {
 		
 		// core types
-		XCTAssertEqual(OSCMessageValue.NumberAsInt(123 as Int),		123)
-		XCTAssertEqual(OSCMessageValue.NumberAsInt(123 as Int32),	123)
-		XCTAssertEqual(OSCMessageValue.NumberAsInt(123 as Float32),	123)
+		XCTAssertEqual(OSCMessageValue.numberAsInt(123 as Int),		123)
+		XCTAssertEqual(OSCMessageValue.numberAsInt(123 as Int32),	123)
+		XCTAssertEqual(OSCMessageValue.numberAsInt(123 as Float32),	123)
 		
 		// extended types
-		XCTAssertEqual(OSCMessageValue.NumberAsInt(123 as Int64),	123)
-		XCTAssertEqual(OSCMessageValue.NumberAsInt(123 as Double),	123)
+		XCTAssertEqual(OSCMessageValue.numberAsInt(123 as Int64),	123)
+		XCTAssertEqual(OSCMessageValue.numberAsInt(123 as Double),	123)
 		
 		// unsuccessful
-		XCTAssertNil(  OSCMessageValue.NumberAsInt(123.45 as Float32))
+		XCTAssertNil(  OSCMessageValue.numberAsInt(123.45 as Float32))
 		
 		// invalid
-		XCTAssertNil(  OSCMessageValue.NumberAsInt("a string"))
+		XCTAssertNil(  OSCMessageValue.numberAsInt("a string"))
 		
 	}
 	
-	func testNumberAsDouble() {
+	func testnumberAsDouble() {
 		
 		// core types
-		XCTAssertEqual(OSCMessageValue.NumberAsDouble(123 as Int),		123.0)
-		XCTAssertEqual(OSCMessageValue.NumberAsDouble(123 as Int32),	123.0)
-		XCTAssertEqual(OSCMessageValue.NumberAsDouble(123 as Float32),	123.0)
+		XCTAssertEqual(OSCMessageValue.numberAsDouble(123 as Int),		123.0)
+		XCTAssertEqual(OSCMessageValue.numberAsDouble(123 as Int32),	123.0)
+		XCTAssertEqual(OSCMessageValue.numberAsDouble(123 as Float32),	123.0)
 		
 		// extended types
-		XCTAssertEqual(OSCMessageValue.NumberAsDouble(123 as Int64),	123.0)
-		XCTAssertEqual(OSCMessageValue.NumberAsDouble(123 as Double),	123.0)
+		XCTAssertEqual(OSCMessageValue.numberAsDouble(123 as Int64),	123.0)
+		XCTAssertEqual(OSCMessageValue.numberAsDouble(123 as Double),	123.0)
 		
 		// unsuccessful
-		XCTAssertNil(  OSCMessageValue.NumberAsDouble(Int.max as Int))
+		XCTAssertNil(  OSCMessageValue.numberAsDouble(Int.max as Int))
 		
 		// invalid
-		XCTAssertNil(  OSCMessageValue.NumberAsDouble("a string"))
+		XCTAssertNil(  OSCMessageValue.numberAsDouble("a string"))
 		
 	}
 	
