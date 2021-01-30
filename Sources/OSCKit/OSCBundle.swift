@@ -28,12 +28,12 @@ public struct OSCBundle: OSCObject {
 	public typealias Element = OSCObject
 	
 	/// Elements contained within the bundle. These can be `OSCBundle` or `OSCMessage` objects.
-	public let elements: [OSCObject]
+	public let elements: [OSCBundlePayload]
 	
 	
 	// MARK: - init
 	
-	@inlinable public init(elements: [OSCObject],
+	@inlinable public init(elements: [OSCBundlePayload],
 						   timeTag: Int64 = 1) {
 		
 		self.timeTag = timeTag
@@ -66,7 +66,7 @@ public struct OSCBundle: OSCObject {
 		}
 		
 		// set up object array
-		var extractedElements = [OSCObject]()
+		var extractedElements = [OSCBundlePayload]()
 		
 		ppos += 8
 		
@@ -106,11 +106,11 @@ public struct OSCBundle: OSCObject {
 			switch oscObject {
 			case .bundle:
 				let newBundle = try OSCBundle(from: elementContents)
-				extractedElements.append(newBundle)
+				extractedElements.append(.bundle(newBundle))
 				
 			case .message:
 				let newMessage = try OSCMessage(from: elementContents)
-				extractedElements.append(newMessage)
+				extractedElements.append(.message(newMessage))
 				
 			}
 			
@@ -131,7 +131,7 @@ public struct OSCBundle: OSCObject {
 	
 	/// Internal: generate raw OSC bytes from struct's properties
 	@usableFromInline
-	internal static func generateRawData(from elements: [OSCObject],
+	internal static func generateRawData(from elements: [OSCBundlePayload],
 										 timeTag: Int64) -> Data {
 		
 		// returns a raw OSC packet constructed out of the struct's properties
@@ -177,21 +177,18 @@ extension OSCBundle: Equatable {
 		for (lhsIndex, rhsIndex) in zip(lhs.elements.indices, rhs.elements.indices) {
 			
 			switch lhs.elements[lhsIndex] {
-			case let lhsElementTyped as OSCBundle:
-				guard case let rhsElementTyped as OSCBundle = rhs.elements[rhsIndex]
+			case .bundle(let lhsElementTyped):
+				guard case .bundle(let rhsElementTyped) = rhs.elements[rhsIndex]
 				else { return false }
 				
 				if lhsElementTyped != rhsElementTyped { return false }
 				
-			case let lhsElementTyped as OSCMessage:
-				guard case let rhsElementTyped as OSCMessage = rhs.elements[rhsIndex]
+			case .message(let lhsElementTyped):
+				guard case .message(let rhsElementTyped) = rhs.elements[rhsIndex]
 				else { return false }
 				
 				if lhsElementTyped != rhsElementTyped { return false }
 				
-			default:
-				// should never happen unless the library consumer conforms a type of their own to OSCObject and tries to use it
-				return false
 			}
 			
 		}
@@ -214,21 +211,12 @@ extension OSCBundle: Hashable {
 		elements.forEach {
 			
 			switch $0 {
-			case let elementTyped as OSCBundle:
+			case .bundle(let elementTyped):
 				hasher.combine(elementTyped)
 				
-			case let elementTyped as OSCMessage:
+			case .message(let elementTyped):
 				hasher.combine(elementTyped)
 				
-			default:
-				// should never happen unless the library consumer conforms a type of their own to OSCObject and tries to use it
-				
-				// doesn't work - but would like to find some fallback solution here
-				//if let hashable = $0 as? AnyHashable {
-				//	hasher.combine(hashable)
-				//}
-				
-				break
 			}
 			
 		}

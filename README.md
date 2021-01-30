@@ -50,20 +50,24 @@ import OSCKit
 // assuming the "data" variable is raw data bytes from a received UDP packet:
 
 do {
-  guard let oscObject = try data.parseOSC() else { return }
-  
-  switch oscObject {
-  case .message(let message):
-    // handle message
-  case .bundle(let bundle):
-    // handle bundle
-  }
+  guard let oscPayload = try data.parseOSC() else { return }
+  handleOSCPayload(oscPayload)
 } catch let error as OSCBundle.DecodeError {
   // handle bundle errors
 } catch let error as OSCMessage.DecodeError {
   // handle message errors
 } catch {
   // handle other errors
+}
+
+func handleOSCPayload(_ oscPayload: OSCBundlePayload) {
+  switch oscPayload {
+  case .bundle(let bundle):
+    // recursively handle nested bundles and messages
+    bundle.elements.forEach { handleOSCPayload($0) }
+  case .message(let message):
+    // handle message
+  }
 }
 ```
 

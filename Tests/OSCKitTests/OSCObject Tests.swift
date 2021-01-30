@@ -19,7 +19,7 @@ final class OSCObjectTests: XCTestCase {
 	
 	// MARK: - OSCObject
 	
-	func testOSCObject() {
+	func testAppearsToBeOSC() {
 		
 		let bundle = OSCBundle(elements: []).rawData
 		let msg    = OSCMessage(address: "/").rawData

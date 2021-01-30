@@ -36,13 +36,13 @@ final class OSCBundleTests: XCTestCase {
 		
 		// elements only
 		
-		let elementsOnly = OSCBundle(elements: [OSCMessage(address: "/")])
+		let elementsOnly = OSCBundle(elements: [.message(address: "/")])
 		XCTAssertEqual(elementsOnly.timeTag, 1)
 		XCTAssertEqual(elementsOnly.elements.count, 1)
 		
 		// timetag and elements
 		
-		let elementsAndTT = OSCBundle(elements: [OSCMessage(address: "/")],
+		let elementsAndTT = OSCBundle(elements: [.message(address: "/")],
 									  timeTag: 20)
 		XCTAssertEqual(elementsAndTT.timeTag, 20)
 		XCTAssertEqual(elementsAndTT.elements.count, 1)
@@ -122,7 +122,7 @@ final class OSCBundleTests: XCTestCase {
 		XCTAssertEqual(bundle.timeTag, 1)
 		XCTAssertEqual(bundle.elements.count, 1)
 		
-		guard let msg = bundle.elements.first as? OSCMessage else { XCTFail() ; return }
+		guard case .message(let msg) = bundle.elements.first else { XCTFail() ; return }
 		XCTAssertEqual(msg.address, "/testaddress")
 		XCTAssertEqual(msg.values.count, 1)
 		guard case .int32(let val) = msg.values.first else { XCTFail() ; return }
@@ -147,24 +147,24 @@ final class OSCBundleTests: XCTestCase {
 			elements:
 				[
 					// element 1
-					OSCBundle(elements: [OSCMessage(address: "/bundle1/msg")]),
+					.bundle(elements: [.message(address: "/bundle1/msg")]),
 					
 					// element 2
-					OSCBundle(elements: [
-						OSCMessage(address: "/bundle2/msg1",
-								   values: [.int32(500000),
-											.string("some string here")]),
-						OSCMessage(address: "/bundle2/msg2",
-								   values: [.float32(8795.4556),
-											.int32(75)])
+					.bundle(elements: [
+						.message(address: "/bundle2/msg1",
+								 values: [.int32(500000),
+										  .string("some string here")]),
+						.message(address: "/bundle2/msg2",
+								 values: [.float32(8795.4556),
+										  .int32(75)])
 					]),
 					
 					// element 3
-					OSCMessage(address: "/msg1",
-							   values: [.blob(Data([1,2,3]))]),
+					.message(address: "/msg1",
+							 values: [.blob(Data([1,2,3]))]),
 					
 					// element 4
-					OSCBundle(elements: [])
+					.bundle(elements: [])
 				]
 		)
 		
@@ -182,42 +182,66 @@ final class OSCBundleTests: XCTestCase {
 		XCTAssertEqual(decodedOSCbundle.elements.count, 4)
 		
 		// element 1
-		guard let element1 = decodedOSCbundle.elements[safe: 0] as? OSCBundle else { XCTFail() ; return }
+		guard case .bundle(let element1) = decodedOSCbundle.elements[safe: 0]
+		else { XCTFail() ; return }
+		
 		XCTAssertEqual(element1.timeTag, 1)
 		XCTAssertEqual(element1.elements.count, 1)
 		
-		guard let element1A = element1.elements[safe: 0] as? OSCMessage else { XCTFail() ; return }
+		guard case .message(let element1A) = element1.elements[safe: 0]
+		else { XCTFail() ; return }
+		
 		XCTAssertEqual(element1A.address, "/bundle1/msg")
 		XCTAssertEqual(element1A.values.count, 0)
 		
 		// element 2
-		guard let element2 = decodedOSCbundle.elements[safe: 1] as? OSCBundle else { XCTFail() ; return }
+		guard case .bundle(let element2) = decodedOSCbundle.elements[safe: 1]
+		else { XCTFail() ; return }
+		
 		XCTAssertEqual(element2.timeTag, 1)
 		XCTAssertEqual(element2.elements.count, 2)
 		
-		guard let element2A = element2.elements[safe: 0] as? OSCMessage else { XCTFail() ; return }
+		guard case .message(let element2A) = element2.elements[safe: 0]
+		else { XCTFail() ; return }
+		
 		XCTAssertEqual(element2A.address, "/bundle2/msg1")
 		XCTAssertEqual(element2A.values.count, 2)
-		guard case .int32(let element2A1) = element2A.values[safe: 0] else { XCTFail() ; return }
+		
+		guard case .int32(let element2A1) = element2A.values[safe: 0]
+		else { XCTFail() ; return }
+		
 		XCTAssertEqual(element2A1, 500000)
-		guard case .string(let element2A2) = element2A.values[safe: 1] else { XCTFail() ; return }
+		
+		guard case .string(let element2A2) = element2A.values[safe: 1]
+		else { XCTFail() ; return }
+		
 		XCTAssertEqual(element2A2, "some string here")
 		
-		guard let element2B = element2.elements[safe: 1] as? OSCMessage else { XCTFail() ; return }
+		guard case .message(let element2B) = element2.elements[safe: 1]
+		else { XCTFail() ; return }
+		
 		XCTAssertEqual(element2B.address, "/bundle2/msg2")
 		XCTAssertEqual(element2B.values.count, 2)
-		guard case .float32(let element2B1) = element2B.values[safe: 0] else { XCTFail() ; return }
+		
+		guard case .float32(let element2B1) = element2B.values[safe: 0]
+		else { XCTFail() ; return }
+		
 		XCTAssertEqual(element2B1, 8795.4556)
-		guard case .int32(let element2B2) = element2B.values[safe: 1] else { XCTFail() ; return }
+		
+		guard case .int32(let element2B2) = element2B.values[safe: 1]
+		else { XCTFail() ; return }
+		
 		XCTAssertEqual(element2B2, 75)
 		
 		// element 3
-		guard let element3 = decodedOSCbundle.elements[safe: 2] as? OSCMessage else { XCTFail() ; return }
+		guard case .message(let element3) = decodedOSCbundle.elements[safe: 2]
+		else { XCTFail() ; return }
 		XCTAssertEqual(element3.values.count, 1)
 		XCTAssertEqual(element3.address, "/msg1")
 		
 		// element 4
-		guard let element4 = decodedOSCbundle.elements[safe: 3] as? OSCBundle else { XCTFail() ; return }
+		guard case .bundle(let element4) = decodedOSCbundle.elements[safe: 3]
+		else { XCTFail() ; return }
 		XCTAssertEqual(element4.timeTag, 1)
 		XCTAssertEqual(element4.elements.count, 0)
 		
@@ -232,9 +256,11 @@ final class OSCBundleTests: XCTestCase {
 		let msg2 = OSCMessage(address: "/msg2")
 		let msg3 = OSCMessage(address: "/msg1", values: [.int32(123)])
 		
-		let bundle1 = OSCBundle(elements: [msg1])
-		let bundle2 = OSCBundle(elements: [msg3])
-		let bundle3 = OSCBundle(elements: [bundle1, bundle2, msg2])
+		let bundle1 = OSCBundle(elements: [.message(msg1)])
+		let bundle2 = OSCBundle(elements: [.message(msg3)])
+		let bundle3 = OSCBundle(elements: [.bundle(bundle1),
+										   .bundle(bundle2),
+										   .message(msg2)])
 		
 		XCTAssert(bundle1 == bundle1)
 		XCTAssert(bundle2 == bundle2)
@@ -253,9 +279,11 @@ final class OSCBundleTests: XCTestCase {
 		let msg2 = OSCMessage(address: "/msg2")
 		let msg3 = OSCMessage(address: "/msg1", values: [.int32(123)])
 		
-		let bundle1 = OSCBundle(elements: [msg1])
-		let bundle2 = OSCBundle(elements: [msg3])
-		let bundle3 = OSCBundle(elements: [bundle1, bundle2, msg2])
+		let bundle1 = OSCBundle(elements: [.message(msg1)])
+		let bundle2 = OSCBundle(elements: [.message(msg3)])
+		let bundle3 = OSCBundle(elements: [.bundle(bundle1),
+										   .bundle(bundle2),
+										   .message(msg2)])
 		
 		let set: Set<OSCBundle> = [bundle1, bundle1, bundle2, bundle2, bundle3, bundle3]
 		
@@ -279,9 +307,9 @@ final class OSCBundleTests: XCTestCase {
 	func testOSCBundleCustomStringConvertible2() {
 		
 		let bundle = OSCBundle(elements: [
-			OSCMessage(address: "/address",
-					   values: [.int32(123),
-								.string("A string")])
+			.message(address: "/address",
+					 values: [.int32(123),
+							  .string("A string")])
 		])
 		
 		
@@ -294,9 +322,9 @@ final class OSCBundleTests: XCTestCase {
 	func testOSCBundleDescriptionPretty() {
 		
 		let bundle = OSCBundle(elements: [
-			OSCMessage(address: "/address",
-					   values: [.int32(123),
-								.string("A string")])
+			.message(address: "/address",
+					 values: [.int32(123),
+							  .string("A string")])
 		])
 		
 		let desc = bundle.descriptionPretty
