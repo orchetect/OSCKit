@@ -224,6 +224,46 @@ final class OSCBundleTests: XCTestCase {
 	}
 	
 	
+	// MARK: - OSCMessage: Equatable, Hashable
+	
+	func testEquatable() {
+		
+		let msg1 = OSCMessage(address: "/msg1")
+		let msg2 = OSCMessage(address: "/msg2")
+		let msg3 = OSCMessage(address: "/msg1", values: [.int32(123)])
+		
+		let bundle1 = OSCBundle(elements: [msg1])
+		let bundle2 = OSCBundle(elements: [msg3])
+		let bundle3 = OSCBundle(elements: [bundle1, bundle2, msg2])
+		
+		XCTAssert(bundle1 == bundle1)
+		XCTAssert(bundle2 == bundle2)
+		XCTAssert(bundle3 == bundle3)
+		
+		XCTAssert(bundle1 != bundle2)
+		XCTAssert(bundle1 != bundle3)
+		
+		XCTAssert(bundle2 != bundle3)
+		
+	}
+	
+	func testHashable() {
+		
+		let msg1 = OSCMessage(address: "/msg1")
+		let msg2 = OSCMessage(address: "/msg2")
+		let msg3 = OSCMessage(address: "/msg1", values: [.int32(123)])
+		
+		let bundle1 = OSCBundle(elements: [msg1])
+		let bundle2 = OSCBundle(elements: [msg3])
+		let bundle3 = OSCBundle(elements: [bundle1, bundle2, msg2])
+		
+		let set: Set<OSCBundle> = [bundle1, bundle1, bundle2, bundle2, bundle3, bundle3]
+		
+		XCTAssertTrue(set == [bundle1, bundle2, bundle3])
+		
+	}
+	
+	
 	// MARK: - OSCBundle: CustomStringConvertible
 	
 	func testOSCBundleCustomStringConvertible1() {

@@ -525,6 +525,38 @@ final class OSCMessageTests: XCTestCase {
 	}
 	
 	
+	// MARK: - OSCMessage: Equatable, Hashable
+	
+	func testEquatable() {
+		
+		let msg1 = OSCMessage(address: "/msg1")
+		let msg2 = OSCMessage(address: "/msg2")
+		let msg3 = OSCMessage(address: "/msg1", values: [.int32(123)])
+		
+		XCTAssert(msg1 == msg1)
+		XCTAssert(msg2 == msg2)
+		XCTAssert(msg3 == msg3)
+		
+		XCTAssert(msg1 != msg2)
+		XCTAssert(msg1 != msg3)
+		
+		XCTAssert(msg2 != msg3)
+		
+	}
+	
+	func testHashable() {
+		
+		let msg1 = OSCMessage(address: "/msg1")
+		let msg2 = OSCMessage(address: "/msg2")
+		let msg3 = OSCMessage(address: "/msg1", values: [.int32(123)])
+		
+		let set: Set<OSCMessage> = [msg1, msg1, msg2, msg2, msg3, msg3]
+		
+		XCTAssertTrue(set == [msg1, msg2, msg3])
+		
+	}
+	
+	
 	// MARK: - OSCMessage: CustomStringConvertible
 	
 	func testOSCMessageCustomStringConvertible1() {

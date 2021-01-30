@@ -24,6 +24,9 @@ public struct OSCBundle: OSCObject {
 	/// Default value 1: means "immediate" in OSC spec.
 	public let timeTag: Int64
 	
+	/// Element type.
+	public typealias Element = OSCObject
+	
 	/// Elements contained within the bundle. These can be `OSCBundle` or `OSCMessage` objects.
 	public let elements: [OSCObject]
 	
@@ -155,6 +158,80 @@ public struct OSCBundle: OSCObject {
 		}
 		
 		return data
+		
+	}
+	
+}
+
+
+// MARK: - Equatable
+
+extension OSCBundle: Equatable {
+	
+	public static func == (lhs: OSCBundle, rhs: OSCBundle) -> Bool {
+		
+		// don't factor timeTag into equality
+		
+		guard lhs.elements.count == rhs.elements.count else { return false }
+		
+		for (lhsIndex, rhsIndex) in zip(lhs.elements.indices, rhs.elements.indices) {
+			
+			switch lhs.elements[lhsIndex] {
+			case let lhsElementTyped as OSCBundle:
+				guard case let rhsElementTyped as OSCBundle = rhs.elements[rhsIndex]
+				else { return false }
+				
+				if lhsElementTyped != rhsElementTyped { return false }
+				
+			case let lhsElementTyped as OSCMessage:
+				guard case let rhsElementTyped as OSCMessage = rhs.elements[rhsIndex]
+				else { return false }
+				
+				if lhsElementTyped != rhsElementTyped { return false }
+				
+			default:
+				// should never happen unless the library consumer conforms a type of their own to OSCObject and tries to use it
+				return false
+			}
+			
+		}
+		
+		return true
+		
+	}
+	
+}
+
+
+// MARK: - Hashable
+
+extension OSCBundle: Hashable {
+	
+	public func hash(into hasher: inout Hasher) {
+		
+		// don't factor timeTag into hash
+		
+		elements.forEach {
+			
+			switch $0 {
+			case let elementTyped as OSCBundle:
+				hasher.combine(elementTyped)
+				
+			case let elementTyped as OSCMessage:
+				hasher.combine(elementTyped)
+				
+			default:
+				// should never happen unless the library consumer conforms a type of their own to OSCObject and tries to use it
+				
+				// doesn't work - but would like to find some fallback solution here
+				//if let hashable = $0 as? AnyHashable {
+				//	hasher.combine(hashable)
+				//}
+				
+				break
+			}
+			
+		}
 		
 	}
 	
