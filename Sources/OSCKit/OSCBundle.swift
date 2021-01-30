@@ -56,6 +56,7 @@ public struct OSCBundle: OSCObject {
 		if len < 16 {
 			throw DecodeError.malformed("Data length too short. (Length is \(len))")
 		}
+		
 		// validation: check header
 		if rawData.subdata(in: Range(ppos...ppos+7)) != OSCBundle.header {
 			throw DecodeError.malformed("Bundle header is not present or is malformed.")
@@ -132,13 +133,23 @@ public struct OSCBundle: OSCObject {
 		
 		// returns a raw OSC packet constructed out of the struct's properties
 		
-		var data = OSCBundle.header // prime the header
+		// max UDP IPv4 packet size is 65507 bytes,
+		// 10kb is reasonable buffer for typical OSC bundles
+		var data = Data()
+		data.reserveCapacity(10000)
+		
+		data.append(OSCBundle.header) // prime the header
+		
 		data.append(timeTag.toData(.bigEndian)) // add timetag
 		
 		for element in elements {
 			
 			let raw = element.rawData
+			
+			// element length
 			data.append(raw.count.int32.toData(.bigEndian))
+			
+			// element data
 			data.append(raw)
 			
 		}

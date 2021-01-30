@@ -47,14 +47,16 @@ final class OSCMessageTests: XCTestCase {
 		
 		// just for debug log analysis, if needed
 		
-		print("Address:", decoded.address)
+		print("Address:", decoded.address.stringValue.quoted)
 		print("Values:", decoded.values.mapDebugString())
 		
 		print("All values decoded:")
 		decoded.values.forEach { val in
 			switch val {
-			case .blob(let data): print("data:", data.hex.stringValueArrayLiteral)
-			default: print(val)
+			case .blob(let data):
+				print("blob bytes:", data.hex.stringValueArrayLiteral)
+			default:
+				print(val)
 			}
 		}
 		
@@ -103,7 +105,8 @@ final class OSCMessageTests: XCTestCase {
 		
 		// re-encode
 		
-		XCTAssertEqual(msg.rawData, knownGoodOSCRawBytes.data)
+		let newMsg = OSCMessage(address: msg.address, values: msg.values)
+		XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
 		
 	}
 	
@@ -135,7 +138,8 @@ final class OSCMessageTests: XCTestCase {
 		
 		// re-encode
 		
-		XCTAssertEqual(msg.rawData, knownGoodOSCRawBytes.data)
+		let newMsg = OSCMessage(address: msg.address, values: msg.values)
+		XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
 		
 	}
 	
@@ -167,7 +171,8 @@ final class OSCMessageTests: XCTestCase {
 		
 		// re-encode
 		
-		XCTAssertEqual(msg.rawData, knownGoodOSCRawBytes.data)
+		let newMsg = OSCMessage(address: msg.address, values: msg.values)
+		XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
 		
 	}
 	
@@ -205,7 +210,8 @@ final class OSCMessageTests: XCTestCase {
 		
 		// re-encode
 		
-		XCTAssertEqual(msg.rawData, knownGoodOSCRawBytes.data)
+		let newMsg = OSCMessage(address: msg.address, values: msg.values)
+		XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
 		
 	}
 	
@@ -239,7 +245,8 @@ final class OSCMessageTests: XCTestCase {
 		
 		// re-encode
 		
-		XCTAssertEqual(msg.rawData, knownGoodOSCRawBytes.data)
+		let newMsg = OSCMessage(address: msg.address, values: msg.values)
+		XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
 		
 	}
 	
@@ -276,7 +283,8 @@ final class OSCMessageTests: XCTestCase {
 		
 		// re-encode
 		
-		XCTAssertEqual(msg.rawData, knownGoodOSCRawBytes.data)
+		let newMsg = OSCMessage(address: msg.address, values: msg.values)
+		XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
 		
 	}
 	
@@ -309,7 +317,8 @@ final class OSCMessageTests: XCTestCase {
 		
 		// re-encode
 		
-		XCTAssertEqual(msg.rawData, knownGoodOSCRawBytes.data)
+		let newMsg = OSCMessage(address: msg.address, values: msg.values)
+		XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
 		
 	}
 	
@@ -342,7 +351,8 @@ final class OSCMessageTests: XCTestCase {
 		
 		// re-encode
 		
-		XCTAssertEqual(msg.rawData, knownGoodOSCRawBytes.data)
+		let newMsg = OSCMessage(address: msg.address, values: msg.values)
+		XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
 		
 	}
 	
@@ -380,7 +390,8 @@ final class OSCMessageTests: XCTestCase {
 		
 		// re-encode
 		
-		XCTAssertEqual(msg.rawData, knownGoodOSCRawBytes.data)
+		let newMsg = OSCMessage(address: msg.address, values: msg.values)
+		XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
 		
 	}
 	
@@ -412,7 +423,8 @@ final class OSCMessageTests: XCTestCase {
 		
 		// re-encode
 		
-		XCTAssertEqual(msg.rawData, knownGoodOSCRawBytes.data)
+		let newMsg = OSCMessage(address: msg.address, values: msg.values)
+		XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
 		
 	}
 	
@@ -444,7 +456,8 @@ final class OSCMessageTests: XCTestCase {
 		
 		// re-encode
 		
-		XCTAssertEqual(msg.rawData, knownGoodOSCRawBytes.data)
+		let newMsg = OSCMessage(address: msg.address, values: msg.values)
+		XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
 		
 	}
 	
@@ -476,7 +489,8 @@ final class OSCMessageTests: XCTestCase {
 		
 		// re-encode
 		
-		XCTAssertEqual(msg.rawData, knownGoodOSCRawBytes.data)
+		let newMsg = OSCMessage(address: msg.address, values: msg.values)
+		XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
 		
 	}
 	
@@ -505,7 +519,8 @@ final class OSCMessageTests: XCTestCase {
 		
 		// re-encode
 		
-		XCTAssertEqual(msg.rawData, knownGoodOSCRawBytes.data)
+		let newMsg = OSCMessage(address: msg.address, values: msg.values)
+		XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
 		
 	}
 	

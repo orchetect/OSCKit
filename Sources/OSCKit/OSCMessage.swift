@@ -218,16 +218,23 @@ public struct OSCMessage: OSCObject {
 		
 		// returns a raw OSC packet constructed out of the struct's properties
 		
+		// max UDP IPv4 packet size is 65507 bytes,
+		// 1kb is reasonable buffer for typical OSC messages
 		var data = Data()
-		var buildDataTypes = "," // prime the types chunk
-		var buildValues = Data() // prime the values chunk
+		data.reserveCapacity(1000)
+		
+		var buildDataTypes: [ASCIICharacter] = []
+		buildDataTypes.reserveCapacity(values.count)
+		buildDataTypes += "," // prime the types chunk
+		
+		var buildValues = Data()
+		buildValues.reserveCapacity(1000)
 		
 		// add OSC address
 		let addressData = address.rawData
-		
 		data.append(addressData.fourNullBytePadded)
 		
-		// iterate data types in values array to prepare ODC-type string
+		// iterate data types in values array to prepare OSC-type string
 		for value in values {
 			switch value {
 			// core types
@@ -284,7 +291,15 @@ public struct OSCMessage: OSCObject {
 		}
 		
 		// assemble OSC-type and values chunk
-		data += buildDataTypes.toData(using: .nonLossyASCII)!.fourNullBytePadded // toData should never fail here
+		
+		var dataTypesRawData = Data()
+		dataTypesRawData.reserveCapacity(buildDataTypes.count.roundedUp(toMultiplesOf: 4))
+		dataTypesRawData = buildDataTypes
+			.reduce(Data(), { $0 + $1.rawData })
+			.fourNullBytePadded
+		
+		data += dataTypesRawData
+		
 		data += buildValues
 		
 		// return data
