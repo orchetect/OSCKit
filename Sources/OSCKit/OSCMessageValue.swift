@@ -9,6 +9,7 @@
 import Foundation
 @_implementationOnly import OTCore
 @_implementationOnly import SwiftRadix
+import SwiftASCII
 
 /// Concrete value types that can be used in an `OSCMessage`.
 public enum OSCMessageValue: Equatable, Hashable {
@@ -17,18 +18,30 @@ public enum OSCMessageValue: Equatable, Hashable {
 	
 	case int32(Int32)
 	case float32(Float32)
-	case string(String)
+	case string(ASCIIString)
 	case blob(Data)
 	
 	// extended types:
 	case int64(Int64)
 	case timeTag(Int64)
 	case double(Double)
-	case stringAlt(String)
-	case character(Character)
+	case stringAlt(ASCIIString)
+	case character(ASCIICharacter)
 	case midi(OSCMIDIMessage)
 	case bool(Bool)
 	case `null`
+	
+}
+
+extension OSCMessageValue: CustomStringConvertible, CustomDebugStringConvertible {
+	
+	public var description: String {
+		stringValue(withLabel: false)
+	}
+	
+	public var debugDescription: String {
+		stringValue(withLabel: true)
+	}
 	
 	/// Returns a string representation of the value. Optionally includes a value-type label.
 	@inlinable public func stringValue(withLabel: Bool = false) -> String {
@@ -41,15 +54,15 @@ public enum OSCMessageValue: Equatable, Hashable {
 		// core types
 		case let .int32(v):		outputString = String(v)			; prefixString = "int32:"		; suffixString = ""
 		case let .float32(v):	outputString = String(v)			; prefixString = "float32:"		; suffixString = ""
-		case let .string(v):	outputString = v					; prefixString = "string:\""	; suffixString = "\""
+		case let .string(v):	outputString = v.stringValue		; prefixString = "string:\""	; suffixString = "\""
 		case let .blob(v):		outputString = "\(v.count) bytes"	; prefixString = "blob:"		; suffixString = ""
 			
 		// extended types
 		case let .int64(v):		outputString = String(v)			; prefixString = "int64:"		; suffixString = ""
 		case let .timeTag(v):	outputString = String(v)			; prefixString = "timeTag:"		; suffixString = ""
 		case let .double(v):	outputString = String(v)			; prefixString = "double:"		; suffixString = ""
-		case let .stringAlt(v):	outputString = v					; prefixString = "stringAlt:\""	; suffixString = "\""
-		case let .character(v):	outputString = String(v)			; prefixString = "char:"		; suffixString = ""
+		case let .stringAlt(v):	outputString = v.stringValue		; prefixString = "stringAlt:\""	; suffixString = "\""
+		case let .character(v):	outputString = String(v.characterValue) ; prefixString = "char:"		; suffixString = ""
 		case let .midi(v):		outputString = "\(v)"				; prefixString = "midi:"		; suffixString = ""
 		case let .bool(v):		outputString = String(v)			; prefixString = "bool:"		; suffixString = ""
 		case     .null:			outputString = "Null"				; prefixString = ""				; suffixString = ""
@@ -67,54 +80,55 @@ public enum OSCMessageValue: Equatable, Hashable {
 }
 
 
+// MARK: - Initializers
 
 public extension OSCMessageValue {
 	
 	// core types
 	
-	init(_ source: Int32) {
+	@inlinable init(_ source: Int32) {
 		self = .int32(source)
 	}
 	
-	init(_ source: Float32) {
+	@inlinable init(_ source: Float32) {
 		self = .float32(source)
 	}
 	
-	init(_ source: String) {
+	@inlinable init(_ source: ASCIIString) {
 		self = .string(source)
 	}
 	
-	init(_ source: Data) {
+	@inlinable init(_ source: Data) {
 		self = .blob(source)
 	}
 	
 	// extended types
 	
-	init(_ source: Int64) {
+	@inlinable init(_ source: Int64) {
 		self = .int64(source)
 	}
 	
-	init(timeTag source: Int64) {
+	@inlinable init(timeTag source: Int64) {
 		self = .timeTag(source)
 	}
 	
-	init(_ source: Double) {
+	@inlinable init(_ source: Double) {
 		self = .double(source)
 	}
 	
-	init(stringAlt source: String) {
+	@inlinable init(stringAlt source: ASCIIString) {
 		self = .stringAlt(source)
 	}
 	
-	init(_ source: Character) {
+	@inlinable init(character source: ASCIICharacter) {
 		self = .character(source)
 	}
 	
-	init(_ source: OSCMIDIMessage) {
+	@inlinable init(_ source: OSCMIDIMessage) {
 		self = .midi(source)
 	}
 	
-	init(_ source: Bool) {
+	@inlinable init(_ source: Bool) {
 		self = .bool(source)
 	}
 	

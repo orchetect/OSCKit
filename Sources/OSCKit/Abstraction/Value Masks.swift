@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftASCII
 
 // Abstraction used to add optional and meta types of existing concrete types
 
@@ -197,11 +198,11 @@ public protocol OSCMessageValueProtocol { }
 
 extension Int32			: OSCMessageValueProtocol { }
 extension Float32		: OSCMessageValueProtocol { }
-extension String		: OSCMessageValueProtocol { }
+extension ASCIIString	: OSCMessageValueProtocol { }
 extension Data			: OSCMessageValueProtocol { }
 extension Int64			: OSCMessageValueProtocol { }
 extension Double		: OSCMessageValueProtocol { }
-extension Character		: OSCMessageValueProtocol { }
+extension ASCIICharacter: OSCMessageValueProtocol { }
 extension OSCMIDIMessage: OSCMessageValueProtocol { }
 extension Bool			: OSCMessageValueProtocol { }
 extension NSNull		: OSCMessageValueProtocol { }

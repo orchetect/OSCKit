@@ -17,6 +17,7 @@ let package = Package(
 	
     dependencies: [
 		.package(url: "https://github.com/orchetect/OTCore", from: "1.1.0"),
+		.package(url: "https://github.com/orchetect/SwiftASCII", from: "1.0.0"),
 		.package(url: "https://github.com/orchetect/SwiftRadix", from: "1.0.0")
 		
     ],
@@ -24,10 +25,10 @@ let package = Package(
     targets: [
         .target(
             name: "OSCKit",
-            dependencies: ["OTCore", "SwiftRadix"]),
+            dependencies: ["OTCore", "SwiftASCII", "SwiftRadix"]),
         .testTarget(
             name: "OSCKitTests",
-            dependencies: ["OSCKit", "OTCore", "SwiftRadix"]),
+            dependencies: ["OSCKit", "OTCore", "SwiftASCII", "SwiftRadix"]),
     ]
 	
 )

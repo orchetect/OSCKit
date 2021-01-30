@@ -9,9 +9,9 @@
 #if !os(watchOS)
 
 import XCTest
-@testable import OSCKit
+import OSCKit
 
-class OSCBundleTests: XCTestCase {
+final class OSCBundleTests: XCTestCase {
 	
 	override func setUp() { super.setUp() }
 	override func tearDown() { super.tearDown() }
@@ -23,31 +23,33 @@ class OSCBundleTests: XCTestCase {
 		
 		// empty
 		
-		let emptyBundle = OSCBundle()
+		let emptyBundle = OSCBundle(elements: [])
 		XCTAssertEqual(emptyBundle.timeTag, 1)
 		XCTAssertEqual(emptyBundle.elements.count, 0)
 		
 		// timetag only
 		
-		let timeTagOnly = OSCBundle(timeTag: 20)
+		let timeTagOnly = OSCBundle(elements: [],
+									timeTag: 20)
 		XCTAssertEqual(timeTagOnly.timeTag, 20)
 		XCTAssertEqual(timeTagOnly.elements.count, 0)
 		
 		// elements only
 		
-		let elementsOnly = OSCBundle(elements: [OSCMessage()])
+		let elementsOnly = OSCBundle(elements: [OSCMessage(address: "/")])
 		XCTAssertEqual(elementsOnly.timeTag, 1)
 		XCTAssertEqual(elementsOnly.elements.count, 1)
 		
 		// timetag and elements
 		
-		let elementsAndTT = OSCBundle(elements: [OSCMessage()], timeTag: 20)
+		let elementsAndTT = OSCBundle(elements: [OSCMessage(address: "/")],
+									  timeTag: 20)
 		XCTAssertEqual(elementsAndTT.timeTag, 20)
 		XCTAssertEqual(elementsAndTT.elements.count, 1)
 		
 		// raw data
 		
-		let rawData = OSCBundle(from: OSCBundle.header + 20.int64.toData(.bigEndian))
+		let rawData = try! OSCBundle(from: OSCBundle.header + 20.int64.toData(.bigEndian))
 		XCTAssertEqual(rawData.timeTag, 20)
 		XCTAssertEqual(rawData.elements.count, 0)
 		
@@ -73,7 +75,7 @@ class OSCBundleTests: XCTestCase {
 		
 		// decode
 		
-		let bundle = OSCBundle(from: knownGoodOSCRawBytes.data)
+		let bundle = try! OSCBundle(from: knownGoodOSCRawBytes.data)
 		
 		XCTAssertEqual(bundle.timeTag, 1)
 		XCTAssertEqual(bundle.elements.count, 0)
@@ -115,7 +117,7 @@ class OSCBundleTests: XCTestCase {
 		
 		// decode
 		
-		let bundle = OSCBundle(from: knownGoodOSCRawBytes.data)
+		let bundle = try! OSCBundle(from: knownGoodOSCRawBytes.data)
 		
 		XCTAssertEqual(bundle.timeTag, 1)
 		XCTAssertEqual(bundle.elements.count, 1)
@@ -141,35 +143,38 @@ class OSCBundleTests: XCTestCase {
 		
 		// build bundle
 		
-		var oscBundle = OSCBundle()
+		let oscBundle = OSCBundle(
+			elements:
+				[
+					// element 1
+					OSCBundle(elements: [OSCMessage(address: "/bundle1/msg")]),
+					
+					// element 2
+					OSCBundle(elements: [
+						OSCMessage(address: "/bundle2/msg1",
+								   values: [.int32(500000),
+											.string("some string here")]),
+						OSCMessage(address: "/bundle2/msg2",
+								   values: [.float32(8795.4556),
+											.int32(75)])
+					]),
+					
+					// element 3
+					OSCMessage(address: "/msg1",
+							   values: [.blob(Data([1,2,3]))]),
+					
+					// element 4
+					OSCBundle(elements: [])
+				]
+		)
 		
-		// element 1
-		var bundle1 = OSCBundle()
-		bundle1.elements.append(OSCMessage(address: "/bundle1/msg"))
-		oscBundle.elements.append(bundle1)
-		
-		// element 2
-		var bundle2 = OSCBundle()
-		bundle2.elements.append(OSCMessage(address: "/bundle2/msg1",
-										   values: [.int32(500000), .string("some string here")]))
-		bundle2.elements.append(OSCMessage(address: "/bundle2/msg2",
-										   values: [.float32(8795.4556), .int32(75)]))
-		oscBundle.elements.append(bundle2)
-		
-		// element 3
-		oscBundle.elements.append(OSCMessage(address: "/msg1",
-											 values: [.blob(Data([1,2,3]))]))
-		
-		// element 4
-		oscBundle.elements.append(OSCBundle())
-			
 		// encode
 		
-		guard let encodedOSCbundle = oscBundle.rawData else { XCTFail() ; return }
+		let encodedOSCbundle = oscBundle.rawData
 		
 		// decode
 		
-		let decodedOSCbundle = OSCBundle(from: encodedOSCbundle)
+		let decodedOSCbundle = try! OSCBundle(from: encodedOSCbundle)
 		
 		// verify contents
 		
@@ -223,7 +228,7 @@ class OSCBundleTests: XCTestCase {
 	
 	func testOSCBundleCustomStringConvertible1() {
 		
-		let bundle = OSCBundle()
+		let bundle = OSCBundle(elements: [])
 		
 		let desc = bundle.description
 		
@@ -233,12 +238,12 @@ class OSCBundleTests: XCTestCase {
 	
 	func testOSCBundleCustomStringConvertible2() {
 		
-		var bundle = OSCBundle()
+		let bundle = OSCBundle(elements: [
+			OSCMessage(address: "/address",
+					   values: [.int32(123),
+								.string("A string")])
+		])
 		
-		let msg = OSCMessage(address: "/address",
-							 values: [.int32(123), .string("A string")])
-		
-		bundle.elements.append(msg)
 		
 		let desc = bundle.description
 		
@@ -248,12 +253,11 @@ class OSCBundleTests: XCTestCase {
 	
 	func testOSCBundleDescriptionPretty() {
 		
-		var bundle = OSCBundle()
-		
-		let msg = OSCMessage(address: "/address",
-							 values: [.int32(123), .string("A string")])
-		
-		bundle.elements.append(msg)
+		let bundle = OSCBundle(elements: [
+			OSCMessage(address: "/address",
+					   values: [.int32(123),
+								.string("A string")])
+		])
 		
 		let desc = bundle.descriptionPretty
 		

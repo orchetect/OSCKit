@@ -9,9 +9,9 @@
 #if !os(watchOS)
 
 import XCTest
-@testable import OSCKit
+import OSCKit
 
-class OSCObjectTests: XCTestCase {
+final class OSCObjectTests: XCTestCase {
 	
 	override func setUp() { super.setUp() }
 	override func tearDown() { super.tearDown() }
@@ -21,8 +21,8 @@ class OSCObjectTests: XCTestCase {
 	
 	func testOSCObject() {
 		
-		let bundle = OSCBundle().rawData!
-		let msg    = OSCMessage().rawData!
+		let bundle = OSCBundle(elements: []).rawData
+		let msg    = OSCMessage(address: "/").rawData
 		
 		// OSC bundle
 		XCTAssert(     bundle.appearsToBeOSCObject == .bundle)

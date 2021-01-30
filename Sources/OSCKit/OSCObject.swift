@@ -13,9 +13,10 @@ import Foundation
 /// Protocol applied to OSC data objects
 public protocol OSCObject {
 	
-	/// Get: constructs a raw UDP data packet from properties.
-	/// Set: parses a raw UDP data packet and populate properties with the relevant OSC data.
-	var rawData: Data? { get set }
+	/// Returns a raw OSC packet constructed from the struct's properties
+	var rawData: Data { get }
+	
+	init(from rawData: Data) throws
 	
 }
 

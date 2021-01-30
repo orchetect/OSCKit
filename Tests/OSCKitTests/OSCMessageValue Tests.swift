@@ -9,9 +9,9 @@
 #if !os(watchOS)
 
 import XCTest
-@testable import OSCKit
+import OSCKit
 
-class OSCMessageValueTests: XCTestCase {
+final class OSCMessageValueTests: XCTestCase {
 	
 	override func setUp() { super.setUp() }
 	override func tearDown() { super.tearDown() }
@@ -142,8 +142,14 @@ class OSCMessageValueTests: XCTestCase {
 	
 	func testOSCMessageValueInit_string() {
 		
-		let val = OSCMessageValue("A string")
-		XCTAssertEqual(val, .string("A string"))
+		let val1 = OSCMessageValue("A string")
+		XCTAssertEqual(val1, .string("A string"))
+		
+		// a single character string (grapheme cluster) could possibly be confused with an ASCIICharacter literal
+		// this is avoided by giving the OSCMessageValue init for .character an explicit label of OSCMessageValue(character:)
+		
+		let val2 = OSCMessageValue("A")
+		XCTAssertEqual(val2, .string("A"))
 		
 	}
 	
@@ -179,15 +185,21 @@ class OSCMessageValueTests: XCTestCase {
 	
 	func testOSCMessageValueInit_stringAlt() {
 		
-		let val = OSCMessageValue(stringAlt: "A string")
-		XCTAssertEqual(val, .stringAlt("A string"))
+		let val1 = OSCMessageValue(stringAlt: "A string")
+		XCTAssertEqual(val1, .stringAlt("A string"))
+		
+		// a single character string (grapheme cluster) could possibly be confused with an ASCIICharacter literal
+		// this is avoided by giving the OSCMessageValue init for .character an explicit label of OSCMessageValue(character:)
+		
+		let val2 = OSCMessageValue(stringAlt: "A")
+		XCTAssertEqual(val2, .stringAlt("A"))
 		
 	}
 	
 	func testOSCMessageValueInit_character() {
 		
-		let val = OSCMessageValue(Character("A"))
-		XCTAssertEqual(val, .character(Character("A")))
+		let val = OSCMessageValue(character: "A")
+		XCTAssertEqual(val, .character("A"))
 		
 	}
 	
@@ -236,7 +248,7 @@ class OSCMessageValueTests: XCTestCase {
 		
 	}
 	
-	func testnumberAsDouble() {
+	func testNumberAsDouble() {
 		
 		// core types
 		XCTAssertEqual(OSCMessageValue.numberAsDouble(123 as Int),		123.0)

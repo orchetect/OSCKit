@@ -9,10 +9,11 @@
 #if !os(watchOS)
 
 import XCTest
-@testable import OSCKit
+import OSCKit
 import OTCore
+import SwiftASCII
 
-class ValueMasksTests: XCTestCase {
+final class ValueMasksTests: XCTestCase {
 	
 	override func setUp() { super.setUp() }
 	override func tearDown() { super.tearDown() }
@@ -503,7 +504,7 @@ class ValueMasksTests: XCTestCase {
 	
 	func testValuesFromValueMask_string() {
 		
-		typealias type                     = String
+		typealias type                     = ASCIIString
 		let value                          = "A string" as type
 		let msgValue:  OSCMessageValue     = .string(value)
 		let valueType: OSCMessageValueType = .string
@@ -570,7 +571,7 @@ class ValueMasksTests: XCTestCase {
 	
 	func testValuesFromValueMask_stringAlt() {
 		
-		typealias type                     = String
+		typealias type                     = ASCIIString
 		let value                          = "A string" as type
 		let msgValue:  OSCMessageValue     = .stringAlt(value)
 		let valueType: OSCMessageValueType = .stringAlt
@@ -583,7 +584,7 @@ class ValueMasksTests: XCTestCase {
 	
 	func testValuesFromValueMask_character() {
 		
-		typealias type                     = Character
+		typealias type                     = ASCIICharacter
 		let value                          = "A" as type
 		let msgValue:  OSCMessageValue     = .character(value)
 		let valueType: OSCMessageValueType = .character

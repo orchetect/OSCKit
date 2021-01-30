@@ -9,10 +9,11 @@
 #if !os(watchOS)
 
 import XCTest
-@testable import OSCKit
+import OSCKit
 import SwiftRadix
+import SwiftASCII
 
-class OSCMessageTests: XCTestCase {
+final class OSCMessageTests: XCTestCase {
 	
 	override func setUp() { super.setUp() }
 	override func tearDown() { super.tearDown() }
@@ -26,7 +27,7 @@ class OSCMessageTests: XCTestCase {
 		
 		// empty
 		
-		_ = OSCMessage()
+		_ = OSCMessage(address: "/")
 		
 		// encode
 		
@@ -37,12 +38,12 @@ class OSCMessageTests: XCTestCase {
 				.float32(123.45),
 				.string("A test string."),
 				.blob(Data([0,1,2]))
-			]
-		).rawData!
+			])
+			.rawData
 		
 		// decode
 		
-		let decoded = OSCMessage(from: msg)
+		let decoded = try! OSCMessage(from: msg)
 		
 		// just for debug log analysis, if needed
 		
@@ -96,7 +97,7 @@ class OSCMessageTests: XCTestCase {
 		
 		// decode
 		
-		let msg = OSCMessage(from: knownGoodOSCRawBytes.data)
+		let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
 		XCTAssertEqual(msg.address, "/testaddress")
 		XCTAssertEqual(msg.values.count, 0)
 		
@@ -126,7 +127,7 @@ class OSCMessageTests: XCTestCase {
 		
 		// decode
 		
-		let msg = OSCMessage(from: knownGoodOSCRawBytes.data)
+		let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
 		XCTAssertEqual(msg.address, "/testaddress")
 		XCTAssertEqual(msg.values.count, 1)
 		guard case .int32(let val) = msg.values.first else { XCTFail() ; return }
@@ -158,7 +159,7 @@ class OSCMessageTests: XCTestCase {
 		
 		// decode
 		
-		let msg = OSCMessage(from: knownGoodOSCRawBytes.data)
+		let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
 		XCTAssertEqual(msg.address, "/testaddress")
 		XCTAssertEqual(msg.values.count, 1)
 		guard case .float32(let val) = msg.values.first else { XCTFail() ; return }
@@ -196,7 +197,7 @@ class OSCMessageTests: XCTestCase {
 		
 		// decode
 		
-		let msg = OSCMessage(from: knownGoodOSCRawBytes.data)
+		let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
 		XCTAssertEqual(msg.address, "/testaddress")
 		XCTAssertEqual(msg.values.count, 1)
 		guard case .string(let val) = msg.values.first else { XCTFail() ; return }
@@ -230,7 +231,7 @@ class OSCMessageTests: XCTestCase {
 		
 		// decode
 		
-		let msg = OSCMessage(from: knownGoodOSCRawBytes.data)
+		let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
 		XCTAssertEqual(msg.address, "/testaddress")
 		XCTAssertEqual(msg.values.count, 1)
 		guard case .blob(let val) = msg.values.first else { XCTFail() ; return }
@@ -267,7 +268,7 @@ class OSCMessageTests: XCTestCase {
 		
 		// decode
 		
-		let msg = OSCMessage(from: knownGoodOSCRawBytes.data)
+		let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
 		XCTAssertEqual(msg.address, "/testaddress")
 		XCTAssertEqual(msg.values.count, 1)
 		guard case .int64(let val) = msg.values.first else { XCTFail() ; return }
@@ -300,7 +301,7 @@ class OSCMessageTests: XCTestCase {
 		
 		// decode
 		
-		let msg = OSCMessage(from: knownGoodOSCRawBytes.data)
+		let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
 		XCTAssertEqual(msg.address, "/testaddress")
 		XCTAssertEqual(msg.values.count, 1)
 		guard case .timeTag(let val) = msg.values.first else { XCTFail() ; return }
@@ -333,7 +334,7 @@ class OSCMessageTests: XCTestCase {
 		
 		// decode
 		
-		let msg = OSCMessage(from: knownGoodOSCRawBytes.data)
+		let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
 		XCTAssertEqual(msg.address, "/testaddress")
 		XCTAssertEqual(msg.values.count, 1)
 		guard case .double(let val) = msg.values.first else { XCTFail() ; return }
@@ -371,7 +372,7 @@ class OSCMessageTests: XCTestCase {
 		
 		// decode
 		
-		let msg = OSCMessage(from: knownGoodOSCRawBytes.data)
+		let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
 		XCTAssertEqual(msg.address, "/testaddress")
 		XCTAssertEqual(msg.values.count, 1)
 		guard case .stringAlt(let val) = msg.values.first else { XCTFail() ; return }
@@ -403,11 +404,11 @@ class OSCMessageTests: XCTestCase {
 		
 		// decode
 		
-		let msg = OSCMessage(from: knownGoodOSCRawBytes.data)
+		let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
 		XCTAssertEqual(msg.address, "/testaddress")
 		XCTAssertEqual(msg.values.count, 1)
 		guard case .character(let val) = msg.values.first else { XCTFail() ; return }
-		XCTAssertEqual(val, Character("a"))
+		XCTAssertEqual(val, "a" as ASCIICharacter)
 		
 		// re-encode
 		
@@ -435,7 +436,7 @@ class OSCMessageTests: XCTestCase {
 		
 		// decode
 		
-		let msg = OSCMessage(from: knownGoodOSCRawBytes.data)
+		let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
 		XCTAssertEqual(msg.address, "/testaddress")
 		XCTAssertEqual(msg.values.count, 1)
 		guard case .midi(let val) = msg.values.first else { XCTFail() ; return }
@@ -465,7 +466,7 @@ class OSCMessageTests: XCTestCase {
 		
 		// decode
 		
-		let msg = OSCMessage(from: knownGoodOSCRawBytes.data)
+		let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
 		XCTAssertEqual(msg.address, "/testaddress")
 		XCTAssertEqual(msg.values.count, 2)
 		guard case .bool(let val1) = msg.values[safe: 0] else { XCTFail() ; return }
@@ -497,7 +498,7 @@ class OSCMessageTests: XCTestCase {
 		
 		// decode
 		
-		let msg = OSCMessage(from: knownGoodOSCRawBytes.data)
+		let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
 		XCTAssertEqual(msg.address, "/testaddress")
 		XCTAssertEqual(msg.values.count, 1)
 		guard case .null = msg.values[safe: 0] else { XCTFail() ; return }
@@ -513,7 +514,7 @@ class OSCMessageTests: XCTestCase {
 	
 	func testOSCMessageCustomStringConvertible1() {
 		
-		let msg = OSCMessage()
+		let msg = OSCMessage(address: "/")
 		
 		let desc = msg.description
 		

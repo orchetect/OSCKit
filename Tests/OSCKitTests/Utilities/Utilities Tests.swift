@@ -1,5 +1,5 @@
 //
-//  Utilities Tests.swift
+//  Data Extensions Tests.swift
 //  OSCKitTests
 //
 //  Created by Steffan Andrews on 2019-10-27.
@@ -10,8 +10,9 @@
 
 import XCTest
 @testable import OSCKit
+import SwiftASCII
 
-class UtilitiesTests: XCTestCase {
+final class DataExtensionsTests: XCTestCase {
 	
 	override func setUp() { super.setUp() }
 	override func tearDown() { super.tearDown() }
@@ -84,30 +85,30 @@ class UtilitiesTests: XCTestCase {
 		// empty string
 		
 		let data1 = Data([0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04])
-		XCTAssertEqual(data1.extractNull4ByteTerminatedString()?.stringValue	, "")
-		XCTAssertEqual(data1.extractNull4ByteTerminatedString()?.byteCount		, 4)
+		XCTAssertEqual(data1.extractNull4ByteTerminatedASCIIString()?.asciiStringValue	, "")
+		XCTAssertEqual(data1.extractNull4ByteTerminatedASCIIString()?.byteCount			, 4)
 		
 		// string
 		
 		let data2 = Data([0x53, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x00, 0x00]) // "String" null null
-		XCTAssertEqual(data2.extractNull4ByteTerminatedString()?.stringValue	, "String")
-		XCTAssertEqual(data2.extractNull4ByteTerminatedString()?.byteCount		, 8)
+		XCTAssertEqual(data2.extractNull4ByteTerminatedASCIIString()?.asciiStringValue	, "String")
+		XCTAssertEqual(data2.extractNull4ByteTerminatedASCIIString()?.byteCount			, 8)
 		
 		// malformed (valid ascii string data, multiple of 4 bytes, but pad is not all nulls)
 		let data3 = Data([0x53, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x00, 0x01]) // "String" null 1
-		XCTAssertNil(data3.extractNull4ByteTerminatedString())
+		XCTAssertNil(data3.extractNull4ByteTerminatedASCIIString())
 		
 		// malformed (valid ascii string data, but not multiple of 4 bytes and no null pad)
 		let data4 = Data([0x53, 0x74, 0x72, 0x69, 0x6E, 0x67]) // "String"
-		XCTAssertNil(data4.extractNull4ByteTerminatedString())
+		XCTAssertNil(data4.extractNull4ByteTerminatedASCIIString())
 		
 		// malformed (valid ascii string data, null terminated, but not multiple of 4 bytes)
 		let data5 = Data([0x53, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x00]) // "String" null
-		XCTAssertNil(data5.extractNull4ByteTerminatedString())
+		XCTAssertNil(data5.extractNull4ByteTerminatedASCIIString())
 		
 		// malformed (valid ascii string data, null terminated, but less than 4 bytes)
 		let data6 = Data([0x53, 0x74, 0x00]) // "St" null
-		XCTAssertNil(data6.extractNull4ByteTerminatedString())
+		XCTAssertNil(data6.extractNull4ByteTerminatedASCIIString())
 		
 	}
 	

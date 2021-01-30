@@ -22,135 +22,128 @@ public struct OSCBundle: OSCObject {
 	
 	/// Timetag.
 	/// Default value 1: means "immediate" in OSC spec.
-	public var timeTag: Int64 = 1
+	public let timeTag: Int64
 	
 	/// Elements contained within the bundle. These can be `OSCBundle` or `OSCMessage` objects.
-	public var elements: [OSCObject] = []
+	public let elements: [OSCObject]
 	
 	
 	// MARK: - init
 	
-	/// Initialize with default timeTag of 1 and no elements.
-	@inlinable public init() { }
-	
-	@inlinable public init(elements: [OSCObject] = [],
+	@inlinable public init(elements: [OSCObject],
 						   timeTag: Int64 = 1) {
+		
 		self.timeTag = timeTag
 		self.elements = elements
+		self.rawData = Self.generateRawData(from: elements,
+											timeTag: timeTag)
+		
 	}
 	
 	/// Initialize by parsing raw OSC bundle data bytes.
-	@inlinable public init(from rawData: Data) {
+	public init(from rawData: Data) throws {
+		
+		// cache raw data
+		
 		self.rawData = rawData
+		
+		// parse a raw OSC packet and populates the struct's properties
+		
+		let len = rawData.count
+		var ppos: Int = 0 // parse byte position
+		
+		// validation: length. all bundles must include the header (8 bytes) and timetag (8 bytes).
+		if len < 16 {
+			throw DecodeError.malformed("Data length too short. (Length is \(len))")
+		}
+		// validation: check header
+		if rawData.subdata(in: Range(ppos...ppos+7)) != OSCBundle.header {
+			throw DecodeError.malformed("Bundle header is not present or is malformed.")
+		}
+		
+		// set up object array
+		var extractedElements = [OSCObject]()
+		
+		ppos += 8
+		
+		guard let extractedTimeTag = rawData
+				.subdata(in: ppos..<ppos+8)
+				.toInt64(from: .bigEndian) else {
+			throw DecodeError.malformed("Could not convert timetag to Int64.")
+		}
+		
+		ppos += 8
+		
+		while ppos < len {
+			
+			//int32 size chunk
+			if rawData.count - (ppos+3) < 0 {
+				throw DecodeError.malformed("Data bytes ended earlier than expected.")
+			}
+			guard let elementSize = rawData
+					.subdata(in: ppos..<ppos+4)
+					.toInt32(from: .bigEndian)?.int else {
+				throw DecodeError.malformed("Could not convert element size to Int32.")
+			}
+			
+			ppos += 4
+			
+			// test for bundle or message
+			if rawData.count - (ppos+elementSize) < 0 {
+				throw DecodeError.malformed("Data bytes ended earlier than expected.")
+			}
+			
+			let elementContents = rawData.subdata(in: ppos..<ppos+elementSize)
+			
+			guard let oscObject = elementContents.appearsToBeOSCObject else {
+				throw DecodeError.malformed("Unrecognized bundle element encountered.")
+			}
+			
+			switch oscObject {
+			case .bundle:
+				let newBundle = try OSCBundle(from: elementContents)
+				extractedElements.append(newBundle)
+				
+			case .message:
+				let newMessage = try OSCMessage(from: elementContents)
+				extractedElements.append(newMessage)
+				
+			}
+			
+			ppos += elementSize
+			
+		}
+		
+		// update public properties
+		timeTag = extractedTimeTag
+		elements = extractedElements
+		
 	}
 	
 	
 	// MARK: - rawData
 	
-	/// Get: returns a raw OSC packet constructed out of the class's properties. Set: parses a raw OSC packet and populates the class's properties.
-	///
-	/// - warning: This is a computed property, so it's best to cache the result in a variable instead of calling repeatedly if the data is required more than once.
-	public var rawData: Data? {
+	public let rawData: Data
+	
+	/// Internal: generate raw OSC bytes from struct's properties
+	@usableFromInline
+	internal static func generateRawData(from elements: [OSCObject],
+										 timeTag: Int64) -> Data {
 		
-		get {
+		// returns a raw OSC packet constructed out of the struct's properties
+		
+		var data = OSCBundle.header // prime the header
+		data.append(timeTag.toData(.bigEndian)) // add timetag
+		
+		for element in elements {
 			
-			// returns a raw OSC packet constructed out of the class's properties
+			let raw = element.rawData
+			data.append(raw.count.int32.toData(.bigEndian))
+			data.append(raw)
 			
-			var data = OSCBundle.header // prime the header
-            data.append(timeTag.toData(.bigEndian)) // add timetag
-			
-			for element in elements {
-				switch element {
-				case is OSCBundle, is OSCMessage:
-					let theElement = element
-					guard let raw = theElement.rawData else {
-						Log.debug("Could not get rawData from OSC chunk.")
-						return nil
-					}
-					data.append(raw.count.int32.toData(.bigEndian))
-					data.append(raw)
-				default:
-					Log.debug("Unexpected element found while building bundle rawData.")
-				}
-			}
-			
-			return data
 		}
 		
-		set {
-			
-			// parses a raw OSC packet and populates the class's properties
-			
-			let len = newValue!.count
-			var ppos: Int = 0 // parse byte position
-			
-			// validation: length. all bundles must include the header (8 bytes) and timetag (8 bytes).
-			if len < 16 {
-				Log.debug("OSCBundle parse error: data length too short. (Length is \(len)) Aborting.")
-				return
-			}
-			// validation: check header
-			if newValue!.subdata(in: Range(ppos...ppos+7)) != OSCBundle.header {
-				Log.debug("OSCBundle parse error: bundle header is not present/correct. Aborting.")
-				return
-			}
-			
-			// set up object array
-			var extractedElements = [OSCObject]()
-			
-			ppos += 8
-			
-			guard let extractedTimeTag = newValue!
-					.subdata(in: ppos..<ppos+8)
-					.toInt64(from: .bigEndian) else {
-				Log.debug("OSCBundle parse error: Could not convert timetag to Int64. Aborting.")
-				return
-			}
-			
-			ppos += 8
-			
-			while ppos < len {
-				
-				//int32 size chunk
-				if newValue!.count - (ppos+3) < 0 { // failsafe for malformed message
-					Log.debug("OSCBundle parse error: data stream ended earlier than expected. Aborting.")
-					return
-				}
-				guard let elementSize = newValue!
-						.subdata(in: ppos..<ppos+4)
-						.toInt32(from: .bigEndian)?.int else {
-					Log.debug("OSCBundle parse error: Could not convert element size to Int32. Aborting.")
-					return
-				}
-				
-				ppos += 4
-				
-				// test for bundle or message
-				if newValue!.count - (ppos+elementSize) < 0 { // fialsafe for malformed message
-					Log.debug("OSCBundle parse error: data stream ended earlier than expected. Aborting.")
-					return
-				}
-				
-				let elementContents = newValue!.subdata(in: ppos..<ppos+elementSize)
-				
-				switch elementContents.appearsToBeOSCObject {
-				case .bundle:
-					extractedElements.append(OSCBundle(from: elementContents))
-				case .message:
-					extractedElements.append(OSCMessage(from: elementContents))
-				default:
-					Log.debug("OSCBundle parse error: unexpected element found.")
-				}
-				
-				ppos += elementSize
-				
-			}
-			
-			// update exposed properties
-			timeTag = extractedTimeTag
-			elements = extractedElements
-			
-		}
+		return data
 		
 	}
 	
