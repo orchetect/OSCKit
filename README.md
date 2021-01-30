@@ -49,29 +49,21 @@ import OSCKit
 // in your UDP socket receive handler,
 // assuming the "data" variable is raw data bytes from a received UDP packet:
 
-// this test is performant and will filter out any non-OSC events
-guard let oscObjectType = data.appearsToBeOSCObject else { return }
-
-switch oscObjectType {
-  case .bundle:
-    do {
-      let bundle = try OSCBundle(from: data)
-      // handle osc bundle
-    } catch let error as OSCBundle.DecodeError {
-      // handle decode error
-    } catch {
-      // handle other errors
-    }
-    
-  case .message:
-    do {
-      let message = try OSCMessage(from: data)
-      // handle osc message
-    } catch let error as OSCMessage.DecodeError {
-      // handle decode error
-    } catch {
-      // handle other errors
-    }
+do {
+  guard let oscObject = try data.parseOSC() else { return }
+  
+  switch oscObject {
+  case .message(let message):
+    // handle message
+  case .bundle(let bundle):
+    // handle bundle
+  }
+} catch let error as OSCBundle.DecodeError {
+  // handle bundle errors
+} catch let error as OSCMessage.DecodeError {
+  // handle message errors
+} catch {
+  // handle other errors
 }
 ```
 
