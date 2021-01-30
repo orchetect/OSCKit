@@ -30,7 +30,7 @@ public extension Data {
 	///
 	/// Returns a type if validation succeeds, otherwise:
 	/// Returns `nil` if neither.
-	@inlinable var appearsToBeOSCObject: OSCObjectType? {
+	@inlinable var appearsToBeOSC: OSCObjectType? {
 		
 		if appearsToBeOSCBundle {
 			return .bundle
@@ -49,5 +49,33 @@ public enum OSCObjectType {
 	
 	case message
 	case bundle
+	
+}
+
+public extension Data {
+	
+	/// Test if `Data` appears to be an OSC bundle or OSC message. (Basic validation)
+	///
+	/// Returns a type if validation succeeds, otherwise:
+	/// Returns `nil` if neither.
+	@inlinable func parseOSC() throws -> OSCObjectPayload? {
+		
+		if appearsToBeOSCBundle {
+			return .bundle(try OSCBundle(from: self))
+		} else if appearsToBeOSCMessage {
+			return .message(try OSCMessage(from: self))
+		}
+		
+		return nil
+		
+	}
+	
+}
+
+/// Enum describing an OSC message type.
+public enum OSCObjectPayload {
+	
+	case message(OSCMessage)
+	case bundle(OSCBundle)
 	
 }

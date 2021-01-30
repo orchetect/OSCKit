@@ -96,7 +96,7 @@ public struct OSCBundle: OSCObject {
 			
 			let elementContents = rawData.subdata(in: ppos..<ppos+elementSize)
 			
-			guard let oscObject = elementContents.appearsToBeOSCObject else {
+			guard let oscObject = elementContents.appearsToBeOSC else {
 				throw DecodeError.malformed("Unrecognized bundle element encountered.")
 			}
 			
