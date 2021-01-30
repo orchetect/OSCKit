@@ -32,6 +32,74 @@ To add OSCKit to your Xcode project:
 1. Select File → Swift Packages → Add Package Dependency
 2. Add package using  `https://github.com/orchetect/OSCKit` as the URL.
 
+## Getting Started
+
+### Setup
+
+```swift
+import OSCKit
+
+// set up your UDP port(s) with a 3rd-party network library of choice;
+// no network layer is included in OSCKit
+```
+
+### Receive
+
+```swift
+// in your UDP socket receive handler,
+// assuming the "data" variable is raw data bytes from a received UDP packet:
+
+// this test is performant and will filter out any non-OSC events
+guard let oscObjectType = data.appearsToBeOSCObject else { return }
+
+switch oscObjectType {
+  case .bundle:
+    do {
+      let bundle = try OSCBundle(from: data)
+      // handle osc bundle
+    } catch let error as OSCBundle.DecodeError {
+      // handle decode error
+    } catch {
+      // handle other errors
+    }
+    
+  case .message:
+    do {
+      let message = try OSCMessage(from: data)
+      // handle osc message
+    } catch let error as OSCMessage.DecodeError {
+      // handle decode error
+    } catch {
+      // handle other errors
+    }
+}
+```
+
+### Send
+
+#### Bundle
+
+To send multiple OSC messages or nested OSC bundled to the same destination at the same time, pack them in an `OSCBundle` and send the bundle's `rawData` bytes as the outgoing UDP message.
+
+```swift
+let msg1 = OSCMessage(address: "/msg1")
+let msg2 = OSCMessage(address: "/msg2", values: [.string("string"), .int32(123)])
+
+let bundle = OSCBundle([msg1, msg2])
+
+yourUDPSocket.send(bundle.rawData)
+```
+
+#### Message
+
+To send a single message, construct an `OSCMessage` and send the message's `rawData` bytes as the outgoing UDP message.
+
+```swift
+let msg = OSCMessage(address: "/msg2", values: [.string("string"), .int32(123)])
+
+yourUDPSocket.send(msg.rawData)
+```
+
 ## Documentation
 
 Will be added in future.
@@ -39,8 +107,8 @@ Will be added in future.
 ## Roadmap
 
 - [ ] Add full timetag support
-- [ ] Add OSC spec address parsing
-- [ ] Add example projects with network layers (ie: Apple's Network.framework)
+- [ ] Add OSC 1.0 spec address parsing
+- [ ] Add example projects with network layers (ie: Apple's `Network.framework`)
 - [ ] Cross-platform testing
 
 ## Author
