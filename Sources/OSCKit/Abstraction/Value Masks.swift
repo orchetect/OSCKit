@@ -100,20 +100,50 @@ public extension OSCMessageValueType {
 		switch self {
 		// concrete types
 		// -- core types
-		case .int32, .float32, .string, .blob: return false
+		case .int32,
+			 .float32,
+			 .string,
+			 .blob:
+			return false
+			
 		// -- extended types
-		case .int64, .timeTag, .double, .stringAlt, .character, .midi, .bool, .null: return false
+		case .int64,
+			 .timeTag,
+			 .double,
+			 .stringAlt,
+			 .character,
+			 .midi,
+			 .bool,
+			 .null:
+			return false
 			
 		// meta types
-		case .number: return false
+		case .number:
+			return false
 			
 		// optional versions of concrete types
 		// -- core types
-		case .int32Optional, .float32Optional, .stringOptional, .blobOptional: return true
+		case .int32Optional,
+			 .float32Optional,
+			 .stringOptional,
+			 .blobOptional:
+			return true
+			
 		// -- extended types
-		case .int64Optional, .timeTagOptional, .doubleOptional, .stringAltOptional, .characterOptional, .midiOptional, .boolOptional, .nullOptional: return true
+		case .int64Optional,
+			 .timeTagOptional,
+			 .doubleOptional,
+			 .stringAltOptional,
+			 .characterOptional,
+			 .midiOptional,
+			 .boolOptional,
+			 .nullOptional:
+			return true
+			
 		// -- meta types
-		case .numberOptional: return true
+		case .numberOptional:
+			return true
+			
 		}
 		
 	}
@@ -157,8 +187,10 @@ public extension OSCMessageValue {
 				(self.baseType.rawValue == OSCMessageValueType.int32.rawValue ||
 					self.baseType.rawValue == OSCMessageValueType.float32.rawValue ||
 					self.baseType.rawValue == OSCMessageValueType.int64.rawValue ||
-					self.baseType.rawValue == OSCMessageValueType.double.rawValue)
-			{ return true }
+					self.baseType.rawValue == OSCMessageValueType.double.rawValue) {
+				
+				return true
+			}
 			
 		}
 		
@@ -196,16 +228,16 @@ public extension OSCMessageValue {
 
 public protocol OSCMessageValueProtocol { }
 
-extension Int32			: OSCMessageValueProtocol { }
-extension Float32		: OSCMessageValueProtocol { }
-extension ASCIIString	: OSCMessageValueProtocol { }
-extension Data			: OSCMessageValueProtocol { }
-extension Int64			: OSCMessageValueProtocol { }
-extension Double		: OSCMessageValueProtocol { }
+extension Int32         : OSCMessageValueProtocol { }
+extension Float32       : OSCMessageValueProtocol { }
+extension ASCIIString   : OSCMessageValueProtocol { }
+extension Data          : OSCMessageValueProtocol { }
+extension Int64         : OSCMessageValueProtocol { }
+extension Double        : OSCMessageValueProtocol { }
 extension ASCIICharacter: OSCMessageValueProtocol { }
 extension OSCMIDIMessage: OSCMessageValueProtocol { }
-extension Bool			: OSCMessageValueProtocol { }
-extension NSNull		: OSCMessageValueProtocol { }
+extension Bool          : OSCMessageValueProtocol { }
+extension NSNull        : OSCMessageValueProtocol { }
 
 
 // MARK: - Value Mask
