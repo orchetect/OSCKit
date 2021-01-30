@@ -8,13 +8,6 @@
 
 public extension OSCMessage {
 	
-	enum EncodeError: Error {
-		
-		/// An error occurred while encoding a String.
-		case stringEncodeFailure(_ verboseError: String)
-		
-	}
-	
 	enum DecodeError: Error {
 		
 		/// Malformed data. `verboseError` contains the specific reason.
@@ -30,10 +23,6 @@ public extension OSCMessage {
 
 
 public extension OSCBundle {
-	
-	enum EncodeError: Error {
-		
-	}
 	
 	enum DecodeError: Error {
 		
