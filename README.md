@@ -75,7 +75,7 @@ func handleOSCPayload(_ oscPayload: OSCBundlePayload) {
 
 #### Bundle
 
-To send multiple OSC messages or nested OSC bundled to the same destination at the same time, pack them in an `OSCBundle` and send the bundle's `rawData` bytes as the outgoing UDP message.
+To send multiple OSC messages or nested OSC bundles to the same destination at the same time, pack them in an `OSCBundle` and send the bundle's `rawData` bytes as the outgoing UDP message.
 
 ```swift
 let msg1 = OSCMessage(address: "/msg1")
