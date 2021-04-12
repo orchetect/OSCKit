@@ -106,6 +106,7 @@ Will be added in future.
 - [ ] Add OSC 1.0 spec address parsing
 - [ ] Add example projects with network layers (ie: Apple's `Network.framework`)
 - [ ] Cross-platform testing
+- [ ] Add custom OSC type tag values (♻️ In Progress)
 
 ## Author
 
