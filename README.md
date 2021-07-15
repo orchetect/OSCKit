@@ -102,9 +102,8 @@ Will be added in future.
 
 ## Roadmap
 
-- [ ] Add full timetag support
-- [ ] Add OSC 1.0 spec address parsing
-- [ ] Add example projects with network layers (ie: Apple's `Network.framework`)
+- [ ] Add full timetag support (OSC 1.0 spec)
+- [ ] Add address parsing (OSC 1.0 spec)
 - [ ] Cross-platform testing
 - [ ] Add custom OSC type tag values (♻️ In Progress)
 
