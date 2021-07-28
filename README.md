@@ -1,25 +1,10 @@
 # OSCKit
 
-<p>
-<a href="https://developer.apple.com/swift">
-<img src="https://img.shields.io/badge/Swift%205.3-compatible-orange.svg?style=flat"
-	 alt="Swift 5.3 compatible" /></a>
-<a href="#installation">
-<img src="https://img.shields.io/badge/SPM-compatible-orange.svg?style=flat"
-	 alt="Swift Package Manager (SPM) compatible" /></a>
-<a href="https://developer.apple.com/swift">
-<img src="https://img.shields.io/badge/platform-macOS%2010.12%20|%20iOS%2010%20|%20tvOS%2010%20|%20watchOS%203-green.svg?style=flat"
-	 alt="Platform - macOS 10.12 | iOS 10 | tvOS 10 | watchOS 3" /></a>
-<a href="#contributions">
-<img src="https://img.shields.io/badge/Linux-not%20tested-black.svg?style=flat"
-	 alt="Linux - not tested" /></a>
-<a href="https://github.com/orchetect/OSCKit/blob/main/LICENSE">
-<img src="http://img.shields.io/badge/license-MIT-blue.svg?style=flat"
-	 alt="License: MIT" /></a>
+[![CI Build Status](https://github.com/orchetect/OSCKit/actions/workflows/build.yml/badge.svg)](https://github.com/orchetect/OSCKit/actions/workflows/build.yml) [![Platforms - macOS | iOS | tvOS | watchOS](https://img.shields.io/badge/platforms-macOS%2010.12%2B%20|%20iOS%2010%2B%20|%20tvOS%2010%2B%20|%20watchOS%203%2B%20-lightgrey.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/OSCKit/blob/main/LICENSE)
 
 Open Sound Control (OSC) library written in Swift.
 
-**Note:** The library does not contain a networking layer so you can modularly integrate OSCKit into whatever network module you choose.
+**Note:** The library does not contain a networking layer so you can modularly integrate OSCKit into whatever network module you choose. The repo contains an example project demonstrating using it with Apple's `Network.framework`.
 
 Unit tests implemented.
 
