@@ -1,8 +1,6 @@
 //
 //  OSCPayload.swift
-//  OSCKit
-//
-//  Created by Steffan Andrews on 2021-04-28.
+//  OSCKit • https://github.com/orchetect/OSCKit
 //
 
 import Foundation
