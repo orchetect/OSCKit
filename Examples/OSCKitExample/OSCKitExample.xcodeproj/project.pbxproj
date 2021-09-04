@@ -7,15 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E28AA81726B200D5001A8861 /* OSCKit in Frameworks */ = {isa = PBXBuildFile; productRef = E28AA81626B200D5001A8861 /* OSCKit */; };
 		E296C83B25C652C700A8714A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E296C83A25C652C700A8714A /* AppDelegate.swift */; };
 		E296C83D25C652C700A8714A /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E296C83C25C652C700A8714A /* ViewController.swift */; };
 		E296C84225C652C800A8714A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E296C84025C652C800A8714A /* Main.storyboard */; };
-		E296C87125C6532000A8714A /* OSCKit in Frameworks */ = {isa = PBXBuildFile; productRef = E296C87025C6532000A8714A /* OSCKit */; };
 		E2A9B8A52623C72D0011E68E /* UDPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A9B8A42623C72C0011E68E /* UDPClient.swift */; };
 		E2A9B8A82623C7850011E68E /* UDPServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A9B8A72623C7850011E68E /* UDPServer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E28AA81326B200BA001A8861 /* OSCKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = OSCKit; path = ../..; sourceTree = "<group>"; };
 		E296C83725C652C700A8714A /* OSCKitExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSCKitExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E296C83A25C652C700A8714A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E296C83C25C652C700A8714A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -31,7 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E296C87125C6532000A8714A /* OSCKit in Frameworks */,
+				E28AA81726B200D5001A8861 /* OSCKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +42,7 @@
 		E296C82E25C652C700A8714A = {
 			isa = PBXGroup;
 			children = (
+				E28AA81326B200BA001A8861 /* OSCKit */,
 				E296C83925C652C700A8714A /* OSCKitExample */,
 				E296C83825C652C700A8714A /* Products */,
 			);
@@ -93,7 +95,7 @@
 			);
 			name = OSCKitExample;
 			packageProductDependencies = (
-				E296C87025C6532000A8714A /* OSCKit */,
+				E28AA81626B200D5001A8861 /* OSCKit */,
 			);
 			productName = OSCKitExample;
 			productReference = E296C83725C652C700A8714A /* OSCKitExample.app */;
@@ -123,7 +125,6 @@
 			);
 			mainGroup = E296C82E25C652C700A8714A;
 			packageReferences = (
-				E296C86F25C6532000A8714A /* XCRemoteSwiftPackageReference "OSCKit" */,
 			);
 			productRefGroup = E296C83825C652C700A8714A /* Products */;
 			projectDirPath = "";
@@ -353,21 +354,9 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		E296C86F25C6532000A8714A /* XCRemoteSwiftPackageReference "OSCKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/orchetect/OSCKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.2.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
 /* Begin XCSwiftPackageProductDependency section */
-		E296C87025C6532000A8714A /* OSCKit */ = {
+		E28AA81626B200D5001A8861 /* OSCKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E296C86F25C6532000A8714A /* XCRemoteSwiftPackageReference "OSCKit" */;
 			productName = OSCKit;
 		};
 /* End XCSwiftPackageProductDependency section */

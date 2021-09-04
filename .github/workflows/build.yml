@@ -62,7 +62,14 @@ jobs:
       run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "OSCKit-CI" -destination "platform=tvOS Simulator,name=Apple TV"
     - name: Apple TV - Unit Tests
       run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "OSCKit-CI" -destination "platform=tvOS Simulator,name=Apple TV"
-
+  
+  Examples:
+    name: Examples
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@main
+    - name: OSCKitExample - Build
+      run: xcodebuild build -project "Examples/OSCKitExample/OSCKitExample.xcodeproj" -scheme "OSCKitExample"
 
 # xcodebuild test reference:
 # https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/testing_with_xcode/chapters/08-automation.html
