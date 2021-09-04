@@ -20,7 +20,7 @@ class ViewController: NSViewController {
         
         oscClient = UDPClient(
             host: "localhost",
-            port: 8008,
+            port: 8000,
             queue: DispatchQueue.global(qos: .userInteractive)
         )
         
