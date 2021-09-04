@@ -45,7 +45,7 @@ do {
   // handle other errors
 }
 
-func handleOSCPayload(_ oscPayload: OSCBundlePayload) {
+func handleOSCPayload(_ oscPayload: OSCPayload) {
   switch oscPayload {
   case .bundle(let bundle):
     // recursively handle nested bundles and messages
