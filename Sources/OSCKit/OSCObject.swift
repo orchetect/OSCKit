@@ -64,7 +64,7 @@ public extension Data {
 	/// Parses raw data and returns valid OSC objects if data is successfully parsed as OSC.
 	///
 	/// Returns `nil` if neither.
-	@inlinable func parseOSC() throws -> OSCBundlePayload? {
+	@inlinable func parseOSC() throws -> OSCPayload? {
 		
 		if appearsToBeOSCBundle {
 			return .bundle(try OSCBundle(from: self))
@@ -78,66 +78,3 @@ public extension Data {
 	
 }
 
-/// Enum describing an OSC message type.
-public enum OSCBundlePayload {
-	
-	case message(OSCMessage)
-	case bundle(OSCBundle)
-	
-	/// Returns the OSC object's raw data bytes
-	public var rawData: Data {
-		switch self {
-		case .message(let element):
-			return element.rawData
-			
-		case .bundle(let element):
-			return element.rawData
-			
-		}
-	}
-	
-	/// Syntactic sugar convenience
-	public init(_ message: OSCMessage) {
-		self = .message(message)
-	}
-	
-	/// Syntactic sugar convenience
-	public init(_ bundle: OSCBundle) {
-		self = .bundle(bundle)
-	}
-	
-	/// Syntactic sugar convenience
-	public static func message(address: ASCIIString, values: [OSCMessageValue] = []) -> Self {
-		
-		.message(OSCMessage(address: address,
-							values: values))
-		
-	}
-	
-	/// Syntactic sugar convenience
-	public static func bundle(elements: [OSCBundlePayload], timeTag: Int64 = 1) -> Self {
-		
-		.bundle(OSCBundle(elements: elements,
-						  timeTag: timeTag))
-		
-	}
-	
-}
-
-
-// MARK: - CustomStringConvertible
-
-extension OSCBundlePayload: CustomStringConvertible {
-	
-	public var description: String {
-		switch self {
-		case .message(let element):
-			return element.description
-			
-		case .bundle(let element):
-			return element.description
-			
-		}
-	}
-	
-}

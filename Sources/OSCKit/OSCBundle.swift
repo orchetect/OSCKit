@@ -28,12 +28,12 @@ public struct OSCBundle: OSCObject {
 	public typealias Element = OSCObject
 	
 	/// Elements contained within the bundle. These can be `OSCBundle` or `OSCMessage` objects.
-	public let elements: [OSCBundlePayload]
+	public let elements: [OSCPayload]
 	
 	
 	// MARK: - init
 	
-	@inlinable public init(elements: [OSCBundlePayload],
+	@inlinable public init(elements: [OSCPayload],
 						   timeTag: Int64 = 1) {
 		
 		self.timeTag = timeTag
@@ -66,7 +66,7 @@ public struct OSCBundle: OSCObject {
 		}
 		
 		// set up object array
-		var extractedElements = [OSCBundlePayload]()
+		var extractedElements = [OSCPayload]()
 		
 		ppos += 8
 		
@@ -131,7 +131,7 @@ public struct OSCBundle: OSCObject {
 	
 	/// Internal: generate raw OSC bytes from struct's properties
 	@usableFromInline
-	internal static func generateRawData(from elements: [OSCBundlePayload],
+	internal static func generateRawData(from elements: [OSCPayload],
 										 timeTag: Int64) -> Data {
 		
 		// returns a raw OSC packet constructed out of the struct's properties
