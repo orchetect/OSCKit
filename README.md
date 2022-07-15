@@ -1,10 +1,12 @@
+![OSCKit](Images/osckit-banner.png)
+
 # OSCKit
 
 [![CI Build Status](https://github.com/orchetect/OSCKit/actions/workflows/build.yml/badge.svg)](https://github.com/orchetect/OSCKit/actions/workflows/build.yml) [![Platforms - macOS | iOS | tvOS | watchOS](https://img.shields.io/badge/platforms-macOS%2010.12%2B%20|%20iOS%2010%2B%20|%20tvOS%2010%2B%20|%20watchOS%203%2B%20-lightgrey.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/OSCKit/blob/main/LICENSE)
 
-Open Sound Control (OSC) library written in Swift.
+Open Sound Control library written in Swift.
 
-**Note:** The library does not contain a networking layer so you can modularly integrate OSCKit into whatever network module you choose. The repo contains an example project demonstrating using it with Apple's `Network.framework`.
+**Note:** The library does not contain a networking layer. This is by design so that OSCKit can be integrated into your network module of choice. This repo contains an example project demonstrating using it with Apple's `Network.framework`.
 
 Unit tests implemented.
 
