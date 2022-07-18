@@ -35,7 +35,7 @@ public enum OSCPayload {
     }
     
     /// Syntactic sugar convenience
-    public static func message(address: ASCIIString,
+    public static func message(address: OSCAddress,
                                values: [OSCMessageValue] = []) -> Self {
         
         let msg = OSCMessage(address: address,

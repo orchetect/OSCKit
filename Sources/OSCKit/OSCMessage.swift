@@ -19,7 +19,7 @@ public struct OSCMessage: OSCObject {
     // MARK: - Properties
     
     /// OSC message address.
-    public let address: ASCIIString
+    public let address: OSCAddress
     
     /// OSC values contained within the message.
     public let values: [OSCMessageValue]
@@ -27,7 +27,7 @@ public struct OSCMessage: OSCObject {
     
     // MARK: - init
     
-    @inlinable public init(address: ASCIIString,
+    @inlinable public init(address: OSCAddress,
                            values: [OSCMessageValue] = []) {
         
         self.address = address
@@ -204,7 +204,7 @@ public struct OSCMessage: OSCObject {
         }
         
         // update public properties
-        address = extractedAddress
+        address = .init(extractedAddress)
         values = extractedValues
         
     }
@@ -216,7 +216,7 @@ public struct OSCMessage: OSCObject {
     
     /// Internal: generate raw OSC bytes from struct's properties
     @usableFromInline
-    internal static func generateRawData(address: ASCIIString,
+    internal static func generateRawData(address: OSCAddress,
                                          values: [OSCMessageValue]) -> Data {
         
         // returns a raw OSC packet constructed out of the struct's properties
@@ -234,7 +234,7 @@ public struct OSCMessage: OSCObject {
         buildValues.reserveCapacity(1000)
         
         // add OSC address
-        let addressData = address.rawData
+        let addressData = address.address.rawData
         data.append(addressData.fourNullBytePadded)
         
         // iterate data types in values array to prepare OSC-type string
