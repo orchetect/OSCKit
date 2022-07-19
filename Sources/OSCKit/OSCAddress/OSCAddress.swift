@@ -38,45 +38,9 @@ import SwiftASCII
 ///
 public struct OSCAddress: Hashable {
     
+    /// OSC Address storage.
     internal let address: ASCIIString
     
-    // MARK: - Init
-    
-    /// Create an OSC address from a raw `String` address.
-    /// The string will be converted to an ASCII string, lossily converting or removing invalid non-ASCII characters if necessary.
-    @_disfavoredOverload
-    public init(_ address: String) {
-        
-        self.address = address.asciiStringLossy
-        
-    }
-    
-    /// Create an OSC address from a raw `ASCIIString` address.
-    public init(_ address: ASCIIString) {
-        
-        self.address = address
-        
-    }
-    
-    /// Create an OSC address from individual path components.
-    /// The path component strings will be converted to ASCII strings, lossily converting or removing invalid non-ASCII characters if necessary.
-    /// Empty path components is equivalent to the address of "/".
-    public init(pathComponents: [String]) {
-        
-        self.address = ("/" + pathComponents.joined(separator: "/")).asciiStringLossy
-        
-    }
-    
-    /// Create an OSC address from individual path components.
-    /// The path component strings will be converted to ASCII strings, lossily converting or removing invalid non-ASCII characters if necessary.
-    /// Empty path components is equivalent to the address of "/".
-    @_disfavoredOverload
-    public init(pathComponents: [ASCIIString]) {
-        
-        self.address = ASCIICharacter("/") + pathComponents.joined(separator: "/")
-        
-    }
-     
 }
 
 extension OSCAddress: ExpressibleByStringLiteral {
@@ -96,55 +60,6 @@ extension OSCAddress: CustomStringConvertible {
     public var description: String {
         
         address.stringValue
-        
-    }
-    
-}
-
-extension OSCAddress {
-    
-    // MARK: - Address Components
-    
-    public var asciiStringValue: ASCIIString {
-        
-        address
-        
-    }
-    
-    public var stringValue: String {
-        
-        address.stringValue
-        
-    }
-    
-    /// Returns the address as individual path components (strings between `/` separators).
-    public var pathComponents: [Substring]? {
-        
-        let addressString = address.stringValue
-        
-        guard addressString.prefix(1) == "/",
-              addressString.count > 1,
-              addressString.suffix(1) != "/"
-        else { return nil }
-        
-        let addressStringAfterInitialSlash = addressString.suffix(
-            from: addressString.index(after: addressString.startIndex)
-        )
-        
-        return addressStringAfterInitialSlash
-            .split(separator: "/",
-                   omittingEmptySubsequences: false)
-        
-    }
-    
-    // MARK: - Pattern
-    
-    /// Returns the OSC address converted to a tokenized pattern form.
-    internal var pattern: [Pattern] {
-        
-        pathComponents?
-            .map { Pattern(string: String($0)) ?? .init() }
-        ?? []
         
     }
     
