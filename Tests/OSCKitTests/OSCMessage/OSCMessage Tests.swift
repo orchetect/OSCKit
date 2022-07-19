@@ -3,7 +3,7 @@
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
-#if !os(watchOS)
+#if shouldTestCurrentPlatform
 
 import XCTest
 import OSCKit
@@ -18,13 +18,48 @@ final class OSCMessageTests: XCTestCase {
     
     // MARK: - OSCMessage: Constructors
     
+    func testOSCMessageInitAddress() {
+        
+        XCTAssertEqual(
+            OSCMessage(address: "/container1/container2").address.stringValue,
+            "/container1/container2"
+        )
+        
+        XCTAssertEqual(
+            OSCMessage(address: String("/container1/container2")).address.stringValue,
+            "/container1/container2"
+        )
+        
+        XCTAssertEqual(
+            OSCMessage(address: ASCIIString("/container1/container2")).address.stringValue,
+            "/container1/container2"
+        )
+        
+        XCTAssertEqual(
+            OSCMessage(address: OSCAddress("/container1/container2")).address.stringValue,
+            "/container1/container2"
+        )
+        
+        XCTAssertEqual(
+            OSCMessage(address: ["container1", "container2"]).address.stringValue,
+            "/container1/container2"
+        )
+        
+        XCTAssertEqual(
+            OSCMessage(address: [ASCIIString("container1"), ASCIIString("container2")]).address.stringValue,
+            "/container1/container2"
+        )
+        
+        XCTAssertEqual(
+            OSCMessage(address: []).address.stringValue,
+            "/"
+        )
+        
+    }
+    
     func testOSCMessageConstructors() {
         
         // this does not necessarily prove that encoding or decoding actually matches OSC spec, it simply ensures that a message that OSCMessage generates can also be decoded
-        
-        // empty
-        
-        _ = OSCMessage(address: "/")
         
         // encode
         

@@ -1,41 +1,32 @@
 //
-//  OSCPayload.swift
+//  OSCPayload init.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
 import Foundation
-import SwiftASCII
 
-/// Enum describing an OSC message type.
-public enum OSCPayload {
-    
-    case message(OSCMessage)
-    case bundle(OSCBundle)
-    
-    /// Returns the OSC object's raw data bytes
-    public var rawData: Data {
-        switch self {
-        case .message(let element):
-            return element.rawData
-            
-        case .bundle(let element):
-            return element.rawData
-            
-        }
-    }
+extension OSCPayload {
     
     /// Syntactic sugar convenience
     public init(_ message: OSCMessage) {
+        
         self = .message(message)
+        
     }
     
     /// Syntactic sugar convenience
     public init(_ bundle: OSCBundle) {
+        
         self = .bundle(bundle)
+        
     }
     
+}
+
+extension OSCPayload {
+    
     /// Syntactic sugar convenience
-    public static func message(address: ASCIIString,
+    public static func message(address: OSCAddress,
                                values: [OSCMessageValue] = []) -> Self {
         
         let msg = OSCMessage(address: address,
@@ -56,20 +47,3 @@ public enum OSCPayload {
     
 }
 
-
-// MARK: - CustomStringConvertible
-
-extension OSCPayload: CustomStringConvertible {
-    
-    public var description: String {
-        switch self {
-        case .message(let element):
-            return element.description
-            
-        case .bundle(let element):
-            return element.description
-            
-        }
-    }
-    
-}

@@ -9,33 +9,8 @@ import SwiftASCII
 
 // MARK: - OSCMessage
 
-/// OSC Message object.
-///
-/// - `address`: OSC address string (ASCII only)
-/// - `values`: `[OSCMessageValue]`
-/// - `rawData`: Set or get to parse or encode the contents.
-public struct OSCMessage: OSCObject {
-    
-    // MARK: - Properties
-    
-    /// OSC message address.
-    public let address: ASCIIString
-    
-    /// OSC values contained within the message.
-    public let values: [OSCMessageValue]
-    
-    
-    // MARK: - init
-    
-    @inlinable public init(address: ASCIIString,
-                           values: [OSCMessageValue] = []) {
-        
-        self.address = address
-        self.values = values
-        self.rawData = Self.generateRawData(address: address,
-                                            values: values)
-        
-    }
+/// OSC Message.
+extension OSCMessage {
     
     /// Initialize by parsing raw OSC message data bytes.
     public init(from rawData: Data) throws {
@@ -204,19 +179,14 @@ public struct OSCMessage: OSCObject {
         }
         
         // update public properties
-        address = extractedAddress
+        address = .init(extractedAddress)
         values = extractedValues
         
     }
     
-    
-    // MARK: - rawData
-    
-    public let rawData: Data
-    
-    /// Internal: generate raw OSC bytes from struct's properties
+    /// Internal: generate raw OSC bytes from struct's properties.
     @usableFromInline
-    internal static func generateRawData(address: ASCIIString,
+    internal static func generateRawData(address: OSCAddress,
                                          values: [OSCMessageValue]) -> Data {
         
         // returns a raw OSC packet constructed out of the struct's properties
@@ -234,7 +204,7 @@ public struct OSCMessage: OSCObject {
         buildValues.reserveCapacity(1000)
         
         // add OSC address
-        let addressData = address.rawData
+        let addressData = address.address.rawData
         data.append(addressData.fourNullBytePadded)
         
         // iterate data types in values array to prepare OSC-type string
@@ -310,61 +280,6 @@ public struct OSCMessage: OSCObject {
         
         // return data
         return data
-        
-    }
-    
-}
-
-
-// MARK: - Equatable, Hashable
-
-extension OSCMessage: Equatable, Hashable {
-    
-    // implementation is automatically synthesized by Swift
-    
-}
-
-
-// MARK: - CustomStringConvertible
-
-extension OSCMessage: CustomStringConvertible {
-    
-    public var description: String {
-        values.count < 1
-        ? "OSCMessage(address: \"\(address)\")"
-        : "OSCMessage(address: \"\(address)\", values: [\(values.mapDebugString(withLabel: true))])"
-    }
-    
-    /// Same as `description` but values are separated with new-line characters and indented.
-    public var descriptionPretty: String {
-        
-        values.count < 1
-        ? "OSCMessage(address: \"\(address)\")"
-        : "OSCMessage(address: \"\(address)\") Values:\n  \(values.mapDebugString(withLabel: true, separator: "\n  "))"
-            .trimmed
-        
-    }
-    
-}
-
-
-// MARK: - Header
-
-extension OSCMessage {
-    
-    /// Constant caching an OSCMessage header
-    public static let header: Data = "/".toData(using: .nonLossyASCII)!
-    
-}
-
-extension Data {
-    
-    /// A fast test if Data() appears tor be an OSC message
-    /// (Note: Does NOT do extensive checks to ensure message isn't malformed)
-    @inlinable public var appearsToBeOSCMessage: Bool {
-        
-        // it's possible an OSC address won't start with "/", but it should!
-        self.starts(with: OSCMessage.header)
         
     }
     

@@ -11,8 +11,9 @@ import SwiftASCII
 internal extension Data {
     
     /// Internal helper function.
-    @inlinable func extractInt32() -> (int32Value: Int32,
-                                       byteLength: Int)? {
+    @inlinable
+    func extractInt32() -> (int32Value: Int32,
+                            byteLength: Int)? {
         
         if self.count < 4 { return nil }
         
@@ -26,8 +27,9 @@ internal extension Data {
     }
     
     /// Internal helper function.
-    @inlinable func extractInt64() -> (int64Value: Int64,
-                                       byteLength: Int)? {
+    @inlinable
+    func extractInt64() -> (int64Value: Int64,
+                            byteLength: Int)? {
         
         if self.count < 8 { return nil }
         
@@ -42,8 +44,9 @@ internal extension Data {
     
     /// Internal helper function.
     /// aka Float
-    @inlinable func extractFloat32() -> (float32Value: Float32,
-                                         byteLength: Int)? {
+    @inlinable
+    func extractFloat32() -> (float32Value: Float32,
+                              byteLength: Int)? {
         
         if self.count < 4 { return nil }
         
@@ -58,8 +61,9 @@ internal extension Data {
     
     /// Internal helper function.
     /// aka Float64
-    @inlinable func extractDouble() -> (doubleValue: Double,
-                                        byteLength: Int)? {
+    @inlinable
+    func extractDouble() -> (doubleValue: Double,
+                             byteLength: Int)? {
         
         if self.count < 8 { return nil }
         
@@ -73,8 +77,9 @@ internal extension Data {
     }
     
     /// Internal helper function.
-    @inlinable func extractNull4ByteTerminatedASCIIString() -> (asciiStringValue: ASCIIString,
-                                                                byteLength: Int)? {
+    @inlinable
+    func extractNull4ByteTerminatedASCIIString() -> (asciiStringValue: ASCIIString,
+                                                     byteLength: Int)? {
         
         // extractNull4ByteTerminatedData takes care of data size validation so we don't need to do it here
         guard let chunk = self.extractNull4ByteTerminatedData()
@@ -88,8 +93,9 @@ internal extension Data {
     }
     
     /// Internal helper function.
-    @inlinable func extractNull4ByteTerminatedData() -> (data: Data,
-                                                         byteLength: Int)? {
+    @inlinable
+    func extractNull4ByteTerminatedData() -> (data: Data,
+                                              byteLength: Int)? {
         
         // ensure minimum of 4 bytes to work with
         if self.count < 4 { return nil }
@@ -113,8 +119,9 @@ internal extension Data {
     }
     
     /// Internal helper function.
-    @inlinable func extractBlob() -> (blobValue: Data,
-                                      byteLength: Int)? {
+    @inlinable
+    func extractBlob() -> (blobValue: Data,
+                           byteLength: Int)? {
         
         // check for int32 length chunk
         guard let pull = self.extractInt32()
@@ -139,7 +146,8 @@ internal extension Data {
     }
     
     /// Internal helper function.
-    @inlinable func extract(byteLength: Int) -> Data? {
+    @inlinable
+    func extract(byteLength: Int) -> Data? {
         
         if byteLength < 0 || byteLength > self.count { return nil }
         
@@ -153,7 +161,8 @@ internal extension Data {
     
     /// Internal helper function.
     /// Conforms a data bock representing a string to 4-byte null-padded OSC-string formatting
-    @inlinable var fourNullBytePadded: Data {
+    @inlinable
+    var fourNullBytePadded: Data {
         
         var retval = self
         let appendval = Data([UInt8](repeating: 00,
