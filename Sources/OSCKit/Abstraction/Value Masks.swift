@@ -1,166 +1,23 @@
 //
-//  Abstraction/Value Masks.swift
+//  Value Masks.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
 import Foundation
 import SwiftASCII
 
-// Abstraction used to add optional and meta types of existing concrete types
-
-// MARK: - OSCMessageValueType
-
-/// Value types that can be used in an `OSCMessage` including optional variants and meta types useful for masking sequences of values.
-public enum OSCMessageValueType: Int, CaseIterable {
-    
-    // concrete types
-    
-    // -- core types
-    case int32
-    case float32
-    case string
-    case blob
-    
-    // -- extended types
-    case int64
-    case timeTag
-    case double
-    case stringAlt
-    case character
-    case midi
-    case bool
-    case `null`
-    
-    // "meta" types
-    
-    /// Not a specific type like the others. Used when defining a `OSCMessageValueType` mask to accept either int32 or float32 for an expected value placeholder.
-    case number // accepts any OSC number type
-    
-    // optional versions of concrete types
-    
-    // -- core types
-    case int32Optional // signifies a value that is optional or has a default value
-    case float32Optional
-    case stringOptional
-    case blobOptional
-    
-    // -- extended types
-    case int64Optional
-    case timeTagOptional
-    case doubleOptional
-    case stringAltOptional
-    case characterOptional
-    case midiOptional
-    case boolOptional
-    case nullOptional
-    
-    // -- meta types
-    /// Not a specific type like the others. Used when defining a `OSCMessageValueType` mask to accept either int32 or float32 for an expected value placeholder.
-    case numberOptional // accepts any OSC number type
-    
-}
-
-
-// MARK: - Base Type
-
-public extension OSCMessageValueType {
-    
-    /// Returns base type `OSCMessageValueType` (by removing 'optional' component).
-    @inlinable
-    var baseType: OSCMessageValueType {
-        
-        switch self {
-            // core types
-        case .int32,        .int32Optional:     return .int32
-        case .float32,      .float32Optional:   return .float32
-        case .string,       .stringOptional:    return .string
-        case .blob,         .blobOptional:      return .blob
-            
-            // extended types
-        case .int64,        .int64Optional:     return .int64
-        case .timeTag,      .timeTagOptional:   return .timeTag
-        case .double,       .doubleOptional:    return .double
-        case .stringAlt,    .stringAltOptional: return .stringAlt
-        case .character,    .characterOptional: return .character
-        case .midi,         .midiOptional:      return .midi
-        case .bool,         .boolOptional:      return .bool
-        case .null,         .nullOptional:      return .null
-            
-            // meta types
-        case .number,       .numberOptional:    return .number
-        }
-        
-    }
-    
-    /// Tests if a `OSCMessageValueType` is optional (has default) or not.
-    @inlinable
-    var isOptional: Bool {
-        
-        switch self {
-            // concrete types
-            // -- core types
-        case .int32,
-                .float32,
-                .string,
-                .blob:
-            return false
-            
-            // -- extended types
-        case .int64,
-                .timeTag,
-                .double,
-                .stringAlt,
-                .character,
-                .midi,
-                .bool,
-                .null:
-            return false
-            
-            // meta types
-        case .number:
-            return false
-            
-            // optional versions of concrete types
-            // -- core types
-        case .int32Optional,
-                .float32Optional,
-                .stringOptional,
-                .blobOptional:
-            return true
-            
-            // -- extended types
-        case .int64Optional,
-                .timeTagOptional,
-                .doubleOptional,
-                .stringAltOptional,
-                .characterOptional,
-                .midiOptional,
-                .boolOptional,
-                .nullOptional:
-            return true
-            
-            // -- meta types
-        case .numberOptional:
-            return true
-            
-        }
-        
-    }
-    
-}
-
 public extension OSCMessageValue {
     
-    /// Tests if the type of a `OSCMessageValue` matches the supplied `OSCMessageValueType` (optional/default or not) and returns base type.
+    /// Tests if the type of a `OSCMessageValue` matches the supplied `OSCMessage.MaskType` (optional/default or not) and returns base type.
     /// Returns `nil` if does not match.
     ///
-    /// - parameter type: `OSCMessageValueType` to compare to.
+    /// - parameter type: `OSCMessage.MaskType` to compare to.
     /// - parameter canMatchMetaTypes: Match a meta type (if a meta type is passed in `type`)
     ///     If `true`, only exact matches will return `true` (`.int32` matches only `.int32` and not `.number` "meta" type; `.number` only matches `.number`).
     ///     If `false`, "meta" types matches will return true (ie: `.int32` or `.float32` will return true if `type` = `.number`).
     ///     (default = `false`)
     @inlinable
-    func baseTypeMatches(type: OSCMessageValueType,
+    func baseTypeMatches(type: OSCMessage.MaskType,
                          canMatchMetaTypes: Bool = false) -> Bool {
         
         // if types explicitly match, return true
@@ -185,11 +42,11 @@ public extension OSCMessageValue {
             //     .number, .number     = return true
             
             // (FYI, `self` will never be a meta type itself, only a concrete type)
-            if type.rawValue == OSCMessageValueType.number.rawValue &&
-                (self.baseType.rawValue == OSCMessageValueType.int32.rawValue ||
-                 self.baseType.rawValue == OSCMessageValueType.float32.rawValue ||
-                 self.baseType.rawValue == OSCMessageValueType.int64.rawValue ||
-                 self.baseType.rawValue == OSCMessageValueType.double.rawValue) {
+            if type.rawValue == OSCMessage.MaskType.number.rawValue &&
+                (self.baseType.rawValue == OSCMessage.MaskType.int32.rawValue ||
+                 self.baseType.rawValue == OSCMessage.MaskType.float32.rawValue ||
+                 self.baseType.rawValue == OSCMessage.MaskType.int64.rawValue ||
+                 self.baseType.rawValue == OSCMessage.MaskType.double.rawValue) {
                 
                 return true
             }
@@ -200,9 +57,9 @@ public extension OSCMessageValue {
         
     }
     
-    /// Returns base type of `OSCMessageValue` as an `OSCMessageValueType` (by removing 'optional' component).
+    /// Returns base type of `OSCMessageValue` as an `OSCMessage.MaskType` (by removing 'optional' component).
     @inlinable
-    var baseType: OSCMessageValueType {
+    var baseType: OSCMessage.MaskType {
         
         switch self {
             // core types
@@ -226,23 +83,6 @@ public extension OSCMessageValue {
     
 }
 
-
-// MARK: - OSCMessageValueProtocol
-
-public protocol OSCMessageValueProtocol { }
-
-extension Int32                       : OSCMessageValueProtocol { }
-extension Float32                     : OSCMessageValueProtocol { }
-extension ASCIIString                 : OSCMessageValueProtocol { }
-extension Data                        : OSCMessageValueProtocol { }
-extension Int64                       : OSCMessageValueProtocol { }
-extension Double                      : OSCMessageValueProtocol { }
-extension ASCIICharacter              : OSCMessageValueProtocol { }
-extension OSCMessageValue.MIDIMessage : OSCMessageValueProtocol { }
-extension Bool                        : OSCMessageValueProtocol { }
-extension NSNull                      : OSCMessageValueProtocol { }
-
-
 // MARK: - Value Mask
 
 public extension Array where Element == OSCMessageValue {
@@ -253,9 +93,11 @@ public extension Array where Element == OSCMessageValue {
     /// Some meta type(s) are available:
     ///   - `number` & `numberOptional`: Accepts int32 or float32 as a value.
     ///
-    /// - parameter expectedMask: `OSCMessageValueType` array representing a positive mask match
+    /// - parameter expectedMask: `OSCMessage.MaskType` array representing a positive mask match.
     @inlinable
-    func matchesValueMask(expectedMask: [OSCMessageValueType]) -> Bool {
+    func matchesValueMask(
+        expectedMask: [OSCMessage.MaskType]
+    ) -> Bool {
         
         // should not contain more values than mask
         if self.count > expectedMask.count { return false }
@@ -298,7 +140,7 @@ public extension Array where Element == OSCMessageValue {
     /// Returns `[OSCMessageValueProtocol]` of non-enumeration-encapsulated values if an array of `OSCMessageValue` values matches an expected value type mask (order and type of values).
     /// To make any of the mask values optional, pass them as `.optional` in `expectedMask`.
     ///
-    /// - parameter expectedMask: `OSCMessageValueType` array representing a positive mask match.
+    /// - parameter expectedMask: `OSCMessage.MaskType` array representing a positive mask match.
     ///
     /// - Returns:
     ///   `.int32()` as `Int`,
@@ -307,7 +149,9 @@ public extension Array where Element == OSCMessageValue {
     ///   `.blob()` as `Data`.
     ///   Returns `nil` if values do not match the mask.
     @inlinable
-    func valuesFromValueMask(expectedMask: [OSCMessageValueType]) -> [OSCMessageValueProtocol?]? {
+    func valuesFromValueMask(
+        expectedMask: [OSCMessage.MaskType]
+    ) -> [OSCMessageValueProtocol?]? {
         
         // should not contain more values than mask
         if self.count > expectedMask.count { return nil }
