@@ -1,5 +1,5 @@
 //
-//  OSCAddress Pattern.swift
+//  Pattern.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
@@ -41,7 +41,7 @@ extension OSCAddress {
         
         var tokens: [Token] = []
         
-        public init() {
+        init() {
             
         }
         
