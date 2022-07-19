@@ -12,6 +12,12 @@ final class OSCKitTests: XCTestCase {
     
     // empty base test file
     
+    func testEmpty() {
+        
+        XCTAssertTrue(true)
+        
+    }
+    
 }
 
 #endif

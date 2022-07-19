@@ -8,7 +8,7 @@
 import XCTest
 import OSCKit
 
-final class OSCObjectParseTests: XCTestCase {
+final class OSCObject_Parse_Tests: XCTestCase {
     
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }

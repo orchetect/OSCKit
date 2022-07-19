@@ -9,7 +9,7 @@ import XCTest
 @testable import OSCKit
 import SwiftASCII
 
-final class DataExtensionsTests: XCTestCase {
+final class DataExtensions_Tests: XCTestCase {
     
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
@@ -17,7 +17,7 @@ final class DataExtensionsTests: XCTestCase {
     
     // MARK: - Data methods
     
-    func test_extractInt32() {
+    func testExtractInt32() {
         
         // value
         
@@ -32,7 +32,7 @@ final class DataExtensionsTests: XCTestCase {
         
     }
     
-    func test_extractInt64() {
+    func testExtractInt64() {
         
         // value
         
@@ -47,7 +47,7 @@ final class DataExtensionsTests: XCTestCase {
         
     }
     
-    func test_extractFloat32() {
+    func testExtractFloat32() {
         
         // value
         
@@ -62,7 +62,7 @@ final class DataExtensionsTests: XCTestCase {
         
     }
     
-    func test_extractDouble() {
+    func testExtractDouble() {
         
         // value
         
@@ -77,7 +77,7 @@ final class DataExtensionsTests: XCTestCase {
         
     }
     
-    func test_extractNull4ByteTerminatedString() {
+    func testExtractNull4ByteTerminatedString() {
         
         // empty string
         
@@ -109,7 +109,7 @@ final class DataExtensionsTests: XCTestCase {
         
     }
     
-    func test_extractNull4ByteTerminatedData() {
+    func testExtractNull4ByteTerminatedData() {
         
         // empty string
         
@@ -140,7 +140,7 @@ final class DataExtensionsTests: XCTestCase {
         XCTAssertNil(data6.extractNull4ByteTerminatedData())
     }
     
-    func test_extractBlob1() {
+    func testExtractBlob1() {
         
         // success
         
@@ -161,7 +161,7 @@ final class DataExtensionsTests: XCTestCase {
         
     }
     
-    func test_extractBlob2() {
+    func testExtractBlob2() {
         
         // success
         
@@ -183,7 +183,7 @@ final class DataExtensionsTests: XCTestCase {
         
     }
     
-    func test_extractBlob3() {
+    func testExtractBlob3() {
         
         // malformed
         
@@ -200,7 +200,7 @@ final class DataExtensionsTests: XCTestCase {
         
     }
     
-    func test_extractBlob4() {
+    func testExtractBlob4() {
         
         // malformed
         
@@ -217,7 +217,7 @@ final class DataExtensionsTests: XCTestCase {
         
     }
     
-    func test_extractBlob5() {
+    func testExtractBlob5() {
         
         // malformed
         
@@ -234,7 +234,7 @@ final class DataExtensionsTests: XCTestCase {
         
     }
     
-    func test_extractBytesCount() {
+    func testExtractBytesCount() {
         
         var data = Data()
         

@@ -1,5 +1,5 @@
 //
-//  Pattern parse Tests.swift
+//  Pattern Parse Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
@@ -8,7 +8,7 @@
 import XCTest
 @testable import OSCKit
 
-final class OSCAddress_PatternParse_Tests: XCTestCase {
+final class OSCAddress_Pattern_Parse_Tests: XCTestCase {
     
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }

@@ -10,7 +10,7 @@ import OSCKit
 import OTCore
 import SwiftASCII
 
-final class ValueMasksTests: XCTestCase {
+final class ValueMasks_Tests: XCTestCase {
     
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
@@ -108,7 +108,7 @@ final class ValueMasksTests: XCTestCase {
     
     // MARK: - OSCMessageValue.baseTypeMatches
     
-    // MARK: -- Core types
+    // MARK: - Core types
     
     func testBaseTypeMatches_int32() {
         
@@ -213,7 +213,7 @@ final class ValueMasksTests: XCTestCase {
     }
     
     
-    // MARK: -- Extended types
+    // MARK: - Extended types
     
     func testBaseTypeMatches_int64() {
         
@@ -517,7 +517,7 @@ final class ValueMasksTests: XCTestCase {
     
     // MARK: - [].valuesFromValueMask Types
     
-    // MARK: -- Core types
+    // MARK: - Core types
     
     func testValuesFromValueMask_int32() {
         
@@ -575,7 +575,7 @@ final class ValueMasksTests: XCTestCase {
         
     }
     
-    // MARK: -- Extended types
+    // MARK: - Extended types
     
     func testValuesFromValueMask_int64() {
         

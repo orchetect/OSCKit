@@ -8,7 +8,7 @@
 import XCTest
 import OSCKit
 
-final class OSCAddressTests: XCTestCase {
+final class OSCAddress_Tests: XCTestCase {
     
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
