@@ -18,13 +18,43 @@ final class OSCMessageTests: XCTestCase {
     
     // MARK: - OSCMessage: Constructors
     
+    func testOSCMessageInitAddress() {
+        
+        XCTAssertEqual(
+            OSCMessage(address: "/path1/path2").address.stringValue,
+            "/path1/path2"
+        )
+        
+        XCTAssertEqual(
+            OSCMessage(address: String("/path1/path2")).address.stringValue,
+            "/path1/path2"
+        )
+        
+        XCTAssertEqual(
+            OSCMessage(address: ASCIIString("/path1/path2")).address.stringValue,
+            "/path1/path2"
+        )
+        
+        XCTAssertEqual(
+            OSCMessage(address: OSCAddress("/path1/path2")).address.stringValue,
+            "/path1/path2"
+        )
+        
+        XCTAssertEqual(
+            OSCMessage(address: ["path1", "path2"]).address.stringValue,
+            "/path1/path2"
+        )
+        
+        XCTAssertEqual(
+            OSCMessage(address: [ASCIIString("path1"), ASCIIString("path2")]).address.stringValue,
+            "/path1/path2"
+        )
+        
+    }
+    
     func testOSCMessageConstructors() {
         
         // this does not necessarily prove that encoding or decoding actually matches OSC spec, it simply ensures that a message that OSCMessage generates can also be decoded
-        
-        // empty
-        
-        _ = OSCMessage(address: "/")
         
         // encode
         
