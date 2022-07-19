@@ -66,7 +66,8 @@ public enum OSCMessageValueType: Int, CaseIterable {
 public extension OSCMessageValueType {
     
     /// Returns base type `OSCMessageValueType` (by removing 'optional' component).
-    @inlinable var baseType: OSCMessageValueType {
+    @inlinable
+    var baseType: OSCMessageValueType {
         
         switch self {
             // core types
@@ -92,7 +93,8 @@ public extension OSCMessageValueType {
     }
     
     /// Tests if a `OSCMessageValueType` is optional (has default) or not.
-    @inlinable var isOptional: Bool {
+    @inlinable
+    var isOptional: Bool {
         
         switch self {
             // concrete types
@@ -157,8 +159,9 @@ public extension OSCMessageValue {
     ///     If `true`, only exact matches will return `true` (`.int32` matches only `.int32` and not `.number` "meta" type; `.number` only matches `.number`).
     ///     If `false`, "meta" types matches will return true (ie: `.int32` or `.float32` will return true if `type` = `.number`).
     ///     (default = `false`)
-    @inlinable func baseTypeMatches(type: OSCMessageValueType,
-                                    canMatchMetaTypes: Bool = false) -> Bool {
+    @inlinable
+    func baseTypeMatches(type: OSCMessageValueType,
+                         canMatchMetaTypes: Bool = false) -> Bool {
         
         // if types explicitly match, return true
         
@@ -198,7 +201,8 @@ public extension OSCMessageValue {
     }
     
     /// Returns base type of `OSCMessageValue` as an `OSCMessageValueType` (by removing 'optional' component).
-    @inlinable var baseType: OSCMessageValueType {
+    @inlinable
+    var baseType: OSCMessageValueType {
         
         switch self {
             // core types
@@ -250,7 +254,8 @@ public extension Array where Element == OSCMessageValue {
     ///   - `number` & `numberOptional`: Accepts int32 or float32 as a value.
     ///
     /// - parameter expectedMask: `OSCMessageValueType` array representing a positive mask match
-    @inlinable func matchesValueMask(expectedMask: [OSCMessageValueType]) -> Bool {
+    @inlinable
+    func matchesValueMask(expectedMask: [OSCMessageValueType]) -> Bool {
         
         // should not contain more values than mask
         if self.count > expectedMask.count { return false }
@@ -301,7 +306,8 @@ public extension Array where Element == OSCMessageValue {
     ///   `.string()` as `String`,
     ///   `.blob()` as `Data`.
     ///   Returns `nil` if values do not match the mask.
-    @inlinable func valuesFromValueMask(expectedMask: [OSCMessageValueType]) -> [OSCMessageValueProtocol?]? {
+    @inlinable
+    func valuesFromValueMask(expectedMask: [OSCMessageValueType]) -> [OSCMessageValueProtocol?]? {
         
         // should not contain more values than mask
         if self.count > expectedMask.count { return nil }

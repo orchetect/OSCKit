@@ -30,8 +30,9 @@ public struct OSCBundle: OSCObject {
     
     // MARK: - init
     
-    @inlinable public init(elements: [OSCPayload],
-                           timeTag: Int64 = 1) {
+    @inlinable
+    public init(elements: [OSCPayload],
+                timeTag: Int64 = 1) {
         
         self.timeTag = timeTag
         self.elements = elements
@@ -269,7 +270,8 @@ extension Data {
     
     /// A fast function to test if Data() begins with an OSC bundle header
     /// (Note: Does NOT do extensive checks to ensure data block isn't malformed)
-    @inlinable var appearsToBeOSCBundle: Bool {
+    @inlinable
+    var appearsToBeOSCBundle: Bool {
         
         self.starts(with: OSCBundle.header)
         

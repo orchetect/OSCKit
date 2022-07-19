@@ -26,7 +26,8 @@ public extension Data {
     /// Test if `Data` appears to be an OSC bundle or OSC message. (Basic validation)
     ///
     /// - Returns: An `OSCObjectType` case if validation succeeds. `nil` if neither.
-    @inlinable var appearsToBeOSC: OSCObjectType? {
+    @inlinable
+    var appearsToBeOSC: OSCObjectType? {
         
         if appearsToBeOSCBundle {
             return .bundle
@@ -59,7 +60,8 @@ public extension Data {
     /// Parses raw data and returns valid OSC objects if data is successfully parsed as OSC.
     ///
     /// Returns `nil` if neither.
-    @inlinable func parseOSC() throws -> OSCPayload? {
+    @inlinable
+    func parseOSC() throws -> OSCPayload? {
         
         if appearsToBeOSCBundle {
             return .bundle(try OSCBundle(from: self))
