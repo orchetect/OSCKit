@@ -10,7 +10,7 @@ import Foundation
 /// Protocol applied to OSC data objects
 public protocol OSCObject {
     
-    /// Returns a raw OSC packet constructed from the struct's properties
+    /// Returns raw OSC packet data constructed from the struct's properties.
     var rawData: Data { get }
     
     /// Initialize by parsing raw OSC packet data bytes.
