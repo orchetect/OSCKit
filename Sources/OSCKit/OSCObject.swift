@@ -25,8 +25,7 @@ public extension Data {
     
     /// Test if `Data` appears to be an OSC bundle or OSC message. (Basic validation)
     ///
-    /// Returns a type if validation succeeds, otherwise:
-    /// Returns `nil` if neither.
+    /// - Returns: An `OSCObjectType` case if validation succeeds. `nil` if neither.
     @inlinable var appearsToBeOSC: OSCObjectType? {
         
         if appearsToBeOSCBundle {

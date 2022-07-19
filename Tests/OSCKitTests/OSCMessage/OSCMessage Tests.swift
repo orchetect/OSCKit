@@ -21,33 +21,38 @@ final class OSCMessageTests: XCTestCase {
     func testOSCMessageInitAddress() {
         
         XCTAssertEqual(
-            OSCMessage(address: "/path1/path2").address.stringValue,
-            "/path1/path2"
+            OSCMessage(address: "/container1/container2").address.stringValue,
+            "/container1/container2"
         )
         
         XCTAssertEqual(
-            OSCMessage(address: String("/path1/path2")).address.stringValue,
-            "/path1/path2"
+            OSCMessage(address: String("/container1/container2")).address.stringValue,
+            "/container1/container2"
         )
         
         XCTAssertEqual(
-            OSCMessage(address: ASCIIString("/path1/path2")).address.stringValue,
-            "/path1/path2"
+            OSCMessage(address: ASCIIString("/container1/container2")).address.stringValue,
+            "/container1/container2"
         )
         
         XCTAssertEqual(
-            OSCMessage(address: OSCAddress("/path1/path2")).address.stringValue,
-            "/path1/path2"
+            OSCMessage(address: OSCAddress("/container1/container2")).address.stringValue,
+            "/container1/container2"
         )
         
         XCTAssertEqual(
-            OSCMessage(address: ["path1", "path2"]).address.stringValue,
-            "/path1/path2"
+            OSCMessage(address: ["container1", "container2"]).address.stringValue,
+            "/container1/container2"
         )
         
         XCTAssertEqual(
-            OSCMessage(address: [ASCIIString("path1"), ASCIIString("path2")]).address.stringValue,
-            "/path1/path2"
+            OSCMessage(address: [ASCIIString("container1"), ASCIIString("container2")]).address.stringValue,
+            "/container1/container2"
+        )
+        
+        XCTAssertEqual(
+            OSCMessage(address: []).address.stringValue,
+            "/"
         )
         
     }

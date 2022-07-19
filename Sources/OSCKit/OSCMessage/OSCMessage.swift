@@ -65,6 +65,7 @@ public struct OSCMessage: OSCObject {
     }
     
     /// Create an OSC message from OSC address path components and zero or more OSC values.
+    /// Empty path components is equivalent to the address of "/".
     @inlinable
     public init(address pathComponents: [String],
                 values: [OSCMessageValue] = []) {
@@ -77,6 +78,7 @@ public struct OSCMessage: OSCObject {
     }
     
     /// Create an OSC message from OSC address path components and zero or more OSC values.
+    /// Empty path components is equivalent to the address of "/".
     @inlinable @_disfavoredOverload
     public init(address pathComponents: [ASCIIString],
                 values: [OSCMessageValue] = []) {

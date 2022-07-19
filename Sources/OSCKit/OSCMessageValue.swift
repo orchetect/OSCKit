@@ -205,9 +205,12 @@ public extension Sequence where Iterator.Element == OSCMessageValue {
 
 public extension OSCMessageValue {
     
-    /// Convenience: If passed value can be converted to an Int, an Int will be returned. Used in cases where you mask an OSC message value set with .number or .numberOptional and want to get a value out without caring about preserving type.
+    /// Convenience:
+    /// If passed value can be converted to an `Int`, an `Int` will be returned.
+    /// Used in cases where you mask an OSC message value set with `.number` or `.numberOptional` and want to get a value out without caring about preserving type.
+    ///
     /// - parameter testValue: Any numerical value type that OSC supports.
-    /// - returns: Double, or nil if value can't be converted.
+    /// - returns: `Double`, or `nil` if value can't be converted.
     @inlinable static func numberAsInt(_ testValue: Any?) -> Int? {
         
         // core types
@@ -223,9 +226,12 @@ public extension OSCMessageValue {
         
     }
     
-    /// Convenience: If passed value can be converted to a Double, a Double will be returned. Used in cases where you mask an OSC message value set with .number or .numberOptional and want to get a value out without caring about preserving type.
+    /// Convenience:
+    /// If passed value can be converted to a `Double`, a `Double` will be returned.
+    /// Used in cases where you mask an OSC message value set with `.number` or `.numberOptional` and want to get a value out without caring about preserving type.
+    ///
     /// - parameter testValue: Any numerical value type that OSC supports.
-    /// - returns: Double, or nil if value can't be converted.
+    /// - returns: `Double`, or `nil` if value can't be converted.
     @inlinable static func numberAsDouble(_ testValue: Any?) -> Double? {
         
         // core types

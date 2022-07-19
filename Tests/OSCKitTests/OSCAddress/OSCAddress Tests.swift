@@ -15,17 +15,17 @@ final class OSCAddressTests: XCTestCase {
     
     func testInit() {
         
-        let addr1 = OSCAddress("/address")
-        XCTAssertEqual(addr1.stringValue, "/address")
+        let addr1 = OSCAddress("/methodname")
+        XCTAssertEqual(addr1.stringValue, "/methodname")
         
-        let addr2 = OSCAddress(ASCIIString("/address"))
-        XCTAssertEqual(addr2.stringValue, "/address")
+        let addr2 = OSCAddress(ASCIIString("/methodname"))
+        XCTAssertEqual(addr2.stringValue, "/methodname")
         
-        let addr3 = OSCAddress(pathComponents: ["path1", "path2"])
-        XCTAssertEqual(addr3.stringValue, "/path1/path2")
+        let addr3 = OSCAddress(pathComponents: ["container1", "methodname"])
+        XCTAssertEqual(addr3.stringValue, "/container1/methodname")
         
-        let addr4 = OSCAddress(pathComponents: [ASCIIString("path1"), ASCIIString("path2")])
-        XCTAssertEqual(addr4.stringValue, "/path1/path2")
+        let addr4 = OSCAddress(pathComponents: [ASCIIString("container1"), ASCIIString("methodname")])
+        XCTAssertEqual(addr4.stringValue, "/container1/methodname")
         
     }
     
@@ -52,32 +52,34 @@ final class OSCAddressTests: XCTestCase {
                        ["methodname"])
         
         // invalid
-        XCTAssertEqual(OSCAddress("/path1/").pathComponents,
+        XCTAssertEqual(OSCAddress("/container1/").pathComponents,
                        nil)
         
         // invalid
-        XCTAssertEqual(OSCAddress("/path1//").pathComponents,
+        XCTAssertEqual(OSCAddress("/container1//").pathComponents,
                        nil)
         
         // valid
+        // In OSC 1.1 Spec, the // character sequence has special meaning
         XCTAssertEqual(OSCAddress("//methodname").pathComponents,
                        ["", "methodname"])
         
         // valid
-        XCTAssertEqual(OSCAddress("/path1/path2/methodname").pathComponents,
-                       ["path1", "path2", "methodname"])
+        XCTAssertEqual(OSCAddress("/container1/container2/methodname").pathComponents,
+                       ["container1", "container2", "methodname"])
         
         // valid
-        XCTAssertEqual(OSCAddress("/path?/path2/methodname").pathComponents,
-                       ["path?", "path2", "methodname"])
+        XCTAssertEqual(OSCAddress("/container?/container2/methodname").pathComponents,
+                       ["container?", "container2", "methodname"])
         
         // valid
-        XCTAssertEqual(OSCAddress("/path*/path2/methodname").pathComponents,
-                       ["path*", "path2", "methodname"])
+        XCTAssertEqual(OSCAddress("/container*/container2/methodname").pathComponents,
+                       ["container*", "container2", "methodname"])
         
         // valid
-        XCTAssertEqual(OSCAddress("/path1//methodname").pathComponents,
-                       ["path1", "", "methodname"])
+        // In OSC 1.1 Spec, the // character sequence has special meaning
+        XCTAssertEqual(OSCAddress("/container1//methodname").pathComponents,
+                       ["container1", "", "methodname"])
         
     }
     

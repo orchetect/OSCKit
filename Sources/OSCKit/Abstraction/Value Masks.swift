@@ -65,7 +65,7 @@ public enum OSCMessageValueType: Int, CaseIterable {
 
 public extension OSCMessageValueType {
     
-    /// Returns base type `OSCMessageValueType` (by removing 'optional' component)
+    /// Returns base type `OSCMessageValueType` (by removing 'optional' component).
     @inlinable var baseType: OSCMessageValueType {
         
         switch self {
@@ -91,7 +91,7 @@ public extension OSCMessageValueType {
         
     }
     
-    /// Tests if a OSCMessageValueType is optional (has default) or not.
+    /// Tests if a `OSCMessageValueType` is optional (has default) or not.
     @inlinable var isOptional: Bool {
         
         switch self {
@@ -149,12 +149,14 @@ public extension OSCMessageValueType {
 
 public extension OSCMessageValue {
     
-    /// Tests if the type of a OSCMessageValue matches the supplied OSCMessageValueType (optional/default or not) and returns base type. Returns nil if does not match.
+    /// Tests if the type of a `OSCMessageValue` matches the supplied `OSCMessageValueType` (optional/default or not) and returns base type.
+    /// Returns `nil` if does not match.
+    ///
     /// - parameter type: `OSCMessageValueType` to compare to.
     /// - parameter canMatchMetaTypes: Match a meta type (if a meta type is passed in `type`)
-    ///   - If `true`, only exact matches will return `true` (`.int32` matches only `.int32` and not `.number` "meta" type; `.number` only matches `.number`).
-    ///   - If `false`, "meta" types matches will return true (ie: `.int32` or `.float32` will return true if `type` = `.number`).
-    ///   - (default = `false`)
+    ///     If `true`, only exact matches will return `true` (`.int32` matches only `.int32` and not `.number` "meta" type; `.number` only matches `.number`).
+    ///     If `false`, "meta" types matches will return true (ie: `.int32` or `.float32` will return true if `type` = `.number`).
+    ///     (default = `false`)
     @inlinable func baseTypeMatches(type: OSCMessageValueType,
                                     canMatchMetaTypes: Bool = false) -> Bool {
         
@@ -195,7 +197,7 @@ public extension OSCMessageValue {
         
     }
     
-    /// Returns base type of `OSCMessageValue` as an `OSCMessageValueType` (by removing 'optional' component)
+    /// Returns base type of `OSCMessageValue` as an `OSCMessageValueType` (by removing 'optional' component).
     @inlinable var baseType: OSCMessageValueType {
         
         switch self {
@@ -241,12 +243,13 @@ extension NSNull                      : OSCMessageValueProtocol { }
 
 public extension Array where Element == OSCMessageValue {
     
-    /// Returns true if an array of `OSCMessageValue` values matches an expected value type mask (order and type of values).
+    /// Returns `true` if an array of `OSCMessageValue` values matches an expected value type mask (order and type of values).
     /// To make any of the mask values optional, pass them as `.optional` in `expectedMask`.
     ///
     /// Some meta type(s) are available:
     ///   - `number` & `numberOptional`: Accepts int32 or float32 as a value.
-    /// - parameter expectedMask: OSCMessageValueType array representing a positive mask match
+    ///
+    /// - parameter expectedMask: `OSCMessageValueType` array representing a positive mask match
     @inlinable func matchesValueMask(expectedMask: [OSCMessageValueType]) -> Bool {
         
         // should not contain more values than mask
@@ -287,16 +290,17 @@ public extension Array where Element == OSCMessageValue {
         
     }
     
-    /// Returns an array `[OSCMessageValueProtocol]` of non-enumeration-encapsulated values if an array of `OSCMessageValue` values matches an expected value type mask (order and type of values).
+    /// Returns `[OSCMessageValueProtocol]` of non-enumeration-encapsulated values if an array of `OSCMessageValue` values matches an expected value type mask (order and type of values).
     /// To make any of the mask values optional, pass them as `.optional` in `expectedMask`.
-    /// Returns nil if values do not match the mask.
     ///
-    /// Returns:
-    /// - `.int32(...)` as `Int`
-    /// - `.float32(...)` as `Float32`
-    /// - `.string(...)` as `String`
-    /// - `.blob(...)` as `Data`
-    /// - parameter expectedMask: OSCMessageValueType array representing a positive mask match
+    /// - parameter expectedMask: `OSCMessageValueType` array representing a positive mask match.
+    ///
+    /// - Returns:
+    ///   `.int32()` as `Int`,
+    ///   `.float32()` as `Float32`,
+    ///   `.string()` as `String`,
+    ///   `.blob()` as `Data`.
+    ///   Returns `nil` if values do not match the mask.
     @inlinable func valuesFromValueMask(expectedMask: [OSCMessageValueType]) -> [OSCMessageValueProtocol?]? {
         
         // should not contain more values than mask

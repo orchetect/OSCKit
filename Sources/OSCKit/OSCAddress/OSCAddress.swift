@@ -7,6 +7,8 @@ import Foundation
 @_implementationOnly import OTCore
 import SwiftASCII
 
+// NOTE: This discussion block is duplicated for `OSCAddress.Pattern`
+
 /// OSCAddress
 ///
 /// [OSC 1.0 Spec](http://opensoundcontrol.org/spec-1_0.html):
@@ -58,6 +60,7 @@ public struct OSCAddress: Hashable {
     
     /// Create an OSC address from individual path components.
     /// The path component strings will be converted to ASCII strings, lossily converting or removing invalid non-ASCII characters if necessary.
+    /// Empty path components is equivalent to the address of "/".
     public init(pathComponents: [String]) {
         
         self.address = ("/" + pathComponents.joined(separator: "/")).asciiStringLossy
@@ -66,6 +69,7 @@ public struct OSCAddress: Hashable {
     
     /// Create an OSC address from individual path components.
     /// The path component strings will be converted to ASCII strings, lossily converting or removing invalid non-ASCII characters if necessary.
+    /// Empty path components is equivalent to the address of "/".
     @_disfavoredOverload
     public init(pathComponents: [ASCIIString]) {
         
