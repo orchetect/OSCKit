@@ -32,7 +32,10 @@ extension OSCAddress.Pattern.Token {
     
     enum CharacterGroup: Equatable, Hashable {
         
+        /// Single character.
         case single(Character)
+        
+        /// Contiguous range of ASCII characters.
         case asciiRange(start: Character, end: Character)
         
     }
