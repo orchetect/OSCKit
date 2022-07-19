@@ -50,7 +50,7 @@ extension OSCAddress {
 extension OSCAddress {
     
     /// Returns the OSC address converted to a tokenized pattern form.
-    internal var pattern: [Pattern] {
+    public var pattern: [Pattern] {
         
         pathComponents?
             .map { Pattern(string: String($0)) ?? .init() }

@@ -10,7 +10,7 @@ extension OSCAddress.Pattern {
     
     /// Tokenizes an individual path component of an OSC address.
     /// Returns `nil` in the event of an error or malformed pattern.
-    internal init?(string pattern: String) {
+    public init?(string pattern: String) {
         
         if pattern.isEmpty { return }
         

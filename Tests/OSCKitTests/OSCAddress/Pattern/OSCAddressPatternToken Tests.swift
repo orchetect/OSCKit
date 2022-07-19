@@ -311,9 +311,9 @@ final class OSCAddressPatternToken_Tests: XCTestCase {
         
         XCTAssertTrue(t.isExhausted)
         
-        XCTAssertEqual(t.matches(string: ""), .noMatch)
-        XCTAssertEqual(t.matches(string: "a"), .noMatch)
-        XCTAssertEqual(t.matches(string: "ab"), .noMatch)
+        XCTAssertEqual(t.matches(string: ""), .match(length: 0))
+        XCTAssertEqual(t.matches(string: "a"), .match(length: 0))
+        XCTAssertEqual(t.matches(string: "ab"), .match(length: 0))
         
         XCTAssertTrue(t.isExhausted)
         

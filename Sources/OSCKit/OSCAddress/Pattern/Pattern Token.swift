@@ -7,7 +7,7 @@ import Foundation
 
 extension OSCAddress.Pattern {
     
-    internal enum Token: Equatable, Hashable {
+    public enum Token: Equatable, Hashable {
         
         /// One or more sequential literal characters.
         case literal(String)
@@ -30,7 +30,7 @@ extension OSCAddress.Pattern {
 
 extension OSCAddress.Pattern.Token {
     
-    enum CharacterGroup: Equatable, Hashable {
+    public enum CharacterGroup: Equatable, Hashable {
         
         /// Single character.
         case single(Character)

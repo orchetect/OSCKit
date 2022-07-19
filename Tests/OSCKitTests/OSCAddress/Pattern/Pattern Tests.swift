@@ -108,7 +108,9 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
     }
 
     func testEvaluate_Bracket() {
-
+        
+        // single chars
+        
         XCTAssertTrue(
             OSCAddress.Pattern(string: "[abc]")!.evaluate(matches: "a")
         )
@@ -121,6 +123,8 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
             OSCAddress.Pattern(string: "[abc]")!.evaluate(matches: "d")
         )
 
+        // range
+        
         XCTAssertTrue(
             OSCAddress.Pattern(string: "[a-z]")!.evaluate(matches: "a")
         )
@@ -128,7 +132,11 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
         XCTAssertTrue(
             OSCAddress.Pattern(string: "[a-z]")!.evaluate(matches: "z")
         )
-
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[b-y]")!.evaluate(matches: "C")
+        )
+        
         XCTAssertFalse(
             OSCAddress.Pattern(string: "[b-y]")!.evaluate(matches: "z")
         )
@@ -140,7 +148,251 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
         XCTAssertFalse(
             OSCAddress.Pattern(string: "[b-y]")!.evaluate(matches: "ab")
         )
-
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[b-y]")!.evaluate(matches: "-")
+        )
+        
+        // single-member range
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[b-b]")!.evaluate(matches: "b")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[b-b]")!.evaluate(matches: "a")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[b-b]")!.evaluate(matches: "c")
+        )
+        
+        // invalid range
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[y-b]")!.evaluate(matches: "c")
+        )
+        
+        // mixed ranges
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[a-z0-9]")!.evaluate(matches: "a")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[a-z0-9]")!.evaluate(matches: "1")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[a-z0-9]")!.evaluate(matches: "Z")
+        )
+        
+        // mixed singles and ranges
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[a-z0-9XY]")!.evaluate(matches: "a")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[a-z0-9XY]")!.evaluate(matches: "1")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[a-z0-9XY]")!.evaluate(matches: "X")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[Xa-z0-9YZ]")!.evaluate(matches: "X")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[Xa-z0-9YZ]")!.evaluate(matches: "Y")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[Xa-z0-9YZ]")!.evaluate(matches: "Z")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[Xa-z0-9YZ]")!.evaluate(matches: "A")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[Xa-z0-9YZ]")!.evaluate(matches: "-")
+        )
+        
+        // edge cases
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[-z]")!.evaluate(matches: "-")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[-z]")!.evaluate(matches: "z")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[-z]")!.evaluate(matches: "a")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[a-]")!.evaluate(matches: "-")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[a-]")!.evaluate(matches: "a")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[a-]")!.evaluate(matches: "b")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[b-y-]")!.evaluate(matches: "b")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[b-y-]")!.evaluate(matches: "y")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[b-y-]")!.evaluate(matches: "-")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[-b-y]")!.evaluate(matches: "b")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[-b-y]")!.evaluate(matches: "y")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[-b-y]")!.evaluate(matches: "-")
+        )
+        
+    }
+    
+    func testEvaluate_Bracket_isExcluded() {
+        
+        // single chars
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[!abc]")!.evaluate(matches: "a")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[!abc]")!.evaluate(matches: "c")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[!abc]")!.evaluate(matches: "d")
+        )
+        
+        // range
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[!b-y]")!.evaluate(matches: "b")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[!b-y]")!.evaluate(matches: "y")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[!b-y]")!.evaluate(matches: "a")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[!b-y]")!.evaluate(matches: "z")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[!b-y]")!.evaluate(matches: "B")
+        )
+        
+        // single-member range
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[!b-b]")!.evaluate(matches: "b")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[!b-b]")!.evaluate(matches: "a")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[!b-b]")!.evaluate(matches: "c")
+        )
+        
+        // invalid range
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[!y-b]")!.evaluate(matches: "c")
+        )
+        
+        // mixed ranges
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[!a-z0-9]")!.evaluate(matches: "a")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[!a-z0-9]")!.evaluate(matches: "1")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[!a-z0-9]")!.evaluate(matches: "A")
+        )
+        
+        // edge cases
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[!]")!.evaluate(matches: "")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[!]")!.evaluate(matches: "a")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[!!]")!.evaluate(matches: "a")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[!!]")!.evaluate(matches: "!")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[!!a]")!.evaluate(matches: "a")
+        )
+        
+        // mixed singles and ranges
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[!a-z0-9XY]")!.evaluate(matches: "a")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[!a-z0-9XY]")!.evaluate(matches: "1")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[!a-z0-9XY]")!.evaluate(matches: "x")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[!a-z0-9XY]")!.evaluate(matches: "X")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[!a-z0-9XY]")!.evaluate(matches: "A")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[!a-z0-9XY]")!.evaluate(matches: "Z")
+        )
+        
     }
 
     func testEvaluate_Brace() {
@@ -163,6 +415,40 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
 
         XCTAssertFalse(
             OSCAddress.Pattern(string: "{def,ghi}")!.evaluate(matches: "abc")
+        )
+        
+        // edge cases
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "{,abc}")!.evaluate(matches: "abc")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "{abc,}")!.evaluate(matches: "abc")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "{,abc}")!.evaluate(matches: "")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "{abc,}")!.evaluate(matches: "")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "{}")!.evaluate(matches: "")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "{,}")!.evaluate(matches: "")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "{}abc")!.evaluate(matches: "abc")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "{,}abc")!.evaluate(matches: "abc")
         )
 
     }
@@ -188,7 +474,11 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
         XCTAssertFalse(
             OSCAddress.Pattern(string: "[0-9]{def,abc}")!.evaluate(matches: "1")
         )
-
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[0-9]{def,abc}")!.evaluate(matches: "abc")
+        )
+        
     }
     
     // MARK: - Complex patterns

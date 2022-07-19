@@ -106,8 +106,6 @@ extension OSCAddress.Pattern {
 
 protocol OSCAddressPatternToken {
     
-    var lengthRange: ClosedRange<Int> { get }
-    
     func matches(string: Substring) -> OSCAddress.Pattern.Token.Match
     
     var isExhausted: Bool { get }
@@ -131,15 +129,9 @@ extension OSCAddress.Pattern.Token {
 
 extension OSCAddress.Pattern.Token {
     
-    internal struct Literal: OSCAddressPatternToken {
+    struct Literal: OSCAddressPatternToken {
         
         let literal: String
-        
-        var lengthRange: ClosedRange<Int> {
-            
-            literal.count...literal.count
-            
-        }
         
         func matches(string: Substring) -> Match {
             
@@ -157,11 +149,9 @@ extension OSCAddress.Pattern.Token {
         
     }
     
-    internal struct ZeroOrMoreWildcard: OSCAddressPatternToken {
+    struct ZeroOrMoreWildcard: OSCAddressPatternToken {
         
         private var currentLength = 0
-        
-        var lengthRange: ClosedRange<Int> { 0...1000 } // TODO: unused, should be removed or set to actual values
         
         func matches(string: Substring) -> Match {
             
@@ -189,9 +179,7 @@ extension OSCAddress.Pattern.Token {
         
     }
     
-    internal struct SingleCharWildcard: OSCAddressPatternToken {
-        
-        var lengthRange: ClosedRange<Int> { 1...1 }
+    struct SingleCharWildcard: OSCAddressPatternToken {
         
         func matches(string: Substring) -> Match {
             
@@ -207,13 +195,11 @@ extension OSCAddress.Pattern.Token {
         
     }
     
-    internal struct SingleChar: OSCAddressPatternToken {
+    struct SingleChar: OSCAddressPatternToken {
         
         let isExclusion: Bool
         
         let groups: Set<CharacterGroup>
-        
-        var lengthRange: ClosedRange<Int> { 1...1 }
         
         func matches(string: Substring) -> Match {
             
@@ -253,17 +239,15 @@ extension OSCAddress.Pattern.Token {
         
     }
     
-    internal struct Strings: OSCAddressPatternToken {
+    struct Strings: OSCAddressPatternToken {
         
         let strings: Set<String>
         
-        var lengthRange: ClosedRange<Int> {
-            
-            (strings.min()?.count ?? 0) ... (strings.max()?.count ?? 0)
-            
-        }
-        
         func matches(string: Substring) -> Match {
+            
+            if strings.isEmpty {
+                return .match(length: 0)
+            }
             
             guard let match = strings.first(where: { string.starts(with: $0) })
             else {
