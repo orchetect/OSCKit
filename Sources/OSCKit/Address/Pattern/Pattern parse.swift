@@ -1,23 +1,28 @@
 //
-//  OSCAddress Pattern Matching.swift
+//  Pattern parse.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
 import Foundation
 @_implementationOnly import OTCore
 
-extension OSCAddress {
+extension OSCAddress.Pattern {
     
-    /// Evaluate pattern matching against a single path component in an OSC address.
-    ///
-    /// - Parameters:
-    ///   - pattern: pattern string
-    ///   - name: OSC address path component
-    /// - Returns: true if the path component pattern matches the supplied path component string.
-    internal static func pathComponent(pattern: String,
-                                       matches name: String) -> Bool {
+    /// Tokenizes an individual path component OSC address pattern.
+    /// Returns nil in the event of an error or malformed pattern.
+    internal init?(string pattern: String) {
         
-        if pattern.isEmpty { return true }
+        if pattern.isEmpty { return }
+        
+        var tokens: [Token] = []
+        var currentTokenBuffer: String = ""
+        
+        func closeBuffer() {
+            if !currentTokenBuffer.isEmpty {
+                tokens.append(.literal(currentTokenBuffer))
+                currentTokenBuffer = ""
+            }
+        }
         
         // pattern
         var patternIndex = pattern.startIndex
@@ -37,21 +42,6 @@ extension OSCAddress {
             patternIndex >= pattern.endIndex
         }
         
-        // name
-        var nameIndex = name.startIndex
-        func nameIndexIncrement() {
-            nameIndex = name.index(after: nameIndex)
-        }
-        func nameIndexIncrement(by numberOfChars: Int) {
-            nameIndex = name.index(nameIndex, offsetBy: numberOfChars)
-        }
-        func isNameIndexLastChar() -> Bool {
-            nameIndex == name.index(before: name.endIndex)
-        }
-        func isNameIndexExhausted() -> Bool {
-            nameIndex >= name.endIndex
-        }
-        
         // bounded expression
         func getRange(
             endBound: Character
@@ -64,81 +54,88 @@ extension OSCAddress {
             
             let bracketSubstring = pattern[patternIndex...closeBracketIndex]
             
-            guard bracketSubstring.count > 2 else { return nil }
+            let bracketInternalSubstring: String.SubSequence
             
-            let internalStartIndex = pattern.index(after: patternIndex)
-            let internalEndIndex = pattern.index(before: closeBracketIndex)
-            let bracketInternalSubstring = pattern[internalStartIndex...internalEndIndex]
+            if bracketSubstring.count > 2 {
+                let internalStartIndex = pattern.index(after: patternIndex)
+                let internalEndIndex = pattern.index(before: closeBracketIndex)
+                bracketInternalSubstring = pattern[internalStartIndex...internalEndIndex]
+            } else {
+                bracketInternalSubstring = ""
+            }
             
             return (outerString: bracketSubstring,
                     innerString: bracketInternalSubstring)
         }
         
         repeat {
-            guard !isPatternIndexExhausted() else { return false }
+            guard !isPatternIndexExhausted() else { break }
             let patternChar = pattern[patternIndex]
             
             switch patternChar {
             case "*":
-                // matches zero or more chars
-                if isPatternIndexLastChar() { return true }
+                // matches zero or more of any character
                 
-                // otherwise, if not last char, we have to handle it differently
-                fatalError("Not implemented yet.")
+                closeBuffer()
+                if tokens.last != .zeroOrMoreWildcard { // avoid sequential copies
+                    tokens.append(.zeroOrMoreWildcard)
+                }
+                patternIndexIncrement()
                 
             case "?":
                 // matches any single char
+                
+                closeBuffer()
+                tokens.append(.singleCharWildcard)
                 patternIndexIncrement()
-                nameIndexIncrement()
                 
             case "[":
                 // [] match any char between brackets
                 
                 guard let bracketStrings = getRange(endBound: "]")
-                else { return false }
+                else { return nil }
                 
-                let isMatch = pathComponent(
-                    bracketExpression: bracketStrings.innerString,
-                    matches: name[nameIndex]
+                let r = Self.parse(
+                    bracketExpression: bracketStrings.innerString
                 )
-                guard isMatch else { return false }
                 
+                closeBuffer()
+                tokens.append(.singleChar(isExclusion: r.isExclusion,
+                                          groups: r.groups))
                 patternIndexIncrement(by: bracketStrings.outerString.count)
-                nameIndexIncrement()
                 
             case "]":
                 // should not encounter an unbalanced closing bracket
-                return false
+                return nil
                 
             case "{":
                 // {foo,bar} - A comma-separated list of strings
                 
                 guard let braceStrings = getRange(endBound: "}")
-                else { return false }
+                else { return nil }
                 
-                let braceResult = pathComponent(
-                    braceExpression: braceStrings.innerString,
-                    prefixes: name[nameIndex...]
+                let strings = Self.parse(
+                    braceExpression: braceStrings.innerString
                 )
-                guard braceResult.isMatch else { return false }
                 
+                closeBuffer()
+                tokens.append(.strings(strings: strings))
                 patternIndexIncrement(by: braceStrings.outerString.count)
-                nameIndexIncrement(by: braceResult.length)
                 
             case "}":
                 // should not encounter an unbalanced closing bracket
-                return false
+                return nil
                 
             default:
-                guard !isNameIndexExhausted() else { return false }
-                if patternChar != name[nameIndex] { return false }
+                currentTokenBuffer.append(patternChar)
                 patternIndexIncrement()
-                nameIndexIncrement()
                 
             }
-        } while !(isPatternIndexExhausted() && isNameIndexExhausted())
+        } while !isPatternIndexExhausted()
         
-        return true
+        closeBuffer()
+        
+        self.tokens = tokens
         
     }
     
@@ -154,19 +151,24 @@ extension OSCAddress {
     /// - only valid inside `[]`;
     /// - at the beginning of a bracketed string negates the sense of the list, meaning that the list matches any character not in the list
     /// - `!` as any other char than first char has no special meaning
-    internal static func pathComponent(
-        bracketExpression: Substring,
-        matches char: Character
-    ) -> Bool {
+    internal static func parse(
+        bracketExpression: Substring
+    ) -> (isExclusion: Bool,
+          groups: Set<Token.CharacterGroup>)
+    {
         
-        guard !bracketExpression.isEmpty else { return false }
+        guard !bracketExpression.isEmpty else { return (false, []) }
+        
+        var charGroups: Set<Token.CharacterGroup> = []
         
         var bracketExpression = bracketExpression
         
         var isExclusion = false
         if bracketExpression.first == "!" {
             isExclusion = true
-            guard bracketExpression.count > 1 else { return true }
+            guard bracketExpression.count > 1 else {
+                return (true, [])
+            }
             bracketExpression = bracketExpression[position: 1...]
         }
         
@@ -189,54 +191,35 @@ extension OSCAddress {
             let startChar = bracketExpression[rangeStartIndex]
             let endChar = bracketExpression[rangeEndIndex]
             
-            guard let charVal = char.asciiValue,
-                  let startCharVal = startChar.asciiValue,
-                  let endCharVal = endChar.asciiValue
-            else { return false }
-            
-            // ensure range is formable
-            guard startCharVal <= endCharVal else { return false }
-            
-            let containsCharVal = (startCharVal...endCharVal).contains(charVal)
-            
-            if containsCharVal {
-                return !isExclusion
-            }
-            
+            charGroups.insert(.asciiRange(start: startChar, end: endChar))
             bracketExpression.removeSubrange(rangeStartIndex...rangeEndIndex)
         }
+        
+        bracketExpression.forEach { charGroups.insert(.single($0)) }
         
         // since we removed all dashes above, re-add one if an orphan dash
         // if one was found so it can be matched verbatim
         if isOrphanDashPresent {
-            bracketExpression.append("-")
+            charGroups.insert(.single("-"))
         }
         
-        let containsChar = bracketExpression.contains(char)
-        
-        return isExclusion ? !containsChar : containsChar
+        return (isExclusion: isExclusion,
+                groups: charGroups)
         
     }
     
     /// `{}` expression sub-parser.
     ///
     /// Matches any of a comma-separated list of strings.
-    internal static func pathComponent(
-        braceExpression: Substring,
-        prefixes text: Substring
-    ) -> (isMatch: Bool,
-          length: Int)
-    {
+    internal static func parse(
+        braceExpression: Substring
+    ) -> Set<String> {
         
-        let candidates = braceExpression.split(separator: ",")
-        
-        guard let match = candidates
-            .first(where: { text.starts(with: $0) })
-        else {
-            return (isMatch: false, length: 0)
-        }
-        
-        return (isMatch: true, length: match.count)
+        braceExpression
+            .split(separator: ",")
+            .reduce(into: Set<String>(), {
+                $0.insert(String($1))
+            })
         
     }
     
