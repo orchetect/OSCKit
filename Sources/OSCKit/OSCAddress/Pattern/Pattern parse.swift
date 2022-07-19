@@ -8,9 +8,8 @@ import Foundation
 
 extension OSCAddress.Pattern {
     
-    /// Tokenizes an individual path component of an OSC address.
-    /// Returns `nil` in the event of an error or malformed pattern.
-    public init?(string pattern: String) {
+    /// Initializes a new `Pattern` instance tokenizing an individual path component of an OSC address.
+    public init(string pattern: String) {
         
         if pattern.isEmpty { return }
         
@@ -93,7 +92,10 @@ extension OSCAddress.Pattern {
                 // [] match any char between brackets
                 
                 guard let bracketStrings = getRange(endBound: "]")
-                else { return nil }
+                else {
+                    // treat as literal character if balanced close bracket is not found
+                    fallthrough
+                }
                 
                 let r = Self.parse(
                     bracketExpression: bracketStrings.innerString
@@ -104,15 +106,14 @@ extension OSCAddress.Pattern {
                                           groups: r.groups))
                 patternIndexIncrement(by: bracketStrings.outerString.count)
                 
-            case "]":
-                // should not encounter an unbalanced closing bracket
-                return nil
-                
             case "{":
                 // {foo,bar} - A comma-separated list of strings
                 
                 guard let braceStrings = getRange(endBound: "}")
-                else { return nil }
+                else {
+                    // treat as literal character if balanced close brace is not found
+                    fallthrough
+                }
                 
                 let strings = Self.parse(
                     braceExpression: braceStrings.innerString
@@ -121,10 +122,6 @@ extension OSCAddress.Pattern {
                 closeBuffer()
                 tokens.append(.strings(strings: strings))
                 patternIndexIncrement(by: braceStrings.outerString.count)
-                
-            case "}":
-                // should not encounter an unbalanced closing bracket
-                return nil
                 
             default:
                 currentTokenBuffer.append(patternChar)

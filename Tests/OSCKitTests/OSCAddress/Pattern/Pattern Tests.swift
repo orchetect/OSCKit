@@ -18,29 +18,29 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
     func testEvaluate_NoPattern() {
 
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "123")!.evaluate(matches: "123")
+            OSCAddress.Pattern(string: "123").evaluate(matching: "123")
         )
 
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "123")!.evaluate(matches: "ABC")
+            OSCAddress.Pattern(string: "123").evaluate(matching: "ABC")
         )
 
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "")!.evaluate(matches: "123")
+            OSCAddress.Pattern(string: "").evaluate(matching: "123")
         )
 
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "")!.evaluate(matches: "")
+            OSCAddress.Pattern(string: "").evaluate(matching: "")
         )
 
         // edge cases
 
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "12")!.evaluate(matches: "123")
+            OSCAddress.Pattern(string: "12").evaluate(matching: "123")
         )
 
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "1234")!.evaluate(matches: "123")
+            OSCAddress.Pattern(string: "1234").evaluate(matching: "123")
         )
 
     }
@@ -48,45 +48,45 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
     func testEvaluate_VariableWildcard() {
 
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*")!.evaluate(matches: "1")
+            OSCAddress.Pattern(string: "*").evaluate(matching: "1")
         )
 
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*")!.evaluate(matches: "123")
+            OSCAddress.Pattern(string: "*").evaluate(matching: "123")
         )
 
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "1*")!.evaluate(matches: "123")
+            OSCAddress.Pattern(string: "1*").evaluate(matching: "123")
         )
 
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "12*")!.evaluate(matches: "123")
+            OSCAddress.Pattern(string: "12*").evaluate(matching: "123")
         )
 
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "123*")!.evaluate(matches: "123")
+            OSCAddress.Pattern(string: "123*").evaluate(matching: "123")
         )
 
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*3")!.evaluate(matches: "123")
+            OSCAddress.Pattern(string: "*3").evaluate(matching: "123")
         )
 
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*23")!.evaluate(matches: "123")
+            OSCAddress.Pattern(string: "*23").evaluate(matching: "123")
         )
 
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*123")!.evaluate(matches: "123")
+            OSCAddress.Pattern(string: "*123").evaluate(matching: "123")
         )
 
         // edge cases
 
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "***")!.evaluate(matches: "1")
+            OSCAddress.Pattern(string: "***").evaluate(matching: "1")
         )
 
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "****")!.evaluate(matches: "123")
+            OSCAddress.Pattern(string: "****").evaluate(matching: "123")
         )
 
     }
@@ -94,15 +94,15 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
     func testEvaluate_SingleWildcard() {
 
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "?")!.evaluate(matches: "1")
+            OSCAddress.Pattern(string: "?").evaluate(matching: "1")
         )
 
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "?")!.evaluate(matches: "123")
+            OSCAddress.Pattern(string: "?").evaluate(matching: "123")
         )
 
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "???")!.evaluate(matches: "123")
+            OSCAddress.Pattern(string: "???").evaluate(matching: "123")
         )
 
     }
@@ -112,163 +112,163 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
         // single chars
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[abc]")!.evaluate(matches: "a")
+            OSCAddress.Pattern(string: "[abc]").evaluate(matching: "a")
         )
 
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[abc]")!.evaluate(matches: "c")
+            OSCAddress.Pattern(string: "[abc]").evaluate(matching: "c")
         )
 
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[abc]")!.evaluate(matches: "d")
+            OSCAddress.Pattern(string: "[abc]").evaluate(matching: "d")
         )
 
         // range
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[a-z]")!.evaluate(matches: "a")
+            OSCAddress.Pattern(string: "[a-z]").evaluate(matching: "a")
         )
 
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[a-z]")!.evaluate(matches: "z")
+            OSCAddress.Pattern(string: "[a-z]").evaluate(matching: "z")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[b-y]")!.evaluate(matches: "C")
+            OSCAddress.Pattern(string: "[b-y]").evaluate(matching: "C")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[b-y]")!.evaluate(matches: "z")
+            OSCAddress.Pattern(string: "[b-y]").evaluate(matching: "z")
         )
 
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[b-y]")!.evaluate(matches: "bb")
+            OSCAddress.Pattern(string: "[b-y]").evaluate(matching: "bb")
         )
 
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[b-y]")!.evaluate(matches: "ab")
+            OSCAddress.Pattern(string: "[b-y]").evaluate(matching: "ab")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[b-y]")!.evaluate(matches: "-")
+            OSCAddress.Pattern(string: "[b-y]").evaluate(matching: "-")
         )
         
         // single-member range
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[b-b]")!.evaluate(matches: "b")
+            OSCAddress.Pattern(string: "[b-b]").evaluate(matching: "b")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[b-b]")!.evaluate(matches: "a")
+            OSCAddress.Pattern(string: "[b-b]").evaluate(matching: "a")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[b-b]")!.evaluate(matches: "c")
+            OSCAddress.Pattern(string: "[b-b]").evaluate(matching: "c")
         )
         
         // invalid range
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[y-b]")!.evaluate(matches: "c")
+            OSCAddress.Pattern(string: "[y-b]").evaluate(matching: "c")
         )
         
         // mixed ranges
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[a-z0-9]")!.evaluate(matches: "a")
+            OSCAddress.Pattern(string: "[a-z0-9]").evaluate(matching: "a")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[a-z0-9]")!.evaluate(matches: "1")
+            OSCAddress.Pattern(string: "[a-z0-9]").evaluate(matching: "1")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[a-z0-9]")!.evaluate(matches: "Z")
+            OSCAddress.Pattern(string: "[a-z0-9]").evaluate(matching: "Z")
         )
         
         // mixed singles and ranges
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[a-z0-9XY]")!.evaluate(matches: "a")
+            OSCAddress.Pattern(string: "[a-z0-9XY]").evaluate(matching: "a")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[a-z0-9XY]")!.evaluate(matches: "1")
+            OSCAddress.Pattern(string: "[a-z0-9XY]").evaluate(matching: "1")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[a-z0-9XY]")!.evaluate(matches: "X")
+            OSCAddress.Pattern(string: "[a-z0-9XY]").evaluate(matching: "X")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[Xa-z0-9YZ]")!.evaluate(matches: "X")
+            OSCAddress.Pattern(string: "[Xa-z0-9YZ]").evaluate(matching: "X")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[Xa-z0-9YZ]")!.evaluate(matches: "Y")
+            OSCAddress.Pattern(string: "[Xa-z0-9YZ]").evaluate(matching: "Y")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[Xa-z0-9YZ]")!.evaluate(matches: "Z")
+            OSCAddress.Pattern(string: "[Xa-z0-9YZ]").evaluate(matching: "Z")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[Xa-z0-9YZ]")!.evaluate(matches: "A")
+            OSCAddress.Pattern(string: "[Xa-z0-9YZ]").evaluate(matching: "A")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[Xa-z0-9YZ]")!.evaluate(matches: "-")
+            OSCAddress.Pattern(string: "[Xa-z0-9YZ]").evaluate(matching: "-")
         )
         
         // edge cases
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[-z]")!.evaluate(matches: "-")
+            OSCAddress.Pattern(string: "[-z]").evaluate(matching: "-")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[-z]")!.evaluate(matches: "z")
+            OSCAddress.Pattern(string: "[-z]").evaluate(matching: "z")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[-z]")!.evaluate(matches: "a")
+            OSCAddress.Pattern(string: "[-z]").evaluate(matching: "a")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[a-]")!.evaluate(matches: "-")
+            OSCAddress.Pattern(string: "[a-]").evaluate(matching: "-")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[a-]")!.evaluate(matches: "a")
+            OSCAddress.Pattern(string: "[a-]").evaluate(matching: "a")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[a-]")!.evaluate(matches: "b")
+            OSCAddress.Pattern(string: "[a-]").evaluate(matching: "b")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[b-y-]")!.evaluate(matches: "b")
+            OSCAddress.Pattern(string: "[b-y-]").evaluate(matching: "b")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[b-y-]")!.evaluate(matches: "y")
+            OSCAddress.Pattern(string: "[b-y-]").evaluate(matching: "y")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[b-y-]")!.evaluate(matches: "-")
+            OSCAddress.Pattern(string: "[b-y-]").evaluate(matching: "-")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[-b-y]")!.evaluate(matches: "b")
+            OSCAddress.Pattern(string: "[-b-y]").evaluate(matching: "b")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[-b-y]")!.evaluate(matches: "y")
+            OSCAddress.Pattern(string: "[-b-y]").evaluate(matching: "y")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[-b-y]")!.evaluate(matches: "-")
+            OSCAddress.Pattern(string: "[-b-y]").evaluate(matching: "-")
         )
         
     }
@@ -278,119 +278,119 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
         // single chars
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[!abc]")!.evaluate(matches: "a")
+            OSCAddress.Pattern(string: "[!abc]").evaluate(matching: "a")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[!abc]")!.evaluate(matches: "c")
+            OSCAddress.Pattern(string: "[!abc]").evaluate(matching: "c")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[!abc]")!.evaluate(matches: "d")
+            OSCAddress.Pattern(string: "[!abc]").evaluate(matching: "d")
         )
         
         // range
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[!b-y]")!.evaluate(matches: "b")
+            OSCAddress.Pattern(string: "[!b-y]").evaluate(matching: "b")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[!b-y]")!.evaluate(matches: "y")
+            OSCAddress.Pattern(string: "[!b-y]").evaluate(matching: "y")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[!b-y]")!.evaluate(matches: "a")
+            OSCAddress.Pattern(string: "[!b-y]").evaluate(matching: "a")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[!b-y]")!.evaluate(matches: "z")
+            OSCAddress.Pattern(string: "[!b-y]").evaluate(matching: "z")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[!b-y]")!.evaluate(matches: "B")
+            OSCAddress.Pattern(string: "[!b-y]").evaluate(matching: "B")
         )
         
         // single-member range
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[!b-b]")!.evaluate(matches: "b")
+            OSCAddress.Pattern(string: "[!b-b]").evaluate(matching: "b")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[!b-b]")!.evaluate(matches: "a")
+            OSCAddress.Pattern(string: "[!b-b]").evaluate(matching: "a")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[!b-b]")!.evaluate(matches: "c")
+            OSCAddress.Pattern(string: "[!b-b]").evaluate(matching: "c")
         )
         
         // invalid range
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[!y-b]")!.evaluate(matches: "c")
+            OSCAddress.Pattern(string: "[!y-b]").evaluate(matching: "c")
         )
         
         // mixed ranges
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[!a-z0-9]")!.evaluate(matches: "a")
+            OSCAddress.Pattern(string: "[!a-z0-9]").evaluate(matching: "a")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[!a-z0-9]")!.evaluate(matches: "1")
+            OSCAddress.Pattern(string: "[!a-z0-9]").evaluate(matching: "1")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[!a-z0-9]")!.evaluate(matches: "A")
+            OSCAddress.Pattern(string: "[!a-z0-9]").evaluate(matching: "A")
         )
         
         // edge cases
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[!]")!.evaluate(matches: "")
+            OSCAddress.Pattern(string: "[!]").evaluate(matching: "")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[!]")!.evaluate(matches: "a")
+            OSCAddress.Pattern(string: "[!]").evaluate(matching: "a")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[!!]")!.evaluate(matches: "a")
+            OSCAddress.Pattern(string: "[!!]").evaluate(matching: "a")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[!!]")!.evaluate(matches: "!")
+            OSCAddress.Pattern(string: "[!!]").evaluate(matching: "!")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[!!a]")!.evaluate(matches: "a")
+            OSCAddress.Pattern(string: "[!!a]").evaluate(matching: "a")
         )
         
         // mixed singles and ranges
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[!a-z0-9XY]")!.evaluate(matches: "a")
+            OSCAddress.Pattern(string: "[!a-z0-9XY]").evaluate(matching: "a")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[!a-z0-9XY]")!.evaluate(matches: "1")
+            OSCAddress.Pattern(string: "[!a-z0-9XY]").evaluate(matching: "1")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[!a-z0-9XY]")!.evaluate(matches: "x")
+            OSCAddress.Pattern(string: "[!a-z0-9XY]").evaluate(matching: "x")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[!a-z0-9XY]")!.evaluate(matches: "X")
+            OSCAddress.Pattern(string: "[!a-z0-9XY]").evaluate(matching: "X")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[!a-z0-9XY]")!.evaluate(matches: "A")
+            OSCAddress.Pattern(string: "[!a-z0-9XY]").evaluate(matching: "A")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[!a-z0-9XY]")!.evaluate(matches: "Z")
+            OSCAddress.Pattern(string: "[!a-z0-9XY]").evaluate(matching: "Z")
         )
         
     }
@@ -398,57 +398,57 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
     func testEvaluate_Brace() {
 
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "{abc}")!.evaluate(matches: "abc")
+            OSCAddress.Pattern(string: "{abc}").evaluate(matching: "abc")
         )
 
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "{abc,def}")!.evaluate(matches: "abc")
+            OSCAddress.Pattern(string: "{abc,def}").evaluate(matching: "abc")
         )
 
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "{def,abc}")!.evaluate(matches: "abc")
+            OSCAddress.Pattern(string: "{def,abc}").evaluate(matching: "abc")
         )
 
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "{def}")!.evaluate(matches: "abc")
+            OSCAddress.Pattern(string: "{def}").evaluate(matching: "abc")
         )
 
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "{def,ghi}")!.evaluate(matches: "abc")
+            OSCAddress.Pattern(string: "{def,ghi}").evaluate(matching: "abc")
         )
         
         // edge cases
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "{,abc}")!.evaluate(matches: "abc")
+            OSCAddress.Pattern(string: "{,abc}").evaluate(matching: "abc")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "{abc,}")!.evaluate(matches: "abc")
+            OSCAddress.Pattern(string: "{abc,}").evaluate(matching: "abc")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "{,abc}")!.evaluate(matches: "")
+            OSCAddress.Pattern(string: "{,abc}").evaluate(matching: "")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "{abc,}")!.evaluate(matches: "")
+            OSCAddress.Pattern(string: "{abc,}").evaluate(matching: "")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "{}")!.evaluate(matches: "")
+            OSCAddress.Pattern(string: "{}").evaluate(matching: "")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "{,}")!.evaluate(matches: "")
+            OSCAddress.Pattern(string: "{,}").evaluate(matching: "")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "{}abc")!.evaluate(matches: "abc")
+            OSCAddress.Pattern(string: "{}abc").evaluate(matching: "abc")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "{,}abc")!.evaluate(matches: "abc")
+            OSCAddress.Pattern(string: "{,}abc").evaluate(matching: "abc")
         )
 
     }
@@ -456,27 +456,27 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
     func testEvaluate_BracketsAndBraces() {
 
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "[0-9]{def,abc}")!.evaluate(matches: "1abc")
+            OSCAddress.Pattern(string: "[0-9]{def,abc}").evaluate(matching: "1abc")
         )
 
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[0-9]{def,abc}")!.evaluate(matches: "1ABC")
+            OSCAddress.Pattern(string: "[0-9]{def,abc}").evaluate(matching: "1ABC")
         )
 
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[0-9]{def,abc}")!.evaluate(matches: "zabc")
+            OSCAddress.Pattern(string: "[0-9]{def,abc}").evaluate(matching: "zabc")
         )
 
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[0-9]{def,abc}")!.evaluate(matches: "1abcz")
+            OSCAddress.Pattern(string: "[0-9]{def,abc}").evaluate(matching: "1abcz")
         )
 
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[0-9]{def,abc}")!.evaluate(matches: "1")
+            OSCAddress.Pattern(string: "[0-9]{def,abc}").evaluate(matching: "1")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "[0-9]{def,abc}")!.evaluate(matches: "abc")
+            OSCAddress.Pattern(string: "[0-9]{def,abc}").evaluate(matching: "abc")
         )
         
     }
@@ -488,11 +488,11 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
         // abc*
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "abc*")!.evaluate(matches: "abc")
+            OSCAddress.Pattern(string: "abc*").evaluate(matching: "abc")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "abc*")!.evaluate(matches: "abcd")
+            OSCAddress.Pattern(string: "abc*").evaluate(matching: "abcd")
         )
         
     }
@@ -502,27 +502,27 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
         // *abc
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*abc")!.evaluate(matches: "abc")
+            OSCAddress.Pattern(string: "*abc").evaluate(matching: "abc")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*abc")!.evaluate(matches: "xabc")
+            OSCAddress.Pattern(string: "*abc").evaluate(matching: "xabc")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*abc")!.evaluate(matches: "xyabc")
+            OSCAddress.Pattern(string: "*abc").evaluate(matching: "xyabc")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "*abc")!.evaluate(matches: "abc1")
+            OSCAddress.Pattern(string: "*abc").evaluate(matching: "abc1")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "*abc")!.evaluate(matches: "xyabc1")
+            OSCAddress.Pattern(string: "*abc").evaluate(matching: "xyabc1")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "*abc")!.evaluate(matches: "xyABC")
+            OSCAddress.Pattern(string: "*abc").evaluate(matching: "xyABC")
         )
         
     }
@@ -532,27 +532,27 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
         // *abc*
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*abc*")!.evaluate(matches: "abc")
+            OSCAddress.Pattern(string: "*abc*").evaluate(matching: "abc")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*abc*")!.evaluate(matches: "abcd")
+            OSCAddress.Pattern(string: "*abc*").evaluate(matching: "abcd")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*abc*")!.evaluate(matches: "xabc")
+            OSCAddress.Pattern(string: "*abc*").evaluate(matching: "xabc")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*abc*")!.evaluate(matches: "xabcd")
+            OSCAddress.Pattern(string: "*abc*").evaluate(matching: "xabcd")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*abc*")!.evaluate(matches: "xyabcde")
+            OSCAddress.Pattern(string: "*abc*").evaluate(matching: "xyabcde")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "*abc*")!.evaluate(matches: "xyABCde")
+            OSCAddress.Pattern(string: "*abc*").evaluate(matching: "xyABCde")
         )
         
     }
@@ -562,47 +562,47 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
         // *a*bc*
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*a*bc*")!.evaluate(matches: "abc")
+            OSCAddress.Pattern(string: "*a*bc*").evaluate(matching: "abc")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*a*bc*")!.evaluate(matches: "a1bc")
+            OSCAddress.Pattern(string: "*a*bc*").evaluate(matching: "a1bc")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*a*bc*")!.evaluate(matches: "1abc")
+            OSCAddress.Pattern(string: "*a*bc*").evaluate(matching: "1abc")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*a*bc*")!.evaluate(matches: "abc1")
+            OSCAddress.Pattern(string: "*a*bc*").evaluate(matching: "abc1")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*a*bc*")!.evaluate(matches: "1a1bc")
+            OSCAddress.Pattern(string: "*a*bc*").evaluate(matching: "1a1bc")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*a*bc*")!.evaluate(matches: "a1bc1")
+            OSCAddress.Pattern(string: "*a*bc*").evaluate(matching: "a1bc1")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*a*bc*")!.evaluate(matches: "1a1bc1")
+            OSCAddress.Pattern(string: "*a*bc*").evaluate(matching: "1a1bc1")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "*a*bc*")!.evaluate(matches: "a")
+            OSCAddress.Pattern(string: "*a*bc*").evaluate(matching: "a")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "*a*bc*")!.evaluate(matches: "bc")
+            OSCAddress.Pattern(string: "*a*bc*").evaluate(matching: "bc")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "*a*bc*")!.evaluate(matches: "bca")
+            OSCAddress.Pattern(string: "*a*bc*").evaluate(matching: "bca")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "*a*bc*")!.evaluate(matches: "ABC")
+            OSCAddress.Pattern(string: "*a*bc*").evaluate(matching: "ABC")
         )
         
     }
@@ -612,23 +612,23 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
         // abc*{def,xyz}[0-9]
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "abc*{def,xyz}[0-9]")!.evaluate(matches: "abcdef1")
+            OSCAddress.Pattern(string: "abc*{def,xyz}[0-9]").evaluate(matching: "abcdef1")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "abc*{def,xyz}[0-9]")!.evaluate(matches: "abcXxyz2")
+            OSCAddress.Pattern(string: "abc*{def,xyz}[0-9]").evaluate(matching: "abcXxyz2")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "abc*{def,xyz}[0-9]")!.evaluate(matches: "abcXXxyz2")
+            OSCAddress.Pattern(string: "abc*{def,xyz}[0-9]").evaluate(matching: "abcXXxyz2")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "abc*{def,xyz}[0-9]")!.evaluate(matches: "abcxyzX")
+            OSCAddress.Pattern(string: "abc*{def,xyz}[0-9]").evaluate(matching: "abcxyzX")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "abc*{def,xyz}[0-9]")!.evaluate(matches: "dummyName123")
+            OSCAddress.Pattern(string: "abc*{def,xyz}[0-9]").evaluate(matching: "dummyName123")
         )
         
     }
@@ -638,23 +638,23 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
         // *abc{def,xyz}[0-9]
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*abc{def,xyz}[0-9]")!.evaluate(matches: "abcdef1")
+            OSCAddress.Pattern(string: "*abc{def,xyz}[0-9]").evaluate(matching: "abcdef1")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*abc{def,xyz}[0-9]")!.evaluate(matches: "Xabcdef1")
+            OSCAddress.Pattern(string: "*abc{def,xyz}[0-9]").evaluate(matching: "Xabcdef1")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "*abc{def,xyz}[0-9]")!.evaluate(matches: "XXabcdef1")
+            OSCAddress.Pattern(string: "*abc{def,xyz}[0-9]").evaluate(matching: "XXabcdef1")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "*abc{def,xyz}[0-9]")!.evaluate(matches: "abcdefX")
+            OSCAddress.Pattern(string: "*abc{def,xyz}[0-9]").evaluate(matching: "abcdefX")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "*abc{def,xyz}[0-9]")!.evaluate(matches: "abcdef1X")
+            OSCAddress.Pattern(string: "*abc{def,xyz}[0-9]").evaluate(matching: "abcdef1X")
         )
         
     }
@@ -664,15 +664,15 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
         // abc*{def,xyz}[A-F0-9][A-F0-9]
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "abc*{def,xyz}[A-F0-9][A-F0-9]")!.evaluate(matches: "abcdef7F")
+            OSCAddress.Pattern(string: "abc*{def,xyz}[A-F0-9][A-F0-9]").evaluate(matching: "abcdef7F")
         )
         
         XCTAssertTrue(
-            OSCAddress.Pattern(string: "abc*{def,xyz}[A-F0-9][A-F0-9]")!.evaluate(matches: "abcXdefF7")
+            OSCAddress.Pattern(string: "abc*{def,xyz}[A-F0-9][A-F0-9]").evaluate(matching: "abcXdefF7")
         )
         
         XCTAssertFalse(
-            OSCAddress.Pattern(string: "abc*{def,xyz}[A-F0-9][A-F0-9]")!.evaluate(matches: "abcdefFG")
+            OSCAddress.Pattern(string: "abc*{def,xyz}[A-F0-9][A-F0-9]").evaluate(matching: "abcdefFG")
         )
         
     }

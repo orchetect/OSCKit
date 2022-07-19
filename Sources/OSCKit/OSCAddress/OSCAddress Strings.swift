@@ -53,7 +53,7 @@ extension OSCAddress {
     public var pattern: [Pattern] {
         
         pathComponents?
-            .map { Pattern(string: String($0)) ?? .init() }
+            .map { Pattern(string: String($0)) }
         ?? []
         
     }

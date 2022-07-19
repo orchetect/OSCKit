@@ -14,20 +14,20 @@ extension OSCAddress.Pattern {
     ///   - pathComponent: OSC address path component.
     ///   
     /// - Returns: `true` if the path component pattern matches the supplied path component string.
-    public func evaluate(matches pathComponent: String) -> Bool {
+    public func evaluate(matching pathComponent: String) -> Bool {
         
         // early return: empty
         if tokens.isEmpty {
             return pathComponent.isEmpty
         }
         
-        // early return: single literal
+        // early return: single string literal
         if tokens.count == 1,
            case let .literal(string) = tokens[0] {
             return string == pathComponent
         }
         
-        // early return: single wildcard
+        // early return: single * wildcard
         if tokens == [.zeroOrMoreWildcard] {
             return true
         }
@@ -64,7 +64,6 @@ extension OSCAddress.Pattern {
         
         func runState(index: Int) -> Bool {
             state[index].reset()
-            
             let entryPos = matchPos
             
             repeat {
@@ -77,10 +76,10 @@ extension OSCAddress.Pattern {
                     break
                     
                 case .match(let len):
-                    matchPos = entryPos + len // set next repeat's matchPos
+                    matchPos = entryPos + len
                     
-                    if index < state.count - 1 { // if not the final state item
-                        if runState(index: index + 1) { // run next state item
+                    if index < state.count - 1 {
+                        if runState(index: index + 1) {
                             return true
                         }
                     } else { // is the final state item...
@@ -103,6 +102,8 @@ extension OSCAddress.Pattern {
     }
     
 }
+
+// MARK: - OSCAddressPatternToken
 
 protocol OSCAddressPatternToken {
     
