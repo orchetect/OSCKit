@@ -5,7 +5,7 @@
 
 #warning("> TODO: refactor these unit tests to use new API")
 
-//#if !os(watchOS)
+//#if shouldTestCurrentPlatform
 //
 //import XCTest
 //@testable import OSCKit
