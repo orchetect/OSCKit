@@ -21,6 +21,12 @@ final class OSCAddressTests: XCTestCase {
         let addr2 = OSCAddress(ASCIIString("/address"))
         XCTAssertEqual(addr2.stringValue, "/address")
         
+        let addr3 = OSCAddress(pathComponents: ["path1", "path2"])
+        XCTAssertEqual(addr3.stringValue, "/path1/path2")
+        
+        let addr4 = OSCAddress(pathComponents: [ASCIIString("path1"), ASCIIString("path2")])
+        XCTAssertEqual(addr4.stringValue, "/path1/path2")
+        
     }
     
     func testPathComponents() {
