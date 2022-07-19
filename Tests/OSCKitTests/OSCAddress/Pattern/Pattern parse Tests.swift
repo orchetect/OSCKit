@@ -131,12 +131,12 @@ final class OSCAddress_PatternParse_Tests: XCTestCase {
     
     func testComplex() {
         
-        // abc*{def,xyz}[0-9]
-        XCTAssertEqual(OSCAddress.Pattern(string: "abc*{def,xyz}[0-9]")!.tokens,
+        XCTAssertEqual(OSCAddress.Pattern(string: "abc*{def,xyz}?[0-9]")!.tokens,
                        [
                         .literal("abc"),
                         .zeroOrMoreWildcard,
                         .strings(strings: ["def", "xyz"]),
+                        .singleCharWildcard,
                         .singleChar(isExclusion: false,
                                     groups: [.asciiRange(start: "0", end: "9")])
                        ])
