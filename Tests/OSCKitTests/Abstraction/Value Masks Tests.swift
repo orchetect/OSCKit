@@ -1,5 +1,5 @@
 //
-//  Abstraction/Value Masks Tests.swift
+//  Value Masks Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
