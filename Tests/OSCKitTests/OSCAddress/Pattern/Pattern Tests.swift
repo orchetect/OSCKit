@@ -9,104 +9,114 @@ import XCTest
 @testable import OSCKit
 
 final class OSCAddress_Pattern_Tests: XCTestCase {
-
+    
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
-
+    
     // MARK: - Individual pattern types
     
-    func testEvaluate_NoPattern() {
-
-        XCTAssertTrue(
-            OSCAddress.Pattern(string: "123").evaluate(matching: "123")
-        )
-
-        XCTAssertFalse(
-            OSCAddress.Pattern(string: "123").evaluate(matching: "ABC")
-        )
-
+    func testEvaluate_EmptyPattern() {
+        
         XCTAssertFalse(
             OSCAddress.Pattern(string: "").evaluate(matching: "123")
         )
-
+        
         XCTAssertTrue(
             OSCAddress.Pattern(string: "").evaluate(matching: "")
         )
-
+        
+    }
+    
+    func testEvaluate_BasicLiterals() {
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "123").evaluate(matching: "123")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "123").evaluate(matching: "ABC")
+        )
+        
         // edge cases
-
+        
         XCTAssertFalse(
             OSCAddress.Pattern(string: "12").evaluate(matching: "123")
         )
-
+        
         XCTAssertFalse(
             OSCAddress.Pattern(string: "1234").evaluate(matching: "123")
         )
-
+        
     }
-
+    
     func testEvaluate_VariableWildcard() {
-
+        
         XCTAssertTrue(
             OSCAddress.Pattern(string: "*").evaluate(matching: "1")
         )
-
+        
         XCTAssertTrue(
             OSCAddress.Pattern(string: "*").evaluate(matching: "123")
         )
-
+        
         XCTAssertTrue(
             OSCAddress.Pattern(string: "1*").evaluate(matching: "123")
         )
-
+        
         XCTAssertTrue(
             OSCAddress.Pattern(string: "12*").evaluate(matching: "123")
         )
-
+        
         XCTAssertTrue(
             OSCAddress.Pattern(string: "123*").evaluate(matching: "123")
         )
-
+        
         XCTAssertTrue(
             OSCAddress.Pattern(string: "*3").evaluate(matching: "123")
         )
-
+        
         XCTAssertTrue(
             OSCAddress.Pattern(string: "*23").evaluate(matching: "123")
         )
-
+        
         XCTAssertTrue(
             OSCAddress.Pattern(string: "*123").evaluate(matching: "123")
         )
-
-        // edge cases
-
+        
+    }
+    
+    func testEvaluate_VariableWildcard_EdgeCases() {
+        
         XCTAssertTrue(
             OSCAddress.Pattern(string: "***").evaluate(matching: "1")
         )
-
+        
         XCTAssertTrue(
             OSCAddress.Pattern(string: "****").evaluate(matching: "123")
         )
-
+        
     }
     
     func testEvaluate_SingleWildcard() {
-
+        
         XCTAssertTrue(
             OSCAddress.Pattern(string: "?").evaluate(matching: "1")
         )
-
+        
         XCTAssertFalse(
             OSCAddress.Pattern(string: "?").evaluate(matching: "123")
         )
-
+        
         XCTAssertTrue(
             OSCAddress.Pattern(string: "???").evaluate(matching: "123")
         )
-
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "????").evaluate(matching: "123")
+        )
+        
     }
-
+    
     func testEvaluate_Bracket() {
         
         // single chars
@@ -114,21 +124,21 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
         XCTAssertTrue(
             OSCAddress.Pattern(string: "[abc]").evaluate(matching: "a")
         )
-
+        
         XCTAssertTrue(
             OSCAddress.Pattern(string: "[abc]").evaluate(matching: "c")
         )
-
+        
         XCTAssertFalse(
             OSCAddress.Pattern(string: "[abc]").evaluate(matching: "d")
         )
-
+        
         // range
         
         XCTAssertTrue(
             OSCAddress.Pattern(string: "[a-z]").evaluate(matching: "a")
         )
-
+        
         XCTAssertTrue(
             OSCAddress.Pattern(string: "[a-z]").evaluate(matching: "z")
         )
@@ -140,11 +150,11 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
         XCTAssertFalse(
             OSCAddress.Pattern(string: "[b-y]").evaluate(matching: "z")
         )
-
+        
         XCTAssertFalse(
             OSCAddress.Pattern(string: "[b-y]").evaluate(matching: "bb")
         )
-
+        
         XCTAssertFalse(
             OSCAddress.Pattern(string: "[b-y]").evaluate(matching: "ab")
         )
@@ -273,7 +283,7 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
         
     }
     
-    func testEvaluate_Bracket_isExcluded() {
+    func testEvaluate_Bracket_isExcluded_SingleChars() {
         
         // single chars
         
@@ -289,7 +299,9 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
             OSCAddress.Pattern(string: "[!abc]").evaluate(matching: "d")
         )
         
-        // range
+    }
+    
+    func testEvaluate_Bracket_isExcluded_Range() {
         
         XCTAssertFalse(
             OSCAddress.Pattern(string: "[!b-y]").evaluate(matching: "b")
@@ -311,7 +323,9 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
             OSCAddress.Pattern(string: "[!b-y]").evaluate(matching: "B")
         )
         
-        // single-member range
+    }
+    
+    func testEvaluate_Bracket_SingleMemberRange() {
         
         XCTAssertFalse(
             OSCAddress.Pattern(string: "[!b-b]").evaluate(matching: "b")
@@ -325,13 +339,9 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
             OSCAddress.Pattern(string: "[!b-b]").evaluate(matching: "c")
         )
         
-        // invalid range
-        
-        XCTAssertTrue(
-            OSCAddress.Pattern(string: "[!y-b]").evaluate(matching: "c")
-        )
-        
-        // mixed ranges
+    }
+    
+    func testEvaluate_Bracket_MixedRanges() {
         
         XCTAssertFalse(
             OSCAddress.Pattern(string: "[!a-z0-9]").evaluate(matching: "a")
@@ -343,6 +353,16 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
         
         XCTAssertTrue(
             OSCAddress.Pattern(string: "[!a-z0-9]").evaluate(matching: "A")
+        )
+        
+    }
+    
+    func testEvaluate_Bracket_EdgeCases() {
+        
+        // invalid range
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[!y-b]").evaluate(matching: "c")
         )
         
         // edge cases
@@ -367,7 +387,9 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
             OSCAddress.Pattern(string: "[!!a]").evaluate(matching: "a")
         )
         
-        // mixed singles and ranges
+    }
+    
+    func testEvaluate_Bracket_MixedSinglesAndRanges() {
         
         XCTAssertFalse(
             OSCAddress.Pattern(string: "[!a-z0-9XY]").evaluate(matching: "a")
@@ -394,30 +416,32 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
         )
         
     }
-
+    
     func testEvaluate_Brace() {
-
+        
         XCTAssertTrue(
             OSCAddress.Pattern(string: "{abc}").evaluate(matching: "abc")
         )
-
+        
         XCTAssertTrue(
             OSCAddress.Pattern(string: "{abc,def}").evaluate(matching: "abc")
         )
-
+        
         XCTAssertTrue(
             OSCAddress.Pattern(string: "{def,abc}").evaluate(matching: "abc")
         )
-
+        
         XCTAssertFalse(
             OSCAddress.Pattern(string: "{def}").evaluate(matching: "abc")
         )
-
+        
         XCTAssertFalse(
             OSCAddress.Pattern(string: "{def,ghi}").evaluate(matching: "abc")
         )
         
-        // edge cases
+    }
+    
+    func testEvaluate_Brace_EdgeCases() {
         
         XCTAssertTrue(
             OSCAddress.Pattern(string: "{,abc}").evaluate(matching: "abc")
@@ -450,27 +474,91 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
         XCTAssertTrue(
             OSCAddress.Pattern(string: "{,}abc").evaluate(matching: "abc")
         )
-
+        
     }
-
+    
+    func testEvaluate_Brace_Malformed_A() {
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "{abc,def").evaluate(matching: "{abc,def")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "{abc,def").evaluate(matching: "abc")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "{abc,def").evaluate(matching: "def")
+        )
+        
+    }
+    
+    func testEvaluate_Brace_Malformed_B() {
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "}abc,def").evaluate(matching: "}abc,def")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "}abc,def").evaluate(matching: "abc")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "}abc,def").evaluate(matching: "def")
+        )
+        
+    }
+    
+    func testEvaluate_Brace_Malformed_C() {
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "{{abc,def").evaluate(matching: "{{abc,def")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "{{abc,def").evaluate(matching: "abc")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "{{abc,def").evaluate(matching: "def")
+        )
+        
+    }
+    
+    func testEvaluate_Brace_Malformed_D() {
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "abc,def}").evaluate(matching: "abc,def}")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "abc,def}").evaluate(matching: "abc")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "abc,def}").evaluate(matching: "def")
+        )
+        
+    }
+    
     func testEvaluate_BracketsAndBraces() {
-
+        
         XCTAssertTrue(
             OSCAddress.Pattern(string: "[0-9]{def,abc}").evaluate(matching: "1abc")
         )
-
+        
         XCTAssertFalse(
             OSCAddress.Pattern(string: "[0-9]{def,abc}").evaluate(matching: "1ABC")
         )
-
+        
         XCTAssertFalse(
             OSCAddress.Pattern(string: "[0-9]{def,abc}").evaluate(matching: "zabc")
         )
-
+        
         XCTAssertFalse(
             OSCAddress.Pattern(string: "[0-9]{def,abc}").evaluate(matching: "1abcz")
         )
-
+        
         XCTAssertFalse(
             OSCAddress.Pattern(string: "[0-9]{def,abc}").evaluate(matching: "1")
         )
@@ -673,6 +761,134 @@ final class OSCAddress_Pattern_Tests: XCTestCase {
         
         XCTAssertFalse(
             OSCAddress.Pattern(string: "abc*{def,xyz}[A-F0-9][A-F0-9]").evaluate(matching: "abcdefFG")
+        )
+        
+    }
+    
+    func testEvaluate_Complex_EdgeCases_WildcardInBrackets() {
+        
+        // test the use of wildcards within brackets.
+        // according to the OSC 1.0 spec, wildcards are not special characters within brackets,
+        // so we treat them as literal characters for sake of matching.
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[*abc]").evaluate(matching: "*")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[*abc]").evaluate(matching: "a")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[*abc]").evaluate(matching: "b")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[*abc]").evaluate(matching: "c")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[*abc]").evaluate(matching: "x")
+        )
+        
+    }
+    
+    func testEvaluate_Complex_EdgeCases_SingleWildcardInBrackets() {
+        
+        // test the use of wildcards within brackets.
+        // according to the OSC 1.0 spec, wildcards are not special characters within brackets,
+        // so we treat them as literal characters for sake of matching.
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[?abc]").evaluate(matching: "?")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[?abc]").evaluate(matching: "a")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[?abc]").evaluate(matching: "b")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "[?abc]").evaluate(matching: "c")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "[?abc]").evaluate(matching: "x")
+        )
+        
+    }
+    
+    func testEvaluate_Complex_EdgeCases_WildcardInBraces() {
+        
+        // test the use of wildcards within brackets.
+        // according to the OSC 1.0 spec, wildcards are not special characters within brackets,
+        // so we treat them as literal characters for sake of matching.
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "{*abc,def}").evaluate(matching: "*abc")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "{*abc,def}").evaluate(matching: "def")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "{*abc,def}").evaluate(matching: "abc")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "{*abc,def}").evaluate(matching: "xabc")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "{*abc,def}").evaluate(matching: "xxabc")
+        )
+        
+    }
+    
+    func testEvaluate_Complex_EdgeCases_SingleWildcardInBraces() {
+        
+        // test the use of wildcards within brackets.
+        // according to the OSC 1.0 spec, wildcards are not special characters within brackets,
+        // so we treat them as literal characters for sake of matching.
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "{?abc,def}").evaluate(matching: "?abc")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "{?abc,def}").evaluate(matching: "def")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "{?abc,def}").evaluate(matching: "abc")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "{?abc,def}").evaluate(matching: "xabc")
+        )
+        
+    }
+    
+    func testEvaluate_Complex_EdgeCases_ExclamationPointInBraces() {
+        
+        // test the use of ! within brackets.
+        // according to the OSC 1.0 spec, ! is only valid if used as the first
+        // character within a [] bracketed expression, not within braces {}
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "{!abc,def}").evaluate(matching: "!abc")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "{!abc,def}").evaluate(matching: "def")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Pattern(string: "{!abc,def}").evaluate(matching: "abc")
         )
         
     }
