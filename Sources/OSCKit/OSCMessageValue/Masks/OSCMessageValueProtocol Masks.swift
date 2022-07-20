@@ -1,5 +1,5 @@
 //
-//  OSCMessageValueProtocol Masks.swift
+//  OSCMessageConcreteValue Masks.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
@@ -7,7 +7,7 @@ import Foundation
 
 public extension Array where Element == OSCMessageValue {
     
-    /// Returns `[OSCMessageValueProtocol]` of non-enumeration-encapsulated values if an array of `OSCMessageValue` values matches an expected value type mask (order and type of values).
+    /// Returns `[OSCMessageConcreteValue]` of non-enumeration-encapsulated values if an array of `OSCMessageValue` values matches an expected value type mask (order and type of values).
     /// To make any of the mask values optional, pass them as `.optional` in `expectedMask`.
     ///
     /// - parameter mask: `OSCMessage.ValueMask` representing a positive mask match.
@@ -18,13 +18,13 @@ public extension Array where Element == OSCMessageValue {
     @inlinable
     func masked(
         _ valueMask: OSCMessage.ValueMask
-    ) throws -> [OSCMessageValueProtocol?] {
+    ) throws -> [OSCMessageConcreteValue?] {
         
         try masked(valueMask.tokens)
         
     }
     
-    /// Returns `[OSCMessageValueProtocol]` of non-enumeration-encapsulated values if an array of `OSCMessageValue` values matches an expected value type mask (order and type of values).
+    /// Returns `[OSCMessageConcreteValue]` of non-enumeration-encapsulated values if an array of `OSCMessageValue` values matches an expected value type mask (order and type of values).
     /// To make any of the mask values optional, pass them as `.optional` in `expectedMask`.
     ///
     /// - parameter mask: `[OSCMessage.ValueMask.Token]` representing a positive mask match.
@@ -35,12 +35,12 @@ public extension Array where Element == OSCMessageValue {
     @inlinable
     func masked(
         _ valueMask: [OSCMessage.ValueMask.Token]
-    ) throws -> [OSCMessageValueProtocol?] {
+    ) throws -> [OSCMessageConcreteValue?] {
         
         // should not contain more values than mask
         if self.count > valueMask.count { throw OSCMessage.ValueMask.MaskError.invalidCount }
         
-        var values = [OSCMessageValueProtocol?]()
+        var values = [OSCMessageConcreteValue?]()
         
         for idx in 0..<valueMask.count {
             let idxOptional = valueMask[idx].isOptional

@@ -1,5 +1,5 @@
 //
-//  OSCMessageValueProtocol Masks Tests.swift
+//  OSCMessageConcreteValue Masks Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 

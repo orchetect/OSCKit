@@ -152,7 +152,7 @@ public extension OSCMessage.ValueMask.Token {
 public extension OSCMessage.ValueMask.Token {
     
     /// Returns the associated concrete type.
-    var concreteType: OSCMessageValueProtocol.Type {
+    var concreteType: OSCMessageConcreteValue.Type {
         
         switch self {
             // core types

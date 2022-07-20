@@ -35,7 +35,7 @@ public extension Array where Element == OSCMessageValue {
     @inlinable
     func masked<V>(_ v: V.Type)
     throws -> V
-    where V : OSCMessageValueProtocol
+    where V : OSCMessageConcreteValue
     {
         try validateCount(1)
         let v = try unwrapValue(v.self, index: 0)
@@ -67,7 +67,7 @@ public extension Array where Element == OSCMessageValue {
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func masked<V>(_ v: V?.Type) throws -> V?
-    where V : OSCMessageValueProtocol
+    where V : OSCMessageConcreteValue
     {
         try validateCount(0...1)
         let v = try unwrapValue(v.self, index: 0)
@@ -107,8 +107,8 @@ public extension Array where Element == OSCMessageValue {
     func masked<V0, V1>(_ v0: V0.Type,
                         _ v1: V1.Type)
     throws -> (V0, V1)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue
     {
         try validateCount(2)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -143,8 +143,8 @@ public extension Array where Element == OSCMessageValue {
     func masked<V0, V1>(_ v0: V0.Type,
                         _ v1: V1?.Type)
     throws -> (V0, V1?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue
     {
         try validateCount(1...2)
         let v0 = try unwrapValue(v0.self, index: 0)
@@ -179,8 +179,8 @@ public extension Array where Element == OSCMessageValue {
     func masked<V0, V1>(_ v0: V0?.Type,
                         _ v1: V1?.Type)
     throws -> (V0?, V1?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue
     {
         try validateCount(0...2)
         let v0 = try unwrapValue(v0.self, index: 0)
@@ -222,9 +222,9 @@ public extension Array where Element == OSCMessageValue {
                             _ v1: V1.Type,
                             _ v2: V2.Type)
     throws -> (V0, V1, V2)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue
     {
         try validateCount(3)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -261,9 +261,9 @@ public extension Array where Element == OSCMessageValue {
                             _ v1: V1.Type,
                             _ v2: V2?.Type)
     throws -> (V0, V1, V2?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue
     {
         try validateCount(2...3)
         let v0 = try unwrapValue(v0.self, index: 0)
@@ -300,9 +300,9 @@ public extension Array where Element == OSCMessageValue {
                             _ v1: V1?.Type,
                             _ v2: V2?.Type)
     throws -> (V0, V1?, V2?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue
     {
         try validateCount(1...3)
         let v0 = try unwrapValue(v0.self, index: 0)
@@ -339,9 +339,9 @@ public extension Array where Element == OSCMessageValue {
                             _ v1: V1?.Type,
                             _ v2: V2?.Type)
     throws -> (V0?, V1?, V2?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue
     {
         try validateCount(0...3)
         let v0 = try unwrapValue(v0.self, index: 0)
@@ -385,10 +385,10 @@ public extension Array where Element == OSCMessageValue {
                                 _ v2: V2.Type,
                                 _ v3: V3.Type)
     throws -> (V0, V1, V2, V3)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue
     {
         try validateCount(4)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -427,10 +427,10 @@ public extension Array where Element == OSCMessageValue {
                                 _ v2: V2.Type,
                                 _ v3: V3?.Type)
     throws -> (V0, V1, V2, V3?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue
     {
         try validateCount(3...4)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -469,10 +469,10 @@ public extension Array where Element == OSCMessageValue {
                                 _ v2: V2?.Type,
                                 _ v3: V3?.Type)
     throws -> (V0, V1, V2?, V3?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue
     {
         try validateCount(2...4)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -511,10 +511,10 @@ public extension Array where Element == OSCMessageValue {
                                 _ v2: V2?.Type,
                                 _ v3: V3?.Type)
     throws -> (V0, V1?, V2?, V3?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue
     {
         try validateCount(1...4)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -553,10 +553,10 @@ public extension Array where Element == OSCMessageValue {
                                 _ v2: V2?.Type,
                                 _ v3: V3?.Type)
     throws -> (V0?, V1?, V2?, V3?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue
     {
         try validateCount(0...4)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -602,11 +602,11 @@ public extension Array where Element == OSCMessageValue {
                                     _ v3: V3.Type,
                                     _ v4: V4.Type)
     throws -> (V0, V1, V2, V3, V4)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue
     {
         try validateCount(5)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -647,11 +647,11 @@ public extension Array where Element == OSCMessageValue {
                                     _ v3: V3.Type,
                                     _ v4: V4?.Type)
     throws -> (V0, V1, V2, V3, V4?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue
     {
         try validateCount(4...5)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -692,11 +692,11 @@ public extension Array where Element == OSCMessageValue {
                                     _ v3: V3?.Type,
                                     _ v4: V4?.Type)
     throws -> (V0, V1, V2, V3?, V4?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue
     {
         try validateCount(3...5)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -737,11 +737,11 @@ public extension Array where Element == OSCMessageValue {
                                     _ v3: V3?.Type,
                                     _ v4: V4?.Type)
     throws -> (V0, V1, V2?, V3?, V4?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue
     {
         try validateCount(2...5)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -782,11 +782,11 @@ public extension Array where Element == OSCMessageValue {
                                     _ v3: V3?.Type,
                                     _ v4: V4?.Type)
     throws -> (V0, V1?, V2?, V3?, V4?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue
     {
         try validateCount(1...5)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -827,11 +827,11 @@ public extension Array where Element == OSCMessageValue {
                                     _ v3: V3?.Type,
                                     _ v4: V4?.Type)
     throws -> (V0?, V1?, V2?, V3?, V4?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue
     {
         try validateCount(0...5)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -879,12 +879,12 @@ public extension Array where Element == OSCMessageValue {
                                         _ v4: V4.Type,
                                         _ v5: V5.Type)
     throws -> (V0, V1, V2, V3, V4, V5)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue
     {
         try validateCount(6)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -927,12 +927,12 @@ public extension Array where Element == OSCMessageValue {
                                         _ v4: V4.Type,
                                         _ v5: V5?.Type)
     throws -> (V0, V1, V2, V3, V4, V5?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue
     {
         try validateCount(5...6)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -975,12 +975,12 @@ public extension Array where Element == OSCMessageValue {
                                         _ v4: V4?.Type,
                                         _ v5: V5?.Type)
     throws -> (V0, V1, V2, V3, V4?, V5?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue
     {
         try validateCount(4...6)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1023,12 +1023,12 @@ public extension Array where Element == OSCMessageValue {
                                         _ v4: V4?.Type,
                                         _ v5: V5?.Type)
     throws -> (V0, V1, V2, V3?, V4?, V5?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue
     {
         try validateCount(3...6)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1071,12 +1071,12 @@ public extension Array where Element == OSCMessageValue {
                                         _ v4: V4?.Type,
                                         _ v5: V5?.Type)
     throws -> (V0, V1, V2?, V3?, V4?, V5?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue
     {
         try validateCount(2...6)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1119,12 +1119,12 @@ public extension Array where Element == OSCMessageValue {
                                         _ v4: V4?.Type,
                                         _ v5: V5?.Type)
     throws -> (V0, V1?, V2?, V3?, V4?, V5?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue
     {
         try validateCount(1...6)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1167,12 +1167,12 @@ public extension Array where Element == OSCMessageValue {
                                         _ v4: V4?.Type,
                                         _ v5: V5?.Type)
     throws -> (V0?, V1?, V2?, V3?, V4?, V5?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue
     {
         try validateCount(0...6)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1222,13 +1222,13 @@ public extension Array where Element == OSCMessageValue {
                                             _ v5: V5.Type,
                                             _ v6: V6.Type)
     throws -> (V0, V1, V2, V3, V4, V5, V6)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue
     {
         try validateCount(7)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1273,13 +1273,13 @@ public extension Array where Element == OSCMessageValue {
                                             _ v5: V5.Type,
                                             _ v6: V6?.Type)
     throws -> (V0, V1, V2, V3, V4, V5, V6?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue
     {
         try validateCount(6...7)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1324,13 +1324,13 @@ public extension Array where Element == OSCMessageValue {
                                             _ v5: V5?.Type,
                                             _ v6: V6?.Type)
     throws -> (V0, V1, V2, V3, V4, V5?, V6?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue
     {
         try validateCount(5...7)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1375,13 +1375,13 @@ public extension Array where Element == OSCMessageValue {
                                             _ v5: V5?.Type,
                                             _ v6: V6?.Type)
     throws -> (V0, V1, V2, V3, V4?, V5?, V6?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue
     {
         try validateCount(4...7)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1426,13 +1426,13 @@ public extension Array where Element == OSCMessageValue {
                                             _ v5: V5?.Type,
                                             _ v6: V6?.Type)
     throws -> (V0, V1, V2, V3?, V4?, V5?, V6?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue
     {
         try validateCount(3...7)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1477,13 +1477,13 @@ public extension Array where Element == OSCMessageValue {
                                             _ v5: V5?.Type,
                                             _ v6: V6?.Type)
     throws -> (V0, V1, V2?, V3?, V4?, V5?, V6?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue
     {
         try validateCount(2...7)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1528,13 +1528,13 @@ public extension Array where Element == OSCMessageValue {
                                             _ v5: V5?.Type,
                                             _ v6: V6?.Type)
     throws -> (V0, V1?, V2?, V3?, V4?, V5?, V6?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue
     {
         try validateCount(1...7)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1579,13 +1579,13 @@ public extension Array where Element == OSCMessageValue {
                                             _ v5: V5?.Type,
                                             _ v6: V6?.Type)
     throws -> (V0?, V1?, V2?, V3?, V4?, V5?, V6?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue
     {
         try validateCount(0...7)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1637,14 +1637,14 @@ public extension Array where Element == OSCMessageValue {
                                                 _ v6: V6.Type,
                                                 _ v7: V7.Type)
     throws -> (V0, V1, V2, V3, V4, V5, V6, V7)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue
     {
         try validateCount(8)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1691,14 +1691,14 @@ public extension Array where Element == OSCMessageValue {
                                                 _ v6: V6.Type,
                                                 _ v7: V7?.Type)
     throws -> (V0, V1, V2, V3, V4, V5, V6, V7?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue
     {
         try validateCount(7...8)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1745,14 +1745,14 @@ public extension Array where Element == OSCMessageValue {
                                                 _ v6: V6?.Type,
                                                 _ v7: V7?.Type)
     throws -> (V0, V1, V2, V3, V4, V5, V6?, V7?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue
     {
         try validateCount(6...8)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1799,14 +1799,14 @@ public extension Array where Element == OSCMessageValue {
                                                 _ v6: V6?.Type,
                                                 _ v7: V7?.Type)
     throws -> (V0, V1, V2, V3, V4, V5?, V6?, V7?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue
     {
         try validateCount(5...8)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1853,14 +1853,14 @@ public extension Array where Element == OSCMessageValue {
                                                 _ v6: V6?.Type,
                                                 _ v7: V7?.Type)
     throws -> (V0, V1, V2, V3, V4?, V5?, V6?, V7?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue
     {
         try validateCount(4...8)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1907,14 +1907,14 @@ public extension Array where Element == OSCMessageValue {
                                                 _ v6: V6?.Type,
                                                 _ v7: V7?.Type)
     throws -> (V0, V1, V2, V3?, V4?, V5?, V6?, V7?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue
     {
         try validateCount(3...8)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1961,14 +1961,14 @@ public extension Array where Element == OSCMessageValue {
                                                 _ v6: V6?.Type,
                                                 _ v7: V7?.Type)
     throws -> (V0, V1, V2?, V3?, V4?, V5?, V6?, V7?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue
     {
         try validateCount(2...8)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2015,14 +2015,14 @@ public extension Array where Element == OSCMessageValue {
                                                 _ v6: V6?.Type,
                                                 _ v7: V7?.Type)
     throws -> (V0, V1?, V2?, V3?, V4?, V5?, V6?, V7?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue
     {
         try validateCount(1...8)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2069,14 +2069,14 @@ public extension Array where Element == OSCMessageValue {
                                                 _ v6: V6?.Type,
                                                 _ v7: V7?.Type)
     throws -> (V0?, V1?, V2?, V3?, V4?, V5?, V6?, V7?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue
     {
         try validateCount(0...8)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2130,15 +2130,15 @@ public extension Array where Element == OSCMessageValue {
                                                     _ v7: V7.Type,
                                                     _ v8: V8.Type)
     throws -> (V0, V1, V2, V3, V4, V5, V6, V7, V8)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol,
-    V8 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue,
+    V8 : OSCMessageConcreteValue
     {
         try validateCount(9)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2187,15 +2187,15 @@ public extension Array where Element == OSCMessageValue {
                                                     _ v7: V7.Type,
                                                     _ v8: V8?.Type)
     throws -> (V0, V1, V2, V3, V4, V5, V6, V7, V8?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol,
-    V8 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue,
+    V8 : OSCMessageConcreteValue
     {
         try validateCount(8...9)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2244,15 +2244,15 @@ public extension Array where Element == OSCMessageValue {
                                                     _ v7: V7?.Type,
                                                     _ v8: V8?.Type)
     throws -> (V0, V1, V2, V3, V4, V5, V6, V7?, V8?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol,
-    V8 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue,
+    V8 : OSCMessageConcreteValue
     {
         try validateCount(7...9)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2301,15 +2301,15 @@ public extension Array where Element == OSCMessageValue {
                                                     _ v7: V7?.Type,
                                                     _ v8: V8?.Type)
     throws -> (V0, V1, V2, V3, V4, V5, V6?, V7?, V8?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol,
-    V8 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue,
+    V8 : OSCMessageConcreteValue
     {
         try validateCount(6...9)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2358,15 +2358,15 @@ public extension Array where Element == OSCMessageValue {
                                                     _ v7: V7?.Type,
                                                     _ v8: V8?.Type)
     throws -> (V0, V1, V2, V3, V4, V5?, V6?, V7?, V8?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol,
-    V8 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue,
+    V8 : OSCMessageConcreteValue
     {
         try validateCount(5...9)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2415,15 +2415,15 @@ public extension Array where Element == OSCMessageValue {
                                                     _ v7: V7?.Type,
                                                     _ v8: V8?.Type)
     throws -> (V0, V1, V2, V3, V4?, V5?, V6?, V7?, V8?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol,
-    V8 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue,
+    V8 : OSCMessageConcreteValue
     {
         try validateCount(4...9)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2472,15 +2472,15 @@ public extension Array where Element == OSCMessageValue {
                                                     _ v7: V7?.Type,
                                                     _ v8: V8?.Type)
     throws -> (V0, V1, V2, V3?, V4?, V5?, V6?, V7?, V8?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol,
-    V8 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue,
+    V8 : OSCMessageConcreteValue
     {
         try validateCount(3...9)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2529,15 +2529,15 @@ public extension Array where Element == OSCMessageValue {
                                                     _ v7: V7?.Type,
                                                     _ v8: V8?.Type)
     throws -> (V0, V1, V2?, V3?, V4?, V5?, V6?, V7?, V8?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol,
-    V8 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue,
+    V8 : OSCMessageConcreteValue
     {
         try validateCount(2...9)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2586,15 +2586,15 @@ public extension Array where Element == OSCMessageValue {
                                                     _ v7: V7?.Type,
                                                     _ v8: V8?.Type)
     throws -> (V0, V1?, V2?, V3?, V4?, V5?, V6?, V7?, V8?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol,
-    V8 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue,
+    V8 : OSCMessageConcreteValue
     {
         try validateCount(1...9)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2643,15 +2643,15 @@ public extension Array where Element == OSCMessageValue {
                                                     _ v7: V7?.Type,
                                                     _ v8: V8?.Type)
     throws -> (V0?, V1?, V2?, V3?, V4?, V5?, V6?, V7?, V8?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol,
-    V8 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue,
+    V8 : OSCMessageConcreteValue
     {
         try validateCount(0...9)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2707,16 +2707,16 @@ public extension Array where Element == OSCMessageValue {
                                                         _ v8: V8.Type,
                                                         _ v9: V9.Type)
     throws -> (V0, V1, V2, V3, V4, V5, V6, V7, V8, V9)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol,
-    V8 : OSCMessageValueProtocol,
-    V9 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue,
+    V8 : OSCMessageConcreteValue,
+    V9 : OSCMessageConcreteValue
     {
         try validateCount(10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2767,16 +2767,16 @@ public extension Array where Element == OSCMessageValue {
                                                         _ v8: V8.Type,
                                                         _ v9: V9?.Type)
     throws -> (V0, V1, V2, V3, V4, V5, V6, V7, V8, V9?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol,
-    V8 : OSCMessageValueProtocol,
-    V9 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue,
+    V8 : OSCMessageConcreteValue,
+    V9 : OSCMessageConcreteValue
     {
         try validateCount(9...10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2827,16 +2827,16 @@ public extension Array where Element == OSCMessageValue {
                                                         _ v8: V8?.Type,
                                                         _ v9: V9?.Type)
     throws -> (V0, V1, V2, V3, V4, V5, V6, V7, V8?, V9?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol,
-    V8 : OSCMessageValueProtocol,
-    V9 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue,
+    V8 : OSCMessageConcreteValue,
+    V9 : OSCMessageConcreteValue
     {
         try validateCount(8...10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2887,16 +2887,16 @@ public extension Array where Element == OSCMessageValue {
                                                         _ v8: V8?.Type,
                                                         _ v9: V9?.Type)
     throws -> (V0, V1, V2, V3, V4, V5, V6, V7?, V8?, V9?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol,
-    V8 : OSCMessageValueProtocol,
-    V9 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue,
+    V8 : OSCMessageConcreteValue,
+    V9 : OSCMessageConcreteValue
     {
         try validateCount(7...10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2947,16 +2947,16 @@ public extension Array where Element == OSCMessageValue {
                                                         _ v8: V8?.Type,
                                                         _ v9: V9?.Type)
     throws -> (V0, V1, V2, V3, V4, V5, V6?, V7?, V8?, V9?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol,
-    V8 : OSCMessageValueProtocol,
-    V9 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue,
+    V8 : OSCMessageConcreteValue,
+    V9 : OSCMessageConcreteValue
     {
         try validateCount(6...10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -3007,16 +3007,16 @@ public extension Array where Element == OSCMessageValue {
                                                         _ v8: V8?.Type,
                                                         _ v9: V9?.Type)
     throws -> (V0, V1, V2, V3, V4, V5?, V6?, V7?, V8?, V9?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol,
-    V8 : OSCMessageValueProtocol,
-    V9 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue,
+    V8 : OSCMessageConcreteValue,
+    V9 : OSCMessageConcreteValue
     {
         try validateCount(5...10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -3067,16 +3067,16 @@ public extension Array where Element == OSCMessageValue {
                                                         _ v8: V8?.Type,
                                                         _ v9: V9?.Type)
     throws -> (V0, V1, V2, V3, V4?, V5?, V6?, V7?, V8?, V9?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol,
-    V8 : OSCMessageValueProtocol,
-    V9 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue,
+    V8 : OSCMessageConcreteValue,
+    V9 : OSCMessageConcreteValue
     {
         try validateCount(4...10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -3127,16 +3127,16 @@ public extension Array where Element == OSCMessageValue {
                                                         _ v8: V8?.Type,
                                                         _ v9: V9?.Type)
     throws -> (V0, V1, V2, V3?, V4?, V5?, V6?, V7?, V8?, V9?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol,
-    V8 : OSCMessageValueProtocol,
-    V9 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue,
+    V8 : OSCMessageConcreteValue,
+    V9 : OSCMessageConcreteValue
     {
         try validateCount(3...10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -3187,16 +3187,16 @@ public extension Array where Element == OSCMessageValue {
                                                         _ v8: V8?.Type,
                                                         _ v9: V9?.Type)
     throws -> (V0, V1, V2?, V3?, V4?, V5?, V6?, V7?, V8?, V9?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol,
-    V8 : OSCMessageValueProtocol,
-    V9 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue,
+    V8 : OSCMessageConcreteValue,
+    V9 : OSCMessageConcreteValue
     {
         try validateCount(2...10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -3247,16 +3247,16 @@ public extension Array where Element == OSCMessageValue {
                                                         _ v8: V8?.Type,
                                                         _ v9: V9?.Type)
     throws -> (V0, V1?, V2?, V3?, V4?, V5?, V6?, V7?, V8?, V9?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol,
-    V8 : OSCMessageValueProtocol,
-    V9 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue,
+    V8 : OSCMessageConcreteValue,
+    V9 : OSCMessageConcreteValue
     {
         try validateCount(1...10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -3307,16 +3307,16 @@ public extension Array where Element == OSCMessageValue {
                                                         _ v8: V8?.Type,
                                                         _ v9: V9?.Type)
     throws -> (V0?, V1?, V2?, V3?, V4?, V5?, V6?, V7?, V8?, V9?)
-    where V0 : OSCMessageValueProtocol,
-    V1 : OSCMessageValueProtocol,
-    V2 : OSCMessageValueProtocol,
-    V3 : OSCMessageValueProtocol,
-    V4 : OSCMessageValueProtocol,
-    V5 : OSCMessageValueProtocol,
-    V6 : OSCMessageValueProtocol,
-    V7 : OSCMessageValueProtocol,
-    V8 : OSCMessageValueProtocol,
-    V9 : OSCMessageValueProtocol
+    where V0 : OSCMessageConcreteValue,
+    V1 : OSCMessageConcreteValue,
+    V2 : OSCMessageConcreteValue,
+    V3 : OSCMessageConcreteValue,
+    V4 : OSCMessageConcreteValue,
+    V5 : OSCMessageConcreteValue,
+    V6 : OSCMessageConcreteValue,
+    V7 : OSCMessageConcreteValue,
+    V8 : OSCMessageConcreteValue,
+    V9 : OSCMessageConcreteValue
     {
         try validateCount(0...10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -3359,7 +3359,7 @@ internal extension Array where Element == OSCMessageValue {
     @usableFromInline
     func unwrapValue<T>(_ type: T.Type,
                         index: Index) throws -> T
-    where T : OSCMessageValueProtocol
+    where T : OSCMessageConcreteValue
     {
         
         guard indices.contains(index) else {
@@ -3367,17 +3367,45 @@ internal extension Array where Element == OSCMessageValue {
         }
         
         switch T.self {
+        
+            // substitute types:
+            
+        case is Int.Type:
+            switch self[index] {
+            case let .int32(v):     return v.int as! T
+            case let .int64(v):     return v.int as! T
+            case let .timeTag(v):   return v.int as! T
+            default: break
+            }
+            
+        case is String.Type:
+            switch self[index] {
+            case let .string(v):    return v.stringValue as! T
+            case let .stringAlt(v): return v.stringValue as! T
+            case let .character(v): return v.characterValue.string as! T
+            default: break
+            }
+            
+        case is Character.Type:
+            switch self[index] {
+            case let .string(v):    return (v.stringValue.first ?? Character("?")) as! T
+            case let .stringAlt(v): return (v.stringValue.first ?? Character("?")) as! T
+            case let .character(v): return v.characterValue as! T
+            default: break
+            }
+            
+            // meta types:
+            
         case is OSCMessageValue.Number.Type:
             switch self[index] {
-                // core types
             case let .int32(v):     return OSCMessageValue.Number.int32(v) as! T
             case let .float32(v):   return OSCMessageValue.Number.float32(v) as! T
-                
-                // extended types
             case let .int64(v):     return OSCMessageValue.Number.int64(v) as! T
             case let .double(v):    return OSCMessageValue.Number.double(v) as! T
             default: break
             }
+            
+            // true concrete types:
             
         default:
             switch self[index] {
@@ -3406,7 +3434,7 @@ internal extension Array where Element == OSCMessageValue {
     @usableFromInline
     func unwrapValue<T>(_ type: T?.Type,
                         index: Index) throws -> T?
-    where T : OSCMessageValueProtocol
+    where T : OSCMessageConcreteValue
     {
         guard indices.contains(index) else { return nil }
         
