@@ -17,7 +17,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -27,6 +27,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -50,7 +55,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -60,6 +65,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -88,7 +98,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -98,6 +108,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -124,7 +139,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -134,6 +149,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -160,7 +180,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -170,6 +190,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -202,7 +227,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -212,6 +237,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -241,7 +271,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -251,6 +281,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -280,7 +315,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -290,6 +325,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -319,7 +359,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -329,6 +369,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -364,7 +409,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -374,6 +419,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -406,7 +456,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -416,6 +466,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -448,7 +503,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -458,6 +513,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -490,7 +550,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -500,6 +560,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -532,7 +597,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -542,6 +607,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -580,7 +650,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -590,6 +660,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -625,7 +700,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -635,6 +710,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -670,7 +750,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -680,6 +760,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -715,7 +800,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -725,6 +810,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -760,7 +850,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -770,6 +860,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -805,7 +900,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -815,6 +910,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -856,7 +956,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -866,6 +966,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -904,7 +1009,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -914,6 +1019,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -952,7 +1062,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -962,6 +1072,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -1000,7 +1115,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -1010,6 +1125,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -1048,7 +1168,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -1058,6 +1178,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -1096,7 +1221,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -1106,6 +1231,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -1144,7 +1274,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -1154,6 +1284,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -1198,7 +1333,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -1208,6 +1343,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -1249,7 +1389,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -1259,6 +1399,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -1300,7 +1445,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -1310,6 +1455,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -1351,7 +1501,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -1361,6 +1511,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -1402,7 +1557,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -1412,6 +1567,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -1453,7 +1613,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -1463,6 +1623,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -1504,7 +1669,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -1514,6 +1679,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -1555,7 +1725,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -1565,6 +1735,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -1612,7 +1787,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -1622,6 +1797,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -1666,7 +1846,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -1676,6 +1856,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -1720,7 +1905,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -1730,6 +1915,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -1774,7 +1964,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -1784,6 +1974,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -1828,7 +2023,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -1838,6 +2033,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -1882,7 +2082,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -1892,6 +2092,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -1936,7 +2141,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -1946,6 +2151,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -1990,7 +2200,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -2000,6 +2210,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -2044,7 +2259,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -2054,6 +2269,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -2104,7 +2324,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -2114,6 +2334,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -2161,7 +2386,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -2171,6 +2396,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -2218,7 +2448,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -2228,6 +2458,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -2275,7 +2510,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -2285,6 +2520,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -2332,7 +2572,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -2342,6 +2582,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -2389,7 +2634,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -2399,6 +2644,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -2446,7 +2696,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -2456,6 +2706,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -2503,7 +2758,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -2513,6 +2768,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -2560,7 +2820,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -2570,6 +2830,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -2617,7 +2882,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -2627,6 +2892,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -2680,7 +2950,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -2690,6 +2960,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -2740,7 +3015,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -2750,6 +3025,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -2800,7 +3080,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -2810,6 +3090,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -2860,7 +3145,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -2870,6 +3155,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -2920,7 +3210,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -2930,6 +3220,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -2980,7 +3275,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -2990,6 +3285,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -3040,7 +3340,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -3050,6 +3350,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -3100,7 +3405,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -3110,6 +3415,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -3160,7 +3470,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -3170,6 +3480,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -3220,7 +3535,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -3230,6 +3545,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
@@ -3280,7 +3600,7 @@ public extension Array where Element == OSCMessageValue {
     /// Core concrete types:
     /// - `Int32.self` (matches `.int32`)
     /// - `Float32.self` (matches `.float32`)
-    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `ASCIIString.self` (matches `.string`, `.stringAlt`)
     /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
@@ -3290,6 +3610,11 @@ public extension Array where Element == OSCMessageValue {
     /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
     /// - `Bool.self` (matches `.bool`)
     /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Substitute concrete types:
+    /// - `Int.self` (matches `.int32`, `.int64`, `.timeTag`)
+    /// - `String.self` (matches `.string`, `.stringAlt`, `.character`)
+    /// - `Character.self` (matches `.string`, `.stringAlt`, `.character`)
     ///
     /// Meta types:
     /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
