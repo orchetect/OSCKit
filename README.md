@@ -113,7 +113,18 @@ The following OSC value types are available, conforming to the [Open Sound Contr
 
 ### Send
 
-#### Bundle
+#### OSC Message
+
+To send a single message, construct an `OSCMessage` and send the message's `rawData` bytes as the outgoing UDP message.
+
+```swift
+let msg = OSCMessage(address: "/msg2", 
+                     values: [.string("string"), .int32(123)])
+
+yourUDPSocket.send(msg.rawData)
+```
+
+#### OSC Bundle
 
 To send multiple OSC messages or nested OSC bundles to the same destination at the same time, pack them in an `OSCBundle` and send the bundle's `rawData` bytes as the outgoing UDP message.
 
@@ -124,17 +135,6 @@ let msg2 = OSCMessage(address: "/msg2",
 let bundle = OSCBundle([msg1, msg2])
 
 yourUDPSocket.send(bundle.rawData)
-```
-
-#### Message
-
-To send a single message, construct an `OSCMessage` and send the message's `rawData` bytes as the outgoing UDP message.
-
-```swift
-let msg = OSCMessage(address: "/msg2", 
-                     values: [.string("string"), .int32(123)])
-
-yourUDPSocket.send(msg.rawData)
 ```
 
 ## Documentation
