@@ -139,7 +139,7 @@ yourUDPSocket.send(bundle.rawData)
 
 ## Documentation
 
-Will be added in future. In the meantime, refer to this README file for a getting started guide, and check out the [Example projects](Examples).
+Will be added in future. In the meantime, refer to this README's [Getting Started](#getting-started) section, and check out the [Example projects](Examples).
 
 ## Roadmap
 
