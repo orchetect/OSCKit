@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import SwiftASCII
 
 extension OSCMessage.ValueMask {
     

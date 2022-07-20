@@ -75,6 +75,8 @@ public extension Array where Element == OSCMessageValue {
     
 }
 
+// MARK: - [OSCMessageValueProtocol] return
+
 public extension Array where Element == OSCMessageValue {
     
     /// Returns `[OSCMessageValueProtocol]` of non-enumeration-encapsulated values if an array of `OSCMessageValue` values matches an expected value type mask (order and type of values).
@@ -82,18 +84,15 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - parameter mask: `OSCMessage.ValueMask` representing a positive mask match.
     ///
-    /// - Returns:
-    ///   `.int32()` as `Int`,
-    ///   `.float32()` as `Float32`,
-    ///   `.string()` as `String`,
-    ///   `.blob()` as `Data`.
-    ///   Returns `nil` if values do not match the mask.
+    /// - Returns: Unwrapped values if values match the mask.
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values(
         mask: OSCMessage.ValueMask
-    ) -> [OSCMessageValueProtocol?]? {
+    ) throws -> [OSCMessageValueProtocol?] {
         
-        values(mask: mask.tokens)
+        try values(mask: mask.tokens)
         
     }
     
@@ -102,19 +101,16 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - parameter mask: `[OSCMessage.ValueMask.Token]` representing a positive mask match.
     ///
-    /// - Returns:
-    ///   `.int32()` as `Int`,
-    ///   `.float32()` as `Float32`,
-    ///   `.string()` as `String`,
-    ///   `.blob()` as `Data`.
-    ///   Returns `nil` if values do not match the mask.
+    /// - Returns: Unwrapped values if values match the mask.
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values(
         mask: [OSCMessage.ValueMask.Token]
-    ) -> [OSCMessageValueProtocol?]? {
+    ) throws -> [OSCMessageValueProtocol?] {
         
         // should not contain more values than mask
-        if self.count > mask.count { return nil }
+        if self.count > mask.count { throw OSCMessage.ValueMask.MaskError.invalidCount }
         
         var values = [OSCMessageValueProtocol?]()
         
@@ -124,8 +120,9 @@ public extension Array where Element == OSCMessageValue {
             if self.indices.contains(idx) {
                 // check if it's the correct base type
                 if !self[idx].baseTypeMatches(type: mask[idx].baseType,
-                                              canMatchMetaTypes: true) {
-                    return nil
+                                              canMatchMetaTypes: true)
+                {
+                    throw OSCMessage.ValueMask.MaskError.mismatchedTypes
                 }
                 
                 switch self[idx] {
@@ -148,7 +145,7 @@ public extension Array where Element == OSCMessageValue {
             } else {
                 switch idxOptional {
                 case true:              values.append(nil)      ; continue
-                case false:             return nil
+                case false:             throw OSCMessage.ValueMask.MaskError.mismatchedTypes
                 }
             }
         }
