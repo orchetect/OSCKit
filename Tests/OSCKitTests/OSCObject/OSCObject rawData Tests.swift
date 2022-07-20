@@ -1,5 +1,5 @@
 //
-//  OSCObject Parse Tests.swift
+//  OSCObject rawData Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
@@ -8,7 +8,7 @@
 import XCTest
 import OSCKit
 
-final class OSCObject_Parse_Tests: XCTestCase {
+final class OSCObject_rawData_Tests: XCTestCase {
     
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
@@ -17,7 +17,7 @@ final class OSCObject_Parse_Tests: XCTestCase {
     
     func testParseOSC_Model() {
         
-        // (Raw data taken from testOSCMessage_int32() of "OSCMessage Tests.swift")
+        // (Raw data taken from testInt32() of "OSCMessage rawData Tests.swift")
         
         // manually build a raw OSC message
         
@@ -75,7 +75,7 @@ final class OSCObject_Parse_Tests: XCTestCase {
     
     func testParseOSC_Message() {
         
-        // (Raw data taken from testOSCMessage_int32() of "OSCMessage Tests.swift")
+        // (Raw data taken from testInt32() of "OSCMessage rawData Tests.swift")
         
         // manually build a raw OSC message
         
@@ -130,7 +130,7 @@ final class OSCObject_Parse_Tests: XCTestCase {
     
     func testParseOSC_Bundle() {
         
-        // (Raw data taken from testOSCBundle_OSCMessage() of "OSCBundle Tests.swift")
+        // (Raw data taken from testSingleOSCMessage() of "OSCBundle rawData Tests.swift")
         
         // manually build a raw OSC bundle
         

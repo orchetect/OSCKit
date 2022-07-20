@@ -13,9 +13,6 @@ final class OSCObject_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
-    
-    // MARK: - OSCObject
-    
     func testAppearsToBeOSC() {
         
         let bundle = OSCBundle(elements: []).rawData
