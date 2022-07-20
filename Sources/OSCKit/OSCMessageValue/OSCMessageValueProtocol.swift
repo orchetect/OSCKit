@@ -5,6 +5,7 @@
 
 import Foundation
 
+/// Protocol that all OSC value types conform to.
 public protocol OSCMessageValueProtocol { }
 
 extension Int32                       : OSCMessageValueProtocol { }

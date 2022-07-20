@@ -1,14 +1,15 @@
 //
-//  OSCMessage MaskType.swift
+//  ValueMask Token.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
 import Foundation
 
-extension OSCMessage {
+extension OSCMessage.ValueMask {
     
-    /// Enum describing value types that are possible in an `OSCMessage` including optional variants and meta types. Useful for abstractions that mask sequences of values.
-    public enum MaskType: Int, CaseIterable {
+    /// `OSCMessage` value type tokens, including optional variants and meta types.
+    /// Useful for abstractions that mask sequences of values.
+    public enum Token: Int, CaseIterable {
         
         // concrete types
         
@@ -61,7 +62,7 @@ extension OSCMessage {
     
 }
 
-public extension OSCMessage.MaskType {
+public extension OSCMessage.ValueMask.Token {
     
     /// Returns base mask type (by stripping 'optional' component if present).
     @inlinable
