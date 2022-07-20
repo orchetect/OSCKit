@@ -148,3 +148,32 @@ public extension OSCMessage.ValueMask.Token {
     }
     
 }
+
+public extension OSCMessage.ValueMask.Token {
+    
+    /// Returns the associated concrete type.
+    var concreteType: OSCMessageValueProtocol.Type {
+        
+        switch self {
+            // core types
+        case .int32,        .int32Optional:     return Int32.self
+        case .float32,      .float32Optional:   return Float32.self
+        case .string,       .stringOptional:    return ASCIIString.self
+        case .blob,         .blobOptional:      return Data.self
+            
+            // extended types
+        case .int64,        .int64Optional:     return Int64.self
+        case .timeTag,      .timeTagOptional:   return Int64.self
+        case .double,       .doubleOptional:    return Double.self
+        case .stringAlt,    .stringAltOptional: return ASCIIString.self
+        case .character,    .characterOptional: return ASCIICharacter.self
+        case .midi,         .midiOptional:      return OSCMessageValue.MIDIMessage.self
+        case .bool,         .boolOptional:      return Bool.self
+        case .null,         .nullOptional:      return NSNull.self
+            
+            // meta types
+        case .number,       .numberOptional:    return OSCMessageValue.Number.self
+        }
+    }
+    
+}
