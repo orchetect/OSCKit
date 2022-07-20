@@ -6,9 +6,7 @@
 
 Open Sound Control library written in Swift.
 
-**Note:** The library does not contain a networking layer. This is by design so that OSCKit can be integrated into your network module of choice. This repo contains an example project demonstrating using it with Apple's `Network.framework`.
-
-Unit tests implemented.
+Full unit test coverage.
 
 ## Getting Started
 
