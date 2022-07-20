@@ -11,7 +11,7 @@ public extension OSCMessageValue {
     /// `OSCMessageValue` meta type "Number":
     /// A box for OSC numeric value types.
     /// Mainly employed as a return type from value masking methods.
-    enum Number: OSCMessageValueProtocol, Equatable, Hashable {
+    enum Number: Equatable, Hashable {
         
         case int32(Int32)
         case float32(Float32)

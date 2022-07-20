@@ -1884,7 +1884,87 @@ final class ConcreteMasks_Tests: XCTestCase {
         
     }
     
-    // MARK: - OSCMessageNumericValue
+    // MARK: - Substitute types
+    
+    func testValuesNumeric_int() throws {
+        
+        XCTAssertEqual(
+            try [OSCMessageValue]([.int32(123)])
+                .masked(Int.self),
+            123
+        )
+        
+        XCTAssertEqual(
+            try [OSCMessageValue]([.int64(123)])
+                .masked(Int.self),
+            123
+        )
+        
+        XCTAssertEqual(
+            try [OSCMessageValue]([.timeTag(123)])
+                .masked(Int.self),
+            123
+        )
+        
+    }
+    
+    func testValuesNumeric_string() throws {
+        
+        XCTAssertEqual(
+            try [OSCMessageValue]([.string("str")])
+                .masked(String.self),
+            "str"
+        )
+        
+        XCTAssertEqual(
+            try [OSCMessageValue]([.stringAlt("str")])
+                .masked(String.self),
+            "str"
+        )
+        
+        XCTAssertEqual(
+            try [OSCMessageValue]([.character("s")])
+                .masked(String.self),
+            "s"
+        )
+        
+    }
+    
+    func testValuesNumeric_character() throws {
+        
+        XCTAssertEqual(
+            try [OSCMessageValue]([.character("a")])
+                .masked(Character.self),
+            "a"
+        )
+        
+        XCTAssertEqual(
+            try [OSCMessageValue]([.string("a")])
+                .masked(Character.self),
+            "a"
+        )
+        
+        XCTAssertEqual(
+            try [OSCMessageValue]([.stringAlt("a")])
+                .masked(Character.self),
+            "a"
+        )
+        
+        XCTAssertEqual(
+            try [OSCMessageValue]([.string("ab")])
+                .masked(Character.self),
+            "a"
+        )
+        
+        XCTAssertEqual(
+            try [OSCMessageValue]([.stringAlt("ab")])
+                .masked(Character.self),
+            "a"
+        )
+        
+    }
+    
+    // MARK: - Meta type: OSCMessageValue.Number
     
     func testValuesNumeric_int32() throws {
         
