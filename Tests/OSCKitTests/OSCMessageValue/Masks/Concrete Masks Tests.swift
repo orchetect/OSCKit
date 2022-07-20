@@ -17,7 +17,7 @@ final class ConcreteMasks_Tests: XCTestCase {
     
     // MARK: - 1 Value
     
-    func testValues1() throws {
+    func testValues_V0() throws {
         
         // success
         XCTAssertEqual(
@@ -34,20 +34,26 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         // wrong number of values
         XCTAssertThrowsError(
+            try [OSCMessageValue]([])
+                .values(mask: Int32.self)
+        )
+        XCTAssertThrowsError(
             try [OSCMessageValue]([.int32(123), .string("str")])
             .values(mask: Int32.self)
         )
         
     }
     
-    func testValues1o() throws {
+    func testValues_V0o() throws {
         
+        // success, has value
         XCTAssertEqual(
             try [OSCMessageValue]([.int32(123)])
                 .values(mask: Int32?.self),
             123
         )
         
+        // success, nil optional
         XCTAssertEqual(
             try [OSCMessageValue]([])
                 .values(mask: Int32?.self),
@@ -58,29 +64,1825 @@ final class ConcreteMasks_Tests: XCTestCase {
     
     // MARK: - 2 Values
     
-    func testValues2() throws {
+    func testValues_V0_V1() throws {
         
-        let values: [OSCMessageValue] = [.int32(123), .string("str")]
+        // success
+        do {
+            let values: [OSCMessageValue] = [.int32(123), .string("str")]
+            
+            let masked = try XCTUnwrap(values.values(mask: Int32.self, ASCIIString.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+        }
         
-        let masked = try XCTUnwrap(values.values(mask: Int32.self, ASCIIString.self))
+        // wrong type
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123), .string("str")])
+                .values(mask: Int64.self, ASCIIString.self)
+        )
         
-        XCTAssertEqual(masked.0, 123)
-        XCTAssertEqual(masked.1, "str")
+        // wrong number of values
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123)])
+                .values(mask: Int32.self, ASCIIString.self)
+        )
+        
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123), .string("str"), .bool(true)])
+                .values(mask: Int32.self, ASCIIString.self)
+        )
+        
+    }
+    
+    func testValues_V0_V1o() throws {
+        
+        // success, has value
+        do {
+            let masked = try [OSCMessageValue]([.int32(123), .string("str")])
+                .values(mask: Int32.self, ASCIIString?.self)
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+        }
+        
+        // success, nil optional
+        do {
+            let masked = try [OSCMessageValue]([.int32(123)])
+                .values(mask: Int32.self, ASCIIString?.self)
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, nil)
+        }
+        
+        // wrong value type
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123), .bool(true)])
+                .values(mask: Int32.self, ASCIIString?.self)
+        )
+        
+    }
+    
+    func testValues_V0o_V1o() throws {
+        
+        // success, has value
+        do {
+            let masked = try [OSCMessageValue]([.int32(123),
+                                                .string("str")])
+                .values(mask: Int32?.self,
+                        ASCIIString?.self)
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+        }
+        
+        // success, nil optional
+        do {
+            let masked = try [OSCMessageValue]([.int32(123)])
+                .values(mask: Int32?.self,
+                        ASCIIString?.self)
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, nil)
+        }
+        
+        // success, nil optional
+        do {
+            let masked = try [OSCMessageValue]([])
+                .values(mask: Int32?.self,
+                        ASCIIString?.self)
+            
+            XCTAssertEqual(masked.0, nil)
+            XCTAssertEqual(masked.1, nil)
+        }
+        
+        // wrong value type
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123), .bool(true)])
+                .values(mask: Int32?.self,
+                        ASCIIString?.self)
+        )
         
     }
     
     // MARK: - 3 Values
+    // TODO: Note: 3 Values does not have exhaustive tests, only basic tests
     
-    //    func testValues3() throws {
-    //
-    //        let values: [OSCMessageValue] = [.int32(123), .string("str")]
-    //
-    //        let masked = try XCTUnwrap(values.values(Int32.self, ASCIIString?.self))
-    //
-    //        XCTAssertEqual(masked.0, 123)
-    //        XCTAssertEqual(masked.1, "str")
-    //
-    //    }
+    func testValues_V0_V1_V2() throws {
+        
+        // success
+        do {
+            let values: [OSCMessageValue] = [.int32(123),
+                                             .string("str"),
+                                             .bool(true)]
+            
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+        }
+        
+        // wrong type
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true)])
+            .values(mask: Int64.self, // wrong type
+                    ASCIIString.self,
+                    Bool.self)
+        )
+        
+        // wrong number of values
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123), .string("str")])
+                .values(mask: Int32.self,
+                        ASCIIString.self,
+                        Bool.self)
+        )
+        
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true),
+                                   .float32(123.45)])
+            .values(mask: Int32.self,
+                    ASCIIString.self,
+                    Bool.self)
+        )
+        
+    }
+    
+    func testValues_V0o_V1o_V2o() throws {
+        
+        let values: [OSCMessageValue] = [.int32(123),
+                                         .string("str"),
+                                         .bool(true)]
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString?.self,
+                                                     Bool?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32?.self,
+                                                     ASCIIString?.self,
+                                                     Bool?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+        }
+        
+    }
+    
+    // MARK: - 4 Values
+    // TODO: Note: 4 Values does not have exhaustive tests, only basic tests
+    
+    func testValues_V0_V1_V2_V3() throws {
+        
+        // success
+        do {
+            let values: [OSCMessageValue] = [.int32(123),
+                                             .string("str"),
+                                             .bool(true),
+                                             .float32(456.78)]
+            
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+        }
+        
+        // wrong type
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true),
+                                   .float32(456.78)])
+            .values(mask: Int64.self, // wrong type
+                    ASCIIString.self,
+                    Bool.self,
+                    Float32.self)
+        )
+        
+        // wrong number of values
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true)])
+            .values(mask: Int32.self,
+                    ASCIIString.self,
+                    Bool.self,
+                    Float32.self)
+        )
+        
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true),
+                                   .float32(123.45),
+                                   .blob(Data([0x01]))])
+            .values(mask: Int32.self,
+                    ASCIIString.self,
+                    Bool.self,
+                    Float32.self)
+        )
+        
+    }
+    
+    func testValues_V0o_V1o_V2o_V3o() throws {
+        
+        let values: [OSCMessageValue] = [.int32(123),
+                                         .string("str"),
+                                         .bool(true),
+                                         .float32(456.78)]
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString?.self,
+                                                     Bool?.self,
+                                                     Float32?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString?.self,
+                                                     Bool?.self,
+                                                     Float32?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32?.self,
+                                                     ASCIIString?.self,
+                                                     Bool?.self,
+                                                     Float32?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+        }
+        
+    }
+    
+    // MARK: - 5 Values
+    // TODO: Note: 5 Values does not have exhaustive tests, only basic tests
+    
+    func testValues_V0_V1_V2_V3_V4() throws {
+        
+        // success
+        do {
+            let values: [OSCMessageValue] = [.int32(123),
+                                             .string("str"),
+                                             .bool(true),
+                                             .float32(456.78),
+                                             .blob(Data([0x01]))]
+            
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+        }
+        
+        // wrong type
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true),
+                                   .float32(456.78),
+                                   .blob(Data([0x01]))])
+            .values(mask: Int64.self, // wrong type
+                    ASCIIString.self,
+                    Bool.self,
+                    Float32.self,
+                    Data.self)
+        )
+        
+        // wrong number of values
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true),
+                                   .float32(123.45)])
+            .values(mask: Int32.self,
+                    ASCIIString.self,
+                    Bool.self,
+                    Float32.self,
+                    Data.self)
+        )
+        
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true),
+                                   .float32(123.45),
+                                   .blob(Data([0x01])),
+                                   .double(234.56)])
+            .values(mask: Int32.self,
+                    ASCIIString.self,
+                    Bool.self,
+                    Float32.self,
+                    Data.self)
+        )
+        
+    }
+    
+    func testValues_V0o_V1o_V2o_V3o_V4o() throws {
+        
+        let values: [OSCMessageValue] = [.int32(123),
+                                         .string("str"),
+                                         .bool(true),
+                                         .float32(456.78),
+                                         .blob(Data([0x01]))]
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32?.self,
+                                                     Data?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool?.self,
+                                                     Float32?.self,
+                                                     Data?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString?.self,
+                                                     Bool?.self,
+                                                     Float32?.self,
+                                                     Data?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32?.self,
+                                                     ASCIIString?.self,
+                                                     Bool?.self,
+                                                     Float32?.self,
+                                                     Data?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+        }
+        
+    }
+    
+    // MARK: - 6 Values
+    // TODO: Note: 6 Values does not have exhaustive tests, only basic tests
+    
+    func testValues_V0_V1_V2_V3_V4_V5() throws {
+        
+        // success
+        do {
+            let values: [OSCMessageValue] = [.int32(123),
+                                             .string("str"),
+                                             .bool(true),
+                                             .float32(456.78),
+                                             .blob(Data([0x01])),
+                                             .double(234.56)]
+            
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data.self,
+                                                     Double.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+        }
+        
+        // wrong type
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true),
+                                   .float32(456.78),
+                                   .blob(Data([0x01])),
+                                   .double(234.56)])
+            .values(mask: Int64.self, // wrong type
+                    ASCIIString.self,
+                    Bool.self,
+                    Float32.self,
+                    Data.self,
+                    Double.self)
+        )
+        
+        // wrong number of values
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true),
+                                   .float32(123.45),
+                                   .blob(Data([0x01]))])
+            .values(mask: Int32.self,
+                    ASCIIString.self,
+                    Bool.self,
+                    Float32.self,
+                    Data.self,
+                    Double.self)
+        )
+        
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true),
+                                   .float32(123.45),
+                                   .blob(Data([0x01])),
+                                   .double(234.56),
+                                   .character("C")])
+            .values(mask: Int32.self,
+                    ASCIIString.self,
+                    Bool.self,
+                    Float32.self,
+                    Data.self,
+                    Double.self)
+        )
+        
+    }
+    
+    func testValues_V0o_V1o_V2o_V3o_V4o_V5o() throws {
+        
+        let values: [OSCMessageValue] = [.int32(123),
+                                         .string("str"),
+                                         .bool(true),
+                                         .float32(456.78),
+                                         .blob(Data([0x01])),
+                                         .double(234.56)]
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data.self,
+                                                     Double?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data?.self,
+                                                     Double?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32?.self,
+                                                     Data?.self,
+                                                     Double?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool?.self,
+                                                     Float32?.self,
+                                                     Data?.self,
+                                                     Double?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString?.self,
+                                                     Bool?.self,
+                                                     Float32?.self,
+                                                     Data?.self,
+                                                     Double?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32?.self,
+                                                     ASCIIString?.self,
+                                                     Bool?.self,
+                                                     Float32?.self,
+                                                     Data?.self,
+                                                     Double?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+        }
+        
+    }
+    
+    // MARK: - 7 Values
+    // TODO: Note: 7 Values does not have exhaustive tests, only basic tests
+    
+    func testValues_V0_V1_V2_V3_V4_V5_V6() throws {
+        
+        // success
+        do {
+            let values: [OSCMessageValue] = [.int32(123),
+                                             .string("str"),
+                                             .bool(true),
+                                             .float32(456.78),
+                                             .blob(Data([0x01])),
+                                             .double(234.56),
+                                             .character("C")]
+            
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data.self,
+                                                     Double.self,
+                                                     ASCIICharacter.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+        }
+        
+        // wrong type
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true),
+                                   .float32(456.78),
+                                   .blob(Data([0x01])),
+                                   .double(234.56),
+                                   .character("C")])
+            .values(mask: Int64.self, // wrong type
+                    ASCIIString.self,
+                    Bool.self,
+                    Float32.self,
+                    Data.self,
+                    Double.self,
+                    ASCIICharacter.self)
+        )
+        
+        // wrong number of values
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true),
+                                   .float32(123.45),
+                                   .blob(Data([0x01])),
+                                   .double(234.56)])
+            .values(mask: Int32.self,
+                    ASCIIString.self,
+                    Bool.self,
+                    Float32.self,
+                    Data.self,
+                    Double.self,
+                    ASCIICharacter.self)
+        )
+        
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true),
+                                   .float32(123.45),
+                                   .blob(Data([0x01])),
+                                   .double(234.56),
+                                   .character("C"),
+                                   .timeTag(999)])
+            .values(mask: Int32.self,
+                    ASCIIString.self,
+                    Bool.self,
+                    Float32.self,
+                    Data.self,
+                    Double.self,
+                    ASCIICharacter.self)
+        )
+        
+    }
+    
+    func testValues_V0o_V1o_V2o_V3o_V4o_V5o_V6o() throws {
+        
+        let values: [OSCMessageValue] = [.int32(123),
+                                         .string("str"),
+                                         .bool(true),
+                                         .float32(456.78),
+                                         .blob(Data([0x01])),
+                                         .double(234.56),
+                                         .character("C")]
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data.self,
+                                                     Double.self,
+                                                     ASCIICharacter?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data?.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32?.self,
+                                                     Data?.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool?.self,
+                                                     Float32?.self,
+                                                     Data?.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString?.self,
+                                                     Bool?.self,
+                                                     Float32?.self,
+                                                     Data?.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32?.self,
+                                                     ASCIIString?.self,
+                                                     Bool?.self,
+                                                     Float32?.self,
+                                                     Data?.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+        }
+        
+    }
+    
+    // MARK: - 8 Values
+    // TODO: Note: 8 Values does not have exhaustive tests, only basic tests
+    
+    func testValues_V0_V1_V2_V3_V4_V5_V6_V7() throws {
+        
+        // success
+        do {
+            let values: [OSCMessageValue] = [.int32(123),
+                                             .string("str"),
+                                             .bool(true),
+                                             .float32(456.78),
+                                             .blob(Data([0x01])),
+                                             .double(234.56),
+                                             .character("C"),
+                                             .timeTag(999)]
+            
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data.self,
+                                                     Double.self,
+                                                     ASCIICharacter.self,
+                                                     Int64.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+        }
+        
+        // wrong type
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true),
+                                   .float32(456.78),
+                                   .blob(Data([0x01])),
+                                   .double(234.56),
+                                   .character("C"),
+                                   .timeTag(999)])
+            .values(mask: Int64.self, // wrong type
+                    ASCIIString.self,
+                    Bool.self,
+                    Float32.self,
+                    Data.self,
+                    Double.self,
+                    ASCIICharacter.self,
+                    Int64.self)
+        )
+        
+        // wrong number of values
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true),
+                                   .float32(123.45),
+                                   .blob(Data([0x01])),
+                                   .double(234.56),
+                                   .character("C")])
+            .values(mask: Int32.self,
+                    ASCIIString.self,
+                    Bool.self,
+                    Float32.self,
+                    Data.self,
+                    Double.self,
+                    ASCIICharacter.self,
+                    Int64.self)
+        )
+        
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true),
+                                   .float32(123.45),
+                                   .blob(Data([0x01])),
+                                   .double(234.56),
+                                   .character("C"),
+                                   .timeTag(999),
+                                   .stringAlt("str2")])
+            .values(mask: Int32.self,
+                    ASCIIString.self,
+                    Bool.self,
+                    Float32.self,
+                    Data.self,
+                    Double.self,
+                    ASCIICharacter.self,
+                    Int64.self)
+        )
+        
+    }
+    
+    func testValues_V0o_V1o_V2o_V3o_V4o_V5o_V6o_V7o() throws {
+        
+        let values: [OSCMessageValue] = [.int32(123),
+                                         .string("str"),
+                                         .bool(true),
+                                         .float32(456.78),
+                                         .blob(Data([0x01])),
+                                         .double(234.56),
+                                         .character("C"),
+                                         .timeTag(999)]
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data.self,
+                                                     Double.self,
+                                                     ASCIICharacter.self,
+                                                     Int64?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data.self,
+                                                     Double.self,
+                                                     ASCIICharacter?.self,
+                                                     Int64?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self,
+                                                     Int64?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data?.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self,
+                                                     Int64?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32?.self,
+                                                     Data?.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self,
+                                                     Int64?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool?.self,
+                                                     Float32?.self,
+                                                     Data?.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self,
+                                                     Int64?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString?.self,
+                                                     Bool?.self,
+                                                     Float32?.self,
+                                                     Data?.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self,
+                                                     Int64?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32?.self,
+                                                     ASCIIString?.self,
+                                                     Bool?.self,
+                                                     Float32?.self,
+                                                     Data?.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self,
+                                                     Int64?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+        }
+        
+    }
+    
+    // MARK: - 9 Values
+    // TODO: Note: 9 Values does not have exhaustive tests, only basic tests
+    
+    func testValues_V0_V1_V2_V3_V4_V5_V6_V7_V8() throws {
+        
+        // success
+        do {
+            let values: [OSCMessageValue] = [.int32(123),
+                                             .string("str"),
+                                             .bool(true),
+                                             .float32(456.78),
+                                             .blob(Data([0x01])),
+                                             .double(234.56),
+                                             .character("C"),
+                                             .timeTag(999),
+                                             .stringAlt("str2")]
+            
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data.self,
+                                                     Double.self,
+                                                     ASCIICharacter.self,
+                                                     Int64.self,
+                                                     ASCIIString.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.8, "str2")
+        }
+        
+        // wrong type
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true),
+                                   .float32(456.78),
+                                   .blob(Data([0x01])),
+                                   .double(234.56),
+                                   .character("C"),
+                                   .timeTag(999),
+                                   .stringAlt("str2")])
+            .values(mask: Int64.self, // wrong type
+                    ASCIIString.self,
+                    Bool.self,
+                    Float32.self,
+                    Data.self,
+                    Double.self,
+                    ASCIICharacter.self,
+                    Int64.self,
+                    ASCIIString.self)
+        )
+        
+        // wrong number of values
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true),
+                                   .float32(123.45),
+                                   .blob(Data([0x01])),
+                                   .double(234.56),
+                                   .character("C"),
+                                   .timeTag(999)])
+            .values(mask: Int32.self,
+                    ASCIIString.self,
+                    Bool.self,
+                    Float32.self,
+                    Data.self,
+                    Double.self,
+                    ASCIICharacter.self,
+                    Int64.self,
+                    ASCIIString.self)
+        )
+        
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true),
+                                   .float32(123.45),
+                                   .blob(Data([0x01])),
+                                   .double(234.56),
+                                   .character("C"),
+                                   .timeTag(999),
+                                   .stringAlt("str2"),
+                                   .midi(portID: 0x00, status: 0xFF)])
+            .values(mask: Int32.self,
+                    ASCIIString.self,
+                    Bool.self,
+                    Float32.self,
+                    Data.self,
+                    Double.self,
+                    ASCIICharacter.self,
+                    Int64.self,
+                    ASCIIString.self)
+        )
+        
+    }
+    
+    func testValues_V0o_V1o_V2o_V3o_V4o_V5o_V6o_V7o_V8o() throws {
+        
+        let values: [OSCMessageValue] = [.int32(123),
+                                         .string("str"),
+                                         .bool(true),
+                                         .float32(456.78),
+                                         .blob(Data([0x01])),
+                                         .double(234.56),
+                                         .character("C"),
+                                         .timeTag(999),
+                                         .stringAlt("str2")]
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data.self,
+                                                     Double.self,
+                                                     ASCIICharacter.self,
+                                                     Int64.self,
+                                                     ASCIIString?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.8, "str2")
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data.self,
+                                                     Double.self,
+                                                     ASCIICharacter.self,
+                                                     Int64?.self,
+                                                     ASCIIString?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.8, "str2")
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data.self,
+                                                     Double.self,
+                                                     ASCIICharacter?.self,
+                                                     Int64?.self,
+                                                     ASCIIString?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.8, "str2")
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self,
+                                                     Int64?.self,
+                                                     ASCIIString?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.8, "str2")
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data?.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self,
+                                                     Int64?.self,
+                                                     ASCIIString?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.8, "str2")
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32?.self,
+                                                     Data?.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self,
+                                                     Int64?.self,
+                                                     ASCIIString?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.8, "str2")
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool?.self,
+                                                     Float32?.self,
+                                                     Data?.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self,
+                                                     Int64?.self,
+                                                     ASCIIString?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.8, "str2")
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString?.self,
+                                                     Bool?.self,
+                                                     Float32?.self,
+                                                     Data?.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self,
+                                                     Int64?.self,
+                                                     ASCIIString?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.8, "str2")
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32?.self,
+                                                     ASCIIString?.self,
+                                                     Bool?.self,
+                                                     Float32?.self,
+                                                     Data?.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self,
+                                                     Int64?.self,
+                                                     ASCIIString?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.8, "str2")
+        }
+        
+    }
+    
+    // MARK: - 10 Values
+    // TODO: Note: 10 Values does not have exhaustive tests, only basic tests
+    
+    func testValues_V0_V1_V2_V3_V4_V5_V6_V7_V8_V9() throws {
+        
+        // success
+        do {
+            let values: [OSCMessageValue] = [.int32(123),
+                                             .string("str"),
+                                             .bool(true),
+                                             .float32(456.78),
+                                             .blob(Data([0x01])),
+                                             .double(234.56),
+                                             .character("C"),
+                                             .timeTag(999),
+                                             .stringAlt("str2"),
+                                             .midi(portID: 0x00, status: 0xFF)]
+            
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data.self,
+                                                     Double.self,
+                                                     ASCIICharacter.self,
+                                                     Int64.self,
+                                                     ASCIIString.self,
+                                                     OSCMessageValue.MIDIMessage.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.8, "str2")
+            XCTAssertEqual(masked.9, OSCMessageValue.MIDIMessage(portID: 0x00, status: 0xFF))
+        }
+        
+        // wrong type
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true),
+                                   .float32(456.78),
+                                   .blob(Data([0x01])),
+                                   .double(234.56),
+                                   .character("C"),
+                                   .timeTag(999),
+                                   .stringAlt("str2"),
+                                   .midi(portID: 0x00, status: 0xFF)])
+            .values(mask: Int64.self, // wrong type
+                    ASCIIString.self,
+                    Bool.self,
+                    Float32.self,
+                    Data.self,
+                    Double.self,
+                    ASCIICharacter.self,
+                    Int64.self,
+                    ASCIIString.self,
+                    OSCMessageValue.MIDIMessage.self)
+        )
+        
+        // wrong number of values
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true),
+                                   .float32(123.45),
+                                   .blob(Data([0x01])),
+                                   .double(234.56),
+                                   .character("C"),
+                                   .timeTag(999),
+                                   .stringAlt("str2")])
+            .values(mask: Int32.self,
+                    ASCIIString.self,
+                    Bool.self,
+                    Float32.self,
+                    Data.self,
+                    Double.self,
+                    ASCIICharacter.self,
+                    Int64.self,
+                    ASCIIString.self,
+                    OSCMessageValue.MIDIMessage.self)
+        )
+        
+        XCTAssertThrowsError(
+            try [OSCMessageValue]([.int32(123),
+                                   .string("str"),
+                                   .bool(true),
+                                   .float32(123.45),
+                                   .blob(Data([0x01])),
+                                   .double(234.56),
+                                   .character("C"),
+                                   .timeTag(999),
+                                   .stringAlt("str2"),
+                                   .midi(portID: 0x00, status: 0xFF),
+                                   .null])
+            .values(mask: Int32.self,
+                    ASCIIString.self,
+                    Bool.self,
+                    Float32.self,
+                    Data.self,
+                    Double.self,
+                    ASCIICharacter.self,
+                    Int64.self,
+                    ASCIIString.self,
+                    OSCMessageValue.MIDIMessage.self)
+        )
+        
+    }
+    
+    func testValues_V0o_V1o_V2o_V3o_V4o_V5o_V6o_V7o_V8o_V9o() throws {
+        
+        let values: [OSCMessageValue] = [.int32(123),
+                                         .string("str"),
+                                         .bool(true),
+                                         .float32(456.78),
+                                         .blob(Data([0x01])),
+                                         .double(234.56),
+                                         .character("C"),
+                                         .timeTag(999),
+                                         .stringAlt("str2"),
+                                         .midi(portID: 0x00, status: 0xFF)]
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data.self,
+                                                     Double.self,
+                                                     ASCIICharacter.self,
+                                                     Int64.self,
+                                                     ASCIIString.self,
+                                                     OSCMessageValue.MIDIMessage?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.8, "str2")
+            XCTAssertEqual(masked.9, OSCMessageValue.MIDIMessage(portID: 0x00, status: 0xFF))
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data.self,
+                                                     Double.self,
+                                                     ASCIICharacter.self,
+                                                     Int64.self,
+                                                     ASCIIString?.self,
+                                                     OSCMessageValue.MIDIMessage?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.8, "str2")
+            XCTAssertEqual(masked.9, OSCMessageValue.MIDIMessage(portID: 0x00, status: 0xFF))
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data.self,
+                                                     Double.self,
+                                                     ASCIICharacter.self,
+                                                     Int64?.self,
+                                                     ASCIIString?.self,
+                                                     OSCMessageValue.MIDIMessage?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.8, "str2")
+            XCTAssertEqual(masked.9, OSCMessageValue.MIDIMessage(portID: 0x00, status: 0xFF))
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data.self,
+                                                     Double.self,
+                                                     ASCIICharacter?.self,
+                                                     Int64?.self,
+                                                     ASCIIString?.self,
+                                                     OSCMessageValue.MIDIMessage?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.8, "str2")
+            XCTAssertEqual(masked.9, OSCMessageValue.MIDIMessage(portID: 0x00, status: 0xFF))
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self,
+                                                     Int64?.self,
+                                                     ASCIIString?.self,
+                                                     OSCMessageValue.MIDIMessage?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.8, "str2")
+            XCTAssertEqual(masked.9, OSCMessageValue.MIDIMessage(portID: 0x00, status: 0xFF))
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32.self,
+                                                     Data?.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self,
+                                                     Int64?.self,
+                                                     ASCIIString?.self,
+                                                     OSCMessageValue.MIDIMessage?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.8, "str2")
+            XCTAssertEqual(masked.9, OSCMessageValue.MIDIMessage(portID: 0x00, status: 0xFF))
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool.self,
+                                                     Float32?.self,
+                                                     Data?.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self,
+                                                     Int64?.self,
+                                                     ASCIIString?.self,
+                                                     OSCMessageValue.MIDIMessage?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.8, "str2")
+            XCTAssertEqual(masked.9, OSCMessageValue.MIDIMessage(portID: 0x00, status: 0xFF))
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString.self,
+                                                     Bool?.self,
+                                                     Float32?.self,
+                                                     Data?.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self,
+                                                     Int64?.self,
+                                                     ASCIIString?.self,
+                                                     OSCMessageValue.MIDIMessage?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.8, "str2")
+            XCTAssertEqual(masked.9, OSCMessageValue.MIDIMessage(portID: 0x00, status: 0xFF))
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+                                                     ASCIIString?.self,
+                                                     Bool?.self,
+                                                     Float32?.self,
+                                                     Data?.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self,
+                                                     Int64?.self,
+                                                     ASCIIString?.self,
+                                                     OSCMessageValue.MIDIMessage?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.8, "str2")
+            XCTAssertEqual(masked.9, OSCMessageValue.MIDIMessage(portID: 0x00, status: 0xFF))
+        }
+        
+        do {
+            let masked = try XCTUnwrap(values.values(mask: Int32?.self,
+                                                     ASCIIString?.self,
+                                                     Bool?.self,
+                                                     Float32?.self,
+                                                     Data?.self,
+                                                     Double?.self,
+                                                     ASCIICharacter?.self,
+                                                     Int64?.self,
+                                                     ASCIIString?.self,
+                                                     OSCMessageValue.MIDIMessage?.self))
+            
+            XCTAssertEqual(masked.0, 123)
+            XCTAssertEqual(masked.1, "str")
+            XCTAssertEqual(masked.2, true)
+            XCTAssertEqual(masked.3, 456.78)
+            XCTAssertEqual(masked.4, Data([0x01]))
+            XCTAssertEqual(masked.5, 234.56)
+            XCTAssertEqual(masked.6, "C")
+            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.8, "str2")
+            XCTAssertEqual(masked.9, OSCMessageValue.MIDIMessage(portID: 0x00, status: 0xFF))
+        }
+        
+    }
     
     // MARK: - OSCMessageNumericValue
     
