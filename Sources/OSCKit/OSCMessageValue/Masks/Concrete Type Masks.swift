@@ -15,23 +15,23 @@ public extension Array where Element == OSCMessageValue {
     /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
     ///
     /// Core concrete types:
-    /// - `Int32.self`
-    /// - `Float32.self`
-    /// - `ASCIIString.self`
-    /// - `Data.self`
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
     ///
     /// Extended concrete types:
-    /// - `Int64.self`
-    /// - `Int64.self`
-    /// - `Double.self`
-    /// - `ASCIIString.self`
-    /// - `ASCIICharacter.self`
-    /// - `OSCMessageValue.MIDIMessage.self`
-    /// - `Bool.self`
-    /// - `NSNull.self`
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
     ///
     /// Meta types:
-    /// - `OSCMessageValue.Number.self` (matches int32, float32, double, int64)
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V>(mask v: V.Type)
     throws -> V
@@ -42,6 +42,29 @@ public extension Array where Element == OSCMessageValue {
         return v
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V>(mask v: V?.Type) throws -> V?
     where V : OSCMessageValueProtocol
@@ -57,6 +80,29 @@ public extension Array where Element == OSCMessageValue {
 
 public extension Array where Element == OSCMessageValue {
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1>(mask v0: V0.Type,
                         _ v1: V1.Type)
@@ -70,6 +116,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1>(mask v0: V0.Type,
                         _ v1: V1?.Type)
@@ -83,6 +152,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1>(mask v0: V0?.Type,
                         _ v1: V1?.Type)
@@ -102,6 +194,29 @@ public extension Array where Element == OSCMessageValue {
 
 public extension Array where Element == OSCMessageValue {
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2>(mask v0: V0.Type,
                             _ v1: V1.Type,
@@ -118,6 +233,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2>(mask v0: V0.Type,
                             _ v1: V1.Type,
@@ -134,6 +272,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2>(mask v0: V0.Type,
                             _ v1: V1?.Type,
@@ -150,6 +311,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2>(mask v0: V0?.Type,
                             _ v1: V1?.Type,
@@ -172,6 +356,29 @@ public extension Array where Element == OSCMessageValue {
 
 public extension Array where Element == OSCMessageValue {
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3>(mask v0: V0.Type,
                                 _ v1: V1.Type,
@@ -191,6 +398,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3>(mask v0: V0.Type,
                                 _ v1: V1.Type,
@@ -210,6 +440,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3>(mask v0: V0.Type,
                                 _ v1: V1.Type,
@@ -229,6 +482,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3>(mask v0: V0.Type,
                                 _ v1: V1?.Type,
@@ -248,6 +524,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3>(mask v0: V0?.Type,
                                 _ v1: V1?.Type,
@@ -273,6 +572,29 @@ public extension Array where Element == OSCMessageValue {
 
 public extension Array where Element == OSCMessageValue {
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4>(mask v0: V0.Type,
                                     _ v1: V1.Type,
@@ -295,6 +617,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4>(mask v0: V0.Type,
                                     _ v1: V1.Type,
@@ -317,6 +662,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4>(mask v0: V0.Type,
                                     _ v1: V1.Type,
@@ -339,6 +707,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4>(mask v0: V0.Type,
                                     _ v1: V1.Type,
@@ -361,6 +752,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4>(mask v0: V0.Type,
                                     _ v1: V1?.Type,
@@ -383,6 +797,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4>(mask v0: V0?.Type,
                                     _ v1: V1?.Type,
@@ -411,6 +848,29 @@ public extension Array where Element == OSCMessageValue {
 
 public extension Array where Element == OSCMessageValue {
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5>(mask v0: V0.Type,
                                         _ v1: V1.Type,
@@ -436,6 +896,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5>(mask v0: V0.Type,
                                         _ v1: V1.Type,
@@ -461,6 +944,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5>(mask v0: V0.Type,
                                         _ v1: V1.Type,
@@ -486,6 +992,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5>(mask v0: V0.Type,
                                         _ v1: V1.Type,
@@ -511,6 +1040,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5>(mask v0: V0.Type,
                                         _ v1: V1.Type,
@@ -536,6 +1088,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5>(mask v0: V0.Type,
                                         _ v1: V1?.Type,
@@ -561,6 +1136,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5>(mask v0: V0?.Type,
                                         _ v1: V1?.Type,
@@ -592,6 +1190,29 @@ public extension Array where Element == OSCMessageValue {
 
 public extension Array where Element == OSCMessageValue {
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6>(mask v0: V0.Type,
                                             _ v1: V1.Type,
@@ -620,6 +1241,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6>(mask v0: V0.Type,
                                             _ v1: V1.Type,
@@ -648,6 +1292,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6>(mask v0: V0.Type,
                                             _ v1: V1.Type,
@@ -676,6 +1343,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6>(mask v0: V0.Type,
                                             _ v1: V1.Type,
@@ -704,6 +1394,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6>(mask v0: V0.Type,
                                             _ v1: V1.Type,
@@ -732,6 +1445,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6>(mask v0: V0.Type,
                                             _ v1: V1.Type,
@@ -760,6 +1496,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6>(mask v0: V0.Type,
                                             _ v1: V1?.Type,
@@ -788,6 +1547,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6>(mask v0: V0?.Type,
                                             _ v1: V1?.Type,
@@ -822,6 +1604,29 @@ public extension Array where Element == OSCMessageValue {
 
 public extension Array where Element == OSCMessageValue {
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7>(mask v0: V0.Type,
                                                 _ v1: V1.Type,
@@ -853,6 +1658,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7>(mask v0: V0.Type,
                                                 _ v1: V1.Type,
@@ -884,6 +1712,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7>(mask v0: V0.Type,
                                                 _ v1: V1.Type,
@@ -915,6 +1766,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7>(mask v0: V0.Type,
                                                 _ v1: V1.Type,
@@ -946,6 +1820,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7>(mask v0: V0.Type,
                                                 _ v1: V1.Type,
@@ -977,6 +1874,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7>(mask v0: V0.Type,
                                                 _ v1: V1.Type,
@@ -1008,6 +1928,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7>(mask v0: V0.Type,
                                                 _ v1: V1.Type,
@@ -1039,6 +1982,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7>(mask v0: V0.Type,
                                                 _ v1: V1?.Type,
@@ -1070,6 +2036,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7>(mask v0: V0?.Type,
                                                 _ v1: V1?.Type,
@@ -1107,6 +2096,29 @@ public extension Array where Element == OSCMessageValue {
 
 public extension Array where Element == OSCMessageValue {
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7, V8>(mask v0: V0.Type,
                                                     _ v1: V1.Type,
@@ -1141,6 +2153,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7, v8)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7, V8>(mask v0: V0.Type,
                                                     _ v1: V1.Type,
@@ -1175,6 +2210,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7, v8)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7, V8>(mask v0: V0.Type,
                                                     _ v1: V1.Type,
@@ -1209,6 +2267,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7, v8)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7, V8>(mask v0: V0.Type,
                                                     _ v1: V1.Type,
@@ -1243,6 +2324,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7, v8)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7, V8>(mask v0: V0.Type,
                                                     _ v1: V1.Type,
@@ -1277,6 +2381,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7, v8)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7, V8>(mask v0: V0.Type,
                                                     _ v1: V1.Type,
@@ -1311,6 +2438,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7, v8)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7, V8>(mask v0: V0.Type,
                                                     _ v1: V1.Type,
@@ -1345,6 +2495,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7, v8)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7, V8>(mask v0: V0.Type,
                                                     _ v1: V1.Type,
@@ -1379,6 +2552,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7, v8)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7, V8>(mask v0: V0.Type,
                                                     _ v1: V1?.Type,
@@ -1413,6 +2609,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7, v8)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7, V8>(mask v0: V0?.Type,
                                                     _ v1: V1?.Type,
@@ -1453,6 +2672,29 @@ public extension Array where Element == OSCMessageValue {
 
 public extension Array where Element == OSCMessageValue {
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0.Type,
                                                         _ v1: V1.Type,
@@ -1490,6 +2732,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7, v8, v9)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0.Type,
                                                         _ v1: V1.Type,
@@ -1527,6 +2792,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7, v8, v9)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0.Type,
                                                         _ v1: V1.Type,
@@ -1564,6 +2852,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7, v8, v9)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0.Type,
                                                         _ v1: V1.Type,
@@ -1601,6 +2912,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7, v8, v9)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0.Type,
                                                         _ v1: V1.Type,
@@ -1638,6 +2972,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7, v8, v9)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0.Type,
                                                         _ v1: V1.Type,
@@ -1675,6 +3032,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7, v8, v9)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0.Type,
                                                         _ v1: V1.Type,
@@ -1712,6 +3092,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7, v8, v9)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0.Type,
                                                         _ v1: V1.Type,
@@ -1749,6 +3152,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7, v8, v9)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0.Type,
                                                         _ v1: V1.Type,
@@ -1786,6 +3212,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7, v8, v9)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0.Type,
                                                         _ v1: V1?.Type,
@@ -1823,6 +3272,29 @@ public extension Array where Element == OSCMessageValue {
         return (v0, v1, v2, v3, v4, v5, v6, v7, v8, v9)
     }
     
+    /// Returns the OSC value sequence as concrete value types.
+    /// If the value types do not match the mask, an error is thrown.
+    ///
+    /// Any concrete type can also be used as as an Optional (ie: `Int32?.self`) to either match that value type or return `nil` the value is missing in the designated position in the value array.
+    ///
+    /// Core concrete types:
+    /// - `Int32.self` (matches `.int32`)
+    /// - `Float32.self` (matches `.float32`)
+    /// - `ASCIIString.self` (matches `.string` and `.stringAlt`)
+    /// - `Data.self` (matches `.data`)
+    ///
+    /// Extended concrete types:
+    /// - `Int64.self` (matches `.int64`, `.timeTag`)
+    /// - `Double.self` (matches `.double`)
+    /// - `ASCIICharacter.self` (matches `.character`)
+    /// - `OSCMessageValue.MIDIMessage.self` (matches `.midi`)
+    /// - `Bool.self` (matches `.bool`)
+    /// - `NSNull.self` (matches `.null`)
+    ///
+    /// Meta types:
+    /// - `OSCMessageValue.Number.self` (matches `.int32`, `.float32`, `.double`, `.int64`)
+    ///
+    /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
     func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0?.Type,
                                                         _ v1: V1?.Type,
