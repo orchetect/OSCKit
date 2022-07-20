@@ -1,5 +1,5 @@
 //
-//  Sequence Extensions for OSCMessageValue.swift
+//  OSCMessageValue Sequence Extensions.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 

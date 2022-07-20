@@ -15,7 +15,6 @@ final class ValueMasks_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
-    
     // MARK: - OSCMessage.ValueMask.Token
     
     func testOSCMessage_MaskType_BaseType() {

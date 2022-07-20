@@ -1,5 +1,5 @@
 //
-//  Data Extensions for OSC Bundle.swift
+//  OSCBundle Data Extensions.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 

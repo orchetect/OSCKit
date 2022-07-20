@@ -1,5 +1,5 @@
 //
-//  Data Extensions for OSCObject.swift
+//  OSCObject Data Extensions.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 

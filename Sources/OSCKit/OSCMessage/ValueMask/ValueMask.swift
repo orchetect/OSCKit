@@ -1,5 +1,5 @@
 //
-//  OSCMessage ValueMask.swift
+//  ValueMask.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 

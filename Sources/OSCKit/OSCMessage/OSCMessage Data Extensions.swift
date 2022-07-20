@@ -1,5 +1,5 @@
 //
-//  Data Extensions for OSC Message.swift
+//  OSCMessage Data Extensions.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 

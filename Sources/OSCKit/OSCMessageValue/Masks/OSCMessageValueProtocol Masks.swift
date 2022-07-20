@@ -1,5 +1,5 @@
 //
-//  Sequence Extensions for ValueMask.swift
+//  OSCMessageValueProtocol Masks.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 

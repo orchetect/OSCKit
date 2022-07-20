@@ -1,5 +1,5 @@
 //
-//  MIDIMessage.swift
+//  OSCMessageValue MIDIMessage.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
