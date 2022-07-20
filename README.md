@@ -94,23 +94,21 @@ oscMessage.values.forEach { oscValue
 The following OSC value types are available, conforming to the [Open Sound Control 1.0 specification](http://opensoundcontrol.org/spec-1_0.html).
 
 ```swift
-enum OSCMessageValue {
-  // core types
-  .int32(Int32)
-  .float32(Float32)
-  .string(ASCIIString)
-  .blob(Data)
-  
-  // extended types
-  .int64(Int64)
-  .timeTag(Int64)
-  .double(Double)
-  .stringAlt(ASCIIString)
-  .character(ASCIICharacter)
-  .midi(MIDIMessage)
-  .bool(Bool)
-  .null
-}
+// core types
+.int32(Int32)
+.float32(Float32)
+.string(ASCIIString)
+.blob(Data)
+
+// extended types
+.int64(Int64)
+.timeTag(Int64)
+.double(Double)
+.stringAlt(ASCIIString)
+.character(ASCIICharacter)
+.midi(MIDIMessage)
+.bool(Bool)
+.null
 ```
 
 ### Send
@@ -121,7 +119,8 @@ To send multiple OSC messages or nested OSC bundles to the same destination at t
 
 ```swift
 let msg1 = OSCMessage(address: "/msg1")
-let msg2 = OSCMessage(address: "/msg2", values: [.string("string"), .int32(123)])
+let msg2 = OSCMessage(address: "/msg2", 
+                      values: [.string("string"), .int32(123)])
 let bundle = OSCBundle([msg1, msg2])
 
 yourUDPSocket.send(bundle.rawData)
@@ -132,7 +131,8 @@ yourUDPSocket.send(bundle.rawData)
 To send a single message, construct an `OSCMessage` and send the message's `rawData` bytes as the outgoing UDP message.
 
 ```swift
-let msg = OSCMessage(address: "/msg2", values: [.string("string"), .int32(123)])
+let msg = OSCMessage(address: "/msg2", 
+                     values: [.string("string"), .int32(123)])
 
 yourUDPSocket.send(msg.rawData)
 ```
