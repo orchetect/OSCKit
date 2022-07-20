@@ -49,7 +49,7 @@ class ViewController: NSViewController {
                 
                 do {
                     guard let oscPayload = try data.parseOSC() else { return }
-                    try self?.handleOSCPayload(oscPayload)
+                    try self?.handle(oscPayload: oscPayload)
                     
                 } catch let error as OSCBundle.DecodeError {
                     // handle bundle errors
@@ -83,37 +83,33 @@ class ViewController: NSViewController {
     }
     
     /// Handle incoming OSC data recursively
-    func handleOSCPayload(_ oscPayload: OSCPayload) throws {
+    func handle(oscPayload: OSCPayload) throws {
         
         switch oscPayload {
         case .bundle(let bundle):
             // recursively handle nested bundles and messages
-            try bundle.elements.forEach { try handleOSCPayload($0) }
+            try bundle.elements.forEach { try handle(oscPayload: $0) }
             
         case .message(let message):
             // handle message
-            try handleOSCMessage(message)
+            try handle(oscMessage: message)
             
         }
         
     }
     
-    func handleOSCMessage(_ oscMessage: OSCMessage) throws {
+    func handle(oscMessage: OSCMessage) throws {
         
         switch oscMessage.address.pathComponents {
         case ["test", "method1"]:
-            // validate value array with expected types: [Int32]
-            let value = try oscMessage.values.masked(Int32.self)
-            print("/test/method1 with int32:", value)
+            // validate and unwrap value array with expected types: [String]
+            let value = try oscMessage.values.masked(String.self)
+            print("/test/method1 with string:", value)
             
         case ["test", "method2"]:
-            // validate value array with expected types: [Int32, String?]
-            let values = try oscMessage.values.masked(Int32.self, ASCIIString?.self)
-            if let values1 = values.1 {
-                print("/test/method2 with int32: \(values.0), string: \(values1)")
-            } else {
-                print("/test/method2 with int32: \(values.0)")
-            }
+            // validate and unwrap value array with expected types: [String, Int32?]
+            let values = try oscMessage.values.masked(String.self, Int32?.self)
+            print("/test/method2 with string: \(values.0), int32: \(values.1 ?? 0)")
             
         default:
             print(oscMessage)
