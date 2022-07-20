@@ -32,27 +32,28 @@ Full unit test coverage.
 ### Receive
 
 ```swift
-// in your UDP socket receive handler,
-// assuming the "data" variable is raw data bytes from a received UDP packet:
-
-do {
-  guard let oscPayload = try data.parseOSC() else { return }
-  handleOSCPayload(oscPayload)
-} catch let error as OSCBundle.DecodeError {
-  // handle bundle errors
-} catch let error as OSCMessage.DecodeError {
-  // handle message errors
-} catch {
-  // handle other errors
+func handleUDP(receivedPacket data: Data) {
+  do {
+    guard let oscPayload = try data.parseOSC() else { return }
+    try handle(oscPayload: oscPayload)
+  } catch let error as OSCBundle.DecodeError {
+    // handle bundle errors
+  } catch let error as OSCMessage.DecodeError {
+    // handle message errors
+  } catch {
+    // handle other errors
+  }
 }
 
-func handleOSCPayload(_ oscPayload: OSCPayload) {
+func handle(oscPayload: OSCPayload) throws {
   switch oscPayload {
   case .bundle(let oscBundle):
     // recursively handle nested bundles and messages
-    oscBundle.elements.forEach { handleOSCPayload($0) }
+    try oscBundle.elements.forEach { try handle(oscPayload: $0) }
+    
   case .message(let oscMessage):
     // handle message
+    try handle(oscMessage: OSCMessage)
   }
 }
 ```
@@ -61,15 +62,56 @@ func handleOSCPayload(_ oscPayload: OSCPayload) {
 
 When a specific number of values and value types are expected:
 
-```swift
-// first test that the value count is expected, then unwrap each value
-guard oscMessage.values.count == 2,
-      case let .string(val1) = oscMessage.values[0],
-      case let .int32(val2) = oscMessage.values[1]
-else { return }
+#### Option 1: Use `masked()` to validate and unwrap expected value types
 
-print("Address:", oscMessage.address, 
-      "Values:", val1, val2)
+```swift
+func handle(oscMessage: OSCMessage) throws {
+  switch oscMessage.address.pathComponents {
+  case ["test", "method1"]:
+    // validate and unwrap value array with expected types: [String]
+    let value = try oscMessage.values.masked(String.self)
+    print("/test/method1 with string:", value)
+    
+  case ["test", "method2"]:
+    // validate and unwrap value array with expected types: [String, Int32?]
+    let values = try oscMessage.values.masked(String.self, Int32?.self)
+    print("/test/method2 with string: \(values.0), int32: \(values.1 ?? 0)")
+    
+  default:
+    print(oscMessage)
+  }
+}
+```
+
+#### Option 2: Manually unwrap expected value types
+
+```swift
+func handle(oscMessage: OSCMessage) throws {
+  switch oscMessage.address.pathComponents {
+  case ["test", "method1"]:
+    // validate and unwrap value array with expected types: [String]
+    guard oscMessage.values.count == 1,
+          case let .string(val0) = oscMessage.values[0]
+    else { return }
+    
+    print("Address:", oscMessage.address, 
+          "Values:", val0)
+    
+  case ["test", "method2"]:
+    // validate and unwrap value array with expected types: [String, Int32?]
+    guard (1...2).contains(oscMessage.values.count),
+          case let .string(val0) = oscMessage.values[0]
+    else { return }
+    let val1: Unt32? = {
+      if case let .int32(val1) = oscMessage.values[1] { return val1 } else { return nil }
+    }()
+      
+    print("/test/method2 with string: \(val0), int32: \(val1 ?? 0)")
+      
+  default:
+    print(oscMessage)
+  }
+}
 ```
 
 To parse a variable number of values:
