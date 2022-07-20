@@ -33,7 +33,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V>(mask v: V.Type)
+    func masked<V>(_ v: V.Type)
     throws -> V
     where V : OSCMessageValueProtocol
     {
@@ -66,7 +66,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V>(mask v: V?.Type) throws -> V?
+    func masked<V>(_ v: V?.Type) throws -> V?
     where V : OSCMessageValueProtocol
     {
         try validateCount(0...1)
@@ -104,11 +104,11 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1>(mask v0: V0.Type,
+    func masked<V0, V1>(_ v0: V0.Type,
                         _ v1: V1.Type)
     throws -> (V0, V1)
     where V0 : OSCMessageValueProtocol,
-          V1 : OSCMessageValueProtocol
+    V1 : OSCMessageValueProtocol
     {
         try validateCount(2)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -140,11 +140,11 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1>(mask v0: V0.Type,
+    func masked<V0, V1>(_ v0: V0.Type,
                         _ v1: V1?.Type)
     throws -> (V0, V1?)
     where V0 : OSCMessageValueProtocol,
-          V1 : OSCMessageValueProtocol
+    V1 : OSCMessageValueProtocol
     {
         try validateCount(1...2)
         let v0 = try unwrapValue(v0.self, index: 0)
@@ -176,11 +176,11 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1>(mask v0: V0?.Type,
+    func masked<V0, V1>(_ v0: V0?.Type,
                         _ v1: V1?.Type)
     throws -> (V0?, V1?)
     where V0 : OSCMessageValueProtocol,
-          V1 : OSCMessageValueProtocol
+    V1 : OSCMessageValueProtocol
     {
         try validateCount(0...2)
         let v0 = try unwrapValue(v0.self, index: 0)
@@ -218,13 +218,13 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2>(mask v0: V0.Type,
+    func masked<V0, V1, V2>(_ v0: V0.Type,
                             _ v1: V1.Type,
                             _ v2: V2.Type)
     throws -> (V0, V1, V2)
     where V0 : OSCMessageValueProtocol,
-          V1 : OSCMessageValueProtocol,
-          V2 : OSCMessageValueProtocol
+    V1 : OSCMessageValueProtocol,
+    V2 : OSCMessageValueProtocol
     {
         try validateCount(3)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -257,13 +257,13 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2>(mask v0: V0.Type,
+    func masked<V0, V1, V2>(_ v0: V0.Type,
                             _ v1: V1.Type,
                             _ v2: V2?.Type)
     throws -> (V0, V1, V2?)
     where V0 : OSCMessageValueProtocol,
-          V1 : OSCMessageValueProtocol,
-          V2 : OSCMessageValueProtocol
+    V1 : OSCMessageValueProtocol,
+    V2 : OSCMessageValueProtocol
     {
         try validateCount(2...3)
         let v0 = try unwrapValue(v0.self, index: 0)
@@ -296,13 +296,13 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2>(mask v0: V0.Type,
+    func masked<V0, V1, V2>(_ v0: V0.Type,
                             _ v1: V1?.Type,
                             _ v2: V2?.Type)
     throws -> (V0, V1?, V2?)
     where V0 : OSCMessageValueProtocol,
-          V1 : OSCMessageValueProtocol,
-          V2 : OSCMessageValueProtocol
+    V1 : OSCMessageValueProtocol,
+    V2 : OSCMessageValueProtocol
     {
         try validateCount(1...3)
         let v0 = try unwrapValue(v0.self, index: 0)
@@ -335,13 +335,13 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2>(mask v0: V0?.Type,
+    func masked<V0, V1, V2>(_ v0: V0?.Type,
                             _ v1: V1?.Type,
                             _ v2: V2?.Type)
     throws -> (V0?, V1?, V2?)
     where V0 : OSCMessageValueProtocol,
-          V1 : OSCMessageValueProtocol,
-          V2 : OSCMessageValueProtocol
+    V1 : OSCMessageValueProtocol,
+    V2 : OSCMessageValueProtocol
     {
         try validateCount(0...3)
         let v0 = try unwrapValue(v0.self, index: 0)
@@ -380,15 +380,15 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3>(_ v0: V0.Type,
                                 _ v1: V1.Type,
                                 _ v2: V2.Type,
                                 _ v3: V3.Type)
     throws -> (V0, V1, V2, V3)
     where V0 : OSCMessageValueProtocol,
-          V1 : OSCMessageValueProtocol,
-          V2 : OSCMessageValueProtocol,
-          V3 : OSCMessageValueProtocol
+    V1 : OSCMessageValueProtocol,
+    V2 : OSCMessageValueProtocol,
+    V3 : OSCMessageValueProtocol
     {
         try validateCount(4)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -422,7 +422,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3>(_ v0: V0.Type,
                                 _ v1: V1.Type,
                                 _ v2: V2.Type,
                                 _ v3: V3?.Type)
@@ -464,7 +464,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3>(_ v0: V0.Type,
                                 _ v1: V1.Type,
                                 _ v2: V2?.Type,
                                 _ v3: V3?.Type)
@@ -506,7 +506,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3>(_ v0: V0.Type,
                                 _ v1: V1?.Type,
                                 _ v2: V2?.Type,
                                 _ v3: V3?.Type)
@@ -548,7 +548,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3>(mask v0: V0?.Type,
+    func masked<V0, V1, V2, V3>(_ v0: V0?.Type,
                                 _ v1: V1?.Type,
                                 _ v2: V2?.Type,
                                 _ v3: V3?.Type)
@@ -596,17 +596,17 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4>(_ v0: V0.Type,
                                     _ v1: V1.Type,
                                     _ v2: V2.Type,
                                     _ v3: V3.Type,
                                     _ v4: V4.Type)
     throws -> (V0, V1, V2, V3, V4)
     where V0 : OSCMessageValueProtocol,
-          V1 : OSCMessageValueProtocol,
-          V2 : OSCMessageValueProtocol,
-          V3 : OSCMessageValueProtocol,
-          V4 : OSCMessageValueProtocol
+    V1 : OSCMessageValueProtocol,
+    V2 : OSCMessageValueProtocol,
+    V3 : OSCMessageValueProtocol,
+    V4 : OSCMessageValueProtocol
     {
         try validateCount(5)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -641,7 +641,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4>(_ v0: V0.Type,
                                     _ v1: V1.Type,
                                     _ v2: V2.Type,
                                     _ v3: V3.Type,
@@ -686,7 +686,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4>(_ v0: V0.Type,
                                     _ v1: V1.Type,
                                     _ v2: V2.Type,
                                     _ v3: V3?.Type,
@@ -731,7 +731,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4>(_ v0: V0.Type,
                                     _ v1: V1.Type,
                                     _ v2: V2?.Type,
                                     _ v3: V3?.Type,
@@ -776,7 +776,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4>(_ v0: V0.Type,
                                     _ v1: V1?.Type,
                                     _ v2: V2?.Type,
                                     _ v3: V3?.Type,
@@ -821,7 +821,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4>(mask v0: V0?.Type,
+    func masked<V0, V1, V2, V3, V4>(_ v0: V0?.Type,
                                     _ v1: V1?.Type,
                                     _ v2: V2?.Type,
                                     _ v3: V3?.Type,
@@ -872,7 +872,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5>(_ v0: V0.Type,
                                         _ v1: V1.Type,
                                         _ v2: V2.Type,
                                         _ v3: V3.Type,
@@ -920,7 +920,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5>(_ v0: V0.Type,
                                         _ v1: V1.Type,
                                         _ v2: V2.Type,
                                         _ v3: V3.Type,
@@ -968,7 +968,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5>(_ v0: V0.Type,
                                         _ v1: V1.Type,
                                         _ v2: V2.Type,
                                         _ v3: V3.Type,
@@ -1016,7 +1016,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5>(_ v0: V0.Type,
                                         _ v1: V1.Type,
                                         _ v2: V2.Type,
                                         _ v3: V3?.Type,
@@ -1064,7 +1064,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5>(_ v0: V0.Type,
                                         _ v1: V1.Type,
                                         _ v2: V2?.Type,
                                         _ v3: V3?.Type,
@@ -1112,7 +1112,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5>(_ v0: V0.Type,
                                         _ v1: V1?.Type,
                                         _ v2: V2?.Type,
                                         _ v3: V3?.Type,
@@ -1160,7 +1160,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5>(mask v0: V0?.Type,
+    func masked<V0, V1, V2, V3, V4, V5>(_ v0: V0?.Type,
                                         _ v1: V1?.Type,
                                         _ v2: V2?.Type,
                                         _ v3: V3?.Type,
@@ -1214,7 +1214,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6>(_ v0: V0.Type,
                                             _ v1: V1.Type,
                                             _ v2: V2.Type,
                                             _ v3: V3.Type,
@@ -1265,7 +1265,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6>(_ v0: V0.Type,
                                             _ v1: V1.Type,
                                             _ v2: V2.Type,
                                             _ v3: V3.Type,
@@ -1316,7 +1316,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6>(_ v0: V0.Type,
                                             _ v1: V1.Type,
                                             _ v2: V2.Type,
                                             _ v3: V3.Type,
@@ -1367,7 +1367,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6>(_ v0: V0.Type,
                                             _ v1: V1.Type,
                                             _ v2: V2.Type,
                                             _ v3: V3.Type,
@@ -1418,7 +1418,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6>(_ v0: V0.Type,
                                             _ v1: V1.Type,
                                             _ v2: V2.Type,
                                             _ v3: V3?.Type,
@@ -1469,7 +1469,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6>(_ v0: V0.Type,
                                             _ v1: V1.Type,
                                             _ v2: V2?.Type,
                                             _ v3: V3?.Type,
@@ -1520,7 +1520,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6>(_ v0: V0.Type,
                                             _ v1: V1?.Type,
                                             _ v2: V2?.Type,
                                             _ v3: V3?.Type,
@@ -1571,7 +1571,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6>(mask v0: V0?.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6>(_ v0: V0?.Type,
                                             _ v1: V1?.Type,
                                             _ v2: V2?.Type,
                                             _ v3: V3?.Type,
@@ -1628,7 +1628,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(_ v0: V0.Type,
                                                 _ v1: V1.Type,
                                                 _ v2: V2.Type,
                                                 _ v3: V3.Type,
@@ -1682,7 +1682,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(_ v0: V0.Type,
                                                 _ v1: V1.Type,
                                                 _ v2: V2.Type,
                                                 _ v3: V3.Type,
@@ -1736,7 +1736,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(_ v0: V0.Type,
                                                 _ v1: V1.Type,
                                                 _ v2: V2.Type,
                                                 _ v3: V3.Type,
@@ -1790,7 +1790,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(_ v0: V0.Type,
                                                 _ v1: V1.Type,
                                                 _ v2: V2.Type,
                                                 _ v3: V3.Type,
@@ -1844,7 +1844,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(_ v0: V0.Type,
                                                 _ v1: V1.Type,
                                                 _ v2: V2.Type,
                                                 _ v3: V3.Type,
@@ -1898,7 +1898,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(_ v0: V0.Type,
                                                 _ v1: V1.Type,
                                                 _ v2: V2.Type,
                                                 _ v3: V3?.Type,
@@ -1952,7 +1952,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(_ v0: V0.Type,
                                                 _ v1: V1.Type,
                                                 _ v2: V2?.Type,
                                                 _ v3: V3?.Type,
@@ -2006,7 +2006,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(_ v0: V0.Type,
                                                 _ v1: V1?.Type,
                                                 _ v2: V2?.Type,
                                                 _ v3: V3?.Type,
@@ -2060,7 +2060,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7>(mask v0: V0?.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(_ v0: V0?.Type,
                                                 _ v1: V1?.Type,
                                                 _ v2: V2?.Type,
                                                 _ v3: V3?.Type,
@@ -2120,7 +2120,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7, V8>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(_ v0: V0.Type,
                                                     _ v1: V1.Type,
                                                     _ v2: V2.Type,
                                                     _ v3: V3.Type,
@@ -2177,7 +2177,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7, V8>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(_ v0: V0.Type,
                                                     _ v1: V1.Type,
                                                     _ v2: V2.Type,
                                                     _ v3: V3.Type,
@@ -2234,7 +2234,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7, V8>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(_ v0: V0.Type,
                                                     _ v1: V1.Type,
                                                     _ v2: V2.Type,
                                                     _ v3: V3.Type,
@@ -2291,7 +2291,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7, V8>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(_ v0: V0.Type,
                                                     _ v1: V1.Type,
                                                     _ v2: V2.Type,
                                                     _ v3: V3.Type,
@@ -2348,7 +2348,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7, V8>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(_ v0: V0.Type,
                                                     _ v1: V1.Type,
                                                     _ v2: V2.Type,
                                                     _ v3: V3.Type,
@@ -2405,7 +2405,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7, V8>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(_ v0: V0.Type,
                                                     _ v1: V1.Type,
                                                     _ v2: V2.Type,
                                                     _ v3: V3.Type,
@@ -2462,7 +2462,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7, V8>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(_ v0: V0.Type,
                                                     _ v1: V1.Type,
                                                     _ v2: V2.Type,
                                                     _ v3: V3?.Type,
@@ -2519,7 +2519,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7, V8>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(_ v0: V0.Type,
                                                     _ v1: V1.Type,
                                                     _ v2: V2?.Type,
                                                     _ v3: V3?.Type,
@@ -2576,7 +2576,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7, V8>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(_ v0: V0.Type,
                                                     _ v1: V1?.Type,
                                                     _ v2: V2?.Type,
                                                     _ v3: V3?.Type,
@@ -2633,7 +2633,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7, V8>(mask v0: V0?.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(_ v0: V0?.Type,
                                                     _ v1: V1?.Type,
                                                     _ v2: V2?.Type,
                                                     _ v3: V3?.Type,
@@ -2696,7 +2696,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0.Type,
                                                         _ v1: V1.Type,
                                                         _ v2: V2.Type,
                                                         _ v3: V3.Type,
@@ -2756,7 +2756,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0.Type,
                                                         _ v1: V1.Type,
                                                         _ v2: V2.Type,
                                                         _ v3: V3.Type,
@@ -2816,7 +2816,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0.Type,
                                                         _ v1: V1.Type,
                                                         _ v2: V2.Type,
                                                         _ v3: V3.Type,
@@ -2876,7 +2876,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0.Type,
                                                         _ v1: V1.Type,
                                                         _ v2: V2.Type,
                                                         _ v3: V3.Type,
@@ -2936,7 +2936,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0.Type,
                                                         _ v1: V1.Type,
                                                         _ v2: V2.Type,
                                                         _ v3: V3.Type,
@@ -2996,7 +2996,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0.Type,
                                                         _ v1: V1.Type,
                                                         _ v2: V2.Type,
                                                         _ v3: V3.Type,
@@ -3056,7 +3056,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0.Type,
                                                         _ v1: V1.Type,
                                                         _ v2: V2.Type,
                                                         _ v3: V3.Type,
@@ -3116,7 +3116,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0.Type,
                                                         _ v1: V1.Type,
                                                         _ v2: V2.Type,
                                                         _ v3: V3?.Type,
@@ -3176,7 +3176,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0.Type,
                                                         _ v1: V1.Type,
                                                         _ v2: V2?.Type,
                                                         _ v3: V3?.Type,
@@ -3236,7 +3236,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0.Type,
                                                         _ v1: V1?.Type,
                                                         _ v2: V2?.Type,
                                                         _ v3: V3?.Type,
@@ -3296,7 +3296,7 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(mask v0: V0?.Type,
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0?.Type,
                                                         _ v1: V1?.Type,
                                                         _ v2: V2?.Type,
                                                         _ v3: V3?.Type,
@@ -3358,7 +3358,7 @@ internal extension Array where Element == OSCMessageValue {
     
     @usableFromInline
     func unwrapValue<T>(_ type: T.Type,
-                                 index: Index) throws -> T
+                        index: Index) throws -> T
     where T : OSCMessageValueProtocol
     {
         
@@ -3405,7 +3405,7 @@ internal extension Array where Element == OSCMessageValue {
     
     @usableFromInline
     func unwrapValue<T>(_ type: T?.Type,
-                                 index: Index) throws -> T?
+                        index: Index) throws -> T?
     where T : OSCMessageValueProtocol
     {
         guard indices.contains(index) else { return nil }

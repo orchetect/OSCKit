@@ -16,11 +16,11 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values(
-        mask: OSCMessage.ValueMask
+    func masked(
+        _ valueMask: OSCMessage.ValueMask
     ) throws -> [OSCMessageValueProtocol?] {
         
-        try values(mask: mask.tokens)
+        try masked(valueMask.tokens)
         
     }
     
@@ -33,21 +33,21 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func values(
-        mask: [OSCMessage.ValueMask.Token]
+    func masked(
+        _ valueMask: [OSCMessage.ValueMask.Token]
     ) throws -> [OSCMessageValueProtocol?] {
         
         // should not contain more values than mask
-        if self.count > mask.count { throw OSCMessage.ValueMask.MaskError.invalidCount }
+        if self.count > valueMask.count { throw OSCMessage.ValueMask.MaskError.invalidCount }
         
         var values = [OSCMessageValueProtocol?]()
         
-        for idx in 0..<mask.count {
-            let idxOptional = mask[idx].isOptional
+        for idx in 0..<valueMask.count {
+            let idxOptional = valueMask[idx].isOptional
             
             if self.indices.contains(idx) {
                 // check if it's the correct base type
-                if !self[idx].baseTypeMatches(type: mask[idx].baseType,
+                if !self[idx].baseTypeMatches(type: valueMask[idx].baseType,
                                               canMatchMetaTypes: true)
                 {
                     throw OSCMessage.ValueMask.MaskError.mismatchedTypes

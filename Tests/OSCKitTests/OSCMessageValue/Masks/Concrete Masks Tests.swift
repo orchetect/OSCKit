@@ -22,24 +22,24 @@ final class ConcreteMasks_Tests: XCTestCase {
         // success
         XCTAssertEqual(
             try [OSCMessageValue]([.int32(123)])
-                .values(mask: Int32.self),
+                .masked(Int32.self),
             (123)
         )
         
         // wrong type
         XCTAssertThrowsError(
             try [OSCMessageValue]([.int32(123)])
-                .values(mask: Int64.self)
+                .masked(Int64.self)
         )
         
         // wrong number of values
         XCTAssertThrowsError(
             try [OSCMessageValue]([])
-                .values(mask: Int32.self)
+                .masked(Int32.self)
         )
         XCTAssertThrowsError(
             try [OSCMessageValue]([.int32(123), .string("str")])
-            .values(mask: Int32.self)
+                .masked(Int32.self)
         )
         
     }
@@ -49,14 +49,14 @@ final class ConcreteMasks_Tests: XCTestCase {
         // success, has value
         XCTAssertEqual(
             try [OSCMessageValue]([.int32(123)])
-                .values(mask: Int32?.self),
+                .masked(Int32?.self),
             123
         )
         
         // success, nil optional
         XCTAssertEqual(
             try [OSCMessageValue]([])
-                .values(mask: Int32?.self),
+                .masked(Int32?.self),
             nil
         )
         
@@ -70,7 +70,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         do {
             let values: [OSCMessageValue] = [.int32(123), .string("str")]
             
-            let masked = try XCTUnwrap(values.values(mask: Int32.self, ASCIIString.self))
+            let masked = try XCTUnwrap(values.masked(Int32.self, ASCIIString.self))
             
             XCTAssertEqual(masked.0, 123)
             XCTAssertEqual(masked.1, "str")
@@ -79,18 +79,18 @@ final class ConcreteMasks_Tests: XCTestCase {
         // wrong type
         XCTAssertThrowsError(
             try [OSCMessageValue]([.int32(123), .string("str")])
-                .values(mask: Int64.self, ASCIIString.self)
+                .masked(Int64.self, ASCIIString.self)
         )
         
         // wrong number of values
         XCTAssertThrowsError(
             try [OSCMessageValue]([.int32(123)])
-                .values(mask: Int32.self, ASCIIString.self)
+                .masked(Int32.self, ASCIIString.self)
         )
         
         XCTAssertThrowsError(
             try [OSCMessageValue]([.int32(123), .string("str"), .bool(true)])
-                .values(mask: Int32.self, ASCIIString.self)
+                .masked(Int32.self, ASCIIString.self)
         )
         
     }
@@ -100,7 +100,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         // success, has value
         do {
             let masked = try [OSCMessageValue]([.int32(123), .string("str")])
-                .values(mask: Int32.self, ASCIIString?.self)
+                .masked(Int32.self, ASCIIString?.self)
             
             XCTAssertEqual(masked.0, 123)
             XCTAssertEqual(masked.1, "str")
@@ -109,7 +109,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         // success, nil optional
         do {
             let masked = try [OSCMessageValue]([.int32(123)])
-                .values(mask: Int32.self, ASCIIString?.self)
+                .masked(Int32.self, ASCIIString?.self)
             
             XCTAssertEqual(masked.0, 123)
             XCTAssertEqual(masked.1, nil)
@@ -118,7 +118,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         // wrong value type
         XCTAssertThrowsError(
             try [OSCMessageValue]([.int32(123), .bool(true)])
-                .values(mask: Int32.self, ASCIIString?.self)
+                .masked(Int32.self, ASCIIString?.self)
         )
         
     }
@@ -129,7 +129,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         do {
             let masked = try [OSCMessageValue]([.int32(123),
                                                 .string("str")])
-                .values(mask: Int32?.self,
+                .masked(Int32?.self,
                         ASCIIString?.self)
             
             XCTAssertEqual(masked.0, 123)
@@ -139,7 +139,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         // success, nil optional
         do {
             let masked = try [OSCMessageValue]([.int32(123)])
-                .values(mask: Int32?.self,
+                .masked(Int32?.self,
                         ASCIIString?.self)
             
             XCTAssertEqual(masked.0, 123)
@@ -149,7 +149,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         // success, nil optional
         do {
             let masked = try [OSCMessageValue]([])
-                .values(mask: Int32?.self,
+                .masked(Int32?.self,
                         ASCIIString?.self)
             
             XCTAssertEqual(masked.0, nil)
@@ -159,7 +159,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         // wrong value type
         XCTAssertThrowsError(
             try [OSCMessageValue]([.int32(123), .bool(true)])
-                .values(mask: Int32?.self,
+                .masked(Int32?.self,
                         ASCIIString?.self)
         )
         
@@ -176,7 +176,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                              .string("str"),
                                              .bool(true)]
             
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self))
             
@@ -190,7 +190,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             try [OSCMessageValue]([.int32(123),
                                    .string("str"),
                                    .bool(true)])
-            .values(mask: Int64.self, // wrong type
+            .masked(Int64.self, // wrong type
                     ASCIIString.self,
                     Bool.self)
         )
@@ -198,7 +198,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         // wrong number of values
         XCTAssertThrowsError(
             try [OSCMessageValue]([.int32(123), .string("str")])
-                .values(mask: Int32.self,
+                .masked(Int32.self,
                         ASCIIString.self,
                         Bool.self)
         )
@@ -208,7 +208,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                    .string("str"),
                                    .bool(true),
                                    .float32(123.45)])
-            .values(mask: Int32.self,
+            .masked(Int32.self,
                     ASCIIString.self,
                     Bool.self)
         )
@@ -222,7 +222,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                          .bool(true)]
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool?.self))
             
@@ -232,7 +232,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString?.self,
                                                      Bool?.self))
             
@@ -242,7 +242,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32?.self,
+            let masked = try XCTUnwrap(values.masked(Int32?.self,
                                                      ASCIIString?.self,
                                                      Bool?.self))
             
@@ -265,7 +265,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                              .bool(true),
                                              .float32(456.78)]
             
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self))
@@ -282,7 +282,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                    .string("str"),
                                    .bool(true),
                                    .float32(456.78)])
-            .values(mask: Int64.self, // wrong type
+            .masked(Int64.self, // wrong type
                     ASCIIString.self,
                     Bool.self,
                     Float32.self)
@@ -293,7 +293,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             try [OSCMessageValue]([.int32(123),
                                    .string("str"),
                                    .bool(true)])
-            .values(mask: Int32.self,
+            .masked(Int32.self,
                     ASCIIString.self,
                     Bool.self,
                     Float32.self)
@@ -305,7 +305,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                    .bool(true),
                                    .float32(123.45),
                                    .blob(Data([0x01]))])
-            .values(mask: Int32.self,
+            .masked(Int32.self,
                     ASCIIString.self,
                     Bool.self,
                     Float32.self)
@@ -321,7 +321,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                          .float32(456.78)]
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32?.self))
@@ -333,7 +333,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString?.self,
                                                      Bool?.self,
                                                      Float32?.self))
@@ -345,7 +345,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString?.self,
                                                      Bool?.self,
                                                      Float32?.self))
@@ -357,7 +357,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32?.self,
+            let masked = try XCTUnwrap(values.masked(Int32?.self,
                                                      ASCIIString?.self,
                                                      Bool?.self,
                                                      Float32?.self))
@@ -383,7 +383,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                              .float32(456.78),
                                              .blob(Data([0x01]))]
             
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -403,7 +403,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                    .bool(true),
                                    .float32(456.78),
                                    .blob(Data([0x01]))])
-            .values(mask: Int64.self, // wrong type
+            .masked(Int64.self, // wrong type
                     ASCIIString.self,
                     Bool.self,
                     Float32.self,
@@ -416,7 +416,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                    .string("str"),
                                    .bool(true),
                                    .float32(123.45)])
-            .values(mask: Int32.self,
+            .masked(Int32.self,
                     ASCIIString.self,
                     Bool.self,
                     Float32.self,
@@ -430,7 +430,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                    .float32(123.45),
                                    .blob(Data([0x01])),
                                    .double(234.56)])
-            .values(mask: Int32.self,
+            .masked(Int32.self,
                     ASCIIString.self,
                     Bool.self,
                     Float32.self,
@@ -448,7 +448,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                          .blob(Data([0x01]))]
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -462,7 +462,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32?.self,
@@ -476,7 +476,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool?.self,
                                                      Float32?.self,
@@ -490,7 +490,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString?.self,
                                                      Bool?.self,
                                                      Float32?.self,
@@ -504,7 +504,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32?.self,
+            let masked = try XCTUnwrap(values.masked(Int32?.self,
                                                      ASCIIString?.self,
                                                      Bool?.self,
                                                      Float32?.self,
@@ -533,7 +533,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                              .blob(Data([0x01])),
                                              .double(234.56)]
             
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -556,7 +556,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                    .float32(456.78),
                                    .blob(Data([0x01])),
                                    .double(234.56)])
-            .values(mask: Int64.self, // wrong type
+            .masked(Int64.self, // wrong type
                     ASCIIString.self,
                     Bool.self,
                     Float32.self,
@@ -571,7 +571,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                    .bool(true),
                                    .float32(123.45),
                                    .blob(Data([0x01]))])
-            .values(mask: Int32.self,
+            .masked(Int32.self,
                     ASCIIString.self,
                     Bool.self,
                     Float32.self,
@@ -587,7 +587,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                    .blob(Data([0x01])),
                                    .double(234.56),
                                    .character("C")])
-            .values(mask: Int32.self,
+            .masked(Int32.self,
                     ASCIIString.self,
                     Bool.self,
                     Float32.self,
@@ -607,7 +607,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                          .double(234.56)]
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -623,7 +623,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -639,7 +639,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32?.self,
@@ -655,7 +655,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool?.self,
                                                      Float32?.self,
@@ -671,7 +671,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString?.self,
                                                      Bool?.self,
                                                      Float32?.self,
@@ -687,7 +687,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32?.self,
+            let masked = try XCTUnwrap(values.masked(Int32?.self,
                                                      ASCIIString?.self,
                                                      Bool?.self,
                                                      Float32?.self,
@@ -719,7 +719,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                              .double(234.56),
                                              .character("C")]
             
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -745,7 +745,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                    .blob(Data([0x01])),
                                    .double(234.56),
                                    .character("C")])
-            .values(mask: Int64.self, // wrong type
+            .masked(Int64.self, // wrong type
                     ASCIIString.self,
                     Bool.self,
                     Float32.self,
@@ -762,7 +762,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                    .float32(123.45),
                                    .blob(Data([0x01])),
                                    .double(234.56)])
-            .values(mask: Int32.self,
+            .masked(Int32.self,
                     ASCIIString.self,
                     Bool.self,
                     Float32.self,
@@ -780,7 +780,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                    .double(234.56),
                                    .character("C"),
                                    .timeTag(999)])
-            .values(mask: Int32.self,
+            .masked(Int32.self,
                     ASCIIString.self,
                     Bool.self,
                     Float32.self,
@@ -802,7 +802,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                          .character("C")]
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -820,7 +820,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -838,7 +838,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -856,7 +856,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32?.self,
@@ -874,7 +874,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool?.self,
                                                      Float32?.self,
@@ -892,7 +892,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString?.self,
                                                      Bool?.self,
                                                      Float32?.self,
@@ -910,7 +910,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32?.self,
+            let masked = try XCTUnwrap(values.masked(Int32?.self,
                                                      ASCIIString?.self,
                                                      Bool?.self,
                                                      Float32?.self,
@@ -945,7 +945,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                              .character("C"),
                                              .timeTag(999)]
             
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -974,7 +974,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                    .double(234.56),
                                    .character("C"),
                                    .timeTag(999)])
-            .values(mask: Int64.self, // wrong type
+            .masked(Int64.self, // wrong type
                     ASCIIString.self,
                     Bool.self,
                     Float32.self,
@@ -993,7 +993,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                    .blob(Data([0x01])),
                                    .double(234.56),
                                    .character("C")])
-            .values(mask: Int32.self,
+            .masked(Int32.self,
                     ASCIIString.self,
                     Bool.self,
                     Float32.self,
@@ -1013,7 +1013,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                    .character("C"),
                                    .timeTag(999),
                                    .stringAlt("str2")])
-            .values(mask: Int32.self,
+            .masked(Int32.self,
                     ASCIIString.self,
                     Bool.self,
                     Float32.self,
@@ -1037,7 +1037,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                          .timeTag(999)]
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -1057,7 +1057,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -1077,7 +1077,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -1097,7 +1097,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -1117,7 +1117,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32?.self,
@@ -1137,7 +1137,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool?.self,
                                                      Float32?.self,
@@ -1157,7 +1157,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString?.self,
                                                      Bool?.self,
                                                      Float32?.self,
@@ -1177,7 +1177,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32?.self,
+            let masked = try XCTUnwrap(values.masked(Int32?.self,
                                                      ASCIIString?.self,
                                                      Bool?.self,
                                                      Float32?.self,
@@ -1215,7 +1215,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                              .timeTag(999),
                                              .stringAlt("str2")]
             
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -1247,7 +1247,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                    .character("C"),
                                    .timeTag(999),
                                    .stringAlt("str2")])
-            .values(mask: Int64.self, // wrong type
+            .masked(Int64.self, // wrong type
                     ASCIIString.self,
                     Bool.self,
                     Float32.self,
@@ -1268,7 +1268,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                    .double(234.56),
                                    .character("C"),
                                    .timeTag(999)])
-            .values(mask: Int32.self,
+            .masked(Int32.self,
                     ASCIIString.self,
                     Bool.self,
                     Float32.self,
@@ -1290,7 +1290,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                    .timeTag(999),
                                    .stringAlt("str2"),
                                    .midi(portID: 0x00, status: 0xFF)])
-            .values(mask: Int32.self,
+            .masked(Int32.self,
                     ASCIIString.self,
                     Bool.self,
                     Float32.self,
@@ -1316,7 +1316,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                          .stringAlt("str2")]
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -1338,7 +1338,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -1360,7 +1360,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -1382,7 +1382,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -1404,7 +1404,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -1426,7 +1426,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32?.self,
@@ -1448,7 +1448,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool?.self,
                                                      Float32?.self,
@@ -1470,7 +1470,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString?.self,
                                                      Bool?.self,
                                                      Float32?.self,
@@ -1492,7 +1492,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32?.self,
+            let masked = try XCTUnwrap(values.masked(Int32?.self,
                                                      ASCIIString?.self,
                                                      Bool?.self,
                                                      Float32?.self,
@@ -1533,7 +1533,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                              .stringAlt("str2"),
                                              .midi(portID: 0x00, status: 0xFF)]
             
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -1568,7 +1568,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                    .timeTag(999),
                                    .stringAlt("str2"),
                                    .midi(portID: 0x00, status: 0xFF)])
-            .values(mask: Int64.self, // wrong type
+            .masked(Int64.self, // wrong type
                     ASCIIString.self,
                     Bool.self,
                     Float32.self,
@@ -1591,7 +1591,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                    .character("C"),
                                    .timeTag(999),
                                    .stringAlt("str2")])
-            .values(mask: Int32.self,
+            .masked(Int32.self,
                     ASCIIString.self,
                     Bool.self,
                     Float32.self,
@@ -1615,7 +1615,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                    .stringAlt("str2"),
                                    .midi(portID: 0x00, status: 0xFF),
                                    .null])
-            .values(mask: Int32.self,
+            .masked(Int32.self,
                     ASCIIString.self,
                     Bool.self,
                     Float32.self,
@@ -1643,7 +1643,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                                          .midi(portID: 0x00, status: 0xFF)]
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -1667,7 +1667,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -1691,7 +1691,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -1715,7 +1715,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -1739,7 +1739,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -1763,7 +1763,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32.self,
@@ -1787,7 +1787,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool.self,
                                                      Float32?.self,
@@ -1811,7 +1811,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString.self,
                                                      Bool?.self,
                                                      Float32?.self,
@@ -1835,7 +1835,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32.self,
+            let masked = try XCTUnwrap(values.masked(Int32.self,
                                                      ASCIIString?.self,
                                                      Bool?.self,
                                                      Float32?.self,
@@ -1859,7 +1859,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         }
         
         do {
-            let masked = try XCTUnwrap(values.values(mask: Int32?.self,
+            let masked = try XCTUnwrap(values.masked(Int32?.self,
                                                      ASCIIString?.self,
                                                      Bool?.self,
                                                      Float32?.self,
@@ -1890,7 +1890,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         let values: [OSCMessageValue] = [.int32(123)]
         
-        let masked = try values.values(mask: OSCMessageValue.Number.self)
+        let masked = try values.masked(OSCMessageValue.Number.self)
         
         guard case let .int32(v) = masked else { XCTFail() ; return }
         
@@ -1902,7 +1902,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         let values: [OSCMessageValue] = [.float32(123.45)]
         
-        let masked = try values.values(mask: OSCMessageValue.Number.self)
+        let masked = try values.masked(OSCMessageValue.Number.self)
         
         guard case let .float32(v) = masked else { XCTFail() ; return }
         
@@ -1914,7 +1914,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         let values: [OSCMessageValue] = [.int64(123)]
         
-        let masked = try values.values(mask: OSCMessageValue.Number.self)
+        let masked = try values.masked(OSCMessageValue.Number.self)
         
         guard case let .int64(v) = masked else { XCTFail() ; return }
         
@@ -1926,7 +1926,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         let values: [OSCMessageValue] = [.double(123.45)]
         
-        let masked = try values.values(mask: OSCMessageValue.Number.self)
+        let masked = try values.masked(OSCMessageValue.Number.self)
         
         guard case let .double(v) = masked else { XCTFail() ; return }
         
@@ -1938,13 +1938,13 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         XCTAssertEqual(
             try [OSCMessageValue]([.int32(123)])
-                .values(mask: OSCMessageValue.Number?.self),
+                .masked(OSCMessageValue.Number?.self),
             .int32(123)
         )
         
         XCTAssertEqual(
             try [OSCMessageValue]([])
-                .values(mask: OSCMessageValue.Number?.self),
+                .masked(OSCMessageValue.Number?.self),
             nil
         )
         
