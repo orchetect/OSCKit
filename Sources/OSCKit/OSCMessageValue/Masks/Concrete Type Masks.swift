@@ -38,8 +38,9 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V>(_ v: V.Type)
-    throws -> V
+    func masked<V>(
+        _ v: V.Type
+    ) throws -> V
     where V : OSCMessageConcreteValue
     {
         try validateCount(1)
@@ -76,7 +77,9 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V>(_ v: V?.Type) throws -> V?
+    func masked<V>(
+        _ v: V?.Type
+    ) throws -> V?
     where V : OSCMessageConcreteValue
     {
         try validateCount(0...1)
@@ -119,11 +122,12 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1>(_ v0: V0.Type,
-                        _ v1: V1.Type)
-    throws -> (V0, V1)
+    func masked<V0, V1>(
+        _ v0: V0.Type,
+        _ v1: V1.Type
+    ) throws -> (V0, V1)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue
     {
         try validateCount(2)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -160,11 +164,12 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1>(_ v0: V0.Type,
-                        _ v1: V1?.Type)
-    throws -> (V0, V1?)
+    func masked<V0, V1>(
+        _ v0: V0.Type,
+        _ v1: V1?.Type
+    ) throws -> (V0, V1?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue
     {
         try validateCount(1...2)
         let v0 = try unwrapValue(v0.self, index: 0)
@@ -201,11 +206,12 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1>(_ v0: V0?.Type,
-                        _ v1: V1?.Type)
-    throws -> (V0?, V1?)
+    func masked<V0, V1>(
+        _ v0: V0?.Type,
+        _ v1: V1?.Type
+    ) throws -> (V0?, V1?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue
     {
         try validateCount(0...2)
         let v0 = try unwrapValue(v0.self, index: 0)
@@ -248,13 +254,14 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2>(_ v0: V0.Type,
-                            _ v1: V1.Type,
-                            _ v2: V2.Type)
-    throws -> (V0, V1, V2)
+    func masked<V0, V1, V2>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type
+    ) throws -> (V0, V1, V2)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue
     {
         try validateCount(3)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -292,13 +299,14 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2>(_ v0: V0.Type,
-                            _ v1: V1.Type,
-                            _ v2: V2?.Type)
-    throws -> (V0, V1, V2?)
+    func masked<V0, V1, V2>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2?.Type
+    ) throws -> (V0, V1, V2?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue
     {
         try validateCount(2...3)
         let v0 = try unwrapValue(v0.self, index: 0)
@@ -336,13 +344,14 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2>(_ v0: V0.Type,
-                            _ v1: V1?.Type,
-                            _ v2: V2?.Type)
-    throws -> (V0, V1?, V2?)
+    func masked<V0, V1, V2>(
+        _ v0: V0.Type,
+        _ v1: V1?.Type,
+        _ v2: V2?.Type
+    ) throws -> (V0, V1?, V2?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue
     {
         try validateCount(1...3)
         let v0 = try unwrapValue(v0.self, index: 0)
@@ -380,13 +389,14 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2>(_ v0: V0?.Type,
-                            _ v1: V1?.Type,
-                            _ v2: V2?.Type)
-    throws -> (V0?, V1?, V2?)
+    func masked<V0, V1, V2>(
+        _ v0: V0?.Type,
+        _ v1: V1?.Type,
+        _ v2: V2?.Type
+    ) throws -> (V0?, V1?, V2?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue
     {
         try validateCount(0...3)
         let v0 = try unwrapValue(v0.self, index: 0)
@@ -430,15 +440,16 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3>(_ v0: V0.Type,
-                                _ v1: V1.Type,
-                                _ v2: V2.Type,
-                                _ v3: V3.Type)
-    throws -> (V0, V1, V2, V3)
+    func masked<V0, V1, V2, V3>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type
+    ) throws -> (V0, V1, V2, V3)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue
     {
         try validateCount(4)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -477,15 +488,16 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3>(_ v0: V0.Type,
-                                _ v1: V1.Type,
-                                _ v2: V2.Type,
-                                _ v3: V3?.Type)
-    throws -> (V0, V1, V2, V3?)
+    func masked<V0, V1, V2, V3>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3?.Type
+    ) throws -> (V0, V1, V2, V3?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue
     {
         try validateCount(3...4)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -524,15 +536,16 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3>(_ v0: V0.Type,
-                                _ v1: V1.Type,
-                                _ v2: V2?.Type,
-                                _ v3: V3?.Type)
-    throws -> (V0, V1, V2?, V3?)
+    func masked<V0, V1, V2, V3>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2?.Type,
+        _ v3: V3?.Type
+    ) throws -> (V0, V1, V2?, V3?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue
     {
         try validateCount(2...4)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -571,15 +584,16 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3>(_ v0: V0.Type,
-                                _ v1: V1?.Type,
-                                _ v2: V2?.Type,
-                                _ v3: V3?.Type)
-    throws -> (V0, V1?, V2?, V3?)
+    func masked<V0, V1, V2, V3>(
+        _ v0: V0.Type,
+        _ v1: V1?.Type,
+        _ v2: V2?.Type,
+        _ v3: V3?.Type
+    ) throws -> (V0, V1?, V2?, V3?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue
     {
         try validateCount(1...4)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -618,15 +632,16 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3>(_ v0: V0?.Type,
-                                _ v1: V1?.Type,
-                                _ v2: V2?.Type,
-                                _ v3: V3?.Type)
-    throws -> (V0?, V1?, V2?, V3?)
+    func masked<V0, V1, V2, V3>(
+        _ v0: V0?.Type,
+        _ v1: V1?.Type,
+        _ v2: V2?.Type,
+        _ v3: V3?.Type
+    ) throws -> (V0?, V1?, V2?, V3?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue
     {
         try validateCount(0...4)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -671,17 +686,18 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4>(_ v0: V0.Type,
-                                    _ v1: V1.Type,
-                                    _ v2: V2.Type,
-                                    _ v3: V3.Type,
-                                    _ v4: V4.Type)
-    throws -> (V0, V1, V2, V3, V4)
+    func masked<V0, V1, V2, V3, V4>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4.Type
+    ) throws -> (V0, V1, V2, V3, V4)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue
     {
         try validateCount(5)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -721,17 +737,18 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4>(_ v0: V0.Type,
-                                    _ v1: V1.Type,
-                                    _ v2: V2.Type,
-                                    _ v3: V3.Type,
-                                    _ v4: V4?.Type)
-    throws -> (V0, V1, V2, V3, V4?)
+    func masked<V0, V1, V2, V3, V4>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4?.Type
+    ) throws -> (V0, V1, V2, V3, V4?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue
     {
         try validateCount(4...5)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -771,17 +788,18 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4>(_ v0: V0.Type,
-                                    _ v1: V1.Type,
-                                    _ v2: V2.Type,
-                                    _ v3: V3?.Type,
-                                    _ v4: V4?.Type)
-    throws -> (V0, V1, V2, V3?, V4?)
+    func masked<V0, V1, V2, V3, V4>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type
+    ) throws -> (V0, V1, V2, V3?, V4?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue
     {
         try validateCount(3...5)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -821,17 +839,18 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4>(_ v0: V0.Type,
-                                    _ v1: V1.Type,
-                                    _ v2: V2?.Type,
-                                    _ v3: V3?.Type,
-                                    _ v4: V4?.Type)
-    throws -> (V0, V1, V2?, V3?, V4?)
+    func masked<V0, V1, V2, V3, V4>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2?.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type
+    ) throws -> (V0, V1, V2?, V3?, V4?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue
     {
         try validateCount(2...5)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -871,17 +890,18 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4>(_ v0: V0.Type,
-                                    _ v1: V1?.Type,
-                                    _ v2: V2?.Type,
-                                    _ v3: V3?.Type,
-                                    _ v4: V4?.Type)
-    throws -> (V0, V1?, V2?, V3?, V4?)
+    func masked<V0, V1, V2, V3, V4>(
+        _ v0: V0.Type,
+        _ v1: V1?.Type,
+        _ v2: V2?.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type
+    ) throws -> (V0, V1?, V2?, V3?, V4?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue
     {
         try validateCount(1...5)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -921,17 +941,18 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4>(_ v0: V0?.Type,
-                                    _ v1: V1?.Type,
-                                    _ v2: V2?.Type,
-                                    _ v3: V3?.Type,
-                                    _ v4: V4?.Type)
-    throws -> (V0?, V1?, V2?, V3?, V4?)
+    func masked<V0, V1, V2, V3, V4>(
+        _ v0: V0?.Type,
+        _ v1: V1?.Type,
+        _ v2: V2?.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type
+    ) throws -> (V0?, V1?, V2?, V3?, V4?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue
     {
         try validateCount(0...5)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -977,19 +998,20 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5>(_ v0: V0.Type,
-                                        _ v1: V1.Type,
-                                        _ v2: V2.Type,
-                                        _ v3: V3.Type,
-                                        _ v4: V4.Type,
-                                        _ v5: V5.Type)
-    throws -> (V0, V1, V2, V3, V4, V5)
+    func masked<V0, V1, V2, V3, V4, V5>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4.Type,
+        _ v5: V5.Type
+    ) throws -> (V0, V1, V2, V3, V4, V5)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue
     {
         try validateCount(6)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1030,19 +1052,20 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5>(_ v0: V0.Type,
-                                        _ v1: V1.Type,
-                                        _ v2: V2.Type,
-                                        _ v3: V3.Type,
-                                        _ v4: V4.Type,
-                                        _ v5: V5?.Type)
-    throws -> (V0, V1, V2, V3, V4, V5?)
+    func masked<V0, V1, V2, V3, V4, V5>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4.Type,
+        _ v5: V5?.Type
+    ) throws -> (V0, V1, V2, V3, V4, V5?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue
     {
         try validateCount(5...6)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1083,19 +1106,20 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5>(_ v0: V0.Type,
-                                        _ v1: V1.Type,
-                                        _ v2: V2.Type,
-                                        _ v3: V3.Type,
-                                        _ v4: V4?.Type,
-                                        _ v5: V5?.Type)
-    throws -> (V0, V1, V2, V3, V4?, V5?)
+    func masked<V0, V1, V2, V3, V4, V5>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type
+    ) throws -> (V0, V1, V2, V3, V4?, V5?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue
     {
         try validateCount(4...6)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1136,19 +1160,20 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5>(_ v0: V0.Type,
-                                        _ v1: V1.Type,
-                                        _ v2: V2.Type,
-                                        _ v3: V3?.Type,
-                                        _ v4: V4?.Type,
-                                        _ v5: V5?.Type)
-    throws -> (V0, V1, V2, V3?, V4?, V5?)
+    func masked<V0, V1, V2, V3, V4, V5>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type
+    ) throws -> (V0, V1, V2, V3?, V4?, V5?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue
     {
         try validateCount(3...6)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1189,19 +1214,20 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5>(_ v0: V0.Type,
-                                        _ v1: V1.Type,
-                                        _ v2: V2?.Type,
-                                        _ v3: V3?.Type,
-                                        _ v4: V4?.Type,
-                                        _ v5: V5?.Type)
-    throws -> (V0, V1, V2?, V3?, V4?, V5?)
+    func masked<V0, V1, V2, V3, V4, V5>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2?.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type
+    ) throws -> (V0, V1, V2?, V3?, V4?, V5?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue
     {
         try validateCount(2...6)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1242,19 +1268,20 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5>(_ v0: V0.Type,
-                                        _ v1: V1?.Type,
-                                        _ v2: V2?.Type,
-                                        _ v3: V3?.Type,
-                                        _ v4: V4?.Type,
-                                        _ v5: V5?.Type)
-    throws -> (V0, V1?, V2?, V3?, V4?, V5?)
+    func masked<V0, V1, V2, V3, V4, V5>(
+        _ v0: V0.Type,
+        _ v1: V1?.Type,
+        _ v2: V2?.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type
+    ) throws -> (V0, V1?, V2?, V3?, V4?, V5?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue
     {
         try validateCount(1...6)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1295,19 +1322,20 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5>(_ v0: V0?.Type,
-                                        _ v1: V1?.Type,
-                                        _ v2: V2?.Type,
-                                        _ v3: V3?.Type,
-                                        _ v4: V4?.Type,
-                                        _ v5: V5?.Type)
-    throws -> (V0?, V1?, V2?, V3?, V4?, V5?)
+    func masked<V0, V1, V2, V3, V4, V5>(
+        _ v0: V0?.Type,
+        _ v1: V1?.Type,
+        _ v2: V2?.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type
+    ) throws -> (V0?, V1?, V2?, V3?, V4?, V5?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue
     {
         try validateCount(0...6)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1354,21 +1382,22 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6>(_ v0: V0.Type,
-                                            _ v1: V1.Type,
-                                            _ v2: V2.Type,
-                                            _ v3: V3.Type,
-                                            _ v4: V4.Type,
-                                            _ v5: V5.Type,
-                                            _ v6: V6.Type)
-    throws -> (V0, V1, V2, V3, V4, V5, V6)
+    func masked<V0, V1, V2, V3, V4, V5, V6>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4.Type,
+        _ v5: V5.Type,
+        _ v6: V6.Type
+    ) throws -> (V0, V1, V2, V3, V4, V5, V6)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue
     {
         try validateCount(7)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1410,21 +1439,22 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6>(_ v0: V0.Type,
-                                            _ v1: V1.Type,
-                                            _ v2: V2.Type,
-                                            _ v3: V3.Type,
-                                            _ v4: V4.Type,
-                                            _ v5: V5.Type,
-                                            _ v6: V6?.Type)
-    throws -> (V0, V1, V2, V3, V4, V5, V6?)
+    func masked<V0, V1, V2, V3, V4, V5, V6>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4.Type,
+        _ v5: V5.Type,
+        _ v6: V6?.Type
+    ) throws -> (V0, V1, V2, V3, V4, V5, V6?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue
     {
         try validateCount(6...7)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1466,21 +1496,22 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6>(_ v0: V0.Type,
-                                            _ v1: V1.Type,
-                                            _ v2: V2.Type,
-                                            _ v3: V3.Type,
-                                            _ v4: V4.Type,
-                                            _ v5: V5?.Type,
-                                            _ v6: V6?.Type)
-    throws -> (V0, V1, V2, V3, V4, V5?, V6?)
+    func masked<V0, V1, V2, V3, V4, V5, V6>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type
+    ) throws -> (V0, V1, V2, V3, V4, V5?, V6?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue
     {
         try validateCount(5...7)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1522,21 +1553,22 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6>(_ v0: V0.Type,
-                                            _ v1: V1.Type,
-                                            _ v2: V2.Type,
-                                            _ v3: V3.Type,
-                                            _ v4: V4?.Type,
-                                            _ v5: V5?.Type,
-                                            _ v6: V6?.Type)
-    throws -> (V0, V1, V2, V3, V4?, V5?, V6?)
+    func masked<V0, V1, V2, V3, V4, V5, V6>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type
+    ) throws -> (V0, V1, V2, V3, V4?, V5?, V6?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue
     {
         try validateCount(4...7)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1578,21 +1610,22 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6>(_ v0: V0.Type,
-                                            _ v1: V1.Type,
-                                            _ v2: V2.Type,
-                                            _ v3: V3?.Type,
-                                            _ v4: V4?.Type,
-                                            _ v5: V5?.Type,
-                                            _ v6: V6?.Type)
-    throws -> (V0, V1, V2, V3?, V4?, V5?, V6?)
+    func masked<V0, V1, V2, V3, V4, V5, V6>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type
+    ) throws -> (V0, V1, V2, V3?, V4?, V5?, V6?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue
     {
         try validateCount(3...7)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1634,21 +1667,22 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6>(_ v0: V0.Type,
-                                            _ v1: V1.Type,
-                                            _ v2: V2?.Type,
-                                            _ v3: V3?.Type,
-                                            _ v4: V4?.Type,
-                                            _ v5: V5?.Type,
-                                            _ v6: V6?.Type)
-    throws -> (V0, V1, V2?, V3?, V4?, V5?, V6?)
+    func masked<V0, V1, V2, V3, V4, V5, V6>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2?.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type
+    ) throws -> (V0, V1, V2?, V3?, V4?, V5?, V6?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue
     {
         try validateCount(2...7)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1690,21 +1724,22 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6>(_ v0: V0.Type,
-                                            _ v1: V1?.Type,
-                                            _ v2: V2?.Type,
-                                            _ v3: V3?.Type,
-                                            _ v4: V4?.Type,
-                                            _ v5: V5?.Type,
-                                            _ v6: V6?.Type)
-    throws -> (V0, V1?, V2?, V3?, V4?, V5?, V6?)
+    func masked<V0, V1, V2, V3, V4, V5, V6>(
+        _ v0: V0.Type,
+        _ v1: V1?.Type,
+        _ v2: V2?.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type
+    ) throws -> (V0, V1?, V2?, V3?, V4?, V5?, V6?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue
     {
         try validateCount(1...7)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1746,21 +1781,22 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6>(_ v0: V0?.Type,
-                                            _ v1: V1?.Type,
-                                            _ v2: V2?.Type,
-                                            _ v3: V3?.Type,
-                                            _ v4: V4?.Type,
-                                            _ v5: V5?.Type,
-                                            _ v6: V6?.Type)
-    throws -> (V0?, V1?, V2?, V3?, V4?, V5?, V6?)
+    func masked<V0, V1, V2, V3, V4, V5, V6>(
+        _ v0: V0?.Type,
+        _ v1: V1?.Type,
+        _ v2: V2?.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type
+    ) throws -> (V0?, V1?, V2?, V3?, V4?, V5?, V6?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue
     {
         try validateCount(0...7)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1808,23 +1844,24 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(_ v0: V0.Type,
-                                                _ v1: V1.Type,
-                                                _ v2: V2.Type,
-                                                _ v3: V3.Type,
-                                                _ v4: V4.Type,
-                                                _ v5: V5.Type,
-                                                _ v6: V6.Type,
-                                                _ v7: V7.Type)
-    throws -> (V0, V1, V2, V3, V4, V5, V6, V7)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4.Type,
+        _ v5: V5.Type,
+        _ v6: V6.Type,
+        _ v7: V7.Type
+    ) throws -> (V0, V1, V2, V3, V4, V5, V6, V7)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue
     {
         try validateCount(8)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1867,23 +1904,24 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(_ v0: V0.Type,
-                                                _ v1: V1.Type,
-                                                _ v2: V2.Type,
-                                                _ v3: V3.Type,
-                                                _ v4: V4.Type,
-                                                _ v5: V5.Type,
-                                                _ v6: V6.Type,
-                                                _ v7: V7?.Type)
-    throws -> (V0, V1, V2, V3, V4, V5, V6, V7?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4.Type,
+        _ v5: V5.Type,
+        _ v6: V6.Type,
+        _ v7: V7?.Type
+    ) throws -> (V0, V1, V2, V3, V4, V5, V6, V7?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue
     {
         try validateCount(7...8)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1926,23 +1964,24 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(_ v0: V0.Type,
-                                                _ v1: V1.Type,
-                                                _ v2: V2.Type,
-                                                _ v3: V3.Type,
-                                                _ v4: V4.Type,
-                                                _ v5: V5.Type,
-                                                _ v6: V6?.Type,
-                                                _ v7: V7?.Type)
-    throws -> (V0, V1, V2, V3, V4, V5, V6?, V7?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4.Type,
+        _ v5: V5.Type,
+        _ v6: V6?.Type,
+        _ v7: V7?.Type
+    ) throws -> (V0, V1, V2, V3, V4, V5, V6?, V7?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue
     {
         try validateCount(6...8)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -1985,23 +2024,24 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(_ v0: V0.Type,
-                                                _ v1: V1.Type,
-                                                _ v2: V2.Type,
-                                                _ v3: V3.Type,
-                                                _ v4: V4.Type,
-                                                _ v5: V5?.Type,
-                                                _ v6: V6?.Type,
-                                                _ v7: V7?.Type)
-    throws -> (V0, V1, V2, V3, V4, V5?, V6?, V7?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type,
+        _ v7: V7?.Type
+    ) throws -> (V0, V1, V2, V3, V4, V5?, V6?, V7?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue
     {
         try validateCount(5...8)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2044,23 +2084,24 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(_ v0: V0.Type,
-                                                _ v1: V1.Type,
-                                                _ v2: V2.Type,
-                                                _ v3: V3.Type,
-                                                _ v4: V4?.Type,
-                                                _ v5: V5?.Type,
-                                                _ v6: V6?.Type,
-                                                _ v7: V7?.Type)
-    throws -> (V0, V1, V2, V3, V4?, V5?, V6?, V7?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type,
+        _ v7: V7?.Type
+    ) throws -> (V0, V1, V2, V3, V4?, V5?, V6?, V7?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue
     {
         try validateCount(4...8)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2103,23 +2144,24 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(_ v0: V0.Type,
-                                                _ v1: V1.Type,
-                                                _ v2: V2.Type,
-                                                _ v3: V3?.Type,
-                                                _ v4: V4?.Type,
-                                                _ v5: V5?.Type,
-                                                _ v6: V6?.Type,
-                                                _ v7: V7?.Type)
-    throws -> (V0, V1, V2, V3?, V4?, V5?, V6?, V7?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type,
+        _ v7: V7?.Type
+    ) throws -> (V0, V1, V2, V3?, V4?, V5?, V6?, V7?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue
     {
         try validateCount(3...8)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2162,23 +2204,24 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(_ v0: V0.Type,
-                                                _ v1: V1.Type,
-                                                _ v2: V2?.Type,
-                                                _ v3: V3?.Type,
-                                                _ v4: V4?.Type,
-                                                _ v5: V5?.Type,
-                                                _ v6: V6?.Type,
-                                                _ v7: V7?.Type)
-    throws -> (V0, V1, V2?, V3?, V4?, V5?, V6?, V7?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2?.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type,
+        _ v7: V7?.Type
+    ) throws -> (V0, V1, V2?, V3?, V4?, V5?, V6?, V7?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue
     {
         try validateCount(2...8)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2221,23 +2264,24 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(_ v0: V0.Type,
-                                                _ v1: V1?.Type,
-                                                _ v2: V2?.Type,
-                                                _ v3: V3?.Type,
-                                                _ v4: V4?.Type,
-                                                _ v5: V5?.Type,
-                                                _ v6: V6?.Type,
-                                                _ v7: V7?.Type)
-    throws -> (V0, V1?, V2?, V3?, V4?, V5?, V6?, V7?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(
+        _ v0: V0.Type,
+        _ v1: V1?.Type,
+        _ v2: V2?.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type,
+        _ v7: V7?.Type
+    ) throws -> (V0, V1?, V2?, V3?, V4?, V5?, V6?, V7?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue
     {
         try validateCount(1...8)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2280,23 +2324,24 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(_ v0: V0?.Type,
-                                                _ v1: V1?.Type,
-                                                _ v2: V2?.Type,
-                                                _ v3: V3?.Type,
-                                                _ v4: V4?.Type,
-                                                _ v5: V5?.Type,
-                                                _ v6: V6?.Type,
-                                                _ v7: V7?.Type)
-    throws -> (V0?, V1?, V2?, V3?, V4?, V5?, V6?, V7?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7>(
+        _ v0: V0?.Type,
+        _ v1: V1?.Type,
+        _ v2: V2?.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type,
+        _ v7: V7?.Type
+    ) throws -> (V0?, V1?, V2?, V3?, V4?, V5?, V6?, V7?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue
     {
         try validateCount(0...8)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2345,25 +2390,26 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(_ v0: V0.Type,
-                                                    _ v1: V1.Type,
-                                                    _ v2: V2.Type,
-                                                    _ v3: V3.Type,
-                                                    _ v4: V4.Type,
-                                                    _ v5: V5.Type,
-                                                    _ v6: V6.Type,
-                                                    _ v7: V7.Type,
-                                                    _ v8: V8.Type)
-    throws -> (V0, V1, V2, V3, V4, V5, V6, V7, V8)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4.Type,
+        _ v5: V5.Type,
+        _ v6: V6.Type,
+        _ v7: V7.Type,
+        _ v8: V8.Type
+    ) throws -> (V0, V1, V2, V3, V4, V5, V6, V7, V8)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue,
-    V8 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue,
+          V8 : OSCMessageConcreteValue
     {
         try validateCount(9)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2407,25 +2453,26 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(_ v0: V0.Type,
-                                                    _ v1: V1.Type,
-                                                    _ v2: V2.Type,
-                                                    _ v3: V3.Type,
-                                                    _ v4: V4.Type,
-                                                    _ v5: V5.Type,
-                                                    _ v6: V6.Type,
-                                                    _ v7: V7.Type,
-                                                    _ v8: V8?.Type)
-    throws -> (V0, V1, V2, V3, V4, V5, V6, V7, V8?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4.Type,
+        _ v5: V5.Type,
+        _ v6: V6.Type,
+        _ v7: V7.Type,
+        _ v8: V8?.Type
+    ) throws -> (V0, V1, V2, V3, V4, V5, V6, V7, V8?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue,
-    V8 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue,
+          V8 : OSCMessageConcreteValue
     {
         try validateCount(8...9)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2469,25 +2516,26 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(_ v0: V0.Type,
-                                                    _ v1: V1.Type,
-                                                    _ v2: V2.Type,
-                                                    _ v3: V3.Type,
-                                                    _ v4: V4.Type,
-                                                    _ v5: V5.Type,
-                                                    _ v6: V6.Type,
-                                                    _ v7: V7?.Type,
-                                                    _ v8: V8?.Type)
-    throws -> (V0, V1, V2, V3, V4, V5, V6, V7?, V8?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4.Type,
+        _ v5: V5.Type,
+        _ v6: V6.Type,
+        _ v7: V7?.Type,
+        _ v8: V8?.Type
+    ) throws -> (V0, V1, V2, V3, V4, V5, V6, V7?, V8?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue,
-    V8 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue,
+          V8 : OSCMessageConcreteValue
     {
         try validateCount(7...9)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2531,25 +2579,26 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(_ v0: V0.Type,
-                                                    _ v1: V1.Type,
-                                                    _ v2: V2.Type,
-                                                    _ v3: V3.Type,
-                                                    _ v4: V4.Type,
-                                                    _ v5: V5.Type,
-                                                    _ v6: V6?.Type,
-                                                    _ v7: V7?.Type,
-                                                    _ v8: V8?.Type)
-    throws -> (V0, V1, V2, V3, V4, V5, V6?, V7?, V8?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4.Type,
+        _ v5: V5.Type,
+        _ v6: V6?.Type,
+        _ v7: V7?.Type,
+        _ v8: V8?.Type
+    ) throws -> (V0, V1, V2, V3, V4, V5, V6?, V7?, V8?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue,
-    V8 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue,
+          V8 : OSCMessageConcreteValue
     {
         try validateCount(6...9)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2593,25 +2642,26 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(_ v0: V0.Type,
-                                                    _ v1: V1.Type,
-                                                    _ v2: V2.Type,
-                                                    _ v3: V3.Type,
-                                                    _ v4: V4.Type,
-                                                    _ v5: V5?.Type,
-                                                    _ v6: V6?.Type,
-                                                    _ v7: V7?.Type,
-                                                    _ v8: V8?.Type)
-    throws -> (V0, V1, V2, V3, V4, V5?, V6?, V7?, V8?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type,
+        _ v7: V7?.Type,
+        _ v8: V8?.Type
+    ) throws -> (V0, V1, V2, V3, V4, V5?, V6?, V7?, V8?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue,
-    V8 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue,
+          V8 : OSCMessageConcreteValue
     {
         try validateCount(5...9)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2655,25 +2705,26 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(_ v0: V0.Type,
-                                                    _ v1: V1.Type,
-                                                    _ v2: V2.Type,
-                                                    _ v3: V3.Type,
-                                                    _ v4: V4?.Type,
-                                                    _ v5: V5?.Type,
-                                                    _ v6: V6?.Type,
-                                                    _ v7: V7?.Type,
-                                                    _ v8: V8?.Type)
-    throws -> (V0, V1, V2, V3, V4?, V5?, V6?, V7?, V8?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type,
+        _ v7: V7?.Type,
+        _ v8: V8?.Type
+    ) throws -> (V0, V1, V2, V3, V4?, V5?, V6?, V7?, V8?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue,
-    V8 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue,
+          V8 : OSCMessageConcreteValue
     {
         try validateCount(4...9)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2717,25 +2768,26 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(_ v0: V0.Type,
-                                                    _ v1: V1.Type,
-                                                    _ v2: V2.Type,
-                                                    _ v3: V3?.Type,
-                                                    _ v4: V4?.Type,
-                                                    _ v5: V5?.Type,
-                                                    _ v6: V6?.Type,
-                                                    _ v7: V7?.Type,
-                                                    _ v8: V8?.Type)
-    throws -> (V0, V1, V2, V3?, V4?, V5?, V6?, V7?, V8?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type,
+        _ v7: V7?.Type,
+        _ v8: V8?.Type
+    ) throws -> (V0, V1, V2, V3?, V4?, V5?, V6?, V7?, V8?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue,
-    V8 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue,
+          V8 : OSCMessageConcreteValue
     {
         try validateCount(3...9)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2779,25 +2831,26 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(_ v0: V0.Type,
-                                                    _ v1: V1.Type,
-                                                    _ v2: V2?.Type,
-                                                    _ v3: V3?.Type,
-                                                    _ v4: V4?.Type,
-                                                    _ v5: V5?.Type,
-                                                    _ v6: V6?.Type,
-                                                    _ v7: V7?.Type,
-                                                    _ v8: V8?.Type)
-    throws -> (V0, V1, V2?, V3?, V4?, V5?, V6?, V7?, V8?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2?.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type,
+        _ v7: V7?.Type,
+        _ v8: V8?.Type
+    ) throws -> (V0, V1, V2?, V3?, V4?, V5?, V6?, V7?, V8?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue,
-    V8 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue,
+          V8 : OSCMessageConcreteValue
     {
         try validateCount(2...9)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2841,25 +2894,26 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(_ v0: V0.Type,
-                                                    _ v1: V1?.Type,
-                                                    _ v2: V2?.Type,
-                                                    _ v3: V3?.Type,
-                                                    _ v4: V4?.Type,
-                                                    _ v5: V5?.Type,
-                                                    _ v6: V6?.Type,
-                                                    _ v7: V7?.Type,
-                                                    _ v8: V8?.Type)
-    throws -> (V0, V1?, V2?, V3?, V4?, V5?, V6?, V7?, V8?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(
+        _ v0: V0.Type,
+        _ v1: V1?.Type,
+        _ v2: V2?.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type,
+        _ v7: V7?.Type,
+        _ v8: V8?.Type
+    ) throws -> (V0, V1?, V2?, V3?, V4?, V5?, V6?, V7?, V8?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue,
-    V8 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue,
+          V8 : OSCMessageConcreteValue
     {
         try validateCount(1...9)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2903,25 +2957,26 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(_ v0: V0?.Type,
-                                                    _ v1: V1?.Type,
-                                                    _ v2: V2?.Type,
-                                                    _ v3: V3?.Type,
-                                                    _ v4: V4?.Type,
-                                                    _ v5: V5?.Type,
-                                                    _ v6: V6?.Type,
-                                                    _ v7: V7?.Type,
-                                                    _ v8: V8?.Type)
-    throws -> (V0?, V1?, V2?, V3?, V4?, V5?, V6?, V7?, V8?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8>(
+        _ v0: V0?.Type,
+        _ v1: V1?.Type,
+        _ v2: V2?.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type,
+        _ v7: V7?.Type,
+        _ v8: V8?.Type
+    ) throws -> (V0?, V1?, V2?, V3?, V4?, V5?, V6?, V7?, V8?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue,
-    V8 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue,
+          V8 : OSCMessageConcreteValue
     {
         try validateCount(0...9)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -2971,27 +3026,28 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0.Type,
-                                                        _ v1: V1.Type,
-                                                        _ v2: V2.Type,
-                                                        _ v3: V3.Type,
-                                                        _ v4: V4.Type,
-                                                        _ v5: V5.Type,
-                                                        _ v6: V6.Type,
-                                                        _ v7: V7.Type,
-                                                        _ v8: V8.Type,
-                                                        _ v9: V9.Type)
-    throws -> (V0, V1, V2, V3, V4, V5, V6, V7, V8, V9)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4.Type,
+        _ v5: V5.Type,
+        _ v6: V6.Type,
+        _ v7: V7.Type,
+        _ v8: V8.Type,
+        _ v9: V9.Type
+    ) throws -> (V0, V1, V2, V3, V4, V5, V6, V7, V8, V9)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue,
-    V8 : OSCMessageConcreteValue,
-    V9 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue,
+          V8 : OSCMessageConcreteValue,
+          V9 : OSCMessageConcreteValue
     {
         try validateCount(10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -3036,27 +3092,28 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0.Type,
-                                                        _ v1: V1.Type,
-                                                        _ v2: V2.Type,
-                                                        _ v3: V3.Type,
-                                                        _ v4: V4.Type,
-                                                        _ v5: V5.Type,
-                                                        _ v6: V6.Type,
-                                                        _ v7: V7.Type,
-                                                        _ v8: V8.Type,
-                                                        _ v9: V9?.Type)
-    throws -> (V0, V1, V2, V3, V4, V5, V6, V7, V8, V9?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4.Type,
+        _ v5: V5.Type,
+        _ v6: V6.Type,
+        _ v7: V7.Type,
+        _ v8: V8.Type,
+        _ v9: V9?.Type
+    ) throws -> (V0, V1, V2, V3, V4, V5, V6, V7, V8, V9?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue,
-    V8 : OSCMessageConcreteValue,
-    V9 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue,
+          V8 : OSCMessageConcreteValue,
+          V9 : OSCMessageConcreteValue
     {
         try validateCount(9...10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -3101,27 +3158,28 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0.Type,
-                                                        _ v1: V1.Type,
-                                                        _ v2: V2.Type,
-                                                        _ v3: V3.Type,
-                                                        _ v4: V4.Type,
-                                                        _ v5: V5.Type,
-                                                        _ v6: V6.Type,
-                                                        _ v7: V7.Type,
-                                                        _ v8: V8?.Type,
-                                                        _ v9: V9?.Type)
-    throws -> (V0, V1, V2, V3, V4, V5, V6, V7, V8?, V9?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4.Type,
+        _ v5: V5.Type,
+        _ v6: V6.Type,
+        _ v7: V7.Type,
+        _ v8: V8?.Type,
+        _ v9: V9?.Type
+    ) throws -> (V0, V1, V2, V3, V4, V5, V6, V7, V8?, V9?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue,
-    V8 : OSCMessageConcreteValue,
-    V9 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue,
+          V8 : OSCMessageConcreteValue,
+          V9 : OSCMessageConcreteValue
     {
         try validateCount(8...10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -3166,27 +3224,28 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0.Type,
-                                                        _ v1: V1.Type,
-                                                        _ v2: V2.Type,
-                                                        _ v3: V3.Type,
-                                                        _ v4: V4.Type,
-                                                        _ v5: V5.Type,
-                                                        _ v6: V6.Type,
-                                                        _ v7: V7?.Type,
-                                                        _ v8: V8?.Type,
-                                                        _ v9: V9?.Type)
-    throws -> (V0, V1, V2, V3, V4, V5, V6, V7?, V8?, V9?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4.Type,
+        _ v5: V5.Type,
+        _ v6: V6.Type,
+        _ v7: V7?.Type,
+        _ v8: V8?.Type,
+        _ v9: V9?.Type
+    ) throws -> (V0, V1, V2, V3, V4, V5, V6, V7?, V8?, V9?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue,
-    V8 : OSCMessageConcreteValue,
-    V9 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue,
+          V8 : OSCMessageConcreteValue,
+          V9 : OSCMessageConcreteValue
     {
         try validateCount(7...10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -3231,27 +3290,28 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0.Type,
-                                                        _ v1: V1.Type,
-                                                        _ v2: V2.Type,
-                                                        _ v3: V3.Type,
-                                                        _ v4: V4.Type,
-                                                        _ v5: V5.Type,
-                                                        _ v6: V6?.Type,
-                                                        _ v7: V7?.Type,
-                                                        _ v8: V8?.Type,
-                                                        _ v9: V9?.Type)
-    throws -> (V0, V1, V2, V3, V4, V5, V6?, V7?, V8?, V9?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4.Type,
+        _ v5: V5.Type,
+        _ v6: V6?.Type,
+        _ v7: V7?.Type,
+        _ v8: V8?.Type,
+        _ v9: V9?.Type
+    ) throws -> (V0, V1, V2, V3, V4, V5, V6?, V7?, V8?, V9?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue,
-    V8 : OSCMessageConcreteValue,
-    V9 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue,
+          V8 : OSCMessageConcreteValue,
+          V9 : OSCMessageConcreteValue
     {
         try validateCount(6...10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -3296,27 +3356,28 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0.Type,
-                                                        _ v1: V1.Type,
-                                                        _ v2: V2.Type,
-                                                        _ v3: V3.Type,
-                                                        _ v4: V4.Type,
-                                                        _ v5: V5?.Type,
-                                                        _ v6: V6?.Type,
-                                                        _ v7: V7?.Type,
-                                                        _ v8: V8?.Type,
-                                                        _ v9: V9?.Type)
-    throws -> (V0, V1, V2, V3, V4, V5?, V6?, V7?, V8?, V9?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type,
+        _ v7: V7?.Type,
+        _ v8: V8?.Type,
+        _ v9: V9?.Type
+    ) throws -> (V0, V1, V2, V3, V4, V5?, V6?, V7?, V8?, V9?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue,
-    V8 : OSCMessageConcreteValue,
-    V9 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue,
+          V8 : OSCMessageConcreteValue,
+          V9 : OSCMessageConcreteValue
     {
         try validateCount(5...10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -3361,27 +3422,28 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0.Type,
-                                                        _ v1: V1.Type,
-                                                        _ v2: V2.Type,
-                                                        _ v3: V3.Type,
-                                                        _ v4: V4?.Type,
-                                                        _ v5: V5?.Type,
-                                                        _ v6: V6?.Type,
-                                                        _ v7: V7?.Type,
-                                                        _ v8: V8?.Type,
-                                                        _ v9: V9?.Type)
-    throws -> (V0, V1, V2, V3, V4?, V5?, V6?, V7?, V8?, V9?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type,
+        _ v7: V7?.Type,
+        _ v8: V8?.Type,
+        _ v9: V9?.Type
+    ) throws -> (V0, V1, V2, V3, V4?, V5?, V6?, V7?, V8?, V9?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue,
-    V8 : OSCMessageConcreteValue,
-    V9 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue,
+          V8 : OSCMessageConcreteValue,
+          V9 : OSCMessageConcreteValue
     {
         try validateCount(4...10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -3426,27 +3488,28 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0.Type,
-                                                        _ v1: V1.Type,
-                                                        _ v2: V2.Type,
-                                                        _ v3: V3?.Type,
-                                                        _ v4: V4?.Type,
-                                                        _ v5: V5?.Type,
-                                                        _ v6: V6?.Type,
-                                                        _ v7: V7?.Type,
-                                                        _ v8: V8?.Type,
-                                                        _ v9: V9?.Type)
-    throws -> (V0, V1, V2, V3?, V4?, V5?, V6?, V7?, V8?, V9?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type,
+        _ v7: V7?.Type,
+        _ v8: V8?.Type,
+        _ v9: V9?.Type
+    ) throws -> (V0, V1, V2, V3?, V4?, V5?, V6?, V7?, V8?, V9?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue,
-    V8 : OSCMessageConcreteValue,
-    V9 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue,
+          V8 : OSCMessageConcreteValue,
+          V9 : OSCMessageConcreteValue
     {
         try validateCount(3...10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -3491,27 +3554,28 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0.Type,
-                                                        _ v1: V1.Type,
-                                                        _ v2: V2?.Type,
-                                                        _ v3: V3?.Type,
-                                                        _ v4: V4?.Type,
-                                                        _ v5: V5?.Type,
-                                                        _ v6: V6?.Type,
-                                                        _ v7: V7?.Type,
-                                                        _ v8: V8?.Type,
-                                                        _ v9: V9?.Type)
-    throws -> (V0, V1, V2?, V3?, V4?, V5?, V6?, V7?, V8?, V9?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+        _ v0: V0.Type,
+        _ v1: V1.Type,
+        _ v2: V2?.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type,
+        _ v7: V7?.Type,
+        _ v8: V8?.Type,
+        _ v9: V9?.Type
+    ) throws -> (V0, V1, V2?, V3?, V4?, V5?, V6?, V7?, V8?, V9?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue,
-    V8 : OSCMessageConcreteValue,
-    V9 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue,
+          V8 : OSCMessageConcreteValue,
+          V9 : OSCMessageConcreteValue
     {
         try validateCount(2...10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -3556,27 +3620,28 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0.Type,
-                                                        _ v1: V1?.Type,
-                                                        _ v2: V2?.Type,
-                                                        _ v3: V3?.Type,
-                                                        _ v4: V4?.Type,
-                                                        _ v5: V5?.Type,
-                                                        _ v6: V6?.Type,
-                                                        _ v7: V7?.Type,
-                                                        _ v8: V8?.Type,
-                                                        _ v9: V9?.Type)
-    throws -> (V0, V1?, V2?, V3?, V4?, V5?, V6?, V7?, V8?, V9?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+        _ v0: V0.Type,
+        _ v1: V1?.Type,
+        _ v2: V2?.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type,
+        _ v7: V7?.Type,
+        _ v8: V8?.Type,
+        _ v9: V9?.Type
+    ) throws -> (V0, V1?, V2?, V3?, V4?, V5?, V6?, V7?, V8?, V9?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue,
-    V8 : OSCMessageConcreteValue,
-    V9 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue,
+          V8 : OSCMessageConcreteValue,
+          V9 : OSCMessageConcreteValue
     {
         try validateCount(1...10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -3621,27 +3686,28 @@ public extension Array where Element == OSCMessageValue {
     ///
     /// - Throws: `OSCMessage.ValueMask.MaskError`
     @inlinable
-    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(_ v0: V0?.Type,
-                                                        _ v1: V1?.Type,
-                                                        _ v2: V2?.Type,
-                                                        _ v3: V3?.Type,
-                                                        _ v4: V4?.Type,
-                                                        _ v5: V5?.Type,
-                                                        _ v6: V6?.Type,
-                                                        _ v7: V7?.Type,
-                                                        _ v8: V8?.Type,
-                                                        _ v9: V9?.Type)
-    throws -> (V0?, V1?, V2?, V3?, V4?, V5?, V6?, V7?, V8?, V9?)
+    func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+        _ v0: V0?.Type,
+        _ v1: V1?.Type,
+        _ v2: V2?.Type,
+        _ v3: V3?.Type,
+        _ v4: V4?.Type,
+        _ v5: V5?.Type,
+        _ v6: V6?.Type,
+        _ v7: V7?.Type,
+        _ v8: V8?.Type,
+        _ v9: V9?.Type
+    ) throws -> (V0?, V1?, V2?, V3?, V4?, V5?, V6?, V7?, V8?, V9?)
     where V0 : OSCMessageConcreteValue,
-    V1 : OSCMessageConcreteValue,
-    V2 : OSCMessageConcreteValue,
-    V3 : OSCMessageConcreteValue,
-    V4 : OSCMessageConcreteValue,
-    V5 : OSCMessageConcreteValue,
-    V6 : OSCMessageConcreteValue,
-    V7 : OSCMessageConcreteValue,
-    V8 : OSCMessageConcreteValue,
-    V9 : OSCMessageConcreteValue
+          V1 : OSCMessageConcreteValue,
+          V2 : OSCMessageConcreteValue,
+          V3 : OSCMessageConcreteValue,
+          V4 : OSCMessageConcreteValue,
+          V5 : OSCMessageConcreteValue,
+          V6 : OSCMessageConcreteValue,
+          V7 : OSCMessageConcreteValue,
+          V8 : OSCMessageConcreteValue,
+          V9 : OSCMessageConcreteValue
     {
         try validateCount(0...10)
         let v0 = try unwrapValue(V0.self, index: 0)
@@ -3692,7 +3758,7 @@ internal extension Array where Element == OSCMessageValue {
         }
         
         switch T.self {
-        
+            
             // substitute types:
             
         case is Int.Type:
