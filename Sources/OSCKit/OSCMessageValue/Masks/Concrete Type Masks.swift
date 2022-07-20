@@ -3336,10 +3336,10 @@ public extension Array where Element == OSCMessageValue {
 
 // MARK: - Helpers
 
-public extension Array where Element == OSCMessageValue {
+internal extension Array where Element == OSCMessageValue {
     
     @usableFromInline
-    internal func validateCount(_ validCount: Index) throws {
+    func validateCount(_ validCount: Index) throws {
         
         guard count == validCount else {
             throw OSCMessage.ValueMask.MaskError.invalidCount
@@ -3348,7 +3348,7 @@ public extension Array where Element == OSCMessageValue {
     }
     
     @usableFromInline
-    internal func validateCount(_ validRange: ClosedRange<Index>) throws {
+    func validateCount(_ validRange: ClosedRange<Index>) throws {
         
         guard validRange.contains(count) else {
             throw OSCMessage.ValueMask.MaskError.invalidCount
@@ -3357,7 +3357,7 @@ public extension Array where Element == OSCMessageValue {
     }
     
     @usableFromInline
-    internal func unwrapValue<T>(_ type: T.Type,
+    func unwrapValue<T>(_ type: T.Type,
                                  index: Index) throws -> T
     where T : OSCMessageValueProtocol
     {
@@ -3404,7 +3404,7 @@ public extension Array where Element == OSCMessageValue {
     }
     
     @usableFromInline
-    internal func unwrapValue<T>(_ type: T?.Type,
+    func unwrapValue<T>(_ type: T?.Type,
                                  index: Index) throws -> T?
     where T : OSCMessageValueProtocol
     {
