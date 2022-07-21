@@ -24,7 +24,7 @@ extension OSCAddress {
     ///
     public class Dispatcher {
         
-        var root: Node = Node("--ROOT--")
+        var root: Node = Node("")
         
         public init() { }
         
@@ -67,6 +67,13 @@ extension OSCAddress.Dispatcher {
         
         removeMethodNode(path: address.pathComponents,
                          forceNonEmptyMethodRemoval: false)
+        
+    }
+    
+    /// Unregister all OSC addresses.
+    public func unregisterAll() {
+        
+        root = Node("")
         
     }
     

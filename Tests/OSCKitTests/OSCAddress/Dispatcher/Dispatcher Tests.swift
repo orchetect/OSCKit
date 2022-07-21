@@ -13,6 +13,76 @@ final class OSCAddress_Dispatcher_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
+    // MARK: - Address Registration
+    
+    func testUnregisterAddress() throws {
+        
+        let dispatcher = OSCAddress.Dispatcher()
+        
+        let t1ID = try XCTUnwrap(dispatcher.register("/test1/test3/methodA")) ; _ = t1ID
+        let t2ID = try XCTUnwrap(dispatcher.register("/test2/test4/methodB"))
+        
+        XCTAssertTrue(
+            dispatcher.unregister("/test1/test3/methodA")
+        )
+        
+        XCTAssertEqual(
+            dispatcher.methods(matching: "/test1/test3/methodA"),
+            []
+        )
+        
+        XCTAssertEqual(
+            dispatcher.methods(matching: "/test2/test4/methodB"),
+            [t2ID]
+        )
+        
+        // containers still exist
+        
+        XCTAssert(
+            dispatcher.methods(matching: "/test1").count == 1
+        )
+        
+        XCTAssert(
+            dispatcher.methods(matching: "/test1/test3").count == 1
+        )
+        
+    }
+    
+    func testUnregisterAllAddresses() throws {
+        
+        let dispatcher = OSCAddress.Dispatcher()
+        
+        let _ = try XCTUnwrap(dispatcher.register("/test1/test3/methodA"))
+        let _ = try XCTUnwrap(dispatcher.register("/test2/test4/methodB"))
+        
+        dispatcher.unregisterAll()
+        
+        XCTAssertEqual(
+            dispatcher.methods(matching: "/test1/test3/methodA"),
+            []
+        )
+        
+        XCTAssertEqual(
+            dispatcher.methods(matching: "/test2/test4/methodB"),
+            []
+        )
+        
+        // containers still exist
+        
+        XCTAssertEqual(
+            dispatcher.methods(matching: "/test1"),
+            []
+        )
+        
+        XCTAssertEqual(
+            dispatcher.methods(matching: "/test1/test3"),
+            []
+        )
+        
+    }
+    
+    // MARK: - Matches
+    
     func testMethodsMatching_Root() throws {
         
         let dispatcher = OSCAddress.Dispatcher()
