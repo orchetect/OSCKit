@@ -9,7 +9,7 @@ public extension Data {
     
     /// Parses raw data and returns valid OSC objects if data is successfully parsed as OSC.
     ///
-    /// Returns `nil` if neither.
+    /// Returns `nil` if not an OSC data packet. Throws an error if the data is malformed.
     @inlinable
     func parseOSC() throws -> OSCPayload? {
         
@@ -27,7 +27,7 @@ public extension Data {
 
 public extension Data {
     
-    /// Test if `Data` appears to be an OSC bundle or OSC message. (Basic validation)
+    /// Test if data appears to be an OSC bundle or OSC message. (Basic validation)
     ///
     /// - Returns: An `OSCObjectType` case if validation succeeds. `nil` if neither.
     @inlinable

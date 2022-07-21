@@ -8,10 +8,10 @@ import Foundation
 /// OSC payload types.
 public enum OSCPayload {
     
-    /// OSC message.
+    /// OSC Message.
     case message(OSCMessage)
     
-    /// OSC bundle, containing one or more OSC bundle(s) and/or OSC message(s).
+    /// OSC Bundle, containing one or more OSC bundle(s) and/or OSC message(s).
     case bundle(OSCBundle)
     
 }

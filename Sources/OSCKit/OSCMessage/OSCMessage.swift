@@ -20,7 +20,6 @@ public struct OSCMessage: OSCObject {
     
 }
 
-
 // MARK: - Equatable, Hashable
 
 extension OSCMessage: Equatable, Hashable {
@@ -28,7 +27,6 @@ extension OSCMessage: Equatable, Hashable {
     // implementation is automatically synthesized by Swift
     
 }
-
 
 // MARK: - CustomStringConvertible
 
@@ -53,7 +51,6 @@ extension OSCMessage: CustomStringConvertible {
     }
     
 }
-
 
 // MARK: - Header
 

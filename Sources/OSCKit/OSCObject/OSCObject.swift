@@ -7,7 +7,7 @@ import Foundation
 
 // MARK: - OSCObject
 
-/// Protocol applied to OSC data objects
+/// Protocol adopted by all OSC data objects.
 public protocol OSCObject {
     
     /// Returns raw OSC packet data constructed from the struct's properties.
