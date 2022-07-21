@@ -91,6 +91,85 @@ final class OSCAddress_Tests: XCTestCase {
         
     }
     
+    func testPatternMatches() {
+        
+        // verbatim matches
+        
+        XCTAssertTrue(
+            OSCAddress("/test1/test3/methodA")
+                .pattern(matches: "/test1/test3/methodA")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress("/test1/test3/methodA/")
+                .pattern(matches: "/test1/test3/methodA")
+        )
+        
+        // wildcard matches
+        
+        XCTAssertTrue(
+            OSCAddress("/test?/test?/method?")
+                .pattern(matches: "/test1/test3/methodA")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress("/*/test?/method?")
+                .pattern(matches: "/test1/test3/methodA")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress("/test?/*/method?")
+                .pattern(matches: "/test1/test3/methodA")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress("/*/*/method?")
+                .pattern(matches: "/test1/test3/methodA")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress("/*/*/*")
+                .pattern(matches: "/test1/test3/methodA")
+        )
+        
+        // wildcard mismatches
+        
+        XCTAssertFalse(
+            OSCAddress("/test?/test?/method?")
+                .pattern(matches: "/test1/test3/methodAA")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress("/test?/test?")
+                .pattern(matches: "/test1/test3/methodA")
+        )
+        
+        // name mismatches
+        
+        XCTAssertFalse(
+            OSCAddress("/test1/test3/methodA")
+                .pattern(matches: "/test1/test3/methodB")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress("/test1/test3/methodA")
+                .pattern(matches: "/test1/test3")
+        )
+        
+        // path component count mismatches
+        
+        XCTAssertFalse(
+            OSCAddress("/test1/test3")
+                .pattern(matches: "/test1/test3/methodA")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress("/test1")
+                .pattern(matches: "/test1/test3/methodA")
+        )
+        
+    }
+    
 }
 
 #endif

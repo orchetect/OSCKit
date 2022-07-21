@@ -14,7 +14,7 @@ extension OSCAddress.Pattern {
     ///   - pathComponent: OSC address path component.
     ///   
     /// - Returns: `true` if the path component pattern matches the supplied path component string.
-    public func evaluate(matching pathComponent: String) -> Bool {
+    public func evaluate<S>(matching pathComponent: S) -> Bool where S : StringProtocol {
         
         // early return: empty
         if tokens.isEmpty {
@@ -107,7 +107,7 @@ extension OSCAddress.Pattern {
 
 protocol OSCAddressPatternToken {
     
-    func matches(string: Substring) -> OSCAddress.Pattern.Token.Match
+    func matches<S>(string: S) -> OSCAddress.Pattern.Token.Match where S : StringProtocol
     
     var isExhausted: Bool { get }
     
@@ -134,7 +134,7 @@ extension OSCAddress.Pattern.Token {
         
         let literal: String
         
-        func matches(string: Substring) -> Match {
+        func matches<S>(string: S) -> Match where S : StringProtocol {
             
             string.starts(with: literal)
             ? .match(length: literal.count)
@@ -154,7 +154,7 @@ extension OSCAddress.Pattern.Token {
         
         private var currentLength = 0
         
-        func matches(string: Substring) -> Match {
+        func matches<S>(string: S) -> Match where S : StringProtocol {
             
             currentLength <= string.count
             ? .match(length: currentLength)
@@ -182,7 +182,7 @@ extension OSCAddress.Pattern.Token {
     
     struct SingleCharWildcard: OSCAddressPatternToken {
         
-        func matches(string: Substring) -> Match {
+        func matches<S>(string: S) -> Match where S : StringProtocol {
             
             string.isEmpty ? .noMatch : .match(length: 1)
             
@@ -202,7 +202,7 @@ extension OSCAddress.Pattern.Token {
         
         let groups: Set<CharacterGroup>
         
-        func matches(string: Substring) -> Match {
+        func matches<S>(string: S) -> Match where S : StringProtocol {
             
             guard !string.isEmpty else {
                 return .noMatch
@@ -244,7 +244,7 @@ extension OSCAddress.Pattern.Token {
         
         let strings: Set<String>
         
-        func matches(string: Substring) -> Match {
+        func matches<S>(string: S) -> Match where S : StringProtocol {
             
             if strings.isEmpty {
                 return .match(length: 0)

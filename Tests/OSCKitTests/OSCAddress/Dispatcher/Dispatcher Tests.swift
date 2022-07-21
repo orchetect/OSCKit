@@ -250,7 +250,7 @@ final class OSCAddress_Dispatcher_Tests: XCTestCase {
         let t1ID = try XCTUnwrap(dispatcher.register("/test1/test3/methodA"))
         let t2ID = try XCTUnwrap(dispatcher.register("/test2/test4/methodB"))
         
-        // wildcards
+        // wildcard matches
         
         XCTAssertEqual(
             dispatcher.methods(matching: "/test?/test?/method?"),
@@ -271,6 +271,36 @@ final class OSCAddress_Dispatcher_Tests: XCTestCase {
             dispatcher.methods(matching: "/*/*/method?"),
             [t1ID, t2ID]
         )
+        
+        XCTAssertEqual(
+            dispatcher.methods(matching: "/*/*/*"),
+            [t1ID, t2ID]
+        )
+        
+        // wildcard returning containers instead of methods
+        
+        do {
+            let matches = dispatcher.methods(matching: "/*")
+            
+            XCTAssertEqual(matches.count, 2)
+            XCTAssertFalse(matches.contains(t1ID))
+            XCTAssertFalse(matches.contains(t2ID))
+        }
+        
+        do {
+            let matches = dispatcher.methods(matching: "/*/*")
+            
+            XCTAssertEqual(matches.count, 2)
+            XCTAssertFalse(matches.contains(t1ID))
+            XCTAssertFalse(matches.contains(t2ID))
+        }
+        do {
+            let matches = dispatcher.methods(matching: "/test?/test?")
+            
+            XCTAssertEqual(matches.count, 2)
+            XCTAssertFalse(matches.contains(t1ID))
+            XCTAssertFalse(matches.contains(t2ID))
+        }
         
     }
     

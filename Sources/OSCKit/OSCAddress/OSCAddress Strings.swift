@@ -60,4 +60,25 @@ extension OSCAddress {
         
     }
     
+    /// Returns `true` if the address matches a given local address.
+    /// Employs OSC address pattern matching if the inbound address contains a pattern.
+    public func pattern(matches localAddress: OSCAddress) -> Bool {
+        
+        let pattern = pattern
+        guard !pattern.isEmpty else { return false }
+        
+        let localAddressComponents = localAddress.pathComponents
+        
+        guard pattern.count == localAddressComponents.count else { return false }
+        
+        for idx in 0..<pattern.count {
+            guard idx < localAddressComponents.count,
+                  pattern[idx].evaluate(matching: localAddressComponents[idx])
+            else { return false }
+        }
+        
+        return true
+        
+    }
+    
 }
