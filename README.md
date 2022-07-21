@@ -58,62 +58,111 @@ func handle(oscPayload: OSCPayload) throws {
 }
 ```
 
+### Address Matching
+
+#### Individual address matching without pattern matching
+
+```swift
+let receivedAddress = OSCAddress("/some/address/here")
+let localAddress = OSCAddress("/some/address/here")
+let isMatch = receivedAddress == localAddress // true
+```
+
+#### Individual address pattern matching
+
+```swift
+let receivedAddress = OSCAddress("/{some,other}/address/*")
+let localAddress = OSCAddress("/some/address/here")
+let isMatch = receivedAddress.pattern(matches: localAddress) // true
+```
+
+#### Using `Dispatcher`
+
+OSCKit provides an optional abstraction called `OSCAddress.Dispatcher`.
+
+Local OSC addresses (methods) are registered with the dispatcher and it proves a unique ID token representing it. When OSC messages are received, pass their addresses to the dispatcher and it will compare the received address against all registered local addresses using OSC pattern matching and return an array of local method IDs that match.
+
+```swift
+static let dispatcher = OSCAddress.Dispatcher()
+
+// register known local OSC addresses when your app starts.
+// if they are not dynamically determined at runtime,
+// an easy way is to store them as contants
+enum OSCMethodIDs {
+  static let methodA = dispatcher.register("/methodA")
+  static let methodB = dispatcher.register("/some/address/methodB")
+  static let methodC = dispatcher.register("/some/address/methodC")
+}
+
+// when received OSC messages arrive, pass them to the dispatcher
+func handle(oscMessage: OSCMessage) throws {
+  let ids = dispatcher.methods(matching: oscMessage.address)
+  
+  try ids.forEach { id in
+    switch id {
+      case OSCMethodIDs.methodA:
+        let value = try oscMessage.values.masked(String.self)
+        performMethodA(value)
+        
+      case OSCMethodIDs.methodB:
+        let values = try oscMessage.values.masked(String.self, Int.self)
+        performMethodB(values.0, values.1)
+        
+      case OSCMethodIDs.methodC:
+        let values = try oscMessage.values.masked(String.self, Double?.self)
+        performMethodC(values.0, values.1)
+        
+      default:
+        break
+    }
+  }
+}
+
+func performMethodA(_ str: String) { }
+func performMethodB(_ str: String, _ int: Int) { }
+func performMethodC(_ str: String, _ int: Double?) { }
+```
+
 ### Parsing OSC Message Values
 
 When a specific number of values and value types are expected:
 
-#### Option 1: Use `masked()` to validate and unwrap expected value types
+#### Use `masked()` to validate and unwrap expected value types
 
 ```swift
-func handle(oscMessage: OSCMessage) throws {
-  switch oscMessage.address.pathComponents {
-  case ["test", "method1"]:
-    // validate and unwrap value array with expected types: [String]
-    let value = try oscMessage.values.masked(String.self)
-    print("/test/method1 with string:", value)
-    
-  case ["test", "method2"]:
-    // validate and unwrap value array with expected types: [String, Int32?]
-    let values = try oscMessage.values.masked(String.self, Int32?.self)
-    print("/test/method2 with string: \(values.0), int32: \(values.1 ?? 0)")
-    
-  default:
-    print(oscMessage)
-  }
-}
+// validate and unwrap value array with expected types: [String]
+let value = try oscMessage.values.masked(String.self)
+print("/test/method1 with string:", value)
 ```
 
-#### Option 2: Manually unwrap expected value types
-
 ```swift
-func handle(oscMessage: OSCMessage) throws {
-  switch oscMessage.address.pathComponents {
-  case ["test", "method1"]:
-    // validate and unwrap value array with expected types: [String]
-    guard oscMessage.values.count == 1,
-          case let .string(value) = oscMessage.values[0] else { return }
-    print("/test/method1 with string:", value)
-    
-  case ["test", "method2"]:
-    // validate and unwrap value array with expected types: [String, Int32?]
-    guard (1...2).contains(oscMessage.values.count),
-          case let .string(val0) = oscMessage.values[0] else { return }
-    let val1: Int32? = {
-        if case let .int32(val1) = oscMessage.values[1] { return val1 } else { return nil }
-    }()
-    print("/test/method2 with string: \(val0), int32: \(val1 ?? 0)")
-    
-  default:
-    print(oscMessage)
-  }
-}
+// validate and unwrap value array with expected types: [String, Int32?]
+let values = try oscMessage.values.masked(String.self, Int32?.self)
+print("/test/method2 with string: \(values.0), int32: \(values.1 ?? 0)")
 ```
 
-To parse a variable number of values:
+#### Manually unwrap expected value types
 
 ```swift
-// iterate through all values and use a switch case to determine the value type
+// validate and unwrap value array with expected types: [String]
+guard oscMessage.values.count == 1,
+      case let .string(value) = oscMessage.values[0] else { return }
+print("/test/method1 with string:", value)
+```
 
+```swift
+// validate and unwrap value array with expected types: [String, Int32?]
+guard (1...2).contains(oscMessage.values.count),
+      case let .string(val0) = oscMessage.values[0] else { return }
+let val1: Int32? = {
+  if case let .int32(val1) = oscMessage.values[1] { return val1 } else { return nil }
+}()
+print("/test/method2 with string: \(val0), int32: \(val1 ?? 0)")
+```
+
+#### Parse a variable number of values
+
+```swift
 oscMessage.values.forEach { oscValue
   switch oscValue {
     case let .string(val):
@@ -121,7 +170,7 @@ oscMessage.values.forEach { oscValue
     case let .int32(val):
       print(val)
       
-    // ... add any other value types you want to handle ...
+    // ... additional caes for other value types ...
   }
 }
 ```
