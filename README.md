@@ -91,23 +91,18 @@ func handle(oscMessage: OSCMessage) throws {
   case ["test", "method1"]:
     // validate and unwrap value array with expected types: [String]
     guard oscMessage.values.count == 1,
-          case let .string(val0) = oscMessage.values[0]
-    else { return }
-    
-    print("Address:", oscMessage.address, 
-          "Values:", val0)
+          case let .string(value) = oscMessage.values[0] else { return }
+    print("/test/method1 with string:", value)
     
   case ["test", "method2"]:
     // validate and unwrap value array with expected types: [String, Int32?]
     guard (1...2).contains(oscMessage.values.count),
-          case let .string(val0) = oscMessage.values[0]
-    else { return }
-    let val1: Unt32? = {
-      if case let .int32(val1) = oscMessage.values[1] { return val1 } else { return nil }
+          case let .string(val0) = oscMessage.values[0] else { return }
+    let val1: Int32? = {
+        if case let .int32(val1) = oscMessage.values[1] { return val1 } else { return nil }
     }()
-      
     print("/test/method2 with string: \(val0), int32: \(val1 ?? 0)")
-      
+    
   default:
     print(oscMessage)
   }
