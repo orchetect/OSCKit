@@ -1,38 +1,38 @@
 //
-//  ValueMask Sequence Extensions.swift
+//  Mask Sequence Extensions.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
 import Foundation
 
-public extension Array where Element == OSCMessageValue {
+public extension Array where Element == OSCMessage.Value {
     
-    /// Returns `true` if an array of `OSCMessageValue` values matches an expected value type mask (order and type of values).
-    /// To make any of the mask values optional, pass them as `.optional` in `expectedMask`.
+    /// Returns `true` if an array of `OSCMessage.Value` values matches an expected value type mask (order and type of values).
+    /// To make any of the mask values optional, pass them as `.optional` in `mask`.
     ///
     /// Some meta type(s) are available:
     ///   - `number` & `numberOptional`: Matches `int32`, `float32`, `double`, or `int64`.
     ///
-    /// - parameter expectedMask: `OSCMessage.ValueMask.Token` array representing a positive mask match.
+    /// - parameter expectedMask: `OSCMessage.Value.Mask.Token` array representing a positive mask match.
     @inlinable
     func matches(
-        mask: OSCMessage.ValueMask
+        mask: OSCMessage.Value.Mask
     ) -> Bool {
         
         matches(mask: mask.tokens)
         
     }
     
-    /// Returns `true` if an array of `OSCMessageValue` values matches an expected value type mask (order and type of values).
-    /// To make any of the mask values optional, pass them as `.optional` in `expectedMask`.
+    /// Returns `true` if an array of `OSCMessage.Value` values matches an expected value type mask (order and type of values).
+    /// To make any of the mask values optional, pass them as `.optional` in `mask`.
     ///
     /// Some meta type(s) are available:
     ///   - `number` & `numberOptional`: Matches `int32`, `float32`, `double`, or `int64`.
     ///
-    /// - parameter expectedMask: `OSCMessage.ValueMask.Token` array representing a positive mask match.
+    /// - parameter expectedMask: `OSCMessage.Value.Mask.Token` array representing a positive mask match.
     @inlinable
     func matches(
-        mask: [OSCMessage.ValueMask.Token]
+        mask: [OSCMessage.Value.Mask.Token]
     ) -> Bool {
         
         // should not contain more values than mask
@@ -45,8 +45,8 @@ public extension Array where Element == OSCMessageValue {
             let idxOptional = mask[idx].isOptional
             
             if self.indices.contains(idx) {
-                switch self[idx].baseTypeMatches(type: mask[idx].baseType,
-                                                 canMatchMetaTypes: true) {
+                switch self[idx].baseType(matches: mask[idx].baseType,
+                                          canMatchMetaTypes: true) {
                 case true:
                     matchCount += 1
                     continue

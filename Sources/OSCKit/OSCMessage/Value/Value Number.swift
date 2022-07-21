@@ -1,14 +1,14 @@
 //
-//  OSCMessageValue Number.swift
+//  Value Number.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
 import Foundation
 @_implementationOnly import OTCore
 
-public extension OSCMessageValue {
+public extension OSCMessage.Value {
     
-    /// `OSCMessageValue` meta type "Number":
+    /// `OSCMessage.Value` meta type `Number`:
     /// A box for OSC numeric value types.
     /// Mainly employed as a return type from value masking methods.
     enum Number: Equatable, Hashable {
@@ -22,7 +22,7 @@ public extension OSCMessageValue {
     
 }
 
-public extension OSCMessageValue.Number {
+public extension OSCMessage.Value.Number {
     
     /// Returns the boxed value as an `Int`, lossily converting format if necessary.
     /// Provided as a convenience. To get the actual stored value, unwrap the enum case instead.

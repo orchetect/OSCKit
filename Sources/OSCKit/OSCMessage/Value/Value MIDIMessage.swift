@@ -1,11 +1,11 @@
 //
-//  OSCMessageValue MIDIMessage.swift
+//  Value MIDIMessage.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
 import Foundation
 
-extension OSCMessageValue {
+extension OSCMessage.Value {
     
     public struct MIDIMessage: Equatable, Hashable, CustomStringConvertible {
         
@@ -29,7 +29,7 @@ extension OSCMessageValue {
         
         public var description: String {
             
-            "portID:\(portID.hex.stringValue) status:\(status.hex.stringValue) data1:\(data1.hex.stringValue) data2:\(data2.hex.stringValue)"
+            "MIDIMessage(portID:\(portID.hex.stringValue) status:\(status.hex.stringValue) data1:\(data1.hex.stringValue) data2:\(data2.hex.stringValue))"
             
         }
         

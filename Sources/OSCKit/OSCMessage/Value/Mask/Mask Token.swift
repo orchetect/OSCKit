@@ -1,12 +1,12 @@
 //
-//  ValueMask Token.swift
+//  Mask Token.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
 import Foundation
 import SwiftASCII
 
-extension OSCMessage.ValueMask {
+extension OSCMessage.Value.Mask {
     
     /// `OSCMessage` value type tokens, including optional variants and meta types.
     /// Useful for abstractions that mask sequences of values.
@@ -33,7 +33,7 @@ extension OSCMessage.ValueMask {
         // "meta" types
         
         /// Meta type: Number.
-        /// Not a specific type like the others. Used when defining a `MaskType` mask to accept numeric value types (`int32`, `float32`, `double`, `int64`) for an expected value placeholder.
+        /// Not a specific type like the others. Used when defining a mask to accept numeric value types (`int32`, `float32`, `double`, `int64`) for an expected value placeholder.
         case number // accepts any OSC number type
         
         // optional versions of concrete types
@@ -56,14 +56,14 @@ extension OSCMessage.ValueMask {
         
         // -- meta types
         /// Meta type: Number (Optional variant).
-        /// Not a specific type like the others. Used when defining a `MaskType` mask to accept numeric value types (`int32`, `float32`, `double`, `int64`) for an expected value placeholder.
+        /// Not a specific type like the others. Used when defining a mask to accept numeric value types (`int32`, `float32`, `double`, `int64`) for an expected value placeholder.
         case numberOptional // accepts any OSC number type
         
     }
     
 }
 
-public extension OSCMessage.ValueMask.Token {
+public extension OSCMessage.Value.Mask.Token {
     
     /// Returns base mask type (by stripping 'optional' component if present).
     @inlinable
@@ -149,7 +149,7 @@ public extension OSCMessage.ValueMask.Token {
     
 }
 
-public extension OSCMessage.ValueMask.Token {
+public extension OSCMessage.Value.Mask.Token {
     
     /// Returns the associated concrete type.
     var concreteType: OSCMessageConcreteValue.Type {
@@ -167,12 +167,12 @@ public extension OSCMessage.ValueMask.Token {
         case .double,       .doubleOptional:    return Double.self
         case .stringAlt,    .stringAltOptional: return ASCIIString.self
         case .character,    .characterOptional: return ASCIICharacter.self
-        case .midi,         .midiOptional:      return OSCMessageValue.MIDIMessage.self
+        case .midi,         .midiOptional:      return OSCMessage.Value.MIDIMessage.self
         case .bool,         .boolOptional:      return Bool.self
         case .null,         .nullOptional:      return NSNull.self
             
             // meta types
-        case .number,       .numberOptional:    return OSCMessageValue.Number.self
+        case .number,       .numberOptional:    return OSCMessage.Value.Number.self
         }
     }
     

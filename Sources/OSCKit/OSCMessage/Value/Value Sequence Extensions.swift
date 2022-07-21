@@ -1,13 +1,13 @@
 //
-//  OSCMessageValue Sequence Extensions.swift
+//  Value Sequence Extensions.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
 import Foundation
 
-public extension Sequence where Iterator.Element == OSCMessageValue {
+public extension Sequence where Iterator.Element == OSCMessage.Value {
     
-    /// Convenience: maps a sequence of `OSCMessageValue`s to a flat string, for logging/debug purposes.
+    /// Convenience: maps a sequence of `OSCMessage.Value`s to a flat string, for logging/debug purposes.
     func mapDebugString(withLabel: Bool = true,
                         separator: String = ", ") -> String {
         
