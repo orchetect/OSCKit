@@ -33,31 +33,31 @@ final class OSCAddress_Tests: XCTestCase {
         
         // empty address
         XCTAssertEqual(OSCAddress("").pathComponents,
-                       nil)
+                       [])
         
-        // empty address
+        // base methodname of " " -- unconventional, but legal
         XCTAssertEqual(OSCAddress(" ").pathComponents,
-                       nil)
+                       [" "])
         
         // undefined / invalid
         XCTAssertEqual(OSCAddress("/").pathComponents,
-                       nil)
+                       [])
         
         // undefined / invalid
         XCTAssertEqual(OSCAddress("//").pathComponents,
-                       nil)
+                       [])
         
         // valid
         XCTAssertEqual(OSCAddress("/methodname").pathComponents,
                        ["methodname"])
         
-        // invalid
+        // strip trailing /
         XCTAssertEqual(OSCAddress("/container1/").pathComponents,
-                       nil)
+                       ["container1"])
         
-        // invalid
+        // having trailing // is not valid -- basically malformed
         XCTAssertEqual(OSCAddress("/container1//").pathComponents,
-                       nil)
+                       ["container1", ""])
         
         // valid
         // In OSC 1.1 Spec, the // character sequence has special meaning
@@ -77,9 +77,17 @@ final class OSCAddress_Tests: XCTestCase {
                        ["container*", "container2", "methodname"])
         
         // valid
+        XCTAssertEqual(OSCAddress("/container*/container2*abc{X,Y,Z}??[0-9A-F]/methodname*abc{X,Y,Z}??[0-9A-F]").pathComponents,
+                       ["container*", "container2*abc{X,Y,Z}??[0-9A-F]", "methodname*abc{X,Y,Z}??[0-9A-F]"])
+        
+        // valid
         // In OSC 1.1 Spec, the // character sequence has special meaning
         XCTAssertEqual(OSCAddress("/container1//methodname").pathComponents,
                        ["container1", "", "methodname"])
+        
+        // leading /// is malformed, but possible to parse
+        XCTAssertEqual(OSCAddress("///methodname").pathComponents,
+                       ["", "", "methodname"])
         
     }
     

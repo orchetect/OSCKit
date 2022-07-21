@@ -24,20 +24,23 @@ extension OSCAddress {
     }
     
     /// Returns the address as individual path components (strings between `/` separators).
-    public var pathComponents: [Substring]? {
+    public var pathComponents: [Substring] {
         
         let addressString = address.stringValue
+        guard !addressString.isEmpty else { return [] }
         
-        guard addressString.prefix(1) == "/",
-              addressString.count > 1,
-              addressString.suffix(1) != "/"
-        else { return nil }
+        var addressSlice = addressString[addressString.startIndex...]
         
-        let addressStringAfterInitialSlash = addressString.suffix(
-            from: addressString.index(after: addressString.startIndex)
-        )
+        if addressString.starts(with: "/") {
+            addressSlice = addressSlice.dropFirst()
+        }
         
-        return addressStringAfterInitialSlash
+        if addressString.hasSuffix("/") {
+            addressSlice = addressSlice.dropLast()
+        }
+        if addressSlice.isEmpty { return [] }
+        
+        return addressSlice
             .split(separator: "/",
                    omittingEmptySubsequences: false)
         
@@ -52,9 +55,8 @@ extension OSCAddress {
     /// Returns the OSC address converted to a tokenized pattern form.
     public var pattern: [Pattern] {
         
-        pathComponents?
+        pathComponents
             .map { Pattern(string: String($0)) }
-        ?? []
         
     }
     
