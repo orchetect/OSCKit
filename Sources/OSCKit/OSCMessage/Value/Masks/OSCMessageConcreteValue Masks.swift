@@ -5,52 +5,52 @@
 
 import Foundation
 
-public extension Array where Element == OSCMessageValue {
+public extension Array where Element == OSCMessage.Value {
     
-    /// Returns `[OSCMessageConcreteValue]` of non-enumeration-encapsulated values if an array of `OSCMessageValue` values matches an expected value type mask (order and type of values).
-    /// To make any of the mask values optional, pass them as `.optional` in `expectedMask`.
+    /// Returns `[OSCMessageConcreteValue]` of non-enumeration-encapsulated values if an array of `OSCMessage.Value` values matches an expected value type mask (order and type of values).
+    /// To make any of the mask values optional, pass them as `.optional` in `mask`.
     ///
-    /// - parameter mask: `OSCMessage.ValueMask` representing a positive mask match.
+    /// - parameter mask: `OSCMessage.Value.Mask` representing a positive mask match.
     ///
     /// - Returns: Unwrapped values if values match the mask.
     ///
-    /// - Throws: `OSCMessage.ValueMask.MaskError`
+    /// - Throws: `OSCMessage.Value.Mask.MaskError`
     @inlinable
     func masked(
-        _ valueMask: OSCMessage.ValueMask
+        _ mask: OSCMessage.Value.Mask
     ) throws -> [OSCMessageConcreteValue?] {
         
-        try masked(valueMask.tokens)
+        try masked(mask.tokens)
         
     }
     
-    /// Returns `[OSCMessageConcreteValue]` of non-enumeration-encapsulated values if an array of `OSCMessageValue` values matches an expected value type mask (order and type of values).
-    /// To make any of the mask values optional, pass them as `.optional` in `expectedMask`.
+    /// Returns `[OSCMessageConcreteValue]` of non-enumeration-encapsulated values if an array of `OSCMessage.Value` values matches an expected value type mask (order and type of values).
+    /// To make any of the mask values optional, pass them as `.optional` in `mask`.
     ///
-    /// - parameter mask: `[OSCMessage.ValueMask.Token]` representing a positive mask match.
+    /// - parameter mask: `[OSCMessage.Value.Mask.Token]` representing a positive mask match.
     ///
     /// - Returns: Unwrapped values if values match the mask.
     ///
-    /// - Throws: `OSCMessage.ValueMask.MaskError`
+    /// - Throws: `OSCMessage.Value.Mask.MaskError`
     @inlinable
     func masked(
-        _ valueMask: [OSCMessage.ValueMask.Token]
+        _ mask: [OSCMessage.Value.Mask.Token]
     ) throws -> [OSCMessageConcreteValue?] {
         
         // should not contain more values than mask
-        if self.count > valueMask.count { throw OSCMessage.ValueMask.MaskError.invalidCount }
+        if self.count > mask.count { throw OSCMessage.Value.Mask.MaskError.invalidCount }
         
         var values = [OSCMessageConcreteValue?]()
         
-        for idx in 0..<valueMask.count {
-            let idxOptional = valueMask[idx].isOptional
+        for idx in 0..<mask.count {
+            let idxOptional = mask[idx].isOptional
             
             if self.indices.contains(idx) {
                 // check if it's the correct base type
-                if !self[idx].baseTypeMatches(type: valueMask[idx].baseType,
-                                              canMatchMetaTypes: true)
+                if !self[idx].baseType(matches: mask[idx].baseType,
+                                       canMatchMetaTypes: true)
                 {
-                    throw OSCMessage.ValueMask.MaskError.mismatchedTypes
+                    throw OSCMessage.Value.Mask.MaskError.mismatchedTypes
                 }
                 
                 switch self[idx] {
@@ -73,7 +73,7 @@ public extension Array where Element == OSCMessageValue {
             } else {
                 switch idxOptional {
                 case true:              values.append(nil)      ; continue
-                case false:             throw OSCMessage.ValueMask.MaskError.mismatchedTypes
+                case false:             throw OSCMessage.Value.Mask.MaskError.mismatchedTypes
                 }
             }
         }

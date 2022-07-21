@@ -1,11 +1,11 @@
 //
-//  OSCMessageValue stringValue.swift
+//  Value stringValue.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
 import Foundation
 
-extension OSCMessageValue {
+extension OSCMessage.Value {
     
     /// Returns a string representation of the value. Optionally includes a value-type label.
     public func stringValue(withLabel: Bool = false) -> String {
@@ -59,7 +59,7 @@ extension OSCMessageValue {
             suffixString = ""
         case .midi(let v):
             outputString = "\(v)"
-            prefixString = "midi:"
+            prefixString = ""
             suffixString = ""
         case .bool(let v):
             outputString = String(v)

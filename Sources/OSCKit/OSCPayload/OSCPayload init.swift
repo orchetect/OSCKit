@@ -27,7 +27,7 @@ extension OSCPayload {
     
     /// Syntactic sugar convenience
     public static func message(address: OSCAddress,
-                               values: [OSCMessageValue] = []) -> Self {
+                               values: [OSCMessage.Value] = []) -> Self {
         
         let msg = OSCMessage(address: address,
                              values: values)

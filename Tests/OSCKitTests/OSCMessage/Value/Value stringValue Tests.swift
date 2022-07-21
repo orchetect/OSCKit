@@ -1,5 +1,5 @@
 //
-//  OSCMessageValue stringValue Tests.swift
+//  Value stringValue Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
@@ -8,7 +8,7 @@
 import XCTest
 import OSCKit
 
-final class OSCMessageValue_stringValue_Tests: XCTestCase {
+final class OSCMessage_Value_stringValue_Tests: XCTestCase {
     
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
@@ -17,7 +17,7 @@ final class OSCMessageValue_stringValue_Tests: XCTestCase {
     
     func testInt32() {
         
-        let val = OSCMessageValue.int32(123)
+        let val = OSCMessage.Value.int32(123)
         XCTAssertEqual(val.stringValue(),                         "123")
         XCTAssertEqual(val.stringValue(withLabel: true),    "int32:123")
         
@@ -25,7 +25,7 @@ final class OSCMessageValue_stringValue_Tests: XCTestCase {
     
     func testFloat32() {
         
-        let val = OSCMessageValue.float32(123.45)
+        let val = OSCMessage.Value.float32(123.45)
         XCTAssertEqual(val.stringValue(),                           "123.45")
         XCTAssertEqual(val.stringValue(withLabel: true),    "float32:123.45")
         
@@ -33,7 +33,7 @@ final class OSCMessageValue_stringValue_Tests: XCTestCase {
     
     func testString() {
         
-        let val = OSCMessageValue.string("A string")
+        let val = OSCMessage.Value.string("A string")
         XCTAssertEqual(val.stringValue(),                            "A string")   // no wrapping quotes
         XCTAssertEqual(val.stringValue(withLabel: true),    #"string:"A string""#) // wrapping quotes
         
@@ -41,7 +41,7 @@ final class OSCMessageValue_stringValue_Tests: XCTestCase {
     
     func testBlob() {
         
-        let val04 = OSCMessageValue.blob(Data([1,2,3,4]))
+        let val04 = OSCMessage.Value.blob(Data([1,2,3,4]))
         XCTAssertEqual(val04.stringValue(),                      "4 bytes")        // no wrapping quotes
         XCTAssertEqual(val04.stringValue(withLabel: true),  "blob:4 bytes")        // wrapping quotes
         
@@ -51,7 +51,7 @@ final class OSCMessageValue_stringValue_Tests: XCTestCase {
     
     func testInt64() {
         
-        let val = OSCMessageValue.int64(123)
+        let val = OSCMessage.Value.int64(123)
         XCTAssertEqual(val.stringValue(),                         "123")
         XCTAssertEqual(val.stringValue(withLabel: true),    "int64:123")
         
@@ -59,7 +59,7 @@ final class OSCMessageValue_stringValue_Tests: XCTestCase {
     
     func testTimeTag() {
         
-        let val = OSCMessageValue.timeTag(123)
+        let val = OSCMessage.Value.timeTag(123)
         XCTAssertEqual(val.stringValue(),                           "123")
         XCTAssertEqual(val.stringValue(withLabel: true),    "timeTag:123")
         
@@ -67,7 +67,7 @@ final class OSCMessageValue_stringValue_Tests: XCTestCase {
     
     func testDouble() {
         
-        let val = OSCMessageValue.double(123.45)
+        let val = OSCMessage.Value.double(123.45)
         XCTAssertEqual(val.stringValue(),                          "123.45")
         XCTAssertEqual(val.stringValue(withLabel: true),    "double:123.45")
         
@@ -75,7 +75,7 @@ final class OSCMessageValue_stringValue_Tests: XCTestCase {
     
     func testStringAlt() {
         
-        let val = OSCMessageValue.stringAlt("A string")
+        let val = OSCMessage.Value.stringAlt("A string")
         XCTAssertEqual(val.stringValue(),                               "A string")     // no wrapping quotes
         XCTAssertEqual(val.stringValue(withLabel: true),    #"stringAlt:"A string""#)   // wrapping quotes
         
@@ -83,27 +83,27 @@ final class OSCMessageValue_stringValue_Tests: XCTestCase {
     
     func testCharacter() {
         
-        let val = OSCMessageValue.character("A")
-        XCTAssertEqual(val.stringValue(),                   "A")
+        let val = OSCMessage.Value.character("A")
+        XCTAssertEqual(val.stringValue(),                        "A")
         XCTAssertEqual(val.stringValue(withLabel: true),    "char:A")
         
     }
     
     func testMIDI() {
         
-        let val = OSCMessageValue.midi(portID: 0x80, status: 0x50, data1: 0x40, data2: 0x50)
-        XCTAssertEqual(val.stringValue(),                        "portID:80 status:50 data1:40 data2:50")
-        XCTAssertEqual(val.stringValue(withLabel: true),    "midi:portID:80 status:50 data1:40 data2:50")
+        let val = OSCMessage.Value.midi(portID: 0x80, status: 0x50, data1: 0x40, data2: 0x50)
+        XCTAssertEqual(val.stringValue(),                   "MIDIMessage(portID:80 status:50 data1:40 data2:50)")
+        XCTAssertEqual(val.stringValue(withLabel: true),    "MIDIMessage(portID:80 status:50 data1:40 data2:50)")
         
     }
     
     func testBool() {
         
-        let val1 = OSCMessageValue.bool(true)
+        let val1 = OSCMessage.Value.bool(true)
         XCTAssertEqual(val1.stringValue(),                       "true")
         XCTAssertEqual(val1.stringValue(withLabel: true),   "bool:true")
         
-        let val2 = OSCMessageValue.bool(false)
+        let val2 = OSCMessage.Value.bool(false)
         XCTAssertEqual(val2.stringValue(),                       "false")
         XCTAssertEqual(val2.stringValue(withLabel: true),   "bool:false")
         
@@ -111,7 +111,7 @@ final class OSCMessageValue_stringValue_Tests: XCTestCase {
     
     func testNull() {
         
-        let val = OSCMessageValue.null
+        let val = OSCMessage.Value.null
         XCTAssertEqual(val.stringValue(),                   "Null")
         XCTAssertEqual(val.stringValue(withLabel: true),    "Null")
         

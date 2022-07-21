@@ -59,7 +59,7 @@ extension OSCMessage {
         ppos += oscTypesPull.byteLength
         
         // set up value array
-        var extractedValues: [OSCMessageValue] = []
+        var extractedValues: [Value] = []
         
         for char in extractedOSCtypes.stringValue {
             
@@ -187,7 +187,7 @@ extension OSCMessage {
     /// Internal: generate raw OSC bytes from struct's properties.
     @usableFromInline
     internal static func generateRawData(address: OSCAddress,
-                                         values: [OSCMessageValue]) -> Data {
+                                         values: [Value]) -> Data {
         
         // returns a raw OSC packet constructed out of the struct's properties
         

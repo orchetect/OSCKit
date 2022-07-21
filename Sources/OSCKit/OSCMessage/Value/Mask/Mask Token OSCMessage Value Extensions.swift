@@ -1,31 +1,31 @@
 //
-//  ValueMask Token OSCMessageValue Extensions.swift
+//  Mask Token OSCMessage Value Extensions.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
 import Foundation
 
-public extension OSCMessageValue {
+public extension OSCMessage.Value {
     
-    /// Returns `true` if the type of a `OSCMessageValue` matches the supplied `OSCMessage.ValueMask.Token`.
+    /// Returns `true` if the type of a `OSCMessage.Value` matches the supplied `OSCMessage.Value.Mask.Token`.
     ///
     /// - parameters:
-    ///   - type: `OSCMessage.ValueMask.Token` to compare to.
+    ///   - type: `OSCMessage.Value.Mask.Token` to compare to.
     ///   - canMatchMetaTypes: Allows matching against a meta type (if a meta type is passed in `type`)
     ///     If `true`, only exact matches will return `true` (`.int32` matches only `.int32` and not `.number` "meta" type; `.number` only matches `.number`).
     ///     If `false`, "meta" types matches will return true (ie: `.int32` or `.float32` will return true if `type` = `.number`).
     ///     (default = `false`)
     @inlinable
-    func baseTypeMatches(type: OSCMessage.ValueMask.Token,
-                         canMatchMetaTypes: Bool = false) -> Bool {
+    func baseType(matches token: Mask.Token,
+                  canMatchMetaTypes: Bool = false) -> Bool {
         
-        if baseType == type { return true }
+        if baseType == token { return true }
         
         if canMatchMetaTypes {
             // handle all meta types
             // for now, it's just .number unless more are added to OSCKit in future
             
-            if type == .number,
+            if token == .number,
                (baseType == .int32 ||
                 baseType == .float32 ||
                 baseType == .int64 ||
@@ -39,9 +39,9 @@ public extension OSCMessageValue {
         
     }
     
-    /// Returns base type of `OSCMessageValue` as an `OSCMessage.ValueMask.Token` (by removing 'optional' component).
+    /// Returns base type of `OSCMessage.Value` as an `OSCMessage.Value.Mask.Token` (by removing 'optional' component).
     @inlinable
-    var baseType: OSCMessage.ValueMask.Token {
+    var baseType: Mask.Token {
         
         switch self {
             // core types

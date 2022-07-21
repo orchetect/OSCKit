@@ -14,7 +14,7 @@ public struct OSCMessage: OSCObject {
     public let address: OSCAddress
     
     /// OSC values contained within the message.
-    public let values: [OSCMessageValue]
+    public let values: [Value]
     
     public let rawData: Data
     

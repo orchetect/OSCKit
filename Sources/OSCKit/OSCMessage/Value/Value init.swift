@@ -1,5 +1,5 @@
 //
-//  OSCMessageValue init.swift
+//  Value init.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
@@ -8,7 +8,7 @@ import Foundation
 @_implementationOnly import SwiftRadix
 import SwiftASCII
 
-public extension OSCMessageValue {
+public extension OSCMessage.Value {
     
     // core types
     
