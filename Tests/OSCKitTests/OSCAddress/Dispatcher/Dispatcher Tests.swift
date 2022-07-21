@@ -15,15 +15,75 @@ final class OSCAddress_Dispatcher_Tests: XCTestCase {
     
     // MARK: - Address Registration
     
+    func testRegisterAddress_PathComponents() throws {
+        
+        let dispatcher = OSCAddress.Dispatcher()
+        
+        let t1ID = dispatcher.register(address: ["test1"])
+        let t2ID = dispatcher.register(address: ["test1", "test2"])
+        let t3ID = dispatcher.register(address: ["test3", "test4"])
+        
+        // basic verbatim match to check if register worked
+        
+        XCTAssertEqual(
+            dispatcher.methods(matching: "/test1"),
+            [t1ID]
+        )
+        
+        XCTAssertEqual(
+            dispatcher.methods(matching: "/test1/test2"),
+            [t2ID]
+        )
+        
+        XCTAssertEqual(
+            dispatcher.methods(matching: "/test3/test4"),
+            [t3ID]
+        )
+        
+    }
+    
     func testUnregisterAddress() throws {
         
         let dispatcher = OSCAddress.Dispatcher()
         
-        let t1ID = try XCTUnwrap(dispatcher.register("/test1/test3/methodA")) ; _ = t1ID
-        let t2ID = try XCTUnwrap(dispatcher.register("/test2/test4/methodB"))
+        let t1ID = dispatcher.register(address: "/test1/test3/methodA") ; _ = t1ID
+        let t2ID = dispatcher.register(address: "/test2/test4/methodB")
         
         XCTAssertTrue(
-            dispatcher.unregister("/test1/test3/methodA")
+            dispatcher.unregister(address: "/test1/test3/methodA")
+        )
+        
+        XCTAssertEqual(
+            dispatcher.methods(matching: "/test1/test3/methodA"),
+            []
+        )
+        
+        XCTAssertEqual(
+            dispatcher.methods(matching: "/test2/test4/methodB"),
+            [t2ID]
+        )
+        
+        // containers still exist
+        
+        XCTAssert(
+            dispatcher.methods(matching: "/test1").count == 1
+        )
+        
+        XCTAssert(
+            dispatcher.methods(matching: "/test1/test3").count == 1
+        )
+        
+    }
+    
+    func testUnregisterAddress_PathComponents() throws {
+        
+        let dispatcher = OSCAddress.Dispatcher()
+        
+        let t1ID = dispatcher.register(address: "/test1/test3/methodA") ; _ = t1ID
+        let t2ID = dispatcher.register(address: "/test2/test4/methodB")
+        
+        XCTAssertTrue(
+            dispatcher.unregister(address: ["test1", "test3", "methodA"])
         )
         
         XCTAssertEqual(
@@ -52,8 +112,8 @@ final class OSCAddress_Dispatcher_Tests: XCTestCase {
         
         let dispatcher = OSCAddress.Dispatcher()
         
-        let _ = try XCTUnwrap(dispatcher.register("/test1/test3/methodA"))
-        let _ = try XCTUnwrap(dispatcher.register("/test2/test4/methodB"))
+        let _ = dispatcher.register(address: "/test1/test3/methodA")
+        let _ = dispatcher.register(address: "/test2/test4/methodB")
         
         dispatcher.unregisterAll()
         
@@ -87,9 +147,9 @@ final class OSCAddress_Dispatcher_Tests: XCTestCase {
         
         let dispatcher = OSCAddress.Dispatcher()
         
-        let t1ID = try XCTUnwrap(dispatcher.register("/test1"))
-        let t2ID = try XCTUnwrap(dispatcher.register("/test2"))
-        let _ = try XCTUnwrap(dispatcher.register("/test1/test1B")) // not tested, just want it present
+        let t1ID = dispatcher.register(address: "/test1")
+        let t2ID = dispatcher.register(address: "/test2")
+        let _ = dispatcher.register(address: "/test1/test1B") // not tested, just want it present
         
         // non-matches
         
@@ -165,8 +225,8 @@ final class OSCAddress_Dispatcher_Tests: XCTestCase {
         
         let dispatcher = OSCAddress.Dispatcher()
         
-        let t1ID = try XCTUnwrap(dispatcher.register("/test1/test2/methodA"))
-        let t2ID = try XCTUnwrap(dispatcher.register("/test1/test2/methodB"))
+        let t1ID = try dispatcher.register(address: "/test1/test2/methodA")
+        let t2ID = try dispatcher.register(address: "/test1/test2/methodB")
                 
         // non-matches
         
@@ -247,8 +307,8 @@ final class OSCAddress_Dispatcher_Tests: XCTestCase {
         
         let dispatcher = OSCAddress.Dispatcher()
         
-        let t1ID = try XCTUnwrap(dispatcher.register("/test1/test3/methodA"))
-        let t2ID = try XCTUnwrap(dispatcher.register("/test2/test4/methodB"))
+        let t1ID = dispatcher.register(address: "/test1/test3/methodA")
+        let t2ID = dispatcher.register(address: "/test2/test4/methodB")
         
         // wildcard matches
         

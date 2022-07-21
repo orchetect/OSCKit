@@ -18,7 +18,7 @@ extension OSCAddress.Dispatcher {
         
         public var children: [Node] = []
         
-        public init(_ name: String) {
+        public init<S>(_ name: S) where S : StringProtocol {
             
             // sanitize name
             self.name = Self.sanitize(name: name)
@@ -88,7 +88,7 @@ extension OSCAddress.Dispatcher.Node {
     ///     {   open curly brace    ASCII char 123
     ///     }   close curly brace   ASCII char 125
     ///
-    static func sanitize(name: String) -> String {
+    static func sanitize<S>(name: S) -> String where S : StringProtocol {
         
         let sanitized = name
             .onlyAlphanumerics

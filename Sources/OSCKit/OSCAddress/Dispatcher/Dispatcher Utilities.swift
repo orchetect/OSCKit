@@ -10,8 +10,11 @@ import Foundation
 
 extension OSCAddress.Dispatcher {
     
-    func createMethodNode(path: [Substring],
-                          replaceExisting: Bool = true) -> Node {
+    func createMethodNode<S>(path: S,
+                             replaceExisting: Bool = true) -> Node
+    where S : BidirectionalCollection,
+          S.Element : StringProtocol
+    {
         var pathRef = root
         
         for idx in path.indices {
@@ -21,14 +24,14 @@ extension OSCAddress.Dispatcher {
                 .first(where: { $0.name == path[idx] })
             {
                 if isLast, replaceExisting {
-                    let newNode = Node(path[idx].string)
+                    let newNode = Node(path[idx])
                     pathRef.children.append(newNode)
                     pathRef = newNode
                 } else {
                     pathRef = existingNode
                 }
             } else {
-                let newNode = Node(path[idx].string)
+                let newNode = Node(path[idx])
                 pathRef.children.append(newNode)
                 pathRef = newNode
             }
@@ -38,8 +41,11 @@ extension OSCAddress.Dispatcher {
     }
     
     @discardableResult
-    func removeMethodNode(path: [Substring],
-                          forceNonEmptyMethodRemoval: Bool = false) -> Bool {
+    func removeMethodNode<S>(path: S,
+                             forceNonEmptyMethodRemoval: Bool = false) -> Bool
+    where S : BidirectionalCollection,
+          S.Element : StringProtocol
+    {
         guard !path.isEmpty,
               let nodes = findPathNodes(path: path, includeRoot: true)
         else { return false }
@@ -60,7 +66,10 @@ extension OSCAddress.Dispatcher {
         return true
     }
     
-    func findMethodNode(path: [Substring]) -> Node? {
+    func findMethodNode<S>(path: S) -> Node?
+    where S : BidirectionalCollection,
+          S.Element : StringProtocol
+    {
         var pathRef = root
         for idx in path.indices {
             guard let node = pathRef.children
@@ -73,8 +82,11 @@ extension OSCAddress.Dispatcher {
         return pathRef
     }
     
-    func findPathNodes(path: [Substring],
-                       includeRoot: Bool = false) -> [Node]? {
+    func findPathNodes<S>(path: S,
+                          includeRoot: Bool = false) -> [Node]?
+    where S : BidirectionalCollection,
+          S.Element : StringProtocol
+    {
         var nodes: [Node] = []
         var pathRef = root
         if includeRoot { nodes.append(pathRef) }

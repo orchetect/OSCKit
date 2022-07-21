@@ -49,13 +49,36 @@ extension OSCAddress.Dispatcher {
     ///
     ///  Any other path components besides the last are referred to as _containers_.
     ///
-    public func register(_ address: OSCAddress) -> MethodID? {
+    public func register(address: OSCAddress) -> MethodID {
         
-        let path = address.pathComponents
+        register(address: address.pathComponents)
         
-        guard !path.isEmpty else { return nil }
+    }
+    
+    /// Register an OSC address.
+    /// Returns a unique identifier assigned to the address's method.
+    /// Replaces existing reference if one exists for that method already.
+    ///
+    /// An OSC _method_ is defined as being the last path component in the address.
+    ///
+    /// `methodname` is the method name in the following address examples:
+    ///
+    ///     /methodname
+    ///     /container1/container2/methodname
+    ///
+    ///  Any other path components besides the last are referred to as _containers_.
+    ///
+    public func register<S>(address pathComponents: S) -> MethodID
+    where S : BidirectionalCollection,
+          S.Element : StringProtocol
+    {
         
-        return createMethodNode(path: path,
+        guard !pathComponents.isEmpty else {
+            // instead of returning nil, return a bogus ID
+            return MethodID()
+        }
+        
+        return createMethodNode(path: pathComponents,
                                 replaceExisting: true)
         .id
         
@@ -63,9 +86,20 @@ extension OSCAddress.Dispatcher {
     
     /// Unregister an OSC address.
     @discardableResult
-    public func unregister(_ address: OSCAddress) -> Bool {
+    public func unregister(address: OSCAddress) -> Bool {
         
         removeMethodNode(path: address.pathComponents,
+                         forceNonEmptyMethodRemoval: false)
+        
+    }
+    
+    /// Unregister an OSC address.
+    @discardableResult
+    public func unregister<S>(address pathComponents: S) -> Bool
+    where S : BidirectionalCollection,
+          S.Element : StringProtocol
+    {
+        removeMethodNode(path: pathComponents,
                          forceNonEmptyMethodRemoval: false)
         
     }
