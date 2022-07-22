@@ -169,7 +169,7 @@ oscMessage.values.forEach { oscValue
     case let .int32(val):
       print(val)
       
-    // ... additional caes for other value types ...
+    // ... additional cases for other value types ...
   }
 }
 ```
