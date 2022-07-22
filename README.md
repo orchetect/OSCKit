@@ -76,51 +76,50 @@ let localAddress = OSCAddress("/some/address/here")
 let isMatch = receivedAddress.pattern(matches: localAddress) // true
 ```
 
-#### Using `Dispatcher`
+#### Using `Dispatcher` for automated pattern matching
 
 OSCKit provides an optional abstraction called `OSCAddress.Dispatcher`.
 
 Local OSC addresses (methods) are registered with the dispatcher and it proves a unique ID token representing it. When OSC messages are received, pass their addresses to the dispatcher and it will compare the received address against all registered local addresses using OSC pattern matching and return an array of local method IDs that match.
 
+Consider that an inbound message address pattern of `/some/address/*` will match both `/some/address/methodB` and `/some/address/methodC` below:
+
 ```swift
-static let dispatcher = OSCAddress.Dispatcher()
-
-// register known local OSC addresses when your app starts.
-// if they are not dynamically determined at runtime,
-// an easy way is to store them as contants
-enum OSCMethodIDs {
-  static let methodA = dispatcher.register("/methodA")
-  static let methodB = dispatcher.register("/some/address/methodB")
-  static let methodC = dispatcher.register("/some/address/methodC")
-}
-
-// when received OSC messages arrive, pass them to the dispatcher
-func handle(oscMessage: OSCMessage) throws {
-  let ids = dispatcher.methods(matching: oscMessage.address)
+class OSCReceiver {
+  // register local OSC methods and store the ID tokens once before receiving OSC messages
+  private let oscDispatcher = OSCAddress.Dispatcher()
+  private lazy var idMethodA = oscDispatcher.register(address: "/methodA")
+  private lazy var idMethodB = oscDispatcher.register(address: "/some/address/methodB")
+  private lazy var idMethodC = oscDispatcher.register(address: "/some/address/methodC")
   
-  try ids.forEach { id in
-    switch id {
-      case OSCMethodIDs.methodA:
-        let value = try oscMessage.values.masked(String.self)
-        performMethodA(value)
-        
-      case OSCMethodIDs.methodB:
-        let values = try oscMessage.values.masked(String.self, Int.self)
-        performMethodB(values.0, values.1)
-        
-      case OSCMethodIDs.methodC:
-        let values = try oscMessage.values.masked(String.self, Double?.self)
-        performMethodC(values.0, values.1)
-        
-      default:
-        break
+  // when received OSC messages arrive, pass them to the dispatcher
+  public func handle(oscMessage: OSCMessage) throws {
+    let ids = oscDispatcher.methods(matching: oscMessage.address)
+    
+    try ids.forEach { id in
+      switch id {
+        case idMethodA:
+          let value = try oscMessage.values.masked(String.self)
+          performMethodA(value)
+          
+        case idMethodB:
+          let values = try oscMessage.values.masked(String.self, Int.self)
+          performMethodB(values.0, values.1)
+          
+        case idMethodC:
+          let values = try oscMessage.values.masked(String.self, Double?.self)
+          performMethodC(values.0, values.1)
+          
+        default:
+          break
+      }
     }
   }
+  
+  private func performMethodA(_ str: String) { }
+  private func performMethodB(_ str: String, _ int: Int) { }
+  private func performMethodC(_ str: String, _ int: Double?) { }
 }
-
-func performMethodA(_ str: String) { }
-func performMethodB(_ str: String, _ int: Int) { }
-func performMethodC(_ str: String, _ int: Double?) { }
 ```
 
 ### Parsing OSC Message Values
