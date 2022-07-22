@@ -65,7 +65,7 @@ func handle(oscPayload: OSCPayload) throws {
 ```swift
 let receivedAddress = OSCAddress("/some/address/here")
 let localAddress = OSCAddress("/some/address/here")
-let isMatch = receivedAddress == localAddress // true
+let isMatch = receivedAddress == localAddress // true, verbatim string comparison only
 ```
 
 #### Individual address pattern matching
@@ -80,7 +80,7 @@ let isMatch = receivedAddress.pattern(matches: localAddress) // true
 
 OSCKit provides an optional abstraction called `OSCAddress.Dispatcher`.
 
-Local OSC addresses (methods) are registered with the dispatcher and it proves a unique ID token representing it. When OSC messages are received, pass their addresses to the dispatcher and it will compare the received address against all registered local addresses using OSC pattern matching and return an array of local method IDs that match.
+Local OSC addresses (methods) are registered with the dispatcher and it proves a unique ID token representing it. When an OSC message is received, pass its address to the dispatcher and it will pattern match it against all registered local addresses and return an array of local method IDs that match.
 
 Consider that an inbound message address pattern of `/some/address/*` will match both `/some/address/methodB` and `/some/address/methodC` below:
 
