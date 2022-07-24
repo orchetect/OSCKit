@@ -29,6 +29,20 @@ final class OSCAddress_Tests: XCTestCase {
         
     }
     
+    func testCodable() throws {
+        
+        let encoder = JSONEncoder()
+        let decoder = JSONDecoder()
+        
+        let str = OSCAddress("/test/address")
+        
+        let encoded = try encoder.encode(str)
+        let decoded = try decoder.decode(OSCAddress.self, from: encoded)
+        
+        XCTAssertEqual(str, decoded)
+        
+    }
+    
     func testPathComponents() {
         
         // empty address

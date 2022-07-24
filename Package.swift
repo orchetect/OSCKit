@@ -17,7 +17,7 @@ let package = Package(
     
     dependencies: [
         .package(url: "https://github.com/orchetect/OTCore", from: "1.4.1"),
-        .package(url: "https://github.com/orchetect/SwiftASCII", from: "1.1.0"),
+        .package(url: "https://github.com/orchetect/SwiftASCII", from: "1.1.2"),
         .package(url: "https://github.com/orchetect/SwiftRadix", from: "1.1.0")
     ],
     
