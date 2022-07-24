@@ -34,3 +34,5 @@ extension OSCPayload: CustomStringConvertible {
     }
     
 }
+
+extension OSCPayload: Codable { }

@@ -103,6 +103,28 @@ final class OSCBundle_Tests: XCTestCase {
         
     }
     
+    func testCodable() throws {
+        
+        let encoder = JSONEncoder()
+        let decoder = JSONDecoder()
+        
+        let str = OSCBundle(elements: [
+            .bundle(elements: [
+                .message(address: "/test/address1",
+                         values: [.int32(123), .string("A string.")])
+            ]),
+            
+            .message(address: "/test/address2",
+                     values: [.int32(456), .string("Another string.")])
+        ], timeTag: 123456)
+        
+        let encoded = try encoder.encode(str)
+        let decoded = try decoder.decode(OSCBundle.self, from: encoded)
+        
+        XCTAssertEqual(str, decoded)
+        
+    }
+    
 }
 
 #endif
