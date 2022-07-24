@@ -35,4 +35,51 @@ extension OSCPayload: CustomStringConvertible {
     
 }
 
-extension OSCPayload: Codable { }
+extension OSCPayload: Codable {
+    
+    enum CodingKeys: String, CodingKey {
+        case message
+        case bundle
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        
+        guard let key = container.allKeys.first else {
+            throw DecodingError.dataCorrupted(
+                .init(
+                    codingPath: container.codingPath,
+                    debugDescription: "Key not present in data."
+                )
+            )
+        }
+        
+        switch key {
+        case .message:
+            let message = try container.decode(OSCMessage.self, forKey: key)
+            self = .message(message)
+            
+        case .bundle:
+            let bundle = try container.decode(OSCBundle.self, forKey: key)
+            self = .bundle(bundle)
+            
+        }
+        
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        
+        switch self {
+        case .message(let message):
+            try container.encode(message, forKey: .message)
+            
+        case .bundle(let bundle):
+            try container.encode(bundle, forKey: .bundle)
+            
+        }
+        
+    }
+    
+}
