@@ -36,3 +36,36 @@ extension OSCMessage.Value {
     }
     
 }
+
+extension OSCMessage.Value.MIDIMessage: Codable {
+    
+    enum CodingKeys: String, CodingKey {
+        
+        case bytes
+        
+    }
+    
+    public init(from decoder: Decoder) throws {
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let bytes = try container.decode([UInt8].self, forKey: .bytes)
+        guard bytes.count == 4 else { throw DecodingError.dataCorrupted(
+            .init(codingPath: decoder.codingPath,
+                  debugDescription: "Found unexpected number of values when decoding MIDI bytes.")
+        )}
+        portID = bytes[0]
+        status = bytes[1]
+        data1 = bytes[2]
+        data2 = bytes[3]
+        
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        let bytes = [portID, status, data1, data2]
+        try container.encode(bytes, forKey: .bytes)
+        
+    }
+    
+}

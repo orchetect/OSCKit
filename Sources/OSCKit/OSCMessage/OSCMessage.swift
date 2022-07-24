@@ -60,3 +60,30 @@ extension OSCMessage {
     public static let header: Data = "/".toData(using: .nonLossyASCII)!
     
 }
+
+extension OSCMessage: Codable {
+    
+    enum CodingKeys: String, CodingKey {
+        
+        case address
+        case values
+        
+    }
+    
+    public init(from decoder: Decoder) throws {
+        
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let address = try container.decode(OSCAddress.self, forKey: .address)
+        let values = try container.decode([Value].self, forKey: .values)
+        self.init(address: address, values: values)
+        
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(address, forKey: .address)
+        try container.encode(values, forKey: .values)
+        
+    }
+}
