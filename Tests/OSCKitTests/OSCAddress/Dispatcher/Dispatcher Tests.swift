@@ -364,6 +364,15 @@ final class OSCAddress_Dispatcher_Tests: XCTestCase {
         
     }
     
+    func testMethodsMatching_EdgeCases() {
+        
+        let dispatcher = OSCAddress.Dispatcher()
+        
+        let id = dispatcher.register(address: "/test1/test3/methodA")
+        let t2ID = dispatcher.register(address: "/test2/test4/methodB")
+        
+    }
+    
 }
 
 #endif

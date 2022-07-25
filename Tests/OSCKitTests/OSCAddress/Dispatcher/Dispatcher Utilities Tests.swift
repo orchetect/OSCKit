@@ -13,14 +13,90 @@ final class OSCAddress_Dispatcher_Utilities_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
-    func testNodeSanitizeName() {
+    func testNodeValidateName() {
         
-        let inputName: ASCIIString = #"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 1#2*3,4/5?6[7]8{9}0"#
-        let outputName: ASCIIString = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+        XCTAssertFalse(
+            OSCAddress.Dispatcher.Node.validate(name: "")
+        )
         
-        XCTAssertEqual(
-            OSCAddress.Dispatcher.Node.sanitize(name: inputName),
-            outputName
+        XCTAssertTrue(
+            OSCAddress.Dispatcher.Node.validate(name: "abcDEF1234")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Dispatcher.Node.validate(name: "abc]p} ,.DEF1234-")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Dispatcher.Node.validate(name: "abc?d")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Dispatcher.Node.validate(name: "abc*")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Dispatcher.Node.validate(name: "a bc")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Dispatcher.Node.validate(name: "abc{d,e}f")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Dispatcher.Node.validate(name: "abc{d,e}f")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Dispatcher.Node.validate(name: "/abcDEF1234")
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Dispatcher.Node.validate(name: "abcDEF1234/")
+        )
+        
+    }
+    
+    func testNodeValidateNameStrict() {
+        
+        XCTAssertFalse(
+            OSCAddress.Dispatcher.Node.validate(name: "", strict: true)
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Dispatcher.Node.validate(name: "abcDEF1234", strict: true)
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Dispatcher.Node.validate(name: "abc]p} ,.DEF1234-", strict: true)
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Dispatcher.Node.validate(name: "abc?d", strict: true)
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Dispatcher.Node.validate(name: "abc*", strict: true)
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Dispatcher.Node.validate(name: "a bc", strict: true)
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Dispatcher.Node.validate(name: "abc{d,e}f", strict: true)
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Dispatcher.Node.validate(name: "abc{d,e}f", strict: true)
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Dispatcher.Node.validate(name: "/abcDEF1234", strict: true)
+        )
+        
+        XCTAssertFalse(
+            OSCAddress.Dispatcher.Node.validate(name: "abcDEF1234/", strict: true)
         )
         
     }
