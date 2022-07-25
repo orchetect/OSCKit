@@ -893,6 +893,23 @@ final class OSCAddress_Pattern_Evaluate_Tests: XCTestCase {
         
     }
     
+    func testEdgeCases_CommonSymbols() {
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "vol-").evaluate(matching: "vol-")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: "vol+").evaluate(matching: "vol+")
+        )
+        
+        XCTAssertTrue(
+            OSCAddress.Pattern(string: ##"`!@#$%^&()-_=+,./<>;':"\|"##)
+                .evaluate(matching: ##"`!@#$%^&()-_=+,./<>;':"\|"##)
+        )
+        
+    }
+    
 }
 
 #endif
