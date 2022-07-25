@@ -366,10 +366,31 @@ final class OSCAddress_Dispatcher_Tests: XCTestCase {
     
     func testMethodsMatching_EdgeCases() {
         
+        // ensure addresses are not sanitized in an unexpected way
+        
         let dispatcher = OSCAddress.Dispatcher()
         
-        let id = dispatcher.register(address: "/test1/test3/methodA")
-        let t2ID = dispatcher.register(address: "/test2/test4/methodB")
+        do {
+            let addr = OSCAddress("/test1/test3/vol-")
+            let id = dispatcher.register(address: addr)
+            XCTAssertEqual(
+                dispatcher.methods(matching: addr), [id]
+            )
+        }
+        do {
+            let addr = OSCAddress("/test2/test4/vol+")
+            let id = dispatcher.register(address: addr)
+            XCTAssertEqual(
+                dispatcher.methods(matching: addr), [id]
+            )
+        }
+        do {
+            let addr = OSCAddress(#"/test2/test4/ajL_-du &@!)(}].,;:%$|\-"#)
+            let id = dispatcher.register(address: addr)
+            XCTAssertEqual(
+                dispatcher.methods(matching: addr), [id]
+            )
+        }
         
     }
     
