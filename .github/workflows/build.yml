@@ -31,7 +31,7 @@ jobs:
     - name: Build
       run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "OSCKit-CI" -destination "generic/platform=macOS,name=Any Mac"
     - name: Unit Tests
-      run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "OSCKit-CI" -destination "platform=macOS,arch=x86_64"
+      run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "OSCKit-CI" -destination "platform=macOS"
 
   macOS-12:
     name: macOS 12 Monterey
