@@ -23,8 +23,14 @@ final class UDPClient {
         self.port = port
         self.queue = queue
         
+        let params: NWParameters = .udp
+        params.allowLocalEndpointReuse = true
+        params.includePeerToPeer = true
+        params.serviceClass = .responsiveData
+        params.multipathServiceType = .interactive
+        
         connection = NWConnection(to: .hostPort(host: self.host, port: self.port),
-                                  using: .udp)
+                                  using: params)
         
         connection.stateUpdateHandler = { [weak self] newState in
             self?.stateDidChange(to: newState)
@@ -45,10 +51,6 @@ final class UDPClient {
         self.init(host: endpointHost,
                   port: endpointPort,
                   queue: queue)
-    }
-    
-    deinit {
-        print("UDPClient deinit")
     }
     
     private func stateDidChange(to newState: NWConnection.State) {

@@ -53,10 +53,6 @@ final class UDPServer {
                       handler: handler)
     }
     
-    deinit {
-        print("UDPServer deinit")
-    }
-    
     func setHandler(_ handler: @escaping (Data) -> Void) {
         self.handler = handler
     }
@@ -89,7 +85,7 @@ final class UDPServer {
         }
     }
     
-    // private func stop() {
-    //     self.listener.cancel()
-    // }
+    public func close() {
+        self.listener.cancel()
+    }
 }

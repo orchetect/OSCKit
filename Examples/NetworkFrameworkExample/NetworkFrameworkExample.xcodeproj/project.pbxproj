@@ -13,6 +13,8 @@
 		E296C84225C652C800A8714A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E296C84025C652C800A8714A /* Main.storyboard */; };
 		E2A9B8A52623C72D0011E68E /* UDPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A9B8A42623C72C0011E68E /* UDPClient.swift */; };
 		E2A9B8A82623C7850011E68E /* UDPServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A9B8A72623C7850011E68E /* UDPServer.swift */; };
+		E2D003F7289890360073ED8F /* OSCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D003F5289890360073ED8F /* OSCClient.swift */; };
+		E2D003F8289890360073ED8F /* OSCServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D003F6289890360073ED8F /* OSCServer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +27,8 @@
 		E296C84425C652C800A8714A /* NetworkFrameworkExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NetworkFrameworkExample.entitlements; sourceTree = "<group>"; };
 		E2A9B8A42623C72C0011E68E /* UDPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPClient.swift; sourceTree = "<group>"; };
 		E2A9B8A72623C7850011E68E /* UDPServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPServer.swift; sourceTree = "<group>"; };
+		E2D003F5289890360073ED8F /* OSCClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSCClient.swift; sourceTree = "<group>"; };
+		E2D003F6289890360073ED8F /* OSCServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSCServer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -64,6 +68,8 @@
 				E296C83C25C652C700A8714A /* ViewController.swift */,
 				E2A9B8A42623C72C0011E68E /* UDPClient.swift */,
 				E2A9B8A72623C7850011E68E /* UDPServer.swift */,
+				E2D003F5289890360073ED8F /* OSCClient.swift */,
+				E2D003F6289890360073ED8F /* OSCServer.swift */,
 			);
 			path = NetworkFrameworkExample;
 			sourceTree = "<group>";
@@ -151,6 +157,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2D003F8289890360073ED8F /* OSCServer.swift in Sources */,
+				E2D003F7289890360073ED8F /* OSCClient.swift in Sources */,
 				E296C83D25C652C700A8714A /* ViewController.swift in Sources */,
 				E296C83B25C652C700A8714A /* AppDelegate.swift in Sources */,
 				E2A9B8A52623C72D0011E68E /* UDPClient.swift in Sources */,
