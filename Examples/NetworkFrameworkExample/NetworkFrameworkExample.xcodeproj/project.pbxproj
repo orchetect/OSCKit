@@ -17,12 +17,12 @@
 
 /* Begin PBXFileReference section */
 		E28AA81326B200BA001A8861 /* OSCKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = OSCKit; path = ../..; sourceTree = "<group>"; };
-		E296C83725C652C700A8714A /* OSCKitExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSCKitExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E296C83725C652C700A8714A /* NetworkFrameworkExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NetworkFrameworkExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E296C83A25C652C700A8714A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E296C83C25C652C700A8714A /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		E296C84125C652C800A8714A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E296C84325C652C800A8714A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E296C84425C652C800A8714A /* OSCKitExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OSCKitExample.entitlements; sourceTree = "<group>"; };
+		E296C84425C652C800A8714A /* NetworkFrameworkExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = NetworkFrameworkExample.entitlements; sourceTree = "<group>"; };
 		E2A9B8A42623C72C0011E68E /* UDPClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPClient.swift; sourceTree = "<group>"; };
 		E2A9B8A72623C7850011E68E /* UDPServer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UDPServer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -43,7 +43,7 @@
 			isa = PBXGroup;
 			children = (
 				E28AA81326B200BA001A8861 /* OSCKit */,
-				E296C83925C652C700A8714A /* OSCKitExample */,
+				E296C83925C652C700A8714A /* NetworkFrameworkExample */,
 				E296C83825C652C700A8714A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -51,12 +51,12 @@
 		E296C83825C652C700A8714A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E296C83725C652C700A8714A /* OSCKitExample.app */,
+				E296C83725C652C700A8714A /* NetworkFrameworkExample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E296C83925C652C700A8714A /* OSCKitExample */ = {
+		E296C83925C652C700A8714A /* NetworkFrameworkExample */ = {
 			isa = PBXGroup;
 			children = (
 				E296C88525C6542E00A8714A /* Support */,
@@ -65,7 +65,7 @@
 				E2A9B8A42623C72C0011E68E /* UDPClient.swift */,
 				E2A9B8A72623C7850011E68E /* UDPServer.swift */,
 			);
-			path = OSCKitExample;
+			path = NetworkFrameworkExample;
 			sourceTree = "<group>";
 		};
 		E296C88525C6542E00A8714A /* Support */ = {
@@ -73,7 +73,7 @@
 			children = (
 				E296C84325C652C800A8714A /* Info.plist */,
 				E296C84025C652C800A8714A /* Main.storyboard */,
-				E296C84425C652C800A8714A /* OSCKitExample.entitlements */,
+				E296C84425C652C800A8714A /* NetworkFrameworkExample.entitlements */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -81,9 +81,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E296C83625C652C700A8714A /* OSCKitExample */ = {
+		E296C83625C652C700A8714A /* NetworkFrameworkExample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E296C85D25C652C800A8714A /* Build configuration list for PBXNativeTarget "OSCKitExample" */;
+			buildConfigurationList = E296C85D25C652C800A8714A /* Build configuration list for PBXNativeTarget "NetworkFrameworkExample" */;
 			buildPhases = (
 				E296C83325C652C700A8714A /* Sources */,
 				E296C83425C652C700A8714A /* Frameworks */,
@@ -93,12 +93,12 @@
 			);
 			dependencies = (
 			);
-			name = OSCKitExample;
+			name = NetworkFrameworkExample;
 			packageProductDependencies = (
 				E28AA81626B200D5001A8861 /* OSCKit */,
 			);
-			productName = OSCKitExample;
-			productReference = E296C83725C652C700A8714A /* OSCKitExample.app */;
+			productName = NetworkFrameworkExample;
+			productReference = E296C83725C652C700A8714A /* NetworkFrameworkExample.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -115,7 +115,7 @@
 					};
 				};
 			};
-			buildConfigurationList = E296C83225C652C700A8714A /* Build configuration list for PBXProject "OSCKitExample" */;
+			buildConfigurationList = E296C83225C652C700A8714A /* Build configuration list for PBXProject "NetworkFrameworkExample" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -130,7 +130,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E296C83625C652C700A8714A /* OSCKitExample */,
+				E296C83625C652C700A8714A /* NetworkFrameworkExample */,
 			);
 		};
 /* End PBXProject section */
@@ -291,19 +291,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = OSCKitExample/Support/OSCKitExample.entitlements;
+				CODE_SIGN_ENTITLEMENTS = NetworkFrameworkExample/Support/NetworkFrameworkExample.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = OSCKitExample/Support/Info.plist;
+				INFOPLIST_FILE = NetworkFrameworkExample/Support/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.orchetect.OSCKitExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.orchetect.NetworkFrameworkExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -313,19 +313,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = OSCKitExample/Support/OSCKitExample.entitlements;
+				CODE_SIGN_ENTITLEMENTS = NetworkFrameworkExample/Support/NetworkFrameworkExample.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
-				INFOPLIST_FILE = OSCKitExample/Support/Info.plist;
+				INFOPLIST_FILE = NetworkFrameworkExample/Support/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.orchetect.OSCKitExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.orchetect.NetworkFrameworkExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 			};
@@ -334,7 +334,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E296C83225C652C700A8714A /* Build configuration list for PBXProject "OSCKitExample" */ = {
+		E296C83225C652C700A8714A /* Build configuration list for PBXProject "NetworkFrameworkExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E296C85B25C652C800A8714A /* Debug */,
@@ -343,7 +343,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E296C85D25C652C800A8714A /* Build configuration list for PBXNativeTarget "OSCKitExample" */ = {
+		E296C85D25C652C800A8714A /* Build configuration list for PBXNativeTarget "NetworkFrameworkExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E296C85E25C652C800A8714A /* Debug */,

@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  OSCKitExample
+//  NetworkFrameworkExample
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
@@ -8,7 +8,6 @@ import Cocoa
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
-    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         
     }
@@ -16,5 +15,4 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillTerminate(_ aNotification: Notification) {
         
     }
-    
 }

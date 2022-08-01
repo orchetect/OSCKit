@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E296C83625C652C700A8714A"
-               BuildableName = "OSCKitExample.app"
-               BlueprintName = "OSCKitExample"
-               ReferencedContainer = "container:OSCKitExample.xcodeproj">
+               BuildableName = "NetworkFrameworkExample.app"
+               BlueprintName = "NetworkFrameworkExample"
+               ReferencedContainer = "container:NetworkFrameworkExample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E296C83625C652C700A8714A"
-            BuildableName = "OSCKitExample.app"
-            BlueprintName = "OSCKitExample"
-            ReferencedContainer = "container:OSCKitExample.xcodeproj">
+            BuildableName = "NetworkFrameworkExample.app"
+            BlueprintName = "NetworkFrameworkExample"
+            ReferencedContainer = "container:NetworkFrameworkExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E296C83625C652C700A8714A"
-            BuildableName = "OSCKitExample.app"
-            BlueprintName = "OSCKitExample"
-            ReferencedContainer = "container:OSCKitExample.xcodeproj">
+            BuildableName = "NetworkFrameworkExample.app"
+            BlueprintName = "NetworkFrameworkExample"
+            ReferencedContainer = "container:NetworkFrameworkExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

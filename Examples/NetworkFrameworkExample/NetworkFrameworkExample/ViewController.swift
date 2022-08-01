@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  OSCKitExample
+//  NetworkFrameworkExample
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
@@ -8,12 +8,10 @@ import Cocoa
 import OSCKit
 
 class ViewController: NSViewController {
-    
     var oscClient: UDPClient?
     var oscServer: UDPServer?
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
         
         // OSC client setup
@@ -40,13 +38,11 @@ class ViewController: NSViewController {
         }
         
         oscServer?.setHandler { [weak self] data in
-            
             // incoming data handler is fired on the UDPServer's queue
             // but we want to deal with it on the main thread
             // to update UI as a result, etc. here
             
             DispatchQueue.main.async {
-                
                 do {
                     guard let oscPayload = try data.parseOSC() else { return }
                     try self?.handle(oscPayload: oscPayload)
@@ -73,18 +69,14 @@ class ViewController: NSViewController {
                     // handle other errors
                     print("Error:", error)
                 }
-                
             }
-            
         }
         
         print("UDP server set up.")
-        
     }
     
     /// Handle incoming OSC data recursively
     func handle(oscPayload: OSCPayload) throws {
-        
         switch oscPayload {
         case .bundle(let bundle):
             // recursively handle nested bundles and messages
@@ -95,11 +87,9 @@ class ViewController: NSViewController {
             try handle(oscMessage: message)
             
         }
-        
     }
     
     func handle(oscMessage: OSCMessage) throws {
-        
         switch oscMessage.address.pathComponents {
         case ["test", "method1"]:
             // validate and unwrap value array with expected types: [String]
@@ -114,19 +104,15 @@ class ViewController: NSViewController {
         default:
             print(oscMessage)
         }
-        
     }
     
     @IBAction func buttonSendOSCMessage(_ sender: Any) {
-        
         let oscMessage = OSCMessage(
             address: "/testaddress",
             values: [.int32(123)]
         )
-            .rawData
+        .rawData
         
         oscClient?.send(data: oscMessage)
-        
     }
-    
 }

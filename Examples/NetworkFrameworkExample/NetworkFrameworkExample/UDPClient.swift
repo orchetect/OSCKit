@@ -1,6 +1,6 @@
 //
 //  UDPClient.swift
-//  OSCKitExample
+//  NetworkFrameworkExample
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
@@ -9,7 +9,6 @@ import Network
 
 @available(macOS 10.14, macCatalyst 13.0, iOS 12.0, tvOS 12.0, *)
 final class UDPClient {
-    
     let host: NWEndpoint.Host
     let port: NWEndpoint.Port
     private var connection: NWConnection
@@ -81,5 +80,4 @@ final class UDPClient {
             }
         }
     }
-    
 }

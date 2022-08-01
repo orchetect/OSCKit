@@ -1,6 +1,6 @@
 //
 //  UDPServer.swift
-//  OSCKitExample
+//  NetworkFrameworkExample
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
@@ -9,7 +9,6 @@ import Network
 
 @available(macOS 10.14, macCatalyst 13.0, iOS 12.0, tvOS 12.0, *)
 final class UDPServer {
-    
     let port: NWEndpoint.Port
     var handler: ((Data) -> Void)? = nil
     private let listener: NWListener
@@ -93,5 +92,4 @@ final class UDPServer {
     // private func stop() {
     //     self.listener.cancel()
     // }
-    
 }
