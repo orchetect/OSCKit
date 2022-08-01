@@ -6,7 +6,7 @@
 
 Open Sound Control library written in Swift.
 
-Full unit test coverage.
+Modular - use with any network library of your choice. Fully unit tested.
 
 ## Getting Started
 
@@ -16,7 +16,7 @@ Full unit test coverage.
    - In an app project or framework, in Xcode:
      - Select the menu: **File → Swift Packages → Add Package Dependency...**
      - Enter this URL: `https://github.com/orchetect/OSCKit`
-   
+
    - In a Swift Package, add it to the Package.swift dependencies:
      ```swift
      .package(url: "https://github.com/orchetect/OSCKit", from: "0.2.2")
@@ -27,8 +27,11 @@ Full unit test coverage.
    import OSCKit
    ```
 
-3. Set up UDP port(s) using your networking library of choice. To keep OSCKit lightweight and flexible, no network layer is included in OSCKit. The Examples folder contains some examples using 3rd-party network libraries to get you started.
-   
+3. Set up UDP port(s) using your networking library of choice.
+
+   - To keep OSCKit lightweight and flexible, no network layer is included in OSCKit.
+   - The [Examples](Examples) folder contains projects to get started with common networking libraries.
+
 ### Receive
 
 ```swift
