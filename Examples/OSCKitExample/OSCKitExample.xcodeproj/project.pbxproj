@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E20B015B2898E40600950A28 /* OSCKit in Frameworks */ = {isa = PBXBuildFile; productRef = E20B015A2898E40600950A28 /* OSCKit */; };
+		E20B015D2898F0B000950A28 /* OSCReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B015C2898F0B000950A28 /* OSCReceiver.swift */; };
 		E2D003D5289882820073ED8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D003D4289882820073ED8F /* AppDelegate.swift */; };
 		E2D003D7289882820073ED8F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D003D6289882820073ED8F /* ViewController.swift */; };
 		E2D003E82898834E0073ED8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2D003E52898834E0073ED8F /* Assets.xcassets */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E20B015C2898F0B000950A28 /* OSCReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSCReceiver.swift; sourceTree = "<group>"; };
 		E2D003D1289882820073ED8F /* OSCKitExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSCKitExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2D003D4289882820073ED8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2D003D6289882820073ED8F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 				E2D003E32898834E0073ED8F /* Support */,
 				E2D003D4289882820073ED8F /* AppDelegate.swift */,
 				E2D003D6289882820073ED8F /* ViewController.swift */,
+				E20B015C2898F0B000950A28 /* OSCReceiver.swift */,
 			);
 			path = OSCKitExample;
 			sourceTree = "<group>";
@@ -150,6 +153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2D003D7289882820073ED8F /* ViewController.swift in Sources */,
+				E20B015D2898F0B000950A28 /* OSCReceiver.swift in Sources */,
 				E2D003D5289882820073ED8F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
