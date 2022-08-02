@@ -7,7 +7,7 @@ let package = Package(
     
     name: "OSCKit",
     
-    platforms: [.macOS(.v10_12), .iOS(.v10), .tvOS(.v10), .watchOS(.v3)],
+    platforms: [.macOS(.v10_12), .iOS(.v10), .tvOS(.v10)],
     
     products: [
         .library(
