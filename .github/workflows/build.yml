@@ -88,10 +88,10 @@ jobs:
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@main
-    - name: OSCKitCASExample - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
-      run: xcodebuild -project "Examples/OSCKitCASExample/OSCKitCASExample.xcodeproj" -resolvePackageDependencies
-    - name: OSCKitCASExample - Build
-      run: xcodebuild build -project "Examples/OSCKitCASExample/OSCKitCASExample.xcodeproj" -scheme "OSCKitCASExample" -destination "generic/platform=macOS,name=Any Mac"
+    - name: OSCKitExample - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
+      run: xcodebuild -project "Examples/OSCKitExample/OSCKitExample.xcodeproj" -resolvePackageDependencies
+    - name: OSCKitExample - Build
+      run: xcodebuild build -project "Examples/OSCKitExample/OSCKitExample.xcodeproj" -scheme "OSCKitExample" -destination "generic/platform=macOS,name=Any Mac"
       
     - name: NetworkFrameworkExample - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
       run: xcodebuild -project "Examples/NetworkFrameworkExample/NetworkFrameworkExample.xcodeproj" -resolvePackageDependencies
