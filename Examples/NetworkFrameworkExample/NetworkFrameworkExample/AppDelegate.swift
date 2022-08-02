@@ -11,9 +11,10 @@ import OSCKit
 class AppDelegate: NSObject, NSApplicationDelegate {
     var oscClient = OSCClient(
         host: "127.0.0.1", // local machine
-        port: 8000 // standard OSC port but can be changed
+        port: 8009 // standard OSC port but can be changed
     )
-    var oscServer = OSCServer(port: 8000)
+    var oscServer = OSCServer(port: 8009)
+    let oscReceiver = OSCReceiver()
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         setupOSCServer()
@@ -29,7 +30,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // Important: handle received OSC on main thread if it may result in UI updates
             DispatchQueue.main.async {
                 do {
-                    try self?.handle(received: oscMessage)
+                    try self?.oscReceiver.handle(oscMessage: oscMessage)
                 } catch {
                     print(error)
                 }
@@ -42,34 +43,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             print(error)
         }
     }
-}
-
-// MARK: - OSC Send and Receive
-
-extension AppDelegate {
-    /// Parses received OSC messages.
-    private func handle(received oscMessage: OSCMessage) throws {
-        switch oscMessage.address.pathComponents {
-        case ["test", "method1"]:
-            // validate and unwrap value array with expected types: [String]
-            let value = try oscMessage.values.masked(String.self)
-            print("Matched /test/method1 with string:", value)
-            
-        case ["test", "method2"]:
-            // validate and unwrap value array with expected types: [String, Int32?]
-            let values = try oscMessage.values.masked(String.self, Int32?.self)
-            print("Matched /test/method2 with string: \"\(values.0)\", int32: \(values.1 ?? 0)")
-            
-        default:
-            print(oscMessage)
-        }
-    }
     
     /// Send a test OSC message.
     @IBAction func sendTestOSCMessage(_ sender: Any) {
         let oscMessage = OSCMessage(
-            address: "/test/method2",
-            values: [.string("Test string."), .int32(123)]
+            address: "/some/address/methodB",
+            values: [.string("Test string"), .int32(123)]
         )
         
         oscClient.send(oscMessage)
