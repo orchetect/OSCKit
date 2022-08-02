@@ -34,7 +34,7 @@ let package = Package(
             dependencies: ["OTCore", "SwiftASCII", "SwiftRadix"]),
         .testTarget(
             name: "OSCKitCoreTests",
-            dependencies: ["OSCKitCore", "OTCore", "SwiftASCII", "SwiftRadix"]),
+            dependencies: ["OSCKitCore", "OTCore"]),
     ]
     
 )
@@ -43,13 +43,13 @@ func addShouldTestFlag() {
     // swiftSettings may be nil so we can't directly append to it
     
     var swiftSettings = package.targets
-        .first(where: { $0.name == "OSCKitTests" })?
+        .first(where: { $0.name == "OSCKitCoreTests" })?
         .swiftSettings ?? []
     
     swiftSettings.append(.define("shouldTestCurrentPlatform"))
     
     package.targets
-        .first(where: { $0.name == "OSCKitTests" })?
+        .first(where: { $0.name == "OSCKitCoreTests" })?
         .swiftSettings = swiftSettings
 }
 
