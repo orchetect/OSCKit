@@ -2,7 +2,7 @@
 
 # OSCKit
 
-[![CI Build Status](https://github.com/orchetect/OSCKit/actions/workflows/build.yml/badge.svg)](https://github.com/orchetect/OSCKit/actions/workflows/build.yml) [![Platforms - macOS | iOS | tvOS | watchOS](https://img.shields.io/badge/platforms-macOS%2010.12%2B%20|%20iOS%2010%2B%20|%20tvOS%2010%2B%20|%20watchOS%203%2B%20-lightgrey.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/OSCKit/blob/main/LICENSE)
+[![CI Build Status](https://github.com/orchetect/OSCKit/actions/workflows/build.yml/badge.svg)](https://github.com/orchetect/OSCKit/actions/workflows/build.yml) [![Platforms - macOS | iOS | tvOS](https://img.shields.io/badge/platforms-macOS%2010.12%2B%20|%20iOS%2010%2B%20|%20tvOS%2010%2B%20-lightgrey.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/OSCKit/blob/main/LICENSE)
 
 Open Sound Control library written in Swift.
 
@@ -19,7 +19,7 @@ Fully unit tested.
 
    - In a Swift Package, add it to the Package.swift dependencies:
      ```swift
-     .package(url: "https://github.com/orchetect/OSCKit", from: "0.2.2")
+     .package(url: "https://github.com/orchetect/OSCKit", from: "0.3.0")
      ```
 
 2. Import the library:
@@ -35,22 +35,30 @@ Fully unit tested.
    
 3. The [Examples](Examples) folder contains projects to get started.
 
-### Send
+## Sending OSC
 
-#### OSC Message
+### Create OSC Client
 
-To send a single message, construct an `OSCMessage` and send the message's `rawData` bytes as the outgoing UDP message.
+A single global OSC client can be created once at app startup then you can access it from aynwhere to send OSC messages to any receiver.
 
 ```swift
-let msg = OSCMessage(address: "/msg2", 
-                     values: [.string("string"), .int32(123)])
-
-yourUDPSocket.send(msg.rawData)
+let oscClient = OSCClient()
 ```
 
-#### OSC Bundle
+### OSC Messages
 
-To send multiple OSC messages or nested OSC bundles to the same destination at the same time, pack them in an `OSCBundle` and send the bundle's `rawData` bytes as the outgoing UDP message.
+To send a single message, construct an `OSCMessage` and send it using a global `OSCClient` instance.
+
+```swift
+let msg = OSCMessage(address: "/msg2",
+                     values: [.string("string"), .int32(123)])
+
+oscClient.send(msg, to: "192.168.1.2", port: 8000)
+```
+
+### OSC Bundles
+
+To send multiple OSC messages or nested OSC bundles to the same destination at the same time, pack them in an `OSCBundle` and send it using a global `OSCClient` instance.
 
 ```swift
 let msg1 = OSCMessage(address: "/msg1")
@@ -58,20 +66,64 @@ let msg2 = OSCMessage(address: "/msg2",
                       values: [.string("string"), .int32(123)])
 let bundle = OSCBundle([msg1, msg2])
 
-yourUDPSocket.send(bundle.rawData)
+oscClient.send(bundle, to: "192.168.1.2", port: 8000)
 ```
 
-### Receive
+## Receiving OSC
 
-##### Option 1: Individual address pattern matching
+### Create OSC Server
+
+Create the server instance. A single global instance can be created one at app startup to receive OSC messages on a specific port. The default OSC port is 8000 but it may be set to any open port if desired.
 
 ```swift
-let receivedAddress = OSCAddress("/{some,other}/address/*")
-let localAddress = OSCAddress("/some/address/here")
-let isMatch = receivedAddress.pattern(matches: localAddress) // true
+let oscServer = OSCServer(port: 8000)
 ```
 
-##### Option 2: Using `OSCDispatcher` for automated pattern matching
+Set the receiver handler.
+
+```swift
+oscServer.setHandler { [weak self] oscMessage in
+    // Important: handle received OSC on main thread if it may result in UI updates
+    DispatchQueue.main.async {
+        do {
+            try self?.handle(received: oscMessage)
+        } catch {
+            print(error)
+        }
+    }
+}
+
+private func handle(received oscMessage: OSCMessage) throws {
+  // handle received messages here
+}
+```
+
+Then start the server to being listening for inbound OSC packets.
+
+```swift
+class AppDelegate: NSObject, NSApplicationDelegate {
+    try oscServer.start()
+}
+```
+
+### Option 1: Imperative pattern matching
+
+```swift
+// example receied OSC message with address "/{some,other}/address/*"
+private func handle(received oscMessage: OSCMessage) throws {
+    if oscMessage.address.pattern(matches: "/some/address/methodA") { // will match
+        // perform methodA action using oscMessage.values
+    }
+    if oscMessage.address.pattern(matches: "/some/address/methodB") { // will match
+        // perform methodB action using oscMessage.values
+    }
+    if oscMessage.address.pattern(matches: "/different/methodC") { // won't match
+        // perform methodC action using oscMessage.values
+    }
+}
+```
+
+### Option 2: Using `OSCDispatcher` for automated pattern matching
 
 OSCKit provides an optional abstraction called `OSCDispatcher`.
 
@@ -81,15 +133,27 @@ Consider that an inbound message address pattern of `/some/address/*` will match
 
 ```swift
 class OSCReceiver {
-  // register local OSC methods and store the ID tokens once before receiving OSC messages
   private let oscDispatcher = OSCDispatcher()
-  private lazy var idMethodA = oscDispatcher.register(address: "/methodA")
-  private lazy var idMethodB = oscDispatcher.register(address: "/some/address/methodB")
-  private lazy var idMethodC = oscDispatcher.register(address: "/some/address/methodC")
+  
+  private let idMethodA: OSCDispatcher.MethodID
+  private let idMethodB: OSCDispatcher.MethodID
+  private let idMethodC: OSCDispatcher.MethodID
+  
+  public init() {
+    // register local OSC methods and store the ID tokens once before receiving OSC messages
+    idMethodA = oscDispatcher.register(address: "/methodA")
+    idMethodB = oscDispatcher.register(address: "/some/address/methodB")
+    idMethodC = oscDispatcher.register(address: "/some/address/methodC")
+  }
   
   // when received OSC messages arrive, pass them to the dispatcher
   public func handle(oscMessage: OSCMessage) throws {
     let ids = oscDispatcher.methods(matching: oscMessage.address)
+    
+    guard !ids.isEmpty else {
+      print("Received unrecognized OSC message:", oscMessage)
+      return
+    }
     
     try ids.forEach { id in
       switch id {
@@ -106,14 +170,14 @@ class OSCReceiver {
           performMethodC(values.0, values.1)
           
         default:
-          break
+          print("Received unhandled OSC message:", oscMessage)
       }
     }
   }
   
   private func performMethodA(_ str: String) { }
   private func performMethodB(_ str: String, _ int: Int) { }
-  private func performMethodC(_ str: String, _ int: Double?) { }
+  private func performMethodC(_ str: String, _ dbl: Double?) { }
 }
 ```
 
