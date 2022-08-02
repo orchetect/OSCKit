@@ -189,35 +189,41 @@ When a specific number of values and value types are expected:
 
 #### Option 1: Use `masked()` to validate and unwrap expected value types
 
-```swift
-// validate and unwrap value array with expected types: [String]
-let value = try oscMessage.values.masked(String.self)
-print("/test/method1 with string:", value)
-```
+Validate and unwrap value array with expected member `String`:
 
 ```swift
-// validate and unwrap value array with expected types: [String, Int32?]
+let value = try oscMessage.values.masked(String.self)
+print("string: \(value)")
+```
+
+Validate and unwrap value array with expected members `String, Int32?`:
+
+```swift
 let values = try oscMessage.values.masked(String.self, Int32?.self)
-print("/test/method2 with string: \(values.0), int32: \(values.1 ?? 0)")
+print("string:", values.0, 
+      "int32:", values.1)
 ```
 
 #### Option 2: Manually unwrap expected value types
 
-```swift
-// validate and unwrap value array with expected types: [String]
-guard oscMessage.values.count == 1,
-      case let .string(value) = oscMessage.values[0] else { return }
-print("/test/method1 with string:", value)
-```
+Validate and unwrap value array with expected member `String`:
 
 ```swift
-// validate and unwrap value array with expected types: [String, Int32?]
+guard oscMessage.values.count == 1,
+      case let .string(value) = oscMessage.values[0] else { return }
+print("string: \(value)")
+```
+
+Validate and unwrap value array with expected members `String, Int32?`:
+
+```swift
 guard (1...2).contains(oscMessage.values.count),
       case let .string(val0) = oscMessage.values[0] else { return }
 let val1: Int32? = {
   if case let .int32(val1) = oscMessage.values[1] { return val1 } else { return nil }
 }()
-print("/test/method2 with string: \(val0), int32: \(val1 ?? 0)")
+print("string:", val0, 
+      "int32:", val1)
 ```
 
 #### Option 3: Parse a variable number of values
