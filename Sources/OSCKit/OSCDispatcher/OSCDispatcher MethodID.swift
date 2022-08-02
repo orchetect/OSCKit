@@ -1,13 +1,13 @@
 //
-//  Dispatcher MethodID.swift
+//  OSCDispatcher MethodID.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
 import Foundation
 
-extension OSCAddress.Dispatcher {
+extension OSCDispatcher {
     
-    /// A unique identifier corresponding to an OSC address method that was registered with the `Dispatcher`
+    /// A unique identifier corresponding to an OSC address method that was registered with the dispatcher.
     public struct MethodID: Equatable, Hashable {
         
         let uuid = UUID()

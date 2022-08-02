@@ -1,5 +1,5 @@
 //
-//  Dispatcher.swift
+//  OSCDispatcher.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
@@ -7,34 +7,31 @@ import Foundation
 @_implementationOnly import OTCore
 import SwiftASCII
 
-extension OSCAddress {
+/// OSC Address Dispatcher.
+/// Populated with an address tree by registering OSC methods.
+/// The `matches(_:)` method returns all methods that match a given address.
+///
+/// An OSC _method_ is defined as being the last path component in the address.
+///
+/// `methodname` is the method name in the following address examples:
+///
+///     /methodname
+///     /container1/container2/methodname
+///
+///  Any other path components besides the last are referred to as _containers_.
+///
+public class OSCDispatcher {
     
-    /// OSC Address Dispatcher.
-    /// Populated with an address tree by registering OSC methods.
-    /// The `matches(_:)` method returns all methods that match a given address.
-    ///
-    /// An OSC _method_ is defined as being the last path component in the address.
-    ///
-    /// `methodname` is the method name in the following address examples:
-    ///
-    ///     /methodname
-    ///     /container1/container2/methodname
-    ///
-    ///  Any other path components besides the last are referred to as _containers_.
-    ///
-    public class Dispatcher {
-        
-        var root: Node = Node("")
-        
-        public init() { }
-        
-    }
+    var root: Node = Node("")
+    
+    public init() { }
     
 }
 
+
 // MARK: - Address Registration
 
-extension OSCAddress.Dispatcher {
+extension OSCDispatcher {
     
     /// Register an OSC address.
     /// Returns a unique identifier assigned to the address's method.
@@ -115,7 +112,7 @@ extension OSCAddress.Dispatcher {
 
 // MARK: - Matches
 
-extension OSCAddress.Dispatcher {
+extension OSCDispatcher {
     
     /// Returns all OSC address nodes matching the address pattern.
     ///

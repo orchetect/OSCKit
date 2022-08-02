@@ -80,9 +80,9 @@ let localAddress = OSCAddress("/some/address/here")
 let isMatch = receivedAddress.pattern(matches: localAddress) // true
 ```
 
-##### Using `Dispatcher` for automated pattern matching
+##### Using `OSCDispatcher` for automated pattern matching
 
-OSCKit provides an optional abstraction called `OSCAddress.Dispatcher`.
+OSCKit provides an optional abstraction called `OSCDispatcher`.
 
 Local OSC addresses (methods) are registered with the dispatcher and it proves a unique ID token representing it. When an OSC message is received, pass its address to the dispatcher and it will pattern match it against all registered local addresses and return an array of local method IDs that match.
 
@@ -91,7 +91,7 @@ Consider that an inbound message address pattern of `/some/address/*` will match
 ```swift
 class OSCReceiver {
   // register local OSC methods and store the ID tokens once before receiving OSC messages
-  private let oscDispatcher = OSCAddress.Dispatcher()
+  private let oscDispatcher = OSCDispatcher()
   private lazy var idMethodA = oscDispatcher.register(address: "/methodA")
   private lazy var idMethodB = oscDispatcher.register(address: "/some/address/methodB")
   private lazy var idMethodC = oscDispatcher.register(address: "/some/address/methodC")

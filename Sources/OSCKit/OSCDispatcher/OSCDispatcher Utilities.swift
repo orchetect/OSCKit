@@ -1,5 +1,5 @@
 //
-//  Dispatcher Utilities.swift
+//  OSCDispatcher Utilities.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
@@ -8,7 +8,7 @@ import Foundation
 
 // MARK: - Node Utility Methods
 
-extension OSCAddress.Dispatcher {
+extension OSCDispatcher {
     
     func createMethodNode<S>(path: S,
                              replaceExisting: Bool = true) -> Node
@@ -104,7 +104,7 @@ extension OSCAddress.Dispatcher {
 
 // MARK: - Pattern Utility Methods
 
-extension OSCAddress.Dispatcher {
+extension OSCDispatcher {
     
     func findPatternMatches(node: Node,
                             pattern: OSCAddress.Pattern) -> [Node] {
@@ -117,7 +117,7 @@ extension OSCAddress.Dispatcher {
 
 // MARK: - Category Methods
 
-extension RangeReplaceableCollection where Element == OSCAddress.Dispatcher.Node {
+extension RangeReplaceableCollection where Element == OSCDispatcher.Node {
     
     @_disfavoredOverload
     mutating func remove(_ element: Element) {

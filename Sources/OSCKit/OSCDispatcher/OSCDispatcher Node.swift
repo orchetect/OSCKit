@@ -1,5 +1,5 @@
 //
-//  Dispatcher Node.swift
+//  OSCDispatcher Node.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
@@ -7,7 +7,7 @@ import Foundation
 @_implementationOnly import OTCore
 import SwiftASCII
 
-extension OSCAddress.Dispatcher {
+extension OSCDispatcher {
     
     /// Represents an OSC address space container or method.
     class Node {
@@ -28,20 +28,20 @@ extension OSCAddress.Dispatcher {
     
 }
 
-extension OSCAddress.Dispatcher.Node: Equatable {
-    static func == (lhs: OSCAddress.Dispatcher.Node,
-                    rhs: OSCAddress.Dispatcher.Node) -> Bool {
+extension OSCDispatcher.Node: Equatable {
+    static func == (lhs: OSCDispatcher.Node,
+                    rhs: OSCDispatcher.Node) -> Bool {
         lhs.id == rhs.id
     }
 }
 
-extension OSCAddress.Dispatcher.Node: Hashable {
+extension OSCDispatcher.Node: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
 }
 
-extension OSCAddress.Dispatcher.Node {
+extension OSCDispatcher.Node {
     
     /// Validates an OSC address space node name b invalid characters.
     ///

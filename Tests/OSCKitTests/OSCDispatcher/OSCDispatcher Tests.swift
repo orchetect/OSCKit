@@ -1,5 +1,5 @@
 //
-//  Dispatcher Tests.swift
+//  OSCDispatcher Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
@@ -8,7 +8,7 @@
 import XCTest
 import OSCKit
 
-final class OSCAddress_Dispatcher_Tests: XCTestCase {
+final class OSCDispatcher_Tests: XCTestCase {
     
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
@@ -17,7 +17,7 @@ final class OSCAddress_Dispatcher_Tests: XCTestCase {
     
     func testRegisterAddress_PathComponents() throws {
         
-        let dispatcher = OSCAddress.Dispatcher()
+        let dispatcher = OSCDispatcher()
         
         let t1ID = dispatcher.register(address: ["test1"])
         let t2ID = dispatcher.register(address: ["test1", "test2"])
@@ -44,7 +44,7 @@ final class OSCAddress_Dispatcher_Tests: XCTestCase {
     
     func testUnregisterAddress() throws {
         
-        let dispatcher = OSCAddress.Dispatcher()
+        let dispatcher = OSCDispatcher()
         
         let t1ID = dispatcher.register(address: "/test1/test3/methodA") ; _ = t1ID
         let t2ID = dispatcher.register(address: "/test2/test4/methodB")
@@ -77,7 +77,7 @@ final class OSCAddress_Dispatcher_Tests: XCTestCase {
     
     func testUnregisterAddress_PathComponents() throws {
         
-        let dispatcher = OSCAddress.Dispatcher()
+        let dispatcher = OSCDispatcher()
         
         let t1ID = dispatcher.register(address: "/test1/test3/methodA") ; _ = t1ID
         let t2ID = dispatcher.register(address: "/test2/test4/methodB")
@@ -110,7 +110,7 @@ final class OSCAddress_Dispatcher_Tests: XCTestCase {
     
     func testUnregisterAllAddresses() throws {
         
-        let dispatcher = OSCAddress.Dispatcher()
+        let dispatcher = OSCDispatcher()
         
         let _ = dispatcher.register(address: "/test1/test3/methodA")
         let _ = dispatcher.register(address: "/test2/test4/methodB")
@@ -145,7 +145,7 @@ final class OSCAddress_Dispatcher_Tests: XCTestCase {
     
     func testMethodsMatching_Root() throws {
         
-        let dispatcher = OSCAddress.Dispatcher()
+        let dispatcher = OSCDispatcher()
         
         let t1ID = dispatcher.register(address: "/test1")
         let t2ID = dispatcher.register(address: "/test2")
@@ -223,7 +223,7 @@ final class OSCAddress_Dispatcher_Tests: XCTestCase {
     
     func testMethodsMatching_NestedMethods() throws {
         
-        let dispatcher = OSCAddress.Dispatcher()
+        let dispatcher = OSCDispatcher()
         
         let t1ID = dispatcher.register(address: "/test1/test2/methodA")
         let t2ID = dispatcher.register(address: "/test1/test2/methodB")
@@ -305,7 +305,7 @@ final class OSCAddress_Dispatcher_Tests: XCTestCase {
     
     func testMethodsMatching_MultipleContainerMatches() throws {
         
-        let dispatcher = OSCAddress.Dispatcher()
+        let dispatcher = OSCDispatcher()
         
         let t1ID = dispatcher.register(address: "/test1/test3/methodA")
         let t2ID = dispatcher.register(address: "/test2/test4/methodB")
@@ -368,7 +368,7 @@ final class OSCAddress_Dispatcher_Tests: XCTestCase {
         
         // ensure addresses are not sanitized in an unexpected way
         
-        let dispatcher = OSCAddress.Dispatcher()
+        let dispatcher = OSCDispatcher()
         
         do {
             let addr = OSCAddress("/test1/test3/vol-")
