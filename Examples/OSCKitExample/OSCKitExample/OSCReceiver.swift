@@ -1,8 +1,7 @@
 //
 //  OSCReceiver.swift
 //  OSCKitExample
-//
-//  Created by Steffan Andrews on 2022-08-01.
+//  OSCKit • https://github.com/orchetect/OSCKit
 //
 
 import OSCKit
