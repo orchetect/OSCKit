@@ -11,10 +11,8 @@ import SwiftASCII
 
 /// OSC Message.
 extension OSCMessage {
-    
     /// Initialize by parsing raw OSC message data bytes.
     public init(from rawData: Data) throws {
-        
         // cache raw data
         
         self.rawData = rawData
@@ -22,7 +20,7 @@ extension OSCMessage {
         // parse a raw OSC packet and populates the struct's properties
         
         let len = rawData.count
-        var ppos: Int = 0 // parse byte position
+        var ppos = 0 // parse byte position
         var remainingData: Data
         
         // validation: length
@@ -45,7 +43,7 @@ extension OSCMessage {
         
         // test for presence of values
         
-        remainingData = rawData.subdata(in: ppos..<rawData.count)
+        remainingData = rawData.subdata(in: ppos ..< rawData.count)
         
         // OSC-type chunk
         
@@ -62,11 +60,9 @@ extension OSCMessage {
         var extractedValues: [Value] = []
         
         for char in extractedOSCtypes.stringValue {
-            
-            remainingData = rawData.subdata(in: ppos..<rawData.count)
+            remainingData = rawData.subdata(in: ppos ..< rawData.count)
             
             switch char {
-                
                 // core types
                 
             case "i":
@@ -139,7 +135,10 @@ extension OSCMessage {
                 if let pull = remainingData.extractInt32() {
                     let asciiCharNum = Int(pull.int32Value)
                     guard let asciiChar = ASCIICharacter(asciiCharNum) else {
-                        throw DecodeError.malformed("Character value couldn't be read. Could not form a Unicode scalar from the value.")
+                        throw DecodeError
+                            .malformed(
+                                "Character value couldn't be read. Could not form a Unicode scalar from the value."
+                            )
                     }
                     extractedValues.append(.character(asciiChar))
                     ppos += pull.byteLength
@@ -150,10 +149,12 @@ extension OSCMessage {
             case "m":
                 if let pull = remainingData.extract(byteLength: 4) {
                     extractedValues.append(
-                        .midi(portID: pull[0],
-                              status: pull[1],
-                              data1: pull[2],
-                              data2: pull[3])
+                        .midi(
+                            portID: pull[0],
+                            status: pull[1],
+                            data1: pull[2],
+                            data2: pull[3]
+                        )
                     )
                     ppos += 4
                 } else {
@@ -174,21 +175,20 @@ extension OSCMessage {
                 
             default:
                 throw DecodeError.unexpectedType(tag: char)
-                
             }
         }
         
         // update public properties
         address = .init(extractedAddress)
         values = extractedValues
-        
     }
     
     /// Internal: generate raw OSC bytes from struct's properties.
     @usableFromInline
-    internal static func generateRawData(address: OSCAddress,
-                                         values: [Value]) -> Data {
-        
+    internal static func generateRawData(
+        address: OSCAddress,
+        values: [Value]
+    ) -> Data {
         // returns a raw OSC packet constructed out of the struct's properties
         
         // max UDP IPv4 packet size is 65507 bytes,
@@ -210,56 +210,55 @@ extension OSCMessage {
         // iterate data types in values array to prepare OSC-type string
         for value in values {
             switch value {
-                // core types
-            case .int32(let val):
+            // core types
+            case let .int32(val):
                 buildDataTypes += "i"
                 buildValues += val.toData(.bigEndian)
                 
-            case .float32(let val):
+            case let .float32(val):
                 buildDataTypes += "f"
                 buildValues += val.toData(.bigEndian)
                 
-            case .string(let val):
+            case let .string(val):
                 buildDataTypes += "s"
                 buildValues += val.rawData.fourNullBytePadded
                 
-            case .blob(let val):
+            case let .blob(val):
                 buildDataTypes += "b"
                 // blob: An int32 size count, followed by that many 8-bit bytes of arbitrary binary data, followed by 0-3 additional zero-bytes to make the total number of bits a multiple of 32.
                 buildValues += val.count.int32.toData(.bigEndian)
                 buildValues += val.fourNullBytePadded
                 
-                // extended types
-            case .int64(let val):
+            // extended types
+            case let .int64(val):
                 buildDataTypes += "h"
                 buildValues += val.toData(.bigEndian)
                 
-            case .timeTag(let val):
+            case let .timeTag(val):
                 buildDataTypes += "t"
                 buildValues += val.toData(.bigEndian)
                 
-            case .double(let val):
+            case let .double(val):
                 buildDataTypes += "d"
                 buildValues += val.toData(.bigEndian)
                 
-            case .stringAlt(let val):
+            case let .stringAlt(val):
                 buildDataTypes += "S"
                 buildValues += val.rawData.fourNullBytePadded
                 
-            case .character(let val):
+            case let .character(val):
                 buildDataTypes += "c"
                 buildValues += val.asciiValue.int32.toData(.bigEndian)
                 
-            case .midi(let val):
+            case let .midi(val):
                 buildDataTypes += "m"
                 buildValues += [val.portID, val.status, val.data1, val.data2].data
                 
-            case .bool(let val):
+            case let .bool(val):
                 buildDataTypes += val ? "T" : "F"
                 
             case .null:
                 buildDataTypes += "N"
-                
             }
         }
         
@@ -271,7 +270,7 @@ extension OSCMessage {
             .reserveCapacity(buildDataTypes.count.roundedUp(toMultiplesOf: 4))
         
         dataTypesRawData = buildDataTypes
-            .reduce(Data(), { $0 + $1.rawData })
+            .reduce(Data()) { $0 + $1.rawData }
             .fourNullBytePadded
         
         data += dataTypesRawData
@@ -280,7 +279,5 @@ extension OSCMessage {
         
         // return data
         return data
-        
     }
-    
 }

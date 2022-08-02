@@ -6,62 +6,59 @@
 import Foundation
 
 extension OSCMessage.Value {
-    
     /// Returns a string representation of the value. Optionally includes a value-type label.
     public func stringValue(withLabel: Bool = false) -> String {
-        
         var prefixString = ""
         var suffixString = ""
-        var outputString: String = ""
+        var outputString = ""
         
         switch self {
-            
             // core types
             
-        case .int32(let v):
+        case let .int32(v):
             outputString = String(v)
             prefixString = "int32:"
             suffixString = ""
-        case .float32(let v):
+        case let .float32(v):
             outputString = String(v)
             prefixString = "float32:"
             suffixString = ""
-        case .string(let v):
+        case let .string(v):
             outputString = v.stringValue
             prefixString = "string:\""
             suffixString = "\""
-        case .blob(let v):
+        case let .blob(v):
             outputString = "\(v.count) bytes"
             prefixString = "blob:"
             suffixString = ""
             
             // extended types
             
-        case .int64(let v):
+        case let .int64(v):
             outputString = String(v)
             prefixString = "int64:"
             suffixString = ""
-        case .timeTag(let v):
+        case let .timeTag(v):
             outputString = String(v)
             prefixString = "timeTag:"
             suffixString = ""
-        case .double(let v):
+        case let .double(v):
             outputString = String(v)
             prefixString = "double:"
             suffixString = ""
-        case .stringAlt(let v):
+        case let .stringAlt(v):
             outputString = v.stringValue
             prefixString = "stringAlt:\""
             suffixString = "\""
-        case .character(let v):
+        case let .character(v):
             outputString = String(v.characterValue)
             prefixString = "char:"
             suffixString = ""
-        case .midi(let v):
+        case let .midi(v):
             outputString = "\(v)"
             prefixString = ""
             suffixString = ""
-        case .bool(let v):
+        case let .bool(v):
             outputString = String(v)
             prefixString = "bool:"
             suffixString = ""
@@ -69,7 +66,6 @@ extension OSCMessage.Value {
             outputString = "Null"
             prefixString = ""
             suffixString = ""
-            
         }
         
         switch withLabel {
@@ -78,7 +74,5 @@ extension OSCMessage.Value {
         case false:
             return outputString
         }
-        
     }
-    
 }

@@ -37,49 +37,33 @@ import SwiftASCII
 /// - Inherits OSC 1.0 pattern matching and adds the `//` operator
 ///
 public struct OSCAddress: Hashable {
-    
     /// OSC Address storage.
     internal let address: ASCIIString
-    
 }
 
 extension OSCAddress: ExpressibleByStringLiteral {
-    
     public typealias StringLiteralType = String
     
     public init(stringLiteral: Self.StringLiteralType) {
-        
         address = ASCIIString(stringLiteral)
-        
     }
-    
 }
 
 extension OSCAddress: CustomStringConvertible {
-    
     public var description: String {
-        
         address.stringValue
-        
     }
-    
 }
 
 extension OSCAddress: Codable {
-    
     public init(from decoder: Decoder) throws {
-        
         let container = try decoder.singleValueContainer()
         let value = try container.decode(String.self)
         self.init(value)
-        
     }
     
     public func encode(to encoder: Encoder) throws {
-        
         var container = encoder.singleValueContainer()
         try container.encode(stringValue)
-        
     }
-    
 }

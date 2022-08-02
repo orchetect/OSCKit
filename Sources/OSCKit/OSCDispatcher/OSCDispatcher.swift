@@ -21,18 +21,14 @@ import SwiftASCII
 ///  Any other path components besides the last are referred to as _containers_.
 ///
 public class OSCDispatcher {
-    
-    var root: Node = Node("")
+    var root: Node = .init("")
     
     public init() { }
-    
 }
-
 
 // MARK: - Address Registration
 
 extension OSCDispatcher {
-    
     /// Register an OSC address.
     /// Returns a unique identifier assigned to the address's method.
     /// Replaces existing reference if one exists for that method already.
@@ -47,9 +43,7 @@ extension OSCDispatcher {
     ///  Any other path components besides the last are referred to as _containers_.
     ///
     public func register(address: OSCAddress) -> MethodID {
-        
         register(address: address.pathComponents)
-        
     }
     
     /// Register an OSC address.
@@ -66,54 +60,51 @@ extension OSCDispatcher {
     ///  Any other path components besides the last are referred to as _containers_.
     ///
     public func register<S>(address pathComponents: S) -> MethodID
-    where S : BidirectionalCollection,
-          S.Element : StringProtocol
+        where S: BidirectionalCollection,
+        S.Element: StringProtocol
     {
-        
         guard !pathComponents.isEmpty else {
             // instead of returning nil, return a bogus ID
             return MethodID()
         }
         
-        return createMethodNode(path: pathComponents,
-                                replaceExisting: true)
+        return createMethodNode(
+            path: pathComponents,
+            replaceExisting: true
+        )
         .id
-        
     }
     
     /// Unregister an OSC address.
     @discardableResult
     public func unregister(address: OSCAddress) -> Bool {
-        
-        removeMethodNode(path: address.pathComponents,
-                         forceNonEmptyMethodRemoval: false)
-        
+        removeMethodNode(
+            path: address.pathComponents,
+            forceNonEmptyMethodRemoval: false
+        )
     }
     
     /// Unregister an OSC address.
     @discardableResult
     public func unregister<S>(address pathComponents: S) -> Bool
-    where S : BidirectionalCollection,
-          S.Element : StringProtocol
+        where S: BidirectionalCollection,
+        S.Element: StringProtocol
     {
-        removeMethodNode(path: pathComponents,
-                         forceNonEmptyMethodRemoval: false)
-        
+        removeMethodNode(
+            path: pathComponents,
+            forceNonEmptyMethodRemoval: false
+        )
     }
     
     /// Unregister all OSC addresses.
     public func unregisterAll() {
-        
         root = Node("")
-        
     }
-    
 }
 
 // MARK: - Matches
 
 extension OSCDispatcher {
-    
     /// Returns all OSC address nodes matching the address pattern.
     ///
     /// An OSC _method_ is defined as being the last path component in the address.
@@ -126,7 +117,6 @@ extension OSCDispatcher {
     ///  Any other path components besides the last are referred to as _containers_.
     ///
     public func methods(matching address: OSCAddress) -> [MethodID] {
-        
         let pattern = address.pattern
         guard !pattern.isEmpty else { return [] }
         
@@ -141,7 +131,5 @@ extension OSCDispatcher {
         } while idx < pattern.count
         
         return nodes.map { $0.id }
-        
     }
-    
 }

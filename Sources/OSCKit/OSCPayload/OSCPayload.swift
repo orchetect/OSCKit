@@ -7,36 +7,28 @@ import Foundation
 
 /// OSC payload types.
 public enum OSCPayload {
-    
     /// OSC Message.
     case message(OSCMessage)
     
     /// OSC Bundle, containing one or more OSC bundle(s) and/or OSC message(s).
     case bundle(OSCBundle)
-    
 }
 
 // MARK: - CustomStringConvertible
 
 extension OSCPayload: CustomStringConvertible {
-    
     public var description: String {
-        
         switch self {
-        case .message(let element):
+        case let .message(element):
             return element.description
             
-        case .bundle(let element):
+        case let .bundle(element):
             return element.description
-            
         }
-        
     }
-    
 }
 
 extension OSCPayload: Codable {
-    
     enum CodingKeys: String, CodingKey {
         case message
         case bundle
@@ -62,24 +54,18 @@ extension OSCPayload: Codable {
         case .bundle:
             let bundle = try container.decode(OSCBundle.self, forKey: key)
             self = .bundle(bundle)
-            
         }
-        
     }
     
     public func encode(to encoder: Encoder) throws {
-        
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         switch self {
-        case .message(let message):
+        case let .message(message):
             try container.encode(message, forKey: .message)
             
-        case .bundle(let bundle):
+        case let .bundle(bundle):
             try container.encode(bundle, forKey: .bundle)
-            
         }
-        
     }
-    
 }

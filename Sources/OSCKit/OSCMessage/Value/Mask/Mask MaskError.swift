@@ -5,14 +5,10 @@
 
 import Foundation
 
-public extension OSCMessage.Value.Mask {
-    
+extension OSCMessage.Value.Mask {
     /// Error thrown by OSC value mask methods.
-    enum MaskError: Error {
-        
+    public enum MaskError: Error {
         case invalidCount
         case mismatchedTypes
-        
     }
-    
 }

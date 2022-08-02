@@ -9,11 +9,12 @@ import Foundation
 // MARK: - Node Utility Methods
 
 extension OSCDispatcher {
-    
-    func createMethodNode<S>(path: S,
-                             replaceExisting: Bool = true) -> Node
-    where S : BidirectionalCollection,
-          S.Element : StringProtocol
+    func createMethodNode<S>(
+        path: S,
+        replaceExisting: Bool = true
+    ) -> Node
+        where S: BidirectionalCollection,
+        S.Element: StringProtocol
     {
         var pathRef = root
         
@@ -41,10 +42,12 @@ extension OSCDispatcher {
     }
     
     @discardableResult
-    func removeMethodNode<S>(path: S,
-                             forceNonEmptyMethodRemoval: Bool = false) -> Bool
-    where S : BidirectionalCollection,
-          S.Element : StringProtocol
+    func removeMethodNode<S>(
+        path: S,
+        forceNonEmptyMethodRemoval: Bool = false
+    ) -> Bool
+        where S: BidirectionalCollection,
+        S.Element: StringProtocol
     {
         guard !path.isEmpty,
               let nodes = findPathNodes(path: path, includeRoot: true)
@@ -67,8 +70,8 @@ extension OSCDispatcher {
     }
     
     func findMethodNode<S>(path: S) -> Node?
-    where S : BidirectionalCollection,
-          S.Element : StringProtocol
+        where S: BidirectionalCollection,
+        S.Element: StringProtocol
     {
         var pathRef = root
         for idx in path.indices {
@@ -82,10 +85,12 @@ extension OSCDispatcher {
         return pathRef
     }
     
-    func findPathNodes<S>(path: S,
-                          includeRoot: Bool = false) -> [Node]?
-    where S : BidirectionalCollection,
-          S.Element : StringProtocol
+    func findPathNodes<S>(
+        path: S,
+        includeRoot: Bool = false
+    ) -> [Node]?
+        where S: BidirectionalCollection,
+        S.Element: StringProtocol
     {
         var nodes: [Node] = []
         var pathRef = root
@@ -99,29 +104,24 @@ extension OSCDispatcher {
         }
         return nodes
     }
-    
 }
 
 // MARK: - Pattern Utility Methods
 
 extension OSCDispatcher {
-    
-    func findPatternMatches(node: Node,
-                            pattern: OSCAddress.Pattern) -> [Node] {
-        
+    func findPatternMatches(
+        node: Node,
+        pattern: OSCAddress.Pattern
+    ) -> [Node] {
         node.children.filter { pattern.evaluate(matching: $0.name) }
-        
     }
-    
 }
 
 // MARK: - Category Methods
 
 extension RangeReplaceableCollection where Element == OSCDispatcher.Node {
-    
     @_disfavoredOverload
     mutating func remove(_ element: Element) {
         removeAll(where: { $0 == element })
     }
-    
 }

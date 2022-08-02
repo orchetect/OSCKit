@@ -7,9 +7,7 @@ import Foundation
 import SwiftASCII
 
 extension OSCMessage.Value: Codable {
-    
     enum CodingKeys: String, CodingKey {
-        
         // core types
         
         case int32
@@ -26,12 +24,10 @@ extension OSCMessage.Value: Codable {
         case character
         case midi
         case bool
-        case `null`
-        
+        case null
     }
     
     public init(from decoder: Decoder) throws {
-        
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         guard let key = container.allKeys.first else {
@@ -44,7 +40,6 @@ extension OSCMessage.Value: Codable {
         }
         
         switch key {
-            
             // core types
             
         case .int32:
@@ -94,43 +89,39 @@ extension OSCMessage.Value: Codable {
             self = .bool(value)
             
         case .null:
-            let _ = try container.decodeNil(forKey: key)
+            _ = try container.decodeNil(forKey: key)
             self = .null
         }
-        
     }
     
     public func encode(to encoder: Encoder) throws {
-        
         var container = encoder.container(keyedBy: CodingKeys.self)
         
         switch self {
-        case .int32(let value):
+        case let .int32(value):
             try container.encode(value, forKey: .int32)
-        case .float32(let value):
+        case let .float32(value):
             try container.encode(value, forKey: .float32)
-        case .string(let value):
+        case let .string(value):
             try container.encode(value, forKey: .string)
-        case .blob(let value):
+        case let .blob(value):
             try container.encode(value, forKey: .blob)
-        case .int64(let value):
+        case let .int64(value):
             try container.encode(value, forKey: .int64)
-        case .timeTag(let value):
+        case let .timeTag(value):
             try container.encode(value, forKey: .timeTag)
-        case .double(let value):
+        case let .double(value):
             try container.encode(value, forKey: .double)
-        case .stringAlt(let value):
+        case let .stringAlt(value):
             try container.encode(value, forKey: .stringAlt)
-        case .character(let value):
+        case let .character(value):
             try container.encode(value, forKey: .character)
-        case .midi(let value):
+        case let .midi(value):
             try container.encode(value, forKey: .midi)
-        case .bool(let value):
+        case let .bool(value):
             try container.encode(value, forKey: .bool)
         case .null:
             try container.encodeNil(forKey: .null)
         }
-        
     }
-    
 }

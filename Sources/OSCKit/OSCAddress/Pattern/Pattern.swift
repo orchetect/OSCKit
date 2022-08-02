@@ -7,7 +7,6 @@ import Foundation
 @_implementationOnly import OTCore
 
 extension OSCAddress {
-    
     // NOTE: This discussion block is duplicated for `OSCAddress`
     
     /// OSC Address Pattern.
@@ -38,13 +37,8 @@ extension OSCAddress {
     ///
     /// - Inherits OSC 1.0 pattern matching and adds the `//` operator
     public struct Pattern {
-        
         var tokens: [Token] = []
         
-        init() {
-            
-        }
-        
+        init() { }
     }
-    
 }

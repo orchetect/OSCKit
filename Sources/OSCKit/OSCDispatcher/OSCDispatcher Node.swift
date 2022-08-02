@@ -8,29 +8,26 @@ import Foundation
 import SwiftASCII
 
 extension OSCDispatcher {
-    
     /// Represents an OSC address space container or method.
     class Node {
-        
         public let id = MethodID()
         
         public let name: String
         
         public var children: [Node] = []
         
-        public init<S>(_ name: S) where S : StringProtocol {
-            
+        public init<S>(_ name: S) where S: StringProtocol {
             // sanitize name
             self.name = String(name)
-            
         }
     }
-    
 }
 
 extension OSCDispatcher.Node: Equatable {
-    static func == (lhs: OSCDispatcher.Node,
-                    rhs: OSCDispatcher.Node) -> Bool {
+    static func == (
+        lhs: OSCDispatcher.Node,
+        rhs: OSCDispatcher.Node
+    ) -> Bool {
         lhs.id == rhs.id
     }
 }
@@ -42,7 +39,6 @@ extension OSCDispatcher.Node: Hashable {
 }
 
 extension OSCDispatcher.Node {
-    
     /// Validates an OSC address space node name b invalid characters.
     ///
     /// Invalid characters:
@@ -65,8 +61,7 @@ extension OSCDispatcher.Node {
     static func validate<S>(
         name: S,
         strict: Bool = false
-    ) -> Bool where S : StringProtocol {
-        
+    ) -> Bool where S: StringProtocol {
         guard !name.isEmpty else { return false }
         
         // if the name results in a pattern other than a single contiguous string,
@@ -89,5 +84,4 @@ extension OSCDispatcher.Node {
         
         return true
     }
-    
 }

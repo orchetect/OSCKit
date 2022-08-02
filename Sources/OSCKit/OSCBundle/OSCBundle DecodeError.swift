@@ -3,13 +3,9 @@
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
-public extension OSCBundle {
-    
-    enum DecodeError: Error {
-        
+extension OSCBundle {
+    public enum DecodeError: Error {
         /// Malformed data. `verboseError` contains the specific reason.
         case malformed(_ verboseError: String)
-        
     }
-    
 }

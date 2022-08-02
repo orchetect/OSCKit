@@ -7,10 +7,8 @@ import Foundation
 import SwiftASCII
 
 extension OSCMessage {
-
     /// Concrete value types that can be used in an `OSCMessage`.
     public enum Value: Equatable, Hashable {
-        
         // core types
         
         case int32(Int32)
@@ -27,24 +25,16 @@ extension OSCMessage {
         case character(ASCIICharacter)
         case midi(MIDIMessage)
         case bool(Bool)
-        case `null`
-        
+        case null
     }
-    
 }
 
 extension OSCMessage.Value: CustomStringConvertible, CustomDebugStringConvertible {
-    
     public var description: String {
-        
         stringValue(withLabel: false)
-        
     }
     
     public var debugDescription: String {
-        
         stringValue(withLabel: true)
-        
     }
-    
 }

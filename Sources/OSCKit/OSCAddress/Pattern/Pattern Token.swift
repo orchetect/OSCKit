@@ -6,9 +6,7 @@
 import Foundation
 
 extension OSCAddress.Pattern {
-    
     public enum Token: Equatable, Hashable {
-        
         /// One or more sequential literal characters.
         case literal(String)
         
@@ -23,21 +21,15 @@ extension OSCAddress.Pattern {
         
         /// `{}` curly-brace expression.
         case strings(strings: Set<String>)
-        
     }
-    
 }
 
 extension OSCAddress.Pattern.Token {
-    
     public enum CharacterGroup: Equatable, Hashable {
-        
         /// Single character.
         case single(Character)
         
         /// Contiguous range of ASCII characters.
         case asciiRange(start: Character, end: Character)
-        
     }
-    
 }

@@ -7,15 +7,13 @@ import Foundation
 @_implementationOnly import OTCore
 
 extension OSCAddress.Pattern {
-    
     /// Evaluate pattern matching against a single path component in an OSC address.
     ///
     /// - Parameters:
     ///   - pathComponent: OSC address path component.
-    ///   
+    ///
     /// - Returns: `true` if the path component pattern matches the supplied path component string.
-    public func evaluate<S>(matching pathComponent: S) -> Bool where S : StringProtocol {
-        
+    public func evaluate<S>(matching pathComponent: S) -> Bool where S: StringProtocol {
         // early return: empty
         if tokens.isEmpty {
             return pathComponent.isEmpty
@@ -23,7 +21,8 @@ extension OSCAddress.Pattern {
         
         // early return: single string literal
         if tokens.count == 1,
-           case let .literal(string) = tokens[0] {
+           case let .literal(string) = tokens[0]
+        {
             return string == pathComponent
         }
         
@@ -49,14 +48,15 @@ extension OSCAddress.Pattern {
                 state.append(stateItem)
                 
             case let .singleChar(isExclusion, groups):
-                let stateItem = Token.SingleChar(isExclusion: isExclusion,
-                                                 groups: groups)
+                let stateItem = Token.SingleChar(
+                    isExclusion: isExclusion,
+                    groups: groups
+                )
                 state.append(stateItem)
                 
             case let .strings(strings):
                 let stateItem = Token.Strings(strings: strings)
                 state.append(stateItem)
-                
             }
         }
         
@@ -67,15 +67,17 @@ extension OSCAddress.Pattern {
             let entryPos = matchPos
             
             repeat {
-                let idx = pathComponent.index(pathComponent.startIndex,
-                                              offsetBy: entryPos)
+                let idx = pathComponent.index(
+                    pathComponent.startIndex,
+                    offsetBy: entryPos
+                )
                 let r = state[index].matches(string: pathComponent[idx...])
                 
                 switch r {
                 case .noMatch:
                     break
                     
-                case .match(let len):
+                case let .match(len):
                     matchPos = entryPos + len
                     
                     if index < state.count - 1 {
@@ -83,8 +85,10 @@ extension OSCAddress.Pattern {
                             return true
                         }
                     } else { // is the final state item...
-                        let matchPosIdx = pathComponent.index(pathComponent.startIndex,
-                                                              offsetBy: matchPos)
+                        let matchPosIdx = pathComponent.index(
+                            pathComponent.startIndex,
+                            offsetBy: matchPos
+                        )
                         if matchPosIdx == pathComponent.endIndex {
                             return true
                         }
@@ -98,48 +102,36 @@ extension OSCAddress.Pattern {
         }
         
         return runState(index: 0)
-        
     }
-    
 }
 
 // MARK: - OSCAddressPatternToken
 
 protocol OSCAddressPatternToken {
-    
-    func matches<S>(string: S) -> OSCAddress.Pattern.Token.Match where S : StringProtocol
+    func matches<S>(string: S) -> OSCAddress.Pattern.Token.Match where S: StringProtocol
     
     var isExhausted: Bool { get }
     
     mutating func next(remainingLength: Int)
     
     mutating func reset()
-    
 }
 
 extension OSCAddress.Pattern.Token {
-    
     enum Match: Equatable, Hashable {
-        
         case noMatch
         case match(length: Int)
-        
     }
-    
 }
 
 extension OSCAddress.Pattern.Token {
-    
     struct Literal: OSCAddressPatternToken {
-        
         let literal: String
         
-        func matches<S>(string: S) -> Match where S : StringProtocol {
-            
+        func matches<S>(string: S) -> Match where S: StringProtocol {
             string.starts(with: literal)
-            ? .match(length: literal.count)
-            : .noMatch
-            
+                ? .match(length: literal.count)
+                : .noMatch
         }
         
         let isExhausted: Bool = true
@@ -147,45 +139,33 @@ extension OSCAddress.Pattern.Token {
         mutating func next(remainingLength: Int) { }
         
         mutating func reset() { }
-        
     }
     
     struct ZeroOrMoreWildcard: OSCAddressPatternToken {
-        
         private var currentLength = 0
         
-        func matches<S>(string: S) -> Match where S : StringProtocol {
-            
+        func matches<S>(string: S) -> Match where S: StringProtocol {
             currentLength <= string.count
-            ? .match(length: currentLength)
-            : .noMatch
-            
+                ? .match(length: currentLength)
+                : .noMatch
         }
         
         private(set) var isExhausted: Bool = false
         
         mutating func next(remainingLength: Int) {
-            
             currentLength += 1
             isExhausted = currentLength > remainingLength
-            
         }
         
         mutating func reset() {
-            
             currentLength = 0
             isExhausted = false
-            
         }
-        
     }
     
     struct SingleCharWildcard: OSCAddressPatternToken {
-        
-        func matches<S>(string: S) -> Match where S : StringProtocol {
-            
+        func matches<S>(string: S) -> Match where S: StringProtocol {
             string.isEmpty ? .noMatch : .match(length: 1)
-            
         }
         
         let isExhausted: Bool = true
@@ -193,17 +173,14 @@ extension OSCAddress.Pattern.Token {
         mutating func next(remainingLength: Int) { }
         
         mutating func reset() { }
-        
     }
     
     struct SingleChar: OSCAddressPatternToken {
-        
         let isExclusion: Bool
         
         let groups: Set<CharacterGroup>
         
-        func matches<S>(string: S) -> Match where S : StringProtocol {
-            
+        func matches<S>(string: S) -> Match where S: StringProtocol {
             guard !string.isEmpty else {
                 return .noMatch
             }
@@ -220,7 +197,7 @@ extension OSCAddress.Pattern.Token {
                     else {
                         return false
                     }
-                    let charRange = startCharVal...endCharVal
+                    let charRange = startCharVal ... endCharVal
                     return charRange.contains(charVal)
                 }
             })
@@ -229,7 +206,6 @@ extension OSCAddress.Pattern.Token {
             }
             
             return isExclusion ? .noMatch : .match(length: 1)
-            
         }
         
         let isExhausted: Bool = true
@@ -237,15 +213,12 @@ extension OSCAddress.Pattern.Token {
         mutating func next(remainingLength: Int) { }
         
         mutating func reset() { }
-        
     }
     
     struct Strings: OSCAddressPatternToken {
-        
         let strings: Set<String>
         
-        func matches<S>(string: S) -> Match where S : StringProtocol {
-            
+        func matches<S>(string: S) -> Match where S: StringProtocol {
             if strings.isEmpty {
                 return .match(length: 0)
             }
@@ -256,7 +229,6 @@ extension OSCAddress.Pattern.Token {
             }
             
             return .match(length: match.count)
-            
         }
         
         private(set) var isExhausted: Bool = true
@@ -264,7 +236,5 @@ extension OSCAddress.Pattern.Token {
         mutating func next(remainingLength: Int) { }
         
         mutating func reset() { }
-        
     }
-    
 }

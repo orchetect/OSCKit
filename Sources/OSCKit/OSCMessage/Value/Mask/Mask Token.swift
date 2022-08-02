@@ -7,11 +7,9 @@ import Foundation
 import SwiftASCII
 
 extension OSCMessage.Value.Mask {
-    
     /// `OSCMessage` value type tokens, including optional variants and meta types.
     /// Useful for abstractions that mask sequences of values.
     public enum Token: Int, CaseIterable {
-        
         // concrete types
         
         // -- core types
@@ -28,7 +26,7 @@ extension OSCMessage.Value.Mask {
         case character
         case midi
         case bool
-        case `null`
+        case null
         
         // "meta" types
         
@@ -58,25 +56,21 @@ extension OSCMessage.Value.Mask {
         /// Meta type: Number (Optional variant).
         /// Not a specific type like the others. Used when defining a mask to accept numeric value types (`int32`, `float32`, `double`, `int64`) for an expected value placeholder.
         case numberOptional // accepts any OSC number type
-        
     }
-    
 }
 
-public extension OSCMessage.Value.Mask.Token {
-    
+extension OSCMessage.Value.Mask.Token {
     /// Returns base mask type (by stripping 'optional' component if present).
     @inlinable
-    var baseType: Self {
-        
+    public var baseType: Self {
         switch self {
-            // core types
+        // core types
         case .int32,        .int32Optional:     return .int32
         case .float32,      .float32Optional:   return .float32
         case .string,       .stringOptional:    return .string
         case .blob,         .blobOptional:      return .blob
             
-            // extended types
+        // extended types
         case .int64,        .int64Optional:     return .int64
         case .timeTag,      .timeTagOptional:   return .timeTag
         case .double,       .doubleOptional:    return .double
@@ -86,82 +80,75 @@ public extension OSCMessage.Value.Mask.Token {
         case .bool,         .boolOptional:      return .bool
         case .null,         .nullOptional:      return .null
             
-            // meta types
+        // meta types
         case .number,       .numberOptional:    return .number
         }
-        
     }
     
     /// Returns `true` if a mask type instance is an 'optional' variant.
     @inlinable
-    var isOptional: Bool {
-        
+    public var isOptional: Bool {
         switch self {
-            // concrete types
-            // -- core types
+        // concrete types
+        // -- core types
         case .int32,
-                .float32,
-                .string,
-                .blob:
+             .float32,
+             .string,
+             .blob:
             return false
             
-            // -- extended types
+        // -- extended types
         case .int64,
-                .timeTag,
-                .double,
-                .stringAlt,
-                .character,
-                .midi,
-                .bool,
-                .null:
+             .timeTag,
+             .double,
+             .stringAlt,
+             .character,
+             .midi,
+             .bool,
+             .null:
             return false
             
-            // meta types
+        // meta types
         case .number:
             return false
             
-            // optional versions of concrete types
-            // -- core types
+        // optional versions of concrete types
+        // -- core types
         case .int32Optional,
-                .float32Optional,
-                .stringOptional,
-                .blobOptional:
+             .float32Optional,
+             .stringOptional,
+             .blobOptional:
             return true
             
-            // -- extended types
+        // -- extended types
         case .int64Optional,
-                .timeTagOptional,
-                .doubleOptional,
-                .stringAltOptional,
-                .characterOptional,
-                .midiOptional,
-                .boolOptional,
-                .nullOptional:
+             .timeTagOptional,
+             .doubleOptional,
+             .stringAltOptional,
+             .characterOptional,
+             .midiOptional,
+             .boolOptional,
+             .nullOptional:
             return true
             
-            // -- meta types
+        // -- meta types
         case .numberOptional:
             return true
-            
         }
-        
     }
-    
 }
 
-public extension OSCMessage.Value.Mask.Token {
-    
+extension OSCMessage.Value.Mask.Token {
     /// Returns the associated concrete type.
-    var concreteType: OSCMessageConcreteValue.Type {
-        
+    public var concreteType: OSCMessageConcreteValue.Type {
         switch self {
-            // core types
+        // core types
         case .int32,        .int32Optional:     return Int32.self
         case .float32,      .float32Optional:   return Float32.self
         case .string,       .stringOptional:    return ASCIIString.self
         case .blob,         .blobOptional:      return Data.self
             
-            // extended types
+        // extended types
         case .int64,        .int64Optional:     return Int64.self
         case .timeTag,      .timeTagOptional:   return Int64.self
         case .double,       .doubleOptional:    return Double.self
@@ -171,9 +158,8 @@ public extension OSCMessage.Value.Mask.Token {
         case .bool,         .boolOptional:      return Bool.self
         case .null,         .nullOptional:      return NSNull.self
             
-            // meta types
+        // meta types
         case .number,       .numberOptional:    return OSCMessage.Value.Number.self
         }
     }
-    
 }

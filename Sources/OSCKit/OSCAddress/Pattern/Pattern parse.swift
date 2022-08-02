@@ -7,14 +7,12 @@ import Foundation
 @_implementationOnly import OTCore
 
 extension OSCAddress.Pattern {
-    
     /// Initializes a new `Pattern` instance tokenizing an individual path component of an OSC address.
     public init(string pattern: String) {
-        
         if pattern.isEmpty { return }
         
         var tokens: [Token] = []
-        var currentTokenBuffer: String = ""
+        var currentTokenBuffer = ""
         
         func closeBuffer() {
             if !currentTokenBuffer.isEmpty {
@@ -44,27 +42,30 @@ extension OSCAddress.Pattern {
         // bounded expression
         func getRange(
             endBound: Character
-        ) -> (outerString: Substring,
-              innerString: Substring)?
-        {
+        ) -> (
+            outerString: Substring,
+            innerString: Substring
+        )? {
             guard let closeBracketIndex = patternRemainder()?
                 .firstIndex(of: endBound)
             else { return nil }
             
-            let bracketSubstring = pattern[patternIndex...closeBracketIndex]
+            let bracketSubstring = pattern[patternIndex ... closeBracketIndex]
             
             let bracketInternalSubstring: String.SubSequence
             
             if bracketSubstring.count > 2 {
                 let internalStartIndex = pattern.index(after: patternIndex)
                 let internalEndIndex = pattern.index(before: closeBracketIndex)
-                bracketInternalSubstring = pattern[internalStartIndex...internalEndIndex]
+                bracketInternalSubstring = pattern[internalStartIndex ... internalEndIndex]
             } else {
                 bracketInternalSubstring = ""
             }
             
-            return (outerString: bracketSubstring,
-                    innerString: bracketInternalSubstring)
+            return (
+                outerString: bracketSubstring,
+                innerString: bracketInternalSubstring
+            )
         }
         
         repeat {
@@ -102,8 +103,10 @@ extension OSCAddress.Pattern {
                 )
                 
                 closeBuffer()
-                tokens.append(.singleChar(isExclusion: r.isExclusion,
-                                          groups: r.groups))
+                tokens.append(.singleChar(
+                    isExclusion: r.isExclusion,
+                    groups: r.groups
+                ))
                 patternIndexIncrement(by: bracketStrings.outerString.count)
                 
             case "{":
@@ -126,14 +129,12 @@ extension OSCAddress.Pattern {
             default:
                 currentTokenBuffer.append(patternChar)
                 patternIndexIncrement()
-                
             }
         } while !isPatternIndexExhausted()
         
         closeBuffer()
         
         self.tokens = tokens
-        
     }
     
     /// `[]` expression sub-parser.
@@ -150,10 +151,10 @@ extension OSCAddress.Pattern {
     /// - `!` as any other char than first char has no special meaning
     internal static func parse(
         bracketExpression: Substring
-    ) -> (isExclusion: Bool,
-          groups: Set<Token.CharacterGroup>)
-    {
-        
+    ) -> (
+        isExclusion: Bool,
+        groups: Set<Token.CharacterGroup>
+    ) {
         guard !bracketExpression.isEmpty else { return (false, []) }
         
         var charGroups: Set<Token.CharacterGroup> = []
@@ -174,11 +175,11 @@ extension OSCAddress.Pattern {
             guard let dashIndex = bracketExpression.firstIndex(of: "-")
             else { break }
             
-            guard dashIndex != bracketExpression.startIndex &&
-                    dashIndex != bracketExpression.index(before: bracketExpression.endIndex)
+            guard dashIndex != bracketExpression.startIndex,
+                  dashIndex != bracketExpression.index(before: bracketExpression.endIndex)
             else {
                 isOrphanDashPresent = true
-                bracketExpression.removeSubrange(dashIndex...dashIndex)
+                bracketExpression.removeSubrange(dashIndex ... dashIndex)
                 continue
             }
             
@@ -189,7 +190,7 @@ extension OSCAddress.Pattern {
             let endChar = bracketExpression[rangeEndIndex]
             
             charGroups.insert(.asciiRange(start: startChar, end: endChar))
-            bracketExpression.removeSubrange(rangeStartIndex...rangeEndIndex)
+            bracketExpression.removeSubrange(rangeStartIndex ... rangeEndIndex)
         }
         
         bracketExpression.forEach { charGroups.insert(.single($0)) }
@@ -200,9 +201,10 @@ extension OSCAddress.Pattern {
             charGroups.insert(.single("-"))
         }
         
-        return (isExclusion: isExclusion,
-                groups: charGroups)
-        
+        return (
+            isExclusion: isExclusion,
+            groups: charGroups
+        )
     }
     
     /// `{}` expression sub-parser.
@@ -211,13 +213,10 @@ extension OSCAddress.Pattern {
     internal static func parse(
         braceExpression: Substring
     ) -> Set<String> {
-        
         braceExpression
             .split(separator: ",")
-            .reduce(into: Set<String>(), {
+            .reduce(into: Set<String>()) {
                 $0.insert(String($1))
-            })
-        
+            }
     }
-    
 }
