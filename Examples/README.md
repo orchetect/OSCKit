@@ -1,10 +1,10 @@
 # OSCKit Examples
 
-To make the library lightweight and flexible, OSCKit does not bundle any network I/O code. This allows you to use the network library of your chosing.
+These example projects are provided to demonstrate using OSCKit.
 
-These example projects are provided to demonstrate using OSCKit with various common network libraries.
+- The [OSCKitCASExample](OSCKitCASExample) project is recommended and is the easiest to get started.
 
-The [CocoaAsyncSocketExample](CocoaAsyncSocketExample) project is recommended as it is the easiest to adopt.
+- The [NetworkFrameworkExample](NetworkFrameworkExample) project is provided as a blueprint for using your own network I/O library.
 
 ## Build Note
 

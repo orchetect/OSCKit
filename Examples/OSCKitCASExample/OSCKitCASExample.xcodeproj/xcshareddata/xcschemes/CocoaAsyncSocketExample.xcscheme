@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E2D003D0289882820073ED8F"
-               BuildableName = "CocoaAsyncSocketExample.app"
-               BlueprintName = "CocoaAsyncSocketExample"
-               ReferencedContainer = "container:CocoaAsyncSocketExample.xcodeproj">
+               BuildableName = "OSCKitCASExample.app"
+               BlueprintName = "OSCKitCASExample"
+               ReferencedContainer = "container:OSCKitCASExample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,9 +46,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E2D003D0289882820073ED8F"
-            BuildableName = "CocoaAsyncSocketExample.app"
-            BlueprintName = "CocoaAsyncSocketExample"
-            ReferencedContainer = "container:CocoaAsyncSocketExample.xcodeproj">
+            BuildableName = "OSCKitCASExample.app"
+            BlueprintName = "OSCKitCASExample"
+            ReferencedContainer = "container:OSCKitCASExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -63,9 +63,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E2D003D0289882820073ED8F"
-            BuildableName = "CocoaAsyncSocketExample.app"
-            BlueprintName = "CocoaAsyncSocketExample"
-            ReferencedContainer = "container:CocoaAsyncSocketExample.xcodeproj">
+            BuildableName = "OSCKitCASExample.app"
+            BlueprintName = "OSCKitCASExample"
+            ReferencedContainer = "container:OSCKitCASExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

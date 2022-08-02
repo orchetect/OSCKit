@@ -1,6 +1,6 @@
-# CocoaAsyncSocket Example
+# OSCKitCAS Example
 
-This example demonstrates how to use OSCKit with [CocoaAsyncSocket](https://github.com/robbiehanson/CocoaAsyncSocket).
+This example demonstrates how to use OSCKit using library-provided [CocoaAsyncSocket](https://github.com/robbiehanson/CocoaAsyncSocket) networking.
 
 ## Entitlements
 

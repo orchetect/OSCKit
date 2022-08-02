@@ -6,7 +6,7 @@
 
 Open Sound Control library written in Swift.
 
-Modular - use with any network library of your choice. Fully unit tested.
+Fully unit tested.
 
 ## Getting Started
 
@@ -24,46 +24,47 @@ Modular - use with any network library of your choice. Fully unit tested.
 
 2. Import the library:
    ```swift
+   // to use the bundled network I/O using CocoaAsyncSocket:
+   import OSCKitCAS
+   
+   // or to use your own network I/O library,
+   // import the core OSCKit library without any networking code:
    import OSCKit
    ```
 
-3. Set up UDP port(s) using your networking library of choice.
+3. The [Examples](Examples) folder contains projects to get started.
 
-   - To keep OSCKit lightweight and flexible, no network layer is included in OSCKit.
-   - The [Examples](Examples) folder contains projects to get started with common networking libraries.
+### Send
+
+#### OSC Message
+
+To send a single message, construct an `OSCMessage` and send the message's `rawData` bytes as the outgoing UDP message.
+
+```swift
+let msg = OSCMessage(address: "/msg2", 
+                     values: [.string("string"), .int32(123)])
+
+yourUDPSocket.send(msg.rawData)
+```
+
+#### OSC Bundle
+
+To send multiple OSC messages or nested OSC bundles to the same destination at the same time, pack them in an `OSCBundle` and send the bundle's `rawData` bytes as the outgoing UDP message.
+
+```swift
+let msg1 = OSCMessage(address: "/msg1")
+let msg2 = OSCMessage(address: "/msg2", 
+                      values: [.string("string"), .int32(123)])
+let bundle = OSCBundle([msg1, msg2])
+
+yourUDPSocket.send(bundle.rawData)
+```
 
 ### Receive
 
-```swift
-func handleUDP(receivedPacket data: Data) {
-  do {
-    guard let oscPayload = try data.parseOSC() else { return }
-    try handle(oscPayload: oscPayload)
-  } catch let error as OSCBundle.DecodeError {
-    // handle bundle errors
-  } catch let error as OSCMessage.DecodeError {
-    // handle message errors
-  } catch {
-    // handle other errors
-  }
-}
+#### Address Matching
 
-func handle(oscPayload: OSCPayload) throws {
-  switch oscPayload {
-  case .bundle(let oscBundle):
-    // recursively handle nested bundles and messages
-    try oscBundle.elements.forEach { try handle(oscPayload: $0) }
-    
-  case .message(let oscMessage):
-    // handle message
-    try handle(oscMessage: OSCMessage)
-  }
-}
-```
-
-### Address Matching
-
-#### Individual address matching without pattern matching
+##### Individual address matching without pattern matching
 
 ```swift
 let receivedAddress = OSCAddress("/some/address/here")
@@ -71,7 +72,7 @@ let localAddress = OSCAddress("/some/address/here")
 let isMatch = receivedAddress == localAddress // true, verbatim string comparison only
 ```
 
-#### Individual address pattern matching
+##### Individual address pattern matching
 
 ```swift
 let receivedAddress = OSCAddress("/{some,other}/address/*")
@@ -79,7 +80,7 @@ let localAddress = OSCAddress("/some/address/here")
 let isMatch = receivedAddress.pattern(matches: localAddress) // true
 ```
 
-#### Using `Dispatcher` for automated pattern matching
+##### Using `Dispatcher` for automated pattern matching
 
 OSCKit provides an optional abstraction called `OSCAddress.Dispatcher`.
 
@@ -197,32 +198,6 @@ The following OSC value types are available, conforming to the [Open Sound Contr
 .midi(MIDIMessage)
 .bool(Bool)
 .null
-```
-
-### Send
-
-#### OSC Message
-
-To send a single message, construct an `OSCMessage` and send the message's `rawData` bytes as the outgoing UDP message.
-
-```swift
-let msg = OSCMessage(address: "/msg2", 
-                     values: [.string("string"), .int32(123)])
-
-yourUDPSocket.send(msg.rawData)
-```
-
-#### OSC Bundle
-
-To send multiple OSC messages or nested OSC bundles to the same destination at the same time, pack them in an `OSCBundle` and send the bundle's `rawData` bytes as the outgoing UDP message.
-
-```swift
-let msg1 = OSCMessage(address: "/msg1")
-let msg2 = OSCMessage(address: "/msg2", 
-                      values: [.string("string"), .int32(123)])
-let bundle = OSCBundle([msg1, msg2])
-
-yourUDPSocket.send(bundle.rawData)
 ```
 
 ## Documentation

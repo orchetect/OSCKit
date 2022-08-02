@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  CocoaAsyncSocketExample
+//  OSCKitCASExample
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
