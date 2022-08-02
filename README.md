@@ -106,7 +106,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 }
 ```
 
-### Option 1: Imperative pattern matching
+### Address Parsing
+
+#### Option 1: Imperative address pattern matching
 
 ```swift
 // example receied OSC message with address "/{some,other}/address/*"
@@ -123,7 +125,7 @@ private func handle(received oscMessage: OSCMessage) throws {
 }
 ```
 
-### Option 2: Using `OSCDispatcher` for automated pattern matching
+#### Option 2: Using `OSCDispatcher` for automated address pattern matching
 
 OSCKit provides an optional abstraction called `OSCDispatcher`.
 
@@ -185,7 +187,7 @@ class OSCReceiver {
 
 When a specific number of values and value types are expected:
 
-#### Use `masked()` to validate and unwrap expected value types
+#### Option 1: Use `masked()` to validate and unwrap expected value types
 
 ```swift
 // validate and unwrap value array with expected types: [String]
@@ -199,7 +201,7 @@ let values = try oscMessage.values.masked(String.self, Int32?.self)
 print("/test/method2 with string: \(values.0), int32: \(values.1 ?? 0)")
 ```
 
-#### Manually unwrap expected value types
+#### Option 2: Manually unwrap expected value types
 
 ```swift
 // validate and unwrap value array with expected types: [String]
@@ -218,7 +220,7 @@ let val1: Int32? = {
 print("/test/method2 with string: \(val0), int32: \(val1 ?? 0)")
 ```
 
-#### Parse a variable number of values
+#### Option 3: Parse a variable number of values
 
 ```swift
 oscMessage.values.forEach { oscValue
@@ -233,7 +235,7 @@ oscMessage.values.forEach { oscValue
 }
 ```
 
-### OSC Value Types
+## OSC Value Types
 
 The following OSC value types are available, conforming to the [Open Sound Control 1.0 specification](http://opensoundcontrol.org/spec-1_0.html).
 
