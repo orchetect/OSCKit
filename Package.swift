@@ -13,18 +13,26 @@ let package = Package(
         .library(
             name: "OSCKit",
             targets: ["OSCKit"]),
+        .library(
+            name: "OSCKitCAS",
+            targets: ["OSCKitCAS"])
     ],
     
     dependencies: [
         .package(url: "https://github.com/orchetect/OTCore", from: "1.4.1"),
         .package(url: "https://github.com/orchetect/SwiftASCII", from: "1.1.3"),
-        .package(url: "https://github.com/orchetect/SwiftRadix", from: "1.2.0")
+        .package(url: "https://github.com/orchetect/SwiftRadix", from: "1.2.0"),
+        .package(url: "https://github.com/robbiehanson/CocoaAsyncSocket", from: "7.0.0"),
     ],
     
     targets: [
         .target(
             name: "OSCKit",
             dependencies: ["OTCore", "SwiftASCII", "SwiftRadix"]),
+        .target(
+            name: "OSCKitCAS",
+            dependencies: ["OSCKit", "CocoaAsyncSocket"]),
+        
         .testTarget(
             name: "OSCKitTests",
             dependencies: ["OSCKit", "OTCore", "SwiftASCII", "SwiftRadix"]),

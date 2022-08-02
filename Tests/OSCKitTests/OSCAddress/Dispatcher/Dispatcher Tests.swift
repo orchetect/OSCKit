@@ -225,8 +225,8 @@ final class OSCAddress_Dispatcher_Tests: XCTestCase {
         
         let dispatcher = OSCAddress.Dispatcher()
         
-        let t1ID = try dispatcher.register(address: "/test1/test2/methodA")
-        let t2ID = try dispatcher.register(address: "/test1/test2/methodB")
+        let t1ID = dispatcher.register(address: "/test1/test2/methodA")
+        let t2ID = dispatcher.register(address: "/test1/test2/methodB")
                 
         // non-matches
         

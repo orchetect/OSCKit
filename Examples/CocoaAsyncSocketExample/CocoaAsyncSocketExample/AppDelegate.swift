@@ -5,12 +5,12 @@
 //
 
 import Cocoa
-import OSCKit
+import OSCKitCAS
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
     var oscClient = OSCClient()
-    var oscServer = OSCServer(port: 8000) 
+    var oscServer = OSCServer(port: 8000)
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         setupOSCServer()

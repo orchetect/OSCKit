@@ -7,14 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E20B01582898D0FC00950A28 /* OSCKitCAS in Frameworks */ = {isa = PBXBuildFile; productRef = E20B01572898D0FC00950A28 /* OSCKitCAS */; };
 		E2D003D5289882820073ED8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D003D4289882820073ED8F /* AppDelegate.swift */; };
 		E2D003D7289882820073ED8F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D003D6289882820073ED8F /* ViewController.swift */; };
 		E2D003E82898834E0073ED8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2D003E52898834E0073ED8F /* Assets.xcassets */; };
 		E2D003E92898834E0073ED8F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2D003E62898834E0073ED8F /* Main.storyboard */; };
-		E2D003ED2898838F0073ED8F /* OSCKit in Frameworks */ = {isa = PBXBuildFile; productRef = E2D003EC2898838F0073ED8F /* OSCKit */; };
-		E2D003F0289883B90073ED8F /* OSCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D003EE289883B90073ED8F /* OSCClient.swift */; };
-		E2D003F1289883B90073ED8F /* OSCServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D003EF289883B90073ED8F /* OSCServer.swift */; };
-		E2D003F4289884030073ED8F /* CocoaAsyncSocket in Frameworks */ = {isa = PBXBuildFile; productRef = E2D003F3289884030073ED8F /* CocoaAsyncSocket */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,8 +22,6 @@
 		E2D003E52898834E0073ED8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2D003E72898834E0073ED8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E2D003EA289883870073ED8F /* OSCKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = OSCKit; path = ../..; sourceTree = "<group>"; };
-		E2D003EE289883B90073ED8F /* OSCClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSCClient.swift; sourceTree = "<group>"; };
-		E2D003EF289883B90073ED8F /* OSCServer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OSCServer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -34,8 +29,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2D003F4289884030073ED8F /* CocoaAsyncSocket in Frameworks */,
-				E2D003ED2898838F0073ED8F /* OSCKit in Frameworks */,
+				E20B01582898D0FC00950A28 /* OSCKitCAS in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,8 +59,6 @@
 				E2D003E32898834E0073ED8F /* Support */,
 				E2D003D4289882820073ED8F /* AppDelegate.swift */,
 				E2D003D6289882820073ED8F /* ViewController.swift */,
-				E2D003EE289883B90073ED8F /* OSCClient.swift */,
-				E2D003EF289883B90073ED8F /* OSCServer.swift */,
 			);
 			path = CocoaAsyncSocketExample;
 			sourceTree = "<group>";
@@ -98,8 +90,7 @@
 			);
 			name = CocoaAsyncSocketExample;
 			packageProductDependencies = (
-				E2D003EC2898838F0073ED8F /* OSCKit */,
-				E2D003F3289884030073ED8F /* CocoaAsyncSocket */,
+				E20B01572898D0FC00950A28 /* OSCKitCAS */,
 			);
 			productName = CocoaAsyncSocketExample;
 			productReference = E2D003D1289882820073ED8F /* CocoaAsyncSocketExample.app */;
@@ -158,9 +149,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2D003F0289883B90073ED8F /* OSCClient.swift in Sources */,
 				E2D003D7289882820073ED8F /* ViewController.swift in Sources */,
-				E2D003F1289883B90073ED8F /* OSCServer.swift in Sources */,
 				E2D003D5289882820073ED8F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -383,14 +372,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E2D003EC2898838F0073ED8F /* OSCKit */ = {
+		E20B01572898D0FC00950A28 /* OSCKitCAS */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = OSCKit;
-		};
-		E2D003F3289884030073ED8F /* CocoaAsyncSocket */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E2D003F2289884030073ED8F /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */;
-			productName = CocoaAsyncSocket;
+			productName = OSCKitCAS;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
