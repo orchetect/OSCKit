@@ -14,8 +14,8 @@ let package = Package(
             name: "OSCKit",
             targets: ["OSCKit"]),
         .library(
-            name: "OSCKitCAS",
-            targets: ["OSCKitCAS"])
+            name: "OSCKitCore",
+            targets: ["OSCKitCore"])
     ],
     
     dependencies: [
@@ -28,14 +28,13 @@ let package = Package(
     targets: [
         .target(
             name: "OSCKit",
-            dependencies: ["OTCore", "SwiftASCII", "SwiftRadix"]),
+            dependencies: ["OSCKitCore", "CocoaAsyncSocket"]),
         .target(
-            name: "OSCKitCAS",
-            dependencies: ["OSCKit", "CocoaAsyncSocket"]),
-        
+            name: "OSCKitCore",
+            dependencies: ["OTCore", "SwiftASCII", "SwiftRadix"]),
         .testTarget(
-            name: "OSCKitTests",
-            dependencies: ["OSCKit", "OTCore", "SwiftASCII", "SwiftRadix"]),
+            name: "OSCKitCoreTests",
+            dependencies: ["OSCKitCore", "OTCore", "SwiftASCII", "SwiftRadix"]),
     ]
     
 )
