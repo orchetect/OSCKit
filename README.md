@@ -24,14 +24,15 @@ Fully unit tested.
 
 2. Import the library:
    ```swift
-   // to use the bundled network I/O using CocoaAsyncSocket:
-   import OSCKitCAS
-   
-   // or to use your own network I/O library,
-   // import the core OSCKit library without any networking code:
    import OSCKit
    ```
-
+   
+   Or to import OSCKit without networking I/O in order to implement your own UDP sockets:
+   
+   ```swift
+   import OSCKitCore
+   ```
+   
 3. The [Examples](Examples) folder contains projects to get started.
 
 ### Send
@@ -62,17 +63,7 @@ yourUDPSocket.send(bundle.rawData)
 
 ### Receive
 
-#### Address Matching
-
-##### Individual address matching without pattern matching
-
-```swift
-let receivedAddress = OSCAddress("/some/address/here")
-let localAddress = OSCAddress("/some/address/here")
-let isMatch = receivedAddress == localAddress // true, verbatim string comparison only
-```
-
-##### Individual address pattern matching
+##### Option 1: Individual address pattern matching
 
 ```swift
 let receivedAddress = OSCAddress("/{some,other}/address/*")
@@ -80,7 +71,7 @@ let localAddress = OSCAddress("/some/address/here")
 let isMatch = receivedAddress.pattern(matches: localAddress) // true
 ```
 
-##### Using `OSCDispatcher` for automated pattern matching
+##### Option 2: Using `OSCDispatcher` for automated pattern matching
 
 OSCKit provides an optional abstraction called `OSCDispatcher`.
 
