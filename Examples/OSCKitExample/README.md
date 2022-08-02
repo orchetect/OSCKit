@@ -1,4 +1,4 @@
-# OSCKitCAS Example
+# OSCKit Example
 
 This example demonstrates how to use OSCKit using library-provided [CocoaAsyncSocket](https://github.com/robbiehanson/CocoaAsyncSocket) networking.
 

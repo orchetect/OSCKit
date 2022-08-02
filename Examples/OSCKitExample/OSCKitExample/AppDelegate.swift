@@ -1,16 +1,16 @@
 //
 //  AppDelegate.swift
-//  OSCKitCASExample
+//  OSCKitExample
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
 import Cocoa
-import OSCKitCAS
+import OSCKit
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
     var oscClient = OSCClient()
-    var oscServer = OSCServer(port: 8000) 
+    var oscServer = OSCServer(port: 8000)
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         setupOSCServer()

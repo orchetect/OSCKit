@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E2D003D0289882820073ED8F"
-               BuildableName = "OSCKitCASExample.app"
-               BlueprintName = "OSCKitCASExample"
-               ReferencedContainer = "container:OSCKitCASExample.xcodeproj">
+               BuildableName = "OSCKitExample.app"
+               BlueprintName = "OSCKitExample"
+               ReferencedContainer = "container:OSCKitExample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,9 +46,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E2D003D0289882820073ED8F"
-            BuildableName = "OSCKitCASExample.app"
-            BlueprintName = "OSCKitCASExample"
-            ReferencedContainer = "container:OSCKitCASExample.xcodeproj">
+            BuildableName = "OSCKitExample.app"
+            BlueprintName = "OSCKitExample"
+            ReferencedContainer = "container:OSCKitExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -63,9 +63,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E2D003D0289882820073ED8F"
-            BuildableName = "OSCKitCASExample.app"
-            BlueprintName = "OSCKitCASExample"
-            ReferencedContainer = "container:OSCKitCASExample.xcodeproj">
+            BuildableName = "OSCKitExample.app"
+            BlueprintName = "OSCKitExample"
+            ReferencedContainer = "container:OSCKitExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

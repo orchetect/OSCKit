@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  OSCKitCASExample
+//  OSCKitExample
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 

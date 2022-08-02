@@ -2,9 +2,9 @@
 
 These example projects are provided to demonstrate using OSCKit.
 
-- The [OSCKitCASExample](OSCKitCASExample) project is recommended and is the easiest to get started.
+- The [OSCKitExample](OSCKitExample) project is recommended and is the easiest to get started.
 
-- The [NetworkFrameworkExample](NetworkFrameworkExample) project is provided as a blueprint for using your own network I/O library.
+- The [NetworkFrameworkExample](NetworkFrameworkExample) project is provided as a blueprint for using your own network I/O library with `OSCKitCore`.
 
 ## Build Note
 
