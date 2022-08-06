@@ -281,6 +281,10 @@ Coded by a bunch of 🐹 hamsters in a trenchcoat that calls itself [@orchetect]
 
 Licensed under the MIT license. See [LICENSE](https://github.com/orchetect/OSCKit/blob/master/LICENSE) for details.
 
+## Sponsoring
+
+If you enjoy using OSCKit and want to contribute to open-source financially, GitHub sponsorship is much appreciated. Feedback and code contributions are also welcome.
+
 ## Contributions
 
 Contributions are welcome. Feel free to post an Issue to discuss.
