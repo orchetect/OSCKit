@@ -70,21 +70,31 @@ extension OSCBundle: Hashable {
 
 extension OSCBundle: CustomStringConvertible {
     public var description: String {
-        elements.count < 1
-            ? "OSCBundle(timeTag: \(timeTag.rawValue))"
-            : "OSCBundle(timeTag: \(timeTag.rawValue), elements: \(elements))"
+        let tt = timeTag.isImmediate ? "" : "timeTag: \(timeTag)"
+        
+        switch elements.isEmpty {
+        case true:
+            return "OSCBundle(\(tt))"
+        case false:
+            return "OSCBundle(\(tt)\(timeTag.isImmediate ? "" : ", ")elements: \(elements))"
+        }
     }
     
     /// Same as `description` but elements are separated with new-line characters.
     public var descriptionPretty: String {
+        let tt = timeTag.rawValue == 1 ? "" : "timeTag: \(timeTag)"
+        
         let elementsString = elements
             .map { "\($0)" }
             .joined(separator: "\n  ")
         
-        return elements.count < 1
-            ? "OSCBundle(timeTag: \(timeTag.rawValue))"
-            : "OSCBundle(timeTag: \(timeTag.rawValue)) Elements:\n  \(elementsString)"
+        switch elements.isEmpty {
+        case true:
+            return "OSCBundle(\(tt))"
+        case false:
+            return "OSCBundle(\(tt)) with elements:\n  \(elementsString)"
                 .trimmed
+        }
     }
 }
 

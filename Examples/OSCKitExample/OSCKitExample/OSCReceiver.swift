@@ -20,11 +20,12 @@ class OSCReceiver {
         idMethodC = oscDispatcher.register(address: "/some/address/methodC")
     }
     
-    public func handle(oscMessage: OSCMessage) throws {
+    public func handle(oscMessage: OSCMessage, timeTag: OSCTimeTag) throws {
         let ids = oscDispatcher.methods(matching: oscMessage.address)
         
         guard !ids.isEmpty else {
-            print("Received unrecognized OSC message:", oscMessage)
+            // No matches against any registered local OSC addresses.
+            print(oscMessage, "with time tag:", timeTag)
             return
         }
         

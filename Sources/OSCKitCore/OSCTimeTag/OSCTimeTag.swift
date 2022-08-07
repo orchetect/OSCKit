@@ -13,7 +13,7 @@ import Foundation
 ///
 /// The time tag value consisting of 63 zero bits followed by a one in the least significant bit (essentially a `UInt64` integer value of 1) is a special case meaning 'immediately.'"
 
-public struct OSCTimeTag: Equatable, Hashable {
+public struct OSCTimeTag {
     /// NTP time format era number.
     ///
     /// The OSC Time Tag encoding uses NTPv3 time encoding which specifies 32 bits for seconds and 32 bits for fractional sections. Given that the prime epoch (era 0) is the year 1990, 32 bit seconds storage rolls over approximate every 136 years. Every time this rollover occurs, the era increments by 1.
@@ -30,4 +30,26 @@ public struct OSCTimeTag: Equatable, Hashable {
     
     /// Raw Time Tag value as encoded in OSC.
     public let rawValue: RawValue
+}
+
+// MARK: - Equatable, Hashable
+
+extension OSCTimeTag: Equatable, Hashable {
+    // implementation is automatically synthesized by Swift
+}
+
+// MARK: - CustomStringConvertible
+
+extension OSCTimeTag: CustomStringConvertible {
+    public var description: String {
+        if rawValue == 1 {
+            return "1 (immediate)"
+        }
+        switch era {
+        case 0:
+            return "\(rawValue)"
+        default:
+            return "\(rawValue)-era:\(era)"
+        }
+    }
 }

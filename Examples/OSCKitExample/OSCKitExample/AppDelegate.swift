@@ -23,9 +23,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     /// Call once at app startup.
     private func setupOSCServer() {
-        oscServer.setHandler { [weak self] oscMessage, timeTag in
+        oscServer.setHandler { [weak self] message, timeTag in
             do {
-                try self?.oscReceiver.handle(oscMessage: oscMessage)
+                try self?.oscReceiver.handle(oscMessage: message,
+                                             timeTag: timeTag)
             } catch {
                 print(error)
             }

@@ -59,15 +59,23 @@ final class OSCBundle_Tests: XCTestCase {
     
     // MARK: - CustomStringConvertible
     
-    func testCustomStringConvertible1() {
+    func testCustomStringConvertible_Immediate_EmptyElements() {
         let bundle = OSCBundle(elements: [])
         
         let desc = bundle.description
         
-        XCTAssertEqual(desc, "OSCBundle(timeTag: 1)")
+        XCTAssertEqual(desc, "OSCBundle()")
     }
     
-    func testCustomStringConvertible2() {
+    func testCustomStringConvertible_SpecificTimeTag_EmptyElements() {
+        let bundle = OSCBundle(elements: [], timeTag: .init(123456))
+        
+        let desc = bundle.description
+        
+        XCTAssertEqual(desc, "OSCBundle(timeTag: 123456)")
+    }
+    
+    func testCustomStringConvertible_Immediate_OneMessage() {
         let bundle = OSCBundle(elements: [
             .message(
                 address: "/address",
@@ -82,11 +90,33 @@ final class OSCBundle_Tests: XCTestCase {
         
         XCTAssertEqual(
             desc,
-            #"OSCBundle(timeTag: 1, elements: [OSCMessage(address: "/address", values: [int32:123, string:"A string"])])"#
+            #"OSCBundle(elements: [OSCMessage(address: "/address", values: [int32:123, string:"A string"])])"#
         )
     }
     
-    func testDescriptionPretty() {
+    func testCustomStringConvertible_SpecificTimeTag_OneMessage() {
+        let bundle = OSCBundle(
+            elements: [
+                .message(
+                    address: "/address",
+                    values: [
+                        .int32(123),
+                        .string("A string")
+                    ]
+                )
+            ],
+            timeTag: .init(123_456)
+        )
+        
+        let desc = bundle.description
+        
+        XCTAssertEqual(
+            desc,
+            #"OSCBundle(timeTag: 123456, elements: [OSCMessage(address: "/address", values: [int32:123, string:"A string"])])"#
+        )
+    }
+    
+    func testDescriptionPretty_Immediate_OneMessage() {
         let bundle = OSCBundle(elements: [
             .message(
                 address: "/address",
@@ -102,7 +132,32 @@ final class OSCBundle_Tests: XCTestCase {
         XCTAssertEqual(
             desc,
             #"""
-            OSCBundle(timeTag: 1) Elements:
+            OSCBundle() with elements:
+              OSCMessage(address: "/address", values: [int32:123, string:"A string"])
+            """#
+        )
+    }
+    
+    func testDescriptionPretty_SpecificTimeTag_OneMessag() {
+        let bundle = OSCBundle(
+            elements: [
+                .message(
+                    address: "/address",
+                    values: [
+                        .int32(123),
+                        .string("A string")
+                    ]
+                )
+            ],
+            timeTag: .init(123_456)
+        )
+        
+        let desc = bundle.descriptionPretty
+        
+        XCTAssertEqual(
+            desc,
+            #"""
+            OSCBundle(timeTag: 123456) with elements:
               OSCMessage(address: "/address", values: [int32:123, string:"A string"])
             """#
         )
