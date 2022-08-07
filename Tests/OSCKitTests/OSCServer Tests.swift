@@ -10,19 +10,19 @@ import XCTest
 
 final class OSCServer_Tests: XCTestCase {
     func testEmptyBundle() throws {
-        let del = OSCServerDelegate()
+        let server = OSCServer()
         
         let exp = expectation(description: "Message Dispatched")
         exp.isInverted = true // empty bundle produces no messages
         
-        del.handler = { oscMessage in
+        server.handler = { _,_ in
             exp.fulfill()
         }
         
         let bundle = OSCBundle(elements: [])
         let payload: OSCPayload = .bundle(bundle)
         
-        try del.handle(payload: payload)
+        try server.handle(payload: payload)
         
         wait(for: [exp], timeout: 1.0)
     }

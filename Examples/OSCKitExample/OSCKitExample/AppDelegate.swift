@@ -23,7 +23,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     /// Call once at app startup.
     private func setupOSCServer() {
-        oscServer.setHandler { [weak self] oscMessage in
+        oscServer.setHandler { [weak self] oscMessage, timeTag in
             do {
                 try self?.oscReceiver.handle(oscMessage: oscMessage)
             } catch {

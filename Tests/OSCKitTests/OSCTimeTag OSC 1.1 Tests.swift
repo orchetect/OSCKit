@@ -1,5 +1,5 @@
 //
-//  OSCTimeTag Tests.swift
+//  OSCTimeTag OSC 1.1 Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
@@ -8,13 +8,13 @@
 import XCTest
 @testable import OSCKit
 
-final class OSCTimeTag_Tests: XCTestCase {
+final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
     func testDefault() throws {
-        let del = OSCServerDelegate()
+        let server = OSCServer(timeTagMode: .ignore)
         
         let exp = expectation(description: "Message Dispatched")
         
-        del.handler = { oscMessage in
+        server.handler = { _,_ in
             exp.fulfill()
         }
         
@@ -24,17 +24,17 @@ final class OSCTimeTag_Tests: XCTestCase {
             ]
         )
         
-        try del.handle(payload: .bundle(bundle))
+        try server.handle(payload: .bundle(bundle))
         
         wait(for: [exp], timeout: 0.5)
     }
     
     func testImmediate() throws {
-        let del = OSCServerDelegate()
+        let server = OSCServer(timeTagMode: .ignore)
         
         let exp = expectation(description: "Message Dispatched")
         
-        del.handler = { oscMessage in
+        server.handler = { _,_ in
             exp.fulfill()
         }
         
@@ -45,17 +45,17 @@ final class OSCTimeTag_Tests: XCTestCase {
             timeTag: .immediate()
         )
         
-        try del.handle(payload: .bundle(bundle))
+        try server.handle(payload: .bundle(bundle))
         
         wait(for: [exp], timeout: 0.5)
     }
     
     func testNow() throws {
-        let del = OSCServerDelegate()
+        let server = OSCServer(timeTagMode: .ignore)
         
         let exp = expectation(description: "Message Dispatched")
         
-        del.handler = { oscMessage in
+        server.handler = { _,_ in
             exp.fulfill()
         }
         
@@ -66,21 +66,17 @@ final class OSCTimeTag_Tests: XCTestCase {
             timeTag: .now()
         )
         
-        try del.handle(payload: .bundle(bundle))
+        try server.handle(payload: .bundle(bundle))
         
         wait(for: [exp], timeout: 0.5)
     }
     
     func test1SecondInFuture() throws {
-        let del = OSCServerDelegate()
-        
-        let expEarly = expectation(description: "Message Dispatched Early")
-        expEarly.isInverted = true
+        let server = OSCServer(timeTagMode: .ignore)
         
         let exp = expectation(description: "Message Dispatched")
         
-        del.handler = { oscMessage in
-            expEarly.fulfill()
+        server.handler = { _,_ in
             exp.fulfill()
         }
         
@@ -91,18 +87,18 @@ final class OSCTimeTag_Tests: XCTestCase {
             timeTag: .timeIntervalSinceNow(1.0)
         )
         
-        try del.handle(payload: .bundle(bundle))
+        try server.handle(payload: .bundle(bundle))
         
-        wait(for: [expEarly], timeout: 0.99)
         wait(for: [exp], timeout: 0.5)
+        
     }
     
     func testPast() throws {
-        let del = OSCServerDelegate()
+        let server = OSCServer(timeTagMode: .ignore)
         
         let exp = expectation(description: "Message Dispatched")
         
-        del.handler = { oscMessage in
+        server.handler = { _,_ in
             exp.fulfill()
         }
         
@@ -113,7 +109,7 @@ final class OSCTimeTag_Tests: XCTestCase {
             timeTag: .timeIntervalSinceNow(-1.0)
         )
         
-        try del.handle(payload: .bundle(bundle))
+        try server.handle(payload: .bundle(bundle))
         
         wait(for: [exp], timeout: 0.5)
     }
