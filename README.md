@@ -80,6 +80,9 @@ It is possible to specify a future time tag. When present, a receiver holds the 
 OSCBundle([msg1, msg2])
 OSCBundle([msg1, msg2], timeTag: .immediate())
 
+// specify a non-immediate time tag of the current time
+OSCBundle([msg1, msg2], timeTag: .now())
+
 // 5 seconds in the future
 OSCBundle([msg1, msg2], timeTag: .timeIntervalSinceNow(5.0))
 
