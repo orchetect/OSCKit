@@ -11,6 +11,6 @@ extension Data {
     @inlinable
     public var appearsToBeOSCMessage: Bool {
         // it's possible an OSC address won't start with "/", but it should!
-        self.starts(with: OSCMessage.header)
+        starts(with: OSCMessage.header)
     }
 }

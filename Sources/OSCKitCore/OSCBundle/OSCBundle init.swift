@@ -14,7 +14,7 @@ extension OSCBundle {
     ) {
         self.timeTag = timeTag ?? .init(1)
         self.elements = elements
-        self.rawData = Self.generateRawData(
+        rawData = Self.generateRawData(
             from: elements,
             timeTag: self.timeTag
         )

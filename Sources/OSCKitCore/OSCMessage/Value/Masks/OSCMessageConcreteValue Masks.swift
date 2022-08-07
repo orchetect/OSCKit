@@ -34,14 +34,16 @@ extension Array where Element == OSCMessage.Value {
         _ mask: [OSCMessage.Value.Mask.Token]
     ) throws -> [OSCMessageConcreteValue?] {
         // should not contain more values than mask
-        if self.count > mask.count { throw OSCMessage.Value.Mask.MaskError.invalidCount }
+        if count > mask.count {
+            throw OSCMessage.Value.Mask.MaskError.invalidCount
+        }
         
         var values = [OSCMessageConcreteValue?]()
         
         for idx in 0 ..< mask.count {
             let idxOptional = mask[idx].isOptional
             
-            if self.indices.contains(idx) {
+            if indices.contains(idx) {
                 // check if it's the correct base type
                 if !self[idx].baseType(
                     matches: mask[idx].baseType,

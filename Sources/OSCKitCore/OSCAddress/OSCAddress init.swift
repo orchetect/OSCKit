@@ -24,7 +24,7 @@ extension OSCAddress {
     /// The path component strings will be converted to ASCII strings, lossily converting or removing invalid non-ASCII characters if necessary.
     /// Empty path components is equivalent to the address of "/".
     public init(pathComponents: [String]) {
-        self.address = ("/" + pathComponents.joined(separator: "/")).asciiStringLossy
+        address = ("/" + pathComponents.joined(separator: "/")).asciiStringLossy
     }
     
     /// Create an OSC address from individual path components.
@@ -32,6 +32,6 @@ extension OSCAddress {
     /// Empty path components is equivalent to the address of "/".
     @_disfavoredOverload
     public init(pathComponents: [ASCIIString]) {
-        self.address = ASCIICharacter("/") + pathComponents.joined(separator: "/")
+        address = ASCIICharacter("/") + pathComponents.joined(separator: "/")
     }
 }

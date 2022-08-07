@@ -32,7 +32,7 @@ extension Array where Element == OSCMessage.Value {
         mask: [OSCMessage.Value.Mask.Token]
     ) -> Bool {
         // should not contain more values than mask
-        if self.count > mask.count { return false }
+        if count > mask.count { return false }
         
         var matchCount = 0
         
@@ -40,7 +40,7 @@ extension Array where Element == OSCMessage.Value {
             // can be a concrete type or meta type
             let idxOptional = mask[idx].isOptional
             
-            if self.indices.contains(idx) {
+            if indices.contains(idx) {
                 switch self[idx].baseType(
                     matches: mask[idx].baseType,
                     canMatchMetaTypes: true

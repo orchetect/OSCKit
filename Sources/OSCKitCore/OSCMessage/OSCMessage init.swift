@@ -18,7 +18,7 @@ extension OSCMessage {
         let oscAddress = OSCAddress(address.asciiStringLossy)
         self.address = oscAddress
         self.values = values
-        self.rawData = Self.generateRawData(
+        rawData = Self.generateRawData(
             address: oscAddress,
             values: values
         )
@@ -33,7 +33,7 @@ extension OSCMessage {
         let oscAddress = OSCAddress(address)
         self.address = oscAddress
         self.values = values
-        self.rawData = Self.generateRawData(
+        rawData = Self.generateRawData(
             address: oscAddress,
             values: values
         )
@@ -47,7 +47,7 @@ extension OSCMessage {
     ) {
         self.address = address
         self.values = values
-        self.rawData = Self.generateRawData(
+        rawData = Self.generateRawData(
             address: address,
             values: values
         )
@@ -60,9 +60,9 @@ extension OSCMessage {
         address pathComponents: [String],
         values: [Value] = []
     ) {
-        self.address = OSCAddress(pathComponents: pathComponents)
+        address = OSCAddress(pathComponents: pathComponents)
         self.values = values
-        self.rawData = Self.generateRawData(
+        rawData = Self.generateRawData(
             address: address,
             values: values
         )
@@ -75,9 +75,9 @@ extension OSCMessage {
         address pathComponents: [ASCIIString],
         values: [Value] = []
     ) {
-        self.address = OSCAddress(pathComponents: pathComponents)
+        address = OSCAddress(pathComponents: pathComponents)
         self.values = values
-        self.rawData = Self.generateRawData(
+        rawData = Self.generateRawData(
             address: address,
             values: values
         )

@@ -25,8 +25,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func setupOSCServer() {
         oscServer.setHandler { [weak self] message, timeTag in
             do {
-                try self?.oscReceiver.handle(oscMessage: message,
-                                             timeTag: timeTag)
+                try self?.oscReceiver.handle(
+                    oscMessage: message,
+                    timeTag: timeTag
+                )
             } catch {
                 print(error)
             }
@@ -40,7 +42,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     /// Send a test OSC message.
-    @IBAction func sendTestOSCMessage(_ sender: Any) {
+    @IBAction
+    func sendTestOSCMessage(_ sender: Any) {
         let oscMessage = OSCMessage(
             address: "/some/address/methodB",
             values: [.string("Test string"), .int32(123)]

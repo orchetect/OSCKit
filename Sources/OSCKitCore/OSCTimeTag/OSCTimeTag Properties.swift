@@ -20,7 +20,7 @@ extension OSCTimeTag {
     
     /// Returns the time tag converted to a `Date` instance.
     public var date: Date {
-        return isImmediate
+        isImmediate
             ? Date()
             : Self.primeEpoch.addingTimeInterval(rawValue.seconds(era: era))
     }

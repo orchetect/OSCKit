@@ -24,20 +24,20 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
                 // concrete types
                 
                 // -- core types
-            case .int32:                XCTAssertEqual(valueType.baseType, .int32)
-            case .float32:              XCTAssertEqual(valueType.baseType, .float32)
-            case .string:               XCTAssertEqual(valueType.baseType, .string)
-            case .blob:                 XCTAssertEqual(valueType.baseType, .blob)
+            case .int32:             XCTAssertEqual(valueType.baseType, .int32)
+            case .float32:           XCTAssertEqual(valueType.baseType, .float32)
+            case .string:            XCTAssertEqual(valueType.baseType, .string)
+            case .blob:              XCTAssertEqual(valueType.baseType, .blob)
                 
                 // -- extended types
-            case .int64:                XCTAssertEqual(valueType.baseType, .int64)
-            case .timeTag:              XCTAssertEqual(valueType.baseType, .timeTag)
-            case .double:               XCTAssertEqual(valueType.baseType, .double)
-            case .stringAlt:            XCTAssertEqual(valueType.baseType, .stringAlt)
-            case .character:            XCTAssertEqual(valueType.baseType, .character)
-            case .midi:                 XCTAssertEqual(valueType.baseType, .midi)
-            case .bool:                 XCTAssertEqual(valueType.baseType, .bool)
-            case .null:                 XCTAssertEqual(valueType.baseType, .null)
+            case .int64:             XCTAssertEqual(valueType.baseType, .int64)
+            case .timeTag:           XCTAssertEqual(valueType.baseType, .timeTag)
+            case .double:            XCTAssertEqual(valueType.baseType, .double)
+            case .stringAlt:         XCTAssertEqual(valueType.baseType, .stringAlt)
+            case .character:         XCTAssertEqual(valueType.baseType, .character)
+            case .midi:              XCTAssertEqual(valueType.baseType, .midi)
+            case .bool:              XCTAssertEqual(valueType.baseType, .bool)
+            case .null:              XCTAssertEqual(valueType.baseType, .null)
                 
                 // "meta" types
                 
@@ -46,24 +46,24 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
                 // optional versions of concrete types
                 
                 // -- core types
-            case .int32Optional:        XCTAssertEqual(valueType.baseType, .int32)
-            case .float32Optional:      XCTAssertEqual(valueType.baseType, .float32)
-            case .stringOptional:       XCTAssertEqual(valueType.baseType, .string)
-            case .blobOptional:         XCTAssertEqual(valueType.baseType, .blob)
+            case .int32Optional:     XCTAssertEqual(valueType.baseType, .int32)
+            case .float32Optional:   XCTAssertEqual(valueType.baseType, .float32)
+            case .stringOptional:    XCTAssertEqual(valueType.baseType, .string)
+            case .blobOptional:      XCTAssertEqual(valueType.baseType, .blob)
                 
                 // -- extended types
-            case .int64Optional:        XCTAssertEqual(valueType.baseType, .int64)
-            case .timeTagOptional:      XCTAssertEqual(valueType.baseType, .timeTag)
-            case .doubleOptional:       XCTAssertEqual(valueType.baseType, .double)
-            case .stringAltOptional:    XCTAssertEqual(valueType.baseType, .stringAlt)
-            case .characterOptional:    XCTAssertEqual(valueType.baseType, .character)
-            case .midiOptional:         XCTAssertEqual(valueType.baseType, .midi)
-            case .boolOptional:         XCTAssertEqual(valueType.baseType, .bool)
-            case .nullOptional:         XCTAssertEqual(valueType.baseType, .null)
+            case .int64Optional:     XCTAssertEqual(valueType.baseType, .int64)
+            case .timeTagOptional:   XCTAssertEqual(valueType.baseType, .timeTag)
+            case .doubleOptional:    XCTAssertEqual(valueType.baseType, .double)
+            case .stringAltOptional: XCTAssertEqual(valueType.baseType, .stringAlt)
+            case .characterOptional: XCTAssertEqual(valueType.baseType, .character)
+            case .midiOptional:      XCTAssertEqual(valueType.baseType, .midi)
+            case .boolOptional:      XCTAssertEqual(valueType.baseType, .bool)
+            case .nullOptional:      XCTAssertEqual(valueType.baseType, .null)
                 
                 // -- meta types
                 
-            case .numberOptional:       XCTAssertEqual(valueType.baseType, .number)
+            case .numberOptional:    XCTAssertEqual(valueType.baseType, .number)
                 
             }
         }
@@ -80,26 +80,26 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
                 // optional versions of concrete types
                 
                 // -- core types
-            case .int32Optional:        XCTAssertEqual(valueType.isOptional, true)
-            case .float32Optional:      XCTAssertEqual(valueType.isOptional, true)
-            case .stringOptional:       XCTAssertEqual(valueType.isOptional, true)
-            case .blobOptional:         XCTAssertEqual(valueType.isOptional, true)
+            case .int32Optional:     XCTAssertEqual(valueType.isOptional, true)
+            case .float32Optional:   XCTAssertEqual(valueType.isOptional, true)
+            case .stringOptional:    XCTAssertEqual(valueType.isOptional, true)
+            case .blobOptional:      XCTAssertEqual(valueType.isOptional, true)
                 
                 // -- extended types
-            case .int64Optional:        XCTAssertEqual(valueType.isOptional, true)
-            case .timeTagOptional:      XCTAssertEqual(valueType.isOptional, true)
-            case .doubleOptional:       XCTAssertEqual(valueType.isOptional, true)
-            case .stringAltOptional:    XCTAssertEqual(valueType.isOptional, true)
-            case .characterOptional:    XCTAssertEqual(valueType.isOptional, true)
-            case .midiOptional:         XCTAssertEqual(valueType.isOptional, true)
-            case .boolOptional:         XCTAssertEqual(valueType.isOptional, true)
-            case .nullOptional:         XCTAssertEqual(valueType.isOptional, true)
+            case .int64Optional:     XCTAssertEqual(valueType.isOptional, true)
+            case .timeTagOptional:   XCTAssertEqual(valueType.isOptional, true)
+            case .doubleOptional:    XCTAssertEqual(valueType.isOptional, true)
+            case .stringAltOptional: XCTAssertEqual(valueType.isOptional, true)
+            case .characterOptional: XCTAssertEqual(valueType.isOptional, true)
+            case .midiOptional:      XCTAssertEqual(valueType.isOptional, true)
+            case .boolOptional:      XCTAssertEqual(valueType.isOptional, true)
+            case .nullOptional:      XCTAssertEqual(valueType.isOptional, true)
                 
                 // -- meta types
                 
-            case .numberOptional:       XCTAssertEqual(valueType.isOptional, true)
+            case .numberOptional:    XCTAssertEqual(valueType.isOptional, true)
                 
-            default:                    XCTAssertEqual(valueType.isOptional, false)
+            default:                 XCTAssertEqual(valueType.isOptional, false)
                 
             }
         }

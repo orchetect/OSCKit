@@ -139,7 +139,8 @@ final class OSCDispatcher_Tests: XCTestCase {
         
         let t1ID = dispatcher.register(address: "/test1")
         let t2ID = dispatcher.register(address: "/test2")
-        let _ = dispatcher.register(address: "/test1/test1B") // not tested, just want it present
+        let _ = dispatcher
+            .register(address: "/test1/test1B") // not tested, just want it present
         
         // non-matches
         

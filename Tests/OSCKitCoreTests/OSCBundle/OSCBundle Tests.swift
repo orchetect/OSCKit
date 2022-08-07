@@ -68,7 +68,7 @@ final class OSCBundle_Tests: XCTestCase {
     }
     
     func testCustomStringConvertible_SpecificTimeTag_EmptyElements() {
-        let bundle = OSCBundle(elements: [], timeTag: .init(123456))
+        let bundle = OSCBundle(elements: [], timeTag: .init(123_456))
         
         let desc = bundle.description
         

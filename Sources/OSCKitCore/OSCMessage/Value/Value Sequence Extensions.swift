@@ -11,7 +11,7 @@ extension Sequence where Iterator.Element == OSCMessage.Value {
         withLabel: Bool = true,
         separator: String = ", "
     ) -> String {
-        self.map { $0.stringValue(withLabel: withLabel) }
+        map { $0.stringValue(withLabel: withLabel) }
             .joined(separator: separator)
     }
 }

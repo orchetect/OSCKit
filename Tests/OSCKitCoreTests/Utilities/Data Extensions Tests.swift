@@ -77,7 +77,10 @@ final class DataExtensions_Tests: XCTestCase {
         // string
         
         let data2 = Data([0x53, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x00, 0x00]) // "String" null null
-        XCTAssertEqual(data2.extractNull4ByteTerminatedASCIIString()?.asciiStringValue, "String")
+        XCTAssertEqual(
+            data2.extractNull4ByteTerminatedASCIIString()?.asciiStringValue,
+            "String"
+        )
         XCTAssertEqual(data2.extractNull4ByteTerminatedASCIIString()?.byteLength, 8)
         
         // malformed (valid ascii string data, multiple of 4 bytes, but pad is not all nulls)

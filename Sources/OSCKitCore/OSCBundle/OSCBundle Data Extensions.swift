@@ -10,6 +10,6 @@ extension Data {
     /// (Note: Does NOT do extensive checks to ensure data block isn't malformed)
     @inlinable
     var appearsToBeOSCBundle: Bool {
-        self.starts(with: OSCBundle.header)
+        starts(with: OSCBundle.header)
     }
 }

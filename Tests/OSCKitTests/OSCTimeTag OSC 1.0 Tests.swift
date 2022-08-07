@@ -14,7 +14,7 @@ final class OSCTimeTag_OSC1_0_Tests: XCTestCase {
         
         let exp = expectation(description: "Message Dispatched")
         
-        server.handler = { _,_ in
+        server.handler = { _, _ in
             exp.fulfill()
         }
         
@@ -34,7 +34,7 @@ final class OSCTimeTag_OSC1_0_Tests: XCTestCase {
         
         let exp = expectation(description: "Message Dispatched")
         
-        server.handler = { _,_ in
+        server.handler = { _, _ in
             exp.fulfill()
         }
         
@@ -55,7 +55,7 @@ final class OSCTimeTag_OSC1_0_Tests: XCTestCase {
         
         let exp = expectation(description: "Message Dispatched")
         
-        server.handler = { _,_ in
+        server.handler = { _, _ in
             exp.fulfill()
         }
         
@@ -79,7 +79,7 @@ final class OSCTimeTag_OSC1_0_Tests: XCTestCase {
         
         let exp = expectation(description: "Message Dispatched")
         
-        server.handler = { _,_ in
+        server.handler = { _, _ in
             expEarly.fulfill()
             exp.fulfill()
         }
@@ -102,7 +102,7 @@ final class OSCTimeTag_OSC1_0_Tests: XCTestCase {
         
         let exp = expectation(description: "Message Dispatched")
         
-        server.handler = { _,_ in
+        server.handler = { _, _ in
             exp.fulfill()
         }
         

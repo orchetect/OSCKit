@@ -15,7 +15,7 @@ final class OSCServer_Tests: XCTestCase {
         let exp = expectation(description: "Message Dispatched")
         exp.isInverted = true // empty bundle produces no messages
         
-        server.handler = { _,_ in
+        server.handler = { _, _ in
             exp.fulfill()
         }
         
