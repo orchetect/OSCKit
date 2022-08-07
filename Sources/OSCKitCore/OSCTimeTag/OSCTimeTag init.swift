@@ -59,4 +59,27 @@ extension OSCTimeTag {
             .oscTimeTag
         return Self(nowRaw.timeTag, era: nowRaw.era)
     }
+    
+    /// Returns a Time Tag representing a time in the future.
+    ///
+    /// If the intention is to produce an immediate Time Tag, use `.immediate()` instead of `init(timeIntervalSinceNow: 0.0)`.
+    ///
+    /// Passing `secondsFromNow` that is `< 0.0` will produce a Time Tag of `.now()`.
+    public static func timeIntervalSinceNow(_ seconds: TimeInterval) -> Self {
+        self.init(timeIntervalSinceNow: seconds)
+    }
+    
+    /// Returns a Time Tag formed from total elapsed seconds since 1990 (prime epoch).
+    public static func secondsSince1900(_ seconds: TimeInterval) -> Self {
+        self.init(secondsSince1900: seconds)
+    }
+    
+    /// Returns a Time Tag representing a time in the future.
+    ///
+    /// If the intention is to produce an immediate Time Tag, use `.immediate()` instead of `init(at: Date())`.
+    ///
+    /// Passing `Date` that is `< now` will produce a Time Tag of `.now()`.
+    public static func future(_ futureDate: Date) -> Self {
+        self.init(future: futureDate)
+    }
 }

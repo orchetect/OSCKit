@@ -69,6 +69,29 @@ let bundle = OSCBundle([msg1, msg2])
 oscClient.send(bundle, to: "192.168.1.2", port: 8000)
 ```
 
+#### Sending with a Future Time Tag
+
+OSC bundles carry a time tag. By default if not specified, this is set to a value equivalent to "immediate" which receivers will interpret and handle the bundle and the message(s) it contains immediately upon receiving them.
+
+It is possible to specify a future time tag. When present, a receiver holds the bundle in memory and handles it at the future time specified in the time tag.
+
+```swift
+// by default, bundles use an immediate time tag; so these two lines are identical:
+OSCBundle([msg1, msg2])
+OSCBundle([msg1, msg2], timeTag: .immediate())
+
+// 5 seconds in the future
+OSCBundle([msg1, msg2], timeTag: .timeIntervalSinceNow(5.0))
+
+// at the specified time as a Date instance
+let date = Date( ... )
+OSCBundle([msg1, msg2], timeTag: .future(date))
+
+// a raw time tag can also be supplied
+let timeTag: UInt64 = 16535555370123264000
+OSCBundle([msg1, msg2], timeTag: .init(timeTag))
+```
+
 ## Receiving OSC
 
 ### Create OSC Server
@@ -105,6 +128,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     try oscServer.start()
 }
 ```
+
+If received OSC bundles contain a future time tag, these bundles will be held in memory by the `OSCServer` automatically and scheduled to be dispatched to the handler at the future time.
 
 ### Address Parsing
 
@@ -254,7 +279,7 @@ The following OSC value types are available, conforming to the [Open Sound Contr
 
 // extended types
 .int64(Int64)
-.timeTag(Int64)
+.timeTag(OSCTimeTag)
 .double(Double)
 .stringAlt(ASCIIString)
 .character(ASCIICharacter)
@@ -266,12 +291,6 @@ The following OSC value types are available, conforming to the [Open Sound Contr
 ## Documentation
 
 Will be added in future. In the meantime, refer to this README's [Getting Started](#getting-started) section, and check out the [Example projects](Examples).
-
-## Roadmap
-
-- [ ] Add full timetag support (OSC 1.0 spec)
-- [ ] Add address parsing (OSC 1.0 spec)
-- [ ] Add custom OSC type tag values
 
 ## Author
 
