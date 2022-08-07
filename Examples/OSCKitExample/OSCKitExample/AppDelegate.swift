@@ -24,13 +24,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// Call once at app startup.
     private func setupOSCServer() {
         oscServer.setHandler { [weak self] oscMessage in
-            // Important: handle received OSC on main thread if it may result in UI updates
-            DispatchQueue.main.async {
-                do {
-                    try self?.oscReceiver.handle(oscMessage: oscMessage)
-                } catch {
-                    print(error)
-                }
+            do {
+                try self?.oscReceiver.handle(oscMessage: oscMessage)
+            } catch {
+                print(error)
             }
         }
         
