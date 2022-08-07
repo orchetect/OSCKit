@@ -14,9 +14,6 @@ import Foundation
 /// The time tag value consisting of 63 zero bits followed by a one in the least significant bit (essentially a `UInt64` integer value of 1) is a special case meaning 'immediately.'"
 
 public struct OSCTimeTag: Equatable, Hashable {
-    /// Raw value type (aka `UInt64`)
-    public typealias RawValue = UInt64
-    
     /// NTP time format era number.
     ///
     /// The OSC Time Tag encoding uses NTPv3 time encoding which specifies 32 bits for seconds and 32 bits for fractional sections. Given that the prime epoch (era 0) is the year 1990, 32 bit seconds storage rolls over approximate every 136 years. Every time this rollover occurs, the era increments by 1.
@@ -28,47 +25,9 @@ public struct OSCTimeTag: Equatable, Hashable {
     /// See https://www.eecis.udel.edu/~mills/y2k.html for details.
     public let era: Int
     
+    /// Raw value type (aka `UInt64`)
+    public typealias RawValue = UInt64
+    
     /// Raw Time Tag value as encoded in OSC.
     public let rawValue: RawValue
-    
-    /// Initialize from a raw OSC Time Tag value.
-    public init(_ rawValue: RawValue, era: Int = 0) {
-        self.era = era
-        self.rawValue = rawValue
-    }
-}
-
-// MARK: - Properties
-
-extension OSCTimeTag {
-    /// Returns `true` if the Time Tag is considered immediate.
-    /// (Special raw value of 1).
-    public var isImmediate: Bool {
-        rawValue == 1
-    }
-    
-    /// Returns `true` if the Time Tag is a time in the future.
-    public var isFuture: Bool {
-        guard !isImmediate else { return false }
-        return rawValue > OSCTimeTag.now().rawValue
-    }
-    
-    /// Returns the time tag converted to a `Date` instance.
-    public var date: Date {
-        return isImmediate
-            ? Date()
-            : Self.primeEpoch.addingTimeInterval(rawValue.seconds(era: era))
-    }
-    
-    /// Returns the delta time interval in seconds between _now_ and the Time Tag.
-    public func secondsFromNow() -> TimeInterval {
-        secondsFrom(Date())
-    }
-    
-    /// Returns the delta time interval in seconds between an arbitrary `date` and the Time Tag.
-    public func secondsFrom(_ other: Date) -> TimeInterval {
-        isImmediate
-            ? 0.0
-            : date.timeIntervalSince(other)
-    }
 }

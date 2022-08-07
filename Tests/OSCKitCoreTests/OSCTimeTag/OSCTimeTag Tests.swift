@@ -17,18 +17,36 @@ final class OSCTimeTag_Tests: XCTestCase {
         XCTAssertEqual(OSCTimeTag(0).rawValue, 0)
         XCTAssertEqual(OSCTimeTag(1).rawValue, 1)
         XCTAssertEqual(OSCTimeTag(2).rawValue, 2)
-        XCTAssertEqual(OSCTimeTag(timeTag1Jan2022).rawValue, timeTag1Jan2022) // typical
+        XCTAssertEqual(OSCTimeTag(timeTag1Jan2022).rawValue, timeTag1Jan2022)
+        XCTAssertEqual(OSCTimeTag(timeTag1Jan2050, era: 1).rawValue, timeTag1Jan2050)
+        XCTAssertEqual(OSCTimeTag(timeTag1Jan2200, era: 2).rawValue, timeTag1Jan2200)
         XCTAssertEqual(OSCTimeTag(UInt64.max).rawValue, UInt64.max)
     }
     
-    func testInit_secondsFromNow() {
-        let tag = OSCTimeTag(secondsFromNow: 0.0)
+    // MARK: - .init(timeIntervalSinceNow:)
+    
+    func testInit_timeIntervalSinceNow_Zero() {
+        let tag = OSCTimeTag(timeIntervalSinceNow: 0.0)
         
         XCTAssertGreaterThan(tag.rawValue, timeTag1Jan2022)
         XCTAssertEqual(tag.era, 0)
         XCTAssertFalse(tag.isImmediate)
         XCTAssertFalse(tag.isFuture)
     }
+    
+    func testInit_timeIntervalSinceNow_EdgeCase_Negative() {
+        let tag = OSCTimeTag(timeIntervalSinceNow: -10.0)
+        
+        XCTAssertNotEqual(tag.rawValue, 0)
+        XCTAssertNotEqual(tag.rawValue, 1)
+        XCTAssertEqual(tag.era, 0)
+        XCTAssertFalse(tag.isImmediate)
+        XCTAssertFalse(tag.isFuture)
+        XCTAssertLessThan(tag.date, Date())
+        XCTAssertEqual(tag.timeIntervalSinceNow(), -10.0, accuracy: 0.001)
+    }
+    
+    // MARK: - .init(secondsSince1900:)
     
     func testInit_secondsSince1900_Zero() {
         let tag = OSCTimeTag(secondsSince1900: 0.0)
@@ -38,7 +56,18 @@ final class OSCTimeTag_Tests: XCTestCase {
         XCTAssertFalse(tag.isImmediate)
         XCTAssertFalse(tag.isFuture)
         XCTAssertEqual(tag.date, primeEpoch)
-        XCTAssertLessThan(tag.secondsFromNow(), 0.0)
+        XCTAssertLessThan(tag.timeIntervalSinceNow(), 0.0)
+    }
+    
+    func testInit_secondsSince1900() {
+        let tag = OSCTimeTag(secondsSince1900: 10.0)
+        
+        XCTAssertEqual(tag.rawValue, 10 << 32)
+        XCTAssertEqual(tag.era, 0)
+        XCTAssertFalse(tag.isImmediate)
+        XCTAssertFalse(tag.isFuture)
+        XCTAssertEqual(tag.date, primeEpoch + 10.0)
+        XCTAssertLessThan(tag.timeIntervalSinceNow(), 10.0)
     }
     
     func testInit_secondsSince1900_EdgeCase_Negative() {
@@ -50,7 +79,7 @@ final class OSCTimeTag_Tests: XCTestCase {
         XCTAssertFalse(tag.isImmediate)
         XCTAssertFalse(tag.isFuture)
         XCTAssertEqual(tag.date, primeEpoch)
-        XCTAssertLessThan(tag.secondsFromNow(), 0.0)
+        XCTAssertLessThan(tag.timeIntervalSinceNow(), 0.0)
     }
     
     func testInit_secondsSince1900_Known() {
@@ -61,8 +90,8 @@ final class OSCTimeTag_Tests: XCTestCase {
         XCTAssertFalse(tag.isImmediate)
         XCTAssertFalse(tag.isFuture)
         XCTAssertEqual(tag.date, date1Jan2022)
-        XCTAssertLessThan(tag.secondsFromNow(), 0.0)
-        XCTAssertEqual(tag.secondsFrom(primeEpoch), seconds1Jan2022)
+        XCTAssertLessThan(tag.timeIntervalSinceNow(), 0.0)
+        XCTAssertEqual(tag.timeInterval(since: primeEpoch), seconds1Jan2022)
     }
     
     func testKnownEra0TimeTag() {
@@ -76,8 +105,8 @@ final class OSCTimeTag_Tests: XCTestCase {
         XCTAssertFalse(tag.isImmediate)
         XCTAssertFalse(tag.isFuture)
         XCTAssertLessThan(tag.date, Date())
-        XCTAssertLessThan(tag.secondsFromNow(), 0.0)
-        XCTAssertEqual(tag.secondsFrom(primeEpoch), seconds1Jan2022)
+        XCTAssertLessThan(tag.timeIntervalSinceNow(), 0.0)
+        XCTAssertEqual(tag.timeInterval(since: primeEpoch), seconds1Jan2022)
     }
     
     func testKnownEra1TimeTag() {
@@ -90,8 +119,8 @@ final class OSCTimeTag_Tests: XCTestCase {
         XCTAssertFalse(tag.isImmediate)
         XCTAssertFalse(tag.isFuture)
         XCTAssertEqual(tag.date, date1Jan2050)
-        XCTAssertGreaterThan(tag.secondsFromNow(), 0.0)
-        XCTAssertEqual(tag.secondsFrom(primeEpoch), seconds1Jan2050)
+        XCTAssertGreaterThan(tag.timeIntervalSinceNow(), 0.0)
+        XCTAssertEqual(tag.timeInterval(since: primeEpoch), seconds1Jan2050)
     }
     
     func testKnownEra2TimeTag() {
@@ -104,8 +133,8 @@ final class OSCTimeTag_Tests: XCTestCase {
         XCTAssertFalse(tag.isImmediate)
         XCTAssertFalse(tag.isFuture)
         XCTAssertEqual(tag.date, date1Jan2200)
-        XCTAssertGreaterThan(tag.secondsFromNow(), 0.0)
-        XCTAssertEqual(tag.secondsFrom(primeEpoch), seconds1Jan2200)
+        XCTAssertGreaterThan(tag.timeIntervalSinceNow(), 0.0)
+        XCTAssertEqual(tag.timeInterval(since: primeEpoch), seconds1Jan2200)
     }
     
     // MARK: - .immediate() (raw value of 1)
@@ -121,7 +150,7 @@ final class OSCTimeTag_Tests: XCTestCase {
             tag.date.timeIntervalSince(Date()),
             0.0
         )
-        XCTAssertEqual(tag.secondsFromNow(), 0.0)
+        XCTAssertEqual(tag.timeIntervalSinceNow(), 0.0)
     }
     
     // MARK: - .now()
@@ -156,9 +185,9 @@ final class OSCTimeTag_Tests: XCTestCase {
         )
     }
     
-    func testNow_secondsFromNow() {
+    func testNow_timeIntervalSinceNow() {
         let tag = OSCTimeTag.now()
-        let captureSecondsFromNow = tag.secondsFromNow()
+        let captureSecondsFromNow = tag.timeIntervalSinceNow()
         XCTAssertEqual(
             captureSecondsFromNow,
             0.0,

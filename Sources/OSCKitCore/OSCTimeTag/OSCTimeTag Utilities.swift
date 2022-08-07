@@ -63,17 +63,3 @@ extension OSCTimeTag.RawValue {
         }
     }
 }
-
-extension Date {
-    /// Returns total seconds elapsed since 1990.
-    @_disfavoredOverload
-    public var secondsSince1900: TimeInterval {
-        timeIntervalSince(OSCTimeTag.primeEpoch)
-    }
-    
-    /// Returns the NTP era.
-    @_disfavoredOverload
-    public var ntpEra: Int {
-        Int(timeIntervalSince(OSCTimeTag.primeEpoch) / OSCTimeTag.eraDuration)
-    }
-}
