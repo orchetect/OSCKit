@@ -20,6 +20,9 @@ extension OSCMessage.Value.MIDIMessage : OSCMessageConcreteValue { }
 extension Bool                         : OSCMessageConcreteValue { }
 extension NSNull                       : OSCMessageConcreteValue { }
 
+extension OSCTimeTag                   : OSCMessageConcreteValue { }
+extension UInt64                       : OSCMessageConcreteValue { }
+
 // substitute types
 extension Int                          : OSCMessageConcreteValue { }
 extension String                       : OSCMessageConcreteValue { }

@@ -18,37 +18,37 @@ final class OSCBundle_Integrity_Tests: XCTestCase {
         // empty
         
         let emptyBundle = OSCBundle(elements: [])
-        XCTAssertEqual(emptyBundle.timeTag, 1)
+        XCTAssertEqual(emptyBundle.timeTag.rawValue, 1)
         XCTAssertEqual(emptyBundle.elements.count, 0)
         
         // timetag only
         
         let timeTagOnly = OSCBundle(
             elements: [],
-            timeTag: 20
+            timeTag: .init(20)
         )
-        XCTAssertEqual(timeTagOnly.timeTag, 20)
+        XCTAssertEqual(timeTagOnly.timeTag.rawValue, 20)
         XCTAssertEqual(timeTagOnly.elements.count, 0)
         
         // elements only
         
         let elementsOnly = OSCBundle(elements: [.message(address: "/")])
-        XCTAssertEqual(elementsOnly.timeTag, 1)
+        XCTAssertEqual(elementsOnly.timeTag.rawValue, 1)
         XCTAssertEqual(elementsOnly.elements.count, 1)
         
         // timetag and elements
         
         let elementsAndTT = OSCBundle(
             elements: [.message(address: "/")],
-            timeTag: 20
+            timeTag: .init(20)
         )
-        XCTAssertEqual(elementsAndTT.timeTag, 20)
+        XCTAssertEqual(elementsAndTT.timeTag.rawValue, 20)
         XCTAssertEqual(elementsAndTT.elements.count, 1)
         
         // raw data
         
         let rawData = try OSCBundle(from: OSCBundle.header + 20.int64.toData(.bigEndian))
-        XCTAssertEqual(rawData.timeTag, 20)
+        XCTAssertEqual(rawData.timeTag.rawValue, 20)
         XCTAssertEqual(rawData.elements.count, 0)
     }
     
@@ -104,14 +104,14 @@ final class OSCBundle_Integrity_Tests: XCTestCase {
         
         // verify contents
         
-        XCTAssertEqual(decodedOSCbundle.timeTag, 1)
+        XCTAssertEqual(decodedOSCbundle.timeTag.rawValue, 1)
         XCTAssertEqual(decodedOSCbundle.elements.count, 4)
         
         // element 1
         guard case let .bundle(element1) = decodedOSCbundle.elements[safe: 0]
         else { XCTFail(); return }
         
-        XCTAssertEqual(element1.timeTag, 1)
+        XCTAssertEqual(element1.timeTag.rawValue, 1)
         XCTAssertEqual(element1.elements.count, 1)
         
         guard case let .message(element1A) = element1.elements[safe: 0]
@@ -124,7 +124,7 @@ final class OSCBundle_Integrity_Tests: XCTestCase {
         guard case let .bundle(element2) = decodedOSCbundle.elements[safe: 1]
         else { XCTFail(); return }
         
-        XCTAssertEqual(element2.timeTag, 1)
+        XCTAssertEqual(element2.timeTag.rawValue, 1)
         XCTAssertEqual(element2.elements.count, 2)
         
         guard case let .message(element2A) = element2.elements[safe: 0]
@@ -168,7 +168,7 @@ final class OSCBundle_Integrity_Tests: XCTestCase {
         // element 4
         guard case let .bundle(element4) = decodedOSCbundle.elements[safe: 3]
         else { XCTFail(); return }
-        XCTAssertEqual(element4.timeTag, 1)
+        XCTAssertEqual(element4.timeTag.rawValue, 1)
         XCTAssertEqual(element4.elements.count, 0)
     }
 }

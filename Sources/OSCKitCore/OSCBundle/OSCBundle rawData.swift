@@ -11,7 +11,7 @@ extension OSCBundle {
     @usableFromInline
     internal static func generateRawData(
         from elements: [OSCPayload],
-        timeTag: Int64
+        timeTag: OSCTimeTag
     ) -> Data {
         // returns a raw OSC packet constructed out of the struct's properties
         
@@ -22,7 +22,7 @@ extension OSCBundle {
         
         data.append(OSCBundle.header) // prime the header
         
-        data.append(timeTag.toData(.bigEndian)) // add timetag
+        data.append(timeTag.rawValue.toData(.bigEndian)) // add timetag
         
         for element in elements {
             let raw = element.rawData

@@ -169,7 +169,7 @@ final class OSCObject_rawData_Tests: XCTestCase {
                 
             case .bundle(let bundle):
                 // handle bundle
-                XCTAssertEqual(bundle.timeTag, 1)
+                XCTAssertEqual(bundle.timeTag.rawValue, 1)
                 XCTAssertEqual(bundle.elements.count, 1)
                 
                 guard case .message(let msg) = bundle.elements.first

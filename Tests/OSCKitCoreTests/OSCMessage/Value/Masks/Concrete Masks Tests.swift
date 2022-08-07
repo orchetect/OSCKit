@@ -880,7 +880,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 .blob(Data([0x01])),
                 .double(234.56),
                 .character("C"),
-                .timeTag(999)
+                .timeTag(.init(999))
             ])
             .masked(
                 Int32.self,
@@ -1060,7 +1060,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 .blob(Data([0x01])),
                 .double(234.56),
                 .character("C"),
-                .timeTag(999)
+                .timeTag(.init(999))
             ]
             
             let masked = try XCTUnwrap(values.masked(
@@ -1071,7 +1071,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data.self,
                 Double.self,
                 ASCIICharacter.self,
-                Int64.self
+                OSCTimeTag.self
             ))
             
             XCTAssertEqual(masked.0, 123)
@@ -1081,7 +1081,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7.rawValue, 999)
         }
         
         // wrong type
@@ -1094,7 +1094,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 .blob(Data([0x01])),
                 .double(234.56),
                 .character("C"),
-                .timeTag(999)
+                .timeTag(.init(999))
             ])
             .masked(
                 Int64.self, // wrong type
@@ -1140,7 +1140,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 .blob(Data([0x01])),
                 .double(234.56),
                 .character("C"),
-                .timeTag(999),
+                .timeTag(.init(999)),
                 .stringAlt("str2")
             ])
             .masked(
@@ -1165,7 +1165,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             .blob(Data([0x01])),
             .double(234.56),
             .character("C"),
-            .timeTag(999)
+            .timeTag(.init(999))
         ]
         
         do {
@@ -1177,7 +1177,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data.self,
                 Double.self,
                 ASCIICharacter.self,
-                Int64?.self
+                OSCTimeTag?.self
             ))
             
             XCTAssertEqual(masked.0, 123)
@@ -1187,7 +1187,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
         }
         
         do {
@@ -1199,7 +1199,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data.self,
                 Double.self,
                 ASCIICharacter?.self,
-                Int64?.self
+                OSCTimeTag?.self
             ))
             
             XCTAssertEqual(masked.0, 123)
@@ -1209,7 +1209,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
         }
         
         do {
@@ -1221,7 +1221,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data.self,
                 Double?.self,
                 ASCIICharacter?.self,
-                Int64?.self
+                OSCTimeTag?.self
             ))
             
             XCTAssertEqual(masked.0, 123)
@@ -1231,7 +1231,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
         }
         
         do {
@@ -1243,7 +1243,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data?.self,
                 Double?.self,
                 ASCIICharacter?.self,
-                Int64?.self
+                OSCTimeTag?.self
             ))
             
             XCTAssertEqual(masked.0, 123)
@@ -1253,7 +1253,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
         }
         
         do {
@@ -1265,7 +1265,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data?.self,
                 Double?.self,
                 ASCIICharacter?.self,
-                Int64?.self
+                OSCTimeTag?.self
             ))
             
             XCTAssertEqual(masked.0, 123)
@@ -1275,7 +1275,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
         }
         
         do {
@@ -1287,7 +1287,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data?.self,
                 Double?.self,
                 ASCIICharacter?.self,
-                Int64?.self
+                OSCTimeTag?.self
             ))
             
             XCTAssertEqual(masked.0, 123)
@@ -1297,7 +1297,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
         }
         
         do {
@@ -1309,7 +1309,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data?.self,
                 Double?.self,
                 ASCIICharacter?.self,
-                Int64?.self
+                OSCTimeTag?.self
             ))
             
             XCTAssertEqual(masked.0, 123)
@@ -1319,7 +1319,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
         }
         
         do {
@@ -1331,7 +1331,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data?.self,
                 Double?.self,
                 ASCIICharacter?.self,
-                Int64?.self
+                OSCTimeTag?.self
             ))
             
             XCTAssertEqual(masked.0, 123)
@@ -1341,7 +1341,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
         }
     }
     
@@ -1359,7 +1359,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 .blob(Data([0x01])),
                 .double(234.56),
                 .character("C"),
-                .timeTag(999),
+                .timeTag(.init(999)),
                 .stringAlt("str2")
             ]
             
@@ -1371,7 +1371,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data.self,
                 Double.self,
                 ASCIICharacter.self,
-                Int64.self,
+                OSCTimeTag.self,
                 ASCIIString.self
             ))
             
@@ -1382,7 +1382,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
         }
         
@@ -1396,7 +1396,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 .blob(Data([0x01])),
                 .double(234.56),
                 .character("C"),
-                .timeTag(999),
+                .timeTag(.init(999)),
                 .stringAlt("str2")
             ])
             .masked(
@@ -1422,7 +1422,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 .blob(Data([0x01])),
                 .double(234.56),
                 .character("C"),
-                .timeTag(999)
+                .timeTag(.init(999))
             ])
             .masked(
                 Int32.self,
@@ -1446,7 +1446,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 .blob(Data([0x01])),
                 .double(234.56),
                 .character("C"),
-                .timeTag(999),
+                .timeTag(.init(999)),
                 .stringAlt("str2"),
                 .midi(portID: 0x00, status: 0xFF)
             ])
@@ -1473,7 +1473,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             .blob(Data([0x01])),
             .double(234.56),
             .character("C"),
-            .timeTag(999),
+            .timeTag(.init(999)),
             .stringAlt("str2")
         ]
         
@@ -1486,7 +1486,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data.self,
                 Double.self,
                 ASCIICharacter.self,
-                Int64.self,
+                OSCTimeTag.self,
                 ASCIIString?.self
             ))
             
@@ -1497,7 +1497,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
         }
         
@@ -1510,7 +1510,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data.self,
                 Double.self,
                 ASCIICharacter.self,
-                Int64?.self,
+                OSCTimeTag?.self,
                 ASCIIString?.self
             ))
             
@@ -1521,7 +1521,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
         }
         
@@ -1534,7 +1534,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data.self,
                 Double.self,
                 ASCIICharacter?.self,
-                Int64?.self,
+                OSCTimeTag?.self,
                 ASCIIString?.self
             ))
             
@@ -1545,7 +1545,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
         }
         
@@ -1558,7 +1558,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data.self,
                 Double?.self,
                 ASCIICharacter?.self,
-                Int64?.self,
+                OSCTimeTag?.self,
                 ASCIIString?.self
             ))
             
@@ -1569,7 +1569,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
         }
         
@@ -1582,7 +1582,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data?.self,
                 Double?.self,
                 ASCIICharacter?.self,
-                Int64?.self,
+                OSCTimeTag?.self,
                 ASCIIString?.self
             ))
             
@@ -1593,7 +1593,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
         }
         
@@ -1606,7 +1606,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data?.self,
                 Double?.self,
                 ASCIICharacter?.self,
-                Int64?.self,
+                OSCTimeTag?.self,
                 ASCIIString?.self
             ))
             
@@ -1617,7 +1617,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
         }
         
@@ -1630,7 +1630,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data?.self,
                 Double?.self,
                 ASCIICharacter?.self,
-                Int64?.self,
+                OSCTimeTag?.self,
                 ASCIIString?.self
             ))
             
@@ -1641,7 +1641,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
         }
         
@@ -1654,7 +1654,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data?.self,
                 Double?.self,
                 ASCIICharacter?.self,
-                Int64?.self,
+                OSCTimeTag?.self,
                 ASCIIString?.self
             ))
             
@@ -1665,7 +1665,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
         }
         
@@ -1678,7 +1678,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data?.self,
                 Double?.self,
                 ASCIICharacter?.self,
-                Int64?.self,
+                OSCTimeTag?.self,
                 ASCIIString?.self
             ))
             
@@ -1689,7 +1689,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
         }
     }
@@ -1708,7 +1708,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 .blob(Data([0x01])),
                 .double(234.56),
                 .character("C"),
-                .timeTag(999),
+                .timeTag(.init(999)),
                 .stringAlt("str2"),
                 .midi(portID: 0x00, status: 0xFF)
             ]
@@ -1721,7 +1721,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data.self,
                 Double.self,
                 ASCIICharacter.self,
-                Int64.self,
+                OSCTimeTag.self,
                 ASCIIString.self,
                 OSCMessage.Value.MIDIMessage.self
             ))
@@ -1733,7 +1733,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
             XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
         }
@@ -1748,7 +1748,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 .blob(Data([0x01])),
                 .double(234.56),
                 .character("C"),
-                .timeTag(999),
+                .timeTag(.init(999)),
                 .stringAlt("str2"),
                 .midi(portID: 0x00, status: 0xFF)
             ])
@@ -1760,7 +1760,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data.self,
                 Double.self,
                 ASCIICharacter.self,
-                Int64.self,
+                OSCTimeTag.self,
                 ASCIIString.self,
                 OSCMessage.Value.MIDIMessage.self
             )
@@ -1776,7 +1776,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 .blob(Data([0x01])),
                 .double(234.56),
                 .character("C"),
-                .timeTag(999),
+                .timeTag(.init(999)),
                 .stringAlt("str2")
             ])
             .masked(
@@ -1787,7 +1787,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data.self,
                 Double.self,
                 ASCIICharacter.self,
-                Int64.self,
+                OSCTimeTag.self,
                 ASCIIString.self,
                 OSCMessage.Value.MIDIMessage.self
             )
@@ -1802,7 +1802,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 .blob(Data([0x01])),
                 .double(234.56),
                 .character("C"),
-                .timeTag(999),
+                .timeTag(.init(999)),
                 .stringAlt("str2"),
                 .midi(portID: 0x00, status: 0xFF),
                 .null
@@ -1815,7 +1815,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data.self,
                 Double.self,
                 ASCIICharacter.self,
-                Int64.self,
+                OSCTimeTag.self,
                 ASCIIString.self,
                 OSCMessage.Value.MIDIMessage.self
             )
@@ -1831,7 +1831,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             .blob(Data([0x01])),
             .double(234.56),
             .character("C"),
-            .timeTag(999),
+            .timeTag(.init(999)),
             .stringAlt("str2"),
             .midi(portID: 0x00, status: 0xFF)
         ]
@@ -1845,7 +1845,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data.self,
                 Double.self,
                 ASCIICharacter.self,
-                Int64.self,
+                OSCTimeTag.self,
                 ASCIIString.self,
                 OSCMessage.Value.MIDIMessage?.self
             ))
@@ -1857,7 +1857,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
             XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
         }
@@ -1871,7 +1871,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data.self,
                 Double.self,
                 ASCIICharacter.self,
-                Int64.self,
+                OSCTimeTag.self,
                 ASCIIString?.self,
                 OSCMessage.Value.MIDIMessage?.self
             ))
@@ -1883,7 +1883,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
             XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
         }
@@ -1897,7 +1897,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data.self,
                 Double.self,
                 ASCIICharacter.self,
-                Int64?.self,
+                OSCTimeTag?.self,
                 ASCIIString?.self,
                 OSCMessage.Value.MIDIMessage?.self
             ))
@@ -1909,7 +1909,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
             XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
         }
@@ -1923,7 +1923,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data.self,
                 Double.self,
                 ASCIICharacter?.self,
-                Int64?.self,
+                OSCTimeTag?.self,
                 ASCIIString?.self,
                 OSCMessage.Value.MIDIMessage?.self
             ))
@@ -1935,7 +1935,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
             XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
         }
@@ -1949,7 +1949,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data.self,
                 Double?.self,
                 ASCIICharacter?.self,
-                Int64?.self,
+                OSCTimeTag?.self,
                 ASCIIString?.self,
                 OSCMessage.Value.MIDIMessage?.self
             ))
@@ -1961,7 +1961,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
             XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
         }
@@ -1975,7 +1975,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data?.self,
                 Double?.self,
                 ASCIICharacter?.self,
-                Int64?.self,
+                OSCTimeTag?.self,
                 ASCIIString?.self,
                 OSCMessage.Value.MIDIMessage?.self
             ))
@@ -1987,7 +1987,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
             XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
         }
@@ -2001,7 +2001,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data?.self,
                 Double?.self,
                 ASCIICharacter?.self,
-                Int64?.self,
+                OSCTimeTag?.self,
                 ASCIIString?.self,
                 OSCMessage.Value.MIDIMessage?.self
             ))
@@ -2013,7 +2013,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
             XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
         }
@@ -2027,7 +2027,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data?.self,
                 Double?.self,
                 ASCIICharacter?.self,
-                Int64?.self,
+                OSCTimeTag?.self,
                 ASCIIString?.self,
                 OSCMessage.Value.MIDIMessage?.self
             ))
@@ -2039,7 +2039,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
             XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
         }
@@ -2053,7 +2053,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data?.self,
                 Double?.self,
                 ASCIICharacter?.self,
-                Int64?.self,
+                OSCTimeTag?.self,
                 ASCIIString?.self,
                 OSCMessage.Value.MIDIMessage?.self
             ))
@@ -2065,7 +2065,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
             XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
         }
@@ -2079,7 +2079,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 Data?.self,
                 Double?.self,
                 ASCIICharacter?.self,
-                Int64?.self,
+                OSCTimeTag?.self,
                 ASCIIString?.self,
                 OSCMessage.Value.MIDIMessage?.self
             ))
@@ -2091,7 +2091,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.4, Data([0x01]))
             XCTAssertEqual(masked.5, 234.56)
             XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7, 999)
+            XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
             XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
         }
@@ -2113,7 +2113,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         )
         
         XCTAssertEqual(
-            try [OSCMessage.Value]([.timeTag(123)])
+            try [OSCMessage.Value]([.timeTag(.init(123))])
                 .masked(Int.self),
             123
         )

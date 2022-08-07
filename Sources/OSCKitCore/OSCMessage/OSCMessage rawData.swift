@@ -107,9 +107,9 @@ extension OSCMessage {
                     throw DecodeError.malformed("Int64 value couldn't be read.")
                 }
                 
-            case "t": // 64 bit big-endian two's complement integer
-                if let pull = remainingData.extractInt64() {
-                    extractedValues.append(.timeTag(pull.int64Value))
+            case "t": // 64-bit big-endian fixed-point time tag
+                if let pull = remainingData.extractUInt64() {
+                    extractedValues.append(.timeTag(.init(pull.uInt64Value)))
                     ppos += pull.byteLength
                 } else {
                     throw DecodeError.malformed("TimeTag value couldn't be read.")
@@ -236,7 +236,7 @@ extension OSCMessage {
                 
             case let .timeTag(val):
                 buildDataTypes += "t"
-                buildValues += val.toData(.bigEndian)
+                buildValues += val.rawValue.toData(.bigEndian)
                 
             case let .double(val):
                 buildDataTypes += "d"

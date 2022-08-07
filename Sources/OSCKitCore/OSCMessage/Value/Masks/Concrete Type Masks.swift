@@ -4062,7 +4062,7 @@ extension Array where Element == OSCMessage.Value {
             switch self[index] {
             case let .int32(v):     return v.int as! T
             case let .int64(v):     return v.int as! T
-            case let .timeTag(v):   return v.int as! T
+            case let .timeTag(v):   return v.rawValue.int as! T
             default: break
             }
             

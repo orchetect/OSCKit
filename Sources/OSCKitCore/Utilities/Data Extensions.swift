@@ -42,6 +42,22 @@ extension Data {
     }
     
     /// Internal helper function.
+    @inlinable
+    internal func extractUInt64() -> (
+        uInt64Value: UInt64,
+        byteLength: Int
+    )? {
+        if self.count < 8 { return nil }
+        
+        let chunk = self.subdata(in: 0 ..< 8)
+        
+        guard let value = chunk.toUInt64(from: .bigEndian)
+        else { return nil }
+        
+        return (value, chunk.count)
+    }
+    
+    /// Internal helper function.
     /// aka Float
     @inlinable
     internal func extractFloat32() -> (

@@ -10,13 +10,13 @@ extension OSCBundle {
     @inlinable
     public init(
         elements: [OSCPayload],
-        timeTag: Int64 = 1
+        timeTag: OSCTimeTag? = nil
     ) {
-        self.timeTag = timeTag
+        self.timeTag = timeTag ?? .init(1)
         self.elements = elements
         self.rawData = Self.generateRawData(
             from: elements,
-            timeTag: timeTag
+            timeTag: self.timeTag
         )
     }
     
@@ -48,9 +48,9 @@ extension OSCBundle {
         
         guard let extractedTimeTag = rawData
             .subdata(in: ppos ..< ppos + 8)
-            .toInt64(from: .bigEndian)
+            .toUInt64(from: .bigEndian)
         else {
-            throw DecodeError.malformed("Could not convert timetag to Int64.")
+            throw DecodeError.malformed("Could not convert timetag to UInt64.")
         }
         
         ppos += 8
@@ -94,7 +94,7 @@ extension OSCBundle {
         }
         
         // update public properties
-        timeTag = extractedTimeTag
+        timeTag = .init(extractedTimeTag)
         elements = extractedElements
     }
 }

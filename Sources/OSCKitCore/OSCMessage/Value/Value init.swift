@@ -39,7 +39,7 @@ extension OSCMessage.Value {
     }
     
     @inlinable
-    public init(timeTag source: Int64) {
+    public init(timeTag source: OSCTimeTag) {
         self = .timeTag(source)
     }
     

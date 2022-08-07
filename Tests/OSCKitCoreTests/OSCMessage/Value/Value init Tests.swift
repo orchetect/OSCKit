@@ -48,8 +48,8 @@ final class OSCMessage_Value_init_Tests: XCTestCase {
     }
     
     func testTimeTag() {
-        let val = OSCMessage.Value(timeTag: 123)
-        XCTAssertEqual(val, .timeTag(123))
+        let val = OSCMessage.Value(timeTag: .init(123))
+        XCTAssertEqual(val, .timeTag(.init(123)))
     }
     
     func testDouble() {

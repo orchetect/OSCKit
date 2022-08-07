@@ -76,7 +76,7 @@ final class OSCMessage_Codable_Tests: XCTestCase {
     }
     
     func testTimeTag() throws {
-        let msg = OSCMessage(address: "/test/address", values: [.timeTag(123)])
+        let msg = OSCMessage(address: "/test/address", values: [.timeTag(.init(123))])
         
         let encoded = try encoder.encode(msg)
         let decoded = try decoder.decode(OSCMessage.self, from: encoded)

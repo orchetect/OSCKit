@@ -31,7 +31,7 @@ final class OSCBundle_rawData_Tests: XCTestCase {
         
         let bundle = try! OSCBundle(from: knownGoodOSCRawBytes.data)
         
-        XCTAssertEqual(bundle.timeTag, 1)
+        XCTAssertEqual(bundle.timeTag.rawValue, 1)
         XCTAssertEqual(bundle.elements.count, 0)
         
         // re-encode
@@ -71,7 +71,7 @@ final class OSCBundle_rawData_Tests: XCTestCase {
         
         let bundle = try! OSCBundle(from: knownGoodOSCRawBytes.data)
         
-        XCTAssertEqual(bundle.timeTag, 1)
+        XCTAssertEqual(bundle.timeTag.rawValue, 1)
         XCTAssertEqual(bundle.elements.count, 1)
         
         guard case .message(let msg) = bundle.elements.first else { XCTFail() ; return }

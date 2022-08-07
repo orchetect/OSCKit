@@ -231,7 +231,7 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_timeTag() {
-        let val = OSCMessage.Value.timeTag(456)
+        let val = OSCMessage.Value.timeTag(.init(456))
         
         // canMatchMetaTypes: false
         OSCMessage.Value.Mask.Token.allCases.forEach { valueType in

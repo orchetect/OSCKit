@@ -234,7 +234,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         XCTAssertEqual(msg.address, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         guard case .timeTag(let val) = msg.values.first else { XCTFail() ; return }
-        XCTAssertEqual(val, 255)
+        XCTAssertEqual(val.rawValue, 255)
         
         // re-encode
         

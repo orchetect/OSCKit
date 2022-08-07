@@ -135,7 +135,7 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     func testValuesFromValueMask_int32() throws {
         typealias type                     = Int32
         let value                          = 123 as type
-        let msgValue:  OSCMessage.Value     = .int32(value)
+        let msgValue:  OSCMessage.Value    = .int32(value)
         let valueType: OSCMessage.Value.Mask.Token = .int32
         
         let result = try [OSCMessage.Value]([msgValue])
@@ -147,7 +147,7 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     func testValuesFromValueMask_float32() throws {
         typealias type                     = Float32
         let value                          = 123.45 as type
-        let msgValue:  OSCMessage.Value     = .float32(value)
+        let msgValue:  OSCMessage.Value    = .float32(value)
         let valueType: OSCMessage.Value.Mask.Token = .float32
         
         let result = try [OSCMessage.Value]([msgValue])
@@ -159,7 +159,7 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     func testValuesFromValueMask_string() throws {
         typealias type                     = ASCIIString
         let value                          = "A string" as type
-        let msgValue:  OSCMessage.Value     = .string(value)
+        let msgValue:  OSCMessage.Value    = .string(value)
         let valueType: OSCMessage.Value.Mask.Token = .string
         
         let result = try [OSCMessage.Value]([msgValue])
@@ -171,7 +171,7 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     func testValuesFromValueMask_blob() throws {
         typealias type                     = Data
         let value                          = Data([1, 2, 3]) as type
-        let msgValue:  OSCMessage.Value     = .blob(value)
+        let msgValue:  OSCMessage.Value    = .blob(value)
         let valueType: OSCMessage.Value.Mask.Token = .blob
         
         let result = try [OSCMessage.Value]([msgValue])
@@ -185,7 +185,7 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     func testValuesFromValueMask_int64() throws {
         typealias type                     = Int64
         let value                          = 123 as type
-        let msgValue:  OSCMessage.Value     = .int64(value)
+        let msgValue:  OSCMessage.Value    = .int64(value)
         let valueType: OSCMessage.Value.Mask.Token = .int64
         
         let result = try [OSCMessage.Value]([msgValue])
@@ -195,9 +195,9 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     }
     
     func testValuesFromValueMask_timeTag() throws {
-        typealias type                     = Int64
-        let value                          = 123 as type
-        let msgValue:  OSCMessage.Value     = .timeTag(value)
+        typealias type                     = OSCTimeTag
+        let value                          = .init(123) as type
+        let msgValue:  OSCMessage.Value    = .timeTag(value)
         let valueType: OSCMessage.Value.Mask.Token = .timeTag
         
         let result = try [OSCMessage.Value]([msgValue])
@@ -209,7 +209,7 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     func testValuesFromValueMask_double() throws {
         typealias type                     = Double
         let value                          = 123.45 as type
-        let msgValue:  OSCMessage.Value     = .double(value)
+        let msgValue:  OSCMessage.Value    = .double(value)
         let valueType: OSCMessage.Value.Mask.Token = .double
         
         let result = try [OSCMessage.Value]([msgValue])
@@ -221,7 +221,7 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     func testValuesFromValueMask_stringAlt() throws {
         typealias type                     = ASCIIString
         let value                          = "A string" as type
-        let msgValue:  OSCMessage.Value     = .stringAlt(value)
+        let msgValue:  OSCMessage.Value    = .stringAlt(value)
         let valueType: OSCMessage.Value.Mask.Token = .stringAlt
         
         let result = try [OSCMessage.Value]([msgValue])
@@ -233,7 +233,7 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     func testValuesFromValueMask_character() throws {
         typealias type                     = ASCIICharacter
         let value                          = "A" as type
-        let msgValue:  OSCMessage.Value     = .character(value)
+        let msgValue:  OSCMessage.Value    = .character(value)
         let valueType: OSCMessage.Value.Mask.Token = .character
         
         let result = try [OSCMessage.Value]([msgValue])
@@ -247,7 +247,7 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
         let value = OSCMessage.Value.MIDIMessage(
             portID: 0x00, status: 0x80, data1: 0x50, data2: 0x40
         ) as type
-        let msgValue:  OSCMessage.Value     = .midi(value)
+        let msgValue:  OSCMessage.Value    = .midi(value)
         let valueType: OSCMessage.Value.Mask.Token = .midi
         
         let result = try [OSCMessage.Value]([msgValue])
@@ -259,7 +259,7 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     func testValuesFromValueMask_bool() throws {
         typealias type                     = Bool
         let value                          = true as type
-        let msgValue:  OSCMessage.Value     = .bool(value)
+        let msgValue:  OSCMessage.Value    = .bool(value)
         let valueType: OSCMessage.Value.Mask.Token = .bool
         
         let result = try [OSCMessage.Value]([msgValue])
@@ -271,7 +271,7 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     func testValuesFromValueMask_null() throws {
         typealias type                     = NSObject
         let value                          = NSNull() as type
-        let msgValue:  OSCMessage.Value     = .null
+        let msgValue:  OSCMessage.Value    = .null
         let valueType: OSCMessage.Value.Mask.Token = .null
         
         let result = try [OSCMessage.Value]([msgValue])

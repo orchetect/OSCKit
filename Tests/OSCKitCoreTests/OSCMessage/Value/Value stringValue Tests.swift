@@ -59,7 +59,7 @@ final class OSCMessage_Value_stringValue_Tests: XCTestCase {
     }
     
     func testTimeTag() {
-        let val = OSCMessage.Value.timeTag(123)
+        let val = OSCMessage.Value.timeTag(.init(123))
         XCTAssertEqual(val.stringValue(), "123")
         XCTAssertEqual(val.stringValue(withLabel: true), "timeTag:123")
     }

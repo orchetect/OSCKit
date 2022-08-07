@@ -19,6 +19,7 @@ extension OSCPayload {
 
 extension OSCPayload {
     /// OSC Message.
+    @inlinable
     public static func message(
         address: OSCAddress,
         values: [OSCMessage.Value] = []
@@ -32,9 +33,10 @@ extension OSCPayload {
     }
     
     /// OSC Bundle.
+    @inlinable
     public static func bundle(
         elements: [OSCPayload],
-        timeTag: Int64 = 1
+        timeTag: OSCTimeTag? = nil
     ) -> Self {
         .bundle(
             OSCBundle(

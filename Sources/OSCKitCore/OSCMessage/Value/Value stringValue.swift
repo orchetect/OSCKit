@@ -39,7 +39,7 @@ extension OSCMessage.Value {
             prefixString = "int64:"
             suffixString = ""
         case let .timeTag(v):
-            outputString = String(v)
+            outputString = String(v.rawValue)
             prefixString = "timeTag:"
             suffixString = ""
         case let .double(v):

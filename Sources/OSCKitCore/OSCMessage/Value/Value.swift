@@ -19,7 +19,7 @@ extension OSCMessage {
         // extended types
         
         case int64(Int64)
-        case timeTag(Int64)
+        case timeTag(OSCTimeTag)
         case double(Double)
         case stringAlt(ASCIIString)
         case character(ASCIICharacter)

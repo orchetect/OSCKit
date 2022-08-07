@@ -65,8 +65,8 @@ extension OSCMessage.Value: Codable {
             self = .int64(value)
             
         case .timeTag:
-            let value = try container.decode(Int64.self, forKey: key)
-            self = .timeTag(value)
+            let value = try container.decode(OSCTimeTag.RawValue.self, forKey: key)
+            self = .timeTag(.init(value))
             
         case .double:
             let value = try container.decode(Double.self, forKey: key)
@@ -109,7 +109,7 @@ extension OSCMessage.Value: Codable {
         case let .int64(value):
             try container.encode(value, forKey: .int64)
         case let .timeTag(value):
-            try container.encode(value, forKey: .timeTag)
+            try container.encode(value.rawValue, forKey: .timeTag)
         case let .double(value):
             try container.encode(value, forKey: .double)
         case let .stringAlt(value):

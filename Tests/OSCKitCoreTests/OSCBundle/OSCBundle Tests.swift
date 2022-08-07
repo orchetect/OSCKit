@@ -124,7 +124,7 @@ final class OSCBundle_Tests: XCTestCase {
                 address: "/test/address2",
                 values: [.int32(456), .string("Another string.")]
             )
-        ], timeTag: 123_456)
+        ], timeTag: .init(123_456))
         
         let encoded = try encoder.encode(str)
         let decoded = try decoder.decode(OSCBundle.self, from: encoded)
