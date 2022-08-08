@@ -5,15 +5,11 @@
 
 import Foundation
 @_implementationOnly import OTCore
-import SwiftASCII
+@_implementationOnly import SwiftASCII
 
 // MARK: - Address Components
 
 extension OSCAddress {
-    public var asciiStringValue: ASCIIString {
-        address
-    }
-    
     public var stringValue: String {
         address.stringValue
     }

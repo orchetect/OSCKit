@@ -29,14 +29,14 @@ final class OSCBundle_rawData_Tests: XCTestCase {
         
         // decode
         
-        let bundle = try! OSCBundle(from: knownGoodOSCRawBytes.data)
+        let bundle = try! OSCBundle(from: knownGoodOSCRawBytes.remainingData)
         
         XCTAssertEqual(bundle.timeTag.rawValue, 1)
         XCTAssertEqual(bundle.elements.count, 0)
         
         // re-encode
         
-        XCTAssertEqual(bundle.rawData, knownGoodOSCRawBytes.data)
+        XCTAssertEqual(bundle.rawData, knownGoodOSCRawBytes.remainingData)
     }
     
     func testSingleOSCMessage() {
@@ -69,7 +69,7 @@ final class OSCBundle_rawData_Tests: XCTestCase {
         
         // decode
         
-        let bundle = try! OSCBundle(from: knownGoodOSCRawBytes.data)
+        let bundle = try! OSCBundle(from: knownGoodOSCRawBytes.remainingData)
         
         XCTAssertEqual(bundle.timeTag.rawValue, 1)
         XCTAssertEqual(bundle.elements.count, 1)
@@ -82,7 +82,7 @@ final class OSCBundle_rawData_Tests: XCTestCase {
         
         // re-encode
         
-        XCTAssertEqual(bundle.rawData, knownGoodOSCRawBytes.data)
+        XCTAssertEqual(bundle.rawData, knownGoodOSCRawBytes.remainingData)
     }
 }
 // swiftformat:enable all

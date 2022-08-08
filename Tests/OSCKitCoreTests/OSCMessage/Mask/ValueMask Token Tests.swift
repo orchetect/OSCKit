@@ -18,7 +18,7 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
     
     func testBaseType() {
         // swiftformat:disable all
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
                 
                 // concrete types
@@ -74,7 +74,7 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
     
     func testIsOptional() {
         // swiftformat:disable all
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
                 
                 // optional versions of concrete types
@@ -106,15 +106,15 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
         // swiftformat:enable all
     }
     
-    // MARK: - OSCMessage.Value.baseTypeMatches
+    // MARK: - OSCValue.baseTypeMatches
     
     // MARK: ... Core types
     
     func testBaseTypeMatches_int32() {
-        let val = OSCMessage.Value.int32(123)
+        let val = OSCValue.int32(123)
         
         // canMatchMetaTypes: false
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .int32:
                 XCTAssertTrue(val.baseType(matches: valueType))
@@ -124,7 +124,7 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
         }
         
         // canMatchMetaTypes: true
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .int32, .number:
                 XCTAssertTrue(val.baseType(matches: valueType, canMatchMetaTypes: true))
@@ -135,10 +135,10 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_float32() {
-        let val = OSCMessage.Value.float32(123.45)
+        let val = OSCValue.float32(123.45)
         
         // canMatchMetaTypes: false
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .float32:
                 XCTAssertTrue(val.baseType(matches: valueType))
@@ -148,7 +148,7 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
         }
         
         // canMatchMetaTypes: true
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .float32, .number:
                 XCTAssertTrue(val.baseType(matches: valueType, canMatchMetaTypes: true))
@@ -159,10 +159,10 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_string() {
-        let val = OSCMessage.Value.string("A string")
+        let val = OSCValue.string("A string")
         
         // canMatchMetaTypes: false
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .string: XCTAssertTrue(val.baseType(matches: valueType))
             default: XCTAssertFalse(val.baseType(matches: valueType))
@@ -170,7 +170,7 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
         }
         
         // canMatchMetaTypes: true
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .string:
                 XCTAssertTrue(val.baseType(matches: valueType, canMatchMetaTypes: true))
@@ -181,10 +181,10 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_blob() {
-        let val = OSCMessage.Value.blob(Data([1, 2, 3]))
+        let val = OSCValue.blob(Data([1, 2, 3]))
         
         // canMatchMetaTypes: false
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .blob:
                 XCTAssertTrue(val.baseType(matches: valueType))
@@ -194,7 +194,7 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
         }
         
         // canMatchMetaTypes: true
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .blob:
                 XCTAssertTrue(val.baseType(matches: valueType, canMatchMetaTypes: true))
@@ -207,10 +207,10 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
     // MARK: ... Extended types
     
     func testBaseTypeMatches_int64() {
-        let val = OSCMessage.Value.int64(456)
+        let val = OSCValue.int64(456)
         
         // canMatchMetaTypes: false
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .int64:
                 XCTAssertTrue(val.baseType(matches: valueType))
@@ -220,7 +220,7 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
         }
         
         // canMatchMetaTypes: true
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .int64, .number:
                 XCTAssertTrue(val.baseType(matches: valueType, canMatchMetaTypes: true))
@@ -231,10 +231,10 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_timeTag() {
-        let val = OSCMessage.Value.timeTag(.init(456))
+        let val = OSCValue.timeTag(.init(456))
         
         // canMatchMetaTypes: false
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .timeTag:
                 XCTAssertTrue(val.baseType(matches: valueType))
@@ -244,7 +244,7 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
         }
         
         // canMatchMetaTypes: true
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .timeTag:
                 XCTAssertTrue(val.baseType(matches: valueType, canMatchMetaTypes: true))
@@ -255,10 +255,10 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_double() {
-        let val = OSCMessage.Value.double(456.78)
+        let val = OSCValue.double(456.78)
         
         // canMatchMetaTypes: false
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .double:
                 XCTAssertTrue(val.baseType(matches: valueType))
@@ -268,7 +268,7 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
         }
         
         // canMatchMetaTypes: true
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .double, .number:
                 XCTAssertTrue(val.baseType(matches: valueType, canMatchMetaTypes: true))
@@ -279,10 +279,10 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_stringAlt() {
-        let val = OSCMessage.Value.stringAlt("An alt string")
+        let val = OSCValue.stringAlt("An alt string")
         
         // canMatchMetaTypes: false
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .stringAlt:
                 XCTAssertTrue(val.baseType(matches: valueType))
@@ -292,7 +292,7 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
         }
         
         // canMatchMetaTypes: true
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .stringAlt:
                 XCTAssertTrue(val.baseType(matches: valueType, canMatchMetaTypes: true))
@@ -303,10 +303,10 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_character() {
-        let val = OSCMessage.Value.character("A")
+        let val = OSCValue.character("A")
         
         // canMatchMetaTypes: false
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .character:
                 XCTAssertTrue(val.baseType(matches: valueType))
@@ -316,7 +316,7 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
         }
         
         // canMatchMetaTypes: true
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .character:
                 XCTAssertTrue(val.baseType(matches: valueType, canMatchMetaTypes: true))
@@ -327,10 +327,10 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_midi() {
-        let val = OSCMessage.Value.midi(portID: 0x00, status: 0x00, data1: 0x00, data2: 0x00)
+        let val = OSCValue.midi(portID: 0x00, status: 0x00, data1: 0x00, data2: 0x00)
         
         // canMatchMetaTypes: false
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .midi:
                 XCTAssertTrue(val.baseType(matches: valueType))
@@ -340,7 +340,7 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
         }
         
         // canMatchMetaTypes: true
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .midi:
                 XCTAssertTrue(val.baseType(matches: valueType, canMatchMetaTypes: true))
@@ -351,10 +351,10 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_bool() {
-        let val = OSCMessage.Value.bool(true)
+        let val = OSCValue.bool(true)
         
         // canMatchMetaTypes: false
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .bool:
                 XCTAssertTrue(val.baseType(matches: valueType))
@@ -364,7 +364,7 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
         }
         
         // canMatchMetaTypes: true
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .bool:
                 XCTAssertTrue(val.baseType(matches: valueType, canMatchMetaTypes: true))
@@ -375,10 +375,10 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_null() {
-        let val = OSCMessage.Value.null
+        let val = OSCValue.null
         
         // canMatchMetaTypes: false
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .null:
                 XCTAssertTrue(val.baseType(matches: valueType))
@@ -388,7 +388,7 @@ final class OSCMessage_Value_Mask_Token_Tests: XCTestCase {
         }
         
         // canMatchMetaTypes: true
-        OSCMessage.Value.Mask.Token.allCases.forEach { valueType in
+        OSCValueMask.Token.allCases.forEach { valueType in
             switch valueType {
             case .null:
                 XCTAssertTrue(val.baseType(matches: valueType, canMatchMetaTypes: true))

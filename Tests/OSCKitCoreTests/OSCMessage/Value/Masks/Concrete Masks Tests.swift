@@ -19,24 +19,24 @@ final class ConcreteMasks_Tests: XCTestCase {
     func testValues_V0() throws {
         // success
         XCTAssertEqual(
-            try [OSCMessage.Value]([.int32(123)])
+            try [OSCValue]([.int32(123)])
                 .masked(Int32.self),
             (123)
         )
         
         // wrong type
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([.int32(123)])
+            try [OSCValue]([.int32(123)])
                 .masked(Int64.self)
         )
         
         // wrong number of values
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([])
+            try [OSCValue]([])
                 .masked(Int32.self)
         )
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([.int32(123), .string("str")])
+            try [OSCValue]([.int32(123), .string("str")])
                 .masked(Int32.self)
         )
     }
@@ -44,14 +44,14 @@ final class ConcreteMasks_Tests: XCTestCase {
     func testValues_V0o() throws {
         // success, has value
         XCTAssertEqual(
-            try [OSCMessage.Value]([.int32(123)])
+            try [OSCValue]([.int32(123)])
                 .masked(Int32?.self),
             123
         )
         
         // success, nil optional
         XCTAssertEqual(
-            try [OSCMessage.Value]([])
+            try [OSCValue]([])
                 .masked(Int32?.self),
             nil
         )
@@ -62,7 +62,7 @@ final class ConcreteMasks_Tests: XCTestCase {
     func testValues_V0_V1() throws {
         // success
         do {
-            let values: [OSCMessage.Value] = [.int32(123), .string("str")]
+            let values: [OSCValue] = [.int32(123), .string("str")]
             
             let masked = try XCTUnwrap(values.masked(Int32.self, ASCIIString.self))
             
@@ -72,18 +72,18 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         // wrong type
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([.int32(123), .string("str")])
+            try [OSCValue]([.int32(123), .string("str")])
                 .masked(Int64.self, ASCIIString.self)
         )
         
         // wrong number of values
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([.int32(123)])
+            try [OSCValue]([.int32(123)])
                 .masked(Int32.self, ASCIIString.self)
         )
         
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([.int32(123), .string("str"), .bool(true)])
+            try [OSCValue]([.int32(123), .string("str"), .bool(true)])
                 .masked(Int32.self, ASCIIString.self)
         )
     }
@@ -91,7 +91,7 @@ final class ConcreteMasks_Tests: XCTestCase {
     func testValues_V0_V1o() throws {
         // success, has value
         do {
-            let masked = try [OSCMessage.Value]([.int32(123), .string("str")])
+            let masked = try [OSCValue]([.int32(123), .string("str")])
                 .masked(Int32.self, ASCIIString?.self)
             
             XCTAssertEqual(masked.0, 123)
@@ -100,7 +100,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         // success, nil optional
         do {
-            let masked = try [OSCMessage.Value]([.int32(123)])
+            let masked = try [OSCValue]([.int32(123)])
                 .masked(Int32.self, ASCIIString?.self)
             
             XCTAssertEqual(masked.0, 123)
@@ -109,7 +109,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         // wrong value type
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([.int32(123), .bool(true)])
+            try [OSCValue]([.int32(123), .bool(true)])
                 .masked(Int32.self, ASCIIString?.self)
         )
     }
@@ -117,7 +117,7 @@ final class ConcreteMasks_Tests: XCTestCase {
     func testValues_V0o_V1o() throws {
         // success, has value
         do {
-            let masked = try [OSCMessage.Value]([
+            let masked = try [OSCValue]([
                 .int32(123),
                 .string("str")
             ])
@@ -132,7 +132,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         // success, nil optional
         do {
-            let masked = try [OSCMessage.Value]([.int32(123)])
+            let masked = try [OSCValue]([.int32(123)])
                 .masked(
                     Int32?.self,
                     ASCIIString?.self
@@ -144,7 +144,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         // success, nil optional
         do {
-            let masked = try [OSCMessage.Value]([])
+            let masked = try [OSCValue]([])
                 .masked(
                     Int32?.self,
                     ASCIIString?.self
@@ -156,7 +156,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         // wrong value type
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([.int32(123), .bool(true)])
+            try [OSCValue]([.int32(123), .bool(true)])
                 .masked(
                     Int32?.self,
                     ASCIIString?.self
@@ -170,7 +170,7 @@ final class ConcreteMasks_Tests: XCTestCase {
     func testValues_V0_V1_V2() throws {
         // success
         do {
-            let values: [OSCMessage.Value] = [
+            let values: [OSCValue] = [
                 .int32(123),
                 .string("str"),
                 .bool(true)
@@ -189,7 +189,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         // wrong type
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true)
@@ -203,7 +203,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         // wrong number of values
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([.int32(123), .string("str")])
+            try [OSCValue]([.int32(123), .string("str")])
                 .masked(
                     Int32.self,
                     ASCIIString.self,
@@ -212,7 +212,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         )
         
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -227,7 +227,7 @@ final class ConcreteMasks_Tests: XCTestCase {
     }
     
     func testValues_V0o_V1o_V2o() throws {
-        let values: [OSCMessage.Value] = [
+        let values: [OSCValue] = [
             .int32(123),
             .string("str"),
             .bool(true)
@@ -276,7 +276,7 @@ final class ConcreteMasks_Tests: XCTestCase {
     func testValues_V0_V1_V2_V3() throws {
         // success
         do {
-            let values: [OSCMessage.Value] = [
+            let values: [OSCValue] = [
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -298,7 +298,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         // wrong type
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -314,7 +314,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         // wrong number of values
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true)
@@ -328,7 +328,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         )
         
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -345,7 +345,7 @@ final class ConcreteMasks_Tests: XCTestCase {
     }
     
     func testValues_V0o_V1o_V2o_V3o() throws {
-        let values: [OSCMessage.Value] = [
+        let values: [OSCValue] = [
             .int32(123),
             .string("str"),
             .bool(true),
@@ -415,7 +415,7 @@ final class ConcreteMasks_Tests: XCTestCase {
     func testValues_V0_V1_V2_V3_V4() throws {
         // success
         do {
-            let values: [OSCMessage.Value] = [
+            let values: [OSCValue] = [
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -440,7 +440,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         // wrong type
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -458,7 +458,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         // wrong number of values
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -474,7 +474,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         )
         
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -493,7 +493,7 @@ final class ConcreteMasks_Tests: XCTestCase {
     }
     
     func testValues_V0o_V1o_V2o_V3o_V4o() throws {
-        let values: [OSCMessage.Value] = [
+        let values: [OSCValue] = [
             .int32(123),
             .string("str"),
             .bool(true),
@@ -588,7 +588,7 @@ final class ConcreteMasks_Tests: XCTestCase {
     func testValues_V0_V1_V2_V3_V4_V5() throws {
         // success
         do {
-            let values: [OSCMessage.Value] = [
+            let values: [OSCValue] = [
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -616,7 +616,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         // wrong type
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -636,7 +636,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         // wrong number of values
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -654,7 +654,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         )
         
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -675,7 +675,7 @@ final class ConcreteMasks_Tests: XCTestCase {
     }
     
     func testValues_V0o_V1o_V2o_V3o_V4o_V5o() throws {
-        let values: [OSCMessage.Value] = [
+        let values: [OSCValue] = [
             .int32(123),
             .string("str"),
             .bool(true),
@@ -799,7 +799,7 @@ final class ConcreteMasks_Tests: XCTestCase {
     func testValues_V0_V1_V2_V3_V4_V5_V6() throws {
         // success
         do {
-            let values: [OSCMessage.Value] = [
+            let values: [OSCValue] = [
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -830,7 +830,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         // wrong type
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -852,7 +852,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         // wrong number of values
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -872,7 +872,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         )
         
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -895,7 +895,7 @@ final class ConcreteMasks_Tests: XCTestCase {
     }
     
     func testValues_V0o_V1o_V2o_V3o_V4o_V5o_V6o() throws {
-        let values: [OSCMessage.Value] = [
+        let values: [OSCValue] = [
             .int32(123),
             .string("str"),
             .bool(true),
@@ -1052,7 +1052,7 @@ final class ConcreteMasks_Tests: XCTestCase {
     func testValues_V0_V1_V2_V3_V4_V5_V6_V7() throws {
         // success
         do {
-            let values: [OSCMessage.Value] = [
+            let values: [OSCValue] = [
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -1086,7 +1086,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         // wrong type
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -1110,7 +1110,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         // wrong number of values
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -1132,7 +1132,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         )
         
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -1157,7 +1157,7 @@ final class ConcreteMasks_Tests: XCTestCase {
     }
     
     func testValues_V0o_V1o_V2o_V3o_V4o_V5o_V6o_V7o() throws {
-        let values: [OSCMessage.Value] = [
+        let values: [OSCValue] = [
             .int32(123),
             .string("str"),
             .bool(true),
@@ -1351,7 +1351,7 @@ final class ConcreteMasks_Tests: XCTestCase {
     func testValues_V0_V1_V2_V3_V4_V5_V6_V7_V8() throws {
         // success
         do {
-            let values: [OSCMessage.Value] = [
+            let values: [OSCValue] = [
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -1388,7 +1388,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         // wrong type
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -1414,7 +1414,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         
         // wrong number of values
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -1438,7 +1438,7 @@ final class ConcreteMasks_Tests: XCTestCase {
         )
         
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -1465,7 +1465,7 @@ final class ConcreteMasks_Tests: XCTestCase {
     }
     
     func testValues_V0o_V1o_V2o_V3o_V4o_V5o_V6o_V7o_V8o() throws {
-        let values: [OSCMessage.Value] = [
+        let values: [OSCValue] = [
             .int32(123),
             .string("str"),
             .bool(true),
@@ -1700,7 +1700,7 @@ final class ConcreteMasks_Tests: XCTestCase {
     func testValues_V0_V1_V2_V3_V4_V5_V6_V7_V8_V9() throws {
         // success
         do {
-            let values: [OSCMessage.Value] = [
+            let values: [OSCValue] = [
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -1723,7 +1723,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 ASCIICharacter.self,
                 OSCTimeTag.self,
                 ASCIIString.self,
-                OSCMessage.Value.MIDIMessage.self
+                OSCValue.MIDIMessage.self
             ))
             
             XCTAssertEqual(masked.0, 123)
@@ -1735,12 +1735,12 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.6, "C")
             XCTAssertEqual(masked.7.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
-            XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
+            XCTAssertEqual(masked.9, OSCValue.MIDIMessage(portID: 0x00, status: 0xFF))
         }
         
         // wrong type
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -1762,13 +1762,13 @@ final class ConcreteMasks_Tests: XCTestCase {
                 ASCIICharacter.self,
                 OSCTimeTag.self,
                 ASCIIString.self,
-                OSCMessage.Value.MIDIMessage.self
+                OSCValue.MIDIMessage.self
             )
         )
         
         // wrong number of values
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -1789,12 +1789,12 @@ final class ConcreteMasks_Tests: XCTestCase {
                 ASCIICharacter.self,
                 OSCTimeTag.self,
                 ASCIIString.self,
-                OSCMessage.Value.MIDIMessage.self
+                OSCValue.MIDIMessage.self
             )
         )
         
         XCTAssertThrowsError(
-            try [OSCMessage.Value]([
+            try [OSCValue]([
                 .int32(123),
                 .string("str"),
                 .bool(true),
@@ -1817,13 +1817,13 @@ final class ConcreteMasks_Tests: XCTestCase {
                 ASCIICharacter.self,
                 OSCTimeTag.self,
                 ASCIIString.self,
-                OSCMessage.Value.MIDIMessage.self
+                OSCValue.MIDIMessage.self
             )
         )
     }
     
     func testValues_V0o_V1o_V2o_V3o_V4o_V5o_V6o_V7o_V8o_V9o() throws {
-        let values: [OSCMessage.Value] = [
+        let values: [OSCValue] = [
             .int32(123),
             .string("str"),
             .bool(true),
@@ -1847,7 +1847,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 ASCIICharacter.self,
                 OSCTimeTag.self,
                 ASCIIString.self,
-                OSCMessage.Value.MIDIMessage?.self
+                OSCValue.MIDIMessage?.self
             ))
             
             XCTAssertEqual(masked.0, 123)
@@ -1859,7 +1859,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.6, "C")
             XCTAssertEqual(masked.7.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
-            XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
+            XCTAssertEqual(masked.9, OSCValue.MIDIMessage(portID: 0x00, status: 0xFF))
         }
         
         do {
@@ -1873,7 +1873,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 ASCIICharacter.self,
                 OSCTimeTag.self,
                 ASCIIString?.self,
-                OSCMessage.Value.MIDIMessage?.self
+                OSCValue.MIDIMessage?.self
             ))
             
             XCTAssertEqual(masked.0, 123)
@@ -1885,7 +1885,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.6, "C")
             XCTAssertEqual(masked.7.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
-            XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
+            XCTAssertEqual(masked.9, OSCValue.MIDIMessage(portID: 0x00, status: 0xFF))
         }
         
         do {
@@ -1899,7 +1899,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 ASCIICharacter.self,
                 OSCTimeTag?.self,
                 ASCIIString?.self,
-                OSCMessage.Value.MIDIMessage?.self
+                OSCValue.MIDIMessage?.self
             ))
             
             XCTAssertEqual(masked.0, 123)
@@ -1911,7 +1911,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.6, "C")
             XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
-            XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
+            XCTAssertEqual(masked.9, OSCValue.MIDIMessage(portID: 0x00, status: 0xFF))
         }
         
         do {
@@ -1925,7 +1925,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 ASCIICharacter?.self,
                 OSCTimeTag?.self,
                 ASCIIString?.self,
-                OSCMessage.Value.MIDIMessage?.self
+                OSCValue.MIDIMessage?.self
             ))
             
             XCTAssertEqual(masked.0, 123)
@@ -1937,7 +1937,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.6, "C")
             XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
-            XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
+            XCTAssertEqual(masked.9, OSCValue.MIDIMessage(portID: 0x00, status: 0xFF))
         }
         
         do {
@@ -1951,7 +1951,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 ASCIICharacter?.self,
                 OSCTimeTag?.self,
                 ASCIIString?.self,
-                OSCMessage.Value.MIDIMessage?.self
+                OSCValue.MIDIMessage?.self
             ))
             
             XCTAssertEqual(masked.0, 123)
@@ -1963,7 +1963,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.6, "C")
             XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
-            XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
+            XCTAssertEqual(masked.9, OSCValue.MIDIMessage(portID: 0x00, status: 0xFF))
         }
         
         do {
@@ -1977,7 +1977,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 ASCIICharacter?.self,
                 OSCTimeTag?.self,
                 ASCIIString?.self,
-                OSCMessage.Value.MIDIMessage?.self
+                OSCValue.MIDIMessage?.self
             ))
             
             XCTAssertEqual(masked.0, 123)
@@ -1989,7 +1989,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.6, "C")
             XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
-            XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
+            XCTAssertEqual(masked.9, OSCValue.MIDIMessage(portID: 0x00, status: 0xFF))
         }
         
         do {
@@ -2003,7 +2003,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 ASCIICharacter?.self,
                 OSCTimeTag?.self,
                 ASCIIString?.self,
-                OSCMessage.Value.MIDIMessage?.self
+                OSCValue.MIDIMessage?.self
             ))
             
             XCTAssertEqual(masked.0, 123)
@@ -2015,7 +2015,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.6, "C")
             XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
-            XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
+            XCTAssertEqual(masked.9, OSCValue.MIDIMessage(portID: 0x00, status: 0xFF))
         }
         
         do {
@@ -2029,7 +2029,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 ASCIICharacter?.self,
                 OSCTimeTag?.self,
                 ASCIIString?.self,
-                OSCMessage.Value.MIDIMessage?.self
+                OSCValue.MIDIMessage?.self
             ))
             
             XCTAssertEqual(masked.0, 123)
@@ -2041,7 +2041,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.6, "C")
             XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
-            XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
+            XCTAssertEqual(masked.9, OSCValue.MIDIMessage(portID: 0x00, status: 0xFF))
         }
         
         do {
@@ -2055,7 +2055,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 ASCIICharacter?.self,
                 OSCTimeTag?.self,
                 ASCIIString?.self,
-                OSCMessage.Value.MIDIMessage?.self
+                OSCValue.MIDIMessage?.self
             ))
             
             XCTAssertEqual(masked.0, 123)
@@ -2067,7 +2067,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.6, "C")
             XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
-            XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
+            XCTAssertEqual(masked.9, OSCValue.MIDIMessage(portID: 0x00, status: 0xFF))
         }
         
         do {
@@ -2081,7 +2081,7 @@ final class ConcreteMasks_Tests: XCTestCase {
                 ASCIICharacter?.self,
                 OSCTimeTag?.self,
                 ASCIIString?.self,
-                OSCMessage.Value.MIDIMessage?.self
+                OSCValue.MIDIMessage?.self
             ))
             
             XCTAssertEqual(masked.0, 123)
@@ -2093,7 +2093,7 @@ final class ConcreteMasks_Tests: XCTestCase {
             XCTAssertEqual(masked.6, "C")
             XCTAssertEqual(masked.7?.rawValue, 999)
             XCTAssertEqual(masked.8, "str2")
-            XCTAssertEqual(masked.9, OSCMessage.Value.MIDIMessage(portID: 0x00, status: 0xFF))
+            XCTAssertEqual(masked.9, OSCValue.MIDIMessage(portID: 0x00, status: 0xFF))
         }
     }
     
@@ -2101,19 +2101,19 @@ final class ConcreteMasks_Tests: XCTestCase {
     
     func testValuesNumeric_int() throws {
         XCTAssertEqual(
-            try [OSCMessage.Value]([.int32(123)])
+            try [OSCValue]([.int32(123)])
                 .masked(Int.self),
             123
         )
         
         XCTAssertEqual(
-            try [OSCMessage.Value]([.int64(123)])
+            try [OSCValue]([.int64(123)])
                 .masked(Int.self),
             123
         )
         
         XCTAssertEqual(
-            try [OSCMessage.Value]([.timeTag(.init(123))])
+            try [OSCValue]([.timeTag(.init(123))])
                 .masked(Int.self),
             123
         )
@@ -2121,19 +2121,19 @@ final class ConcreteMasks_Tests: XCTestCase {
     
     func testValuesNumeric_string() throws {
         XCTAssertEqual(
-            try [OSCMessage.Value]([.string("str")])
+            try [OSCValue]([.string("str")])
                 .masked(String.self),
             "str"
         )
         
         XCTAssertEqual(
-            try [OSCMessage.Value]([.stringAlt("str")])
+            try [OSCValue]([.stringAlt("str")])
                 .masked(String.self),
             "str"
         )
         
         XCTAssertEqual(
-            try [OSCMessage.Value]([.character("s")])
+            try [OSCValue]([.character("s")])
                 .masked(String.self),
             "s"
         )
@@ -2141,42 +2141,42 @@ final class ConcreteMasks_Tests: XCTestCase {
     
     func testValuesNumeric_character() throws {
         XCTAssertEqual(
-            try [OSCMessage.Value]([.character("a")])
+            try [OSCValue]([.character("a")])
                 .masked(Character.self),
             "a"
         )
         
         XCTAssertEqual(
-            try [OSCMessage.Value]([.string("a")])
+            try [OSCValue]([.string("a")])
                 .masked(Character.self),
             "a"
         )
         
         XCTAssertEqual(
-            try [OSCMessage.Value]([.stringAlt("a")])
+            try [OSCValue]([.stringAlt("a")])
                 .masked(Character.self),
             "a"
         )
         
         XCTAssertEqual(
-            try [OSCMessage.Value]([.string("ab")])
+            try [OSCValue]([.string("ab")])
                 .masked(Character.self),
             "a"
         )
         
         XCTAssertEqual(
-            try [OSCMessage.Value]([.stringAlt("ab")])
+            try [OSCValue]([.stringAlt("ab")])
                 .masked(Character.self),
             "a"
         )
     }
     
-    // MARK: - Meta type: OSCMessage.Value.Number
+    // MARK: - Meta type: OSCValue.Number
     
     func testValuesNumeric_int32() throws {
-        let values: [OSCMessage.Value] = [.int32(123)]
+        let values: [OSCValue] = [.int32(123)]
         
-        let masked = try values.masked(OSCMessage.Value.Number.self)
+        let masked = try values.masked(OSCValue.Number.self)
         
         guard case let .int32(v) = masked else { XCTFail(); return }
         
@@ -2184,9 +2184,9 @@ final class ConcreteMasks_Tests: XCTestCase {
     }
     
     func testValuesNumeric_float32() throws {
-        let values: [OSCMessage.Value] = [.float32(123.45)]
+        let values: [OSCValue] = [.float32(123.45)]
         
-        let masked = try values.masked(OSCMessage.Value.Number.self)
+        let masked = try values.masked(OSCValue.Number.self)
         
         guard case let .float32(v) = masked else { XCTFail(); return }
         
@@ -2194,9 +2194,9 @@ final class ConcreteMasks_Tests: XCTestCase {
     }
     
     func testValuesNumeric_int64() throws {
-        let values: [OSCMessage.Value] = [.int64(123)]
+        let values: [OSCValue] = [.int64(123)]
         
-        let masked = try values.masked(OSCMessage.Value.Number.self)
+        let masked = try values.masked(OSCValue.Number.self)
         
         guard case let .int64(v) = masked else { XCTFail(); return }
         
@@ -2204,9 +2204,9 @@ final class ConcreteMasks_Tests: XCTestCase {
     }
     
     func testValuesNumeric_double() throws {
-        let values: [OSCMessage.Value] = [.double(123.45)]
+        let values: [OSCValue] = [.double(123.45)]
         
-        let masked = try values.masked(OSCMessage.Value.Number.self)
+        let masked = try values.masked(OSCValue.Number.self)
         
         guard case let .double(v) = masked else { XCTFail(); return }
         
@@ -2215,14 +2215,14 @@ final class ConcreteMasks_Tests: XCTestCase {
     
     func testValuesNumericOptional() throws {
         XCTAssertEqual(
-            try [OSCMessage.Value]([.int32(123)])
-                .masked(OSCMessage.Value.Number?.self),
+            try [OSCValue]([.int32(123)])
+                .masked(OSCValue.Number?.self),
             .int32(123)
         )
         
         XCTAssertEqual(
-            try [OSCMessage.Value]([])
-                .masked(OSCMessage.Value.Number?.self),
+            try [OSCValue]([])
+                .masked(OSCValue.Number?.self),
             nil
         )
     }

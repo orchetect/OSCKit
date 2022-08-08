@@ -34,26 +34,26 @@ final class OSCObject_rawData_Tests: XCTestCase {
         
         // parse block
         
-        func handleOSCPayload(_ oscPayload: OSCPayload) {
+        func handleOSCObject(_ oscPayload: OSCObject) {
             switch oscPayload {
             case .bundle(let bundle):
                 // recursively handle nested bundles and messages
-                bundle.elements.forEach { handleOSCPayload($0) }
+                bundle.elements.forEach { handleOSCObject($0) }
             case .message(let message):
                 // handle message
                 _ = message
             }
         }
         
-        let data = Data(knownGoodOSCRawBytes)
+        let remainingData = Data(knownGoodOSCRawBytes)
         
         do {
-            guard let oscPayload = try data.parseOSC() else {
+            guard let oscPayload = try remainingData.parseOSC() else {
                 XCTFail()
                 return
             }
             
-            handleOSCPayload(oscPayload)
+            handleOSCObject(oscPayload)
         } catch let error as OSCBundle.DecodeError {
             // handle bundle errors
             _ = error
@@ -89,10 +89,10 @@ final class OSCObject_rawData_Tests: XCTestCase {
         
         // parse block
         
-        let data = Data(knownGoodOSCRawBytes)
+        let remainingData = Data(knownGoodOSCRawBytes)
         
         do {
-            guard let oscObject = try data.parseOSC() else {
+            guard let oscObject = try remainingData.parseOSC() else {
                 XCTFail()
                 return
             }
@@ -153,10 +153,10 @@ final class OSCObject_rawData_Tests: XCTestCase {
         
         // parse block
         
-        let data = Data(knownGoodOSCRawBytes)
+        let remainingData = Data(knownGoodOSCRawBytes)
         
         do {
-            guard let oscObject = try data.parseOSC() else {
+            guard let oscObject = try remainingData.parseOSC() else {
                 XCTFail()
                 return
             }
@@ -215,10 +215,10 @@ final class OSCObject_rawData_Tests: XCTestCase {
         
         // parse block
         
-        let data = Data(knownBadOSCRawBytes)
+        let remainingData = Data(knownBadOSCRawBytes)
         
         do {
-            guard let oscObject = try data.parseOSC() else {
+            guard let oscObject = try remainingData.parseOSC() else {
                 XCTFail()
                 return
             }
@@ -283,10 +283,10 @@ final class OSCObject_rawData_Tests: XCTestCase {
         
         // parse block
         
-        let data = Data(knownGoodOSCRawBytes)
+        let remainingData = Data(knownGoodOSCRawBytes)
         
         do {
-            guard let oscObject = try data.parseOSC() else {
+            guard let oscObject = try remainingData.parseOSC() else {
                 XCTFail()
                 return
             }
@@ -349,10 +349,10 @@ final class OSCObject_rawData_Tests: XCTestCase {
         
         // parse block
         
-        let data = Data(knownGoodOSCRawBytes)
+        let remainingData = Data(knownGoodOSCRawBytes)
         
         do {
-            guard let oscObject = try data.parseOSC() else {
+            guard let oscObject = try remainingData.parseOSC() else {
                 XCTFail()
                 return
             }

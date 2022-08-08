@@ -17,113 +17,113 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     // MARK: - [].matches(mask:)
     
     func testMatchesValueMask1() {
-        let mask: [OSCMessage.Value.Mask.Token] = [.int32]
+        let mask: [OSCValueMask.Token] = [.int32]
         
         // success
         XCTAssertTrue(
-            [OSCMessage.Value]([.int32(123)])
+            [OSCValue]([.int32(123)])
                 .matches(mask: mask)
         )
         
         // fail - empty values array
         XCTAssertFalse(
-            [OSCMessage.Value]()
+            [OSCValue]()
                 .matches(mask: mask)
         )
         
         // fail - wrong type
         XCTAssertFalse(
-            [OSCMessage.Value]([.int64(123)])
+            [OSCValue]([.int64(123)])
                 .matches(mask: mask)
         )
         
         // fail - matches but too many values
         XCTAssertFalse(
-            [OSCMessage.Value]([.int32(123), .int32(123)])
+            [OSCValue]([.int32(123), .int32(123)])
                 .matches(mask: mask)
         )
     }
     
     func testMatchesValueMask2() {
-        let mask: [OSCMessage.Value.Mask.Token] = [.int32Optional]
+        let mask: [OSCValueMask.Token] = [.int32Optional]
         
         // success
         XCTAssertTrue(
-            [OSCMessage.Value]([.int32(123)])
+            [OSCValue]([.int32(123)])
                 .matches(mask: mask)
         )
         
         // success - value was optional
         XCTAssertTrue(
-            [OSCMessage.Value]()
+            [OSCValue]()
                 .matches(mask: mask)
         )
         
         // fail - wrong type
         XCTAssertFalse(
-            [OSCMessage.Value]([.int64(123)])
+            [OSCValue]([.int64(123)])
                 .matches(mask: mask)
         )
         
         // fail - matches but too many values
         XCTAssertFalse(
-            [OSCMessage.Value]([.int32(123), .int32(123)])
+            [OSCValue]([.int32(123), .int32(123)])
                 .matches(mask: mask)
         )
     }
     
     func testMatchesValueMask3() {
-        let mask: [OSCMessage.Value.Mask.Token] = [.number]
+        let mask: [OSCValueMask.Token] = [.number]
         
         // success
         XCTAssertTrue(
-            [OSCMessage.Value]([.int32(123)])
+            [OSCValue]([.int32(123)])
                 .matches(mask: mask)
         )
         
         // fail - empty values array
         XCTAssertFalse(
-            [OSCMessage.Value]()
+            [OSCValue]()
                 .matches(mask: mask)
         )
         
         // success
         XCTAssertTrue(
-            [OSCMessage.Value]([.int64(123)])
+            [OSCValue]([.int64(123)])
                 .matches(mask: mask)
         )
         
         // fail - matches but too many values
         XCTAssertFalse(
-            [OSCMessage.Value]([.int32(123), .int32(123)])
+            [OSCValue]([.int32(123), .int32(123)])
                 .matches(mask: mask)
         )
     }
     
     func testMatchesValueMask4() {
-        let mask: [OSCMessage.Value.Mask.Token] = [.numberOptional]
+        let mask: [OSCValueMask.Token] = [.numberOptional]
         
         // success
         XCTAssertTrue(
-            [OSCMessage.Value]([.int32(123)])
+            [OSCValue]([.int32(123)])
                 .matches(mask: mask)
         )
         
         // success - value was optional
         XCTAssertTrue(
-            [OSCMessage.Value]()
+            [OSCValue]()
                 .matches(mask: mask)
         )
         
         // success
         XCTAssertTrue(
-            [OSCMessage.Value]([.int64(123)])
+            [OSCValue]([.int64(123)])
                 .matches(mask: mask)
         )
         
         // fail - matches but too many values
         XCTAssertFalse(
-            [OSCMessage.Value]([.int32(123), .int32(123)])
+            [OSCValue]([.int32(123), .int32(123)])
                 .matches(mask: mask)
         )
     }
@@ -135,10 +135,10 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     func testValuesFromValueMask_int32() throws {
         typealias type                     = Int32
         let value                          = 123 as type
-        let msgValue:  OSCMessage.Value    = .int32(value)
-        let valueType: OSCMessage.Value.Mask.Token = .int32
+        let msgValue:  OSCValue    = .int32(value)
+        let valueType: OSCValueMask.Token = .int32
         
-        let result = try [OSCMessage.Value]([msgValue])
+        let result = try [OSCValue]([msgValue])
             .masked([valueType])
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result[0] as? type, value)
@@ -147,10 +147,10 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     func testValuesFromValueMask_float32() throws {
         typealias type                     = Float32
         let value                          = 123.45 as type
-        let msgValue:  OSCMessage.Value    = .float32(value)
-        let valueType: OSCMessage.Value.Mask.Token = .float32
+        let msgValue:  OSCValue    = .float32(value)
+        let valueType: OSCValueMask.Token = .float32
         
-        let result = try [OSCMessage.Value]([msgValue])
+        let result = try [OSCValue]([msgValue])
             .masked([valueType])
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result[0] as? type, value)
@@ -159,10 +159,10 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     func testValuesFromValueMask_string() throws {
         typealias type                     = ASCIIString
         let value                          = "A string" as type
-        let msgValue:  OSCMessage.Value    = .string(value)
-        let valueType: OSCMessage.Value.Mask.Token = .string
+        let msgValue:  OSCValue    = .string(value)
+        let valueType: OSCValueMask.Token = .string
         
-        let result = try [OSCMessage.Value]([msgValue])
+        let result = try [OSCValue]([msgValue])
             .masked([valueType])
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result[0] as? type, value)
@@ -171,10 +171,10 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     func testValuesFromValueMask_blob() throws {
         typealias type                     = Data
         let value                          = Data([1, 2, 3]) as type
-        let msgValue:  OSCMessage.Value    = .blob(value)
-        let valueType: OSCMessage.Value.Mask.Token = .blob
+        let msgValue:  OSCValue    = .blob(value)
+        let valueType: OSCValueMask.Token = .blob
         
-        let result = try [OSCMessage.Value]([msgValue])
+        let result = try [OSCValue]([msgValue])
             .masked([valueType])
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result[0] as? type, value)
@@ -185,10 +185,10 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     func testValuesFromValueMask_int64() throws {
         typealias type                     = Int64
         let value                          = 123 as type
-        let msgValue:  OSCMessage.Value    = .int64(value)
-        let valueType: OSCMessage.Value.Mask.Token = .int64
+        let msgValue:  OSCValue    = .int64(value)
+        let valueType: OSCValueMask.Token = .int64
         
-        let result = try [OSCMessage.Value]([msgValue])
+        let result = try [OSCValue]([msgValue])
             .masked([valueType])
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result[0] as? type, value)
@@ -197,10 +197,10 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     func testValuesFromValueMask_timeTag() throws {
         typealias type                     = OSCTimeTag
         let value                          = .init(123) as type
-        let msgValue:  OSCMessage.Value    = .timeTag(value)
-        let valueType: OSCMessage.Value.Mask.Token = .timeTag
+        let msgValue:  OSCValue    = .timeTag(value)
+        let valueType: OSCValueMask.Token = .timeTag
         
-        let result = try [OSCMessage.Value]([msgValue])
+        let result = try [OSCValue]([msgValue])
             .masked([valueType])
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result[0] as? type, value)
@@ -209,10 +209,10 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     func testValuesFromValueMask_double() throws {
         typealias type                     = Double
         let value                          = 123.45 as type
-        let msgValue:  OSCMessage.Value    = .double(value)
-        let valueType: OSCMessage.Value.Mask.Token = .double
+        let msgValue:  OSCValue    = .double(value)
+        let valueType: OSCValueMask.Token = .double
         
-        let result = try [OSCMessage.Value]([msgValue])
+        let result = try [OSCValue]([msgValue])
             .masked([valueType])
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result[0] as? type, value)
@@ -221,10 +221,10 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     func testValuesFromValueMask_stringAlt() throws {
         typealias type                     = ASCIIString
         let value                          = "A string" as type
-        let msgValue:  OSCMessage.Value    = .stringAlt(value)
-        let valueType: OSCMessage.Value.Mask.Token = .stringAlt
+        let msgValue:  OSCValue    = .stringAlt(value)
+        let valueType: OSCValueMask.Token = .stringAlt
         
-        let result = try [OSCMessage.Value]([msgValue])
+        let result = try [OSCValue]([msgValue])
             .masked([valueType])
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result[0] as? type, value)
@@ -233,24 +233,24 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     func testValuesFromValueMask_character() throws {
         typealias type                     = ASCIICharacter
         let value                          = "A" as type
-        let msgValue:  OSCMessage.Value    = .character(value)
-        let valueType: OSCMessage.Value.Mask.Token = .character
+        let msgValue:  OSCValue    = .character(value)
+        let valueType: OSCValueMask.Token = .character
         
-        let result = try [OSCMessage.Value]([msgValue])
+        let result = try [OSCValue]([msgValue])
             .masked([valueType])
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result[0] as? type, value)
     }
     
     func testValuesFromValueMask_midi() throws {
-        typealias type                     = OSCMessage.Value.MIDIMessage
-        let value = OSCMessage.Value.MIDIMessage(
+        typealias type                     = OSCValue.MIDIMessage
+        let value = OSCValue.MIDIMessage(
             portID: 0x00, status: 0x80, data1: 0x50, data2: 0x40
         ) as type
-        let msgValue:  OSCMessage.Value    = .midi(value)
-        let valueType: OSCMessage.Value.Mask.Token = .midi
+        let msgValue:  OSCValue    = .midi(value)
+        let valueType: OSCValueMask.Token = .midi
         
-        let result = try [OSCMessage.Value]([msgValue])
+        let result = try [OSCValue]([msgValue])
             .masked([valueType])
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result[0] as? type, value)
@@ -259,10 +259,10 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     func testValuesFromValueMask_bool() throws {
         typealias type                     = Bool
         let value                          = true as type
-        let msgValue:  OSCMessage.Value    = .bool(value)
-        let valueType: OSCMessage.Value.Mask.Token = .bool
+        let msgValue:  OSCValue    = .bool(value)
+        let valueType: OSCValueMask.Token = .bool
         
-        let result = try [OSCMessage.Value]([msgValue])
+        let result = try [OSCValue]([msgValue])
             .masked([valueType])
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result[0] as? type, value)
@@ -271,10 +271,10 @@ final class OSCMessage_Value_Mask_SequenceExtensions_Tests: XCTestCase {
     func testValuesFromValueMask_null() throws {
         typealias type                     = NSObject
         let value                          = NSNull() as type
-        let msgValue:  OSCMessage.Value    = .null
-        let valueType: OSCMessage.Value.Mask.Token = .null
+        let msgValue:  OSCValue    = .null
+        let valueType: OSCValueMask.Token = .null
         
-        let result = try [OSCMessage.Value]([msgValue])
+        let result = try [OSCValue]([msgValue])
             .masked([valueType])
         XCTAssertEqual(result.count, 1)
         XCTAssertEqual(result[0] as? type, value)

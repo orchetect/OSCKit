@@ -5,7 +5,7 @@
 
 import Foundation
 @_implementationOnly import OTCore
-import SwiftASCII
+@_implementationOnly import SwiftASCII
 
 // NOTE: This discussion block is duplicated for `OSCAddress.Pattern`
 
@@ -36,10 +36,18 @@ import SwiftASCII
 ///
 /// - Inherits OSC 1.0 pattern matching and adds the `//` operator
 ///
-public struct OSCAddress: Hashable {
+public struct OSCAddress {
     /// OSC Address storage.
     internal let address: ASCIIString
 }
+
+// MARK: - Equatable, Hashable
+
+extension OSCAddress: Equatable, Hashable {
+    // implementation is automatically synthesized by Swift
+}
+
+// MARK: - ExpressibleByStringLiteral
 
 extension OSCAddress: ExpressibleByStringLiteral {
     public typealias StringLiteralType = String
@@ -49,11 +57,15 @@ extension OSCAddress: ExpressibleByStringLiteral {
     }
 }
 
+// MARK: - CustomStringConvertible
+
 extension OSCAddress: CustomStringConvertible {
     public var description: String {
         address.stringValue
     }
 }
+
+// MARK: - Codable
 
 extension OSCAddress: Codable {
     public init(from decoder: Decoder) throws {

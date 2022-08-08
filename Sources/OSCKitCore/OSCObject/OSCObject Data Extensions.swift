@@ -10,18 +10,16 @@ extension Data {
     ///
     /// Returns `nil` if not an OSC data packet. Throws an error if the data is malformed.
     @inlinable
-    public func parseOSC() throws -> OSCPayload? {
+    public func parseOSC() throws -> (any OSCObject)? {
         if appearsToBeOSCBundle {
-            return .bundle(try OSCBundle(from: self))
+            return try OSCBundle(from: self)
         } else if appearsToBeOSCMessage {
-            return .message(try OSCMessage(from: self))
+            return try OSCMessage(from: self)
         }
         
         return nil
     }
-}
-
-extension Data {
+    
     /// Test if data appears to be an OSC bundle or OSC message. (Basic validation)
     ///
     /// - Returns: An `OSCObjectType` case if validation succeeds. `nil` if neither.

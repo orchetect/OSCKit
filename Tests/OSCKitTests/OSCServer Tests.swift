@@ -20,7 +20,7 @@ final class OSCServer_Tests: XCTestCase {
         }
         
         let bundle = OSCBundle(elements: [])
-        let payload: OSCPayload = .bundle(bundle)
+        let payload: OSCObject = .bundle(bundle)
         
         try server.handle(payload: payload)
         

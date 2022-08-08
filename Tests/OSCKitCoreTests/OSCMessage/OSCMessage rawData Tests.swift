@@ -34,14 +34,14 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.remainingData)
         XCTAssertEqual(msg.address, "/testaddress")
         XCTAssertEqual(msg.values.count, 0)
         
         // re-encode
         
         let newMsg = OSCMessage(address: msg.address, values: msg.values)
-        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
+        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.remainingData)
     }
     
     func testInt32() {
@@ -63,7 +63,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.remainingData)
         XCTAssertEqual(msg.address, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         guard case .int32(let val) = msg.values.first else { XCTFail() ; return }
@@ -72,7 +72,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         // re-encode
         
         let newMsg = OSCMessage(address: msg.address, values: msg.values)
-        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
+        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.remainingData)
     }
     
     func testFloat32() {
@@ -94,7 +94,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.remainingData)
         XCTAssertEqual(msg.address, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         guard case .float32(let val) = msg.values.first else { XCTFail() ; return }
@@ -103,7 +103,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         // re-encode
         
         let newMsg = OSCMessage(address: msg.address, values: msg.values)
-        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
+        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.remainingData)
     }
     
     func testString() {
@@ -131,7 +131,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.remainingData)
         XCTAssertEqual(msg.address, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         guard case .string(let val) = msg.values.first else { XCTFail() ; return }
@@ -140,7 +140,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         // re-encode
         
         let newMsg = OSCMessage(address: msg.address, values: msg.values)
-        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
+        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.remainingData)
     }
     
     func testBlob() {
@@ -164,7 +164,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.remainingData)
         XCTAssertEqual(msg.address, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         guard case .blob(let val) = msg.values.first else { XCTFail() ; return }
@@ -173,7 +173,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         // re-encode
         
         let newMsg = OSCMessage(address: msg.address, values: msg.values)
-        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
+        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.remainingData)
     }
     
     // MARK: - Extended Types
@@ -198,7 +198,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.remainingData)
         XCTAssertEqual(msg.address, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         guard case .int64(let val) = msg.values.first else { XCTFail() ; return }
@@ -207,7 +207,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         // re-encode
         
         let newMsg = OSCMessage(address: msg.address, values: msg.values)
-        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
+        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.remainingData)
     }
     
     func testTimeTag() {
@@ -230,7 +230,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.remainingData)
         XCTAssertEqual(msg.address, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         guard case .timeTag(let val) = msg.values.first else { XCTFail() ; return }
@@ -239,7 +239,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         // re-encode
         
         let newMsg = OSCMessage(address: msg.address, values: msg.values)
-        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
+        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.remainingData)
     }
     
     func testDouble() {
@@ -262,7 +262,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.remainingData)
         XCTAssertEqual(msg.address, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         guard case .double(let val) = msg.values.first else { XCTFail() ; return }
@@ -271,7 +271,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         // re-encode
         
         let newMsg = OSCMessage(address: msg.address, values: msg.values)
-        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
+        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.remainingData)
     }
     
     func testStringAlt() {
@@ -299,7 +299,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.remainingData)
         XCTAssertEqual(msg.address, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         guard case .stringAlt(let val) = msg.values.first else { XCTFail() ; return }
@@ -308,7 +308,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         // re-encode
         
         let newMsg = OSCMessage(address: msg.address, values: msg.values)
-        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
+        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.remainingData)
     }
     
     func testCharacter() {
@@ -330,7 +330,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.remainingData)
         XCTAssertEqual(msg.address, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         guard case .character(let val) = msg.values.first else { XCTFail() ; return }
@@ -339,7 +339,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         // re-encode
         
         let newMsg = OSCMessage(address: msg.address, values: msg.values)
-        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
+        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.remainingData)
     }
     
     func testMIDI() {
@@ -361,16 +361,16 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.remainingData)
         XCTAssertEqual(msg.address, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         guard case .midi(let val) = msg.values.first else { XCTFail() ; return }
-        XCTAssertEqual(val, OSCMessage.Value.MIDIMessage(portID: 0x01, status: 0x02, data1: 0x03, data2: 0x04))
+        XCTAssertEqual(val, OSCValue.MIDIMessage(portID: 0x01, status: 0x02, data1: 0x03, data2: 0x04))
         
         // re-encode
         
         let newMsg = OSCMessage(address: msg.address, values: msg.values)
-        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
+        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.remainingData)
     }
     
     func testBool() {
@@ -390,7 +390,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.remainingData)
         XCTAssertEqual(msg.address, "/testaddress")
         XCTAssertEqual(msg.values.count, 2)
         guard case .bool(let val1) = msg.values[safe: 0] else { XCTFail() ; return }
@@ -401,7 +401,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         // re-encode
         
         let newMsg = OSCMessage(address: msg.address, values: msg.values)
-        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
+        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.remainingData)
     }
     
     func testNull() {
@@ -421,7 +421,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try! OSCMessage(from: knownGoodOSCRawBytes.remainingData)
         XCTAssertEqual(msg.address, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         guard case .null = msg.values[safe: 0] else { XCTFail() ; return }
@@ -429,7 +429,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         // re-encode
         
         let newMsg = OSCMessage(address: msg.address, values: msg.values)
-        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.data)
+        XCTAssertEqual(newMsg.rawData, knownGoodOSCRawBytes.remainingData)
     }
 }
 // swiftformat:enable all

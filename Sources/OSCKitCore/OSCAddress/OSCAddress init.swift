@@ -5,7 +5,7 @@
 
 import Foundation
 @_implementationOnly import OTCore
-import SwiftASCII
+@_implementationOnly import SwiftASCII
 
 extension OSCAddress {
     /// Create an OSC address from a raw `String` address.
@@ -16,7 +16,7 @@ extension OSCAddress {
     }
     
     /// Create an OSC address from a raw `ASCIIString` address.
-    public init(_ address: ASCIIString) {
+    init(_ address: ASCIIString) {
         self.address = address
     }
     
@@ -31,7 +31,7 @@ extension OSCAddress {
     /// The path component strings will be converted to ASCII strings, lossily converting or removing invalid non-ASCII characters if necessary.
     /// Empty path components is equivalent to the address of "/".
     @_disfavoredOverload
-    public init(pathComponents: [ASCIIString]) {
+    init(pathComponents: [ASCIIString]) {
         address = ASCIICharacter("/") + pathComponents.joined(separator: "/")
     }
 }

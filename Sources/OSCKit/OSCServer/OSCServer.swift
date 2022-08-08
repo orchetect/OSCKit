@@ -93,7 +93,7 @@ extension OSCServer {
 extension OSCServer {
     /// Handle incoming OSC data recursively.
     func handle(
-        payload: OSCPayload,
+        payload: OSCObject,
         timeTag: OSCTimeTag = .immediate()
     ) throws {
         switch payload {

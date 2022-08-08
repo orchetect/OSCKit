@@ -15,32 +15,35 @@ public struct OSCBundle: OSCObject {
     public let timeTag: OSCTimeTag
     
     /// Elements contained within the bundle. These can be `OSCBundle` or `OSCMessage` instances.
-    public let elements: [OSCPayload]
+    public let elements: [any OSCObject]
     
-    public let rawData: Data
+    public let _rawData: Data?
 }
 
 // MARK: - Equatable
 
 extension OSCBundle: Equatable {
-    public static func == (lhs: OSCBundle, rhs: OSCBundle) -> Bool {
+    public static func == (lhs: Self, rhs: Self) -> Bool {
         // don't factor timeTag into equality
         
         guard lhs.elements.count == rhs.elements.count else { return false }
         
         for (lhsIndex, rhsIndex) in zip(lhs.elements.indices, rhs.elements.indices) {
             switch lhs.elements[lhsIndex] {
-            case let .bundle(lhsElementTyped):
-                guard case let .bundle(rhsElementTyped) = rhs.elements[rhsIndex]
+            case let lhsElementTyped as OSCBundle:
+                guard let rhsElementTyped = rhs.elements[rhsIndex] as? OSCBundle
                 else { return false }
                 
-                if lhsElementTyped != rhsElementTyped { return false }
+                guard lhsElementTyped == rhsElementTyped else { return false }
                 
-            case let .message(lhsElementTyped):
-                guard case let .message(rhsElementTyped) = rhs.elements[rhsIndex]
+            case let lhsElementTyped as OSCMessage:
+                guard let rhsElementTyped = rhs.elements[rhsIndex] as? OSCMessage
                 else { return false }
                 
-                if lhsElementTyped != rhsElementTyped { return false }
+                guard lhsElementTyped == rhsElementTyped else { return false }
+                
+            default:
+                return false
             }
         }
         
@@ -55,13 +58,7 @@ extension OSCBundle: Hashable {
         // don't factor timeTag into hash
         
         elements.forEach {
-            switch $0 {
-            case let .bundle(elementTyped):
-                hasher.combine(elementTyped)
-                
-            case let .message(elementTyped):
-                hasher.combine(elementTyped)
-            }
+            hasher.combine($0)
         }
     }
 }
@@ -98,31 +95,33 @@ extension OSCBundle: CustomStringConvertible {
     }
 }
 
-extension OSCBundle: Codable {
-    enum CodingKeys: String, CodingKey {
-        case timeTag
-        case elements
-    }
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let timeTag = try container.decode(OSCTimeTag.RawValue.self, forKey: .timeTag)
-        let elements = try container.decode([OSCPayload].self, forKey: .elements)
-        self.init(elements: elements, timeTag: OSCTimeTag(timeTag))
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(timeTag.rawValue, forKey: .timeTag)
-        try container.encode(elements, forKey: .elements)
-    }
-}
+// TODO: fix or remove
+
+//extension OSCBundle: Codable {
+//    enum CodingKeys: String, CodingKey {
+//        case timeTag
+//        case elements
+//    }
+//
+//    public init(from decoder: Decoder) throws {
+//        let container = try decoder.container(keyedBy: CodingKeys.self)
+//        let timeTag = try container.decode(OSCTimeTag.RawValue.self, forKey: .timeTag)
+//        let elements = try container.decode([any OSCObject].self, forKey: .elements)
+//        self.init(elements: elements, timeTag: OSCTimeTag(timeTag))
+//    }
+//
+//    public func encode(to encoder: Encoder) throws {
+//        var container = encoder.container(keyedBy: CodingKeys.self)
+//        try container.encode(timeTag.rawValue, forKey: .timeTag)
+//        try container.encode(elements, forKey: .elements)
+//    }
+//}
 
 // MARK: - Header
 
 extension OSCBundle {
     /// Constant caching an OSCBundle header
-    public static let header: Data = "#bundle"
-        .toData(using: .nonLossyASCII)!
-        .fourNullBytePadded
+    public static let header: Data = OSCMessageEncoder.fourNullBytePadded(
+        "#bundle".toData(using: .nonLossyASCII) ?? Data()
+    )
 }

@@ -83,8 +83,8 @@ final class OSCMessage_Integrity_Tests: XCTestCase {
         print("All values decoded:")
         decoded.values.forEach { val in
             switch val {
-            case let .blob(data):
-                print("blob bytes:", data.hex.stringValueArrayLiteral)
+            case let .blob(remainingData):
+                print("blob bytes:", remainingData.hex.stringValueArrayLiteral)
             default:
                 print(val)
             }

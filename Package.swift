@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.7
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -6,7 +6,7 @@ import PackageDescription
 let package = Package(
     name: "OSCKit",
     
-    platforms: [.macOS(.v10_12), .iOS(.v10), .tvOS(.v10)],
+    platforms: [.macOS(.v10_13), .iOS(.v11), .tvOS(.v11)],
     
     products: [
         .library(

@@ -5,7 +5,7 @@
 
 import Foundation
 @_implementationOnly import OTCore
-import SwiftASCII
+@_implementationOnly import SwiftASCII
 
 /// OSC Address Dispatcher.
 /// Populated with an address tree by registering OSC methods.

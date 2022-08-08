@@ -5,7 +5,7 @@
 
 import Foundation
 @_implementationOnly import OTCore
-import SwiftASCII
+@_implementationOnly import SwiftASCII
 
 extension OSCDispatcher {
     /// Represents an OSC address space container or method.

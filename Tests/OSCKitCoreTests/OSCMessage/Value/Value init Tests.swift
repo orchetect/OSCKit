@@ -15,68 +15,68 @@ final class OSCMessage_Value_init_Tests: XCTestCase {
     // MARK: - Core types
     
     func testInt32() {
-        let val = OSCMessage.Value(Int32(123))
+        let val = OSCValue(Int32(123))
         XCTAssertEqual(val, .int32(123))
     }
     
     func testFloat32() {
-        let val = OSCMessage.Value(Float32(123.45))
+        let val = OSCValue(Float32(123.45))
         XCTAssertEqual(val, .float32(123.45))
     }
     
     func testString() {
-        let val1 = OSCMessage.Value("A string")
+        let val1 = OSCValue("A string")
         XCTAssertEqual(val1, .string("A string"))
         
         // a single character string (grapheme cluster) could possibly be confused with an ASCIICharacter literal
-        // this is avoided by giving the OSCMessage.Value init for .character an explicit label of OSCMessage.Value(character:)
+        // this is avoided by giving the OSCValue init for .character an explicit label of OSCValue(character:)
         
-        let val2 = OSCMessage.Value("A")
+        let val2 = OSCValue("A")
         XCTAssertEqual(val2, .string("A"))
     }
     
     func testBlob() {
-        let val = OSCMessage.Value(Data([1, 2, 3, 4]))
+        let val = OSCValue(Data([1, 2, 3, 4]))
         XCTAssertEqual(val, .blob(Data([1, 2, 3, 4])))
     }
     
     // MARK: - Extended types
     
     func testInt64() {
-        let val = OSCMessage.Value(Int64(123))
+        let val = OSCValue(Int64(123))
         XCTAssertEqual(val, .int64(123))
     }
     
     func testTimeTag() {
-        let val = OSCMessage.Value(timeTag: .init(123))
+        let val = OSCValue(timeTag: .init(123))
         XCTAssertEqual(val, .timeTag(.init(123)))
     }
     
     func testDouble() {
-        let val = OSCMessage.Value(123.45)
+        let val = OSCValue(123.45)
         XCTAssertEqual(val, .double(123.45))
     }
     
     func testStringAlt() {
-        let val1 = OSCMessage.Value(stringAlt: "A string")
+        let val1 = OSCValue(stringAlt: "A string")
         XCTAssertEqual(val1, .stringAlt("A string"))
         
         // a single character string (grapheme cluster) could possibly be confused with an ASCIICharacter literal
-        // this is avoided by giving the OSCMessage.Value init for .character an explicit label of OSCMessage.Value(character:)
+        // this is avoided by giving the OSCValue init for .character an explicit label of OSCValue(character:)
         
-        let val2 = OSCMessage.Value(stringAlt: "A")
+        let val2 = OSCValue(stringAlt: "A")
         XCTAssertEqual(val2, .stringAlt("A"))
     }
     
     func testCharacter() {
-        let val = OSCMessage.Value(character: "A")
+        let val = OSCValue(character: "A")
         XCTAssertEqual(val, .character("A"))
     }
     
     func testMIDI() {
         // enum
-        let source: OSCMessage.Value = .midi(
-            OSCMessage.Value.MIDIMessage(
+        let source: OSCValue = .midi(
+            OSCValue.MIDIMessage(
                 portID: 0x80,
                 status: 0x50,
                 data1: 0x40,
@@ -84,10 +84,10 @@ final class OSCMessage_Value_init_Tests: XCTestCase {
             )
         )
         
-        // OSCMessage.Value(MIDIMessage)
+        // OSCValue(MIDIMessage)
         XCTAssertEqual(
             source,
-            OSCMessage.Value(OSCMessage.Value.MIDIMessage(
+            OSCValue(OSCValue.MIDIMessage(
                 portID: 0x80,
                 status: 0x50,
                 data1: 0x40,
@@ -95,7 +95,7 @@ final class OSCMessage_Value_init_Tests: XCTestCase {
             ))
         )
         
-        // OSCMessage.Value(MIDIMessage) as .init() shorthand
+        // OSCValue(MIDIMessage) as .init() shorthand
         XCTAssertEqual(
             source,
             .midi(.init(
@@ -106,7 +106,7 @@ final class OSCMessage_Value_init_Tests: XCTestCase {
             ))
         )
         
-        // OSCMessage.Value.midi(MIDIMessage) static func
+        // OSCValue.midi(MIDIMessage) static func
         XCTAssertEqual(
             source,
             .midi(
@@ -119,10 +119,10 @@ final class OSCMessage_Value_init_Tests: XCTestCase {
     }
     
     func testBool() {
-        let val1 = OSCMessage.Value(true)
+        let val1 = OSCValue(true)
         XCTAssertEqual(val1, .bool(true))
         
-        let val2 = OSCMessage.Value(false)
+        let val2 = OSCValue(false)
         XCTAssertEqual(val2, .bool(false))
     }
 }
