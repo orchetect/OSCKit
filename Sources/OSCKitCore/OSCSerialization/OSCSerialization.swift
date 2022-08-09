@@ -21,13 +21,13 @@ public class OSCSerialization {
     public func registerType(_ oscValueType: any OSCValueCodable.Type) {
         // TODO: throw an error if user attempts to register an already existing type tag?
         
-        assert(
-            !oscValueType
-                .oscTagIdentity
-                .staticTags()
-                .allSatisfy(tagIdentities(contains:)),
-            "Tag identity is already registered."
-        )
+//        assert(
+//            oscValueType
+//                .oscTagIdentity
+//                .staticTags()
+//                .allSatisfy(tagIdentities(contains:)) == false,
+//            "Tag identity is already registered."
+//        )
         
         tagIdentities.append(
             (oscValueType.oscTagIdentity, oscValueType.self)
@@ -37,13 +37,10 @@ public class OSCSerialization {
 
 extension OSCSerialization {
     func registerDefaultTypes() {
-        // core types
-        // registerType(OSCValues.self) // can't use OSCValues as a type :(
-        registerType(OSCArrayValue.self)
-        registerType(Data.self)
-        registerType(Float32.self)
         registerType(Int32.self)
+        registerType(Float32.self)
         registerType(String.self)
+        registerType(Data.self)
         
         // extended types
         registerType(Bool.self)
@@ -55,6 +52,12 @@ extension OSCSerialization {
         registerType(OSCNullValue.self)
         registerType(OSCStringAltValue.self)
         registerType(OSCTimeTag.self)
+        
+        // variadic
+        // registerType(OSCValues.self) // can't use `any OSC Value` as a type :(
+        
+        // TODO: uncomment this once OSCArrayValue encoding/decoding is implemented
+//        registerType(OSCArrayValue.self)
     }
     
     func tagIdentities(for character: Character) -> [any OSCValueCodable.Type] {

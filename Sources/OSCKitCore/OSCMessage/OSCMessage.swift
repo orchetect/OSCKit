@@ -23,7 +23,7 @@ public struct OSCMessage: OSCObject {
 extension OSCMessage: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.addressPattern == rhs.addressPattern &&
-            lhs.values == rhs.values
+        lhs.values == rhs.values
     }
 }
 
@@ -49,8 +49,8 @@ extension OSCMessage: CustomStringConvertible {
     public var descriptionPretty: String {
         values.isEmpty
             ? "OSCMessage(\(addressPattern.stringValue.quoted))"
-            : "OSCMessage(\(addressPattern.stringValue.quoted)) Values:\n  "
-                + values.map { "\($0)" }.joined(separator: "\n  ")
+            : "OSCMessage(\(addressPattern.stringValue.quoted)) with values:\n  "
+                + values.map { "\(type(of: $0)): \($0)" }.joined(separator: "\n  ")
                 .trimmed
     }
 }

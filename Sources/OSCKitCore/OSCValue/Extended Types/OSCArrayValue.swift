@@ -74,6 +74,6 @@ extension OSCArrayValue: OSCValueDecodable {
         
         let array: OSCValues = [Int32(123)]
         
-        return (tagCount: 0, OSCDecoded(array))
+        return (tagCount: 3, OSCDecoded(array))
     }
 }

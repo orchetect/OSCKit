@@ -13,8 +13,6 @@ public struct OSCMessageEncoder {
     var builderTags: [ASCIICharacter] = []
     var builderValuesChunk = Data()
     
-    var encodeCalledCount = 0
-    
     init(
         addressPattern: OSCAddressPattern
     ) {
@@ -88,14 +86,13 @@ public struct OSCMessageEncoder {
         
         // assemble OSC-type and values chunk
         
-        var tagsRawData = Data()
+        data += builderAddress
         
-        tagsRawData
-            .reserveCapacity(builderTags.count.roundedUp(toMultiplesOf: 4))
-        
-        tagsRawData = builderTags
-            .reduce(Data()) { $0 + $1.rawData }
-        
+        let tagsRawData = builderTags.reduce(
+            Data(capacity: builderTags.count.roundedUp(toMultiplesOf: 4))
+        ) {
+            $0 + $1.rawData
+        }
         data += Self.fourNullBytePadded(tagsRawData)
         
         data += builderValuesChunk

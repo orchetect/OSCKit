@@ -6,7 +6,7 @@
 #if shouldTestCurrentPlatform
 
 import XCTest
-import OSCKitCore
+@testable import OSCKitCore
 import SwiftRadix
 import SwiftASCII
 
@@ -16,41 +16,41 @@ final class OSCMessage_Integrity_Tests: XCTestCase {
     
     func testInitAddress() {
         // check that address and path components inits successfully create
-        // correct OSCAddress
+        // correct OSCAddressPattern
         
         XCTAssertEqual(
-            OSCMessage(address: "/container1/container2").address.stringValue,
+            OSCMessage(address: "/container1/container2").addressPattern.stringValue,
             "/container1/container2"
         )
         
         XCTAssertEqual(
-            OSCMessage(address: String("/container1/container2")).address.stringValue,
+            OSCMessage(address: String("/container1/container2")).addressPattern.stringValue,
             "/container1/container2"
         )
         
         XCTAssertEqual(
-            OSCMessage(address: ASCIIString("/container1/container2")).address.stringValue,
+            OSCMessage(asciiAddress: ASCIIString("/container1/container2")).addressPattern.stringValue,
             "/container1/container2"
         )
         
         XCTAssertEqual(
-            OSCMessage(address: OSCAddress("/container1/container2")).address.stringValue,
+            OSCMessage(address: OSCAddressPattern("/container1/container2")).addressPattern.stringValue,
             "/container1/container2"
         )
         
         XCTAssertEqual(
-            OSCMessage(address: ["container1", "container2"]).address.stringValue,
+            OSCMessage(address: ["container1", "container2"]).addressPattern.stringValue,
             "/container1/container2"
         )
         
         XCTAssertEqual(
-            OSCMessage(address: [ASCIIString("container1"), ASCIIString("container2")]).address
+            OSCMessage(asciiAddress: [ASCIIString("container1"), ASCIIString("container2")]).addressPattern
                 .stringValue,
             "/container1/container2"
         )
         
         XCTAssertEqual(
-            OSCMessage(address: []).address.stringValue,
+            OSCMessage(address: [String]()).addressPattern.stringValue,
             "/"
         )
     }
@@ -60,16 +60,16 @@ final class OSCMessage_Integrity_Tests: XCTestCase {
         
         // encode
         
-        let msg = OSCMessage(
+        let msg = try OSCMessage(
             address: "/test",
             values: [
-                .int32(123),
-                .float32(123.45),
-                .string("A test string."),
-                .blob(Data([0, 1, 2]))
+                Int32(123),
+                Float32(123.45),
+                String("A test string."),
+                Data([0, 1, 2])
             ]
         )
-        .rawData
+        .rawData()
         
         // decode
         
@@ -77,14 +77,14 @@ final class OSCMessage_Integrity_Tests: XCTestCase {
         
         // just for debug log analysis, if needed
         
-        print("Address:", decoded.address.stringValue.quoted)
-        print("Values:", decoded.values.mapDebugString())
+        print("Address:", decoded.addressPattern.stringValue.quoted)
+        print("Values:", decoded.values)
         
         print("All values decoded:")
         decoded.values.forEach { val in
             switch val {
-            case let .blob(remainingData):
-                print("blob bytes:", remainingData.hex.stringValueArrayLiteral)
+            case let blob as Data:
+                print("blob bytes:", blob.hex.stringValueArrayLiteral)
             default:
                 print(val)
             }
@@ -94,16 +94,16 @@ final class OSCMessage_Integrity_Tests: XCTestCase {
         
         XCTAssertEqual(decoded.values.count, 4)
         
-        guard case let .int32(val1) = decoded.values[safe: 0] else { XCTFail(); return }
+        let val1 = try XCTUnwrap(decoded.values[safe: 0] as? Int32)
         XCTAssertEqual(val1, 123)
         
-        guard case let .float32(val2) = decoded.values[safe: 1] else { XCTFail(); return }
+        let val2 = try XCTUnwrap(decoded.values[safe: 1] as? Float32)
         XCTAssertEqual(val2, 123.45)
         
-        guard case let .string(val3) = decoded.values[safe: 2] else { XCTFail(); return }
+        let val3 = try XCTUnwrap(decoded.values[safe: 2] as? String)
         XCTAssertEqual(val3, "A test string.")
         
-        guard case let .blob(val4) = decoded.values[safe: 3] else { XCTFail(); return }
+        let val4 = try XCTUnwrap(decoded.values[safe: 3] as? Data)
         XCTAssertEqual(val4, Data([0, 1, 2]))
     }
 }

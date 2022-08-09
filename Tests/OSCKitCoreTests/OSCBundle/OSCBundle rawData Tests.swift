@@ -13,7 +13,7 @@ final class OSCBundle_rawData_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
-    func testEmpty() {
+    func testEmpty() throws {
         // tests an empty OSC bundle
         
         // manually build a raw OSC bundle
@@ -29,17 +29,17 @@ final class OSCBundle_rawData_Tests: XCTestCase {
         
         // decode
         
-        let bundle = try! OSCBundle(from: knownGoodOSCRawBytes.remainingData)
+        let bundle = try OSCBundle(from: knownGoodOSCRawBytes.data)
         
         XCTAssertEqual(bundle.timeTag.rawValue, 1)
         XCTAssertEqual(bundle.elements.count, 0)
         
         // re-encode
         
-        XCTAssertEqual(bundle.rawData, knownGoodOSCRawBytes.remainingData)
+        XCTAssertEqual(try bundle.rawData(), knownGoodOSCRawBytes.data)
     }
     
-    func testSingleOSCMessage() {
+    func testSingleOSCMessage() throws {
         // tests an OSC bundle, with one message containing an int32 value
         
         // manually build a raw OSC bundle
@@ -69,20 +69,20 @@ final class OSCBundle_rawData_Tests: XCTestCase {
         
         // decode
         
-        let bundle = try! OSCBundle(from: knownGoodOSCRawBytes.remainingData)
+        let bundle = try OSCBundle(from: knownGoodOSCRawBytes.data)
         
         XCTAssertEqual(bundle.timeTag.rawValue, 1)
         XCTAssertEqual(bundle.elements.count, 1)
         
-        guard case .message(let msg) = bundle.elements.first else { XCTFail() ; return }
-        XCTAssertEqual(msg.address, "/testaddress")
+        let msg = try XCTUnwrap(bundle.elements.first as? OSCMessage)
+        XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
-        guard case .int32(let val) = msg.values.first else { XCTFail() ; return }
+        let val = try XCTUnwrap(msg.values.first as? Int32)
         XCTAssertEqual(val, 255)
         
         // re-encode
         
-        XCTAssertEqual(bundle.rawData, knownGoodOSCRawBytes.remainingData)
+        XCTAssertEqual(try bundle.rawData(), knownGoodOSCRawBytes.data)
     }
 }
 // swiftformat:enable all

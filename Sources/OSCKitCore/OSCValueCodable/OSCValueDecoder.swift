@@ -20,8 +20,10 @@ public struct OSCValueDecoder {
     var pos: Int = 0
     
     /// Initialize with default context or custom context.
-    init(data: Data,
-         context: OSCSerialization? = nil) {
+    init(
+        data: Data,
+        context: OSCSerialization? = nil
+    ) {
         self.data = data
         self.context = context ?? defaultContextSingleton
     }
@@ -38,9 +40,9 @@ extension OSCValueDecoder {
     ///
     /// - Throws: Error if position is advanced past the end of the available number of bytes.
     public mutating func advancePosition(by numberOfBytes: Int) throws {
-        guard numberOfBytes < remainingByteCount else {
+        guard numberOfBytes <= remainingByteCount else {
             throw OSCDecodeError.malformed(
-                "Attempted to advance byte read position past end of available bytes."
+                "Attempted to advance byte read position past end of available bytes. \(remainingByteCount) bytes remain but \(numberOfBytes) were advanced."
             )
         }
         pos += numberOfBytes
@@ -51,13 +53,15 @@ extension OSCValueDecoder {
     /// Read an encoded `Int32` value.
     /// (32-bit big-endian two's complement integer.)
     public mutating func readInt32() throws -> Int32 {
-        if remainingData.count < 4 {
+        if remainingByteCount < 4 {
             throw OSCDecodeError.malformed(
                 "Not enough bytes while reading Int32 data chunk."
             )
         }
         
-        let chunk = remainingData.subdata(in: 0 ..< 4)
+        let chunk = remainingData.subdata(
+            in: remainingData.startIndex ..<  remainingData.startIndex.advanced(by: 4)
+        )
         
         guard let value = chunk.toInt32(from: .bigEndian)
         else {
@@ -75,13 +79,15 @@ extension OSCValueDecoder {
     /// Read an encoded `Int64` value.
     /// (64-bit big-endian two's complement integer.)
     public mutating func readInt64() throws -> Int64 {
-        if remainingData.count < 8 {
+        if remainingByteCount < 8 {
             throw OSCDecodeError.malformed(
                 "Not enough bytes while reading Int64 data chunk."
             )
         }
         
-        let chunk = remainingData.subdata(in: 0 ..< 8)
+        let chunk = remainingData.subdata(
+            in: remainingData.startIndex ..< remainingData.startIndex.advanced(by: 8)
+        )
         
         guard let value = chunk.toInt64(from: .bigEndian)
         else {
@@ -99,13 +105,15 @@ extension OSCValueDecoder {
     /// Read an encoded `UInt64` value.
     /// (64-bit big-endian fixed-point integer.)
     public mutating func readUInt64() throws -> UInt64 {
-        if remainingData.count < 8 {
+        if remainingByteCount < 8 {
             throw OSCDecodeError.malformed(
                 "Not enough bytes while reading UInt64 data chunk."
             )
         }
         
-        let chunk = remainingData.subdata(in: 0 ..< 8)
+        let chunk = remainingData.subdata(
+            in: remainingData.startIndex ..< remainingData.startIndex.advanced(by: 8)
+        )
         
         guard let value = chunk.toUInt64(from: .bigEndian)
         else {
@@ -124,13 +132,15 @@ extension OSCValueDecoder {
     /// a.k.a. "Float"
     /// (32-bit big-endian IEEE 754 floating point number)
     public mutating func readFloat32() throws -> Float32 {
-        if remainingData.count < 4 {
+        if remainingByteCount < 4 {
             throw OSCDecodeError.malformed(
                 "Not enough bytes while reading Float32 data chunk."
             )
         }
         
-        let chunk = remainingData.subdata(in: 0 ..< 4)
+        let chunk = remainingData.subdata(
+            in: remainingData.startIndex ..< remainingData.startIndex.advanced(by: 4)
+        )
         
         guard let value = chunk.toFloat32(from: .bigEndian)
         else {
@@ -149,13 +159,15 @@ extension OSCValueDecoder {
     /// a.k.a. "Float64"
     /// (64-bit ("double") IEEE 754 floating point number)
     public mutating func readDouble() throws -> Double {
-        if remainingData.count < 8 {
+        if remainingByteCount < 8 {
             throw OSCDecodeError.malformed(
                 "Not enough bytes while reading Double data chunk."
             )
         }
         
-        let chunk = remainingData.subdata(in: 0 ..< 8)
+        let chunk = remainingData.subdata(
+            in: remainingData.startIndex ..< remainingData.startIndex.advanced(by: 8)
+        )
         
         guard let value = chunk.toDouble(from: .bigEndian)
         else {
@@ -175,12 +187,7 @@ extension OSCValueDecoder {
     /// The string is validated and an error is thrown if it contains non-ASCII characters which may be a sign the data is malformed. (OSC string encoding allows only ASCII characters.)
     public mutating func read4ByteAlignedNullTerminatedASCIIString() throws -> String {
         // read4ByteAlignedNullTerminatedData takes care of data size validation so we don't need to do it here
-        guard let chunk = try? read4ByteAlignedNullTerminatedData()
-        else {
-            throw OSCDecodeError.malformed(
-                "Not enough bytes in 4-byte aligned null-terminated ASCII string chunk."
-            )
-        }
+        let chunk = try read4ByteAlignedNullTerminatedData()
         
         guard let value = ASCIIString(exactly: chunk.data)?.stringValue
         else {
@@ -197,14 +204,18 @@ extension OSCValueDecoder {
     /// Read a 4-byte aligned null-terminated data chunk.
     public mutating func read4ByteAlignedNullTerminatedData() throws -> Data {
         // ensure minimum of 4 bytes to work with
-        if remainingData.count < 4 {
+        if remainingByteCount < 4 {
             throw OSCDecodeError.malformed(
                 "Not enough bytes in 4-byte aligned null-terminated data chunk."
             )
         }
         
+        let data = remainingData
+        
         // check for first null
-        guard let nullFound: Int = remainingData.range(of: Data([0x00]))?.lowerBound
+        guard let nullIndex = data
+            .range(of: Data([0x00]))?
+            .lowerBound
         else {
             throw OSCDecodeError.malformed(
                 "4-byte aligned null-terminated data chunk does not terminate in null bytes as expected."
@@ -212,17 +223,19 @@ extension OSCValueDecoder {
         }
         
         // calculate theoretical position after first null that is a multiple of 4 bytes
-        let byteCount = nullFound + (4 - (nullFound % 4))
+        let nullIndexOffsetToZeroStart = nullIndex - data.startIndex
+        let byteCount = nullIndexOffsetToZeroStart + (4 - (nullIndexOffsetToZeroStart % 4))
+        let byteCountIndexOffset = byteCount + data.startIndex
         
         // check to see if there actually are enough bytes
-        guard remainingData.count >= byteCount else {
+        guard data.count >= byteCount else {
             throw OSCDecodeError.malformed(
                 "Not enough bytes in 4-byte aligned null-terminated data chunk."
             )
         }
         
         // check to see if any pad bytes are all nulls
-        guard remainingData[nullFound ..< byteCount]
+        guard data[nullIndex ..< byteCountIndexOffset]
             .allSatisfy({ $0 == 0x00 })
         else {
             throw OSCDecodeError.malformed(
@@ -232,7 +245,7 @@ extension OSCValueDecoder {
         
         try advancePosition(by: byteCount)
         
-        return remainingData.subdata(in: 0 ..< nullFound)
+        return data.subdata(in: data.startIndex ..< nullIndex)
     }
     
     /// Read an OSC blob data chunk.
@@ -244,18 +257,25 @@ extension OSCValueDecoder {
             )
         }
         
+        let data = remainingData
+        
         // blob OSC chunk length
-        let blobRawSize = (remainingData.count - 4).roundedUp(toMultiplesOf: 4)
+        let blobRawSize = data.count.roundedUp(toMultiplesOf: 4)
         
         // check if data is indeed at least as long as the int32 length claims it is
-        if (blobRawSize > remainingData.count - 4) {
+        if blobRawSize > data.count {
             throw OSCDecodeError.malformed(
                 "Not enough bytes in 4-byte aligned null-terminated blob data chunk."
             )
         }
         
         // check to see if any pad bytes are all nulls
-        guard data[4 + blobSize ..< 4 + blobRawSize]
+        
+        guard data
+            .subdata(
+                in: data.startIndex.advanced(by: blobSize)
+                    ..< data.startIndex.advanced(by: blobRawSize)
+            )
             .allSatisfy({ $0 == 0x00 })
         else {
             throw OSCDecodeError.malformed(
@@ -263,7 +283,10 @@ extension OSCValueDecoder {
             )
         }
         
-        let chunk = data.subdata(in: 4 ..< 4 + blobSize)
+        let chunk = data.subdata(
+            in: data.startIndex
+            ..< data.startIndex.advanced(by: blobSize)
+        )
         
         let byteCount = blobRawSize
         try advancePosition(by: byteCount)
@@ -281,8 +304,12 @@ extension OSCValueDecoder {
             )
         }
         
+        let chunk = remainingData.subdata(
+            in: remainingData.startIndex ..< remainingData.startIndex.advanced(by: byteLength)
+        )
+        
         try advancePosition(by: byteLength)
         
-        return remainingData[0 ..< byteLength]
+        return chunk
     }
 }
