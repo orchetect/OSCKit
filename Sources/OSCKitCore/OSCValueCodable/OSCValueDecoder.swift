@@ -298,9 +298,9 @@ extension OSCValueDecoder {
     public mutating func read(byteLength: Int) throws -> Data {
         guard byteLength > 0 else { return Data() }
         
-        guard byteLength < remainingByteCount else {
+        guard byteLength <= remainingByteCount else {
             throw OSCDecodeError.malformed(
-                "Not enough bytes remain in data stream. Attempted to read \(byteLength) bytes "
+                "Not enough bytes remain in data stream. Attempted to read \(byteLength) bytes but only \(remainingData) bytes remain."
             )
         }
         
