@@ -1,5 +1,5 @@
 //
-//  Pattern Token Tests.swift
+//  Component Token Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
@@ -8,12 +8,12 @@
 import XCTest
 @testable import OSCKitCore
 
-final class OSCAddress_Pattern_Token_Tests: XCTestCase {
+final class OSCAddressPattern_Component_Token_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
     func testLiteral_Empty() {
-        let t = OSCAddress.Pattern.Token.Literal(literal: "")
+        let t = OSCAddressPattern.Component.Token.Literal(literal: "")
         
         XCTAssertTrue(t.isExhausted)
         
@@ -24,7 +24,7 @@ final class OSCAddress_Pattern_Token_Tests: XCTestCase {
     }
     
     func testLiteral_Basic() {
-        let t = OSCAddress.Pattern.Token.Literal(literal: "abc")
+        let t = OSCAddressPattern.Component.Token.Literal(literal: "abc")
         
         XCTAssertTrue(t.isExhausted)
         
@@ -37,7 +37,7 @@ final class OSCAddress_Pattern_Token_Tests: XCTestCase {
     }
     
     func testZeroOrMoreWildcard() {
-        var t = OSCAddress.Pattern.Token.ZeroOrMoreWildcard()
+        var t = OSCAddressPattern.Component.Token.ZeroOrMoreWildcard()
         
         XCTAssertFalse(t.isExhausted)
         XCTAssertEqual(t.matches(string: ""), .match(length: 0))
@@ -91,7 +91,7 @@ final class OSCAddress_Pattern_Token_Tests: XCTestCase {
     }
     
     func testSingleCharWildcard() {
-        let t = OSCAddress.Pattern.Token.SingleCharWildcard()
+        let t = OSCAddressPattern.Component.Token.SingleCharWildcard()
         
         XCTAssertTrue(t.isExhausted)
         
@@ -104,7 +104,7 @@ final class OSCAddress_Pattern_Token_Tests: XCTestCase {
     }
     
     func testSingleChar_Empty() {
-        let t = OSCAddress.Pattern.Token.SingleChar(
+        let t = OSCAddressPattern.Component.Token.SingleChar(
             isExclusion: false,
             groups: []
         )
@@ -120,7 +120,7 @@ final class OSCAddress_Pattern_Token_Tests: XCTestCase {
     }
     
     func testSingleChar_Single() {
-        let t = OSCAddress.Pattern.Token.SingleChar(
+        let t = OSCAddressPattern.Component.Token.SingleChar(
             isExclusion: false,
             groups: [.single("a")]
         )
@@ -140,7 +140,7 @@ final class OSCAddress_Pattern_Token_Tests: XCTestCase {
     }
     
     func testSingleChar_Range() {
-        let t = OSCAddress.Pattern.Token.SingleChar(
+        let t = OSCAddressPattern.Component.Token.SingleChar(
             isExclusion: false,
             groups: [.asciiRange(start: "b", end: "y")]
         )
@@ -163,7 +163,7 @@ final class OSCAddress_Pattern_Token_Tests: XCTestCase {
     }
     
     func testSingleChar_SingleAndRange() {
-        let t = OSCAddress.Pattern.Token.SingleChar(
+        let t = OSCAddressPattern.Component.Token.SingleChar(
             isExclusion: false,
             groups: [
                 .single("a"),
@@ -194,7 +194,7 @@ final class OSCAddress_Pattern_Token_Tests: XCTestCase {
     }
     
     func testSingleChar_Empty_isExclusion() {
-        let t = OSCAddress.Pattern.Token.SingleChar(
+        let t = OSCAddressPattern.Component.Token.SingleChar(
             isExclusion: true,
             groups: []
         )
@@ -210,7 +210,7 @@ final class OSCAddress_Pattern_Token_Tests: XCTestCase {
     }
     
     func testSingleChar_Single_isExclusion() {
-        let t = OSCAddress.Pattern.Token.SingleChar(
+        let t = OSCAddressPattern.Component.Token.SingleChar(
             isExclusion: true,
             groups: [.single("a")]
         )
@@ -230,7 +230,7 @@ final class OSCAddress_Pattern_Token_Tests: XCTestCase {
     }
     
     func testSingleChar_Range_isExclusion() {
-        let t = OSCAddress.Pattern.Token.SingleChar(
+        let t = OSCAddressPattern.Component.Token.SingleChar(
             isExclusion: true,
             groups: [.asciiRange(start: "b", end: "y")]
         )
@@ -253,7 +253,7 @@ final class OSCAddress_Pattern_Token_Tests: XCTestCase {
     }
     
     func testSingleChar_SingleAndRange_isExclusion() {
-        let t = OSCAddress.Pattern.Token.SingleChar(
+        let t = OSCAddressPattern.Component.Token.SingleChar(
             isExclusion: true,
             groups: [
                 .single("a"),
@@ -284,7 +284,7 @@ final class OSCAddress_Pattern_Token_Tests: XCTestCase {
     }
     
     func testStrings_Empty() {
-        let t = OSCAddress.Pattern.Token.Strings(strings: [])
+        let t = OSCAddressPattern.Component.Token.Strings(strings: [])
         
         XCTAssertTrue(t.isExhausted)
         
@@ -296,7 +296,7 @@ final class OSCAddress_Pattern_Token_Tests: XCTestCase {
     }
     
     func testStrings_Single() {
-        let t = OSCAddress.Pattern.Token.Strings(strings: ["abc"])
+        let t = OSCAddressPattern.Component.Token.Strings(strings: ["abc"])
         
         XCTAssertTrue(t.isExhausted)
         
@@ -311,7 +311,7 @@ final class OSCAddress_Pattern_Token_Tests: XCTestCase {
     }
     
     func testStrings_Multiple() {
-        let t = OSCAddress.Pattern.Token.Strings(strings: ["wxyz", "abc"])
+        let t = OSCAddressPattern.Component.Token.Strings(strings: ["wxyz", "abc"])
         
         XCTAssertTrue(t.isExhausted)
         
