@@ -10,15 +10,15 @@ import Foundation
 // MARK: - OSC Encoding
 
 extension Character: OSCValue {
-    public static let oscCoreType: OSCValueMask.Token = .character
+    public static let oscValueToken: OSCValueToken = .character
 }
 
-extension Character: OSCValueCodable { }
-
-extension Character: OSCValueEncodable {
+extension Character: OSCValueCodable {
     static let oscTag: Character = "c"
     public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
-    
+}
+
+extension Character: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
         (

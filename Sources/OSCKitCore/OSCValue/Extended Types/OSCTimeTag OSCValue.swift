@@ -7,15 +7,15 @@ import Foundation
 @_implementationOnly import OTCore
 
 extension OSCTimeTag: OSCValue {
-    public static let oscCoreType: OSCValueMask.Token = .timeTag
+    public static let oscValueToken: OSCValueToken = .timeTag
 }
 
-extension OSCTimeTag: OSCValueCodable { }
-
-extension OSCTimeTag: OSCValueEncodable {
+extension OSCTimeTag: OSCValueCodable {
     static let oscTag: Character = "t"
     public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
-    
+}
+
+extension OSCTimeTag: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
         (

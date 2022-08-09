@@ -10,16 +10,16 @@ private let oscTypeTagTrue: Character = "T"
 private let oscTypeTagFalse: Character = "F"
 
 extension Bool: OSCValue {
-    public static let oscCoreType: OSCValueMask.Token = .bool
+    public static let oscValueToken: OSCValueToken = .bool
 }
 
-extension Bool: OSCValueCodable { }
-
-extension Bool: OSCValueEncodable {
+extension Bool: OSCValueCodable {
     public static let oscTagIdentity: OSCValueTagIdentity = .variable(
         [oscTypeTagTrue, oscTypeTagFalse]
     )
-    
+}
+
+extension Bool: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueVariableEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
         (

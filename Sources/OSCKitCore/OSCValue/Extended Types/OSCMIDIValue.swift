@@ -74,15 +74,15 @@ extension OSCMIDIValue: Codable {
 // MARK: - OSC Encoding
 
 extension OSCMIDIValue: OSCValue {
-    public static let oscCoreType: OSCValueMask.Token = .midi
+    public static let oscValueToken: OSCValueToken = .midi
 }
 
-extension OSCMIDIValue: OSCValueCodable { }
-
-extension OSCMIDIValue: OSCValueEncodable {
+extension OSCMIDIValue: OSCValueCodable {
     static let oscTag: Character = "m"
     public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
-    
+}
+
+extension OSCMIDIValue: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
         (

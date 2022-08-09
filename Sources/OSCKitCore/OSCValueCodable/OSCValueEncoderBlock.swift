@@ -6,34 +6,12 @@
 import Foundation
 
 public protocol OSCValueEncoderBlock {
-    associatedtype OSCEncoded: OSCValue
+    associatedtype OSCEncoded: OSCValueEncodable
 }
 
-// MARK: - Static Constructors
+// MARK: - Encoder Blocks
 
-extension OSCValueEncoderBlock {
-    public static func atomic(
-        _ block: @escaping OSCValueAtomicEncoder<OSCEncoded>.Block
-    ) -> OSCValueAtomicEncoder<OSCEncoded> {
-        .init(block)
-    }
-    
-    public static func variable(
-        _ block: @escaping OSCValueVariableEncoder<OSCEncoded>.Block
-    ) -> OSCValueVariableEncoder<OSCEncoded> {
-        .init(block)
-    }
-    
-    public static func variadic(
-        _ block: @escaping OSCValueVariadicEncoder<OSCEncoded>.Block
-    ) -> OSCValueVariadicEncoder<OSCEncoded> {
-        .init(block)
-    }
-}
-
-// MARK: - Encoders
-
-public struct OSCValueAtomicEncoder<OSCEncoded: OSCValue>: OSCValueEncoderBlock {
+public struct OSCValueAtomicEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEncoderBlock {
     public typealias Block = (
         _ value: OSCEncoded
     ) throws -> (
@@ -48,7 +26,7 @@ public struct OSCValueAtomicEncoder<OSCEncoded: OSCValue>: OSCValueEncoderBlock 
     }
 }
 
-public struct OSCValueVariableEncoder<OSCEncoded: OSCValue>: OSCValueEncoderBlock {
+public struct OSCValueVariableEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEncoderBlock {
     public typealias Block = (
         _ value: OSCEncoded
     ) throws -> (
@@ -63,7 +41,7 @@ public struct OSCValueVariableEncoder<OSCEncoded: OSCValue>: OSCValueEncoderBloc
     }
 }
 
-public struct OSCValueVariadicEncoder<OSCEncoded: OSCValue>: OSCValueEncoderBlock {
+public struct OSCValueVariadicEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEncoderBlock {
     public typealias Block = (
         _ value: OSCEncoded
     ) throws -> (

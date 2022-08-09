@@ -45,6 +45,7 @@ extension OSCTimeTag: CustomStringConvertible {
         if rawValue == 1 {
             return "1 (immediate)"
         }
+        
         switch era {
         case 0:
             return "\(rawValue)"

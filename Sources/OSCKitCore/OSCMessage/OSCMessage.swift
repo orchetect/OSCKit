@@ -9,11 +9,11 @@ import Foundation
 
 /// OSC Message.
 public struct OSCMessage: OSCObject {
-    /// OSC message address.
-    public let address: OSCAddress
+    /// OSC message address pattern.
+    public let addressPattern: OSCAddressPattern
     
-    /// OSC values contained within the message.
-    public let values: [any OSCValue]
+    /// OSC values (arguments) contained within the message.
+    public let values: OSCValues
     
     public let _rawData: Data?
 }
@@ -22,8 +22,8 @@ public struct OSCMessage: OSCObject {
 
 extension OSCMessage: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        lhs.address == rhs.address &&
-        lhs.values == rhs.values
+        lhs.addressPattern == rhs.addressPattern &&
+            lhs.values == rhs.values
     }
 }
 
@@ -31,7 +31,7 @@ extension OSCMessage: Equatable {
 
 extension OSCMessage: Hashable {
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(address.stringValue)
+        hasher.combine(addressPattern.stringValue)
         values.hash(into: &hasher)
     }
 }
@@ -41,15 +41,15 @@ extension OSCMessage: Hashable {
 extension OSCMessage: CustomStringConvertible {
     public var description: String {
         values.isEmpty
-            ? "OSCMessage(address: \"\(address)\")"
-            : "OSCMessage(address: \"\(address)\", values: \(values))"
+            ? "OSCMessage(\(addressPattern.stringValue.quoted))"
+            : "OSCMessage(\(addressPattern.stringValue.quoted), values: \(values))"
     }
     
     /// Same as `description` but values are separated with new-line characters and indented.
     public var descriptionPretty: String {
         values.isEmpty
-            ? "OSCMessage(address: \"\(address)\")"
-            : "OSCMessage(address: \"\(address)\") Values:\n  "
+            ? "OSCMessage(\(addressPattern.stringValue.quoted))"
+            : "OSCMessage(\(addressPattern.stringValue.quoted)) Values:\n  "
                 + values.map { "\($0)" }.joined(separator: "\n  ")
                 .trimmed
     }
@@ -66,7 +66,7 @@ extension OSCMessage {
 
 // TODO: fix this later. needs Array implementation.
 
-//extension OSCMessage: Codable {
+// extension OSCMessage: Codable {
 //    enum CodingKeys: String, CodingKey {
 //        case address
 //        case values
@@ -74,8 +74,8 @@ extension OSCMessage {
 //
 //    public init(from decoder: Decoder) throws {
 //        let container = try decoder.container(keyedBy: CodingKeys.self)
-//        let address = try container.decode(OSCAddress.self, forKey: .address)
-//        let values = try container.decode([any OSCValue].self, forKey: .values)
+//        let address = try container.decode(OSCAddressPattern.self, forKey: .address)
+//        let values = try container.decode(OSCValues.self, forKey: .values)
 //        self.init(address: address, values: values)
 //    }
 //
@@ -84,4 +84,4 @@ extension OSCMessage {
 //        try container.encode(address, forKey: .address)
 //        try container.encode(values, forKey: .values)
 //    }
-//}
+// }

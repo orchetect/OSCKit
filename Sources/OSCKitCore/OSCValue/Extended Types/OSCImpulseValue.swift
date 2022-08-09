@@ -33,15 +33,15 @@ extension OSCImpulseValue: Codable { }
 // MARK: - OSC Encoding
 
 extension OSCImpulseValue: OSCValue {
-    public static let oscCoreType: OSCValueMask.Token = .impulse
+    public static let oscValueToken: OSCValueToken = .impulse
 }
 
-extension OSCImpulseValue: OSCValueCodable { }
-
-extension OSCImpulseValue: OSCValueEncodable {
+extension OSCImpulseValue: OSCValueCodable {
     static let oscTag: Character = "I"
     public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
-    
+}
+
+extension OSCImpulseValue: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
         (tag: oscTag, data: nil)

@@ -5,25 +5,39 @@
 
 import Foundation
 
-extension OSCObject {
+extension OSCObject where Self == OSCMessage {
     /// OSC Message.
     @inlinable
     public static func message(
-        address: OSCAddress,
-        values: [any OSCValue] = []
-    ) -> OSCMessage {
+        address: String,
+        values: OSCValues = []
+    ) -> Self {
+        OSCMessage(
+            address: OSCAddressPattern(address),
+            values: values
+        )
+    }
+    
+    /// OSC Message.
+    @inlinable
+    public static func message(
+        address: OSCAddressPattern,
+        values: OSCValues = []
+    ) -> Self {
         OSCMessage(
             address: address,
             values: values
         )
     }
-    
+}
+
+extension OSCObject where Self == OSCBundle {
     /// OSC Bundle.
     @inlinable
     public static func bundle(
         elements: [any OSCObject],
         timeTag: OSCTimeTag? = nil
-    ) -> OSCBundle {
+    ) -> Self {
         OSCBundle(
             elements: elements,
             timeTag: timeTag

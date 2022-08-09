@@ -6,7 +6,7 @@
 import Foundation
 
 public protocol OSCValueDecodable {
-    associatedtype OSCDecoded: OSCValue
+    associatedtype OSCDecoded: OSCValueDecodable
     associatedtype OSCValueDecodingBlock: OSCValueDecoderBlock where OSCValueDecodingBlock.OSCDecoded == OSCDecoded
     static var oscDecoding: OSCValueDecodingBlock { get }
 }

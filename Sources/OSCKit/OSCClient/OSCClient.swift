@@ -14,11 +14,11 @@ public class OSCClient: NSObject {
     }
     
     public func send(
-        _ oscObject: OSCObject,
+        _ oscObject: any OSCObject,
         to host: String,
         port: UInt16 = 8000
-    ) {
-        let data = oscObject.rawData
+    ) throws {
+        let data = try oscObject.rawData()
         
         udpClient.send(
             data,

@@ -7,21 +7,21 @@
 import OSCKit
 
 class OSCReceiver {
-    private let oscDispatcher = OSCDispatcher()
+    private let addressSpace = OSCAddressSpace()
     
-    private let idMethodA: OSCDispatcher.MethodID
-    private let idMethodB: OSCDispatcher.MethodID
-    private let idMethodC: OSCDispatcher.MethodID
+    private let idMethodA: OSCAddressSpace.MethodID
+    private let idMethodB: OSCAddressSpace.MethodID
+    private let idMethodC: OSCAddressSpace.MethodID
     
     public init() {
         // register local OSC methods and store the ID tokens once before receiving OSC messages
-        idMethodA = oscDispatcher.register(address: "/methodA")
-        idMethodB = oscDispatcher.register(address: "/some/address/methodB")
-        idMethodC = oscDispatcher.register(address: "/some/address/methodC")
+        idMethodA = addressSpace.register(address: "/methodA")
+        idMethodB = addressSpace.register(address: "/some/address/methodB")
+        idMethodC = addressSpace.register(address: "/some/address/methodC")
     }
     
-    public func handle(oscMessage: OSCMessage, timeTag: OSCTimeTag) throws {
-        let ids = oscDispatcher.methods(matching: oscMessage.address)
+    public func handle(message: OSCMessage, timeTag: OSCTimeTag) throws {
+        let ids = addressSpace.methods(matching: message.address)
         
         guard !ids.isEmpty else {
             // No matches against any registered local OSC addresses.
@@ -32,15 +32,15 @@ class OSCReceiver {
         try ids.forEach { id in
             switch id {
             case idMethodA:
-                let value = try oscMessage.values.masked(String.self)
+                let value = try message.values.masked(String.self)
                 performMethodA(value)
                 
             case idMethodB:
-                let values = try oscMessage.values.masked(String.self, Int.self)
+                let values = try message.values.masked(String.self, Int.self)
                 performMethodB(values.0, values.1)
                 
             case idMethodC:
-                let values = try oscMessage.values.masked(String.self, Double?.self)
+                let values = try message.values.masked(String.self, Double?.self)
                 performMethodC(values.0, values.1)
                 
             default:

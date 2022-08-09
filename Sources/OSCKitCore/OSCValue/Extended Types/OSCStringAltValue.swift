@@ -36,15 +36,15 @@ extension OSCStringAltValue: Codable { }
 // MARK: - OSC Encoding
 
 extension OSCStringAltValue: OSCValue {
-    public static let oscCoreType: OSCValueMask.Token = .stringAlt
+    public static let oscValueToken: OSCValueToken = .stringAlt
 }
 
-extension OSCStringAltValue: OSCValueCodable { }
-
-extension OSCStringAltValue: OSCValueEncodable {
+extension OSCStringAltValue: OSCValueCodable {
     static let oscTag: Character = "S"
     public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
+}
 
+extension OSCStringAltValue: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
         let encoded = try String.oscEncoding.block(value.string)

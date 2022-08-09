@@ -6,16 +6,12 @@
 import Foundation
 
 public protocol OSCValueDecoderBlock {
-    associatedtype OSCDecoded: OSCValue
+    associatedtype OSCDecoded: OSCValueDecodable
 }
 
-// MARK: - Static Constructors
+// MARK: - Decoder Blocks
 
-// TODO: add these
-
-// MARK: - Decoders
-
-public struct OSCValueAtomicDecoder<OSCDecoded: OSCValue>: OSCValueDecoderBlock {
+public struct OSCValueAtomicDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDecoderBlock {
     public typealias Block = (
         _ decoder: inout OSCValueDecoder
     ) throws -> OSCDecoded
@@ -27,7 +23,7 @@ public struct OSCValueAtomicDecoder<OSCDecoded: OSCValue>: OSCValueDecoderBlock 
     }
 }
 
-public struct OSCValueVariableDecoder<OSCDecoded: OSCValue>: OSCValueDecoderBlock {
+public struct OSCValueVariableDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDecoderBlock {
     public typealias Block = (
         _ tag: Character,
         _ decoder: inout OSCValueDecoder
@@ -40,11 +36,11 @@ public struct OSCValueVariableDecoder<OSCDecoded: OSCValue>: OSCValueDecoderBloc
     }
 }
 
-public struct OSCValueVariadicDecoder<OSCDecoded: OSCValue>: OSCValueDecoderBlock {
+public struct OSCValueVariadicDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDecoderBlock {
     public typealias Block = (
         _ tags: [Character],
         _ decoder: inout OSCValueDecoder
-    ) throws -> (tagCount: Int, OSCDecoded)
+    ) throws -> (tagCount: Int, value: OSCDecoded)
     
     public let block: Block
     

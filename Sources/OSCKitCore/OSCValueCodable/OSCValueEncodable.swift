@@ -6,7 +6,7 @@
 import Foundation
 
 public protocol OSCValueEncodable {
-    associatedtype OSCEncoded: OSCValue
+    associatedtype OSCEncoded: OSCValueEncodable
     associatedtype OSCValueEncodingBlock: OSCValueEncoderBlock where OSCValueEncodingBlock.OSCEncoded == OSCEncoded
     static var oscTagIdentity: OSCValueTagIdentity { get }
     static var oscEncoding: OSCValueEncodingBlock { get }

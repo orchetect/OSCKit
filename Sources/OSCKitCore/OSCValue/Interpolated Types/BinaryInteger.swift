@@ -40,9 +40,9 @@ extension Int16: OSCInterpolatedValue {
     public typealias CoreOSCValue = Int32
 }
 
-// Int32 is a core type
+// `Int32` is already a core type
 
-// Int64 is a extended type
+// `Int64` is already an extended type
 
 extension UInt: OSCInterpolatedValue {
     public typealias CoreOSCValue = Int32

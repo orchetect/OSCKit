@@ -20,9 +20,8 @@ final class OSCServer_Tests: XCTestCase {
         }
         
         let bundle = OSCBundle(elements: [])
-        let payload: OSCObject = .bundle(bundle)
         
-        try server.handle(payload: payload)
+        try server.handle(payload: bundle)
         
         wait(for: [exp], timeout: 1.0)
     }

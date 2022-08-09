@@ -4,7 +4,6 @@
 //
 
 public enum OSCEncodeError: Error {
-    // TODO: add cases as needed
-    
     case general
+    case unexpectedEncoder
 }

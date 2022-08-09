@@ -13,55 +13,55 @@ extension OSCMessage {
     @inlinable @_disfavoredOverload
     public init(
         address: String,
-        values: [any OSCValue] = []
+        values: OSCValues = []
     ) {
-        self.address = OSCAddress(address)
+        self.addressPattern = OSCAddressPattern(address)
         self.values = values
         self._rawData = nil
     }
+    
+    /// Create an OSC message from an `OSCAddressPattern` and zero or more OSC values.
+    @inlinable
+    public init(
+        address: OSCAddressPattern,
+        values: OSCValues = []
+    ) {
+        self.addressPattern = address
+        self.values = values
+        self._rawData = nil
+    }
+    
+    /// Create an OSC message from OSC address path components and zero or more OSC values.
+    /// Empty path components is equivalent to the address of "/".
+    @inlinable
+    public init(
+        address pathComponents: some BidirectionalCollection<some StringProtocol>,
+        values: OSCValues = []
+    ) {
+        self.addressPattern = OSCAddressPattern(pathComponents: pathComponents)
+        self.values = values
+        self._rawData = nil
+    }
+    
+    // MARK: - SwiftASCII typed
     
     /// Create an OSC message from a raw `ASCIIString` address and zero or more OSC values.
-    @_disfavoredOverload
     init(
-        address: ASCIIString,
-        values: [any OSCValue] = []
+        asciiAddress address: ASCIIString,
+        values: OSCValues = []
     ) {
-        self.address = OSCAddress(address)
+        self.addressPattern = OSCAddressPattern(ascii: address)
         self.values = values
         self._rawData = nil
     }
     
-    /// Create an OSC message from an `OSCAddress` and zero or more OSC values.
-    @inlinable
-    public init(
-        address: OSCAddress,
-        values: [any OSCValue] = []
-    ) {
-        self.address = address
-        self.values = values
-        self._rawData = nil
-    }
-    
-    /// Create an OSC message from OSC address path components and zero or more OSC values.
+    /// Create an OSC message from `ASCIIString` OSC address path components and zero or more OSC values.
     /// Empty path components is equivalent to the address of "/".
-    @inlinable
-    public init(
-        address pathComponents: [String],
-        values: [any OSCValue] = []
-    ) {
-        self.address = OSCAddress(pathComponents: pathComponents)
-        self.values = values
-        self._rawData = nil
-    }
-    
-    /// Create an OSC message from OSC address path components and zero or more OSC values.
-    /// Empty path components is equivalent to the address of "/".
-    @_disfavoredOverload
     init(
-        address pathComponents: [ASCIIString],
-        values: [any OSCValue] = []
+        asciiAddress pathComponents: some BidirectionalCollection<ASCIIString>,
+        values: OSCValues = []
     ) {
-        self.address = OSCAddress(pathComponents: pathComponents)
+        self.addressPattern = OSCAddressPattern(asciiPathComponents: pathComponents)
         self.values = values
         self._rawData = nil
     }

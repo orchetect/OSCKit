@@ -33,15 +33,15 @@ extension OSCNullValue: Codable { }
 // MARK: - OSC Encoding
 
 extension OSCNullValue: OSCValue {
-    public static let oscCoreType: OSCValueMask.Token = .null
+    public static let oscValueToken: OSCValueToken = .null
 }
 
-extension OSCNullValue: OSCValueCodable { }
-
-extension OSCNullValue: OSCValueEncodable {
+extension OSCNullValue: OSCValueCodable {
     static let oscTag: Character = "N"
     public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
-    
+}
+
+extension OSCNullValue: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
         (tag: oscTag, data: nil)

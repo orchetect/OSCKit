@@ -9,7 +9,7 @@ extension Data {
     /// A fast test if `Data` appears tor be an OSC message.
     /// (Note: Does NOT do extensive checks to ensure message isn't malformed.)
     @inlinable @_disfavoredOverload
-    public var appearsToBeOSCMessage: Bool {
+    var appearsToBeOSCMessage: Bool {
         // it's possible an OSC address won't start with "/", but it should!
         starts(with: OSCMessage.header)
     }

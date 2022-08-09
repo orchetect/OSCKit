@@ -7,15 +7,15 @@ import Foundation
 @_implementationOnly import OTCore
 
 extension Int32: OSCValue {
-    public static let oscCoreType: OSCValueMask.Token = .int32
+    public static let oscValueToken: OSCValueToken = .int32
 }
 
-extension Int32: OSCValueCodable { }
-
-extension Int32: OSCValueEncodable {
+extension Int32: OSCValueCodable {
     static let oscTag: Character = "i"
     public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
-    
+}
+
+extension Int32: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
         (tag: oscTag, data: value.toData(.bigEndian))

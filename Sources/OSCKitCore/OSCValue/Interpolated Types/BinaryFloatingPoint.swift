@@ -24,13 +24,14 @@ where Self: BinaryFloatingPoint,
     } }
 }
 
-// `Float` is equivalent to `Float32` already
-// extension Float: OSCInterpolatedValue { }
+// `Float` (aka `Float32`) is already a core type
 
+#if !(arch(i386) || arch(x86_64)) // Float16 won't compile for Intel
 @available(macOS 11.0, iOS 14.0, tvOS 14.0, watchOS 7.0, *)
 extension Float16: OSCInterpolatedValue {
     public typealias CoreOSCValue = Float32
 }
+#endif
 
 #if !(arch(arm64) || arch(arm) || os(watchOS)) // Float80 is now removed for ARM
 extension Float80: OSCInterpolatedValue {
