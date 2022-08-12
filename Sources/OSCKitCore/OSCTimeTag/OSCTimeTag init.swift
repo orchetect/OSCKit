@@ -83,3 +83,54 @@ extension OSCTimeTag {
         self.init(future: futureDate)
     }
 }
+
+// MARK: - `any OSCValue` Constructors
+
+extension OSCValue where Self == OSCTimeTag {
+    /// Initialize from a raw OSC Time Tag value.
+    ///
+    /// If the intention is to produce an immediate Time Tag, use `.immediate()` instead.
+    @inlinable
+    public static func timeTag(_ rawValue: Self.RawValue, era: Int = 0) -> Self {
+        OSCTimeTag(rawValue, era: era)
+    }
+    
+    /// Returns a Time Tag with value of `1`, a special time value indicating "now" in the OSC spec.
+    @inlinable
+    public static func timeTagImmediate() -> Self {
+        OSCTimeTag.immediate()
+    }
+    
+    /// Returns a Time Tag representing the current time.
+    /// To indicate immediate dispatch, use `.immediate()` instead.
+    @inlinable
+    public static func timeTagNow() -> Self {
+        OSCTimeTag.now()
+    }
+    
+    /// Returns a Time Tag representing a time in the future.
+    ///
+    /// If the intention is to produce an immediate Time Tag, use `.immediate()` instead of `init(secondsSinceNow: 0.0)`.
+    ///
+    /// Passing `seconds` that is `< 0.0` will produce a Time Tag of `.now()`.
+    @inlinable
+    public static func timeTag(secondsSinceNow seconds: TimeInterval) -> Self {
+        OSCTimeTag(secondsSinceNow: seconds)
+    }
+    
+    /// Returns a Time Tag formed from total elapsed seconds since 1990 (prime epoch).
+    @inlinable
+    public static func timeTag(secondsSince1900 seconds: TimeInterval) -> Self {
+        OSCTimeTag(secondsSince1900: seconds)
+    }
+    
+    /// Returns a Time Tag representing a time in the future.
+    ///
+    /// If the intention is to produce an immediate Time Tag, use `.immediate()` instead of `init(at: Date())`.
+    ///
+    /// Passing `Date` that is `< now` will produce a Time Tag of `.now()`.
+    @inlinable
+    public static func timeTag(future futureDate: Date) -> Self {
+        OSCTimeTag(future: futureDate)
+    }
+}
