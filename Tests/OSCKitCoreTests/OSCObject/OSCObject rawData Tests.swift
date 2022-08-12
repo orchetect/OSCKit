@@ -16,7 +16,7 @@ final class OSCObject_rawData_Tests: XCTestCase {
     
     // MARK: - Model UDP data receiver pattern
     
-    func testParseOSC_Model() {
+    func testParseOSC_Model() throws {
         // (Raw data taken from testInt32() of "OSCMessage rawData Tests.swift")
         
         // manually build a raw OSC message
@@ -35,43 +35,24 @@ final class OSCObject_rawData_Tests: XCTestCase {
         
         // parse block
         
-        func handleOSCObject(_ oscPayload: OSCObject) {
-            switch oscPayload {
-            case .bundle(let bundle):
-                // recursively handle nested bundles and messages
-                bundle.elements.forEach { handleOSCObject($0) }
-            case .message(let message):
+        func handleOSCObject(_ oscObject: any OSCObject) {
+            switch oscObject {
+            case let message as OSCMessage:
                 // handle message
                 _ = message
+            default:
+                XCTFail()
             }
         }
         
         let remainingData = Data(knownGoodOSCRawBytes)
-        
-        do {
-            guard let oscPayload = try remainingData.parseOSC() else {
-                XCTFail()
-                return
-            }
-            
-            handleOSCObject(oscPayload)
-        } catch let error as OSCBundle.DecodeError {
-            // handle bundle errors
-            _ = error
-            XCTFail()
-        } catch let error as OSCMessage.DecodeError {
-            // handle message errors
-            _ = error
-            XCTFail()
-        } catch {
-            // handle other errors
-            XCTFail()
-        }
+        let oscObject = try XCTUnwrap(remainingData.parseOSC())
+        handleOSCObject(oscObject)
     }
     
     // MARK: - Variations
     
-    func testParseOSC_Message() {
+    func testParseOSC_Message() throws {
         // (Raw data taken from testInt32() of "OSCMessage rawData Tests.swift")
         
         // manually build a raw OSC message
@@ -92,39 +73,20 @@ final class OSCObject_rawData_Tests: XCTestCase {
         
         let remainingData = Data(knownGoodOSCRawBytes)
         
-        do {
-            guard let oscObject = try remainingData.parseOSC() else {
-                XCTFail()
-                return
-            }
+        let oscObject = try XCTUnwrap(remainingData.parseOSC())
             
-            switch oscObject {
-            case .message(let message):
-                // handle message
-                XCTAssertEqual(message.address, "/testaddress")
-                XCTAssertEqual(message.values, [.int32(255)])
+        switch oscObject {
+        case let message as OSCMessage:
+            // handle message
+            XCTAssertEqual(message.addressPattern.stringValue, "/testaddress")
+            XCTAssertEqual(message.values[0] as? Int32, Int32(255))
                 
-            case .bundle(let bundle):
-                // handle bundle
-                _ = bundle
-                XCTFail()
-                
-            }
-        } catch let error as OSCBundle.DecodeError {
-            // handle bundle errors
-            _ = error
-            XCTFail()
-        } catch let error as OSCMessage.DecodeError {
-            // handle message errors
-            _ = error
-            XCTFail()
-        } catch {
-            // handle other errors
+        default:
             XCTFail()
         }
     }
     
-    func testParseOSC_Bundle() {
+    func testParseOSC_Bundle() throws {
         // (Raw data taken from testSingleOSCMessage() of "OSCBundle rawData Tests.swift")
         
         // manually build a raw OSC bundle
@@ -155,46 +117,27 @@ final class OSCObject_rawData_Tests: XCTestCase {
         // parse block
         
         let remainingData = Data(knownGoodOSCRawBytes)
-        
-        do {
-            guard let oscObject = try remainingData.parseOSC() else {
-                XCTFail()
-                return
-            }
+        let oscObject = try remainingData.parseOSC()
             
-            switch oscObject {
-            case .message(let message):
-                // handle message
-                _ = message
-                XCTFail()
+        switch oscObject {
+        case let bundle as OSCBundle:
+            // handle bundle
+            XCTAssertEqual(bundle.timeTag.rawValue, 1)
+            XCTAssertEqual(bundle.elements.count, 1)
                 
-            case .bundle(let bundle):
-                // handle bundle
-                XCTAssertEqual(bundle.timeTag.rawValue, 1)
-                XCTAssertEqual(bundle.elements.count, 1)
+            let msg = try XCTUnwrap(bundle.elements.first as? OSCMessage)
                 
-                guard case .message(let msg) = bundle.elements.first
-                else { XCTFail() ; return }
+            XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
+            XCTAssertEqual(msg.values.count, 1)
+            
+            XCTAssertEqual(msg.values[0] as? Int32, Int32(255))
                 
-                XCTAssertEqual(msg.address, "/testaddress")
-                XCTAssertEqual(msg.values.count, 1)
-                
-                guard case .int32(let val) = msg.values.first
-                else { XCTFail() ; return }
-                
-                XCTAssertEqual(val, 255)
-                
-            }
-        } catch let error as OSCBundle.DecodeError {
-            // handle bundle errors
-            _ = error
+        case let message as OSCMessage:
+            // handle message
+            _ = message
             XCTFail()
-        } catch let error as OSCMessage.DecodeError {
-            // handle message errors
-            _ = error
-            XCTFail()
-        } catch {
-            // handle other errors
+                
+        default:
             XCTFail()
         }
     }
@@ -219,40 +162,14 @@ final class OSCObject_rawData_Tests: XCTestCase {
         let remainingData = Data(knownBadOSCRawBytes)
         
         do {
-            guard let oscObject = try remainingData.parseOSC() else {
-                XCTFail()
-                return
-            }
-            
-            switch oscObject {
-            case .message(let message):
-                // handle message
-                _ = message
-                XCTFail()
-                
-            case .bundle(let bundle):
-                // handle bundle
-                _ = bundle
-                XCTFail()
-                
-            }
-        } catch let error as OSCBundle.DecodeError {
-            // handle bundle errors
-            _ = error
-            XCTFail()
-        } catch let error as OSCMessage.DecodeError {
-            // handle message errors
-            
-            switch error {
-            case .malformed(let verboseError):
-                _ = verboseError
-                XCTAssert(true)
-            default:
-                XCTFail()
-            }
+            _ = try remainingData.parseOSC()
+            XCTFail("Should throw an error.")
+        } catch _ as OSCDecodeError {
+            // handle decode errors
+            XCTAssert(true)
         } catch {
             // handle other errors
-            XCTFail()
+            XCTFail("Wrong error thrown.")
         }
     }
     
@@ -287,38 +204,14 @@ final class OSCObject_rawData_Tests: XCTestCase {
         let remainingData = Data(knownGoodOSCRawBytes)
         
         do {
-            guard let oscObject = try remainingData.parseOSC() else {
-                XCTFail()
-                return
-            }
-            
-            switch oscObject {
-            case .message(let message):
-                // handle message
-                _ = message
-                XCTFail()
-                
-            case .bundle(let bundle):
-                // handle bundle
-                _ = bundle
-                XCTFail()
-                
-            }
-        } catch let error as OSCBundle.DecodeError {
-            // handle bundle errors
-            
-            switch error {
-            case .malformed(let verboseError):
-                _ = verboseError
-                XCTAssert(true)
-            }
-        } catch let error as OSCMessage.DecodeError {
-            // handle message errors
-            _ = error
-            XCTFail()
+            _ = try remainingData.parseOSC()
+            XCTFail("Should throw an error.")
+        } catch _ as OSCDecodeError {
+            // handle decode errors
+            XCTAssert(true)
         } catch {
             // handle other errors
-            XCTFail()
+            XCTFail("Wrong error thrown.")
         }
     }
     
@@ -353,40 +246,14 @@ final class OSCObject_rawData_Tests: XCTestCase {
         let remainingData = Data(knownGoodOSCRawBytes)
         
         do {
-            guard let oscObject = try remainingData.parseOSC() else {
-                XCTFail()
-                return
-            }
-            
-            switch oscObject {
-            case .message(let message):
-                // handle message
-                _ = message
-                XCTFail()
-                
-            case .bundle(let bundle):
-                // handle bundle
-                _ = bundle
-                XCTFail()
-                
-            }
-        } catch let error as OSCBundle.DecodeError {
-            // handle bundle errors
-            _ = error
-            XCTFail()
-        } catch let error as OSCMessage.DecodeError {
-            // handle message errors
-            
-            switch error {
-            case .malformed(let verboseError):
-                _ = verboseError
-                XCTAssert(true)
-            default:
-                XCTFail()
-            }
+            _ = try remainingData.parseOSC()
+            XCTFail("Should throw an error.")
+        } catch _ as OSCDecodeError {
+            // handle decode errors
+            XCTAssert(true)
         } catch {
             // handle other errors
-            XCTFail()
+            XCTFail("Wrong error thrown.")
         }
     }
 }
