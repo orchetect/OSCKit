@@ -45,8 +45,8 @@ extension OSCAddressSpace {
     ///
     ///  Any other path components besides the last are referred to as _containers_.
     ///
-    public func register(address: OSCAddressPattern) -> MethodID {
-        register(address: address.pathComponents)
+    public func register(localAddress address: String) -> MethodID {
+        register(localAddress: OSCAddressPattern(address).pathComponents)
     }
     
     /// Register an OSC address.
@@ -63,7 +63,7 @@ extension OSCAddressSpace {
     ///  Any other path components besides the last are referred to as _containers_.
     ///
     public func register(
-        address pathComponents: some BidirectionalCollection<some StringProtocol>
+        localAddress pathComponents: some BidirectionalCollection<some StringProtocol>
     ) -> MethodID {
         guard !pathComponents.isEmpty else {
             // instead of returning nil, return a bogus ID
@@ -79,9 +79,9 @@ extension OSCAddressSpace {
     
     /// Unregister an OSC address.
     @discardableResult
-    public func unregister(address: OSCAddressPattern) -> Bool {
+    public func unregister(localAddress address: String) -> Bool {
         removeMethodNode(
-            path: address.pathComponents,
+            path: OSCAddressPattern(address).pathComponents,
             forceNonEmptyMethodRemoval: false
         )
     }
@@ -89,7 +89,7 @@ extension OSCAddressSpace {
     /// Unregister an OSC address.
     @discardableResult
     public func unregister(
-        address pathComponents: some BidirectionalCollection<some StringProtocol>
+        localAddress pathComponents: some BidirectionalCollection<some StringProtocol>
     ) -> Bool {
         removeMethodNode(
             path: pathComponents,
