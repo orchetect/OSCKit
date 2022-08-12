@@ -8,8 +8,9 @@
 import XCTest
 import OSCKitCore
 
-// swiftformat:disable all
 final class OSCBundle_rawData_Tests: XCTestCase {
+    // swiftformat:options --wrapcollections preserve
+    
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
@@ -85,6 +86,5 @@ final class OSCBundle_rawData_Tests: XCTestCase {
         XCTAssertEqual(try bundle.rawData(), knownGoodOSCRawBytes.data)
     }
 }
-// swiftformat:enable all
 
 #endif

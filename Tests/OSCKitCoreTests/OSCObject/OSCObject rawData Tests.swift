@@ -8,8 +8,9 @@
 import XCTest
 import OSCKitCore
 
-// swiftformat:disable all
 final class OSCObject_rawData_Tests: XCTestCase {
+    // swiftformat:options --wrapcollections preserve
+    
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
@@ -389,6 +390,5 @@ final class OSCObject_rawData_Tests: XCTestCase {
         }
     }
 }
-// swiftformat:enable all
 
 #endif

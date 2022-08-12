@@ -10,8 +10,9 @@ import OSCKitCore
 import SwiftRadix
 import SwiftASCII
 
-// swiftformat:disable all
 final class OSCMessage_rawData_Tests: XCTestCase {
+    // swiftformat:options --wrapcollections preserve
+    
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
@@ -432,6 +433,5 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
 }
-// swiftformat:enable all
 
 #endif

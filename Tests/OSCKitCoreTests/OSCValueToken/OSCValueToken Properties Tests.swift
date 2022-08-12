@@ -17,10 +17,8 @@ final class OSCValueToken_Properties_Tests: XCTestCase {
     // MARK: - baseType
     
     func testBaseType() {
-        // swiftformat:disable all
         OSCValueToken.allCases.forEach { token in
             switch token {
-                
             // concrete types
             
             // -- core types
@@ -66,21 +64,16 @@ final class OSCValueToken_Properties_Tests: XCTestCase {
             case .timeTagOptional:   XCTAssertEqual(token.baseType, .timeTag)
             
             // -- opaque types
-            
             case .numberOptional:    XCTAssertEqual(token.baseType, .number)
-                
             }
         }
-        // swiftformat:enable all
     }
     
     // MARK: - isOptional
     
     func testIsOptional() {
-        // swiftformat:disable all
         OSCValueToken.allCases.forEach { token in
             switch token {
-            
             // optional versions of concrete types
             
             // -- core types
@@ -102,14 +95,11 @@ final class OSCValueToken_Properties_Tests: XCTestCase {
             case .timeTagOptional:   XCTAssertEqual(token.isOptional, true)
             
             // -- opaque types
-            
             case .numberOptional:    XCTAssertEqual(token.isOptional, true)
                 
             default:                 XCTAssertEqual(token.isOptional, false)
-                
             }
         }
-        // swiftformat:enable all
     }
 }
 
