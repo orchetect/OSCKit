@@ -88,7 +88,7 @@ final class OSCTimeTag_OSC1_0_Tests: XCTestCase {
             elements: [
                 .message(address: "/test", values: [Int32(123)])
             ],
-            timeTag: .timeIntervalSinceNow(1.0)
+            timeTag: .secondsSinceNow(1.0)
         )
         
         try server.handle(payload: bundle)
@@ -110,7 +110,7 @@ final class OSCTimeTag_OSC1_0_Tests: XCTestCase {
             elements: [
                 .message(address: "/test", values: [Int32(123)])
             ],
-            timeTag: .timeIntervalSinceNow(-1.0)
+            timeTag: .secondsSinceNow(-1.0)
         )
         
         try server.handle(payload: bundle)
