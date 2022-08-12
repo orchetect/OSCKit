@@ -16,10 +16,10 @@ extension OSCTimeTag {
     
     /// Returns a Time Tag representing a time in the future.
     ///
-    /// If the intention is to produce an immediate Time Tag, use `.immediate()` instead of `init(secondsSinceNow: 0.0)`.
+    /// If the intention is to produce an immediate Time Tag, use `.immediate()` instead of `init(timeIntervalSinceNow: 0.0)`.
     ///
     /// Passing `seconds` that is `< 0.0` will produce a Time Tag of `.now()`.
-    public init(secondsSinceNow seconds: TimeInterval) {
+    public init(timeIntervalSinceNow seconds: TimeInterval) {
         if seconds.isZero {
             self = Self.now()
             return
@@ -29,7 +29,7 @@ extension OSCTimeTag {
     }
     
     /// Returns a Time Tag formed from total elapsed seconds since 1990 (prime epoch).
-    public init(secondsSince1900 seconds: TimeInterval) {
+    public init(timeIntervalSince1900 seconds: TimeInterval) {
         let converted = seconds.oscTimeTag
         self.init(converted.timeTag, era: converted.era)
     }
@@ -40,7 +40,7 @@ extension OSCTimeTag {
     ///
     /// Passing `Date` that is `< now` will produce a Time Tag of `.now()`.
     public init(future futureDate: Date) {
-        self.init(secondsSince1900: futureDate.timeIntervalSince(Self.primeEpoch))
+        self.init(timeIntervalSince1900: futureDate.timeIntervalSince(Self.primeEpoch))
     }
 }
 
@@ -62,16 +62,16 @@ extension OSCTimeTag {
     
     /// Returns a Time Tag representing a time in the future.
     ///
-    /// If the intention is to produce an immediate Time Tag, use `.immediate()` instead of `init(secondsSinceNow: 0.0)`.
+    /// If the intention is to produce an immediate Time Tag, use `.immediate()` instead of `init(timeIntervalSinceNow: 0.0)`.
     ///
     /// Passing `seconds` that is `< 0.0` will produce a Time Tag of `.now()`.
-    public static func secondsSinceNow(_ seconds: TimeInterval) -> Self {
-        self.init(secondsSinceNow: seconds)
+    public static func timeIntervalSinceNow(_ seconds: TimeInterval) -> Self {
+        self.init(timeIntervalSinceNow: seconds)
     }
     
     /// Returns a Time Tag formed from total elapsed seconds since 1990 (prime epoch).
-    public static func secondsSince1900(_ seconds: TimeInterval) -> Self {
-        self.init(secondsSince1900: seconds)
+    public static func timeIntervalSince1900(_ seconds: TimeInterval) -> Self {
+        self.init(timeIntervalSince1900: seconds)
     }
     
     /// Returns a Time Tag representing a time in the future.
@@ -110,18 +110,18 @@ extension OSCValue where Self == OSCTimeTag {
     
     /// Returns a Time Tag representing a time in the future.
     ///
-    /// If the intention is to produce an immediate Time Tag, use `.immediate()` instead of `init(secondsSinceNow: 0.0)`.
+    /// If the intention is to produce an immediate Time Tag, use `.immediate()` instead of `init(timeIntervalSinceNow: 0.0)`.
     ///
     /// Passing `seconds` that is `< 0.0` will produce a Time Tag of `.now()`.
     @inlinable
-    public static func timeTag(secondsSinceNow seconds: TimeInterval) -> Self {
-        OSCTimeTag(secondsSinceNow: seconds)
+    public static func timeTag(timeIntervalSinceNow seconds: TimeInterval) -> Self {
+        OSCTimeTag(timeIntervalSinceNow: seconds)
     }
     
     /// Returns a Time Tag formed from total elapsed seconds since 1990 (prime epoch).
     @inlinable
-    public static func timeTag(secondsSince1900 seconds: TimeInterval) -> Self {
-        OSCTimeTag(secondsSince1900: seconds)
+    public static func timeTag(timeIntervalSince1900 seconds: TimeInterval) -> Self {
+        OSCTimeTag(timeIntervalSince1900: seconds)
     }
     
     /// Returns a Time Tag representing a time in the future.

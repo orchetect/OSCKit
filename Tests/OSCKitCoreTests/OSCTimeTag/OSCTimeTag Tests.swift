@@ -46,10 +46,10 @@ final class OSCTimeTag_Tests: XCTestCase {
         XCTAssertEqual(tag.timeIntervalSinceNow(), -10.0, accuracy: 0.001)
     }
     
-    // MARK: - .init(secondsSince1900:)
+    // MARK: - .init(timeIntervalSince1900:)
     
-    func testInit_secondsSince1900_Zero() {
-        let tag = OSCTimeTag(secondsSince1900: 0.0)
+    func testInit_timeIntervalSince1900_Zero() {
+        let tag = OSCTimeTag(timeIntervalSince1900: 0.0)
         
         XCTAssertEqual(tag.rawValue, 0)
         XCTAssertEqual(tag.era, 0)
@@ -59,8 +59,8 @@ final class OSCTimeTag_Tests: XCTestCase {
         XCTAssertLessThan(tag.timeIntervalSinceNow(), 0.0)
     }
     
-    func testInit_secondsSince1900() {
-        let tag = OSCTimeTag(secondsSince1900: 10.0)
+    func testInit_timeIntervalSince1900() {
+        let tag = OSCTimeTag(timeIntervalSince1900: 10.0)
         
         XCTAssertEqual(tag.rawValue, 10 << 32)
         XCTAssertEqual(tag.era, 0)
@@ -70,9 +70,9 @@ final class OSCTimeTag_Tests: XCTestCase {
         XCTAssertLessThan(tag.timeIntervalSinceNow(), 10.0)
     }
     
-    func testInit_secondsSince1900_EdgeCase_Negative() {
+    func testInit_timeIntervalSince1900_EdgeCase_Negative() {
         // negative values should clamp to 0.
-        let tag = OSCTimeTag(secondsSince1900: -1.0)
+        let tag = OSCTimeTag(timeIntervalSince1900: -1.0)
         
         XCTAssertEqual(tag.rawValue, 0)
         XCTAssertEqual(tag.era, 0)
@@ -82,8 +82,8 @@ final class OSCTimeTag_Tests: XCTestCase {
         XCTAssertLessThan(tag.timeIntervalSinceNow(), 0.0)
     }
     
-    func testInit_secondsSince1900_Known() {
-        let tag = OSCTimeTag(secondsSince1900: seconds1Jan2022)
+    func testInit_timeIntervalSince1900_Known() {
+        let tag = OSCTimeTag(timeIntervalSince1900: seconds1Jan2022)
         
         XCTAssertEqual(tag.rawValue, timeTag1Jan2022)
         XCTAssertEqual(tag.era, 0)
