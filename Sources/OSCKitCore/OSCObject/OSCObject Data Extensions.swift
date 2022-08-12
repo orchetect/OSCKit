@@ -8,7 +8,11 @@ import Foundation
 extension Data {
     /// Parses raw data and returns valid OSC objects if data is successfully parsed as OSC.
     ///
-    /// Returns `nil` if not an OSC data packet. Throws an error if the data is malformed.
+    /// - Throws: An error is thrown if data appears to be an OSC bundle or message but is malformed.
+    ///
+    /// Errors thrown will typically be a case of `OSCDecodeError` but other errors may be thrown.
+    ///
+    /// - Returns: Decoded `OSCObject`, or `nil` if not an OSC data packet.
     @inlinable
     public func parseOSC() throws -> (any OSCObject)? {
         if appearsToBeOSCBundle {
