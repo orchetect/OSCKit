@@ -139,18 +139,32 @@ final class OSCTimeTag_Tests: XCTestCase {
     
     // MARK: - .immediate() (raw value of 1)
     
-    func testImmediate() {
+    func testImmediate_Basics() {
         let tag = OSCTimeTag.immediate()
-        
         XCTAssertEqual(tag.rawValue, 1)
         XCTAssertEqual(tag.era, Date().ntpEra)
         XCTAssertTrue(tag.isImmediate)
         XCTAssertFalse(tag.isFuture)
+    }
+    
+    func testImmediate_date() {
+        let tag = OSCTimeTag.immediate()
+        let date = Date()
         XCTAssertEqual(
-            tag.date.timeIntervalSince(Date()),
-            0.0
+            tag.date.timeIntervalSince(date),
+            0.0,
+            accuracy: 0.001
         )
-        XCTAssertEqual(tag.timeIntervalSinceNow(), 0.0)
+    }
+    
+    func testImmediate_timeIntervalSinceNow() {
+        let tag = OSCTimeTag.immediate()
+        let captureSecondsFromNow = tag.timeIntervalSinceNow()
+        XCTAssertEqual(
+            captureSecondsFromNow,
+            0.0,
+            accuracy: 0.001
+        )
     }
     
     // MARK: - .now()
