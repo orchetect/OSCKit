@@ -25,19 +25,42 @@ extension OSCValues {
     @usableFromInline
     func unwrapValue<MaskType>(
         _: MaskType.Type,
-        index: Index
+        index: Index,
+        asOptional: Bool = false
     ) throws -> MaskType
         where MaskType: OSCValueMaskable
     {
         guard indices.contains(index) else {
             throw OSCValueMaskError.invalidCount
         }
-
-        guard let typed = self[index] as? MaskType else {
-            throw OSCValueMaskError.mismatchedTypes
+        
+        switch MaskType.self {
+        case is Int.Type:
+            guard let typed = self[index] as? (any BinaryInteger) else {
+                throw OSCValueMaskError.mismatchedTypes
+            }
+            
+            return Int(typed) as! MaskType // guaranteed
+            
+        case is AnyOSCNumberValue.Type:
+            let sourceValue = self[index]
+            
+            switch sourceValue {
+            case let int as any (OSCValue & BinaryInteger):
+                return AnyOSCNumberValue(int) as! MaskType // guaranteed
+            case let float as any (OSCValue & BinaryFloatingPoint):
+                return AnyOSCNumberValue(float) as! MaskType // guaranteed
+            default:
+                throw OSCValueMaskError.mismatchedTypes
+            }
+            
+        default:
+            guard let typed = self[index] as? MaskType else {
+                throw OSCValueMaskError.mismatchedTypes
+            }
+            
+            return typed
         }
-
-        return typed
     }
 
     // MARK: - Optionals
@@ -49,55 +72,14 @@ extension OSCValues {
     ) throws -> MaskType?
         where MaskType: OSCValueMaskable
     {
-        guard indices.contains(index) else { return nil }
-
-        return try unwrapValue(type.Wrapped, index: index)
-    }
-
-    // MARK: - Int
-
-    /// Handle `Int` as a special interpolated type.
-    @usableFromInline
-    func unwrapValue(
-        _: Int.Type,
-        index: Index
-    ) throws -> Int
-        where Int: OSCValueMaskable
-    {
         guard indices.contains(index) else {
-            throw OSCValueMaskError.invalidCount
+            return nil
         }
-
-        guard let typed = self[index] as? (any BinaryInteger) else {
-            throw OSCValueMaskError.mismatchedTypes
-        }
-
-        return Int(typed)
-    }
-
-    // MARK: - AnyOSCNumberValue
-
-    /// Handle opaque type `AnyOSCNumberValue`.
-    /// @usableFromInline
-    func unwrapValue(
-        _: AnyOSCNumberValue.Type,
-        index: Index
-    ) throws -> AnyOSCNumberValue
-        where AnyOSCNumberValue: OSCValueMaskable
-    {
-        guard indices.contains(index) else {
-            throw OSCValueMaskError.invalidCount
-        }
-
-        let sourceValue = self[index]
-
-        switch sourceValue {
-        case let int as any (OSCValue & BinaryInteger):
-            return AnyOSCNumberValue(int)
-        case let float as any (OSCValue & BinaryFloatingPoint):
-            return AnyOSCNumberValue(float)
-        default:
-            throw OSCValueMaskError.mismatchedTypes
-        }
+        
+        return try unwrapValue(
+            type.Wrapped,
+            index: index,
+            asOptional: true
+        )
     }
 }

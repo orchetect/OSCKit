@@ -115,8 +115,8 @@ extension OSCValues {
     /// - Throws: `OSCValueMaskError`
     @inlinable
     public func masked<V0, V1, V2, V3, V4, V5, V6>(
-        _: V0.Type,
-        _: V1.Type,
+        _ v0: V0.Type,
+        _ v1: V1.Type,
         _ v2: V2.Type,
         _ v3: V3.Type,
         _ v4: V4.Type,
@@ -132,8 +132,8 @@ extension OSCValues {
         V6: OSCValueMaskable
     {
         try validateCount(7)
-        let v0 = try unwrapValue(V0.self, index: 0)
-        let v1 = try unwrapValue(V1.self, index: 1)
+        let v0 = try unwrapValue(v0.self, index: 0)
+        let v1 = try unwrapValue(v1.self, index: 1)
         let v2 = try unwrapValue(v2.self, index: 2)
         let v3 = try unwrapValue(v3.self, index: 3)
         let v4 = try unwrapValue(v4.self, index: 4)
@@ -251,8 +251,8 @@ extension OSCValues {
     /// - Throws: `OSCValueMaskError`
     @inlinable
     public func masked<V0, V1, V2, V3, V4, V5, V6>(
-        _: V0.Type,
-        _: V1.Type,
+        _ v0: V0.Type,
+        _ v1: V1.Type,
         _ v2: V2.Type,
         _ v3: V3.Type,
         _ v4: V4.Type,
@@ -268,8 +268,8 @@ extension OSCValues {
         V6: OSCValueMaskable
     {
         try validateCount(6 ... 7)
-        let v0 = try unwrapValue(V0.self, index: 0)
-        let v1 = try unwrapValue(V1.self, index: 1)
+        let v0 = try unwrapValue(v0.self, index: 0)
+        let v1 = try unwrapValue(v1.self, index: 1)
         let v2 = try unwrapValue(v2.self, index: 2)
         let v3 = try unwrapValue(v3.self, index: 3)
         let v4 = try unwrapValue(v4.self, index: 4)
@@ -387,8 +387,8 @@ extension OSCValues {
     /// - Throws: `OSCValueMaskError`
     @inlinable
     public func masked<V0, V1, V2, V3, V4, V5, V6>(
-        _: V0.Type,
-        _: V1.Type,
+        _ v0: V0.Type,
+        _ v1: V1.Type,
         _ v2: V2.Type,
         _ v3: V3.Type,
         _ v4: V4.Type,
@@ -404,8 +404,8 @@ extension OSCValues {
         V6: OSCValueMaskable
     {
         try validateCount(5 ... 7)
-        let v0 = try unwrapValue(V0.self, index: 0)
-        let v1 = try unwrapValue(V1.self, index: 1)
+        let v0 = try unwrapValue(v0.self, index: 0)
+        let v1 = try unwrapValue(v1.self, index: 1)
         let v2 = try unwrapValue(v2.self, index: 2)
         let v3 = try unwrapValue(v3.self, index: 3)
         let v4 = try unwrapValue(v4.self, index: 4)
@@ -523,8 +523,8 @@ extension OSCValues {
     /// - Throws: `OSCValueMaskError`
     @inlinable
     public func masked<V0, V1, V2, V3, V4, V5, V6>(
-        _: V0.Type,
-        _: V1.Type,
+        _ v0: V0.Type,
+        _ v1: V1.Type,
         _ v2: V2.Type,
         _ v3: V3.Type,
         _ v4: V4?.Type,
@@ -540,8 +540,8 @@ extension OSCValues {
         V6: OSCValueMaskable
     {
         try validateCount(4 ... 7)
-        let v0 = try unwrapValue(V0.self, index: 0)
-        let v1 = try unwrapValue(V1.self, index: 1)
+        let v0 = try unwrapValue(v0.self, index: 0)
+        let v1 = try unwrapValue(v1.self, index: 1)
         let v2 = try unwrapValue(v2.self, index: 2)
         let v3 = try unwrapValue(v3.self, index: 3)
         let v4 = try unwrapValue(v4.self, index: 4)
@@ -659,8 +659,8 @@ extension OSCValues {
     /// - Throws: `OSCValueMaskError`
     @inlinable
     public func masked<V0, V1, V2, V3, V4, V5, V6>(
-        _: V0.Type,
-        _: V1.Type,
+        _ v0: V0.Type,
+        _ v1: V1.Type,
         _ v2: V2.Type,
         _ v3: V3?.Type,
         _ v4: V4?.Type,
@@ -676,8 +676,8 @@ extension OSCValues {
         V6: OSCValueMaskable
     {
         try validateCount(3 ... 7)
-        let v0 = try unwrapValue(V0.self, index: 0)
-        let v1 = try unwrapValue(V1.self, index: 1)
+        let v0 = try unwrapValue(v0.self, index: 0)
+        let v1 = try unwrapValue(v1.self, index: 1)
         let v2 = try unwrapValue(v2.self, index: 2)
         let v3 = try unwrapValue(v3.self, index: 3)
         let v4 = try unwrapValue(v4.self, index: 4)
@@ -795,8 +795,8 @@ extension OSCValues {
     /// - Throws: `OSCValueMaskError`
     @inlinable
     public func masked<V0, V1, V2, V3, V4, V5, V6>(
-        _: V0.Type,
-        _: V1.Type,
+        _ v0: V0.Type,
+        _ v1: V1.Type,
         _ v2: V2?.Type,
         _ v3: V3?.Type,
         _ v4: V4?.Type,
@@ -812,8 +812,8 @@ extension OSCValues {
         V6: OSCValueMaskable
     {
         try validateCount(2 ... 7)
-        let v0 = try unwrapValue(V0.self, index: 0)
-        let v1 = try unwrapValue(V1.self, index: 1)
+        let v0 = try unwrapValue(v0.self, index: 0)
+        let v1 = try unwrapValue(v1.self, index: 1)
         let v2 = try unwrapValue(v2.self, index: 2)
         let v3 = try unwrapValue(v3.self, index: 3)
         let v4 = try unwrapValue(v4.self, index: 4)
@@ -931,8 +931,8 @@ extension OSCValues {
     /// - Throws: `OSCValueMaskError`
     @inlinable
     public func masked<V0, V1, V2, V3, V4, V5, V6>(
-        _: V0.Type,
-        _: V1?.Type,
+        _ v0: V0.Type,
+        _ v1: V1?.Type,
         _ v2: V2?.Type,
         _ v3: V3?.Type,
         _ v4: V4?.Type,
@@ -948,8 +948,8 @@ extension OSCValues {
         V6: OSCValueMaskable
     {
         try validateCount(1 ... 7)
-        let v0 = try unwrapValue(V0.self, index: 0)
-        let v1 = try unwrapValue(V1.self, index: 1)
+        let v0 = try unwrapValue(v0.self, index: 0)
+        let v1 = try unwrapValue(v1.self, index: 1)
         let v2 = try unwrapValue(v2.self, index: 2)
         let v3 = try unwrapValue(v3.self, index: 3)
         let v4 = try unwrapValue(v4.self, index: 4)
@@ -1067,8 +1067,8 @@ extension OSCValues {
     /// - Throws: `OSCValueMaskError`
     @inlinable
     public func masked<V0, V1, V2, V3, V4, V5, V6>(
-        _: V0?.Type,
-        _: V1?.Type,
+        _ v0: V0?.Type,
+        _ v1: V1?.Type,
         _ v2: V2?.Type,
         _ v3: V3?.Type,
         _ v4: V4?.Type,
@@ -1084,8 +1084,8 @@ extension OSCValues {
         V6: OSCValueMaskable
     {
         try validateCount(0 ... 7)
-        let v0 = try unwrapValue(V0.self, index: 0)
-        let v1 = try unwrapValue(V1.self, index: 1)
+        let v0 = try unwrapValue(v0.self, index: 0)
+        let v1 = try unwrapValue(v1.self, index: 1)
         let v2 = try unwrapValue(v2.self, index: 2)
         let v3 = try unwrapValue(v3.self, index: 3)
         let v4 = try unwrapValue(v4.self, index: 4)

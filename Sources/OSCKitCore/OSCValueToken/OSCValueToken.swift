@@ -5,7 +5,7 @@
 
 import Foundation
 
-/// `OSCValue` type tokens, including optional variants and meta types.
+/// `OSCValue` type tokens, including optional variants and opaque types.
 /// Useful for abstractions that mask sequences of values.
 public enum OSCValueToken: Int, CaseIterable, Equatable, Hashable {
     // concrete types
@@ -170,7 +170,7 @@ extension OSCValueToken {
 //        case .midi,         .midiOptional:      return OSCMIDIValue.self
 //        case .null,         .nullOptional:      return OSCNullValue.self
 //
-//        // meta types
+//        // opaque types
 //        case .number,       .numberOptional:    return AnyOSCNumberValue.self
 //        }
 //    }

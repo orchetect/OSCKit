@@ -16,7 +16,7 @@ import Foundation
 // - `AnyOSCNumberValue` should be used in masks since it is type-erased.
 // -----------------------------------------------------------------------
 
-/// `OSCValue` meta type `OSCNumberValue`:
+/// Opaque OSC type `OSCNumberValue`:
 /// A box for OSC numeric value types.
 /// Mainly employed as a return type from value masking methods.
 internal struct OSCNumberValue<B: OSCValue> {

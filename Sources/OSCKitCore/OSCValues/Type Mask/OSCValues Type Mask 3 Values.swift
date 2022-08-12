@@ -115,8 +115,8 @@ extension OSCValues {
     /// - Throws: `OSCValueMaskError`
     @inlinable
     public func masked<V0, V1, V2>(
-        _: V0.Type,
-        _: V1.Type,
+        _ v0: V0.Type,
+        _ v1: V1.Type,
         _ v2: V2.Type
     ) throws -> (V0, V1, V2)
         where V0: OSCValueMaskable,
@@ -124,8 +124,8 @@ extension OSCValues {
         V2: OSCValueMaskable
     {
         try validateCount(3)
-        let v0 = try unwrapValue(V0.self, index: 0)
-        let v1 = try unwrapValue(V1.self, index: 1)
+        let v0 = try unwrapValue(v0.self, index: 0)
+        let v1 = try unwrapValue(v1.self, index: 1)
         let v2 = try unwrapValue(v2.self, index: 2)
         return (v0, v1, v2)
     }
