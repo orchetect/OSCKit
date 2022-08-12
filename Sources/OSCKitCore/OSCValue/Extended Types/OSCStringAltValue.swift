@@ -25,7 +25,7 @@ extension OSCStringAltValue: Equatable, Hashable {
 
 extension OSCStringAltValue: CustomStringConvertible {
     public var description: String {
-        "OSCStringAltValue()"
+        "\(string)"
     }
 }
 

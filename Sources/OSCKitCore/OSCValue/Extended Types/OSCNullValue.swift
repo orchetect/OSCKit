@@ -22,7 +22,7 @@ extension OSCNullValue: Equatable, Hashable {
 
 extension OSCNullValue: CustomStringConvertible {
     public var description: String {
-        "OSCNullValue()"
+        "Null"
     }
 }
 
