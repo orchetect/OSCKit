@@ -31,19 +31,29 @@ final class OSCTimeTag_init_Tests: XCTestCase {
         XCTAssertEqual(val as? OSCTimeTag, OSCTimeTag.immediate())
     }
     
-    func testOSCValue_TimeTagNow() {
+    func testOSCValue_TimeTagNow() throws {
         let val: any OSCValue = .timeTagNow()
-        XCTAssertEqual(val as? OSCTimeTag, OSCTimeTag.now())
+        let now = OSCTimeTag.now()
+        
+        let valTI = try XCTUnwrap((val as? OSCTimeTag)?.timeInterval(since: primeEpoch))
+        let nowTI = now.timeInterval(since: primeEpoch)
+        
+        XCTAssertEqual(valTI, nowTI, accuracy: 0.001)
     }
     
-    func testOSCValue_TimeTagSecondsSinceNow() {
-        let val: any OSCValue = .timeTag(secondsSinceNow: 5.0)
-        XCTAssertEqual(val as? OSCTimeTag, OSCTimeTag(secondsSinceNow: 5.0))
+    func testOSCValue_TimeTagTimeIntervalSinceNow() throws {
+        let val: any OSCValue = .timeTag(timeIntervalSinceNow: 5.0)
+        let now = OSCTimeTag(timeIntervalSinceNow: 5.0)
+        
+        let valTI = try XCTUnwrap((val as? OSCTimeTag)?.timeInterval(since: primeEpoch))
+        let nowTI = now.timeInterval(since: primeEpoch)
+        
+        XCTAssertEqual(valTI, nowTI, accuracy: 0.001)
     }
     
-    func testOSCValue_TimeTagSecondsSince1900() {
-        let val: any OSCValue = .timeTag(secondsSince1900: 9467107200.0)
-        XCTAssertEqual(val as? OSCTimeTag, OSCTimeTag(secondsSince1900: 9467107200.0))
+    func testOSCValue_TimeTagTimeIntervalSince1900() {
+        let val: any OSCValue = .timeTag(timeIntervalSince1900: 9467107200.0)
+        XCTAssertEqual(val as? OSCTimeTag, OSCTimeTag(timeIntervalSince1900: 9467107200.0))
     }
     
     func testOSCValue_TimeTagFuture() {
@@ -52,5 +62,19 @@ final class OSCTimeTag_init_Tests: XCTestCase {
         XCTAssertEqual(val as? OSCTimeTag, OSCTimeTag(future: futureDate))
     }
 }
+
+// MARK: - Helpers
+
+/// NTP prime epoch, a.k.a. era 0.
+private let primeEpoch: Date = DateComponents(
+    calendar: .current,
+    timeZone: .current,
+    year: 1900,
+    month: 1,
+    day: 1,
+    hour: 0,
+    minute: 0,
+    second: 0
+).date!
 
 #endif
