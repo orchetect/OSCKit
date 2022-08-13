@@ -64,7 +64,7 @@ extension OSCMessage {
 
 // MARK: - Codable
 
-// TODO: fix this later. needs Array implementation.
+// TODO: Codable - fix. needs Array implementation.
 
 // extension OSCMessage: Codable {
 //    enum CodingKeys: String, CodingKey {
