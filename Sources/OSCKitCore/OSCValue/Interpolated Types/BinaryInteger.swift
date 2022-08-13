@@ -45,7 +45,7 @@ extension Int16: OSCInterpolatedValue {
 // `Int64` is already an extended type
 
 extension UInt: OSCInterpolatedValue {
-    public typealias CoreOSCValue = Int32
+    public typealias CoreOSCValue = Int64
 }
 
 extension UInt8: OSCInterpolatedValue {
