@@ -15,17 +15,17 @@ class OSCReceiver {
     
     public init() {
         // register local OSC methods and store the ID tokens once before receiving OSC messages
-        idMethodA = addressSpace.register(address: "/methodA")
-        idMethodB = addressSpace.register(address: "/some/address/methodB")
-        idMethodC = addressSpace.register(address: "/some/address/methodC")
+        idMethodA = addressSpace.register(localAddress: "/methodA")
+        idMethodB = addressSpace.register(localAddress: "/some/address/methodB")
+        idMethodC = addressSpace.register(localAddress: "/some/address/methodC")
     }
     
     public func handle(message: OSCMessage, timeTag: OSCTimeTag) throws {
-        let ids = addressSpace.methods(matching: message.address)
+        let ids = addressSpace.methods(matching: message.addressPattern)
         
         guard !ids.isEmpty else {
             // No matches against any registered local OSC addresses.
-            print(oscMessage, "with time tag:", timeTag)
+            print(message, "with time tag:", timeTag)
             return
         }
         

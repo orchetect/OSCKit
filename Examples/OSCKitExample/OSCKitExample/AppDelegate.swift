@@ -26,7 +26,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         oscServer.setHandler { [weak self] message, timeTag in
             do {
                 try self?.oscReceiver.handle(
-                    oscMessage: message,
+                    message: message,
                     timeTag: timeTag
                 )
             } catch {
@@ -45,11 +45,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction
     func sendTestOSCMessage(_ sender: Any) {
         let oscMessage = OSCMessage(
-            address: "/some/address/methodB",
-            values: [.string("Test string"), .int32(123)]
+            "/some/address/methodB",
+            values: ["Test string", 123]
         )
         
-        oscClient.send(
+        try? oscClient.send(
             oscMessage,
             to: "127.0.0.1", // local machine
             port: 8000 // standard OSC port but can be changed
