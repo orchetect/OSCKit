@@ -60,13 +60,13 @@ extension OSCAddressPattern: Hashable {
 
 // MARK: - ExpressibleByStringLiteral
 
-// extension OSCAddressPattern: ExpressibleByStringLiteral {
-//    public typealias StringLiteralType = String
-//
-//    public init(stringLiteral: Self.StringLiteralType) {
-//        rawAddress = ASCIIString(stringLiteral)
-//    }
-// }
+ extension OSCAddressPattern: ExpressibleByStringLiteral {
+    public typealias StringLiteralType = String
+
+    public init(stringLiteral: Self.StringLiteralType) {
+        self.init(stringLiteral)
+    }
+ }
 
 // MARK: - CustomStringConvertible
 
