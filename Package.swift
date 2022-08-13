@@ -1,5 +1,4 @@
 // swift-tools-version:5.7
-// The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
@@ -20,7 +19,7 @@ let package = Package(
     ],
     
     dependencies: [
-        .package(url: "https://github.com/orchetect/OTCore", from: "1.4.1"),
+        .package(url: "https://github.com/orchetect/OTCore", from: "1.4.2"),
         .package(url: "https://github.com/orchetect/SwiftASCII", from: "1.1.3"),
         .package(url: "https://github.com/orchetect/SwiftRadix", from: "1.2.0"),
         .package(url: "https://github.com/robbiehanson/CocoaAsyncSocket", from: "7.0.0")
