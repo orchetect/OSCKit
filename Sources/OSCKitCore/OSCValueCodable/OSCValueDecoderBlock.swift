@@ -36,11 +36,13 @@ public struct OSCValueVariableDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDe
     }
 }
 
+/// Return nil if no expected tags are encountered.
+/// Only throw an error if at least one expected tag is encountered but any other tags or value data is malformed.
 public struct OSCValueVariadicDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDecoderBlock {
     public typealias Block = (
         _ tags: [Character],
         _ decoder: inout OSCValueDecoder
-    ) throws -> (tagCount: Int, value: OSCDecoded)
+    ) throws -> (tagCount: Int, value: OSCDecoded)?
     
     public let block: Block
     

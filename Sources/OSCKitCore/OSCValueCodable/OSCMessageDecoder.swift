@@ -35,7 +35,7 @@ public enum OSCMessageDecoder {
         
         // OSC-type chunk
         
-        guard let extractedOSCtags = (
+        guard var extractedOSCtags = (
             try? decoder.read4ByteAlignedNullTerminatedASCIIString()
         )?
             .map({ Character(extendedGraphemeClusterLiteral: $0) })
@@ -48,7 +48,7 @@ public enum OSCMessageDecoder {
         
         var currentTagIndex = 0
         while currentTagIndex < extractedOSCtags.count {
-            let char = extractedOSCtags[currentTagIndex]
+            var char = extractedOSCtags[currentTagIndex]
             
             switch char {
             case ",", "\0":
@@ -56,36 +56,65 @@ public enum OSCMessageDecoder {
                 currentTagIndex += 1
                 
             default:
-                let types = OSCSerialization.shared.tagIdentities(for: char)
-                    .compactMap { $0 as? (any OSCValue.Type) }
-                
-                guard !types.isEmpty else {
-                    throw OSCDecodeError.malformed(
-                        "No concrete type found to decode OSC type tag \(char)."
-                    )
-                }
-                
-                var isTypeDecoded = false
-                for type in types {
-                    guard !isTypeDecoded else { continue }
-                    
-                    let decoded = try Self.decode(
-                        forType: type,
-                        char: char,
-                        charStream: extractedOSCtags[currentTagIndex...],
-                        decoder: &decoder
-                    )
-                    
-                    currentTagIndex += decoded.tagCount
-                    extractedValues += decoded.value
-                    
-                    // prevent multiple decode attempts for the same value
-                    isTypeDecoded = true
-                }
+                let tagsToAdvance = try decodeValue(
+                    initialChar: &char,
+                    currentTagIndex: &currentTagIndex,
+                    tags: &extractedOSCtags,
+                    extractedValues: &extractedValues,
+                    decoder: &decoder
+                )
+                currentTagIndex += tagsToAdvance
             }
         }
         
         return (extractedAddressPattern, extractedValues)
+    }
+    
+    /// Decode a series of values.
+    /// Returns number of tag(s) to advance.
+    static func decodeValue(
+        initialChar: inout Character,
+        currentTagIndex: inout Int,
+        tags: inout [Character],
+        extractedValues: inout OSCValues,
+        decoder: inout OSCValueDecoder
+    ) throws -> Int {
+        let types = OSCSerialization.shared.tagIdentities(for: initialChar)
+            .compactMap { $0 as? (any OSCValue.Type) }
+        
+        guard !types.isEmpty else {
+            throw OSCDecodeError.malformed(
+                "No concrete type found to decode OSC type tag: \(initialChar)"
+            )
+        }
+        
+        var tagsToAdvance = 0
+        
+        var isTypeDecoded = false
+        for type in types {
+            guard !isTypeDecoded else { continue }
+            
+            if let decoded = try Self.decode(
+                forType: type,
+                char: initialChar,
+                charStream: tags[currentTagIndex...],
+                decoder: &decoder
+            ) {
+                tagsToAdvance = decoded.tagCount
+                extractedValues += decoded.value
+                
+                // prevent multiple decode attempts for the same value
+                isTypeDecoded = true
+            }
+        }
+        
+        guard isTypeDecoded else {
+            throw OSCDecodeError.malformed(
+                "No decoder found to decode OSC type tag: \(initialChar)"
+            )
+        }
+        
+        return tagsToAdvance
     }
     
     private static func decode<T: OSCValue & OSCValueDecodable>(
@@ -93,7 +122,7 @@ public enum OSCMessageDecoder {
         char: Character,
         charStream: Array<Character>.SubSequence,
         decoder: inout OSCValueDecoder
-    ) throws -> (tagCount: Int, value: any OSCValue) {
+    ) throws -> (tagCount: Int, value: any OSCValue)? {
         switch T.oscDecoding {
         case let d as OSCValueAtomicDecoder<T>:
             let decoded = try d.block(&decoder)
@@ -109,7 +138,7 @@ public enum OSCMessageDecoder {
             
         default:
             throw OSCDecodeError.malformed(
-                "No decoder is implemented for OSC type tag \(char)."
+                "No decoder is implemented for OSC type tag: \(char)"
             )
         }
     }

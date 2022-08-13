@@ -38,9 +38,21 @@ final class OSCValue_stringValue_Tests: XCTestCase {
     
     // MARK: - Extended types
     
-    func testArray() {
+    func testArray_Simple() {
         let val: any OSCValue = OSCArrayValue([Int32(123)])
         XCTAssertEqual("\(val)", "[123]")
+    }
+    
+    func testArray_Complex() {
+        let val: any OSCValue = OSCArrayValue([
+            Int32(123),
+            String("A String"),
+            OSCArrayValue([
+                true,
+                Double(1.5)
+            ])
+        ])
+        XCTAssertEqual("\(val)", #"[123, "A String", [true, 1.5]]"#)
     }
     
     func testBool() {

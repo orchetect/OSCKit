@@ -5,12 +5,17 @@
 
 import Foundation
 @_implementationOnly import OTCore
+@_implementationOnly import SwiftASCII
 
 /// OSC value array.
 public struct OSCArrayValue {
     public let elements: OSCValues
     
     public init(_ elements: OSCValues) {
+        self.elements = elements
+    }
+    
+    public init(_ elements: (any OSCValue)...) {
         self.elements = elements
     }
 }
@@ -61,19 +66,63 @@ extension OSCArrayValue: OSCValueCodable {
 extension OSCArrayValue: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueVariadicEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
-        // TODO: implement
+        var tags: [ASCIICharacter] = []
+        tags.reserveCapacity(value.elements.count + 2)
+        tags += ASCIICharacter(oscTypeTagOpen)
         
-        (tags: [], data: nil)
+        var data = Data()
+        
+        for element in value.elements {
+            try OSCMessageEncoder.encode(
+                element,
+                builderTags: &tags,
+                builderValuesChunk: &data
+            )
+        }
+        
+        tags += ASCIICharacter(oscTypeTagClose)
+        
+        return (
+            tags: tags.map { $0.characterValue },
+            data: data
+        )
     }
 }
 
 extension OSCArrayValue: OSCValueDecodable {
     public typealias OSCValueDecodingBlock = OSCValueVariadicDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { tags, decoder in
-        // TODO: implement
+        guard tags.first == oscTypeTagOpen else {
+            return nil
+        }
+
+        var extractedValues: OSCValues = []
         
-        let array: OSCValues = [Int32(123)]
+        var remainingTags = Array(tags.dropFirst())
         
-        return (tagCount: 3, OSCDecoded(array))
+        var currentTagIndex = remainingTags.startIndex
+        while currentTagIndex < remainingTags.count {
+            var tag = remainingTags[currentTagIndex]
+            
+            if tag == oscTypeTagClose {
+                currentTagIndex += 1
+                return (
+                    tagCount: currentTagIndex - remainingTags.startIndex + 1,
+                    value: OSCDecoded(extractedValues)
+                )
+            }
+            
+            let tagsToAdvance = try OSCMessageDecoder.decodeValue(
+                initialChar: &tag,
+                currentTagIndex: &currentTagIndex,
+                tags: &remainingTags,
+                extractedValues: &extractedValues,
+                decoder: &decoder
+            )
+            currentTagIndex += tagsToAdvance
+        }
+        
+        // fall-through condition means we never encountered a closing tag
+        throw OSCDecodeError.malformed("Array termination tag ']' was not found.")
     }
 }
