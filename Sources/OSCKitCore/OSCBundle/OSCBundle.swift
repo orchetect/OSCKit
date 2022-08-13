@@ -8,7 +8,7 @@ import Foundation
 
 // MARK: - OSCBundle
 
-/// OSC Bundle object.
+/// OSC Bundle.
 public struct OSCBundle: OSCObject {
     /// Timetag.
     /// Default value 1: means "immediate" in OSC spec.
@@ -17,7 +17,8 @@ public struct OSCBundle: OSCObject {
     /// Elements contained within the bundle. These can be `OSCBundle` or `OSCMessage` instances.
     public let elements: [any OSCObject]
     
-    public let _rawData: Data?
+    @usableFromInline
+    let _rawData: Data?
 }
 
 // MARK: - Equatable

@@ -17,9 +17,9 @@ final class OSCMessage_Tests: XCTestCase {
     // MARK: - Equatable
     
     func testEquatable() {
-        let msg1 = OSCMessage(address: "/msg1")
-        let msg2 = OSCMessage(address: "/msg2")
-        let msg3 = OSCMessage(address: "/msg1", values: [Int32(123)])
+        let msg1 = OSCMessage("/msg1")
+        let msg2 = OSCMessage("/msg2")
+        let msg3 = OSCMessage("/msg1", values: [Int32(123)])
         
         XCTAssert(msg1 == msg1)
         XCTAssert(msg2 == msg2)
@@ -34,9 +34,9 @@ final class OSCMessage_Tests: XCTestCase {
     // MARK: - Hashable
     
     func testHashable() {
-        let msg1 = OSCMessage(address: "/msg1")
-        let msg2 = OSCMessage(address: "/msg2")
-        let msg3 = OSCMessage(address: "/msg1", values: [Int32(123)])
+        let msg1 = OSCMessage("/msg1")
+        let msg2 = OSCMessage("/msg2")
+        let msg3 = OSCMessage("/msg1", values: [Int32(123)])
         
         let set: Set<OSCMessage> = [msg1, msg1, msg2, msg2, msg3, msg3]
         
@@ -46,14 +46,14 @@ final class OSCMessage_Tests: XCTestCase {
     // MARK: - CustomStringConvertible
     
     func testCustomStringConvertible1() {
-        let msg = OSCMessage(address: "/")
+        let msg = OSCMessage("/")
         
         XCTAssertEqual(msg.description, #"OSCMessage("/")"#)
     }
     
     func testCustomStringConvertible2() {
         let msg = OSCMessage(
-            address: "/address",
+            "/address",
             values: [Int32(123), String("A string")]
         )
         
@@ -65,7 +65,7 @@ final class OSCMessage_Tests: XCTestCase {
     
     func testDescriptionPretty() {
         let msg = OSCMessage(
-            address: "/address",
+            "/address",
             values: [Int32(123), String("A string")]
         )
         

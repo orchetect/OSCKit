@@ -15,7 +15,8 @@ public struct OSCMessage: OSCObject {
     /// OSC values (arguments) contained within the message.
     public let values: OSCValues
     
-    public let _rawData: Data?
+    @usableFromInline
+    let _rawData: Data?
 }
 
 // MARK: - Equatable

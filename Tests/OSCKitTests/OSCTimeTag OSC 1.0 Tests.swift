@@ -19,9 +19,7 @@ final class OSCTimeTag_OSC1_0_Tests: XCTestCase {
         }
         
         let bundle = OSCBundle(
-            elements: [
-                .message(address: "/test", values: [Int32(123)])
-            ]
+            .message("/test", values: Int32(123))
         )
         
         try server.handle(payload: bundle)
@@ -39,10 +37,8 @@ final class OSCTimeTag_OSC1_0_Tests: XCTestCase {
         }
         
         let bundle = OSCBundle(
-            elements: [
-                .message(address: "/test", values: [Int32(123)])
-            ],
-            timeTag: .immediate()
+            timeTag: .immediate(),
+            .message("/test", values: Int32(123))
         )
         
         try server.handle(payload: bundle)
@@ -60,10 +56,8 @@ final class OSCTimeTag_OSC1_0_Tests: XCTestCase {
         }
         
         let bundle = OSCBundle(
-            elements: [
-                .message(address: "/test", values: [Int32(123)])
-            ],
-            timeTag: .now()
+            timeTag: .now(),
+            .message("/test", values: Int32(123))
         )
         
         try server.handle(payload: bundle)
@@ -85,10 +79,8 @@ final class OSCTimeTag_OSC1_0_Tests: XCTestCase {
         }
         
         let bundle = OSCBundle(
-            elements: [
-                .message(address: "/test", values: [Int32(123)])
-            ],
-            timeTag: .timeIntervalSinceNow(1.0)
+            timeTag: .timeIntervalSinceNow(1.0),
+            .message("/test", values: Int32(123))
         )
         
         try server.handle(payload: bundle)
@@ -107,10 +99,8 @@ final class OSCTimeTag_OSC1_0_Tests: XCTestCase {
         }
         
         let bundle = OSCBundle(
-            elements: [
-                .message(address: "/test", values: [Int32(123)])
-            ],
-            timeTag: .timeIntervalSinceNow(-1.0)
+            timeTag: .timeIntervalSinceNow(-1.0),
+            .message("/test", values: Int32(123))
         )
         
         try server.handle(payload: bundle)

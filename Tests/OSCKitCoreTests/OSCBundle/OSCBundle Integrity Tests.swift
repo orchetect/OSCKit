@@ -18,30 +18,30 @@ final class OSCBundle_Integrity_Tests: XCTestCase {
     func testConstructors() throws {
         // empty
         
-        let emptyBundle = OSCBundle(elements: [])
+        let emptyBundle = OSCBundle([])
         XCTAssertEqual(emptyBundle.timeTag.rawValue, 1)
         XCTAssertEqual(emptyBundle.elements.count, 0)
         
         // timetag only
         
         let timeTagOnly = OSCBundle(
-            elements: [],
-            timeTag: .init(20)
+            timeTag: .init(20),
+            []
         )
         XCTAssertEqual(timeTagOnly.timeTag.rawValue, 20)
         XCTAssertEqual(timeTagOnly.elements.count, 0)
         
         // elements only
         
-        let elementsOnly = OSCBundle(elements: [.message(address: "/")])
+        let elementsOnly = OSCBundle([.message("/")])
         XCTAssertEqual(elementsOnly.timeTag.rawValue, 1)
         XCTAssertEqual(elementsOnly.elements.count, 1)
         
         // timetag and elements
         
         let elementsAndTT = OSCBundle(
-            elements: [.message(address: "/")],
-            timeTag: .init(20)
+            timeTag: .init(20),
+            [.message("/")]
         )
         XCTAssertEqual(elementsAndTT.timeTag.rawValue, 20)
         XCTAssertEqual(elementsAndTT.elements.count, 1)
@@ -60,40 +60,37 @@ final class OSCBundle_Integrity_Tests: XCTestCase {
         
         // build bundle
         
-        let oscBundle = OSCBundle(
-            elements:
-            [
-                // element 1
-                .bundle(elements: [.message(address: "/bundle1/msg")]),
-                
-                // element 2
-                .bundle(elements: [
-                    .message(
-                        address: "/bundle2/msg1",
-                        values: [
-                            Int32(500_000),
-                            String("some string here")
-                        ]
-                    ),
-                    .message(
-                        address: "/bundle2/msg2",
-                        values: [
-                            Float32(8795.4556),
-                            Int32(75)
-                        ]
-                    )
-                ]),
-                
-                // element 3
+        let oscBundle = OSCBundle([
+            // element 1
+            .bundle([.message("/bundle1/msg")]),
+            
+            // element 2
+            .bundle([
                 .message(
-                    address: "/msg1",
-                    values: [Data([1, 2, 3])]
+                    "/bundle2/msg1",
+                    values: [
+                        Int32(500_000),
+                        String("some string here")
+                    ]
                 ),
-                
-                // element 4
-                .bundle(elements: [])
-            ]
-        )
+                .message(
+                    "/bundle2/msg2",
+                    values: [
+                        Float32(8795.4556),
+                        Int32(75)
+                    ]
+                )
+            ]),
+            
+            // element 3
+            .message(
+                "/msg1",
+                values: [Data([1, 2, 3])]
+            ),
+            
+            // element 4
+            .bundle([])
+        ])
         
         // encode
         

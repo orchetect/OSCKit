@@ -19,7 +19,7 @@ final class OSCServer_Tests: XCTestCase {
             exp.fulfill()
         }
         
-        let bundle = OSCBundle(elements: [])
+        let bundle = OSCBundle()
         
         try server.handle(payload: bundle)
         

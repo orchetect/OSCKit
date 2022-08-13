@@ -41,7 +41,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // re-encode
         
-        let newMsg = OSCMessage(address: msg.addressPattern.stringValue, values: msg.values)
+        let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
@@ -72,7 +72,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // re-encode
         
-        let newMsg = OSCMessage(address: msg.addressPattern.stringValue, values: msg.values)
+        let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
@@ -103,7 +103,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // re-encode
         
-        let newMsg = OSCMessage(address: msg.addressPattern.stringValue, values: msg.values)
+        let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
@@ -140,7 +140,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // re-encode
         
-        let newMsg = OSCMessage(address: msg.addressPattern.stringValue, values: msg.values)
+        let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
@@ -173,7 +173,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // re-encode
         
-        let newMsg = OSCMessage(address: msg.addressPattern.stringValue, values: msg.values)
+        let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
@@ -207,7 +207,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // re-encode
         
-        let newMsg = OSCMessage(address: msg.addressPattern.stringValue, values: msg.values)
+        let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
@@ -239,7 +239,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // re-encode
         
-        let newMsg = OSCMessage(address: msg.addressPattern.stringValue, values: msg.values)
+        let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
@@ -271,7 +271,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // re-encode
         
-        let newMsg = OSCMessage(address: msg.addressPattern.stringValue, values: msg.values)
+        let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
@@ -308,7 +308,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // re-encode
         
-        let newMsg = OSCMessage(address: msg.addressPattern.stringValue, values: msg.values)
+        let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
@@ -339,7 +339,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // re-encode
         
-        let newMsg = OSCMessage(address: msg.addressPattern.stringValue, values: msg.values)
+        let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
@@ -370,7 +370,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // re-encode
         
-        let newMsg = OSCMessage(address: msg.addressPattern.stringValue, values: msg.values)
+        let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
@@ -401,7 +401,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // re-encode
         
-        let newMsg = OSCMessage(address: msg.addressPattern.stringValue, values: msg.values)
+        let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
@@ -429,7 +429,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // re-encode
         
-        let newMsg = OSCMessage(address: msg.addressPattern.stringValue, values: msg.values)
+        let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
 }

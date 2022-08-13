@@ -13,8 +13,8 @@ final class OSCObject_Tests: XCTestCase {
     override func tearDown() { super.tearDown() }
     
     func testAppearsToBeOSC() throws {
-        let bundle = try OSCBundle(elements: []).rawData()
-        let msg    = try OSCMessage(address: "/").rawData()
+        let bundle = try OSCBundle([]).rawData()
+        let msg    = try OSCMessage("/").rawData()
         
         // OSC bundle
         XCTAssert(bundle.appearsToBeOSC == .bundle)

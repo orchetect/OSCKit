@@ -19,38 +19,38 @@ final class OSCMessage_Integrity_Tests: XCTestCase {
         // correct OSCAddressPattern
         
         XCTAssertEqual(
-            OSCMessage(address: "/container1/container2").addressPattern.stringValue,
+            OSCMessage("/container1/container2").addressPattern.stringValue,
             "/container1/container2"
         )
         
         XCTAssertEqual(
-            OSCMessage(address: String("/container1/container2")).addressPattern.stringValue,
+            OSCMessage(String("/container1/container2")).addressPattern.stringValue,
             "/container1/container2"
         )
         
         XCTAssertEqual(
-            OSCMessage(asciiAddress: ASCIIString("/container1/container2")).addressPattern.stringValue,
+            OSCMessage(asciiAddressPattern: ASCIIString("/container1/container2")).addressPattern.stringValue,
             "/container1/container2"
         )
         
         XCTAssertEqual(
-            OSCMessage(address: OSCAddressPattern("/container1/container2")).addressPattern.stringValue,
+            OSCMessage(OSCAddressPattern("/container1/container2")).addressPattern.stringValue,
             "/container1/container2"
         )
         
         XCTAssertEqual(
-            OSCMessage(address: ["container1", "container2"]).addressPattern.stringValue,
+            OSCMessage(addressPattern: ["container1", "container2"]).addressPattern.stringValue,
             "/container1/container2"
         )
         
         XCTAssertEqual(
-            OSCMessage(asciiAddress: [ASCIIString("container1"), ASCIIString("container2")]).addressPattern
+            OSCMessage(asciiAddressPattern: [ASCIIString("container1"), ASCIIString("container2")]).addressPattern
                 .stringValue,
             "/container1/container2"
         )
         
         XCTAssertEqual(
-            OSCMessage(address: [String]()).addressPattern.stringValue,
+            OSCMessage(addressPattern: [String]()).addressPattern.stringValue,
             "/"
         )
     }
@@ -61,7 +61,7 @@ final class OSCMessage_Integrity_Tests: XCTestCase {
         // encode
         
         let msg = try OSCMessage(
-            address: "/test",
+            "/test",
             values: [
                 Int32(123),
                 Float32(123.45),

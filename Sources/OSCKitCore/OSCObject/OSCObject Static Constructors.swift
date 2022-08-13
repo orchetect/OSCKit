@@ -5,15 +5,17 @@
 
 import Foundation
 
+// MARK: - OSCMessage
+
 extension OSCObject where Self == OSCMessage {
     /// OSC Message.
     @inlinable
     public static func message(
-        address: String,
+        _ addressPattern: String,
         values: OSCValues = []
     ) -> Self {
         OSCMessage(
-            address: OSCAddressPattern(address),
+            OSCAddressPattern(addressPattern),
             values: values
         )
     }
@@ -21,26 +23,68 @@ extension OSCObject where Self == OSCMessage {
     /// OSC Message.
     @inlinable
     public static func message(
-        address: OSCAddressPattern,
+        _ addressPattern: OSCAddressPattern,
         values: OSCValues = []
     ) -> Self {
         OSCMessage(
-            address: address,
+            addressPattern,
+            values: values
+        )
+    }
+    
+    // MARK: - Variadic Values
+    
+    /// OSC Message.
+    @inlinable
+    public static func message(
+        _ addressPattern: String,
+        values: AnyOSCValue...
+    ) -> Self {
+        OSCMessage(
+            OSCAddressPattern(addressPattern),
+            values: values
+        )
+    }
+    
+    /// OSC Message.
+    @inlinable
+    public static func message(
+        _ addressPattern: OSCAddressPattern,
+        values: AnyOSCValue...
+    ) -> Self {
+        OSCMessage(
+            addressPattern,
             values: values
         )
     }
 }
 
+// MARK: - OSCBundle
+
 extension OSCObject where Self == OSCBundle {
     /// OSC Bundle.
     @inlinable
     public static func bundle(
-        elements: [any OSCObject],
-        timeTag: OSCTimeTag? = nil
+        timeTag: OSCTimeTag? = nil,
+        _ elements: [any OSCObject]
     ) -> Self {
         OSCBundle(
-            elements: elements,
-            timeTag: timeTag
+            timeTag: timeTag,
+            elements
+        )
+    }
+    
+    // MARK: - Variadic Values
+    
+    /// OSC Bundle.
+    @inlinable
+    public static func bundle(
+        timeTag: OSCTimeTag? = nil,
+        _ elements: (any OSCObject)...
+    ) -> Self {
+        OSCBundle(
+            timeTag: timeTag,
+            elements
         )
     }
 }
