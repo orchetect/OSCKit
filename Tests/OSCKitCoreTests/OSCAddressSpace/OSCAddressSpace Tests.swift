@@ -139,8 +139,7 @@ final class OSCAddressSpace_Tests: XCTestCase {
         
         let t1ID = addressSpace.register(localAddress: "/test1")
         let t2ID = addressSpace.register(localAddress: "/test2")
-        let _ = addressSpace
-            .register(localAddress: "/test1/test1B") // not tested, just want it present
+        let _ = addressSpace.register(localAddress: "/test1/test1B") // not tested
         
         // non-matches
         
