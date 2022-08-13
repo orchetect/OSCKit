@@ -12,10 +12,21 @@ public struct OSCNullValue {
     public init() { }
 }
 
+// MARK: - `any OSCValue` Constructors
+
+extension OSCValue where Self == OSCNullValue {
+    /// Null OSC value as defined by the OSC 1.0 spec.
+    /// This type carries no data.
+    @inlinable
+    public static var null: Self {
+        OSCNullValue()
+    }
+}
+
 // MARK: - Equatable, Hashable
 
 extension OSCNullValue: Equatable, Hashable {
-    
+    // synthesized
 }
 
 // MARK: - CustomStringConvertible

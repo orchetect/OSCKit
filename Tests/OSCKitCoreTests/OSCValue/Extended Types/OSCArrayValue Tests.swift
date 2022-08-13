@@ -81,6 +81,16 @@ final class OSCArrayValue_Tests: XCTestCase {
         let decodedMsg = try OSCMessage(from: rawData)
         XCTAssertEqual(msg, decodedMsg)
     }
+    
+    // MARK: - `any OSCValue` Constructors
+    
+    func testOSCValue_array() {
+        let val: any OSCValue = .array([Int32(123)])
+        XCTAssertEqual(
+            val as? OSCArrayValue,
+            OSCArrayValue([Int32(123)])
+        )
+    }
 }
 
 #endif

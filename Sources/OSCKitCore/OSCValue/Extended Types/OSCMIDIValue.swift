@@ -28,6 +28,26 @@ public struct OSCMIDIValue {
     }
 }
 
+// MARK: - `any OSCValue` Constructors
+
+extension OSCValue where Self == OSCMIDIValue {
+    /// MIDI message OSC value as defined by the OSC 1.0 spec.
+    @inlinable
+    public static func midi(
+        portID: UInt8,
+        status: UInt8,
+        data1: UInt8 = 0x00,
+        data2: UInt8 = 0x00
+    ) -> Self {
+        OSCMIDIValue(
+            portID: portID,
+            status: status,
+            data1: data1,
+            data2: data2
+        )
+    }
+}
+
 // MARK: - Equatable, Hashable
 
 extension OSCMIDIValue: Equatable, Hashable {
@@ -56,12 +76,14 @@ extension OSCMIDIValue: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let bytes = try container.decode([UInt8].self, forKey: .bytes)
-        guard bytes.count == 4 else { throw DecodingError.dataCorrupted(
-            .init(
-                codingPath: decoder.codingPath,
-                debugDescription: "Found unexpected number of values when decoding MIDI bytes."
+        guard bytes.count == 4 else {
+            throw DecodingError.dataCorrupted(
+                .init(
+                    codingPath: decoder.codingPath,
+                    debugDescription: "Found unexpected number of values when decoding MIDI bytes."
+                )
             )
-        ) }
+        }
         portID = bytes[0]
         status = bytes[1]
         data1 = bytes[2]

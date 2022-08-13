@@ -1,5 +1,5 @@
 //
-//  OSCTimeTag init Tests.swift
+//  OSCTimeTag Static Constructors Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
@@ -8,7 +8,7 @@
 import XCTest
 import OSCKitCore
 
-final class OSCTimeTag_init_Tests: XCTestCase {
+final class OSCTimeTag_StaticConstructors_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
@@ -21,17 +21,17 @@ final class OSCTimeTag_init_Tests: XCTestCase {
     
     // MARK: - `any OSCValue` Constructors
     
-    func testOSCValue_TimeTag() {
+    func testOSCValue_timeTag() {
         let val: any OSCValue = .timeTag(123, era: 1)
         XCTAssertEqual(val as? OSCTimeTag, OSCTimeTag(123, era: 1))
     }
     
-    func testOSCValue_TimeTagImmediate() {
+    func testOSCValue_timeTagImmediate() {
         let val: any OSCValue = .timeTagImmediate()
         XCTAssertEqual(val as? OSCTimeTag, OSCTimeTag.immediate())
     }
     
-    func testOSCValue_TimeTagNow() throws {
+    func testOSCValue_timeTagNow() throws {
         let val: any OSCValue = .timeTagNow()
         let now = OSCTimeTag.now()
         
@@ -41,7 +41,7 @@ final class OSCTimeTag_init_Tests: XCTestCase {
         XCTAssertEqual(valTI, nowTI, accuracy: 0.001)
     }
     
-    func testOSCValue_TimeTagTimeIntervalSinceNow() throws {
+    func testOSCValue_timeTagTimeIntervalSinceNow() throws {
         let val: any OSCValue = .timeTag(timeIntervalSinceNow: 5.0)
         let now = OSCTimeTag(timeIntervalSinceNow: 5.0)
         
@@ -51,12 +51,12 @@ final class OSCTimeTag_init_Tests: XCTestCase {
         XCTAssertEqual(valTI, nowTI, accuracy: 0.001)
     }
     
-    func testOSCValue_TimeTagTimeIntervalSince1900() {
+    func testOSCValue_timeTagTimeIntervalSince1900() {
         let val: any OSCValue = .timeTag(timeIntervalSince1900: 9467107200.0)
         XCTAssertEqual(val as? OSCTimeTag, OSCTimeTag(timeIntervalSince1900: 9467107200.0))
     }
     
-    func testOSCValue_TimeTagFuture() {
+    func testOSCValue_timeTagFuture() {
         let futureDate = Date().advanced(by: 200.0)
         let val: any OSCValue = .timeTag(future: futureDate)
         XCTAssertEqual(val as? OSCTimeTag, OSCTimeTag(future: futureDate))

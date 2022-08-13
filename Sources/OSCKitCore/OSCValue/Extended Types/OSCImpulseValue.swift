@@ -12,6 +12,17 @@ public struct OSCImpulseValue {
     public init() { }
 }
 
+// MARK: - `any OSCValue` Constructors
+
+extension OSCValue where Self == OSCImpulseValue {
+    /// Impulse OSC value (also known as Infinitum or Bang) as defined by the OSC 1.0 spec.
+    /// This type carries no data.
+    @inlinable
+    public static var impulse: Self {
+        OSCImpulseValue()
+    }
+}
+
 // MARK: - Equatable, Hashable
 
 extension OSCImpulseValue: Equatable, Hashable {

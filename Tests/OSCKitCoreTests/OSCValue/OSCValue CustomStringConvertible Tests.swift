@@ -1,5 +1,5 @@
 //
-//  OSCValue stringValue Tests.swift
+//  OSCValue CustomStringConvertible Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
@@ -8,7 +8,7 @@
 import XCTest
 import OSCKitCore
 
-final class OSCValue_stringValue_Tests: XCTestCase {
+final class OSCValue_CustomStringConvertible_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     

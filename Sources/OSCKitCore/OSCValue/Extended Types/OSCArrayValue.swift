@@ -20,6 +20,16 @@ public struct OSCArrayValue {
     // undesirable to have variadic parameters.
 }
 
+// MARK: - `any OSCValue` Constructors
+
+extension OSCValue where Self == OSCArrayValue {
+    /// OSC value array.
+    @inlinable
+    public static func array(_ elements: OSCValues) -> Self {
+        OSCArrayValue(elements)
+    }
+}
+
 // MARK: - Equatable
 
 extension OSCArrayValue: Equatable {
