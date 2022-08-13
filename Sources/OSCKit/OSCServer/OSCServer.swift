@@ -20,7 +20,8 @@ public class OSCServer: NSObject {
     let udpDelegate = OSCServerDelegate()
     let receiveQueue: DispatchQueue
     let dispatchQueue: DispatchQueue
-    var handler: ((_ message: OSCMessage, _ timeTag: OSCTimeTag) -> Void)?
+    var handler: ((_ message: OSCMessage,
+                   _ timeTag: OSCTimeTag) -> Void)?
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
     public var timeTagMode: TimeTagMode
@@ -93,17 +94,20 @@ extension OSCServer {
 extension OSCServer {
     /// Handle incoming OSC data recursively.
     func handle(
-        payload: OSCPayload,
+        payload: any OSCObject,
         timeTag: OSCTimeTag = .immediate()
     ) throws {
         switch payload {
-        case let .bundle(bundle):
-            try bundle.elements.forEach {
-                try handle(payload: $0, timeTag: bundle.timeTag)
+        case let bundle as OSCBundle:
+            for element in bundle.elements {
+                try handle(payload: element, timeTag: bundle.timeTag)
             }
-            
-        case let .message(message):
+
+        case let message as OSCMessage:
             schedule(message, at: timeTag)
+
+        default:
+            assertionFailure("Unexpected OSCObject type encountered.")
         }
     }
     

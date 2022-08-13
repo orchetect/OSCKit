@@ -7,6 +7,7 @@
 
 import XCTest
 import OSCKitCore
+import OTCore
 
 final class OSCBundle_Integrity_Tests: XCTestCase {
     override func setUp() { super.setUp() }
@@ -17,30 +18,30 @@ final class OSCBundle_Integrity_Tests: XCTestCase {
     func testConstructors() throws {
         // empty
         
-        let emptyBundle = OSCBundle(elements: [])
+        let emptyBundle = OSCBundle([])
         XCTAssertEqual(emptyBundle.timeTag.rawValue, 1)
         XCTAssertEqual(emptyBundle.elements.count, 0)
         
         // timetag only
         
         let timeTagOnly = OSCBundle(
-            elements: [],
-            timeTag: .init(20)
+            timeTag: .init(20),
+            []
         )
         XCTAssertEqual(timeTagOnly.timeTag.rawValue, 20)
         XCTAssertEqual(timeTagOnly.elements.count, 0)
         
         // elements only
         
-        let elementsOnly = OSCBundle(elements: [.message(address: "/")])
+        let elementsOnly = OSCBundle([.message("/")])
         XCTAssertEqual(elementsOnly.timeTag.rawValue, 1)
         XCTAssertEqual(elementsOnly.elements.count, 1)
         
         // timetag and elements
         
         let elementsAndTT = OSCBundle(
-            elements: [.message(address: "/")],
-            timeTag: .init(20)
+            timeTag: .init(20),
+            [.message("/")]
         )
         XCTAssertEqual(elementsAndTT.timeTag.rawValue, 20)
         XCTAssertEqual(elementsAndTT.elements.count, 1)
@@ -54,120 +55,94 @@ final class OSCBundle_Integrity_Tests: XCTestCase {
     
     // MARK: - Complex messages
     
-    func testComplex() {
+    func testComplex() throws {
         // this does not necessarily prove that encoding or decoding actually matches OSC spec, it simply ensures that rawData that OSCBundle generates can be decoded
         
         // build bundle
         
-        let oscBundle = OSCBundle(
-            elements:
-            [
-                // element 1
-                .bundle(elements: [.message(address: "/bundle1/msg")]),
-                
-                // element 2
-                .bundle(elements: [
-                    .message(
-                        address: "/bundle2/msg1",
-                        values: [
-                            .int32(500_000),
-                            .string("some string here")
-                        ]
-                    ),
-                    .message(
-                        address: "/bundle2/msg2",
-                        values: [
-                            .float32(8795.4556),
-                            .int32(75)
-                        ]
-                    )
-                ]),
-                
-                // element 3
+        let oscBundle = OSCBundle([
+            // element 1
+            .bundle([.message("/bundle1/msg")]),
+            
+            // element 2
+            .bundle([
                 .message(
-                    address: "/msg1",
-                    values: [.blob(Data([1, 2, 3]))]
+                    "/bundle2/msg1",
+                    values: [
+                        Int32(500_000),
+                        String("some string here")
+                    ]
                 ),
-                
-                // element 4
-                .bundle(elements: [])
-            ]
-        )
+                .message(
+                    "/bundle2/msg2",
+                    values: [
+                        Float32(8795.4556),
+                        Int32(75)
+                    ]
+                )
+            ]),
+            
+            // element 3
+            .message(
+                "/msg1",
+                values: [Data([1, 2, 3])]
+            ),
+            
+            // element 4
+            .bundle([])
+        ])
         
         // encode
         
-        let encodedOSCbundle = oscBundle.rawData
+        let encodedOSCbundle = try oscBundle.rawData()
         
         // decode
         
-        let decodedOSCbundle = try! OSCBundle(from: encodedOSCbundle)
+        let decodedOSCbundle = try OSCBundle(from: encodedOSCbundle)
         
         // verify contents
         
         XCTAssertEqual(decodedOSCbundle.timeTag.rawValue, 1)
         XCTAssertEqual(decodedOSCbundle.elements.count, 4)
         
-        // element 1
-        guard case let .bundle(element1) = decodedOSCbundle.elements[safe: 0]
-        else { XCTFail(); return }
-        
+        let element1 = try XCTUnwrap(decodedOSCbundle.elements[safe: 0] as? OSCBundle)
         XCTAssertEqual(element1.timeTag.rawValue, 1)
         XCTAssertEqual(element1.elements.count, 1)
         
-        guard case let .message(element1A) = element1.elements[safe: 0]
-        else { XCTFail(); return }
-        
-        XCTAssertEqual(element1A.address, "/bundle1/msg")
+        let element1A = try XCTUnwrap(element1.elements[safe: 0] as? OSCMessage)
+        XCTAssertEqual(element1A.addressPattern.stringValue, "/bundle1/msg")
         XCTAssertEqual(element1A.values.count, 0)
         
-        // element 2
-        guard case let .bundle(element2) = decodedOSCbundle.elements[safe: 1]
-        else { XCTFail(); return }
-        
+        let element2 = try XCTUnwrap(decodedOSCbundle.elements[safe: 1] as? OSCBundle)
         XCTAssertEqual(element2.timeTag.rawValue, 1)
         XCTAssertEqual(element2.elements.count, 2)
         
-        guard case let .message(element2A) = element2.elements[safe: 0]
-        else { XCTFail(); return }
-        
-        XCTAssertEqual(element2A.address, "/bundle2/msg1")
+        let element2A = try XCTUnwrap(element2.elements[safe: 0] as? OSCMessage)
+        XCTAssertEqual(element2A.addressPattern.stringValue, "/bundle2/msg1")
         XCTAssertEqual(element2A.values.count, 2)
         
-        guard case let .int32(element2A1) = element2A.values[safe: 0]
-        else { XCTFail(); return }
-        
+        let element2A1 = try XCTUnwrap(element2A.values[safe: 0] as? Int32)
         XCTAssertEqual(element2A1, 500_000)
         
-        guard case let .string(element2A2) = element2A.values[safe: 1]
-        else { XCTFail(); return }
-        
+        let element2A2 = try XCTUnwrap(element2A.values[safe: 1] as? String)
         XCTAssertEqual(element2A2, "some string here")
         
-        guard case let .message(element2B) = element2.elements[safe: 1]
-        else { XCTFail(); return }
-        
-        XCTAssertEqual(element2B.address, "/bundle2/msg2")
+        let element2B = try XCTUnwrap(element2.elements[safe: 1] as? OSCMessage)
+        XCTAssertEqual(element2B.addressPattern.stringValue, "/bundle2/msg2")
         XCTAssertEqual(element2B.values.count, 2)
         
-        guard case let .float32(element2B1) = element2B.values[safe: 0]
-        else { XCTFail(); return }
-        
+        let element2B1 = try XCTUnwrap(element2B.values[safe: 0] as? Float32)
         XCTAssertEqual(element2B1, 8795.4556)
         
-        guard case let .int32(element2B2) = element2B.values[safe: 1]
-        else { XCTFail(); return }
-        
+        let element2B2 = try XCTUnwrap(element2B.values[safe: 1] as? Int32)
         XCTAssertEqual(element2B2, 75)
         
-        // element 3
-        guard case let .message(element3) = decodedOSCbundle.elements[safe: 2]
-        else { XCTFail(); return }
+        let element3 = try XCTUnwrap(decodedOSCbundle.elements[safe: 2] as? OSCMessage)
+        XCTAssertEqual(element3.addressPattern.stringValue, "/msg1")
         XCTAssertEqual(element3.values.count, 1)
-        XCTAssertEqual(element3.address, "/msg1")
         
         // element 4
-        guard case let .bundle(element4) = decodedOSCbundle.elements[safe: 3]
-        else { XCTFail(); return }
+        let element4 = try XCTUnwrap(decodedOSCbundle.elements[safe: 3] as? OSCBundle)
         XCTAssertEqual(element4.timeTag.rawValue, 1)
         XCTAssertEqual(element4.elements.count, 0)
     }

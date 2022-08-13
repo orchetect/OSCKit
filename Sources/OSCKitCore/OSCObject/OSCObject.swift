@@ -8,9 +8,9 @@ import Foundation
 // MARK: - OSCObject
 
 /// Protocol adopted by all OSC data objects.
-public protocol OSCObject {
-    /// Returns raw OSC packet data constructed from the struct's properties.
-    var rawData: Data { get }
+public protocol OSCObject: Equatable, Hashable {
+    /// Returns raw OSC data constructed from the struct's properties.
+    func rawData() throws -> Data
     
     /// Initialize by parsing raw OSC packet data bytes.
     init(from rawData: Data) throws

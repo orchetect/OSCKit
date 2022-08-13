@@ -1,12 +1,11 @@
-// swift-tools-version:5.3
-// The swift-tools-version declares the minimum version of Swift required to build this package.
+// swift-tools-version:5.7
 
 import PackageDescription
 
 let package = Package(
     name: "OSCKit",
     
-    platforms: [.macOS(.v10_12), .iOS(.v10), .tvOS(.v10)],
+    platforms: [.macOS(.v10_13), .iOS(.v11), .tvOS(.v11)],
     
     products: [
         .library(
@@ -20,7 +19,7 @@ let package = Package(
     ],
     
     dependencies: [
-        .package(url: "https://github.com/orchetect/OTCore", from: "1.4.1"),
+        .package(url: "https://github.com/orchetect/OTCore", from: "1.4.2"),
         .package(url: "https://github.com/orchetect/SwiftASCII", from: "1.1.3"),
         .package(url: "https://github.com/orchetect/SwiftRadix", from: "1.2.0"),
         .package(url: "https://github.com/robbiehanson/CocoaAsyncSocket", from: "7.0.0")

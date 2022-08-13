@@ -18,13 +18,11 @@ final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
             exp.fulfill()
         }
         
-        let bundle = OSCBundle(
-            elements: [
-                .message(OSCMessage(address: "/test", values: [.int32(123)]))
-            ]
-        )
+        let bundle = OSCBundle([
+            .message("/test", values: [Int32(123)])
+        ])
         
-        try server.handle(payload: .bundle(bundle))
+        try server.handle(payload: bundle)
         
         wait(for: [exp], timeout: 0.5)
     }
@@ -39,13 +37,11 @@ final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
         }
         
         let bundle = OSCBundle(
-            elements: [
-                .message(OSCMessage(address: "/test", values: [.int32(123)]))
-            ],
-            timeTag: .immediate()
+            timeTag: .immediate(),
+            [.message("/test", values: [Int32(123)])]
         )
         
-        try server.handle(payload: .bundle(bundle))
+        try server.handle(payload: bundle)
         
         wait(for: [exp], timeout: 0.5)
     }
@@ -60,13 +56,11 @@ final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
         }
         
         let bundle = OSCBundle(
-            elements: [
-                .message(OSCMessage(address: "/test", values: [.int32(123)]))
-            ],
-            timeTag: .now()
+            timeTag: .now(),
+            [.message("/test", values: [Int32(123)])]
         )
         
-        try server.handle(payload: .bundle(bundle))
+        try server.handle(payload: bundle)
         
         wait(for: [exp], timeout: 0.5)
     }
@@ -81,13 +75,11 @@ final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
         }
         
         let bundle = OSCBundle(
-            elements: [
-                .message(OSCMessage(address: "/test", values: [.int32(123)]))
-            ],
-            timeTag: .timeIntervalSinceNow(1.0)
+            timeTag: .timeIntervalSinceNow(1.0),
+            [.message( "/test", values: [Int32(123)])]
         )
         
-        try server.handle(payload: .bundle(bundle))
+        try server.handle(payload: bundle)
         
         wait(for: [exp], timeout: 0.5)
     }
@@ -102,13 +94,11 @@ final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
         }
         
         let bundle = OSCBundle(
-            elements: [
-                .message(OSCMessage(address: "/test", values: [.int32(123)]))
-            ],
-            timeTag: .timeIntervalSinceNow(-1.0)
+            timeTag: .timeIntervalSinceNow(-1.0),
+            [.message("/test", values: [Int32(123)])]
         )
         
-        try server.handle(payload: .bundle(bundle))
+        try server.handle(payload: bundle)
         
         wait(for: [exp], timeout: 0.5)
     }

@@ -17,9 +17,9 @@ final class OSCMessage_Tests: XCTestCase {
     // MARK: - Equatable
     
     func testEquatable() {
-        let msg1 = OSCMessage(address: "/msg1")
-        let msg2 = OSCMessage(address: "/msg2")
-        let msg3 = OSCMessage(address: "/msg1", values: [.int32(123)])
+        let msg1 = OSCMessage("/msg1")
+        let msg2 = OSCMessage("/msg2")
+        let msg3 = OSCMessage("/msg1", values: [Int32(123)])
         
         XCTAssert(msg1 == msg1)
         XCTAssert(msg2 == msg2)
@@ -34,9 +34,9 @@ final class OSCMessage_Tests: XCTestCase {
     // MARK: - Hashable
     
     func testHashable() {
-        let msg1 = OSCMessage(address: "/msg1")
-        let msg2 = OSCMessage(address: "/msg2")
-        let msg3 = OSCMessage(address: "/msg1", values: [.int32(123)])
+        let msg1 = OSCMessage("/msg1")
+        let msg2 = OSCMessage("/msg2")
+        let msg3 = OSCMessage("/msg1", values: [Int32(123)])
         
         let set: Set<OSCMessage> = [msg1, msg1, msg2, msg2, msg3, msg3]
         
@@ -46,41 +46,35 @@ final class OSCMessage_Tests: XCTestCase {
     // MARK: - CustomStringConvertible
     
     func testCustomStringConvertible1() {
-        let msg = OSCMessage(address: "/")
+        let msg = OSCMessage("/")
         
-        let desc = msg.description
-        
-        XCTAssertEqual(desc, "OSCMessage(address: \"/\")")
+        XCTAssertEqual(msg.description, #"OSCMessage("/")"#)
     }
     
     func testCustomStringConvertible2() {
         let msg = OSCMessage(
-            address: "/address",
-            values: [.int32(123), .string("A string")]
+            "/address",
+            values: [Int32(123), String("A string")]
         )
         
-        let desc = msg.description
-        
         XCTAssertEqual(
-            desc,
-            #"OSCMessage(address: "/address", values: [int32:123, string:"A string"])"#
+            msg.description,
+            #"OSCMessage("/address", values: [123, "A string"])"#
         )
     }
     
     func testDescriptionPretty() {
         let msg = OSCMessage(
-            address: "/address",
-            values: [.int32(123), .string("A string")]
+            "/address",
+            values: [Int32(123), String("A string")]
         )
         
-        let desc = msg.descriptionPretty
-        
         XCTAssertEqual(
-            desc,
+            msg.descriptionPretty,
             #"""
-            OSCMessage(address: "/address") Values:
-              int32:123
-              string:"A string"
+            OSCMessage("/address") with values:
+              Int32: 123
+              String: A string
             """#
         )
     }
