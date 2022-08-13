@@ -10,17 +10,15 @@
 		E20B015B2898E40600950A28 /* OSCKit in Frameworks */ = {isa = PBXBuildFile; productRef = E20B015A2898E40600950A28 /* OSCKit */; };
 		E20B015D2898F0B000950A28 /* OSCReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B015C2898F0B000950A28 /* OSCReceiver.swift */; };
 		E2D003D5289882820073ED8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D003D4289882820073ED8F /* AppDelegate.swift */; };
-		E2D003D7289882820073ED8F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D003D6289882820073ED8F /* ViewController.swift */; };
 		E2D003E82898834E0073ED8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2D003E52898834E0073ED8F /* Assets.xcassets */; };
 		E2D003E92898834E0073ED8F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2D003E62898834E0073ED8F /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E20B015C2898F0B000950A28 /* OSCReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSCReceiver.swift; sourceTree = "<group>"; };
-		E2D003D1289882820073ED8F /* OSCKitExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSCKitExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2D003D1289882820073ED8F /* OSCKitAdvancedExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSCKitAdvancedExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2D003D4289882820073ED8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E2D003D6289882820073ED8F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		E2D003E42898834E0073ED8F /* OSCKitExample.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = OSCKitExample.entitlements; sourceTree = "<group>"; };
+		E2D003E42898834E0073ED8F /* OSCKitAdvancedExample.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = OSCKitAdvancedExample.entitlements; sourceTree = "<group>"; };
 		E2D003E52898834E0073ED8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2D003E72898834E0073ED8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E2D003EA289883870073ED8F /* OSCKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = OSCKit; path = ../..; sourceTree = "<group>"; };
@@ -42,7 +40,7 @@
 			isa = PBXGroup;
 			children = (
 				E2D003EA289883870073ED8F /* OSCKit */,
-				E2D003D3289882820073ED8F /* OSCKitExample */,
+				E2D003D3289882820073ED8F /* OSCKitAdvancedExample */,
 				E2D003D2289882820073ED8F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -50,26 +48,25 @@
 		E2D003D2289882820073ED8F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E2D003D1289882820073ED8F /* OSCKitExample.app */,
+				E2D003D1289882820073ED8F /* OSCKitAdvancedExample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E2D003D3289882820073ED8F /* OSCKitExample */ = {
+		E2D003D3289882820073ED8F /* OSCKitAdvancedExample */ = {
 			isa = PBXGroup;
 			children = (
 				E2D003E32898834E0073ED8F /* Support */,
 				E2D003D4289882820073ED8F /* AppDelegate.swift */,
-				E2D003D6289882820073ED8F /* ViewController.swift */,
 				E20B015C2898F0B000950A28 /* OSCReceiver.swift */,
 			);
-			path = OSCKitExample;
+			path = OSCKitAdvancedExample;
 			sourceTree = "<group>";
 		};
 		E2D003E32898834E0073ED8F /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				E2D003E42898834E0073ED8F /* OSCKitExample.entitlements */,
+				E2D003E42898834E0073ED8F /* OSCKitAdvancedExample.entitlements */,
 				E2D003E52898834E0073ED8F /* Assets.xcassets */,
 				E2D003E62898834E0073ED8F /* Main.storyboard */,
 			);
@@ -79,9 +76,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E2D003D0289882820073ED8F /* OSCKitExample */ = {
+		E2D003D0289882820073ED8F /* OSCKitAdvancedExample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E2D003E0289882850073ED8F /* Build configuration list for PBXNativeTarget "OSCKitExample" */;
+			buildConfigurationList = E2D003E0289882850073ED8F /* Build configuration list for PBXNativeTarget "OSCKitAdvancedExample" */;
 			buildPhases = (
 				E2D003CD289882820073ED8F /* Sources */,
 				E2D003CE289882820073ED8F /* Frameworks */,
@@ -91,12 +88,12 @@
 			);
 			dependencies = (
 			);
-			name = OSCKitExample;
+			name = OSCKitAdvancedExample;
 			packageProductDependencies = (
 				E20B015A2898E40600950A28 /* OSCKit */,
 			);
-			productName = OSCKitExample;
-			productReference = E2D003D1289882820073ED8F /* OSCKitExample.app */;
+			productName = OSCKitAdvancedExample;
+			productReference = E2D003D1289882820073ED8F /* OSCKitAdvancedExample.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -114,7 +111,7 @@
 					};
 				};
 			};
-			buildConfigurationList = E2D003CC289882820073ED8F /* Build configuration list for PBXProject "OSCKitExample" */;
+			buildConfigurationList = E2D003CC289882820073ED8F /* Build configuration list for PBXProject "OSCKitAdvancedExample" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -130,7 +127,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E2D003D0289882820073ED8F /* OSCKitExample */,
+				E2D003D0289882820073ED8F /* OSCKitAdvancedExample */,
 			);
 		};
 /* End PBXProject section */
@@ -152,7 +149,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2D003D7289882820073ED8F /* ViewController.swift in Sources */,
 				E20B015D2898F0B000950A28 /* OSCReceiver.swift in Sources */,
 				E2D003D5289882820073ED8F /* AppDelegate.swift in Sources */,
 			);
@@ -222,7 +218,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -276,7 +272,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -290,13 +286,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = OSCKitExample/Support/OSCKitExample.entitlements;
+				CODE_SIGN_ENTITLEMENTS = OSCKitAdvancedExample/Support/OSCKitAdvancedExample.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Advanced Example";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
@@ -306,7 +303,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.orchsoft.OSCKitExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.orchsoft.OSCKitAdvancedExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -318,13 +315,14 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = OSCKitExample/Support/OSCKitExample.entitlements;
+				CODE_SIGN_ENTITLEMENTS = OSCKitAdvancedExample/Support/OSCKitAdvancedExample.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = "Advanced Example";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSMainStoryboardFile = Main;
@@ -334,7 +332,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.orchsoft.OSCKitExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.orchsoft.OSCKitAdvancedExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -344,7 +342,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E2D003CC289882820073ED8F /* Build configuration list for PBXProject "OSCKitExample" */ = {
+		E2D003CC289882820073ED8F /* Build configuration list for PBXProject "OSCKitAdvancedExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E2D003DE289882850073ED8F /* Debug */,
@@ -353,7 +351,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E2D003E0289882850073ED8F /* Build configuration list for PBXNativeTarget "OSCKitExample" */ = {
+		E2D003E0289882850073ED8F /* Build configuration list for PBXNativeTarget "OSCKitAdvancedExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E2D003E1289882850073ED8F /* Debug */,

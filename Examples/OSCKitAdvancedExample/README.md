@@ -1,6 +1,9 @@
-# OSCKit Example
+# OSCKit Advanced Example
 
-This example demonstrates how to use OSCKit using library-provided [CocoaAsyncSocket](https://github.com/robbiehanson/CocoaAsyncSocket) networking.
+This example demonstrates how to get the most out of OSCKit, including:
+
+- taking advantage of `OSCAddressSpace` pattern matching
+- OSC message value validation and strong-typing using `masked()`
 
 ## Entitlements
 

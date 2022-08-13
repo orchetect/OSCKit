@@ -1,6 +1,6 @@
 //
 //  OSCReceiver.swift
-//  OSCKitExample
+//  OSCKitAdvancedExample
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 

@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  OSCKitExample
+//  OSCKitAdvancedExample
 //  OSCKit • https://github.com/orchetect/OSCKit
 //
 
@@ -51,7 +51,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         try? oscClient.send(
             oscMessage,
-            to: "127.0.0.1", // local machine
+            to: "localhost", // IP address or hostname
             port: 8000 // standard OSC port but can be changed
         )
     }
