@@ -19,13 +19,15 @@ on:
       
   workflow_dispatch:
     
-  schedule:
-    - cron: '40 11 * * *'   # once a day @ 11:40am UTC (4:40am PST)
+#  schedule:
+#    - cron: '40 11 * * *'   # once a day @ 11:40am UTC (4:40am PST)
     
 jobs:
   CI:
     name: CI
     steps:
+    - uses: actions/checkout@main
+    
 #  macOS-11:
 #    name: macOS 11 Big Sur
 #    runs-on: macos-11
