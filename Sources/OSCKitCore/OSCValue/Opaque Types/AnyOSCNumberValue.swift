@@ -65,7 +65,7 @@ extension AnyOSCNumberValue: Hashable {
 
 extension AnyOSCNumberValue: CustomStringConvertible {
     public var description: String {
-        "OSCNumberValue(\(base))"
+        "\(base)"
     }
 }
 

@@ -102,6 +102,18 @@ final class OSCValue_CustomStringConvertible_Tests: XCTestCase {
         let val: any OSCValue = OSCTimeTag(.init(123))
         XCTAssertEqual("\(val)", "123")
     }
+    
+    // MARK: - Opaque types
+    
+    func testAnyOSCNumberValue_Int() throws {
+        let val = try [Int(123)].masked(AnyOSCNumberValue.self)
+        XCTAssertEqual("\(val)", "123")
+    }
+    
+    func testAnyOSCNumberValue_Double() throws {
+        let val = try [Double(1.5)].masked(AnyOSCNumberValue.self)
+        XCTAssertEqual("\(val)", "1.5")
+    }
 }
 
 #endif
