@@ -56,6 +56,7 @@ final class OSCTimeTag_StaticConstructors_Tests: XCTestCase {
         XCTAssertEqual(val as? OSCTimeTag, OSCTimeTag(timeIntervalSince1900: 9467107200.0))
     }
     
+    @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6, *)
     func testOSCValue_timeTagFuture() {
         let futureDate = Date().advanced(by: 200.0)
         let val: any OSCValue = .timeTag(future: futureDate)
