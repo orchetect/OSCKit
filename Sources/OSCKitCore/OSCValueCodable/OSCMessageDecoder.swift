@@ -36,8 +36,7 @@ public enum OSCMessageDecoder {
         // OSC-type chunk
         
         guard let extractedOSCtags = (
-            try? decoder
-                .read4ByteAlignedNullTerminatedASCIIString()
+            try? decoder.read4ByteAlignedNullTerminatedASCIIString()
         )?
             .map({ Character(extendedGraphemeClusterLiteral: $0) })
         else {
@@ -66,7 +65,10 @@ public enum OSCMessageDecoder {
                     )
                 }
                 
+                var isTypeDecoded = false
                 for type in types {
+                    guard !isTypeDecoded else { continue }
+                    
                     let decoded = try Self.decode(
                         forType: type,
                         char: char,
@@ -76,6 +78,9 @@ public enum OSCMessageDecoder {
                     
                     currentTagIndex += decoded.tagCount
                     extractedValues += decoded.value
+                    
+                    // prevent multiple decode attempts for the same value
+                    isTypeDecoded = true
                 }
             }
         }
