@@ -29,7 +29,7 @@ extension OSCValue where Self == OSCStringAltValue {
 // MARK: - Equatable, Hashable
 
 extension OSCStringAltValue: Equatable, Hashable {
-    
+    // implementation is automatically synthesized by Swift
 }
 
 // MARK: - CustomStringConvertible

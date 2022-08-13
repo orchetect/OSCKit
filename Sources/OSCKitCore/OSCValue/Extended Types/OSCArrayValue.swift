@@ -36,7 +36,7 @@ extension OSCArrayValue: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         guard lhs.elements.count == lhs.elements.count else { return false }
         for (lhsIndex, rhsIndex) in zip(lhs.elements.indices, rhs.elements.indices) {
-            guard isEqual(lhs.elements[lhsIndex], rhs.elements[rhsIndex]) else {
+            guard lhs.elements[lhsIndex] == rhs.elements[rhsIndex] else {
                 return false
             }
         }

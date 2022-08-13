@@ -57,20 +57,20 @@ internal struct OSCNumberValue<B: OSCValue> {
 // MARK: - Equatable
 
 extension OSCNumberValue: Equatable {
-    // synthesized
+    // implementation is automatically synthesized by Swift
 }
 
 // MARK: - Hashable
 
 extension OSCNumberValue: Hashable {
-    // synthesized
+    // implementation is automatically synthesized by Swift
 }
 
 // MARK: - CustomStringConvertible
 
 extension OSCNumberValue: CustomStringConvertible {
     public var description: String {
-        "OSCNumberValue(\(base))"
+        "Number(\(base))"
     }
 }
 

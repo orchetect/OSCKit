@@ -52,13 +52,13 @@ extension AnyOSCNumberValue: OSCValueMaskable {
 // MARK: - Equatable
 
 extension AnyOSCNumberValue: Equatable {
-    // synthesized
+    // implementation is automatically synthesized by Swift
 }
 
 // MARK: - Hashable
 
 extension AnyOSCNumberValue: Hashable {
-    // synthesized
+    // implementation is automatically synthesized by Swift
 }
 
 // MARK: - CustomStringConvertible

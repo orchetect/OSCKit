@@ -19,7 +19,7 @@ extension OSCValues {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         guard lhs.count == rhs.count else { return false }
         for (lhsIndex, rhsIndex) in zip(lhs.indices, rhs.indices) {
-            guard isEqual(lhs[lhsIndex], rhs[rhsIndex]) else {
+            guard lhs[lhsIndex] == rhs[rhsIndex] else {
                 return false
             }
         }

@@ -12,7 +12,7 @@ final class OSCArrayValue_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
-    func testArray_Empty() throws {
+    func testEmpty() throws {
         let msg = OSCMessage("/test", values: [OSCArrayValue([])])
         
         XCTAssertEqual(msg.values[0] as? OSCArrayValue, OSCArrayValue([]))
@@ -23,7 +23,7 @@ final class OSCArrayValue_Tests: XCTestCase {
         XCTAssertEqual(msg, decodedMsg)
     }
     
-    func testArray_Simple() throws {
+    func testSimple() throws {
         let msg = OSCMessage("/test", values: [OSCArrayValue([Int32(123)])])
         
         XCTAssertEqual(msg.values[0] as? OSCArrayValue, OSCArrayValue([Int32(123)]))
@@ -34,7 +34,7 @@ final class OSCArrayValue_Tests: XCTestCase {
         XCTAssertEqual(msg, decodedMsg)
     }
     
-    func testArray_Nested() throws {
+    func testNested() throws {
         let msg = OSCMessage(
             "/test",
             values: [

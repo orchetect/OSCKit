@@ -26,7 +26,7 @@ extension OSCValue where Self == OSCImpulseValue {
 // MARK: - Equatable, Hashable
 
 extension OSCImpulseValue: Equatable, Hashable {
-    
+    // implementation is automatically synthesized by Swift
 }
 
 // MARK: - CustomStringConvertible
