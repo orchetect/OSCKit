@@ -285,7 +285,7 @@ extension OSCValueDecoder {
         
         let chunk = data.subdata(
             in: data.startIndex
-            ..< data.startIndex.advanced(by: blobSize)
+                ..< data.startIndex.advanced(by: blobSize)
         )
         
         let byteCount = blobRawSize
@@ -296,7 +296,16 @@ extension OSCValueDecoder {
     
     /// Read an arbitrary number of bytes from the data stream.
     public mutating func read(byteLength: Int) throws -> Data {
-        guard byteLength > 0 else { return Data() }
+        assert(
+            byteLength != 0,
+            "Requested byte read length of 0 bytes is not an error condition but may indicate faulty logic."
+        )
+        
+        guard byteLength >= 0 else {
+            throw OSCDecodeError.internalInconsistency(
+                "Negative byte count requested: \(byteLength)"
+            )
+        }
         
         guard byteLength <= remainingByteCount else {
             throw OSCDecodeError.malformed(
