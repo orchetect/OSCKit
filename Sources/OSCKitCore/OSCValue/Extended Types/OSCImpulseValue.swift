@@ -22,7 +22,7 @@ extension OSCImpulseValue: Equatable, Hashable {
 
 extension OSCImpulseValue: CustomStringConvertible {
     public var description: String {
-        "OSCImpulseValue()"
+        "Impulse"
     }
 }
 

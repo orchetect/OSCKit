@@ -14,6 +14,13 @@ final class OSCValue_stringValue_Tests: XCTestCase {
     
     // MARK: - Core types
     
+    func testBlob() {
+        let val: any OSCValue = Data([1, 2, 3, 4])
+        // should be "4 bytes" but `Data` is supplying the description
+        // so it may be brittle to test it here
+        XCTAssertEqual("\(val)", "\(val)")
+    }
+    
     func testInt32() {
         let val: any OSCValue = Int32(123)
         XCTAssertEqual("\(val)", "123")
@@ -29,41 +36,11 @@ final class OSCValue_stringValue_Tests: XCTestCase {
         XCTAssertEqual("\(val)", "A string")
     }
     
-    func testBlob() {
-        let val: any OSCValue = Data([1, 2, 3, 4])
-        XCTAssertEqual("\(val)", "4 bytes")
-    }
-    
     // MARK: - Extended types
     
-    func testInt64() {
-        let val: any OSCValue = Int64(123)
-        XCTAssertEqual("\(val)", "123")
-    }
-    
-    func testTimeTag() {
-        let val: any OSCValue = OSCTimeTag(.init(123))
-        XCTAssertEqual("\(val)", "123")
-    }
-    
-    func testDouble() {
-        let val: any OSCValue = Double(123.45)
-        XCTAssertEqual("\(val)", "123.45")
-    }
-    
-    func testStringAlt() {
-        let val: any OSCValue = OSCStringAltValue("A string")
-        XCTAssertEqual("\(val)", "A string")
-    }
-    
-    func testCharacter() {
-        let val: any OSCValue = Character("A")
-        XCTAssertEqual("\(val)", "A")
-    }
-    
-    func testMIDI() {
-        let val = OSCMIDIValue(portID: 0x80, status: 0x50, data1: 0x40, data2: 0x50)
-        XCTAssertEqual("\(val)", "OSCMIDIValue(portID:80 status:50 data1:40 data2:50)")
+    func testArray() {
+        let val: any OSCValue = OSCArrayValue([Int32(123)])
+        XCTAssertEqual("\(val)", "[123]")
     }
     
     func testBool() {
@@ -74,12 +51,45 @@ final class OSCValue_stringValue_Tests: XCTestCase {
         XCTAssertEqual("\(val2)", "false")
     }
     
+    func testCharacter() {
+        let val: any OSCValue = Character("A")
+        XCTAssertEqual("\(val)", "A")
+    }
+    
+    func testDouble() {
+        let val: any OSCValue = Double(123.45)
+        XCTAssertEqual("\(val)", "123.45")
+    }
+    
+    func testInt64() {
+        let val: any OSCValue = Int64(123)
+        XCTAssertEqual("\(val)", "123")
+    }
+    
+    func testImpulse() {
+        let val: any OSCValue = OSCImpulseValue()
+        XCTAssertEqual("\(val)", "Impulse")
+    }
+    
+    func testMIDI() {
+        let val = OSCMIDIValue(portID: 0x01, status: 0x80, data1: 0x40, data2: 0x51)
+        XCTAssertEqual("\(val)", "MIDI(portID: 0x01, status: 0x80, data1: 0x40, data2: 0x51)")
+    }
+    
     func testNull() {
         let val: any OSCValue = OSCNullValue()
         XCTAssertEqual("\(val)", "Null")
     }
     
-    // TODO: add tests for new value types added in OSCKit 0.4.0
+    func testStringAlt() {
+        let val: any OSCValue = OSCStringAltValue("A string")
+        XCTAssertEqual("\(val)", "A string")
+    }
+    
+    func testTimeTag() {
+        let val: any OSCValue = OSCTimeTag(.init(123))
+        XCTAssertEqual("\(val)", "123")
+    }
 }
 
 #endif

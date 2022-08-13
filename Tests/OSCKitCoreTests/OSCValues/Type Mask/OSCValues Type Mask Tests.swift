@@ -36,7 +36,6 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 .masked(Int32.self)
         )
         
-        // TODO: Why is the compiler saying this is ambiguous???
         XCTAssertThrowsError(
             try OSCValues([Int32(123), String("str")])
                 .masked(Int32.self)
@@ -167,7 +166,7 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
     }
     
     // MARK: - 3 Values
-    // TODO: Note: 3 Values does not have exhaustive tests, only basic tests
+    // Note: 3 Values does not have exhaustive tests, only basic tests
     
     func testValues_V0_V1_V2() throws {
         // success
@@ -285,7 +284,7 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
     }
     
     // MARK: - 4 Values
-    // TODO: Note: 4 Values does not have exhaustive tests, only basic tests
+    // Note: 4 Values does not have exhaustive tests, only basic tests
     
     func testValues_V0_V1_V2_V3() throws {
         // success
@@ -424,7 +423,7 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
     }
     
     // MARK: - 5 Values
-    // TODO: Note: 5 Values does not have exhaustive tests, only basic tests
+    // Note: 5 Values does not have exhaustive tests, only basic tests
     
     func testValues_V0_V1_V2_V3_V4() throws {
         // success
@@ -597,7 +596,7 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
     }
     
     // MARK: - 6 Values
-    // TODO: Note: 6 Values does not have exhaustive tests, only basic tests
+    // Note: 6 Values does not have exhaustive tests, only basic tests
     
     func testValues_V0_V1_V2_V3_V4_V5() throws {
         // success
@@ -808,7 +807,7 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
     }
     
     // MARK: - 7 Values
-    // TODO: Note: 7 Values does not have exhaustive tests, only basic tests
+    // Note: 7 Values does not have exhaustive tests, only basic tests
     
     func testValues_V0_V1_V2_V3_V4_V5_V6() throws {
         // success
@@ -1061,7 +1060,7 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
     }
     
     // MARK: - 8 Values
-    // TODO: Note: 8 Values does not have exhaustive tests, only basic tests
+    // Note: 8 Values does not have exhaustive tests, only basic tests
     
     func testValues_V0_V1_V2_V3_V4_V5_V6_V7() throws {
         // success
@@ -1360,7 +1359,7 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
     }
     
     // MARK: - 9 Values
-    // TODO: Note: 9 Values does not have exhaustive tests, only basic tests
+    // Note: 9 Values does not have exhaustive tests, only basic tests
     
     func testValues_V0_V1_V2_V3_V4_V5_V6_V7_V8() throws {
         // success
@@ -1709,7 +1708,7 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
     }
     
     // MARK: - 10 Values
-    // TODO: Note: 10 Values does not have exhaustive tests, only basic tests
+    // Note: 10 Values does not have exhaustive tests, only basic tests
     
     func testValues_V0_V1_V2_V3_V4_V5_V6_V7_V8_V9() throws {
         // success

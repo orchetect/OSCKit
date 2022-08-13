@@ -41,7 +41,7 @@ extension OSCArrayValue: Hashable {
 
 extension OSCArrayValue: CustomStringConvertible {
     public var description: String {
-        "OSCArrayValue(\(elements))"
+        "\(elements)"
     }
 }
 
