@@ -6,9 +6,12 @@
 
 Open Sound Control library written in Swift.
 
-Fully unit tested.
+- OSC address pattern matching and dispatch
+- Convenient OSC message value type masking, validation and strong-typing
+- Modular: use the bundled UDP network layer by default, or power-users can use your own
+- Fully unit tested
 
-Note that  Swift 5.7+ and Xcode 14+ are minimum requirements.
+>  **Note**: Swift 5.7+ and Xcode 14+ are minimum requirements. OSCKit [0.3.1](https://github.com/orchetect/OSCKit/releases/tag/0.3.1) can be used with Xcode 13.
 
 ## Getting Started
 
