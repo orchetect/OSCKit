@@ -13,7 +13,7 @@ final class OSCArrayValue_Tests: XCTestCase {
     override func tearDown() { super.tearDown() }
     
     func testArray_Empty() throws {
-        let msg = OSCMessage("/test", values: OSCArrayValue())
+        let msg = OSCMessage("/test", values: [OSCArrayValue([])])
         
         XCTAssertEqual(msg.values[0] as? OSCArrayValue, OSCArrayValue([]))
         
@@ -24,7 +24,7 @@ final class OSCArrayValue_Tests: XCTestCase {
     }
     
     func testArray_Simple() throws {
-        let msg = OSCMessage("/test", values: OSCArrayValue([Int32(123)]))
+        let msg = OSCMessage("/test", values: [OSCArrayValue([Int32(123)])])
         
         XCTAssertEqual(msg.values[0] as? OSCArrayValue, OSCArrayValue([Int32(123)]))
         

@@ -15,9 +15,9 @@ public struct OSCArrayValue {
         self.elements = elements
     }
     
-    public init(_ elements: (any OSCValue)...) {
-        self.elements = elements
-    }
+    // NOTE: Overloads that take variadic values were tested,
+    // however for code consistency and proper indentation, it is
+    // undesirable to have variadic parameters.
 }
 
 // MARK: - Equatable
@@ -49,6 +49,25 @@ extension OSCArrayValue: CustomStringConvertible {
         "\(elements)"
     }
 }
+
+// MARK: - ExpressibleByArrayLiteral
+
+// Note: this honestly has no practical effect since Swift's type inference
+//       system will almost never guess an array literal contains `any OSCValue`.
+//       It seems to infer it to be of type [Any] without more context,
+//       and even still, from testing it seems it is almost impossible to
+//       get this literal to be formed without requiring explicit typing
+//       of the array inline:
+//         ie: [123, "String"] as OSCArrayValue
+//       which defeats the purpose since it brings no real syntactic convenience.
+
+//extension OSCArrayValue: ExpressibleByArrayLiteral {
+//    public typealias ArrayLiteralElement = AnyOSCValue
+//
+//    public init(arrayLiteral elements: ArrayLiteralElement...) {
+//        self.init(elements)
+//    }
+//}
 
 // MARK: - OSC Encoding
 

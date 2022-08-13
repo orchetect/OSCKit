@@ -5,6 +5,10 @@
 
 import Foundation
 
+// NOTE: Overloads that take variadic values were tested,
+// however for code consistency and proper indentation, it is
+// undesirable to have variadic parameters.
+
 // MARK: - OSCMessage
 
 extension OSCObject where Self == OSCMessage {
@@ -31,32 +35,6 @@ extension OSCObject where Self == OSCMessage {
             values: values
         )
     }
-    
-    // MARK: - Variadic Values
-    
-    /// OSC Message.
-    @inlinable
-    public static func message(
-        _ addressPattern: String,
-        values: AnyOSCValue...
-    ) -> Self {
-        OSCMessage(
-            OSCAddressPattern(addressPattern),
-            values: values
-        )
-    }
-    
-    /// OSC Message.
-    @inlinable
-    public static func message(
-        _ addressPattern: OSCAddressPattern,
-        values: AnyOSCValue...
-    ) -> Self {
-        OSCMessage(
-            addressPattern,
-            values: values
-        )
-    }
 }
 
 // MARK: - OSCBundle
@@ -66,21 +44,7 @@ extension OSCObject where Self == OSCBundle {
     @inlinable
     public static func bundle(
         timeTag: OSCTimeTag? = nil,
-        _ elements: [any OSCObject]
-    ) -> Self {
-        OSCBundle(
-            timeTag: timeTag,
-            elements
-        )
-    }
-    
-    // MARK: - Variadic Values
-    
-    /// OSC Bundle.
-    @inlinable
-    public static func bundle(
-        timeTag: OSCTimeTag? = nil,
-        _ elements: (any OSCObject)...
+        _ elements: [any OSCObject] = []
     ) -> Self {
         OSCBundle(
             timeTag: timeTag,

@@ -18,9 +18,9 @@ final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
             exp.fulfill()
         }
         
-        let bundle = OSCBundle(
-            .message("/test", values: Int32(123))
-        )
+        let bundle = OSCBundle([
+            .message("/test", values: [Int32(123)])
+        ])
         
         try server.handle(payload: bundle)
         
@@ -38,7 +38,7 @@ final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
         
         let bundle = OSCBundle(
             timeTag: .immediate(),
-            .message("/test", values: Int32(123))
+            [.message("/test", values: [Int32(123)])]
         )
         
         try server.handle(payload: bundle)
@@ -57,7 +57,7 @@ final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
         
         let bundle = OSCBundle(
             timeTag: .now(),
-            .message("/test", values: Int32(123))
+            [.message("/test", values: [Int32(123)])]
         )
         
         try server.handle(payload: bundle)
@@ -76,7 +76,7 @@ final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
         
         let bundle = OSCBundle(
             timeTag: .timeIntervalSinceNow(1.0),
-            .message( "/test", values: Int32(123))
+            [.message( "/test", values: [Int32(123)])]
         )
         
         try server.handle(payload: bundle)
@@ -95,7 +95,7 @@ final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
         
         let bundle = OSCBundle(
             timeTag: .timeIntervalSinceNow(-1.0),
-            .message("/test", values: Int32(123))
+            [.message("/test", values: [Int32(123)])]
         )
         
         try server.handle(payload: bundle)
