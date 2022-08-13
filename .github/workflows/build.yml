@@ -25,8 +25,11 @@ on:
 jobs:
   CI:
     name: CI
+    runs-on: macos-latest
     steps:
     - uses: actions/checkout@main
+    - name: CI
+    - run: echo
     
 #  macOS-11:
 #    name: macOS 11 Big Sur
