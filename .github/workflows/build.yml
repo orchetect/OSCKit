@@ -29,7 +29,7 @@ jobs:
     steps:
     - uses: actions/checkout@main
     - name: CI
-    - run: echo
+      run: echo
     
 #  macOS-11:
 #    name: macOS 11 Big Sur
