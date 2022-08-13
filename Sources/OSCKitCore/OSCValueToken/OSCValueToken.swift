@@ -146,32 +146,30 @@ extension OSCValueToken {
     }
 }
 
-// TODO: remove? not sure this is needed or beneficial.
+extension OSCValueToken {
+    /// Returns the associated concrete return type.
+    public var maskReturnType: OSCValueMaskable.Type {
+        switch self {
+        // core types
+        case .blob,         .blobOptional:      return Data.self
+        case .float32,      .float32Optional:   return Float32.self
+        case .int32,        .int32Optional:     return Int32.self
+        case .string,       .stringOptional:    return String.self
 
-// extension OSCValueToken {
-//    /// Returns the associated concrete type.
-//    public var concreteType: OSCValue.Type {
-//        switch self {
-//        // core types
-//        case .array,        .arrayOptional:     return Array<OSCValue>.self
-//        case .blob,         .blobOptional:      return Data.self
-//        case .float32,      .float32Optional:   return Float32.self
-//        case .int32,        .int32Optional:     return Int32.self
-//        case .string,       .stringOptional:    return String.self
-//
-//        // extended types
-//        case .bool,         .boolOptional:      return Bool.self
-//        case .character,    .characterOptional: return Character.self
-//        case .double,       .doubleOptional:    return Double.self
-//        case .int64,        .int64Optional:     return Int64.self
-//        case .impulse,      .impulseOptional:   return OSCImpulseValue.self
-//        case .timeTag,      .timeTagOptional:   return Int64.self
-//        case .stringAlt,    .stringAltOptional: return String.self
-//        case .midi,         .midiOptional:      return OSCMIDIValue.self
-//        case .null,         .nullOptional:      return OSCNullValue.self
-//
-//        // opaque types
-//        case .number,       .numberOptional:    return AnyOSCNumberValue.self
-//        }
-//    }
-// }
+        // extended types
+        case .array,        .arrayOptional:     return OSCArrayValue.self
+        case .bool,         .boolOptional:      return Bool.self
+        case .character,    .characterOptional: return Character.self
+        case .double,       .doubleOptional:    return Double.self
+        case .int64,        .int64Optional:     return Int64.self
+        case .impulse,      .impulseOptional:   return OSCImpulseValue.self
+        case .midi,         .midiOptional:      return OSCMIDIValue.self
+        case .null,         .nullOptional:      return OSCNullValue.self
+        case .stringAlt,    .stringAltOptional: return String.self
+        case .timeTag,      .timeTagOptional:   return Int64.self
+
+        // opaque types
+        case .number,       .numberOptional:    return AnyOSCNumberValue.self
+        }
+    }
+}
