@@ -1,6 +1,7 @@
 //
 //  OSCValueToken Methods.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -27,9 +28,9 @@ extension OSCValueToken {
             switch token {
             case .number:
                 if self == .int32 ||
-                   self == .float32 ||
-                   self == .int64 ||
-                   self == .double
+                    self == .float32 ||
+                    self == .int64 ||
+                    self == .double
                 {
                     return true
                 }

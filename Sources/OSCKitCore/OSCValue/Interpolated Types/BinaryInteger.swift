@@ -1,6 +1,7 @@
 //
 //  BinaryInteger.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -8,12 +9,12 @@ import Foundation
 // MARK: - BinaryInteger Default Implementation
 
 extension OSCInterpolatedValue
-where Self: BinaryInteger,
-      CoreOSCValue: BinaryInteger,
-      OSCValueEncodingBlock == OSCValueAtomicEncoder<Self>,
-      OSCValueDecodingBlock == OSCValueAtomicDecoder<Self>,
-      CoreOSCValue.OSCValueEncodingBlock == OSCValueAtomicEncoder<CoreOSCValue>,
-      CoreOSCValue.OSCValueDecodingBlock == OSCValueAtomicDecoder<CoreOSCValue>
+    where Self: BinaryInteger,
+    CoreOSCValue: BinaryInteger,
+    OSCValueEncodingBlock == OSCValueAtomicEncoder<Self>,
+    OSCValueDecodingBlock == OSCValueAtomicDecoder<Self>,
+    CoreOSCValue.OSCValueEncodingBlock == OSCValueAtomicEncoder<CoreOSCValue>,
+    CoreOSCValue.OSCValueDecodingBlock == OSCValueAtomicDecoder<CoreOSCValue>
 {
     public static var oscEncoding: OSCValueEncodingBlock { OSCValueEncodingBlock { value in
         try CoreOSCValue.oscEncoding.block(CoreOSCValue(value))

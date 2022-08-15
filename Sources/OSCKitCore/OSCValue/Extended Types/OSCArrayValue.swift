@@ -1,6 +1,7 @@
 //
 //  OSCArrayValue.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -71,13 +72,13 @@ extension OSCArrayValue: CustomStringConvertible {
 //         ie: [123, "String"] as OSCArrayValue
 //       which defeats the purpose since it brings no real syntactic convenience.
 
-//extension OSCArrayValue: ExpressibleByArrayLiteral {
+// extension OSCArrayValue: ExpressibleByArrayLiteral {
 //    public typealias ArrayLiteralElement = AnyOSCValue
 //
 //    public init(arrayLiteral elements: ArrayLiteralElement...) {
 //        self.init(elements)
 //    }
-//}
+// }
 
 // MARK: - OSC Encoding
 

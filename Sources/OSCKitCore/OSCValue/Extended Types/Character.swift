@@ -1,6 +1,7 @@
 //
 //  Character.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -30,6 +31,7 @@ extension Character: OSCValueEncodable {
         )
     }
 }
+
 extension Character: OSCValueDecodable {
     public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { decoder in

@@ -1,6 +1,7 @@
 //
 //  OSCBundle init.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -19,6 +20,6 @@ extension OSCBundle {
     ) {
         self.timeTag = timeTag ?? .init(1)
         self.elements = elements
-        self._rawData = nil
+        _rawData = nil
     }
 }

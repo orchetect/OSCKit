@@ -1,6 +1,7 @@
 //
 //  OSCValueDecoder Read Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 #if shouldTestCurrentPlatform
@@ -30,7 +31,7 @@ final class OSCValueDecoder_Read_Tests: XCTestCase {
         XCTAssertEqual(decoder1.pos, 4)
         
         // negative
-        let data2 = Data([0b1111_1111, 0b1011_1000, 0b1000_0100, 0b1001_0010])
+        let data2 = Data([0b11111111, 0b10111000, 0b10000100, 0b10010010])
         var decoder2 = OSCValueDecoder(data: data2)
         XCTAssertEqual(try decoder2.readInt32(), -4_684_654)
         XCTAssertEqual(decoder2.pos, 4)
@@ -49,8 +50,8 @@ final class OSCValueDecoder_Read_Tests: XCTestCase {
         XCTAssertEqual(decoder1.pos, 8)
         
         // negative
-        let data2 = Data([0b1111_1111, 0b1111_1111, 0b1111_1111, 0b1111_1111,
-                          0b1111_1111, 0b1011_1000, 0b1000_0100, 0b1001_0010])
+        let data2 = Data([0b11111111, 0b11111111, 0b11111111, 0b11111111,
+                          0b11111111, 0b10111000, 0b10000100, 0b10010010])
         var decoder2 = OSCValueDecoder(data: data2)
         XCTAssertEqual(try decoder2.readInt64(), -4_684_654)
         XCTAssertEqual(decoder2.pos, 8)

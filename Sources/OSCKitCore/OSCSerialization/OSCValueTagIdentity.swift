@@ -1,6 +1,7 @@
 //
 //  OSCValueTagIdentity.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 public enum OSCValueTagIdentity: Equatable, Hashable {
@@ -14,9 +15,9 @@ extension OSCValueTagIdentity {
     /// If the identity is variadic, `false` is always returned.
     public func isEqual(to otherTag: Character) -> Bool {
         switch self {
-        case .atomic(let character):
+        case let .atomic(character):
             return otherTag == character
-        case .variable(let array):
+        case let .variable(array):
             return array.contains(otherTag)
         case .variadic:
             return false
@@ -27,9 +28,9 @@ extension OSCValueTagIdentity {
     /// If the identity is variadic, an empty array is always returned since the tags are known only to the type's `OSCValueCodable` implementation.
     func staticTags() -> [Character] {
         switch self {
-        case .atomic(let character):
+        case let .atomic(character):
             return [character]
-        case .variable(let array):
+        case let .variable(array):
             return array
         case .variadic:
             return []

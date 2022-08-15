@@ -1,6 +1,7 @@
 //
 //  OSCTimeTag OSC 1.1 Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 #if shouldTestCurrentPlatform
@@ -76,7 +77,7 @@ final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
         
         let bundle = OSCBundle(
             timeTag: .timeIntervalSinceNow(1.0),
-            [.message( "/test", values: [Int32(123)])]
+            [.message("/test", values: [Int32(123)])]
         )
         
         try server.handle(payload: bundle)

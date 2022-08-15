@@ -1,6 +1,7 @@
 //
 //  OSCMessage init.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -21,7 +22,7 @@ extension OSCMessage {
     ) {
         self.addressPattern = OSCAddressPattern(addressPattern)
         self.values = values
-        self._rawData = nil
+        _rawData = nil
     }
     
     /// Create an OSC message from an `OSCAddressPattern` and zero or more OSC values (arguments).
@@ -32,7 +33,7 @@ extension OSCMessage {
     ) {
         self.addressPattern = addressPattern
         self.values = values
-        self._rawData = nil
+        _rawData = nil
     }
     
     /// Create an OSC message from OSC address pattern path components and zero or more OSC values (arguments).
@@ -42,9 +43,9 @@ extension OSCMessage {
         addressPattern pathComponents: some BidirectionalCollection<some StringProtocol>,
         values: OSCValues = []
     ) {
-        self.addressPattern = OSCAddressPattern(pathComponents: pathComponents)
+        addressPattern = OSCAddressPattern(pathComponents: pathComponents)
         self.values = values
-        self._rawData = nil
+        _rawData = nil
     }
     
     // MARK: - SwiftASCII typed
@@ -54,9 +55,9 @@ extension OSCMessage {
         asciiAddressPattern address: ASCIIString,
         values: OSCValues = []
     ) {
-        self.addressPattern = OSCAddressPattern(ascii: address)
+        addressPattern = OSCAddressPattern(ascii: address)
         self.values = values
-        self._rawData = nil
+        _rawData = nil
     }
     
     /// Create an OSC message from `ASCIIString` OSC address pattern path components and zero or more OSC values (arguments).
@@ -65,8 +66,8 @@ extension OSCMessage {
         asciiAddressPattern pathComponents: some BidirectionalCollection<ASCIIString>,
         values: OSCValues = []
     ) {
-        self.addressPattern = OSCAddressPattern(asciiPathComponents: pathComponents)
+        addressPattern = OSCAddressPattern(asciiPathComponents: pathComponents)
         self.values = values
-        self._rawData = nil
+        _rawData = nil
     }
 }

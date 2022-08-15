@@ -1,6 +1,7 @@
 //
 //  OSCMessage.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -24,7 +25,7 @@ public struct OSCMessage: OSCObject {
 extension OSCMessage: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         lhs.addressPattern == rhs.addressPattern &&
-        lhs.values == rhs.values
+            lhs.values == rhs.values
     }
 }
 

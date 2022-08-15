@@ -1,6 +1,7 @@
 //
 //  OSCValueToken Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 #if shouldTestCurrentPlatform
@@ -484,7 +485,7 @@ final class OSCValueToken_Tests: XCTestCase {
         // fail - related (but wrong) type
         XCTAssertFalse(
             OSCValues([Data([1, 2, 3])])
-            .matches(mask: mask)
+                .matches(mask: mask)
         )
         
         // fail - matches but too many values
@@ -826,8 +827,6 @@ final class OSCValueToken_Tests: XCTestCase {
     }
     
     // MARK: ... Extended types
-    
-    
     
     // MARK: ... Opaque types
     

@@ -1,6 +1,7 @@
 //
 //  OSCBundle rawData.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -10,7 +11,7 @@ extension OSCBundle {
     /// Initialize by parsing raw OSC bundle data bytes.
     public init(from rawData: Data) throws {
         // cache raw data
-        self._rawData = rawData
+        _rawData = rawData
         
         // parse a raw OSC packet and populates the struct's properties
         

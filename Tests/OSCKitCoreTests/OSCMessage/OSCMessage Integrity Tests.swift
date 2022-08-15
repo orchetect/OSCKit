@@ -1,6 +1,7 @@
 //
 //  OSCMessage Integrity Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 #if shouldTestCurrentPlatform
@@ -29,7 +30,8 @@ final class OSCMessage_Integrity_Tests: XCTestCase {
         )
         
         XCTAssertEqual(
-            OSCMessage(asciiAddressPattern: ASCIIString("/container1/container2")).addressPattern.stringValue,
+            OSCMessage(asciiAddressPattern: ASCIIString("/container1/container2")).addressPattern
+                .stringValue,
             "/container1/container2"
         )
         
@@ -44,7 +46,8 @@ final class OSCMessage_Integrity_Tests: XCTestCase {
         )
         
         XCTAssertEqual(
-            OSCMessage(asciiAddressPattern: [ASCIIString("container1"), ASCIIString("container2")]).addressPattern
+            OSCMessage(asciiAddressPattern: [ASCIIString("container1"), ASCIIString("container2")])
+                .addressPattern
                 .stringValue,
             "/container1/container2"
         )

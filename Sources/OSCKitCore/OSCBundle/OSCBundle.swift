@@ -1,6 +1,7 @@
 //
 //  OSCBundle.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -98,7 +99,7 @@ extension OSCBundle: CustomStringConvertible {
 
 // TODO: Codable - fix or remove
 
-//extension OSCBundle: Codable {
+// extension OSCBundle: Codable {
 //    enum CodingKeys: String, CodingKey {
 //        case timeTag
 //        case elements
@@ -116,7 +117,7 @@ extension OSCBundle: CustomStringConvertible {
 //        try container.encode(timeTag.rawValue, forKey: .timeTag)
 //        try container.encode(elements, forKey: .elements)
 //    }
-//}
+// }
 
 // MARK: - Header
 

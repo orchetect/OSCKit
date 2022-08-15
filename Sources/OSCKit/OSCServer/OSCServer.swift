@@ -1,6 +1,7 @@
 //
 //  OSCServer.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -20,8 +21,10 @@ public class OSCServer: NSObject {
     let udpDelegate = OSCServerDelegate()
     let receiveQueue: DispatchQueue
     let dispatchQueue: DispatchQueue
-    var handler: ((_ message: OSCMessage,
-                   _ timeTag: OSCTimeTag) -> Void)?
+    var handler: ((
+        _ message: OSCMessage,
+        _ timeTag: OSCTimeTag
+    ) -> Void)?
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
     public var timeTagMode: TimeTagMode

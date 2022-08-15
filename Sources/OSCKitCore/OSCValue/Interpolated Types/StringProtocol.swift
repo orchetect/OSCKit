@@ -1,6 +1,7 @@
 //
 //  StringProtocol.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -8,12 +9,12 @@ import Foundation
 // MARK: - StringProtocol Default Implementation
 
 extension OSCInterpolatedValue
-where Self: StringProtocol,
+    where Self: StringProtocol,
 //      CoreOSCValue == String,
-      OSCValueEncodingBlock == OSCValueAtomicEncoder<Self>,
-      OSCValueDecodingBlock == OSCValueAtomicDecoder<Self>,
-      CoreOSCValue.OSCValueEncodingBlock == OSCValueAtomicEncoder<CoreOSCValue>,
-      CoreOSCValue.OSCValueDecodingBlock == OSCValueAtomicDecoder<CoreOSCValue>
+    OSCValueEncodingBlock == OSCValueAtomicEncoder<Self>,
+    OSCValueDecodingBlock == OSCValueAtomicDecoder<Self>,
+    CoreOSCValue.OSCValueEncodingBlock == OSCValueAtomicEncoder<CoreOSCValue>,
+    CoreOSCValue.OSCValueDecodingBlock == OSCValueAtomicDecoder<CoreOSCValue>
 {
     public typealias CoreOSCValue = String
     

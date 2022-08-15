@@ -1,6 +1,7 @@
 //
 //  OSCAddressPattern.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -60,13 +61,13 @@ extension OSCAddressPattern: Hashable {
 
 // MARK: - ExpressibleByStringLiteral
 
- extension OSCAddressPattern: ExpressibleByStringLiteral {
+extension OSCAddressPattern: ExpressibleByStringLiteral {
     public typealias StringLiteralType = String
 
     public init(stringLiteral: Self.StringLiteralType) {
         self.init(stringLiteral)
     }
- }
+}
 
 // MARK: - CustomStringConvertible
 

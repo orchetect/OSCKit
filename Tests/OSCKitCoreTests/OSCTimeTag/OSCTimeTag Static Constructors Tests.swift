@@ -1,6 +1,7 @@
 //
 //  OSCTimeTag Static Constructors Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 #if shouldTestCurrentPlatform
@@ -52,8 +53,8 @@ final class OSCTimeTag_StaticConstructors_Tests: XCTestCase {
     }
     
     func testOSCValue_timeTagTimeIntervalSince1900() {
-        let val: any OSCValue = .timeTag(timeIntervalSince1900: 9467107200.0)
-        XCTAssertEqual(val as? OSCTimeTag, OSCTimeTag(timeIntervalSince1900: 9467107200.0))
+        let val: any OSCValue = .timeTag(timeIntervalSince1900: 9_467_107_200.0)
+        XCTAssertEqual(val as? OSCTimeTag, OSCTimeTag(timeIntervalSince1900: 9_467_107_200.0))
     }
     
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6, *)

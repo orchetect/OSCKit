@@ -1,6 +1,7 @@
 //
 //  OSCAddressPattern Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 #if shouldTestCurrentPlatform
@@ -30,7 +31,10 @@ final class OSCAddressPattern_Tests: XCTestCase {
     
     func testInit_PathComponents_ASCIIString() {
         let addr =
-            OSCAddressPattern(asciiPathComponents: [ASCIIString("container1"), ASCIIString("methodname")])
+            OSCAddressPattern(asciiPathComponents: [
+                ASCIIString("container1"),
+                ASCIIString("methodname")
+            ])
         XCTAssertEqual(addr.stringValue, "/container1/methodname")
     }
     

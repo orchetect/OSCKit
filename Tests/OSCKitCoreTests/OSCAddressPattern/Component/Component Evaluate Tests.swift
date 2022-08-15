@@ -1,6 +1,7 @@
 //
 //  Component Evaluate Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 #if shouldTestCurrentPlatform
@@ -660,7 +661,8 @@ final class OSCAddressPattern_Component_Evaluate_Tests: XCTestCase {
         )
         
         XCTAssertTrue(
-            OSCAddressPattern.Component(string: "abc*{def,xyz}[0-9]").evaluate(matching: "abcXXxyz2")
+            OSCAddressPattern.Component(string: "abc*{def,xyz}[0-9]")
+                .evaluate(matching: "abcXXxyz2")
         )
         
         XCTAssertFalse(
@@ -668,7 +670,8 @@ final class OSCAddressPattern_Component_Evaluate_Tests: XCTestCase {
         )
         
         XCTAssertFalse(
-            OSCAddressPattern.Component(string: "abc*{def,xyz}[0-9]").evaluate(matching: "dummyName123")
+            OSCAddressPattern.Component(string: "abc*{def,xyz}[0-9]")
+                .evaluate(matching: "dummyName123")
         )
     }
     
@@ -684,7 +687,8 @@ final class OSCAddressPattern_Component_Evaluate_Tests: XCTestCase {
         )
         
         XCTAssertTrue(
-            OSCAddressPattern.Component(string: "*abc{def,xyz}[0-9]").evaluate(matching: "XXabcdef1")
+            OSCAddressPattern.Component(string: "*abc{def,xyz}[0-9]")
+                .evaluate(matching: "XXabcdef1")
         )
         
         XCTAssertFalse(
