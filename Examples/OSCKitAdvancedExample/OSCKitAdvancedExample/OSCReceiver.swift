@@ -32,16 +32,16 @@ class OSCReceiver {
         try ids.forEach { id in
             switch id {
             case idMethodA:
-                let value = try message.values.masked(String.self)
-                performMethodA(value)
+                let str = try message.values.masked(String.self)
+                performMethodA(str)
                 
             case idMethodB:
-                let values = try message.values.masked(String.self, Int.self)
-                performMethodB(values.0, values.1)
+                let (str, int) = try message.values.masked(String.self, Int.self)
+                performMethodB(str, int)
                 
             case idMethodC:
-                let values = try message.values.masked(String.self, Double?.self)
-                performMethodC(values.0, values.1)
+                let (str, dbl) = try message.values.masked(String.self, Double?.self)
+                performMethodC(str, dbl)
                 
             default:
                 break
