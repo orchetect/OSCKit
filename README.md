@@ -172,7 +172,7 @@ OSCKit provides an abstraction called `OSCAddressSpace`.
 
 This object is generally instanced once and stored globally.
 
-Each local OSC addresses (OSC Method) must be registered with this object. It will return a unique ID token to correspond to each method. When an OSC message is received, you then pass its address pattern to the `methods(matching:)` method of the `OSCAddressSpace` instance. This method will pattern-match it against all registered local addresses and return an array of local method IDs that match.
+Each local OSC address (OSC Method) must be registered once with this object. It will return a unique ID token to correspond to each method that is registered. When an OSC message is received, you then pass its address pattern to the `methods(matching:)` method of the `OSCAddressSpace` instance. This method will pattern-match it against all registered local addresses and return an array of local method IDs that match.
 
 Consider that an inbound message address pattern of `/some/address/*` will match both `/some/address/methodB` and `/some/address/methodC` below:
 
