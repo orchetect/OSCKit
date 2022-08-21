@@ -12,6 +12,7 @@ import Foundation
 extension OSCAddressSpace {
     func createMethodNode(
         path: some BidirectionalCollection<some StringProtocol>,
+        block: MethodBlock? = nil,
         replaceExisting: Bool = true
     ) -> Node {
         var pathRef = root
@@ -23,14 +24,14 @@ extension OSCAddressSpace {
                 .first(where: { $0.name == path[idx] })
             {
                 if isLast, replaceExisting {
-                    let newNode = Node(path[idx])
+                    let newNode = Node(path[idx], block)
                     pathRef.children.append(newNode)
                     pathRef = newNode
                 } else {
                     pathRef = existingNode
                 }
             } else {
-                let newNode = Node(path[idx])
+                let newNode = Node(path[idx], block)
                 pathRef.children.append(newNode)
                 pathRef = newNode
             }
@@ -105,6 +106,23 @@ extension OSCAddressSpace {
         pattern: OSCAddressPattern.Component
     ) -> [Node] {
         node.children.filter { pattern.evaluate(matching: $0.name) }
+    }
+    
+    func findNodes(patternMatching address: OSCAddressPattern) -> [Node] {
+        let patternComponents = address.components
+        guard !patternComponents.isEmpty else { return [] }
+        
+        var nodes: [Node] = [root]
+        var idx = 0
+        repeat {
+            nodes = nodes.reduce(into: [Node]()) {
+                let m = findPatternMatches(node: $1, pattern: patternComponents[idx])
+                $0.append(contentsOf: m)
+            }
+            idx += 1
+        } while idx < patternComponents.count
+        
+        return nodes
     }
 }
 

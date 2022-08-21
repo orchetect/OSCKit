@@ -15,11 +15,14 @@ extension OSCAddressSpace {
         
         public let name: String
         
+        public let block: MethodBlock?
+        
         public var children: [Node] = []
         
-        public init(_ name: any StringProtocol) {
+        public init(_ name: any StringProtocol, _ block: MethodBlock? = nil) {
             // sanitize name
             self.name = String(name)
+            self.block = block
         }
     }
 }

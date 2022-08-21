@@ -377,6 +377,77 @@ final class OSCAddressSpace_Tests: XCTestCase {
             )
         }
     }
+    
+    func testDispatchMatching_CurrentQueue() {
+        let addressSpace = OSCAddressSpace()
+        
+        let test1Exp = expectation(description: "test1 Closure Called")
+        let test2Exp = expectation(description: "test2 Closure Called")
+        let test3Exp = expectation(description: "test3 Closure Called")
+        test3Exp.isInverted = true
+        
+        let id1 = addressSpace.register(localAddress: "/base/test1") { values in
+            XCTAssert(values == ["A string", 123])
+            test1Exp.fulfill()
+        }
+        
+        let id2 = addressSpace.register(localAddress: "/base/test2") { values in
+            XCTAssert(values == ["A string", 123])
+            test2Exp.fulfill()
+        }
+        
+        // this shouldn't be called
+        let id3 = addressSpace.register(localAddress: "/base/blah3") { values in
+            test3Exp.fulfill()
+        }
+        
+        let methodIDs = addressSpace.dispatch(
+            OSCMessage("/base/test?", values: ["A string", 123])
+        )
+        
+        wait(for: [test1Exp, test2Exp, test3Exp], timeout: 1.0)
+        
+        XCTAssertEqual(methodIDs.count, 2)
+        XCTAssertTrue(methodIDs.contains(id1))
+        XCTAssertTrue(methodIDs.contains(id2))
+        _ = id3
+    }
+    
+    func testDispatchMatching_OnQueue() {
+        let addressSpace = OSCAddressSpace()
+        
+        let test1Exp = expectation(description: "test1 Closure Called")
+        let test2Exp = expectation(description: "test2 Closure Called")
+        let test3Exp = expectation(description: "test3 Closure Called")
+        test3Exp.isInverted = true
+        
+        let id1 = addressSpace.register(localAddress: "/base/test1") { values in
+            XCTAssert(values == ["A string", 123])
+            test1Exp.fulfill()
+        }
+        
+        let id2 = addressSpace.register(localAddress: "/base/test2") { values in
+            XCTAssert(values == ["A string", 123])
+            test2Exp.fulfill()
+        }
+        
+        // this shouldn't be called
+        let id3 = addressSpace.register(localAddress: "/base/blah3") { values in
+            test3Exp.fulfill()
+        }
+        
+        let methodIDs = addressSpace.dispatch(
+            OSCMessage("/base/test?", values: ["A string", 123]),
+            on: .global()
+        )
+        
+        wait(for: [test1Exp, test2Exp, test3Exp], timeout: 1.0)
+        
+        XCTAssertEqual(methodIDs.count, 2)
+        XCTAssertTrue(methodIDs.contains(id1))
+        XCTAssertTrue(methodIDs.contains(id2))
+        _ = id3
+    }
 }
 
 #endif

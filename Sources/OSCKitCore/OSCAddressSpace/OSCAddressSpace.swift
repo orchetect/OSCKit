@@ -36,8 +36,9 @@ extension OSCAddressSpace {
     /// Register an OSC address.
     /// Returns a unique identifier assigned to the address's method.
     /// Replaces existing reference if one exists for that method already.
+    /// Optionally supply a closure that will be invoked when calling ``methods(matching:)``.
     ///
-    /// An OSC _method_ is defined as being the last path component in the address.
+    /// - Remark: An OSC _method_ is defined as being the last path component in the address.
     ///
     /// `methodname` is the method name in the following address examples:
     ///
@@ -46,15 +47,20 @@ extension OSCAddressSpace {
     ///
     ///  Any other path components besides the last are referred to as _containers_.
     ///
-    public func register(localAddress address: String) -> MethodID {
-        register(localAddress: OSCAddressPattern(address).pathComponents)
+    @discardableResult
+    public func register(
+        localAddress address: String,
+        block: MethodBlock? = nil
+    ) -> MethodID {
+        register(localAddress: OSCAddressPattern(address).pathComponents, block: block)
     }
     
     /// Register an OSC address.
     /// Returns a unique identifier assigned to the address's method.
     /// Replaces existing reference if one exists for that method already.
+    /// Optionally supply a closure that will be invoked when calling ``methods(matching:)``.
     ///
-    /// An OSC _method_ is defined as being the last path component in the address.
+    /// - Remark: An OSC _method_ is defined as being the last path component in the address.
     ///
     /// `methodname` is the method name in the following address examples:
     ///
@@ -63,8 +69,10 @@ extension OSCAddressSpace {
     ///
     ///  Any other path components besides the last are referred to as _containers_.
     ///
+    @discardableResult
     public func register(
-        localAddress pathComponents: some BidirectionalCollection<some StringProtocol>
+        localAddress pathComponents: some BidirectionalCollection<some StringProtocol>,
+        block: MethodBlock? = nil
     ) -> MethodID {
         guard !pathComponents.isEmpty else {
             // instead of returning nil, return a bogus ID
@@ -73,6 +81,7 @@ extension OSCAddressSpace {
         
         return createMethodNode(
             path: pathComponents,
+            block: block,
             replaceExisting: true
         )
         .id
@@ -87,7 +96,9 @@ extension OSCAddressSpace {
         )
     }
     
-    /// Unregister an OSC address.
+    // TODO: add unregister(methodID: MethodID) method
+    
+    /// Unregister an OSC method by supplying its local address.
     @discardableResult
     public func unregister(
         localAddress pathComponents: some BidirectionalCollection<some StringProtocol>
@@ -98,7 +109,7 @@ extension OSCAddressSpace {
         )
     }
     
-    /// Unregister all OSC addresses.
+    /// Unregister all registered OSC methods.
     public func unregisterAll() {
         root = Node("")
     }
@@ -109,7 +120,9 @@ extension OSCAddressSpace {
 extension OSCAddressSpace {
     /// Returns all OSC address nodes matching the address pattern.
     ///
-    /// An OSC Method is defined as being the last path component in the address. OSC Methods are the potential destinations of OSC messages received by the OSC server and correspond to each of the points of control that the application makes available.
+    /// - Note: This will not automatically execute the closure blocks that may be associated with the methods. To execute the closures, invoke the ``dispatch(_:on:)`` function instead.
+    ///
+    /// - Remark: An OSC Method is defined as being the last path component in the address. OSC Methods are the potential destinations of OSC messages received by the OSC server and correspond to each of the points of control that the application makes available.
     ///
     /// `methodname` is the method name in the following address examples:
     ///
@@ -121,18 +134,43 @@ extension OSCAddressSpace {
     ///  A container may also be a method. Simply register it the same way as other methods.
     ///
     public func methods(matching address: OSCAddressPattern) -> [MethodID] {
-        let patternComponents = address.components
-        guard !patternComponents.isEmpty else { return [] }
+        findNodes(patternMatching: address)
+            .map { $0.id }
+    }
+    
+    /// Executes the closure blocks (with the OSC message values) for all local OSC address nodes matching the address pattern in the OSC message.
+    /// If a `queue` is supplied, blocks will be dispatched  on the `queue` with its default QoS.
+    /// If no `queue` is supplied, the closures are dispatched synchronously on the current queue.
+    ///
+    /// - Remark: An OSC Method is defined as being the last path component in the address. OSC Methods are the potential destinations of OSC messages received by the OSC server and correspond to each of the points of control that the application makes available.
+    ///
+    /// `methodname` is the method name in the following address examples:
+    ///
+    ///     /methodname
+    ///     /container1/container2/methodname
+    ///
+    ///  Any other path components besides the last are referred to as _containers_.
+    ///
+    ///  A container may also be a method. Simply register it the same way as other methods.
+    ///
+    /// - Returns: The OSC method IDs that were matched (the same as calling ``methods(matching:)``).
+    ///
+    @discardableResult
+    public func dispatch(
+        _ message: OSCMessage,
+        on queue: DispatchQueue? = nil
+    ) -> [MethodID] {
+        let nodes = findNodes(patternMatching: message.addressPattern)
         
-        var nodes: [Node] = [root]
-        var idx = 0
-        repeat {
-            nodes = nodes.reduce(into: [Node]()) {
-                let m = findPatternMatches(node: $1, pattern: patternComponents[idx])
-                $0.append(contentsOf: m)
-            }
-            idx += 1
-        } while idx < patternComponents.count
+        func runBlocks() {
+            nodes.forEach { $0.block?(message.values) }
+        }
+        
+        if let queue = queue {
+            queue.async { runBlocks() }
+        } else {
+            runBlocks()
+        }
         
         return nodes.map { $0.id }
     }
