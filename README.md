@@ -46,7 +46,7 @@ Open Sound Control library for macOS, iOS and tvOS written in Swift.
 
 ### Create OSC Client
 
-A single global OSC client can be created once at app startup then you can access it from aynwhere to send OSC messages to any receiver.
+A single global OSC client is all that is needed to send OSC packets. It can be used to send OSC messages to any receiver.
 
 ```swift
 let oscClient = OSCClient()
@@ -84,12 +84,12 @@ oscClient.send(bundle, to: "192.168.1.2", port: 8000)
 
 #### Sending with a Future Time Tag
 
-OSC bundles carry a time tag. By default if not specified, this is set to a value equivalent to "immediate" which receivers will interpret and handle the bundle and the message(s) it contains immediately upon receiving them.
+OSC bundles carry a time tag. If not specified, by default a time tag equivalent to "immediate" is used, which indicates to receivers that they should handle the bundle and the message(s) it contains immediately upon receiving them.
 
-It is possible to specify a future time tag. When present, a receiver holds the bundle in memory and handles it at the future time specified in the time tag.
+It is possible to specify a future time tag. When present, a receiver which adheres to the OSC 1.0 spec will hold the bundle in memory and handle it at the future time specified in the time tag.
 
 ```swift
-// by default, bundles use an immediate time tag; so these two lines are identical:
+// by default, bundles use an immediate time tag; these two lines are identical:
 OSCBundle([ ... ])
 OSCBundle(timeTag: .immediate(), [ ... ])
 
@@ -112,7 +112,7 @@ OSCBundle(timeTag: .init(timeTag), [ ... ])
 
 ### Create OSC Server
 
-Create the server instance. A single global instance can be created one at app startup to receive OSC messages on a specific port. The default OSC port is 8000 but it may be set to any open port if desired.
+Create a server instance. A single global instance is often created once at app startup to receive OSC messages on a specific port. The default OSC port is 8000 but it may be set to any open port if desired.
 
 ```swift
 let oscServer = OSCServer(port: 8000)
@@ -145,14 +145,14 @@ try oscServer.start()
 
 If received OSC bundles contain a future time tag and the `OSCServer` is set to `.osc1_0` mode, these bundles will be held in memory automatically and scheduled to be dispatched to the handler at the future time.
 
-Note that as per the OSC 1.1 proposal, this behavior has largely been deprecated. OSCServer will default to `.ignore` and not perform any scheduling unless explicitly set to `.osc1_0` mode.
+Note that as per the OSC 1.1 proposal, this behavior has largely been deprecated. `OSCServer` will default to `.ignore` and not perform any scheduling unless explicitly set to `.osc1_0` mode.
 
 ### Address Parsing
 
 #### Option 1: Imperative address pattern matching
 
 ```swift
-// example receied OSC message with address "/{some,other}/address/*"
+// example: received OSC message with address "/{some,other}/address/*"
 private func handle(received message: OSCMessage) throws {
     if message.addressPattern.matches(localAddress: "/some/address/methodA") { // will match
         // perform methodA action using message.values
@@ -172,7 +172,7 @@ OSCKit provides an abstraction called `OSCAddressSpace`.
 
 This object is generally instanced once and stored globally.
 
-Each local OSC addresses (OSC Method) is registered with this object and it returns a unique ID token to correspond to the method. When an OSC message is received, pass its address pattern to the `OSCAddressSpace` instance and it will pattern match it against all registered local addresses and return an array of local method IDs that match.
+Each local OSC address (OSC Method) must be registered once with this object. It will return a unique ID token to correspond to each method that is registered. When an OSC message is received, you then pass its address pattern to the `methods(matching:)` method of the `OSCAddressSpace` instance. This method will pattern-match it against all registered local addresses and return an array of local method IDs that match.
 
 Consider that an inbound message address pattern of `/some/address/*` will match both `/some/address/methodB` and `/some/address/methodC` below:
 
@@ -239,7 +239,7 @@ let str = try oscMessage.values.masked(String.self)
 print("string: \(str)")
 ```
 
-A special wrapper type `AnyOSCNumberValue` can match any number and provides easy type-erased access to its contents, converting value types if necessary automatically.
+The special wrapper type `AnyOSCNumberValue` is able to match any number and provides easy type-erased access to its contents, converting value types if necessary automatically.
 
 Validate and unwrap value array with expected members `String, Int, <number>?`:
 
