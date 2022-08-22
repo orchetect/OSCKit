@@ -427,6 +427,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         let val = try XCTUnwrap(msg.values.first as? OSCNullValue)
+        XCTAssertEqual(val, OSCNullValue())
         
         // re-encode
         
