@@ -16,9 +16,9 @@
 
 /* Begin PBXFileReference section */
 		E20B015C2898F0B000950A28 /* OSCReceiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSCReceiver.swift; sourceTree = "<group>"; };
-		E2D003D1289882820073ED8F /* OSCKitAdvancedExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSCKitAdvancedExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2D003D1289882820073ED8F /* OSCKitMethodBlocksExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSCKitMethodBlocksExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2D003D4289882820073ED8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E2D003E42898834E0073ED8F /* OSCKitAdvancedExample.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = OSCKitAdvancedExample.entitlements; sourceTree = "<group>"; };
+		E2D003E42898834E0073ED8F /* OSCKitMethodBlocksExample.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = OSCKitMethodBlocksExample.entitlements; sourceTree = "<group>"; };
 		E2D003E52898834E0073ED8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2D003E72898834E0073ED8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E2D003EA289883870073ED8F /* OSCKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = OSCKit; path = ../..; sourceTree = "<group>"; };
@@ -40,7 +40,7 @@
 			isa = PBXGroup;
 			children = (
 				E2D003EA289883870073ED8F /* OSCKit */,
-				E2D003D3289882820073ED8F /* OSCKitAdvancedExample */,
+				E2D003D3289882820073ED8F /* OSCKitMethodBlocksExample */,
 				E2D003D2289882820073ED8F /* Products */,
 			);
 			sourceTree = "<group>";
@@ -48,25 +48,25 @@
 		E2D003D2289882820073ED8F /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E2D003D1289882820073ED8F /* OSCKitAdvancedExample.app */,
+				E2D003D1289882820073ED8F /* OSCKitMethodBlocksExample.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		E2D003D3289882820073ED8F /* OSCKitAdvancedExample */ = {
+		E2D003D3289882820073ED8F /* OSCKitMethodBlocksExample */ = {
 			isa = PBXGroup;
 			children = (
 				E2D003E32898834E0073ED8F /* Support */,
 				E2D003D4289882820073ED8F /* AppDelegate.swift */,
 				E20B015C2898F0B000950A28 /* OSCReceiver.swift */,
 			);
-			path = OSCKitAdvancedExample;
+			path = OSCKitMethodBlocksExample;
 			sourceTree = "<group>";
 		};
 		E2D003E32898834E0073ED8F /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				E2D003E42898834E0073ED8F /* OSCKitAdvancedExample.entitlements */,
+				E2D003E42898834E0073ED8F /* OSCKitMethodBlocksExample.entitlements */,
 				E2D003E52898834E0073ED8F /* Assets.xcassets */,
 				E2D003E62898834E0073ED8F /* Main.storyboard */,
 			);
@@ -76,9 +76,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E2D003D0289882820073ED8F /* OSCKitAdvancedExample */ = {
+		E2D003D0289882820073ED8F /* OSCKitMethodBlocksExample */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E2D003E0289882850073ED8F /* Build configuration list for PBXNativeTarget "OSCKitAdvancedExample" */;
+			buildConfigurationList = E2D003E0289882850073ED8F /* Build configuration list for PBXNativeTarget "OSCKitMethodBlocksExample" */;
 			buildPhases = (
 				E2D003CD289882820073ED8F /* Sources */,
 				E2D003CE289882820073ED8F /* Frameworks */,
@@ -88,12 +88,12 @@
 			);
 			dependencies = (
 			);
-			name = OSCKitAdvancedExample;
+			name = OSCKitMethodBlocksExample;
 			packageProductDependencies = (
 				E20B015A2898E40600950A28 /* OSCKit */,
 			);
-			productName = OSCKitAdvancedExample;
-			productReference = E2D003D1289882820073ED8F /* OSCKitAdvancedExample.app */;
+			productName = OSCKitMethodBlocksExample;
+			productReference = E2D003D1289882820073ED8F /* OSCKitMethodBlocksExample.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -111,7 +111,7 @@
 					};
 				};
 			};
-			buildConfigurationList = E2D003CC289882820073ED8F /* Build configuration list for PBXProject "OSCKitAdvancedExample" */;
+			buildConfigurationList = E2D003CC289882820073ED8F /* Build configuration list for PBXProject "OSCKitMethodBlocksExample" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -127,7 +127,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				E2D003D0289882820073ED8F /* OSCKitAdvancedExample */,
+				E2D003D0289882820073ED8F /* OSCKitMethodBlocksExample */,
 			);
 		};
 /* End PBXProject section */
@@ -286,7 +286,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = OSCKitAdvancedExample/Support/OSCKitAdvancedExample.entitlements;
+				CODE_SIGN_ENTITLEMENTS = OSCKitMethodBlocksExample/Support/OSCKitMethodBlocksExample.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -303,7 +303,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.orchsoft.OSCKitAdvancedExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.orchsoft.OSCKitMethodBlocksExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -315,7 +315,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_ENTITLEMENTS = OSCKitAdvancedExample/Support/OSCKitAdvancedExample.entitlements;
+				CODE_SIGN_ENTITLEMENTS = OSCKitMethodBlocksExample/Support/OSCKitMethodBlocksExample.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -332,7 +332,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.orchsoft.OSCKitAdvancedExample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.orchsoft.OSCKitMethodBlocksExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -342,7 +342,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E2D003CC289882820073ED8F /* Build configuration list for PBXProject "OSCKitAdvancedExample" */ = {
+		E2D003CC289882820073ED8F /* Build configuration list for PBXProject "OSCKitMethodBlocksExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E2D003DE289882850073ED8F /* Debug */,
@@ -351,7 +351,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E2D003E0289882850073ED8F /* Build configuration list for PBXNativeTarget "OSCKitAdvancedExample" */ = {
+		E2D003E0289882850073ED8F /* Build configuration list for PBXNativeTarget "OSCKitMethodBlocksExample" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E2D003E1289882850073ED8F /* Debug */,

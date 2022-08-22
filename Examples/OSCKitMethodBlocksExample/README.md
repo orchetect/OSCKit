@@ -1,8 +1,8 @@
-# OSCKit Advanced Example
+# OSCKit Method Blocks Example
 
 This example demonstrates how to get the most out of OSCKit, including:
 
-- taking advantage of `OSCAddressSpace` pattern matching
+- taking advantage of `OSCAddressSpace` pattern matching using method closure blocks
 - OSC message value validation and strong-typing using `masked()`
 
 ## Entitlements
