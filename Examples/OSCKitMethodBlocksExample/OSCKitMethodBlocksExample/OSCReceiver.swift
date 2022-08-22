@@ -25,10 +25,16 @@ class OSCReceiver {
         // instead of supplying a closure, it's also possible to forward to a function:
         
         // weakly (recommended):
-        addressSpace.register(localAddress: "/some/address/methodC", block: { [weak self] in self?.handleMethodC($0) })
+        addressSpace.register(
+            localAddress: "/some/address/methodC",
+            block: { [weak self] in self?.handleMethodC($0) }
+        )
         
         // strongly (discouraged):
-        // addressSpace.register(localAddress: "/some/address/methodC", block: handleMethodC)
+        // addressSpace.register(
+        //     localAddress: "/some/address/methodC",
+        //     block: handleMethodC
+        // )
     }
     
     private func handleMethodC(_ values: OSCValues) {
