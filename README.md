@@ -132,7 +132,7 @@ oscServer.setHandler { [weak self] oscMessage, timeTag in
 }
 
 private func handle(received oscMessage: OSCMessage) throws {
-  // handle received messages here
+    // handle received messages here
 }
 ```
 
@@ -168,62 +168,77 @@ private func handle(received message: OSCMessage) throws {
 
 #### Option 2: Using `OSCAddressSpace` for automated address pattern matching
 
-OSCKit provides an abstraction called `OSCAddressSpace`.
+OSCKit provides an abstraction called `OSCAddressSpace`. This object is generally instanced once and stored globally.
 
-This object is generally instanced once and stored globally.
+Each local OSC address (OSC Method) is registered once with this object in order to enable it to perform matching against received OSC message address patterns. Each method is assigned an ID, and can optionally store a closure.
 
-Each local OSC address (OSC Method) must be registered once with this object. It will return a unique ID token to correspond to each method that is registered. When an OSC message is received, you then pass its address pattern to the `methods(matching:)` method of the `OSCAddressSpace` instance. This method will pattern-match it against all registered local addresses and return an array of local method IDs that match.
+Method IDs, method closures, or a combination of both may be used for maximum flexibility.
 
-Consider that an inbound message address pattern of `/some/address/*` will match both `/some/address/methodB` and `/some/address/methodC` below:
+##### Method IDs
+
+- Registration will return a unique ID token to correspond to each method that is registered. This can be stored and used to identify methods that `OSCAddressSpace` matches for you.
+- When an OSC message is received:
+  - Pass its address pattern to the `methods(matching:)` method of the `OSCAddressSpace` instance.
+  - This method will pattern-match it against all registered local addresses and return an array of local method IDs that match.
+  - You can then compare the IDs to ones you stored while registering the local methods.
 
 ```swift
-class OSCReceiver {
-  private let addressSpace = OSCAddressSpace()
-  
-  private let idMethodA: OSCAddressSpace.MethodID
-  private let idMethodB: OSCAddressSpace.MethodID
-  private let idMethodC: OSCAddressSpace.MethodID
-  
-  public init() {
-    // register local OSC methods and store the ID tokens once before receiving OSC messages
-    idMethodA = addressSpace.register(localAddress: "/methodA")
-    idMethodB = addressSpace.register(localAddress: "/some/address/methodB")
-    idMethodC = addressSpace.register(localAddress: "/some/address/methodC")
-  }
-  
-  // when received OSC messages arrive, pass them to the dispatcher
-  public func handle(message: OSCMessage) throws {
+// instance address space and register methods only once, usually at app startup.
+let addressSpace = OSCAddressSpace()
+let idMethodA = addressSpace.register(localAddress: "/methodA")
+let idMethodB = addressSpace.register(localAddress: "/some/address/methodB")
+
+func handle(message: OSCMessage) throws {
     let ids = addressSpace.methods(matching: message.addressPattern)
     
-    guard !ids.isEmpty else {
-      print("Received unrecognized OSC message:", message)
-      return
-    }
-    
     try ids.forEach { id in
-      switch id {
+        switch id {
         case idMethodA:
-          let str = try message.values.masked(String.self)
-          performMethodA(str)
-          
+            let str = try message.values.masked(String.self)
+            performMethodA(str)
         case idMethodB:
-          let (str, int) = try message.values.masked(String.self, Int?.self)
-          performMethodB(str, int)
-          
-        case idMethodC:
-          let (str, num) = try message.values.masked(String.self, AnyOSCNumberValue.self)
-          performMethodC(str, num.doubleValue)
-          
+            let (str, int) = try message.values.masked(String.self, Int?.self)
+            performMethodB(str, int)
         default:
-          print("Received unhandled OSC message:", message)
-      }
+            print("Received unhandled OSC message:", message)
+        }
     }
-  }
-  
-  private func performMethodA(_ str: String) { }
-  private func performMethodB(_ str: String, _ int: Int?) { }
-  private func performMethodC(_ str: String, _ dbl: Double) { }
 }
+
+func performMethodA(_ str: String) { }
+func performMethodB(_ str: String, _ int: Int?) { }
+```
+
+##### Method Closure Blocks
+
+- When registering a local method, it can also store a closure. This closure can be executed automatically when matching against a received OSC message's address pattern.
+- When an OSC message is received:
+  - Pass its address pattern to the `dispatch(_:)` method of the `OSCAddressSpace` instance.
+  - This method will pattern-match it against all registered local addresses and execute their closures, optionally on a specified queue.
+  - It also returns an array of local method IDs that match exactly like `methods(matching:)` (which may be discarded if handling of unregistered/unrecognized methods is not needed).
+  - If the returned method ID array is empty, that indicates that no methods matched the address pattern. In this case you may want to handle the unhandled message in a special way.
+
+```swift
+// instance address space and register methods only once, usually at app startup.
+let addressSpace = OSCAddressSpace()
+addressSpace.register(localAddress: "/methodA") { values in
+    guard let str = try? message.values.masked(String.self) else { return }
+    performMethodA(str)
+}
+addressSpace.register(localAddress: "/some/address/methodB") { values in
+    guard let (str, int) = try message.values.masked(String.self, Int?.self) else { return }
+    performMethodB(str, int)
+}
+
+func handle(message: OSCMessage) throws {
+    let ids = addressSpace.dispatch(message)
+    if ids.isEmpty {
+        print("Received unhandled OSC message:", message)
+    }
+}
+
+func performMethodA(_ str: String) { }
+func performMethodB(_ str: String, _ int: Int?) { }
 ```
 
 ### Parsing OSC Message Values
@@ -280,14 +295,14 @@ It may be desired to imperatively validate and cast values when their expected m
 
 ```swift
 oscMessage.values.forEach { oscValue
-  switch oscValue {
+    switch oscValue {
     case let val as String:
-      print(val)
+        print(val)
     case let val as Int32:
-      print(val)
+        print(val)
     default:
-      // unhandled
-  }
+        // unhandled
+    }
 }
 ```
 
