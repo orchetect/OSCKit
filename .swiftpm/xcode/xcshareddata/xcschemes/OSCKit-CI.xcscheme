@@ -24,6 +24,20 @@
             buildForTesting = "YES"
             buildForRunning = "YES"
             buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "OSCKitCore"
+               BuildableName = "OSCKitCore"
+               BlueprintName = "OSCKitCore"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
             buildForArchiving = "NO"
             buildForAnalyzing = "YES">
             <BuildableReference
@@ -50,6 +64,16 @@
                BlueprintIdentifier = "OSCKitCoreTests"
                BuildableName = "OSCKitCoreTests"
                BlueprintName = "OSCKitCoreTests"
+               ReferencedContainer = "container:">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "OSCKitTests"
+               BuildableName = "OSCKitTests"
+               BlueprintName = "OSCKitTests"
                ReferencedContainer = "container:">
             </BuildableReference>
          </TestableReference>
