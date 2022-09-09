@@ -10,11 +10,11 @@ import Foundation
 // MARK: - Node Utility Methods
 
 extension OSCAddressSpace {
-    func createMethodNode(
-        path: some BidirectionalCollection<some StringProtocol>,
+    func createMethodNode<S>(
+        path: S,
         block: MethodBlock? = nil,
         replaceExisting: Bool = true
-    ) -> Node {
+    ) -> Node where S: BidirectionalCollection, S.Element: StringProtocol {
         var pathRef = root
         
         for idx in path.indices {
@@ -41,10 +41,10 @@ extension OSCAddressSpace {
     }
     
     @discardableResult
-    func removeMethodNode(
-        path: some BidirectionalCollection<some StringProtocol>,
+    func removeMethodNode<S>(
+        path: S,
         forceNonEmptyMethodRemoval: Bool = false
-    ) -> Bool {
+    ) -> Bool where S: BidirectionalCollection, S.Element: StringProtocol {
         guard !path.isEmpty,
               let nodes = findPathNodes(path: path, includeRoot: true)
         else { return false }
@@ -65,9 +65,9 @@ extension OSCAddressSpace {
         return true
     }
     
-    func findMethodNode(
-        path: some BidirectionalCollection<some StringProtocol>
-    ) -> Node? {
+    func findMethodNode<S>(
+        path: S
+    ) -> Node? where S: BidirectionalCollection, S.Element: StringProtocol {
         var pathRef = root
         for idx in path.indices {
             guard let node = pathRef.children
@@ -80,10 +80,10 @@ extension OSCAddressSpace {
         return pathRef
     }
     
-    func findPathNodes(
-        path: some BidirectionalCollection<some StringProtocol>,
+    func findPathNodes<S>(
+        path: S,
         includeRoot: Bool = false
-    ) -> [Node]? {
+    ) -> [Node]? where S: BidirectionalCollection, S.Element: StringProtocol {
         var nodes: [Node] = []
         var pathRef = root
         if includeRoot { nodes.append(pathRef) }

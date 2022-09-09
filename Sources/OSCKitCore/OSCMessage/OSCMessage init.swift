@@ -39,10 +39,10 @@ extension OSCMessage {
     /// Create an OSC message from OSC address pattern path components and zero or more OSC values (arguments).
     /// Empty path components is equivalent to the address of "/".
     @inlinable
-    public init(
-        addressPattern pathComponents: some BidirectionalCollection<some StringProtocol>,
+    public init<S>(
+        addressPattern pathComponents: S,
         values: OSCValues = []
-    ) {
+    ) where S: BidirectionalCollection, S.Element: StringProtocol {
         addressPattern = OSCAddressPattern(pathComponents: pathComponents)
         self.values = values
         _rawData = nil
@@ -62,10 +62,10 @@ extension OSCMessage {
     
     /// Create an OSC message from `ASCIIString` OSC address pattern path components and zero or more OSC values (arguments).
     /// Empty path components is equivalent to the address of "/".
-    init(
-        asciiAddressPattern pathComponents: some BidirectionalCollection<ASCIIString>,
+    init<S>(
+        asciiAddressPattern pathComponents: S,
         values: OSCValues = []
-    ) {
+    ) where S: BidirectionalCollection, S.Element == ASCIIString {
         addressPattern = OSCAddressPattern(asciiPathComponents: pathComponents)
         self.values = values
         _rawData = nil
