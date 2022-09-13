@@ -8,13 +8,24 @@ import Foundation
 @_implementationOnly import OTCore
 @_implementationOnly import SwiftRadix
 
-/// MIDI message OSC value as defined by the OSC 1.0 spec.
+/// MIDI 1.0 message OSC value as defined by the OSC 1.0 spec.
+///
+/// The message is built as 1-3 raw MIDI 1.0 message bytes, along with a port ID.
 public struct OSCMIDIValue {
     public var portID: UInt8
     public var status: UInt8
     public var data1: UInt8
     public var data2: UInt8
     
+    /// MIDI 1.0 message OSC value as defined by the OSC 1.0 spec.
+    ///
+    /// The message is built as 1-3 raw MIDI 1.0 message bytes, along with a port ID.
+    ///
+    /// - Parameters:
+    ///   - portID: An index number to identify a MIDI port. This is not part of the raw MIDI message bytes but is rather up to manufacturer or developer to decide how to use this OSC parameter. An ID of 0 can be used if not applicable.
+    ///   - status: MIDI 1.0 status byte
+    ///   - data1: MIDI status message data byte 1 (optional)
+    ///   - data2: MIDI status message data byte 2 (optional)
     public init(
         portID: UInt8,
         status: UInt8,
@@ -31,7 +42,15 @@ public struct OSCMIDIValue {
 // MARK: - `any OSCValue` Constructors
 
 extension OSCValue where Self == OSCMIDIValue {
-    /// MIDI message OSC value as defined by the OSC 1.0 spec.
+    /// MIDI 1.0 message OSC value as defined by the OSC 1.0 spec.
+    ///
+    /// The message is built as 1-3 raw MIDI 1.0 message bytes, along with a port ID.
+    ///
+    /// - Parameters:
+    ///   - portID: An index number to identify a MIDI port. This is not part of the raw MIDI message bytes but is rather up to manufacturer or developer to decide how to use this OSC parameter. An ID of 0 can be used if not applicable.
+    ///   - status: MIDI 1.0 status byte
+    ///   - data1: MIDI status message data byte 1 (optional)
+    ///   - data2: MIDI status message data byte 2 (optional)
     public static func midi(
         portID: UInt8,
         status: UInt8,
