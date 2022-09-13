@@ -25,7 +25,7 @@ import Foundation
 ///  A container may also be a method. Simply register it the same way as other methods.
 ///
 public class OSCAddressSpace {
-    var root: Node = .init("")
+    var root: Node = .rootNodeFactory()
     
     public init() { }
 }
@@ -111,7 +111,7 @@ extension OSCAddressSpace {
     
     /// Unregister all registered OSC methods.
     public func unregisterAll() {
-        root = Node("")
+        root = Node.rootNodeFactory()
     }
 }
 
@@ -135,6 +135,7 @@ extension OSCAddressSpace {
     ///
     public func methods(matching address: OSCAddressPattern) -> [MethodID] {
         findNodes(patternMatching: address)
+            .filter(\.isMethod)
             .map { $0.id }
     }
     
@@ -172,6 +173,8 @@ extension OSCAddressSpace {
             runBlocks()
         }
         
-        return nodes.map { $0.id }
+        return nodes
+            .filter(\.isMethod)
+            .map { $0.id }
     }
 }

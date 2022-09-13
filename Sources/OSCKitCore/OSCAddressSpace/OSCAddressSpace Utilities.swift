@@ -24,14 +24,22 @@ extension OSCAddressSpace {
                 .first(where: { $0.name == path[idx] })
             {
                 if isLast, replaceExisting {
-                    let newNode = Node(path[idx], block)
+                    let newNode = Node(
+                        name: path[idx],
+                        type: isLast ? .method : .container,
+                        block: block
+                    )
                     pathRef.children.append(newNode)
                     pathRef = newNode
                 } else {
                     pathRef = existingNode
                 }
             } else {
-                let newNode = Node(path[idx], block)
+                let newNode = Node(
+                    name: path[idx],
+                    type: isLast ? .method : .container,
+                    block: block
+                )
                 pathRef.children.append(newNode)
                 pathRef = newNode
             }

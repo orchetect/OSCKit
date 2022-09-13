@@ -10,7 +10,9 @@ import Foundation
 
 extension OSCAddressSpace {
     /// Represents an OSC address space container or method.
-    class Node {
+    final class Node {
+        public let nodeType: NodeType
+        
         public let id = MethodID()
         
         public let name: String
@@ -19,10 +21,20 @@ extension OSCAddressSpace {
         
         public var children: [Node] = []
         
-        public init(_ name: any StringProtocol, _ block: MethodBlock? = nil) {
-            // sanitize name
+        public required init(
+            name: any StringProtocol,
+            type nodeType: NodeType,
+            block: MethodBlock? = nil
+        ) {
             self.name = String(name)
             self.block = block
+            self.nodeType = nodeType
+        }
+        
+        /// Returns `true` if node is a method.
+        /// (Note that a method can also be a container if it has children.)
+        public var isMethod: Bool {
+            nodeType == .method
         }
     }
 }
@@ -87,5 +99,20 @@ extension OSCAddressSpace.Node {
         }
         
         return true
+    }
+}
+
+extension OSCAddressSpace.Node {
+    /// Node type.
+    /// A container does not carry a method ID since it is not a method.
+    /// A container may become a method if it is also registered as one.
+    public enum NodeType: Equatable, Hashable {
+        case container
+        case method
+    }
+    
+    /// Internal: Returns a new root node.
+    static func rootNodeFactory() -> Self {
+        .init(name: "", type: .container)
     }
 }

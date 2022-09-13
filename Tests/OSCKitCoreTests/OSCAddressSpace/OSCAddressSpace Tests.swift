@@ -60,14 +60,14 @@ final class OSCAddressSpace_Tests: XCTestCase {
             [t2ID]
         )
         
-        // containers still exist
+        // should not match containers which are not also methods
         
-        XCTAssert(
-            addressSpace.methods(matching: .init("/test1")).count == 1
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/test1")).count, 0
         )
         
-        XCTAssert(
-            addressSpace.methods(matching: .init("/test1/test3")).count == 1
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/test1/test3")).count, 0
         )
     }
     
@@ -91,14 +91,14 @@ final class OSCAddressSpace_Tests: XCTestCase {
             [t2ID]
         )
         
-        // containers still exist
+        // should not match containers which are not also methods
         
-        XCTAssert(
-            addressSpace.methods(matching: .init("/test1")).count == 1
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/test1")).count, 0
         )
         
-        XCTAssert(
-            addressSpace.methods(matching: .init("/test1/test3")).count == 1
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/test1/test3")).count, 0
         )
     }
     
@@ -278,6 +278,23 @@ final class OSCAddressSpace_Tests: XCTestCase {
             [t1ID, t2ID]
         )
         
+        // partial path matches should not return containers
+        
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/test1")),
+            []
+        )
+        
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/test?")),
+            []
+        )
+        
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/test*")),
+            []
+        )
+        
         // edge cases
         
         XCTAssertEqual(
@@ -325,29 +342,30 @@ final class OSCAddressSpace_Tests: XCTestCase {
         )
         
         // wildcard returning containers instead of methods
+        // (don't test for equal arrays since the ordering may differ on each execution)
         
         do {
-            let matches = addressSpace.methods(matching: .init("/*"))
+            let matches = addressSpace.methods(matching: .init("/*/*/*"))
             
             XCTAssertEqual(matches.count, 2)
-            XCTAssertFalse(matches.contains(t1ID))
-            XCTAssertFalse(matches.contains(t2ID))
+            XCTAssertTrue(matches.contains(t1ID))
+            XCTAssertTrue(matches.contains(t2ID))
         }
         
-        do {
-            let matches = addressSpace.methods(matching: .init("/*/*"))
-            
-            XCTAssertEqual(matches.count, 2)
-            XCTAssertFalse(matches.contains(t1ID))
-            XCTAssertFalse(matches.contains(t2ID))
-        }
-        do {
-            let matches = addressSpace.methods(matching: .init("/test?/test?"))
-            
-            XCTAssertEqual(matches.count, 2)
-            XCTAssertFalse(matches.contains(t1ID))
-            XCTAssertFalse(matches.contains(t2ID))
-        }
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/*")),
+            []
+        )
+           
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/*/*")),
+            []
+        )
+        
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/test?/test?")),
+            []
+        )
     }
     
     func testMethodsMatching_EdgeCases() {
