@@ -7,13 +7,17 @@
 import Foundation
 import CocoaAsyncSocket
 
-public class OSCClient: NSObject {
+/// Sends OSC packets over the network ad-hoc to recipients.
+///
+/// A single client can serve the needs of an entire application. The client is capable of sending packets to arbitrary recipients and is not intrinsically bound to any single destination.
+public final class OSCClient: NSObject {
     private let udpClient = GCDAsyncUdpSocket()
     
     deinit {
         udpClient.close()
     }
     
+    /// Send an OSC bundle or message ad-hoc to a recipient on the network.
     public func send(
         _ oscObject: any OSCObject,
         to host: String,

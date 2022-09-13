@@ -6,8 +6,12 @@
 
 import Foundation
 
+/// OSC number value type-erased base value encapsulation.
 public enum OSCNumberValueBase {
+    /// Integer value.
     case int(any(OSCValue & BinaryInteger))
+    
+    /// Floating-point value.
     case float(any(OSCValue & BinaryFloatingPoint))
 }
 
@@ -33,6 +37,7 @@ extension OSCNumberValueBase: Hashable {
 }
 
 extension OSCNumberValueBase {
+    /// Unwraps the base value and returns it as an `AnyHashable` instance.
     public func anyHashable() -> AnyHashable {
         switch self {
         case let .int(v):

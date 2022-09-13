@@ -31,7 +31,7 @@ extension OSCTimeTag {
         timeInterval(since: Date())
     }
     
-    /// Returns the delta time interval in seconds between an arbitrary `date` and the Time Tag.
+    /// Returns the delta time interval in seconds between an arbitrary `Date` and the Time Tag.
     public func timeInterval(since other: Date) -> TimeInterval {
         isImmediate
             ? 0.0

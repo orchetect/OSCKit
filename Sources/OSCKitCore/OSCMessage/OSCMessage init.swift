@@ -25,7 +25,7 @@ extension OSCMessage {
         _rawData = nil
     }
     
-    /// Create an OSC message from an `OSCAddressPattern` and zero or more OSC values (arguments).
+    /// Create an OSC message from an ``OSCAddressPattern`` and zero or more OSC values (arguments).
     @inlinable
     public init(
         _ addressPattern: OSCAddressPattern,
@@ -50,7 +50,8 @@ extension OSCMessage {
     
     // MARK: - SwiftASCII typed
     
-    /// Create an OSC message from a raw `ASCIIString` address pattern and zero or more OSC values (arguments).
+    /// Internal:
+    /// Create an OSC message from a raw ``ASCIIString`` address pattern and zero or more OSC values (arguments).
     init(
         asciiAddressPattern address: ASCIIString,
         values: OSCValues = []
@@ -60,7 +61,8 @@ extension OSCMessage {
         _rawData = nil
     }
     
-    /// Create an OSC message from `ASCIIString` OSC address pattern path components and zero or more OSC values (arguments).
+    /// Internal:
+    /// Create an OSC message from ``ASCIIString`` OSC address pattern path components and zero or more OSC values (arguments).
     /// Empty path components is equivalent to the address of "/".
     init<S>(
         asciiAddressPattern pathComponents: S,

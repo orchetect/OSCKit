@@ -6,16 +6,17 @@
 
 import Foundation
 
-// -----------------------------------------------------------------------
+// ------------------------------------------------------------------------
 //                             **** NOTE ****
-// -----------------------------------------------------------------------
+// ------------------------------------------------------------------------
 // This struct is not public because it does not serve a practical purpose.
-// The code works, but exists more as a proof-of-concept.
+// The code works, but exists more as a proof-of-concept and may be removed
+// in future.
 // - Users should just use actual concrete types (Int, Int32, etc.)
 //   and not use a specialized box.
 // - This can't be used in an OSCValues mask since it is specialized.
 // - `AnyOSCNumberValue` should be used in masks since it is type-erased.
-// -----------------------------------------------------------------------
+// ------------------------------------------------------------------------
 
 /// Opaque OSC type `OSCNumberValue`:
 /// A box for OSC numeric value types.

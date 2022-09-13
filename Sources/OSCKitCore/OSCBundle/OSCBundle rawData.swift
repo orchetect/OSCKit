@@ -85,6 +85,7 @@ extension OSCBundle {
         elements = extractedElements
     }
     
+    // (inline docs inherited from OSCObject protocol)
     public func rawData() throws -> Data {
         // return cached data if struct was originally initialized from raw data
         // so we don't needlessly church CPU cycles to generate the data

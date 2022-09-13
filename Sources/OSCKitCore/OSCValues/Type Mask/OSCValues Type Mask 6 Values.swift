@@ -60,9 +60,9 @@ extension OSCValues {
     ///     [123, 456, 789].masked(String.self, Int.self, Int32?.self)
     ///     // throws error; mask does not match
     ///
-    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an `OSCMessage`.
+    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an ``OSCMessage``.
     ///
-    /// These types conform to the `OSCInterpolatedValue` protocol (which defines their core encoding value type) and may be used any where `OSCValue` is accepted.
+    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core encoding value type) and may be used any where ``OSCValue`` is accepted.
     ///
     /// OSCKit provides conformance for a number of such common Swift Standard Library types: `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
     ///
@@ -113,7 +113,7 @@ extension OSCValues {
     /// Opaque types:
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
-    /// - Throws: `OSCValueMaskError`
+    /// - Throws: ``OSCValueMaskError``
     @inlinable
     public func masked<V0, V1, V2, V3, V4, V5>(
         _ v0: V0.Type,
@@ -193,9 +193,9 @@ extension OSCValues {
     ///     [123, 456, 789].masked(String.self, Int.self, Int32?.self)
     ///     // throws error; mask does not match
     ///
-    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an `OSCMessage`.
+    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an ``OSCMessage``.
     ///
-    /// These types conform to the `OSCInterpolatedValue` protocol (which defines their core encoding value type) and may be used any where `OSCValue` is accepted.
+    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core encoding value type) and may be used any where ``OSCValue`` is accepted.
     ///
     /// OSCKit provides conformance for a number of such common Swift Standard Library types: `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
     ///
@@ -246,7 +246,7 @@ extension OSCValues {
     /// Opaque types:
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
-    /// - Throws: `OSCValueMaskError`
+    /// - Throws: ``OSCValueMaskError``
     @inlinable
     public func masked<V0, V1, V2, V3, V4, V5>(
         _ v0: V0.Type,
@@ -326,9 +326,9 @@ extension OSCValues {
     ///     [123, 456, 789].masked(String.self, Int.self, Int32?.self)
     ///     // throws error; mask does not match
     ///
-    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an `OSCMessage`.
+    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an ``OSCMessage``.
     ///
-    /// These types conform to the `OSCInterpolatedValue` protocol (which defines their core encoding value type) and may be used any where `OSCValue` is accepted.
+    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core encoding value type) and may be used any where ``OSCValue`` is accepted.
     ///
     /// OSCKit provides conformance for a number of such common Swift Standard Library types: `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
     ///
@@ -379,7 +379,7 @@ extension OSCValues {
     /// Opaque types:
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
-    /// - Throws: `OSCValueMaskError`
+    /// - Throws: ``OSCValueMaskError``
     @inlinable
     public func masked<V0, V1, V2, V3, V4, V5>(
         _ v0: V0.Type,
@@ -459,9 +459,9 @@ extension OSCValues {
     ///     [123, 456, 789].masked(String.self, Int.self, Int32?.self)
     ///     // throws error; mask does not match
     ///
-    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an `OSCMessage`.
+    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an ``OSCMessage``.
     ///
-    /// These types conform to the `OSCInterpolatedValue` protocol (which defines their core encoding value type) and may be used any where `OSCValue` is accepted.
+    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core encoding value type) and may be used any where ``OSCValue`` is accepted.
     ///
     /// OSCKit provides conformance for a number of such common Swift Standard Library types: `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
     ///
@@ -512,7 +512,7 @@ extension OSCValues {
     /// Opaque types:
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
-    /// - Throws: `OSCValueMaskError`
+    /// - Throws: ``OSCValueMaskError``
     @inlinable
     public func masked<V0, V1, V2, V3, V4, V5>(
         _ v0: V0.Type,
@@ -592,9 +592,9 @@ extension OSCValues {
     ///     [123, 456, 789].masked(String.self, Int.self, Int32?.self)
     ///     // throws error; mask does not match
     ///
-    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an `OSCMessage`.
+    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an ``OSCMessage``.
     ///
-    /// These types conform to the `OSCInterpolatedValue` protocol (which defines their core encoding value type) and may be used any where `OSCValue` is accepted.
+    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core encoding value type) and may be used any where ``OSCValue`` is accepted.
     ///
     /// OSCKit provides conformance for a number of such common Swift Standard Library types: `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
     ///
@@ -645,7 +645,7 @@ extension OSCValues {
     /// Opaque types:
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
-    /// - Throws: `OSCValueMaskError`
+    /// - Throws: ``OSCValueMaskError``
     @inlinable
     public func masked<V0, V1, V2, V3, V4, V5>(
         _ v0: V0.Type,
@@ -725,9 +725,9 @@ extension OSCValues {
     ///     [123, 456, 789].masked(String.self, Int.self, Int32?.self)
     ///     // throws error; mask does not match
     ///
-    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an `OSCMessage`.
+    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an ``OSCMessage``.
     ///
-    /// These types conform to the `OSCInterpolatedValue` protocol (which defines their core encoding value type) and may be used any where `OSCValue` is accepted.
+    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core encoding value type) and may be used any where ``OSCValue`` is accepted.
     ///
     /// OSCKit provides conformance for a number of such common Swift Standard Library types: `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
     ///
@@ -778,7 +778,7 @@ extension OSCValues {
     /// Opaque types:
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
-    /// - Throws: `OSCValueMaskError`
+    /// - Throws: ``OSCValueMaskError``
     @inlinable
     public func masked<V0, V1, V2, V3, V4, V5>(
         _ v0: V0.Type,
@@ -858,9 +858,9 @@ extension OSCValues {
     ///     [123, 456, 789].masked(String.self, Int.self, Int32?.self)
     ///     // throws error; mask does not match
     ///
-    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an `OSCMessage`.
+    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an ``OSCMessage``.
     ///
-    /// These types conform to the `OSCInterpolatedValue` protocol (which defines their core encoding value type) and may be used any where `OSCValue` is accepted.
+    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core encoding value type) and may be used any where ``OSCValue`` is accepted.
     ///
     /// OSCKit provides conformance for a number of such common Swift Standard Library types: `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
     ///
@@ -911,7 +911,7 @@ extension OSCValues {
     /// Opaque types:
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
-    /// - Throws: `OSCValueMaskError`
+    /// - Throws: ``OSCValueMaskError``
     @inlinable
     public func masked<V0, V1, V2, V3, V4, V5>(
         _ v0: V0?.Type,

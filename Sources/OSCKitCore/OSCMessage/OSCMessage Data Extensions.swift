@@ -7,7 +7,7 @@
 import Foundation
 
 extension Data {
-    /// A fast test if `Data` appears tor be an OSC message.
+    /// A fast test if `Data` appears to be an OSC message.
     /// (Note: Does NOT do extensive checks to ensure message isn't malformed.)
     @inlinable @_disfavoredOverload
     var appearsToBeOSCMessage: Bool {

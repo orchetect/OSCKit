@@ -6,15 +6,18 @@
 
 import Foundation
 
-/// OSC Coding singleton serialization context.
+/// OSC Coding serialization context (global singleton).
 ///
-/// Register custom value types to enable `OSCValueDecoder` and `OSCValues.masked()` support for them.
-public class OSCSerialization {
+/// Register custom value types to enable ``OSCValueDecoder`` and ``OSCValues`` `masked()` support for them.
+public final class OSCSerialization {
     /// Shared singleton instance.
     public static let shared: OSCSerialization = .init()
     
+    /// Internal:
+    /// Registered tag identities repository.
     var tagIdentities: [(OSCValueTagIdentity, any OSCValueCodable.Type)] = []
     
+    /// Singleton init.
     internal required init() {
         do {
             try registerDefaultTypes()
@@ -25,6 +28,7 @@ public class OSCSerialization {
         }
     }
     
+    /// Register a concrete type that conforms to ``OSCValueCodable`` to make it available for OSC encoding and decoding.
     public func registerType(_ oscValueType: any OSCValueCodable.Type) throws {
         // throw an error if user attempts to register an already existing type tag
         
@@ -47,6 +51,9 @@ public class OSCSerialization {
 }
 
 extension OSCSerialization {
+    /// Internal:
+    /// Register basic / default types.
+    /// This is called on singleton initialization and should not be called manually otherwise.
     func registerDefaultTypes() throws {
         try registerType(Int32.self)
         try registerType(Float32.self)
@@ -71,6 +78,8 @@ extension OSCSerialization {
         try registerType(OSCArrayValue.self)
     }
     
+    /// Internal:
+    /// Returns tag identities for a given OSC-type tag character.
     func tagIdentities(for character: Character) -> [any OSCValueCodable.Type] {
         tagIdentities
             .filter {
@@ -86,6 +95,8 @@ extension OSCSerialization {
             .map { $0.1 }
     }
     
+    /// Internal:
+    /// Returns `true` if a registered tag identity matches a given OSC-type tag character.
     func tagIdentities(contains character: Character) -> Bool {
         tagIdentities
             .contains {

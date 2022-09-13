@@ -9,6 +9,7 @@ import Foundation
 @_implementationOnly import SwiftASCII
 
 extension OSCAddressSpace {
+    /// Internal:
     /// Represents an OSC address space container or method.
     final class Node {
         public let nodeType: NodeType
@@ -55,6 +56,7 @@ extension OSCAddressSpace.Node: Hashable {
 }
 
 extension OSCAddressSpace.Node {
+    /// Internal:
     /// Validates an OSC address space node name b invalid characters.
     ///
     /// Invalid characters:
@@ -111,7 +113,8 @@ extension OSCAddressSpace.Node {
         case method
     }
     
-    /// Internal: Returns a new root node.
+    /// Internal:
+    /// Returns a new root node.
     static func rootNodeFactory() -> Self {
         .init(name: "", type: .container)
     }

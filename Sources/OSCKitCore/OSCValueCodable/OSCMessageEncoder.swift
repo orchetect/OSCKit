@@ -8,7 +8,9 @@ import Foundation
 @_implementationOnly import OTCore
 @_implementationOnly import SwiftASCII
 
-/// `OSCMessage` encoder.
+/// ``OSCMessage`` encoder.
+///
+/// Generally there is no need to directly instance or interact with this unless you are implementing custom OSC value types. OSC message encoding and decoding is handled automatically in OSCKit otherwise.
 public struct OSCMessageEncoder {
     var builderAddress: Data
     var builderTags: [ASCIICharacter] = []

@@ -8,10 +8,13 @@ import Foundation
 @_implementationOnly import OTCore
 @_implementationOnly import SwiftASCII
 
-/// `OSCMessage` decoder.
-public enum OSCMessageDecoder {
+/// Internal:
+/// ``OSCMessage`` decoding methods.
+///
+/// This is not meant to be instanced but instead provides static helper methods for OSC message decoding.
+enum OSCMessageDecoder {
     /// Decodes OSC message raw data.
-    public static func decode(rawData: Data) throws ->
+    static func decode(rawData: Data) throws ->
         (addressPattern: String, values: OSCValues)
     {
         // validation: length
@@ -118,6 +121,8 @@ public enum OSCMessageDecoder {
         return tagsToAdvance
     }
     
+    /// Internal:
+    /// Executes the concrete type's specialized OSC decoder block.
     private static func decode<T: OSCValue & OSCValueDecodable>(
         forType: T.Type,
         char: Character,

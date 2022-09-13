@@ -16,6 +16,7 @@ extension OSCAddressPattern {
         self.init(ascii: asciiLossy)
     }
     
+    /// Internal:
     /// Create an OSC address from a raw `ASCIIString` address.
     init(ascii address: ASCIIString) {
         rawAddress = address.stringValue
@@ -30,6 +31,7 @@ extension OSCAddressPattern {
         self.init(formedAddress)
     }
     
+    /// Internal:
     /// Create an OSC address from individual path components.
     /// The path component strings will be converted to ASCII strings, lossily converting or removing invalid non-ASCII characters if necessary.
     /// Empty path components is equivalent to the address of "/".

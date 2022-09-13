@@ -7,7 +7,7 @@
 import Foundation
 
 extension Date {
-    /// Returns total seconds elapsed since 1990.
+    /// Returns total seconds elapsed since 1990 (prime epoch, NTP era 0).
     @_disfavoredOverload
     public var timeIntervalSince1900: TimeInterval {
         timeIntervalSince(OSCTimeTag.primeEpoch)

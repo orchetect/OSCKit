@@ -8,10 +8,11 @@ import Foundation
 @_implementationOnly import OTCore
 @_implementationOnly import SwiftASCII
 
-/// OSC Address Space.
-/// Populated with a local address tree by registering OSC methods.
+/// OSC address space populated with a local address tree by registering OSC methods, offering methods to match and dispatch against received OSC address patterns.
+///
 /// This object is typically instanced once and stored globally in an application.
-/// Received OSC messages can have their address patterns passed to the `matches(_:)` method which will return all OSC Methods that match.
+/// 
+/// Received OSC messages can have their address patterns passed to the ``methods(matching:)`` method which will return all OSC Methods that match.
 ///
 /// An OSC Method is defined as being the last path component in the address. OSC Methods are the potential destinations of OSC messages received by the OSC server and correspond to each of the points of control that the application makes available.
 ///
@@ -24,7 +25,7 @@ import Foundation
 ///
 ///  A container may also be a method. Simply register it the same way as other methods.
 ///
-public class OSCAddressSpace {
+public final class OSCAddressSpace {
     var root: Node = .rootNodeFactory()
     
     public init() { }

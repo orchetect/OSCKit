@@ -6,10 +6,12 @@
 
 import Foundation
 
+/// Protocol requirements for ``OSCValue`` decoding.
 public protocol OSCValueDecodable {
     associatedtype OSCDecoded: OSCValueDecodable
     associatedtype OSCValueDecodingBlock: OSCValueDecoderBlock
         where OSCValueDecodingBlock.OSCDecoded == OSCDecoded
+    
     static var oscDecoding: OSCValueDecodingBlock { get }
 }
 

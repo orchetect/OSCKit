@@ -25,7 +25,8 @@ extension OSCAddressPattern {
 // MARK: - Address Pattern
 
 extension OSCAddressPattern {
-    /// Utility: Returns the raw OSC address pattern converted to a tokenized pattern.
+    /// Utility:
+    /// Returns the raw OSC address pattern converted to a tokenized pattern.
     var components: [Component] {
         pathComponents
             .map { Component(string: String($0)) }

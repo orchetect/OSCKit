@@ -6,11 +6,11 @@
 
 import Foundation
 
-/// A meta-type used in `OSCValues.masked()` to opaquely mask any OSC number type.
+/// A meta-type used in ``OSCValues`` `masked()` to opaquely mask any OSC number type.
 /// This type is not publicly initializable. Instead it is provided as a box for a type-erased number value when masking.
 ///
-/// - `base` returns the strongly-typed number.
-/// - `intValue` and `doubleValue` can be used as a convenience to access the base value, converting from the base type if necessary.
+/// - ``base`` returns the strongly-typed number.
+/// - ``intValue`` and ``doubleValue`` can be used as a convenience to access the base value, converting from the base type if necessary.
 public struct AnyOSCNumberValue {
     /// Base value storage.
     public let base: OSCNumberValueBase

@@ -8,7 +8,7 @@ import Foundation
 @_implementationOnly import OTCore
 
 extension OSCAddressPattern.Component {
-    /// Initializes a new `Pattern` instance tokenizing an individual path component of an OSC address.
+    /// Initializes a new OSC address pattern ``Component`` instance tokenizing an individual path component of an OSC address.
     init(string pattern: String) {
         if pattern.isEmpty { return }
         

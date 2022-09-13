@@ -4,6 +4,7 @@
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
+/// Error type thrown from OSC decode methods.
 public enum OSCDecodeError: Error {
     /// Malformed data. `verboseError` contains the specific reason.
     case malformed(_ verboseError: String)

@@ -6,12 +6,14 @@
 
 import Foundation
 
+/// Protocol that ``OSCValue`` decoder block encapsulation objects adopt.
 public protocol OSCValueDecoderBlock {
     associatedtype OSCDecoded: OSCValueDecodable
 }
 
 // MARK: - Decoder Blocks
 
+/// ``OSCValue`` atomic value decoder block encapsulation.
 public struct OSCValueAtomicDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDecoderBlock {
     public typealias Block = (
         _ decoder: inout OSCValueDecoder
@@ -24,6 +26,7 @@ public struct OSCValueAtomicDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDeco
     }
 }
 
+/// ``OSCValue`` variable value decoder block encapsulation.
 public struct OSCValueVariableDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDecoderBlock {
     public typealias Block = (
         _ tag: Character,
@@ -37,7 +40,9 @@ public struct OSCValueVariableDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDe
     }
 }
 
-/// Return nil if no expected tags are encountered.
+/// ``OSCValue`` variadic value decoder block encapsulation.
+///
+/// Return `nil` if no expected tags are encountered.
 /// Only throw an error if at least one expected tag is encountered but any other tags or value data is malformed.
 public struct OSCValueVariadicDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDecoderBlock {
     public typealias Block = (

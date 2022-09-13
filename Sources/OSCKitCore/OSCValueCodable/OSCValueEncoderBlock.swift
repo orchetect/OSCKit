@@ -6,12 +6,14 @@
 
 import Foundation
 
+/// Protocol that ``OSCValue`` encoder block encapsulation objects adopt.
 public protocol OSCValueEncoderBlock {
     associatedtype OSCEncoded: OSCValueEncodable
 }
 
 // MARK: - Encoder Blocks
 
+/// ``OSCValue`` atomic value encoder block encapsulation.
 public struct OSCValueAtomicEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEncoderBlock {
     public typealias Block = (
         _ value: OSCEncoded
@@ -27,6 +29,7 @@ public struct OSCValueAtomicEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEnco
     }
 }
 
+/// ``OSCValue`` variable value encoder block encapsulation.
 public struct OSCValueVariableEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEncoderBlock {
     public typealias Block = (
         _ value: OSCEncoded
@@ -42,6 +45,7 @@ public struct OSCValueVariableEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEn
     }
 }
 
+/// ``OSCValue`` variadic value encoder block encapsulation.
 public struct OSCValueVariadicEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEncoderBlock {
     public typealias Block = (
         _ value: OSCEncoded

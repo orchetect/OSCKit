@@ -8,7 +8,7 @@ import Foundation
 @_implementationOnly import OTCore
 @_implementationOnly import SwiftASCII
 
-/// OSC value array.
+/// OSC value array (as an OSC value type itself).
 public struct OSCArrayValue {
     public let elements: OSCValues
     

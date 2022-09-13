@@ -6,10 +6,13 @@
 
 import Foundation
 
+/// Protocol requirements for ``OSCValue`` encoding.
 public protocol OSCValueEncodable {
     associatedtype OSCEncoded: OSCValueEncodable
     associatedtype OSCValueEncodingBlock: OSCValueEncoderBlock
         where OSCValueEncodingBlock.OSCEncoded == OSCEncoded
+    
+    /// Declarative description of how an OSC value represents itself with OSC message type tag(s).
     static var oscTagIdentity: OSCValueTagIdentity { get }
     static var oscEncoding: OSCValueEncodingBlock { get }
 }

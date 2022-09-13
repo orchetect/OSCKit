@@ -7,10 +7,10 @@
 import Foundation
 
 extension OSCValueToken {
-    /// Returns `true` if the value's base type masks the supplied `OSCValueToken`.
+    /// Returns `true` if the value's base type masks the supplied ``OSCValueToken``.
     ///
     /// - parameters:
-    ///   - token: `OSCValueToken` to compare to.
+    ///   - token: ``OSCValueToken`` to compare to.
     ///   - includingOpaque: Allows matching against an opaque type if one is passed in `type`.
     ///     If `false`, only exact matching occurs (ie: `.int32` == `.int32`; `.number` == `.number`).
     ///     If `true`, opaque type matching is allowed (ie: `.int32` == `.number`).
@@ -44,7 +44,7 @@ extension OSCValueToken {
 }
 
 extension OSCValue {
-    /// A mechanism to easily return the static type of an `AnyOSCValue` instance.
+    /// A mechanism to easily return the static type of an ``AnyOSCValue`` instance.
     @inlinable @_disfavoredOverload
     func getSelf() -> Self.Type {
         Self.self

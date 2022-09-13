@@ -29,7 +29,7 @@ extension OSCTimeTag {
 }
 
 extension TimeInterval {
-    /// Returns raw OSC Time Tag value from TimeInterval as seconds from 1990.
+    /// Returns raw OSC Time Tag value from `TimeInterval` as seconds from 1990.
     var oscTimeTag: (timeTag: OSCTimeTag.RawValue, era: Int) {
         // early return for negative values or zero
         guard self > .zero else {

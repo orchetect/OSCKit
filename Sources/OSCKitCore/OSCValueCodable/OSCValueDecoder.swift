@@ -10,6 +10,7 @@ import Foundation
 
 private let defaultContextSingleton = OSCSerialization()
 
+/// ``OSCValue`` decoder.
 public struct OSCValueDecoder {
     weak var context: OSCSerialization?
     
@@ -37,7 +38,7 @@ extension OSCValueDecoder {
     }
     
     /// Manually advance data read position.
-    /// This functionality will be automatically handled by local `read*()` methods if they succeed. This method is only provided for custom parsing needs.
+    /// This functionality will be automatically handled by local `read*()` methods if they succeed. This method is only provided for custom parsing requirements.
     ///
     /// - Throws: Error if position is advanced past the end of the available number of bytes.
     public mutating func advancePosition(by numberOfBytes: Int) throws {
