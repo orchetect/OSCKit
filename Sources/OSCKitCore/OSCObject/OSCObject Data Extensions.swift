@@ -11,10 +11,9 @@ extension Data {
     ///
     /// - Throws: An error is thrown if data appears to be an OSC bundle or message but is malformed.
     ///
-    /// Errors thrown will typically be a case of `OSCDecodeError` but other errors may be thrown.
+    /// Errors thrown will typically be a case of ``OSCDecodeError`` but other errors may be thrown.
     ///
-    /// - Returns: Decoded `OSCObject`, or `nil` if not an OSC data packet.
-    @inlinable
+    /// - Returns: Decoded ``OSCObject``, or `nil` if not an OSC data packet.
     public func parseOSC() throws -> (any OSCObject)? {
         if appearsToBeOSCBundle {
             return try OSCBundle(from: self)
@@ -27,8 +26,7 @@ extension Data {
     
     /// Test if data appears to be an OSC bundle or OSC message. (Basic validation)
     ///
-    /// - Returns: An `OSCObjectType` case if validation succeeds. `nil` if neither.
-    @inlinable
+    /// - Returns: An ``OSCObjectType`` case if validation succeeds. `nil` if neither.
     public var appearsToBeOSC: OSCObjectType? {
         if appearsToBeOSCBundle {
             return .bundle

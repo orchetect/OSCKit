@@ -12,9 +12,8 @@ extension OSCValueToken {
     /// - parameters:
     ///   - token: ``OSCValueToken`` to compare to.
     ///   - includingOpaque: Allows matching against an opaque type if one is passed in `type`.
-    ///     If `false`, only exact matching occurs (ie: `.int32` == `.int32`; `.number` == `.number`).
-    ///     If `true`, opaque type matching is allowed (ie: `.int32` == `.number`).
-    @inlinable
+    ///     If `false`, only exact matching occurs (ie: ``int32`` == ``int32``; ``number`` == ``number``).
+    ///     If `true`, opaque type matching is allowed (ie: ``int32`` == ``number``).
     public func isBaseType(
         matching token: OSCValueToken,
         includingOpaque: Bool = false
