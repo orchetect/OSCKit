@@ -23,9 +23,9 @@ public struct OSCMIDIValue {
     ///
     /// - Parameters:
     ///   - portID: An index number to identify a MIDI port. This is not part of the raw MIDI message bytes but is rather up to manufacturer or developer to decide how to use this OSC parameter. An ID of 0 can be used if not applicable.
-    ///   - status: MIDI 1.0 status byte
-    ///   - data1: MIDI status message data byte 1 (optional)
-    ///   - data2: MIDI status message data byte 2 (optional)
+    ///   - status: MIDI 1.0 status byte.
+    ///   - data1: MIDI status message data byte 1 (optional).
+    ///   - data2: MIDI status message data byte 2 (optional).
     public init(
         portID: UInt8,
         status: UInt8,
@@ -48,9 +48,9 @@ extension OSCValue where Self == OSCMIDIValue {
     ///
     /// - Parameters:
     ///   - portID: An index number to identify a MIDI port. This is not part of the raw MIDI message bytes but is rather up to manufacturer or developer to decide how to use this OSC parameter. An ID of 0 can be used if not applicable.
-    ///   - status: MIDI 1.0 status byte
-    ///   - data1: MIDI status message data byte 1 (optional)
-    ///   - data2: MIDI status message data byte 2 (optional)
+    ///   - status: MIDI 1.0 status byte.
+    ///   - data1: MIDI status message data byte 1 (optional).
+    ///   - data2: MIDI status message data byte 2 (optional).
     public static func midi(
         portID: UInt8,
         status: UInt8,
