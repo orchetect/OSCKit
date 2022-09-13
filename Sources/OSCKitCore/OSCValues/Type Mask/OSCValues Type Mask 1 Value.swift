@@ -114,7 +114,6 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    @inlinable
     public func masked<V>(
         _ v: V.Type
     ) throws -> V
@@ -231,7 +230,6 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    @inlinable
     public func masked<V>(
         _ v: V?.Type
     ) throws -> V?

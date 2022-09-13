@@ -9,7 +9,6 @@ import Foundation
 /// Impulse OSC value (also known as Infinitum or Bang) as defined by the OSC 1.0 spec.
 /// This type carries no data.
 public struct OSCImpulseValue {
-    @inlinable
     public init() { }
 }
 
@@ -18,7 +17,6 @@ public struct OSCImpulseValue {
 extension OSCValue where Self == OSCImpulseValue {
     /// Impulse OSC value (also known as Infinitum or Bang) as defined by the OSC 1.0 spec.
     /// This type carries no data.
-    @inlinable
     public static var impulse: Self {
         OSCImpulseValue()
     }

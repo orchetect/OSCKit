@@ -13,7 +13,6 @@ import Foundation
 
 extension OSCBundle {
     /// OSC Bundle.
-    @inlinable
     public init(
         timeTag: OSCTimeTag? = nil,
         _ elements: [any OSCObject] = []

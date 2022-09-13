@@ -14,7 +14,6 @@ extension OSCValues {
     ///   - ``OSCValueToken/number`` & ``OSCValueToken/numberOptional``: Matches ``OSCValueToken/int32``, ``OSCValueToken/float32``, ``OSCValueToken/double``, or ``OSCValueToken/int64``.
     ///
     /// - parameter expectedMask: ``OSCValueToken`` array representing a positive mask match.
-    @inlinable
     public func matches(
         mask: [OSCValueToken]
     ) -> Bool {

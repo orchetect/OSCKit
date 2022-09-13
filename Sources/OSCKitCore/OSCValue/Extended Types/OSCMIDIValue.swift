@@ -14,8 +14,7 @@ public struct OSCMIDIValue {
     public var status: UInt8
     public var data1: UInt8
     public var data2: UInt8
-        
-    @inlinable
+    
     public init(
         portID: UInt8,
         status: UInt8,
@@ -33,7 +32,6 @@ public struct OSCMIDIValue {
 
 extension OSCValue where Self == OSCMIDIValue {
     /// MIDI message OSC value as defined by the OSC 1.0 spec.
-    @inlinable
     public static func midi(
         portID: UInt8,
         status: UInt8,

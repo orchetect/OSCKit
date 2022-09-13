@@ -25,7 +25,6 @@ public struct OSCArrayValue {
 
 extension OSCValue where Self == OSCArrayValue {
     /// OSC value array.
-    @inlinable
     public static func array(_ elements: OSCValues) -> Self {
         OSCArrayValue(elements)
     }

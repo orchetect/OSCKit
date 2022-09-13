@@ -14,7 +14,6 @@ import Foundation
 
 extension OSCObject where Self == OSCMessage {
     /// OSC Message.
-    @inlinable
     public static func message(
         _ addressPattern: String,
         values: OSCValues = []
@@ -26,7 +25,6 @@ extension OSCObject where Self == OSCMessage {
     }
     
     /// OSC Message.
-    @inlinable
     public static func message(
         _ addressPattern: OSCAddressPattern,
         values: OSCValues = []
@@ -42,7 +40,6 @@ extension OSCObject where Self == OSCMessage {
 
 extension OSCObject where Self == OSCBundle {
     /// OSC Bundle.
-    @inlinable
     public static func bundle(
         timeTag: OSCTimeTag? = nil,
         _ elements: [any OSCObject] = []

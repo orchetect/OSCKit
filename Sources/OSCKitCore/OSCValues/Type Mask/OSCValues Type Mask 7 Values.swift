@@ -114,7 +114,6 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    @inlinable
     public func masked<V0, V1, V2, V3, V4, V5, V6>(
         _ v0: V0.Type,
         _ v1: V1.Type,
@@ -250,7 +249,6 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    @inlinable
     public func masked<V0, V1, V2, V3, V4, V5, V6>(
         _ v0: V0.Type,
         _ v1: V1.Type,
@@ -386,7 +384,6 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    @inlinable
     public func masked<V0, V1, V2, V3, V4, V5, V6>(
         _ v0: V0.Type,
         _ v1: V1.Type,
@@ -522,7 +519,6 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    @inlinable
     public func masked<V0, V1, V2, V3, V4, V5, V6>(
         _ v0: V0.Type,
         _ v1: V1.Type,
@@ -658,7 +654,6 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    @inlinable
     public func masked<V0, V1, V2, V3, V4, V5, V6>(
         _ v0: V0.Type,
         _ v1: V1.Type,
@@ -794,7 +789,6 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    @inlinable
     public func masked<V0, V1, V2, V3, V4, V5, V6>(
         _ v0: V0.Type,
         _ v1: V1.Type,
@@ -930,7 +924,6 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    @inlinable
     public func masked<V0, V1, V2, V3, V4, V5, V6>(
         _ v0: V0.Type,
         _ v1: V1?.Type,
@@ -1066,7 +1059,6 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    @inlinable
     public func masked<V0, V1, V2, V3, V4, V5, V6>(
         _ v0: V0?.Type,
         _ v1: V1?.Type,

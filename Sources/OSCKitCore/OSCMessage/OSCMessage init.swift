@@ -15,7 +15,7 @@ import Foundation
 extension OSCMessage {
     /// Create an OSC message from a raw `String` address pattern and zero or more OSC values (arguments).
     /// The address string will be converted to an ASCII string, lossily converting or removing invalid non-ASCII characters if necessary.
-    @inlinable @_disfavoredOverload
+    @_disfavoredOverload
     public init(
         _ addressPattern: String,
         values: OSCValues = []
@@ -26,7 +26,6 @@ extension OSCMessage {
     }
     
     /// Create an OSC message from an ``OSCAddressPattern`` and zero or more OSC values (arguments).
-    @inlinable
     public init(
         _ addressPattern: OSCAddressPattern,
         values: OSCValues = []
@@ -38,7 +37,6 @@ extension OSCMessage {
     
     /// Create an OSC message from OSC address pattern path components and zero or more OSC values (arguments).
     /// Empty path components is equivalent to the address of "/".
-    @inlinable
     public init<S>(
         addressPattern pathComponents: S,
         values: OSCValues = []

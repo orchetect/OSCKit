@@ -9,7 +9,6 @@ import Foundation
 /// Null OSC value as defined by the OSC 1.0 spec.
 /// This type carries no data.
 public struct OSCNullValue {
-    @inlinable
     public init() { }
 }
 
@@ -18,7 +17,6 @@ public struct OSCNullValue {
 extension OSCValue where Self == OSCNullValue {
     /// Null OSC value as defined by the OSC 1.0 spec.
     /// This type carries no data.
-    @inlinable
     public static var null: Self {
         OSCNullValue()
     }

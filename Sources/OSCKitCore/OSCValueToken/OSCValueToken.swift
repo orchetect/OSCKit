@@ -63,7 +63,6 @@ public enum OSCValueToken: Int, CaseIterable, Equatable, Hashable {
 
 extension OSCValueToken {
     /// Returns base mask type (by stripping 'optional' component if present).
-    @inlinable
     public var baseType: Self {
         switch self {
         // core types
@@ -90,7 +89,6 @@ extension OSCValueToken {
     }
     
     /// Returns `true` if a mask type instance is an 'optional' variant.
-    @inlinable
     public var isOptional: Bool {
         switch self {
         // concrete types
