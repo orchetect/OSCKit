@@ -102,6 +102,152 @@ final class OSCAddressSpace_Tests: XCTestCase {
         )
     }
     
+    func testRegisterAddress_MethodThatAlsoBecomesAContainer() throws {
+        let addressSpace = OSCAddressSpace()
+        
+        let t0ID = addressSpace.register(localAddress: "/test1/test2")
+        let t1ID = addressSpace.register(localAddress: "/test1/test2/methodA"); _ = t1ID
+        
+        // confirm registrations worked and match as methods
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/test1/test2")),
+            [t0ID]
+        )
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/test1/test2/methodA")),
+            [t1ID]
+        )
+    }
+    
+    func testRegisterAddress_ContainerThatBecomesAMethod() throws {
+        let addressSpace = OSCAddressSpace()
+        
+        let t1ID = addressSpace.register(localAddress: "/test1/test2/methodA"); _ = t1ID
+        let t0ID = addressSpace.register(localAddress: "/test1/test2")
+        
+        // confirm registrations worked and match as methods
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/test1/test2")),
+            [t0ID]
+        )
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/test1/test2/methodA")),
+            [t1ID]
+        )
+    }
+    
+    func testUnregisterAddress_MethodThatAlsoBecomesAContainer_RemoveMethod() throws {
+        let addressSpace = OSCAddressSpace()
+        
+        let t0ID = addressSpace.register(localAddress: "/test1/test2")
+        let t1ID = addressSpace.register(localAddress: "/test1/test2/methodA"); _ = t1ID
+        
+        // unregister downstream method
+        XCTAssertTrue(
+            addressSpace.unregister(localAddress: ["test1", "test2", "methodA"])
+        )
+        
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/test1/test2/methodA")),
+            []
+        )
+        
+        // should not modify pre-existing methods that were also containers
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/test1/test2")),
+            [t0ID]
+        )
+        
+        // attempt to unregister again
+        XCTAssertFalse(
+            addressSpace.unregister(localAddress: ["test1", "test2", "methodA"])
+        )
+    }
+    
+    func testUnregisterAddress_ContainerThatBecomesAMethod_RemoveMethod() throws {
+        let addressSpace = OSCAddressSpace()
+        
+        let t1ID = addressSpace.register(localAddress: "/test1/test2/methodA"); _ = t1ID
+        let t0ID = addressSpace.register(localAddress: "/test1/test2")
+        
+        // unregister downstream method
+        XCTAssertTrue(
+            addressSpace.unregister(localAddress: ["test1", "test2", "methodA"])
+        )
+        
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/test1/test2/methodA")),
+            []
+        )
+        
+        // should not modify pre-existing methods that were also containers
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/test1/test2")),
+            [t0ID]
+        )
+        
+        // attempt to unregister again
+        XCTAssertFalse(
+            addressSpace.unregister(localAddress: ["test1", "test2", "methodA"])
+        )
+    }
+    
+    func testUnregisterAddress_MethodThatAlsoBecomesAContainer_RemoveContainer() throws {
+        let addressSpace = OSCAddressSpace()
+        
+        let t0ID = addressSpace.register(localAddress: "/test1/test2"); _ = t0ID
+        let t1ID = addressSpace.register(localAddress: "/test1/test2/methodA")
+        
+        // unregister midstream container method
+        XCTAssertTrue(
+            addressSpace.unregister(localAddress: ["test1", "test2"])
+        )
+        
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/test1/test2")),
+            []
+        )
+        
+        // should not modify pre-existing downstream methods or containers
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/test1/test2/methodA")),
+            [t1ID]
+        )
+        
+        // attempt to unregister again
+        XCTAssertFalse(
+            addressSpace.unregister(localAddress: ["test1", "test2"])
+        )
+    }
+    
+    func testUnregisterAddress_ContainerThatBecomesAMethod_RemoveContainer() throws {
+        let addressSpace = OSCAddressSpace()
+        
+        let t1ID = addressSpace.register(localAddress: "/test1/test2/methodA")
+        let t0ID = addressSpace.register(localAddress: "/test1/test2"); _ = t0ID
+        
+        // unregister midstream container method
+        XCTAssertTrue(
+            addressSpace.unregister(localAddress: ["test1", "test2"])
+        )
+        
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/test1/test2")),
+            []
+        )
+        
+        // should not modify pre-existing downstream methods or containers
+        XCTAssertEqual(
+            addressSpace.methods(matching: .init("/test1/test2/methodA")),
+            [t1ID]
+        )
+        
+        // attempt to unregister again
+        XCTAssertFalse(
+            addressSpace.unregister(localAddress: ["test1", "test2"])
+        )
+    }
+    
     func testUnregisterAllAddresses() throws {
         let addressSpace = OSCAddressSpace()
         

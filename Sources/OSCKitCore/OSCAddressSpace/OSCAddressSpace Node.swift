@@ -12,17 +12,17 @@ extension OSCAddressSpace {
     /// Internal:
     /// Represents an OSC address space container or method.
     final class Node {
-        public let nodeType: NodeType
+        var nodeType: NodeType
         
-        public let id = MethodID()
+        let id = MethodID()
         
-        public let name: String
+        let name: String
         
-        public let block: MethodBlock?
+        var block: MethodBlock?
         
-        public var children: [Node] = []
+        var children: [Node] = []
         
-        public required init(
+        required init(
             name: any StringProtocol,
             type nodeType: NodeType,
             block: MethodBlock? = nil
@@ -34,11 +34,13 @@ extension OSCAddressSpace {
         
         /// Returns `true` if node is a method.
         /// (Note that a method can also be a container if it has children.)
-        public var isMethod: Bool {
+        var isMethod: Bool {
             nodeType == .method
         }
     }
 }
+
+// MARK: - Equatable
 
 extension OSCAddressSpace.Node: Equatable {
     static func == (
@@ -49,13 +51,49 @@ extension OSCAddressSpace.Node: Equatable {
     }
 }
 
+// MARK: - Hashable
+
 extension OSCAddressSpace.Node: Hashable {
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
 }
 
+// MARK: - Methods
+
 extension OSCAddressSpace.Node {
+    /// Internal:
+    /// Returns a new root node.
+    static func rootNodeFactory() -> Self {
+        .init(name: "", type: .container)
+    }
+    
+    /// Internal:
+    /// Converts the node to a container.
+    /// Children remain unaffected.
+    func convertToContainer() {
+        nodeType = .container
+        block = nil
+    }
+    
+    /// Internal:
+    /// Converts the node to a method.
+    /// Children remain unaffected.
+    func convertToMethod(
+        block: OSCAddressSpace.MethodBlock? = nil
+    ) {
+        nodeType = .method
+        self.block = block
+    }
+    
+    /// Internal:
+    /// Filters ``children`` that match the given path component OSC address pattern.
+    func children(
+        matching pattern: OSCAddressPattern.Component
+    ) -> [OSCAddressSpace.Node] {
+        children.filter { pattern.evaluate(matching: $0.name) }
+    }
+    
     /// Internal:
     /// Validates an OSC address space node name b invalid characters.
     ///
@@ -104,18 +142,14 @@ extension OSCAddressSpace.Node {
     }
 }
 
+// MARK: - NodeType
+
 extension OSCAddressSpace.Node {
     /// Node type.
     /// A container does not carry a method ID since it is not a method.
     /// A container may become a method if it is also registered as one.
-    public enum NodeType: Equatable, Hashable {
+    enum NodeType: Equatable, Hashable {
         case container
         case method
-    }
-    
-    /// Internal:
-    /// Returns a new root node.
-    static func rootNodeFactory() -> Self {
-        .init(name: "", type: .container)
     }
 }

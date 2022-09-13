@@ -77,36 +77,38 @@ extension OSCAddressSpace {
     ) -> MethodID where S: BidirectionalCollection, S.Element: StringProtocol {
         guard !pathComponents.isEmpty else {
             // instead of returning nil, return a bogus ID
+            assertionFailure("Local address is empty and cannot be registered. Returning random method ID as failsafe that will never be matched.")
             return MethodID()
         }
         
         return createMethodNode(
             path: pathComponents,
-            block: block,
-            replaceExisting: true
+            block: block
         )
         .id
     }
     
     /// Unregister an OSC address.
+    ///
+    /// - Returns: `true` if the operation was successful, `false` if unsuccessful or the path does not exist.
     @discardableResult
     public func unregister(localAddress address: String) -> Bool {
         removeMethodNode(
-            path: OSCAddressPattern(address).pathComponents,
-            forceNonEmptyMethodRemoval: false
+            path: OSCAddressPattern(address).pathComponents
         )
     }
     
     // TODO: add unregister(methodID: MethodID) method
     
     /// Unregister an OSC method by supplying its local address.
+    ///
+    /// - Returns: `true` if the operation was successful, `false` if unsuccessful or the path does not exist.
     @discardableResult
     public func unregister<S>(
         localAddress pathComponents: S
     ) -> Bool where S: BidirectionalCollection, S.Element: StringProtocol {
         removeMethodNode(
-            path: pathComponents,
-            forceNonEmptyMethodRemoval: false
+            path: pathComponents
         )
     }
     
@@ -135,13 +137,12 @@ extension OSCAddressSpace {
     ///  A container may also be a method. Simply register it the same way as other methods.
     ///
     public func methods(matching address: OSCAddressPattern) -> [MethodID] {
-        findNodes(patternMatching: address)
-            .filter(\.isMethod)
+        methodNodes(patternMatching: address)
             .map { $0.id }
     }
     
-    /// Executes the closure blocks (with the OSC message values) for all local OSC address nodes matching the address pattern in the OSC message.
-    /// If a `queue` is supplied, blocks will be dispatched  on the `queue` with its default QoS.
+    /// Executes the closure blocks (and passes the OSC message values to them) for all local OSC address nodes matching the address pattern in the OSC message.
+    /// If a `queue` is supplied, blocks will be dispatched on the `queue` with its default QoS.
     /// If no `queue` is supplied, the closures are dispatched synchronously on the current queue.
     ///
     /// - Remark: An OSC Method is defined as being the last path component in the address. OSC Methods are the potential destinations of OSC messages received by the OSC server and correspond to each of the points of control that the application makes available.
@@ -162,7 +163,7 @@ extension OSCAddressSpace {
         _ message: OSCMessage,
         on queue: DispatchQueue? = nil
     ) -> [MethodID] {
-        let nodes = findNodes(patternMatching: message.addressPattern)
+        let nodes = methodNodes(patternMatching: message.addressPattern)
         
         func runBlocks() {
             nodes.forEach { $0.block?(message.values) }
@@ -175,7 +176,6 @@ extension OSCAddressSpace {
         }
         
         return nodes
-            .filter(\.isMethod)
             .map { $0.id }
     }
 }
