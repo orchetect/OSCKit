@@ -13,8 +13,6 @@ Open Sound Control library for macOS, iOS and tvOS written in Swift.
 - Thread-safe
 - Fully unit tested
 
->  **Note**: Swift 5.7 and Xcode 14 are minimum requirements. OSCKit [0.3.1](https://github.com/orchetect/OSCKit/releases/tag/0.3.1) can be used with Xcode 13.
-
 ## Getting Started
 
 ### Swift Package Manager (SPM)
