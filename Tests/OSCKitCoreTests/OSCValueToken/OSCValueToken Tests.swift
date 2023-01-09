@@ -764,7 +764,7 @@ final class OSCValueToken_Tests: XCTestCase {
     // MARK: ... Interpolated types
     
     func testMatchesValueMask_int() {
-        // Int is an interpolated value and therefor should
+        // Int is an interpolated value and therefore should
         // never match against any core OSC types
         
         let value = OSCValues([Int(1)])
@@ -861,7 +861,7 @@ final class OSCValueToken_Tests: XCTestCase {
     // MARK: ... Interpolated types
     
     func testMatchesValueMask_int_OptionalTokens() {
-        // Int is an interpolated value and therefor should
+        // Int is an interpolated value and therefore should
         // never match against any core OSC types
         
         let value = OSCValues([Int(1)])
