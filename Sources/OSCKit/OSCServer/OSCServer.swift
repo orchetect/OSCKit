@@ -48,7 +48,7 @@ public final class OSCServer: NSObject {
         
         self.receiveQueue = receiveQueue ?? DispatchQueue(
             label: "OSCServer",
-            qos: .userInitiated
+            qos: .default
         )
         self.dispatchQueue = dispatchQueue
         self.handler = handler
