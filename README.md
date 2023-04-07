@@ -4,7 +4,7 @@
 
 [![CI Build Status](https://github.com/orchetect/OSCKit/actions/workflows/build.yml/badge.svg)](https://github.com/orchetect/OSCKit/actions/workflows/build.yml) ![Platforms - macOS 10.13+ | iOS 11+ | tvOS 11+](https://img.shields.io/badge/platforms-macOS%2010.13+%20|%20iOS%2011+%20|%20tvOS%2011+%20-lightgrey.svg?style=flat) [![Swift 5.7](https://img.shields.io/badge/Swift-5.7-orange.svg?style=flat)](https://developer.apple.com/swift) [![Xcode 14](https://img.shields.io/badge/Xcode-14-blue.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/OSCKit/blob/main/LICENSE)
 
-Open Sound Control library for macOS, iOS and tvOS written in Swift.
+Open Sound Control ([OSC](https://opensoundcontrol.stanford.edu)) library for macOS, iOS and tvOS written in Swift.
 
 - OSC address pattern matching and dispatch
 - Convenient OSC message value type masking, validation and strong-typing
@@ -260,9 +260,9 @@ Validate and unwrap value array with expected members `String, Int, <number>?`:
 let (str, int, num) = try oscMessage.values.masked(String.self, 
                                                    Int.self,
                                                    AnyOSCNumberValue?.self)
-print(str, int, num.intValue)
-print(str, int, num.doubleValue)
-print(str, int, num.base) // access to the strongly typed integer or floating-point value
+print(str, int, num?.intValue)
+print(str, int, num?.doubleValue)
+print(str, int, num?.base) // access to the strongly typed integer or floating-point value
 ```
 
 #### Option 2: Manually unwrap expected value types
@@ -349,9 +349,15 @@ OSCKit also adds the following opaque type-erasure types:
 AnyOSCNumberValue // wraps any BinaryInteger or BinaryFloatingPoint
 ```
 
+## OSC Peer
+
+In less-common situations, some devices such as the Behringer X32 & M32 employ a communication pattern in which the device responds on the UDP port that it receives OSC messages on. This is difficult to achieve with the `OSCServer`/`OSCClient` objects.
+
+This use case is where the `OSCPeer` class can be employed instead. It internally combines both an OSC server and client using same unified UDP port number to both send and receive OSC messages with a single network host or IP address.
+
 ## Documentation
 
-Will be added in future. In the meantime, refer to this README's [Getting Started](#getting-started) section, and check out the [Example projects](Examples).
+Refer to this README's [Getting Started](#getting-started) section, and check out the [Example projects](Examples).
 
 ## Author
 
