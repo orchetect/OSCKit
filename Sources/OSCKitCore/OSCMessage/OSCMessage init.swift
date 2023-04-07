@@ -1,7 +1,7 @@
 //
 //  OSCMessage init.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -13,8 +13,10 @@ import Foundation
 // undesirable to have variadic parameters.
 
 extension OSCMessage {
-    /// Create an OSC message from a raw `String` address pattern and zero or more OSC values (arguments).
-    /// The address string will be converted to an ASCII string, lossily converting or removing invalid non-ASCII characters if necessary.
+    /// Create an OSC message from a raw `String` address pattern and zero or more OSC values
+    /// (arguments).
+    /// The address string will be converted to an ASCII string, lossily converting or removing
+    /// invalid non-ASCII characters if necessary.
     @_disfavoredOverload
     public init(
         _ addressPattern: String,
@@ -35,7 +37,8 @@ extension OSCMessage {
         _rawData = nil
     }
     
-    /// Create an OSC message from OSC address pattern path components and zero or more OSC values (arguments).
+    /// Create an OSC message from OSC address pattern path components and zero or more OSC values
+    /// (arguments).
     /// Empty path components is equivalent to the address of "/".
     public init<S>(
         addressPattern pathComponents: S,
@@ -49,7 +52,8 @@ extension OSCMessage {
     // MARK: - SwiftASCII typed
     
     /// Internal:
-    /// Create an OSC message from a raw ``ASCIIString`` address pattern and zero or more OSC values (arguments).
+    /// Create an OSC message from a raw ``ASCIIString`` address pattern and zero or more OSC values
+    /// (arguments).
     init(
         asciiAddressPattern address: ASCIIString,
         values: OSCValues = []
@@ -60,7 +64,8 @@ extension OSCMessage {
     }
     
     /// Internal:
-    /// Create an OSC message from ``ASCIIString`` OSC address pattern path components and zero or more OSC values (arguments).
+    /// Create an OSC message from ``ASCIIString`` OSC address pattern path components and zero or
+    /// more OSC values (arguments).
     /// Empty path components is equivalent to the address of "/".
     init<S>(
         asciiAddressPattern pathComponents: S,

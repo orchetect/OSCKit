@@ -1,7 +1,7 @@
 //
 //  API-0.5.0.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation

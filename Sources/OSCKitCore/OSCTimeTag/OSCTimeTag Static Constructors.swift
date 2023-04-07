@@ -1,7 +1,7 @@
 //
 //  OSCTimeTag Static Constructors.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -22,7 +22,8 @@ extension OSCTimeTag {
     
     /// Returns a Time Tag representing a time in the future.
     ///
-    /// If the intention is to produce an immediate Time Tag, use ``immediate()`` instead of `init(timeIntervalSinceNow: 0.0)`.
+    /// If the intention is to produce an immediate Time Tag, use ``immediate()`` instead of
+    /// `init(timeIntervalSinceNow: 0.0)`.
     ///
     /// Passing `seconds` that is `< 0.0` will produce a Time Tag of ``now()``.
     public static func timeIntervalSinceNow(_ seconds: TimeInterval) -> Self {
@@ -36,7 +37,8 @@ extension OSCTimeTag {
     
     /// Returns a Time Tag representing a time in the future.
     ///
-    /// If the intention is to produce an immediate Time Tag, use ``immediate()`` instead of `init(at: Date())`.
+    /// If the intention is to produce an immediate Time Tag, use ``immediate()`` instead of
+    /// `init(at: Date())`.
     ///
     /// Passing `Date` that is `< now` will produce a Time Tag of ``now()``.
     public static func future(_ futureDate: Date) -> Self {
@@ -49,7 +51,8 @@ extension OSCTimeTag {
 extension OSCValue where Self == OSCTimeTag {
     /// Initialize from a raw OSC Time Tag value.
     ///
-    /// If the intention is to produce an immediate Time Tag, use ``OSCTimeTag/immediate()`` instead.
+    /// If the intention is to produce an immediate Time Tag, use ``OSCTimeTag/immediate()``
+    /// instead.
     public static func timeTag(_ rawValue: Self.RawValue, era: Int = 0) -> Self {
         OSCTimeTag(rawValue, era: era)
     }
@@ -67,7 +70,8 @@ extension OSCValue where Self == OSCTimeTag {
     
     /// Returns a Time Tag representing a time in the future.
     ///
-    /// If the intention is to produce an immediate Time Tag, use ``OSCTimeTag/immediate()`` instead of `init(timeIntervalSinceNow: 0.0)`.
+    /// If the intention is to produce an immediate Time Tag, use ``OSCTimeTag/immediate()`` instead
+    /// of `init(timeIntervalSinceNow: 0.0)`.
     ///
     /// Passing `seconds` that is `< 0.0` will produce a Time Tag of ``OSCTimeTag/now()``.
     public static func timeTag(timeIntervalSinceNow seconds: TimeInterval) -> Self {
@@ -81,7 +85,8 @@ extension OSCValue where Self == OSCTimeTag {
     
     /// Returns a Time Tag representing a time in the future.
     ///
-    /// If the intention is to produce an immediate Time Tag, use ``OSCTimeTag/immediate()`` instead of `init(at: Date())`.
+    /// If the intention is to produce an immediate Time Tag, use ``OSCTimeTag/immediate()`` instead
+    /// of `init(at: Date())`.
     ///
     /// Passing `Date` that is `< now` will produce a Time Tag of ``OSCTimeTag/now()``.
     public static func timeTag(future futureDate: Date) -> Self {

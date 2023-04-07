@@ -1,7 +1,7 @@
 //
 //  OSCPeer.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -55,7 +55,9 @@ public final class OSCPeer: NSObject, _OSCServerProtocol {
         stop()
     }
     
-    /// Set the handler closure. This closure will be called when OSC bundles or messages are received. The handler is called on the `dispatchQueue` queue specified at time of initialization.
+    /// Set the handler closure. This closure will be called when OSC bundles or messages are
+    /// received. The handler is called on the `dispatchQueue` queue specified at time of
+    /// initialization.
     public func setHandler(
         _ handler: @escaping (_ message: OSCMessage, _ timeTag: OSCTimeTag) -> Void
     ) {
@@ -73,7 +75,7 @@ extension OSCPeer {
         try udpSocket.enableReusePort(true)
         try udpSocket.enableBroadcast(true)
         try udpSocket.bind(toPort: port)
-        self.port = udpSocket.localPort() // update local port if it changed or was assigned by system
+        port = udpSocket.localPort() // update local port if it changed or was assigned by system
         try udpSocket.beginReceiving()
         
         isStarted = true

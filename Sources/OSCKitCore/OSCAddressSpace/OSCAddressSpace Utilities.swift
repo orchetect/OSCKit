@@ -1,7 +1,7 @@
 //
 //  OSCAddressSpace Utilities.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -13,7 +13,8 @@ extension OSCAddressSpace {
     /// Internal:
     /// Create a method node by creating its path node tree recursively as needed.
     ///
-    /// If the method node already exists as either a container or method, it will be updated to be marked as a method and its block closure will be replaced.
+    /// If the method node already exists as either a container or method, it will be updated to be
+    /// marked as a method and its block closure will be replaced.
     ///
     /// Children, if any, are unaffected.
     func createMethodNode<S>(
@@ -54,7 +55,8 @@ extension OSCAddressSpace {
     ///   1) it is marked as a method
     ///   2) is has zero children; if children are present, downgrade node to be a container
     ///
-    /// - Returns: `true` if the operation was successful, `false` if unsuccessful or the path does not exist.
+    /// - Returns: `true` if the operation was successful, `false` if unsuccessful or the path does
+    ///   not exist.
     @discardableResult
     func removeMethodNode<S>(
         path: S
@@ -121,7 +123,8 @@ extension OSCAddressSpace {
     }
     
     /// Internal:
-    /// Returns an array representing the path comprised of `Node` references for each path component.
+    /// Returns an array representing the path comprised of `Node` references for each path
+    /// component.
     /// May be a partial path.
     /// Returns `nil` if the complete path does not exist.
     func nodePath<S>(
@@ -146,7 +149,8 @@ extension OSCAddressSpace {
 
 extension OSCAddressSpace {
     /// Internal:
-    /// Returns all registered local OSC method nodes whose path matches the given OSC address pattern.
+    /// Returns all registered local OSC method nodes whose path matches the given OSC address
+    /// pattern.
     func methodNodes(patternMatching address: OSCAddressPattern) -> [Node] {
         let patternComponents = address.components
         guard !patternComponents.isEmpty else { return [] }

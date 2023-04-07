@@ -1,7 +1,7 @@
 //
 //  OSCServer.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -61,7 +61,9 @@ public final class OSCServer: NSObject, _OSCServerProtocol {
         stop()
     }
     
-    /// Set the handler closure. This closure will be called when OSC bundles or messages are received. The handler is called on the `dispatchQueue` queue specified at time of initialization.
+    /// Set the handler closure. This closure will be called when OSC bundles or messages are
+    /// received. The handler is called on the `dispatchQueue` queue specified at time of
+    /// initialization.
     public func setHandler(
         _ handler: @escaping (_ message: OSCMessage, _ timeTag: OSCTimeTag) -> Void
     ) {

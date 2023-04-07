@@ -1,7 +1,7 @@
 //
 //  OSCValueToken Methods.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -12,7 +12,8 @@ extension OSCValueToken {
     /// - parameters:
     ///   - token: ``OSCValueToken`` to compare to.
     ///   - includingOpaque: Allows matching against an opaque type if one is passed in `type`.
-    ///     If `false`, only exact matching occurs (ie: ``int32`` == ``int32``; ``number`` == ``number``).
+    ///     If `false`, only exact matching occurs (ie: ``int32`` == ``int32``;
+    ///     ``number`` == ``number``).
     ///     If `true`, opaque type matching is allowed (ie: ``int32`` == ``number``).
     public func isBaseType(
         matching token: OSCValueToken,

@@ -1,7 +1,7 @@
 //
 //  OSCValueToken.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -32,7 +32,8 @@ public enum OSCValueToken: Int, CaseIterable, Equatable, Hashable {
     // -- opaque types
     
     /// Meta type: Number.
-    /// Not a specific type like the others. Used when defining a mask to accept numeric value types (``int32``, ``float32``, ``double``, ``int64``) for an expected value placeholder.
+    /// Not a specific type like the others. Used when defining a mask to accept numeric value types
+    /// (``int32``, ``float32``, ``double``, ``int64``) for an expected value placeholder.
     case number // accepts any OSC number type
     
     // optional versions of concrete types
@@ -57,7 +58,8 @@ public enum OSCValueToken: Int, CaseIterable, Equatable, Hashable {
     
     // -- opaque types
     /// Meta type: Number (Optional variant).
-    /// Not a specific type like the others. Used when defining a mask to accept numeric value types (``int32``, ``float32``, ``double``, ``int64``) for an expected value placeholder.
+    /// Not a specific type like the others. Used when defining a mask to accept numeric value types
+    /// (``int32``, ``float32``, ``double``, ``int64``) for an expected value placeholder.
     case numberOptional // accepts any OSC number type
 }
 

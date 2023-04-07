@@ -1,7 +1,7 @@
 //
 //  AppDelegate.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Cocoa
@@ -20,7 +20,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction
     func startOSCPeerWithPort(_ sender: Any?) {
-        guard let port = port, (1 ... 65335).contains(port) else {
+        guard let port, (1 ... 65335).contains(port) else {
             print("Press enter a valid port number first.")
             return
         }
@@ -68,15 +68,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 }
 
 class ViewController: NSViewController {
-    @IBOutlet weak var portNumber: NSTextField!
+    @IBOutlet var portNumber: NSTextField!
     
     @IBAction
     func startOSCPeerWithPort(_ sender: Any?) {
         let appDelegate = NSApplication.shared.delegate as? AppDelegate
         appDelegate?.port = UInt16(portNumber.intValue)
         
-        NSApp.sendAction(#selector(AppDelegate.startOSCPeerWithPort(_:)),
-                         to: appDelegate,
-                         from: self)
+        NSApp.sendAction(
+            #selector(AppDelegate.startOSCPeerWithPort(_:)),
+            to: appDelegate,
+            from: self
+        )
     }
 }

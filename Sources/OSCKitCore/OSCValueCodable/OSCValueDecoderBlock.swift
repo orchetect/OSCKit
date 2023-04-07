@@ -1,7 +1,7 @@
 //
 //  OSCValueDecoderBlock.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -43,7 +43,8 @@ public struct OSCValueVariableDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDe
 /// ``OSCValue`` variadic value decoder block encapsulation.
 ///
 /// Return `nil` if no expected tags are encountered.
-/// Only throw an error if at least one expected tag is encountered but any other tags or value data is malformed.
+/// Only throw an error if at least one expected tag is encountered but any other tags or value data
+/// is malformed.
 public struct OSCValueVariadicDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDecoderBlock {
     public typealias Block = (
         _ tags: [Character],

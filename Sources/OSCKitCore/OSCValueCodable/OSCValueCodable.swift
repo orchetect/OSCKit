@@ -1,7 +1,7 @@
 //
 //  OSCValueCodable.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 /// Combined protocol that includes ``OSCValueEncodable`` & ``OSCValueDecodable``.

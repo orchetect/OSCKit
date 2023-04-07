@@ -1,7 +1,7 @@
 //
 //  OSCMessage Integrity Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 #if shouldTestCurrentPlatform
@@ -59,7 +59,8 @@ final class OSCMessage_Integrity_Tests: XCTestCase {
     }
     
     func testConstructors() throws {
-        // this does not necessarily prove that encoding or decoding actually matches OSC spec, it simply ensures that a message that OSCMessage generates can also be decoded
+        // this does not necessarily prove that encoding or decoding actually matches OSC spec, it
+        // simply ensures that a message that OSCMessage generates can also be decoded
         
         // encode
         

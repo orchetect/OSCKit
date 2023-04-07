@@ -1,7 +1,7 @@
 //
 //  OSCReceiver.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import OSCKit
@@ -46,7 +46,8 @@ class OSCReceiver {
         // execute closures for matching methods, and returns the matching method IDs
         let methodIDs = addressSpace.dispatch(message)
         
-        // if no IDs are returned, it means that the OSC message address pattern did not match any that were registered
+        // if no IDs are returned, it means that the OSC message address pattern did not match any
+        // that were registered
         if methodIDs.isEmpty {
             print("No method registered for:", message)
         }

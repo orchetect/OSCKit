@@ -1,14 +1,15 @@
 //
 //  Component parse.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
 @_implementationOnly import OTCore
 
 extension OSCAddressPattern.Component {
-    /// Initializes a new OSC address pattern ``Component`` instance tokenizing an individual path component of an OSC address.
+    /// Initializes a new OSC address pattern ``Component`` instance tokenizing an individual path
+    /// component of an OSC address.
     init(string pattern: String) {
         if pattern.isEmpty { return }
         
@@ -148,7 +149,8 @@ extension OSCAddressPattern.Component {
     ///
     /// Special character `!`:
     /// - only valid inside `[]`;
-    /// - at the beginning of a bracketed string negates the sense of the list, meaning that the list matches any character not in the list
+    /// - at the beginning of a bracketed string negates the sense of the list, meaning that the
+    ///   list matches any character not in the list
     /// - `!` as any other char than first char has no special meaning
     internal static func parse(
         bracketExpression: Substring

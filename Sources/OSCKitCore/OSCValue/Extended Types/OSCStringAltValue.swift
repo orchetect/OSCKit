@@ -1,13 +1,14 @@
 //
 //  OSCStringAltValue.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
 
 /// Alternative String OSC value as defined by the OSC 1.0 spec.
-/// This is encoded identically as to the normal String type except it carries a unique OSC tag that differentiates it as an alternative string type.
+/// This is encoded identically as to the normal String type except it carries a unique OSC tag that
+/// differentiates it as an alternative string type.
 public struct OSCStringAltValue {
     public var string: String
     
@@ -20,7 +21,8 @@ public struct OSCStringAltValue {
 
 extension OSCValue where Self == OSCStringAltValue {
     /// Alternative String OSC value as defined by the OSC 1.0 spec.
-    /// This is encoded identically as to the normal String type except it carries a unique OSC tag that differentiates it as an alternative string type.
+    /// This is encoded identically as to the normal String type except it carries a unique OSC tag
+    /// that differentiates it as an alternative string type.
     public static func stringAlt(_ string: String) -> Self {
         OSCStringAltValue(string)
     }
@@ -66,6 +68,6 @@ extension OSCStringAltValue: OSCValueEncodable {
 extension OSCStringAltValue: OSCValueDecodable {
     public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { decoder in
-        OSCStringAltValue(try String.oscDecoding.block(&decoder))
+        try OSCStringAltValue(String.oscDecoding.block(&decoder))
     }
 }
