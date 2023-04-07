@@ -29,16 +29,17 @@ public final class OSCPeer: NSObject, _OSCServerProtocol {
     public private(set) var port: UInt16
     
     /// Initialize with a remote hostname and OSC port.
+    /// If port is passed `nil`, a random available port in the system will be chosen.
     public init(
         host: String,
-        port: UInt16,
+        port: UInt16?,
         receiveQueue: DispatchQueue = .main,
         dispatchQueue: DispatchQueue = .main,
         timeTagMode: OSCServer.TimeTagMode = .ignore,
         handler: ((_ message: OSCMessage, _ timeTag: OSCTimeTag) -> Void)? = nil
     ) {
         self.host = host
-        self.port = port
+        self.port = port ?? 0 // 0 causes system to assign random open port
         self.timeTagMode = timeTagMode
         
         self.receiveQueue = receiveQueue
@@ -73,6 +74,7 @@ extension OSCPeer {
         try udpSocket.enableReusePort(true)
         try udpSocket.enableBroadcast(true)
         try udpSocket.bind(toPort: port)
+        self.port = udpSocket.localPort() // update local port if it changed or was assigned by system
         try udpSocket.beginReceiving()
         
         isStarted = true

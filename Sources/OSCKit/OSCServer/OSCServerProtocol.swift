@@ -83,8 +83,7 @@ extension _OSCServerProtocol {
     }
 }
 
-
-/// Internal UDP receiver class so as to not expose `GCDAsyncUdpSocketDelegate` methods as public on `OSCServer`.
+/// Internal UDP receiver class so as to not expose `GCDAsyncUdpSocketDelegate` methods as public.
 internal class OSCServerDelegate: NSObject, GCDAsyncUdpSocketDelegate {
     weak var oscServer: _OSCServerProtocol?
     

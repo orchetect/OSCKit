@@ -704,48 +704,95 @@
         <!--View Controller-->
         <scene sceneID="hIz-AP-VOD">
             <objects>
-                <viewController id="XfG-lQ-9wD" sceneMemberID="viewController">
-                    <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="208"/>
+                <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="OSCKitPeerExample" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" misplaced="YES" id="m2S-Jp-Qdl">
+                        <rect key="frame" x="0.0" y="0.0" width="512" height="281"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="50" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vvt-YU-uqM" userLabel="Window Stack">
-                                <rect key="frame" x="20" y="20" width="440" height="168"/>
+                            <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="40" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vvt-YU-uqM" userLabel="Window Stack">
+                                <rect key="frame" x="20" y="20" width="476" height="241"/>
                                 <subviews>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="SMY-Ed-289">
-                                        <rect key="frame" x="-2" y="136" width="444" height="32"/>
+                                        <rect key="frame" x="-2" y="209" width="480" height="32"/>
                                         <textFieldCell key="cell" selectable="YES" alignment="center" title="Port 8000 is used in this example to send and receive OSC to single network nostname or IP address." id="0EH-Gz-CDh">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="xGS-qg-AfL">
-                                        <rect key="frame" x="60" y="70" width="321" height="16"/>
-                                        <textFieldCell key="cell" selectable="YES" alignment="center" title="Received OSC messages are logged to the console." id="mdu-sW-SjZ">
+                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="r9E-D0-SB9">
+                                        <rect key="frame" x="78" y="153" width="321" height="16"/>
+                                        <textFieldCell key="cell" selectable="YES" alignment="center" title="Received OSC messages are logged to the console." id="6th-Yx-HZD">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <stackView distribution="equalSpacing" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="aIg-vn-NbE" userLabel="Buttons Stack">
-                                        <rect key="frame" x="45" y="0.0" width="350" height="20"/>
+                                    <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="xGS-qg-AfL">
+                                        <rect key="frame" x="8" y="97" width="460" height="16"/>
+                                        <textFieldCell key="cell" selectable="YES" alignment="center" title="The peer object must be started before messages can be sent or received." id="mdu-sW-SjZ">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <stackView distribution="equalSpacing" orientation="vertical" alignment="centerX" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="aIg-vn-NbE" userLabel="Buttons Stack">
+                                        <rect key="frame" x="0.0" y="0.0" width="476" height="57"/>
                                         <subviews>
-                                            <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="YqW-A8-CMr" userLabel="Start Stop Stack">
-                                                <rect key="frame" x="0.0" y="0.0" width="108" height="20"/>
+                                            <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="50" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="YqW-A8-CMr" userLabel="Start Stop Stack">
+                                                <rect key="frame" x="0.0" y="36" width="476" height="21"/>
                                                 <subviews>
-                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ppE-il-vA8">
-                                                        <rect key="frame" x="-7" y="-7" width="64" height="32"/>
-                                                        <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hAY-Vb-tPK">
+                                                    <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cmg-Nh-TLf">
+                                                        <rect key="frame" x="0.0" y="0.0" width="174" height="21"/>
+                                                        <subviews>
+                                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ppE-il-vA8">
+                                                                <rect key="frame" x="-7" y="-6" width="116" height="32"/>
+                                                                <buttonCell key="cell" type="push" title="Start on Port:" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hAY-Vb-tPK">
+                                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                    <font key="font" metaFont="system"/>
+                                                                </buttonCell>
+                                                                <connections>
+                                                                    <action selector="startOSCPeerWithPort:" target="rPt-NT-nkU" id="Uye-gP-JRl"/>
+                                                                </connections>
+                                                            </button>
+                                                            <textField focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SZr-kn-JBF">
+                                                                <rect key="frame" x="104" y="0.0" width="70" height="21"/>
+                                                                <constraints>
+                                                                    <constraint firstAttribute="width" constant="70" id="OP9-H7-0sq"/>
+                                                                </constraints>
+                                                                <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" continuous="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" focusRingType="none" title="8000" drawsBackground="YES" usesSingleLineMode="YES" id="hNU-Cg-wcM">
+                                                                    <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0" localizesFormat="NO" numberStyle="scientific" allowsFloats="NO" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" id="2bk-y1-nLc">
+                                                                        <integer key="roundingIncrement" value="1"/>
+                                                                        <real key="minimum" value="1"/>
+                                                                        <real key="maximum" value="65335"/>
+                                                                    </numberFormatter>
+                                                                    <font key="font" metaFont="system"/>
+                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                </textFieldCell>
+                                                            </textField>
+                                                        </subviews>
+                                                        <visibilityPriorities>
+                                                            <integer value="1000"/>
+                                                            <integer value="1000"/>
+                                                        </visibilityPriorities>
+                                                        <customSpacing>
+                                                            <real value="3.4028234663852886e+38"/>
+                                                            <real value="3.4028234663852886e+38"/>
+                                                        </customSpacing>
+                                                    </stackView>
+                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e37-Dd-xbw">
+                                                        <rect key="frame" x="217" y="-6" width="166" height="32"/>
+                                                        <buttonCell key="cell" type="push" title="Start on Random Port" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9Ze-AE-aZM">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
                                                         <connections>
-                                                            <action selector="startOSCPeer:" target="rPt-NT-nkU" id="OHO-hU-gIR"/>
+                                                            <action selector="startOSCPeerWithRandomPort:" target="rPt-NT-nkU" id="hqN-SD-i6i"/>
                                                         </connections>
                                                     </button>
                                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OHl-rC-oMK">
-                                                        <rect key="frame" x="51" y="-7" width="64" height="32"/>
+                                                        <rect key="frame" x="419" y="-6" width="64" height="32"/>
                                                         <buttonCell key="cell" type="push" title="Stop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rj3-0z-0Np">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="system"/>
@@ -758,15 +805,17 @@
                                                 <visibilityPriorities>
                                                     <integer value="1000"/>
                                                     <integer value="1000"/>
+                                                    <integer value="1000"/>
                                                 </visibilityPriorities>
                                                 <customSpacing>
+                                                    <real value="3.4028234663852886e+38"/>
                                                     <real value="3.4028234663852886e+38"/>
                                                     <real value="3.4028234663852886e+38"/>
                                                 </customSpacing>
                                             </stackView>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FSo-jV-sgB">
-                                                <rect key="frame" x="173" y="-7" width="184" height="32"/>
-                                                <buttonCell key="cell" type="push" title="Send Test OSC Message" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fIP-b4-vLY">
+                                                <rect key="frame" x="161" y="-7" width="154" height="32"/>
+                                                <buttonCell key="cell" type="push" title="Send OSC Message" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fIP-b4-vLY">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -775,9 +824,6 @@
                                                 </connections>
                                             </button>
                                         </subviews>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="350" id="biQ-xt-fOS"/>
-                                        </constraints>
                                         <visibilityPriorities>
                                             <integer value="1000"/>
                                             <integer value="1000"/>
@@ -792,8 +838,10 @@
                                     <integer value="1000"/>
                                     <integer value="1000"/>
                                     <integer value="1000"/>
+                                    <integer value="1000"/>
                                 </visibilityPriorities>
                                 <customSpacing>
+                                    <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
                                     <real value="3.4028234663852886e+38"/>
@@ -807,10 +855,13 @@
                             <constraint firstAttribute="trailing" secondItem="Vvt-YU-uqM" secondAttribute="trailing" constant="20" symbolic="YES" id="g32-DO-Yxz"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="portNumber" destination="SZr-kn-JBF" id="Jnq-c8-Gdr"/>
+                    </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="655"/>
+            <point key="canvasLocation" x="75" y="632"/>
         </scene>
     </scenes>
 </document>
