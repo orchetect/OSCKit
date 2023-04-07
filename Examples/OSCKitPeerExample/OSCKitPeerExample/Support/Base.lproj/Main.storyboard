@@ -706,7 +706,7 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="OSCKitPeerExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" misplaced="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="512" height="281"/>
+                        <rect key="frame" x="0.0" y="0.0" width="516" height="281"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="40" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vvt-YU-uqM" userLabel="Window Stack">
@@ -714,7 +714,7 @@
                                 <subviews>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="SMY-Ed-289">
                                         <rect key="frame" x="-2" y="209" width="480" height="32"/>
-                                        <textFieldCell key="cell" selectable="YES" alignment="center" title="Port 8000 is used in this example to send and receive OSC to single network nostname or IP address." id="0EH-Gz-CDh">
+                                        <textFieldCell key="cell" selectable="YES" alignment="center" title="The OSCPeer class is designed to send and receive OSC to single network nostname or IP address." id="0EH-Gz-CDh">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>

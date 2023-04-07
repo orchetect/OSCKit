@@ -102,10 +102,11 @@ extension OSCPeer {
     }
     
     /// Send an OSC bundle or message to the remote peer.
-    /// If ``remotePort`` is non-nil, it will be used as the destination port.
-    /// Otherwise, the ``localPort`` number will be used.
+    /// If `port` is non-nil, it will be used as the destination port.
+    /// Otherwise, the ``remotePort`` number will be used.
     public func send(
-        _ oscObject: any OSCObject
+        _ oscObject: any OSCObject,
+        port: UInt16? = nil
     ) throws {
         guard isStarted else {
             throw GCDAsyncUdpSocketError(
@@ -119,7 +120,7 @@ extension OSCPeer {
         udpSocket.send(
             data,
             toHost: host,
-            port: remotePort,
+            port: port ?? remotePort,
             withTimeout: 1.0,
             tag: 0
         )
