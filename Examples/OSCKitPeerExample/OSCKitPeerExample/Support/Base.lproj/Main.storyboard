@@ -714,7 +714,7 @@
                                 <subviews>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="SMY-Ed-289">
                                         <rect key="frame" x="-2" y="136" width="444" height="32"/>
-                                        <textFieldCell key="cell" selectable="YES" alignment="center" title="By default, port 8000 is used in this example to send and receive OSC to single network nostname or IP address." id="0EH-Gz-CDh">
+                                        <textFieldCell key="cell" selectable="YES" alignment="center" title="Port 8000 is used in this example to send and receive OSC to single network nostname or IP address." id="0EH-Gz-CDh">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
