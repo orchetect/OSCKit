@@ -11,7 +11,7 @@ import XCTest
 
 final class OSCPeer_Tests: XCTestCase {
     func testEmptyBundle() throws {
-        let server = OSCPeer(host: "localhost", port: nil)
+        let server = OSCPeer(host: "localhost", localPort: nil)
         
         let exp = expectation(description: "Message Dispatched")
         exp.isInverted = true // empty bundle produces no messages
