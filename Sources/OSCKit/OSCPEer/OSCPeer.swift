@@ -86,7 +86,6 @@ extension OSCPeer {
         isStarted = true
     }
     
-    // TODO: needs testing
     public func stop() {
         // server
         oscServer.stop()
