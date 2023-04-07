@@ -7,7 +7,7 @@
 import Foundation
 import CocoaAsyncSocket
 
-/// Sends and receive OSC packets over the network with an individual remote host and port.
+/// Sends and receive OSC packets over the network with an individual remote host.
 public final class OSCPeer: NSObject, _OSCServerProtocol {
     let udpSocket = GCDAsyncUdpSocket()
     let udpDelegate = OSCServerDelegate()
@@ -24,21 +24,27 @@ public final class OSCPeer: NSObject, _OSCServerProtocol {
     /// Remote network hostname.
     public private(set) var host: String
     
-    /// UDP port used by to send and receive OSC packets.
-    public private(set) var port: UInt16
+    /// UDP port used by to receive OSC packets.
+    public private(set) var localPort: UInt16
+    
+    /// UDP port used by to send OSC packets.
+    public private(set) var remotePort: UInt16?
     
     /// Initialize with a remote hostname and OSC port.
-    /// If port is passed as `nil`, a random available port in the system will be chosen.
+    /// If `localPort` is `nil`, a random available port in the system will be chosen.
+    /// If `remotePort` is `nil`, the same port number as `localPort` will be used.
     public init(
         host: String,
-        port: UInt16?,
+        localPort: UInt16?,
+        remotePort: UInt16?,
         receiveQueue: DispatchQueue = .main,
         dispatchQueue: DispatchQueue = .main,
         timeTagMode: OSCTimeTagMode = .ignore,
         handler: ((_ message: OSCMessage, _ timeTag: OSCTimeTag) -> Void)? = nil
     ) {
         self.host = host
-        self.port = port ?? 0 // 0 causes system to assign random open port
+        self.localPort = localPort ?? 0 // 0 causes system to assign random open port
+        self.remotePort = remotePort
         self.timeTagMode = timeTagMode
         
         self.receiveQueue = receiveQueue
@@ -74,8 +80,11 @@ extension OSCPeer {
         
         try udpSocket.enableReusePort(true)
         try udpSocket.enableBroadcast(true)
-        try udpSocket.bind(toPort: port)
-        port = udpSocket.localPort() // update local port if it changed or was assigned by system
+        try udpSocket.bind(toPort: localPort)
+        
+        // update local port if it changed or was assigned by system
+        localPort = udpSocket.localPort()
+        
         try udpSocket.beginReceiving()
         
         isStarted = true
@@ -88,7 +97,9 @@ extension OSCPeer {
         isStarted = false
     }
     
-    /// Send an OSC bundle or message ad-hoc to the remote peer.
+    /// Send an OSC bundle or message to the remote peer.
+    /// If ``remotePort`` is non-nil, it will be used as the destination port.
+    /// Otherwise, the ``localPort`` number will be used.
     public func send(
         _ oscObject: any OSCObject
     ) throws {
@@ -104,7 +115,7 @@ extension OSCPeer {
         udpSocket.send(
             data,
             toHost: host,
-            port: port,
+            port: remotePort ?? localPort,
             withTimeout: 1.0,
             tag: 0
         )
