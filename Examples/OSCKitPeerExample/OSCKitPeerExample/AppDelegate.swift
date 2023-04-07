@@ -10,7 +10,9 @@ import OSCKit
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
     var oscPeer: OSCPeer?
-    var port: UInt16?
+    var localPort: UInt16?
+    var remoteHost: String = ""
+    var remotePort: UInt16?
     
     func applicationDidFinishLaunching(_ aNotification: Notification) { }
     
@@ -19,32 +21,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     @IBAction
-    func startOSCPeerWithPort(_ sender: Any?) {
-        guard let port, (1 ... 65335).contains(port) else {
-            print("Press enter a valid port number first.")
-            return
-        }
-        startOSCPeer(sender)
-    }
-    
-    @IBAction
-    func startOSCPeerWithRandomPort(_ sender: Any?) {
-        port = nil
-        startOSCPeer(sender)
-    }
-    
-    @IBAction
     func startOSCPeer(_ sender: Any?) {
         print("Starting OSC peer.")
         do {
-            let newPeer = OSCPeer(host: "localhost", localPort: port) { message, timeTag in
+            let newPeer = OSCPeer(
+                host: remoteHost,
+                localPort: localPort,
+                remotePort: remotePort
+            ) { message, timeTag in
                 print(message, "with time tag: \(timeTag)")
             }
             oscPeer = newPeer
             try newPeer.start()
-            print("Using local port \(newPeer.localPort) and remote port \(newPeer.remotePort).")
+            print("Using local port \(newPeer.localPort) and remote port \(newPeer.remotePort) with remote host \(remoteHost).")
         } catch {
-            print("Error while starting OSC peer with port \(port as Any): \(error)")
+            print("Error while starting OSC peer: \(error)")
         }
     }
     
@@ -68,15 +59,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 }
 
 class ViewController: NSViewController {
-    @IBOutlet var portNumber: NSTextField!
+    @IBOutlet var localPortNumber: NSTextField!
+    @IBOutlet var remotePortNumber: NSTextField!
+    @IBOutlet weak var remoteHost: NSTextField!
     
     @IBAction
-    func startOSCPeerWithPort(_ sender: Any?) {
+    func startOSCPeer(_ sender: Any?) {
         let appDelegate = NSApplication.shared.delegate as? AppDelegate
-        appDelegate?.port = UInt16(portNumber.intValue)
+        
+        appDelegate?.remoteHost = remoteHost.stringValue
+        
+        appDelegate?.localPort = !localPortNumber.stringValue.isEmpty
+            ? UInt16(localPortNumber.stringValue)
+            : nil
+        
+        appDelegate?.remotePort = !remotePortNumber.stringValue.isEmpty
+            ? UInt16(remotePortNumber.stringValue)
+            : nil
         
         NSApp.sendAction(
-            #selector(AppDelegate.startOSCPeerWithPort(_:)),
+            #selector(AppDelegate.startOSCPeer(_:)),
             to: appDelegate,
             from: self
         )

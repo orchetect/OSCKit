@@ -705,116 +705,259 @@
         <scene sceneID="hIz-AP-VOD">
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="OSCKitPeerExample" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" misplaced="YES" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="516" height="281"/>
+                    <view key="view" id="m2S-Jp-Qdl">
+                        <rect key="frame" x="0.0" y="0.0" width="646" height="384"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="40" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vvt-YU-uqM" userLabel="Window Stack">
-                                <rect key="frame" x="20" y="20" width="476" height="241"/>
+                            <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vvt-YU-uqM" userLabel="Window Stack">
+                                <rect key="frame" x="20" y="20" width="606" height="344"/>
                                 <subviews>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="SMY-Ed-289">
-                                        <rect key="frame" x="-2" y="209" width="480" height="32"/>
-                                        <textFieldCell key="cell" selectable="YES" alignment="center" title="The OSCPeer class is designed to send and receive OSC to single network nostname or IP address." id="0EH-Gz-CDh">
+                                        <rect key="frame" x="-2" y="328" width="610" height="16"/>
+                                        <textFieldCell key="cell" selectable="YES" alignment="center" title="The OSCPeer class is designed to send &amp; receive OSC with a single network hostname / IP address." id="0EH-Gz-CDh">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="r9E-D0-SB9">
-                                        <rect key="frame" x="78" y="153" width="321" height="16"/>
-                                        <textFieldCell key="cell" selectable="YES" alignment="center" title="Received OSC messages are logged to the console." id="6th-Yx-HZD">
+                                        <rect key="frame" x="96" y="292" width="415" height="16"/>
+                                        <textFieldCell key="cell" selectable="YES" alignment="center" title="Received OSC messages are logged to the console in this example." id="6th-Yx-HZD">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="xGS-qg-AfL">
-                                        <rect key="frame" x="8" y="97" width="460" height="16"/>
+                                        <rect key="frame" x="73" y="256" width="460" height="16"/>
                                         <textFieldCell key="cell" selectable="YES" alignment="center" title="The peer object must be started before messages can be sent or received." id="mdu-sW-SjZ">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <stackView distribution="equalSpacing" orientation="vertical" alignment="centerX" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="aIg-vn-NbE" userLabel="Buttons Stack">
-                                        <rect key="frame" x="0.0" y="0.0" width="476" height="57"/>
+                                    <stackView distribution="equalSpacing" orientation="vertical" alignment="centerX" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="aIg-vn-NbE" userLabel="Controls Stack">
+                                        <rect key="frame" x="28" y="0.0" width="550" height="236"/>
                                         <subviews>
-                                            <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="50" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="YqW-A8-CMr" userLabel="Start Stop Stack">
-                                                <rect key="frame" x="0.0" y="36" width="476" height="21"/>
-                                                <subviews>
-                                                    <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cmg-Nh-TLf">
-                                                        <rect key="frame" x="0.0" y="0.0" width="174" height="21"/>
-                                                        <subviews>
-                                                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ppE-il-vA8">
-                                                                <rect key="frame" x="-7" y="-6" width="116" height="32"/>
-                                                                <buttonCell key="cell" type="push" title="Start on Port:" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hAY-Vb-tPK">
-                                                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                                    <font key="font" metaFont="system"/>
-                                                                </buttonCell>
-                                                                <connections>
-                                                                    <action selector="startOSCPeerWithPort:" target="rPt-NT-nkU" id="Uye-gP-JRl"/>
-                                                                </connections>
-                                                            </button>
-                                                            <textField focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SZr-kn-JBF">
-                                                                <rect key="frame" x="104" y="0.0" width="70" height="21"/>
-                                                                <constraints>
-                                                                    <constraint firstAttribute="width" constant="70" id="OP9-H7-0sq"/>
-                                                                </constraints>
-                                                                <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" continuous="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" focusRingType="none" title="8000" drawsBackground="YES" usesSingleLineMode="YES" id="hNU-Cg-wcM">
-                                                                    <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0" localizesFormat="NO" numberStyle="scientific" allowsFloats="NO" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" id="2bk-y1-nLc">
-                                                                        <integer key="roundingIncrement" value="1"/>
-                                                                        <real key="minimum" value="1"/>
-                                                                        <real key="maximum" value="65335"/>
-                                                                    </numberFormatter>
-                                                                    <font key="font" metaFont="system"/>
-                                                                    <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                                </textFieldCell>
-                                                            </textField>
-                                                        </subviews>
-                                                        <visibilityPriorities>
-                                                            <integer value="1000"/>
-                                                            <integer value="1000"/>
-                                                        </visibilityPriorities>
-                                                        <customSpacing>
-                                                            <real value="3.4028234663852886e+38"/>
-                                                            <real value="3.4028234663852886e+38"/>
-                                                        </customSpacing>
-                                                    </stackView>
-                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e37-Dd-xbw">
-                                                        <rect key="frame" x="217" y="-6" width="166" height="32"/>
-                                                        <buttonCell key="cell" type="push" title="Start on Random Port" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9Ze-AE-aZM">
-                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                            <font key="font" metaFont="system"/>
-                                                        </buttonCell>
-                                                        <connections>
-                                                            <action selector="startOSCPeerWithRandomPort:" target="rPt-NT-nkU" id="hqN-SD-i6i"/>
-                                                        </connections>
-                                                    </button>
-                                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OHl-rC-oMK">
-                                                        <rect key="frame" x="419" y="-6" width="64" height="32"/>
-                                                        <buttonCell key="cell" type="push" title="Stop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rj3-0z-0Np">
-                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                            <font key="font" metaFont="system"/>
-                                                        </buttonCell>
-                                                        <connections>
-                                                            <action selector="stopOSCPeer:" target="rPt-NT-nkU" id="DMP-3E-ofb"/>
-                                                        </connections>
-                                                    </button>
-                                                </subviews>
-                                                <visibilityPriorities>
-                                                    <integer value="1000"/>
-                                                    <integer value="1000"/>
-                                                    <integer value="1000"/>
-                                                </visibilityPriorities>
-                                                <customSpacing>
-                                                    <real value="3.4028234663852886e+38"/>
-                                                    <real value="3.4028234663852886e+38"/>
-                                                    <real value="3.4028234663852886e+38"/>
-                                                </customSpacing>
-                                            </stackView>
+                                            <box title="Configuration" translatesAutoresizingMaskIntoConstraints="NO" id="XJF-nc-z4Z">
+                                                <rect key="frame" x="-3" y="47" width="556" height="189"/>
+                                                <view key="contentView" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cwc-BU-LWU">
+                                                    <rect key="frame" x="4" y="5" width="548" height="169"/>
+                                                    <subviews>
+                                                        <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ooi-uG-svR">
+                                                            <rect key="frame" x="20" y="20" width="504" height="131"/>
+                                                            <subviews>
+                                                                <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Th1-8m-oE3" userLabel="Local Port Stack">
+                                                                    <rect key="frame" x="0.0" y="110" width="504" height="21"/>
+                                                                    <subviews>
+                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XDg-KK-9Hr">
+                                                                            <rect key="frame" x="-2" y="3" width="94" height="16"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="qnR-44-n8h"/>
+                                                                            </constraints>
+                                                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Local Port:" id="W4q-Td-yug">
+                                                                                <font key="font" metaFont="system"/>
+                                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                            </textFieldCell>
+                                                                        </textField>
+                                                                        <textField focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SZr-kn-JBF" userLabel="Local Port Number">
+                                                                            <rect key="frame" x="106" y="0.0" width="80" height="21"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="OP9-H7-0sq"/>
+                                                                            </constraints>
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" focusRingType="none" title="8000" drawsBackground="YES" usesSingleLineMode="YES" id="hNU-Cg-wcM">
+                                                                                <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0" localizesFormat="NO" numberStyle="scientific" allowsFloats="NO" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" id="2bk-y1-nLc">
+                                                                                    <integer key="roundingIncrement" value="1"/>
+                                                                                    <real key="minimum" value="1"/>
+                                                                                    <real key="maximum" value="65335"/>
+                                                                                </numberFormatter>
+                                                                                <font key="font" metaFont="system"/>
+                                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                            </textFieldCell>
+                                                                        </textField>
+                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IK2-9a-M1F">
+                                                                            <rect key="frame" x="200" y="3" width="306" height="16"/>
+                                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="(Leave empty to use a system-assigned free port)" id="DKJ-3L-jaN">
+                                                                                <font key="font" metaFont="system"/>
+                                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                            </textFieldCell>
+                                                                        </textField>
+                                                                    </subviews>
+                                                                    <visibilityPriorities>
+                                                                        <integer value="1000"/>
+                                                                        <integer value="1000"/>
+                                                                        <integer value="1000"/>
+                                                                    </visibilityPriorities>
+                                                                    <customSpacing>
+                                                                        <real value="3.4028234663852886e+38"/>
+                                                                        <real value="3.4028234663852886e+38"/>
+                                                                        <real value="3.4028234663852886e+38"/>
+                                                                    </customSpacing>
+                                                                </stackView>
+                                                                <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IvA-jI-hHe" userLabel="Remote Port Stack">
+                                                                    <rect key="frame" x="37" y="73" width="431" height="21"/>
+                                                                    <subviews>
+                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hL3-Tc-bJz">
+                                                                            <rect key="frame" x="-2" y="3" width="94" height="16"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="VkQ-yt-2MJ"/>
+                                                                            </constraints>
+                                                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Remote Port:" id="YnF-Jx-r7z">
+                                                                                <font key="font" metaFont="system"/>
+                                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                            </textFieldCell>
+                                                                        </textField>
+                                                                        <textField focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xiz-iK-zUs">
+                                                                            <rect key="frame" x="106" y="0.0" width="70" height="21"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="yDE-Za-IiF"/>
+                                                                            </constraints>
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" focusRingType="none" title="8000" drawsBackground="YES" usesSingleLineMode="YES" id="N6X-8L-Dpj">
+                                                                                <numberFormatter key="formatter" formatterBehavior="custom10_4" positiveFormat="#0" localizesFormat="NO" numberStyle="scientific" allowsFloats="NO" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" id="sBN-og-ljT">
+                                                                                    <integer key="roundingIncrement" value="1"/>
+                                                                                    <real key="minimum" value="1"/>
+                                                                                    <real key="maximum" value="65335"/>
+                                                                                </numberFormatter>
+                                                                                <font key="font" metaFont="system"/>
+                                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                            </textFieldCell>
+                                                                        </textField>
+                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="mo5-yR-cVq">
+                                                                            <rect key="frame" x="190" y="3" width="243" height="16"/>
+                                                                            <textFieldCell key="cell" lineBreakMode="clipping" title="(Leave empty to use local port number)" id="yW4-aM-Oxt">
+                                                                                <font key="font" metaFont="system"/>
+                                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                            </textFieldCell>
+                                                                        </textField>
+                                                                    </subviews>
+                                                                    <visibilityPriorities>
+                                                                        <integer value="1000"/>
+                                                                        <integer value="1000"/>
+                                                                        <integer value="1000"/>
+                                                                    </visibilityPriorities>
+                                                                    <customSpacing>
+                                                                        <real value="3.4028234663852886e+38"/>
+                                                                        <real value="3.4028234663852886e+38"/>
+                                                                        <real value="3.4028234663852886e+38"/>
+                                                                    </customSpacing>
+                                                                </stackView>
+                                                                <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ohL-6s-979" userLabel="Remote Host Stack">
+                                                                    <rect key="frame" x="99" y="36" width="306" height="21"/>
+                                                                    <subviews>
+                                                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Gy-J0-MmH">
+                                                                            <rect key="frame" x="-2" y="3" width="94" height="16"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="AAj-YR-OSE"/>
+                                                                            </constraints>
+                                                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Remote Host:" id="g3B-VX-VlJ">
+                                                                                <font key="font" metaFont="system"/>
+                                                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                            </textFieldCell>
+                                                                        </textField>
+                                                                        <textField focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uwN-I3-wAP" userLabel="Remote Host">
+                                                                            <rect key="frame" x="106" y="0.0" width="200" height="21"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="HTc-de-k4n"/>
+                                                                            </constraints>
+                                                                            <textFieldCell key="cell" lineBreakMode="truncatingTail" selectable="YES" editable="YES" continuous="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" focusRingType="none" title="localhost" drawsBackground="YES" usesSingleLineMode="YES" id="xXx-bq-tHk">
+                                                                                <font key="font" metaFont="system"/>
+                                                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                                            </textFieldCell>
+                                                                        </textField>
+                                                                    </subviews>
+                                                                    <visibilityPriorities>
+                                                                        <integer value="1000"/>
+                                                                        <integer value="1000"/>
+                                                                    </visibilityPriorities>
+                                                                    <customSpacing>
+                                                                        <real value="3.4028234663852886e+38"/>
+                                                                        <real value="3.4028234663852886e+38"/>
+                                                                    </customSpacing>
+                                                                </stackView>
+                                                                <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="YqW-A8-CMr" userLabel="Start Stop Stack">
+                                                                    <rect key="frame" x="198" y="0.0" width="108" height="20"/>
+                                                                    <subviews>
+                                                                        <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cmg-Nh-TLf">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="50" height="20"/>
+                                                                            <subviews>
+                                                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ppE-il-vA8">
+                                                                                    <rect key="frame" x="-7" y="-7" width="64" height="32"/>
+                                                                                    <buttonCell key="cell" type="push" title="Start" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hAY-Vb-tPK">
+                                                                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                        <font key="font" metaFont="system"/>
+                                                                                    </buttonCell>
+                                                                                    <connections>
+                                                                                        <action selector="startOSCPeer:" target="rPt-NT-nkU" id="AoB-Ar-tFm"/>
+                                                                                    </connections>
+                                                                                </button>
+                                                                            </subviews>
+                                                                            <visibilityPriorities>
+                                                                                <integer value="1000"/>
+                                                                            </visibilityPriorities>
+                                                                            <customSpacing>
+                                                                                <real value="3.4028234663852886e+38"/>
+                                                                            </customSpacing>
+                                                                        </stackView>
+                                                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OHl-rC-oMK">
+                                                                            <rect key="frame" x="51" y="-7" width="64" height="32"/>
+                                                                            <buttonCell key="cell" type="push" title="Stop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rj3-0z-0Np">
+                                                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                                                <font key="font" metaFont="system"/>
+                                                                            </buttonCell>
+                                                                            <connections>
+                                                                                <action selector="stopOSCPeer:" target="rPt-NT-nkU" id="DMP-3E-ofb"/>
+                                                                            </connections>
+                                                                        </button>
+                                                                    </subviews>
+                                                                    <visibilityPriorities>
+                                                                        <integer value="1000"/>
+                                                                        <integer value="1000"/>
+                                                                    </visibilityPriorities>
+                                                                    <customSpacing>
+                                                                        <real value="3.4028234663852886e+38"/>
+                                                                        <real value="3.4028234663852886e+38"/>
+                                                                    </customSpacing>
+                                                                </stackView>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="500" id="mXM-Je-gPw"/>
+                                                            </constraints>
+                                                            <visibilityPriorities>
+                                                                <integer value="1000"/>
+                                                                <integer value="1000"/>
+                                                                <integer value="1000"/>
+                                                                <integer value="1000"/>
+                                                            </visibilityPriorities>
+                                                            <customSpacing>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                            </customSpacing>
+                                                        </stackView>
+                                                    </subviews>
+                                                    <constraints>
+                                                        <constraint firstAttribute="bottom" secondItem="ooi-uG-svR" secondAttribute="bottom" constant="20" symbolic="YES" id="3R5-7h-tFN"/>
+                                                        <constraint firstItem="ooi-uG-svR" firstAttribute="top" secondItem="Cwc-BU-LWU" secondAttribute="top" constant="20" symbolic="YES" id="AQb-Sk-cY4"/>
+                                                        <constraint firstAttribute="trailing" secondItem="ooi-uG-svR" secondAttribute="trailing" constant="20" symbolic="YES" id="Fs1-fm-IQD"/>
+                                                        <constraint firstItem="ooi-uG-svR" firstAttribute="leading" secondItem="Cwc-BU-LWU" secondAttribute="leading" constant="20" symbolic="YES" id="wHD-PV-trf"/>
+                                                    </constraints>
+                                                </view>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="185" id="KzD-g6-lfE"/>
+                                                    <constraint firstAttribute="width" constant="550" id="eIo-dN-cm7"/>
+                                                </constraints>
+                                            </box>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FSo-jV-sgB">
-                                                <rect key="frame" x="161" y="-7" width="154" height="32"/>
+                                                <rect key="frame" x="198" y="-7" width="154" height="32"/>
                                                 <buttonCell key="cell" type="push" title="Send OSC Message" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fIP-b4-vLY">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
@@ -856,12 +999,14 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="portNumber" destination="SZr-kn-JBF" id="Jnq-c8-Gdr"/>
+                        <outlet property="localPortNumber" destination="SZr-kn-JBF" id="NuS-ca-yQz"/>
+                        <outlet property="remoteHost" destination="uwN-I3-wAP" id="onl-25-Aq8"/>
+                        <outlet property="remotePortNumber" destination="xiz-iK-zUs" id="HmT-R2-xK6"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="75" y="632"/>
+            <point key="canvasLocation" x="116" y="601"/>
         </scene>
     </scenes>
 </document>
