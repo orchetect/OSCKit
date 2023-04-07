@@ -1,45 +1,46 @@
 //
-//  OSCPeer.swift
+//  OSCServer.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //  © 2022 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
 import CocoaAsyncSocket
+import OSCKitCore
 
-/// Sends and receive OSC packets over the network to and from a specific remote host and port.
-/// This class allows broadcast and port reuse.
-public final class OSCPeer: NSObject, _OSCServerProtocol {
+/// Receives OSC packets from the network on a specific UDP listen port.
+///
+/// By default, a dedicated high-priority receive queue is used to receive UDP data and received OSC messages are dispatched to the main queue by way of the `handler` closure. Specific queues may be specified if needed.
+///
+/// > OSC 1.0 Spec:
+/// >
+/// > With regards OSC Bundle Time Tag:
+/// >
+/// > An OSC server must have access to a representation of the correct current absolute time. OSC does not provide any mechanism for clock synchronization. If the time represented by the OSC Time Tag is before or equal to the current time, the OSC Server should invoke the methods immediately. Otherwise the OSC Time Tag represents a time in the future, and the OSC server must store the OSC Bundle until the specified time and then invoke the appropriate OSC Methods. When bundles contain other bundles, the OSC Time Tag of the enclosed bundle must be greater than or equal to the OSC Time Tag of the enclosing bundle.
+public final class OSCServer: NSObject, _OSCServerProtocol {
     let udpSocket = GCDAsyncUdpSocket()
     let udpDelegate = OSCServerDelegate()
     let receiveQueue: DispatchQueue
     let dispatchQueue: DispatchQueue
     var handler: ((_ message: OSCMessage, _ timeTag: OSCTimeTag) -> Void)?
     
-    /// Returns a boolean indicating whether the OSC peer server and client have been started.
+    /// Returns a boolean indicating whether the OSC server has been started.
     public private(set) var isStarted: Bool = false
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
-    public var timeTagMode: OSCServer.TimeTagMode
+    public var timeTagMode: OSCTimeTagMode
     
-    /// Remote network hostname.
-    public private(set) var host: String
-    
-    /// UDP port used by to send and receive OSC packets.
+    /// UDP port used by the OSC server to listen for inbound OSC packets.
     public private(set) var port: UInt16
     
-    /// Initialize with a remote hostname and OSC port.
-    /// If port is passed `nil`, a random available port in the system will be chosen.
     public init(
-        host: String,
-        port: UInt16?,
+        port: UInt16 = 8000,
         receiveQueue: DispatchQueue = .main,
         dispatchQueue: DispatchQueue = .main,
-        timeTagMode: OSCServer.TimeTagMode = .ignore,
+        timeTagMode: OSCTimeTagMode = .ignore,
         handler: ((_ message: OSCMessage, _ timeTag: OSCTimeTag) -> Void)? = nil
     ) {
-        self.host = host
-        self.port = port ?? 0 // 0 causes system to assign random open port
+        self.port = port
         self.timeTagMode = timeTagMode
         
         self.receiveQueue = receiveQueue
@@ -49,7 +50,7 @@ public final class OSCPeer: NSObject, _OSCServerProtocol {
         super.init()
         
         udpDelegate.oscServer = self
-        udpSocket.setDelegate(udpDelegate, delegateQueue: .main)
+        udpSocket.setDelegate(udpDelegate, delegateQueue: receiveQueue)
     }
     
     deinit {
@@ -66,46 +67,24 @@ public final class OSCPeer: NSObject, _OSCServerProtocol {
 
 // MARK: - Lifecycle
 
-extension OSCPeer {
-    /// Bind the local OSC UDP port and begin listening for data.
+extension OSCServer {
+    /// Bind the OSC server's local UDP port and begin listening for data.
     public func start() throws {
         guard !isStarted else { return }
         
+        stop()
+        
         try udpSocket.enableReusePort(true)
-        try udpSocket.enableBroadcast(true)
         try udpSocket.bind(toPort: port)
-        self.port = udpSocket.localPort() // update local port if it changed or was assigned by system
         try udpSocket.beginReceiving()
         
         isStarted = true
     }
     
-    /// Stops listening for data and closes the OSC port.
+    /// Stops listening for data and closes the OSC server port.
     public func stop() {
         udpSocket.close()
         
         isStarted = false
-    }
-    
-    /// Send an OSC bundle or message ad-hoc to the remote peer.
-    public func send(
-        _ oscObject: any OSCObject
-    ) throws {
-        guard isStarted else {
-            throw GCDAsyncUdpSocketError(
-                .closedError,
-                userInfo: ["Reason": "OSC Peer has not been started yet."]
-            )
-        }
-        
-        let data = try oscObject.rawData()
-        
-        udpSocket.send(
-            data,
-            toHost: host,
-            port: port,
-            withTimeout: 1.0,
-            tag: 0
-        )
     }
 }
