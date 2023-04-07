@@ -35,7 +35,7 @@ public final class OSCServer: NSObject {
     
     public init(
         port: UInt16 = 8000,
-        receiveQueue: DispatchQueue? = nil,
+        receiveQueue: DispatchQueue = .main,
         dispatchQueue: DispatchQueue = .main,
         timeTagMode: TimeTagMode = .ignore,
         handler: ((_ message: OSCMessage, _ timeTag: OSCTimeTag) -> Void)? = nil
@@ -43,18 +43,14 @@ public final class OSCServer: NSObject {
         self.port = port
         self.timeTagMode = timeTagMode
         
-        self.receiveQueue = receiveQueue ?? DispatchQueue(
-            label: "OSCServer",
-            qos: .default
-        )
+        self.receiveQueue = receiveQueue
         self.dispatchQueue = dispatchQueue
         self.handler = handler
         
         super.init()
         
         udpDelegate.oscServer = self
-        udpServer.setDelegateQueue(self.receiveQueue)
-        udpServer.setDelegate(udpDelegate)
+        udpSocket.setDelegate(udpDelegate, delegateQueue: receiveQueue)
     }
     
     deinit {
