@@ -353,7 +353,7 @@ AnyOSCNumberValue // wraps any BinaryInteger or BinaryFloatingPoint
 
 The `OSCPeer` class internally combines both an OSC server and client sharing same local UDP port number. It is able to send and receive OSC messages with a single network host / IP address.
 
-This can be useful in less-common situations, such as when communicating with devices such as the Behringer X32 & M32 which employ a communication pattern where those devices respond on the UDP port that they receive OSC messages on.
+This can be useful in less-common situations, such as when communicating with devices such as the Behringer X32 & M32 which employ a communication pattern where the devices respond on the UDP port that they receive OSC messages on.
 
 ### Setup
 
