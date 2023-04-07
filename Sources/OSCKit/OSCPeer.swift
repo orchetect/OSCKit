@@ -7,8 +7,7 @@
 import Foundation
 import CocoaAsyncSocket
 
-/// Sends and receive OSC packets over the network to and from a specific remote host and port.
-/// This class allows broadcast and port reuse.
+/// Sends and receive OSC packets over the network with an individual remote host and port.
 public final class OSCPeer: NSObject, _OSCServerProtocol {
     let udpSocket = GCDAsyncUdpSocket()
     let udpDelegate = OSCServerDelegate()
@@ -29,7 +28,7 @@ public final class OSCPeer: NSObject, _OSCServerProtocol {
     public private(set) var port: UInt16
     
     /// Initialize with a remote hostname and OSC port.
-    /// If port is passed `nil`, a random available port in the system will be chosen.
+    /// If port is passed as `nil`, a random available port in the system will be chosen.
     public init(
         host: String,
         port: UInt16?,

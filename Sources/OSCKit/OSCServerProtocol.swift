@@ -7,6 +7,8 @@
 import Foundation
 import CocoaAsyncSocket
 
+/// Internal protocol that all objects who act as an OSC server adopt.
+/// Provides shared logic.
 internal protocol _OSCServerProtocol: AnyObject {
     var timeTagMode: OSCTimeTagMode { get set }
     var dispatchQueue: DispatchQueue { get }
