@@ -37,12 +37,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func startOSCPeer(_ sender: Any?) {
         print("Starting OSC peer.")
         do {
-            let newPeer = OSCPeer(host: "localhost", port: port) { message, timeTag in
+            let newPeer = OSCPeer(host: "localhost", remotePort: port) { message, timeTag in
                 print(message, "with time tag: \(timeTag)")
             }
             oscPeer = newPeer
             try newPeer.start()
-            print("Using port \(newPeer.port).")
+            print("Using local port \(newPeer.localPort) and remote port \(newPeer.remotePort).")
         } catch {
             print("Error while starting OSC peer with port \(port as Any): \(error)")
         }

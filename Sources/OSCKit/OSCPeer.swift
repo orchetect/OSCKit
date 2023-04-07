@@ -27,16 +27,20 @@ public final class OSCPeer: NSObject, _OSCServerProtocol {
     /// UDP port used by to receive OSC packets.
     public private(set) var localPort: UInt16
     
+    private var _remotePort: UInt16?
     /// UDP port used by to send OSC packets.
-    public private(set) var remotePort: UInt16?
+    public var remotePort: UInt16 {
+        get { _remotePort ?? localPort }
+        set { _remotePort = newValue }
+    }
     
     /// Initialize with a remote hostname and OSC port.
     /// If `localPort` is `nil`, a random available port in the system will be chosen.
     /// If `remotePort` is `nil`, the same port number as `localPort` will be used.
     public init(
         host: String,
-        localPort: UInt16?,
-        remotePort: UInt16?,
+        localPort: UInt16? = nil,
+        remotePort: UInt16? = nil,
         receiveQueue: DispatchQueue = .main,
         dispatchQueue: DispatchQueue = .main,
         timeTagMode: OSCTimeTagMode = .ignore,
@@ -44,7 +48,7 @@ public final class OSCPeer: NSObject, _OSCServerProtocol {
     ) {
         self.host = host
         self.localPort = localPort ?? 0 // 0 causes system to assign random open port
-        self.remotePort = remotePort
+        self._remotePort = remotePort
         self.timeTagMode = timeTagMode
         
         self.receiveQueue = receiveQueue
@@ -115,7 +119,7 @@ extension OSCPeer {
         udpSocket.send(
             data,
             toHost: host,
-            port: remotePort ?? localPort,
+            port: remotePort,
             withTimeout: 1.0,
             tag: 0
         )
