@@ -28,7 +28,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBAction
     func sendTestOSCMessage(_ sender: Any) {
         try? oscClient.send(
-            .message("/some/address/methodB", values: ["Test string", 123]),
+            .message("/some/address/method", values: ["Test string", 123]),
             to: "localhost", // IP address or hostname
             port: 8000 // standard OSC port but can be changed
         )
