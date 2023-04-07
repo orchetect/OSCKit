@@ -7,9 +7,7 @@
 import Foundation
 import CocoaAsyncSocket
 
-public protocol OSCServerProtocol: AnyObject { }
-
-internal protocol _OSCServerProtocol: OSCServerProtocol {
+internal protocol _OSCServerProtocol: AnyObject {
     var timeTagMode: OSCTimeTagMode { get set }
     var dispatchQueue: DispatchQueue { get }
     var handler: ((_ message: OSCMessage, _ timeTag: OSCTimeTag) -> Void)? { get set }
