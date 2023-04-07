@@ -351,9 +351,46 @@ AnyOSCNumberValue // wraps any BinaryInteger or BinaryFloatingPoint
 
 ## OSC Peer
 
-In less-common situations, some devices such as the Behringer X32 & M32 employ a communication pattern in which the device responds on the UDP port that it receives OSC messages on. This is difficult to achieve with the `OSCServer`/`OSCClient` objects.
+In less-common situations, some devices such as the Behringer X32 & M32 employ a communication pattern in which the device responds on the UDP port that it receives OSC messages on.
 
-This use case is where the `OSCPeer` class can be employed instead. It internally combines both an OSC server and client using same unified UDP port number to both send and receive OSC messages with a single network host or IP address.
+The `OSCPeer` class internally combines both an OSC server and client sharing same local UDP port number. It is able to send and receive OSC messages with a single network host / IP address.
+
+### Setup
+
+If not specified during initialization, the local port will be randomly assigned by the system. The same port will be used to both listen for incoming events and send outgoing events _from_.
+
+The remote port may be omitted, in which case the same port number as the local port will be used. If specified, all messages sent from the peer will be sent to this port on the remote host. This does not affect the local port.
+
+```swift
+// this would be a typical setup to interact with a remote Behringer X32.
+// randomly generate a local port, but always send messages to remote port 10023
+let peer = OSCPeer(
+    host: "192.168.0.2",
+    remotePort: 10023
+) { message, _ in
+    print("Received \(message)")
+}
+```
+
+Similar to OSCServer, OSCPeer must be started before it can send or receive messages.
+
+```swift
+try peer.start()
+```
+
+### Sending to Remote Peer
+
+The `send()` method may be used to send OSC messages and bundles using the remote port held by `OSCPeer`.
+
+```swift
+try peer.send(osc)
+```
+
+It is also possible to override the destination port on a per-message basis.
+
+```swift
+try peer.send(osc, port: 10023)
+```
 
 ## Documentation
 
