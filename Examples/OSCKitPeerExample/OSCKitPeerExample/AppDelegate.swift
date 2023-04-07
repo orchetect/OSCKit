@@ -37,7 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func startOSCPeer(_ sender: Any?) {
         print("Starting OSC peer.")
         do {
-            let newPeer = OSCPeer(host: "localhost", remotePort: port) { message, timeTag in
+            let newPeer = OSCPeer(host: "localhost", localPort: port) { message, timeTag in
                 print(message, "with time tag: \(timeTag)")
             }
             oscPeer = newPeer
