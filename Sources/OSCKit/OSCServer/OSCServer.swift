@@ -22,10 +22,10 @@ public final class OSCServer: NSObject {
     let udpDelegate = OSCServerDelegate()
     let receiveQueue: DispatchQueue
     let dispatchQueue: DispatchQueue
-    var handler: ((
-        _ message: OSCMessage,
-        _ timeTag: OSCTimeTag
-    ) -> Void)?
+    var handler: ((_ message: OSCMessage, _ timeTag: OSCTimeTag) -> Void)?
+    
+    /// Returns a boolean indicating whether the OSC server has been started.
+    public private(set) var isStarted: Bool = false
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
     public var timeTagMode: TimeTagMode
@@ -38,10 +38,7 @@ public final class OSCServer: NSObject {
         receiveQueue: DispatchQueue? = nil,
         dispatchQueue: DispatchQueue = .main,
         timeTagMode: TimeTagMode = .ignore,
-        handler: ((
-            _ message: OSCMessage,
-            _ timeTag: OSCTimeTag
-        ) -> Void)? = nil
+        handler: ((_ message: OSCMessage, _ timeTag: OSCTimeTag) -> Void)? = nil
     ) {
         self.port = port
         self.timeTagMode = timeTagMode
@@ -66,10 +63,7 @@ public final class OSCServer: NSObject {
     
     /// Set the handler closure. This closure will be called when OSC bundles or messages are received. The handler is called on the `dispatchQueue` queue specified at time of initialization.
     public func setHandler(
-        _ handler: @escaping (
-            _ message: OSCMessage,
-            _ timeTag: OSCTimeTag
-        ) -> Void
+        _ handler: @escaping (_ message: OSCMessage, _ timeTag: OSCTimeTag) -> Void
     ) {
         self.handler = handler
     }
@@ -85,11 +79,15 @@ extension OSCServer {
         try udpServer.enableReusePort(true)
         try udpServer.bind(toPort: port)
         try udpServer.beginReceiving()
+        
+        isStarted = true
     }
     
     /// Stops listening for data and closes the OSC server port.
     public func stop() {
         udpServer.close()
+        
+        isStarted = false
     }
 }
 
