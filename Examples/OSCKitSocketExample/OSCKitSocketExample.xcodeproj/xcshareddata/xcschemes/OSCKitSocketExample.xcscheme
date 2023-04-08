@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E2D003D0289882820073ED8F"
-               BuildableName = "OSCKitPeerExample.app"
-               BlueprintName = "OSCKitPeerExample"
-               ReferencedContainer = "container:OSCKitPeerExample.xcodeproj">
+               BuildableName = "OSCKitSocketExample.app"
+               BlueprintName = "OSCKitSocketExample"
+               ReferencedContainer = "container:OSCKitSocketExample.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -46,9 +46,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E2D003D0289882820073ED8F"
-            BuildableName = "OSCKitPeerExample.app"
-            BlueprintName = "OSCKitPeerExample"
-            ReferencedContainer = "container:OSCKitPeerExample.xcodeproj">
+            BuildableName = "OSCKitSocketExample.app"
+            BlueprintName = "OSCKitSocketExample"
+            ReferencedContainer = "container:OSCKitSocketExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -63,9 +63,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E2D003D0289882820073ED8F"
-            BuildableName = "OSCKitPeerExample.app"
-            BlueprintName = "OSCKitPeerExample"
-            ReferencedContainer = "container:OSCKitPeerExample.xcodeproj">
+            BuildableName = "OSCKitSocketExample.app"
+            BlueprintName = "OSCKitSocketExample"
+            ReferencedContainer = "container:OSCKitSocketExample.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
