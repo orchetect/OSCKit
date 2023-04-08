@@ -25,10 +25,16 @@ public final class OSCPeer: NSObject, _OSCServerProtocol {
     public private(set) var host: String
     
     /// UDP port used by to receive OSC packets.
+    ///
+    /// The default port for OSC communication is 8000 but may change depending on device/software
+    /// manufacturer.
     public private(set) var localPort: UInt16
     
     private var _remotePort: UInt16?
     /// UDP port used by to send OSC packets.
+    ///
+    /// The default port for OSC communication is 8000 but may change depending on device/software
+    /// manufacturer.
     public var remotePort: UInt16 {
         get { _remotePort ?? localPort }
         set { _remotePort = newValue }
@@ -36,7 +42,9 @@ public final class OSCPeer: NSObject, _OSCServerProtocol {
     
     /// Initialize with a remote hostname and OSC port.
     /// If `localPort` is `nil`, a random available port in the system will be chosen.
-    /// If `remotePort` is `nil`, the same port number as `localPort` will be used.
+    /// If `remotePort` is `nil`, the resulting `localPort` value will be used.
+    ///
+    /// - Note: Ensure ``start()`` is called once in order to begin sending and receiving messages.
     public init(
         host: String,
         localPort: UInt16? = nil,
@@ -104,6 +112,9 @@ extension OSCPeer {
     /// Send an OSC bundle or message to the remote peer.
     /// If `port` is non-nil, it will be used as the destination port.
     /// Otherwise, the ``remotePort`` number will be used.
+    ///
+    /// The default port for OSC communication is 8000 but may change depending on device/software
+    /// manufacturer.
     public func send(
         _ oscObject: any OSCObject,
         port: UInt16? = nil

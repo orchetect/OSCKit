@@ -7,18 +7,26 @@
 import Foundation
 import CocoaAsyncSocket
 
-/// Sends OSC packets over the network ad-hoc to recipients.
+/// Sends OSC packets over the network using the UDP network protocol.
 ///
 /// A single client can serve the needs of an entire application. The client is capable of sending
 /// packets to arbitrary recipients and is not intrinsically bound to any single destination.
 public final class OSCClient: NSObject {
     private let udpClient = GCDAsyncUdpSocket()
     
+    /// Initialize an OSC client to send messages using the UDP network protocol.
+    public override init() {
+        super.init()
+    }
+    
     deinit {
         udpClient.close()
     }
     
     /// Send an OSC bundle or message ad-hoc to a recipient on the network.
+    ///
+    /// The default port for OSC communication is 8000 but may change depending on device/software
+    /// manufacturer.
     public func send(
         _ oscObject: any OSCObject,
         to host: String,
