@@ -37,6 +37,21 @@ public final class OSCServer: NSObject, _OSCServerProtocol {
     /// UDP port used by the OSC server to listen for inbound OSC packets.
     public private(set) var port: UInt16
     
+    /// Enable local UDP port reuse. This property must be set prior to calling ``start()`` in order
+    /// to take effect.
+    ///
+    /// By default, only one socket can be bound to a given IP address + port at a time. To enable
+    /// multiple processes to simultaneously bind to the same address + port, you need to enable
+    /// this functionality in the socket. All processes that wish to use the address+port
+    /// simultaneously must all enable reuse port on the socket bound to that port.
+    public var enableReusePort: Bool = false
+    
+    /// Initialize an OSC server.
+    ///
+    /// The default port for OSC communication is 8000 but may change depending on device/software
+    /// manufacturer.
+    ///
+    /// - Note: Ensure ``start()`` is called once in order to begin receiving messages.
     public init(
         port: UInt16 = 8000,
         receiveQueue: DispatchQueue = .main,
@@ -80,7 +95,7 @@ extension OSCServer {
         
         stop()
         
-        try udpSocket.enableReusePort(true)
+        try udpSocket.enableReusePort(enableReusePort)
         try udpSocket.bind(toPort: port)
         try udpSocket.beginReceiving()
         
