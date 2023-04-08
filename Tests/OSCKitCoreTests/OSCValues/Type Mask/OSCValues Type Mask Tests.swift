@@ -8,7 +8,6 @@
 
 import XCTest
 import OSCKitCore
-import OTCore
 import SwiftASCII
 
 final class OSCValues_TypeMask_Tests: XCTestCase {

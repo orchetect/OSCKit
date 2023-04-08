@@ -5,7 +5,6 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore // Data<->number conversion
 @_implementationOnly import SwiftASCII // ASCIIString
 
 private let defaultContextSingleton = OSCSerialization()

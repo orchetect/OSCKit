@@ -5,7 +5,6 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore // Data<->number conversion
 
 extension Int32: OSCValue {
     public static let oscValueToken: OSCValueToken = .int32

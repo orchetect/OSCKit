@@ -98,16 +98,16 @@ final class OSCMessage_Integrity_Tests: XCTestCase {
         
         XCTAssertEqual(decoded.values.count, 4)
         
-        let val1 = try XCTUnwrap(decoded.values[safe: 0] as? Int32)
+        let val1 = try XCTUnwrap(decoded.values[0] as? Int32)
         XCTAssertEqual(val1, 123)
         
-        let val2 = try XCTUnwrap(decoded.values[safe: 1] as? Float32)
+        let val2 = try XCTUnwrap(decoded.values[1] as? Float32)
         XCTAssertEqual(val2, 123.45)
         
-        let val3 = try XCTUnwrap(decoded.values[safe: 2] as? String)
+        let val3 = try XCTUnwrap(decoded.values[2] as? String)
         XCTAssertEqual(val3, "A test string.")
         
-        let val4 = try XCTUnwrap(decoded.values[safe: 3] as? Data)
+        let val4 = try XCTUnwrap(decoded.values[3] as? Data)
         XCTAssertEqual(val4, Data([0, 1, 2]))
     }
 }

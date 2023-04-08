@@ -5,7 +5,6 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore // array +=
 
 /// Internal:
 /// ``OSCMessage`` decoding methods.

@@ -7,7 +7,7 @@
 #if shouldTestCurrentPlatform
 
 import XCTest
-import OSCKitCore
+@testable import OSCKitCore
 import SwiftRadix
 import SwiftASCII
 
@@ -395,9 +395,9 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
         XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
         XCTAssertEqual(msg.values.count, 2)
-        let val1 = try XCTUnwrap(msg.values[safe: 0] as? Bool)
+        let val1 = try XCTUnwrap(msg.values[0] as? Bool)
         XCTAssertEqual(val1, true)
-        let val2 = try XCTUnwrap(msg.values[safe: 1] as? Bool)
+        let val2 = try XCTUnwrap(msg.values[1] as? Bool)
         XCTAssertEqual(val2, false)
         
         // re-encode

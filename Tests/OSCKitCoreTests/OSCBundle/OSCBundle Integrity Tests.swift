@@ -7,8 +7,7 @@
 #if shouldTestCurrentPlatform
 
 import XCTest
-import OSCKitCore
-import OTCore
+@testable import OSCKitCore
 
 final class OSCBundle_Integrity_Tests: XCTestCase {
     override func setUp() { super.setUp() }
@@ -107,44 +106,44 @@ final class OSCBundle_Integrity_Tests: XCTestCase {
         XCTAssertEqual(decodedOSCbundle.timeTag.rawValue, 1)
         XCTAssertEqual(decodedOSCbundle.elements.count, 4)
         
-        let element1 = try XCTUnwrap(decodedOSCbundle.elements[safe: 0] as? OSCBundle)
+        let element1 = try XCTUnwrap(decodedOSCbundle.elements[0] as? OSCBundle)
         XCTAssertEqual(element1.timeTag.rawValue, 1)
         XCTAssertEqual(element1.elements.count, 1)
         
-        let element1A = try XCTUnwrap(element1.elements[safe: 0] as? OSCMessage)
+        let element1A = try XCTUnwrap(element1.elements[0] as? OSCMessage)
         XCTAssertEqual(element1A.addressPattern.stringValue, "/bundle1/msg")
         XCTAssertEqual(element1A.values.count, 0)
         
-        let element2 = try XCTUnwrap(decodedOSCbundle.elements[safe: 1] as? OSCBundle)
+        let element2 = try XCTUnwrap(decodedOSCbundle.elements[1] as? OSCBundle)
         XCTAssertEqual(element2.timeTag.rawValue, 1)
         XCTAssertEqual(element2.elements.count, 2)
         
-        let element2A = try XCTUnwrap(element2.elements[safe: 0] as? OSCMessage)
+        let element2A = try XCTUnwrap(element2.elements[0] as? OSCMessage)
         XCTAssertEqual(element2A.addressPattern.stringValue, "/bundle2/msg1")
         XCTAssertEqual(element2A.values.count, 2)
         
-        let element2A1 = try XCTUnwrap(element2A.values[safe: 0] as? Int32)
+        let element2A1 = try XCTUnwrap(element2A.values[0] as? Int32)
         XCTAssertEqual(element2A1, 500_000)
         
-        let element2A2 = try XCTUnwrap(element2A.values[safe: 1] as? String)
+        let element2A2 = try XCTUnwrap(element2A.values[1] as? String)
         XCTAssertEqual(element2A2, "some string here")
         
-        let element2B = try XCTUnwrap(element2.elements[safe: 1] as? OSCMessage)
+        let element2B = try XCTUnwrap(element2.elements[1] as? OSCMessage)
         XCTAssertEqual(element2B.addressPattern.stringValue, "/bundle2/msg2")
         XCTAssertEqual(element2B.values.count, 2)
         
-        let element2B1 = try XCTUnwrap(element2B.values[safe: 0] as? Float32)
+        let element2B1 = try XCTUnwrap(element2B.values[0] as? Float32)
         XCTAssertEqual(element2B1, 8795.4556)
         
-        let element2B2 = try XCTUnwrap(element2B.values[safe: 1] as? Int32)
+        let element2B2 = try XCTUnwrap(element2B.values[1] as? Int32)
         XCTAssertEqual(element2B2, 75)
         
-        let element3 = try XCTUnwrap(decodedOSCbundle.elements[safe: 2] as? OSCMessage)
+        let element3 = try XCTUnwrap(decodedOSCbundle.elements[2] as? OSCMessage)
         XCTAssertEqual(element3.addressPattern.stringValue, "/msg1")
         XCTAssertEqual(element3.values.count, 1)
         
         // element 4
-        let element4 = try XCTUnwrap(decodedOSCbundle.elements[safe: 3] as? OSCBundle)
+        let element4 = try XCTUnwrap(decodedOSCbundle.elements[3] as? OSCBundle)
         XCTAssertEqual(element4.timeTag.rawValue, 1)
         XCTAssertEqual(element4.elements.count, 0)
     }

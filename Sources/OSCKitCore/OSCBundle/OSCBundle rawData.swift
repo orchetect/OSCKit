@@ -5,7 +5,6 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore // Data<->number conversion
 
 extension OSCBundle {
     /// Initialize by parsing raw OSC bundle data bytes.

@@ -5,7 +5,6 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore // Data/array +=
 @_implementationOnly import SwiftASCII // ASCIICharacter
 
 /// ``OSCMessage`` encoder.

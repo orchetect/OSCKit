@@ -5,7 +5,6 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore // array +=
 @_implementationOnly import SwiftASCII // ASCIICharacter
 
 /// OSC value array (as an OSC value type itself).
