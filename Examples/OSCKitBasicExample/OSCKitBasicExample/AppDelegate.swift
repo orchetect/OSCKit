@@ -13,11 +13,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let oscServer = OSCServer(port: 8000)
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        // setup server
+        
         oscServer.setHandler { message, timeTag in
             print(message, "with time tag:", timeTag)
         }
+        //oscServer.isPortReuseEnabled = true
+        do { try oscServer.start() } catch { print(error) }
         
-        try? oscServer.start()
+        // setup client
+        
+        //oscClient.isPortReuseEnabled = true
+        //oscClient.isIPv4BroadcastEnabled = true
+        do { try oscClient.start() } catch { print(error) }
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -29,7 +37,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func sendTestOSCMessage(_ sender: Any) {
         try? oscClient.send(
             .message("/some/address/method", values: ["Test string", 123]),
-            to: "localhost", // IP address or hostname
+            to: "localhost", // remote IP address or hostname
             port: 8000 // standard OSC port but can be changed
         )
     }

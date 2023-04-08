@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -706,22 +706,22 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="OSCKitPeerExample" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="646" height="384"/>
+                        <rect key="frame" x="0.0" y="0.0" width="646" height="424"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="20" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Vvt-YU-uqM" userLabel="Window Stack">
-                                <rect key="frame" x="20" y="20" width="606" height="344"/>
+                                <rect key="frame" x="20" y="20" width="606" height="384"/>
                                 <subviews>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="SMY-Ed-289">
-                                        <rect key="frame" x="-2" y="328" width="610" height="16"/>
-                                        <textFieldCell key="cell" selectable="YES" alignment="center" title="The OSCPeer class is designed to send &amp; receive OSC with a single network hostname / IP address." id="0EH-Gz-CDh">
+                                        <rect key="frame" x="53" y="368" width="501" height="16"/>
+                                        <textFieldCell key="cell" selectable="YES" alignment="center" title="The OSCPeer class is designed to send and receive OSC using a single local port." id="0EH-Gz-CDh">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="r9E-D0-SB9">
-                                        <rect key="frame" x="96" y="292" width="415" height="16"/>
+                                        <rect key="frame" x="96" y="332" width="415" height="16"/>
                                         <textFieldCell key="cell" selectable="YES" alignment="center" title="Received OSC messages are logged to the console in this example." id="6th-Yx-HZD">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -729,26 +729,26 @@
                                         </textFieldCell>
                                     </textField>
                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="xGS-qg-AfL">
-                                        <rect key="frame" x="73" y="256" width="460" height="16"/>
-                                        <textFieldCell key="cell" selectable="YES" alignment="center" title="The peer object must be started before messages can be sent or received." id="mdu-sW-SjZ">
+                                        <rect key="frame" x="67" y="296" width="473" height="16"/>
+                                        <textFieldCell key="cell" selectable="YES" alignment="center" title="The socket object must be started before messages can be sent or received." id="mdu-sW-SjZ">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
                                     <stackView distribution="equalSpacing" orientation="vertical" alignment="centerX" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="aIg-vn-NbE" userLabel="Controls Stack">
-                                        <rect key="frame" x="28" y="0.0" width="550" height="236"/>
+                                        <rect key="frame" x="28" y="0.0" width="550" height="276"/>
                                         <subviews>
                                             <box title="Configuration" translatesAutoresizingMaskIntoConstraints="NO" id="XJF-nc-z4Z">
-                                                <rect key="frame" x="-3" y="47" width="556" height="189"/>
+                                                <rect key="frame" x="-3" y="52" width="556" height="224"/>
                                                 <view key="contentView" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cwc-BU-LWU">
-                                                    <rect key="frame" x="4" y="5" width="548" height="169"/>
+                                                    <rect key="frame" x="3" y="3" width="550" height="206"/>
                                                     <subviews>
                                                         <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ooi-uG-svR">
-                                                            <rect key="frame" x="20" y="20" width="504" height="131"/>
+                                                            <rect key="frame" x="20" y="20" width="504" height="163"/>
                                                             <subviews>
                                                                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Th1-8m-oE3" userLabel="Local Port Stack">
-                                                                    <rect key="frame" x="0.0" y="110" width="504" height="21"/>
+                                                                    <rect key="frame" x="0.0" y="142" width="504" height="21"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XDg-KK-9Hr">
                                                                             <rect key="frame" x="-2" y="3" width="94" height="16"/>
@@ -798,7 +798,7 @@
                                                                     </customSpacing>
                                                                 </stackView>
                                                                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IvA-jI-hHe" userLabel="Remote Port Stack">
-                                                                    <rect key="frame" x="37" y="73" width="431" height="21"/>
+                                                                    <rect key="frame" x="37" y="105" width="431" height="21"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hL3-Tc-bJz">
                                                                             <rect key="frame" x="-2" y="3" width="94" height="16"/>
@@ -848,7 +848,7 @@
                                                                     </customSpacing>
                                                                 </stackView>
                                                                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" spacing="16" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ohL-6s-979" userLabel="Remote Host Stack">
-                                                                    <rect key="frame" x="99" y="36" width="306" height="21"/>
+                                                                    <rect key="frame" x="99" y="68" width="306" height="21"/>
                                                                     <subviews>
                                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Gy-J0-MmH">
                                                                             <rect key="frame" x="-2" y="3" width="94" height="16"/>
@@ -872,6 +872,33 @@
                                                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                             </textFieldCell>
                                                                         </textField>
+                                                                    </subviews>
+                                                                    <visibilityPriorities>
+                                                                        <integer value="1000"/>
+                                                                        <integer value="1000"/>
+                                                                    </visibilityPriorities>
+                                                                    <customSpacing>
+                                                                        <real value="3.4028234663852886e+38"/>
+                                                                        <real value="3.4028234663852886e+38"/>
+                                                                    </customSpacing>
+                                                                </stackView>
+                                                                <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="40" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="1s9-Vu-CSD">
+                                                                    <rect key="frame" x="100" y="36" width="305" height="16"/>
+                                                                    <subviews>
+                                                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GHf-pj-uxR">
+                                                                            <rect key="frame" x="-2" y="-1" width="137" height="18"/>
+                                                                            <buttonCell key="cell" type="check" title="Enable Port Reuse" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Sg0-8A-U1I">
+                                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                                <font key="font" metaFont="system"/>
+                                                                            </buttonCell>
+                                                                        </button>
+                                                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OBz-pb-50P">
+                                                                            <rect key="frame" x="173" y="-1" width="132" height="18"/>
+                                                                            <buttonCell key="cell" type="check" title="Enable Broadcast" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Bg7-MM-03n">
+                                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                                <font key="font" metaFont="system"/>
+                                                                            </buttonCell>
+                                                                        </button>
                                                                     </subviews>
                                                                     <visibilityPriorities>
                                                                         <integer value="1000"/>
@@ -908,7 +935,7 @@
                                                                         </stackView>
                                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OHl-rC-oMK">
                                                                             <rect key="frame" x="51" y="-7" width="64" height="32"/>
-                                                                            <buttonCell key="cell" type="push" title="Stop" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rj3-0z-0Np">
+                                                                            <buttonCell key="cell" type="push" title="Stop" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="rj3-0z-0Np">
                                                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                                                 <font key="font" metaFont="system"/>
                                                                             </buttonCell>
@@ -935,8 +962,10 @@
                                                                 <integer value="1000"/>
                                                                 <integer value="1000"/>
                                                                 <integer value="1000"/>
+                                                                <integer value="1000"/>
                                                             </visibilityPriorities>
                                                             <customSpacing>
+                                                                <real value="3.4028234663852886e+38"/>
                                                                 <real value="3.4028234663852886e+38"/>
                                                                 <real value="3.4028234663852886e+38"/>
                                                                 <real value="3.4028234663852886e+38"/>
@@ -952,13 +981,13 @@
                                                     </constraints>
                                                 </view>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="185" id="KzD-g6-lfE"/>
+                                                    <constraint firstAttribute="height" constant="220" id="KzD-g6-lfE"/>
                                                     <constraint firstAttribute="width" constant="550" id="eIo-dN-cm7"/>
                                                 </constraints>
                                             </box>
                                             <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FSo-jV-sgB">
                                                 <rect key="frame" x="198" y="-7" width="154" height="32"/>
-                                                <buttonCell key="cell" type="push" title="Send OSC Message" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fIP-b4-vLY">
+                                                <buttonCell key="cell" type="push" title="Send OSC Message" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="fIP-b4-vLY">
                                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                     <font key="font" metaFont="system"/>
                                                 </buttonCell>
@@ -999,14 +1028,19 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="enableBroadcast" destination="OBz-pb-50P" id="E1r-fX-X2c"/>
+                        <outlet property="enablePortReuse" destination="GHf-pj-uxR" id="Rqf-HA-oXY"/>
                         <outlet property="localPortNumber" destination="SZr-kn-JBF" id="NuS-ca-yQz"/>
                         <outlet property="remoteHost" destination="uwN-I3-wAP" id="onl-25-Aq8"/>
                         <outlet property="remotePortNumber" destination="xiz-iK-zUs" id="HmT-R2-xK6"/>
+                        <outlet property="sendOSCMessageButton" destination="FSo-jV-sgB" id="iL4-34-NzG"/>
+                        <outlet property="startButton" destination="ppE-il-vA8" id="Kt2-73-FEz"/>
+                        <outlet property="stopButton" destination="OHl-rC-oMK" id="fjN-Jx-x0B"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="116" y="601"/>
+            <point key="canvasLocation" x="74" y="770"/>
         </scene>
     </scenes>
 </document>
