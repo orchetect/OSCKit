@@ -23,26 +23,16 @@ on:
 #    - cron: '40 11 * * *'   # once a day @ 11:40am UTC (4:40am PST)
     
 jobs:
-#  macOS-11:
-#    name: macOS 11 Big Sur
-#    runs-on: macos-11
-#    steps:
-#    - uses: actions/checkout@main
-#    - name: Build
-#      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "OSCKit-CI" -destination "generic/platform=macOS,name=Any Mac"
-#    - name: Unit Tests
-#      run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "OSCKit-CI" -destination "platform=macOS"
-#
-#  macOS-12:
-#    name: macOS 12 Monterey
-#    runs-on: macos-12
-#    steps:
-#    - uses: actions/checkout@main
-#    - name: Build
-#      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "OSCKit-CI" -destination "generic/platform=macOS,name=Any Mac"
-#    - name: Unit Tests
-#      run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "OSCKit-CI" -destination "platform=macOS"
-#
+  macOS:
+    name: macOS
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@main
+    - name: Build
+      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "OSCKit-CI" -destination "generic/platform=macOS,name=Any Mac"
+    - name: Unit Tests
+      run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "OSCKit-CI" -destination "platform=macOS"
+
   macCatalyst:
     name: macCatalyst
     runs-on: macos-latest
@@ -55,7 +45,7 @@ jobs:
 
   iOS:
     name: iOS
-    runs-on: macos-latest # this must be macos, GitHub does not offer iOS directly but we can use xcodebuild
+    runs-on: macos-latest # this must be macOS, GitHub does not offer iOS directly but we can use xcodebuild
     steps:
     - uses: actions/checkout@main
     - name: iPhone 12 Simulator - Build
@@ -65,7 +55,7 @@ jobs:
 
   tvOS:
     name: tvOS
-    runs-on: macos-latest # this must be macos, GitHub does not offer tvOS directly but we can use xcodebuild
+    runs-on: macos-latest # this must be macOS, GitHub does not offer tvOS directly but we can use xcodebuild
     steps:
     - uses: actions/checkout@main
     - name: Apple TV - Build
