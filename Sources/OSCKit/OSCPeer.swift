@@ -40,7 +40,37 @@ public final class OSCPeer: NSObject, _OSCServerProtocol {
         set { _remotePort = newValue }
     }
     
-    /// Initialize with a remote hostname and OSC port.
+    private var _isIPv4BroadcastEnabled: Bool = false
+    /// Enable sending IPv4 broadcast messages from the socket.
+    /// This may be set at any time, either before or after calling ``start()``.
+    ///
+    /// By default, the socket will not allow you to send broadcast messages as a network safeguard
+    /// and it is an opt-in feature.
+    ///
+    /// A broadcast UDP message can be sent to a correctly formatted broadcast address. A broadcast
+    /// address is the highest IP address for a subnet or a network.
+    ///
+    /// For example, a class C network with first octet `192`, one subnet, and subnet mask of
+    /// `255.255.255.0` would have a broadcast address of `192.168.0.255` and would effectively send
+    /// to `192.168.0.*` (where `*` is the range `1 ... 254`).
+    ///
+    /// 255.255.255.255 is a special broadcast address which targets all hosts on a local network.
+    ///
+    /// For more information on IPv4 broadcast addresses, see
+    /// [Broadcast Address (Wikipedia)](https://en.wikipedia.org/wiki/Broadcast_address) and [Subnet
+    /// Calculator](https://www.subnet-calculator.com).
+    ///
+    /// Internet Protocol version 6 (IPv6) does not implement this method of broadcast, and
+    /// therefore does not define broadcast addresses. Instead, IPv6 uses multicast addressing.
+    public var isIPv4BroadcastEnabled: Bool {
+        get { _isIPv4BroadcastEnabled }
+        set {
+            _isIPv4BroadcastEnabled = newValue
+            try? udpSocket.enableBroadcast(newValue)
+        }
+    }
+    
+    /// Initialize with a remote hostname and UDP port.
     /// If `localPort` is `nil`, a random available port in the system will be chosen.
     /// If `remotePort` is `nil`, the resulting `localPort` value will be used.
     ///
@@ -91,7 +121,7 @@ extension OSCPeer {
         guard !isStarted else { return }
         
         try udpSocket.enableReusePort(true)
-        try udpSocket.enableBroadcast(true)
+        try udpSocket.enableBroadcast(isIPv4BroadcastEnabled)
         try udpSocket.bind(toPort: localPort)
         
         // update local port if it changed or was assigned by system
