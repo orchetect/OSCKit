@@ -349,7 +349,7 @@ OSCKit also adds the following opaque type-erasure types:
 AnyOSCNumberValue // wraps any BinaryInteger or BinaryFloatingPoint
 ```
 
-## OSCSocket
+## OSC Socket
 
 The `OSCSocket` class internally combines both an OSC server and client sharing the same local UDP port number. What sets it apart from `OSCServer` and `OSCClient` is that it does not require enabling port reuse to accomplish this. It also can conceptually make communicating bidirectionally with a single remote host more intuitive.
 
@@ -410,4 +410,4 @@ If you enjoy using OSCKit and want to contribute to open-source financially, Git
 
 ## Contributions
 
-Contributions are welcome. Feel free to post an Issue to discuss.
+Contributions are welcome. Posting in [Discussions](https://github.com/orchetect/OSCKIt/discussions) first prior to new submitting PRs for features or modifications is encouraged.
