@@ -8,7 +8,6 @@
 
 import XCTest
 import OSCKitCore
-import SwiftRadix
 import SwiftASCII
 
 final class OSCObject_StaticConstructors_Tests: XCTestCase {

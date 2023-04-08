@@ -8,7 +8,6 @@
 
 import XCTest
 @testable import OSCKitCore
-import SwiftRadix
 import SwiftASCII
 
 final class OSCMessage_rawData_Tests: XCTestCase {

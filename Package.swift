@@ -20,9 +20,8 @@ let package = Package(
     ],
     
     dependencies: [
-        .package(url: "https://github.com/orchetect/SwiftASCII", from: "1.1.3"),
-        .package(url: "https://github.com/orchetect/SwiftRadix", from: "1.2.0"),
-        .package(url: "https://github.com/robbiehanson/CocoaAsyncSocket", from: "7.0.0")
+        .package(url: "https://github.com/robbiehanson/CocoaAsyncSocket", from: "7.0.0"),
+        .package(url: "https://github.com/orchetect/SwiftASCII", from: "1.1.3")
     ],
     
     targets: [
@@ -32,7 +31,7 @@ let package = Package(
         ),
         .target(
             name: "OSCKitCore",
-            dependencies: ["SwiftASCII", "SwiftRadix"]
+            dependencies: ["SwiftASCII"]
         ),
         
         // Test targets

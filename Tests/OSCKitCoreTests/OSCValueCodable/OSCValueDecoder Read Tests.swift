@@ -9,17 +9,12 @@
 import XCTest
 @testable import OSCKitCore
 import SwiftASCII
-import SwiftRadix
 
 final class OSCValueDecoder_Read_Tests: XCTestCase {
     // swiftformat:options --wrapcollections preserve
     
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
-    
-    func testFoo() {
-        print(Int32(-4_684_654).toData(.bigEndian).binary.stringValueArrayLiteral)
-    }
     
     // MARK: - Data methods
     

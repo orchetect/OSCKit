@@ -8,7 +8,6 @@
 
 import XCTest
 @testable import OSCKitCore
-import SwiftRadix
 import SwiftASCII
 
 final class OSCMessage_Integrity_Tests: XCTestCase {
@@ -88,7 +87,7 @@ final class OSCMessage_Integrity_Tests: XCTestCase {
         decoded.values.forEach { val in
             switch val {
             case let blob as Data:
-                print("blob bytes:", blob.hex.stringValueArrayLiteral)
+                print("blob bytes:", blob.hexStringArrayLiteral())
             default:
                 print(val)
             }

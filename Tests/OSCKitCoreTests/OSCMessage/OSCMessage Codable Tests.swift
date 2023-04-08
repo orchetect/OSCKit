@@ -8,8 +8,6 @@
 
 import XCTest
 import OSCKitCore
-import SwiftRadix
-import SwiftASCII
 
 final class OSCMessage_Codable_Tests: XCTestCase {
     override func setUp() { super.setUp() }
