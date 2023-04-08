@@ -5,7 +5,7 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
+@_implementationOnly import OTCore // Data<->number conversion
 
 extension Float32: OSCValue {
     public static let oscValueToken: OSCValueToken = .float32

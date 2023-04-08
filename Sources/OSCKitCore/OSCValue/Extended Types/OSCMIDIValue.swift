@@ -5,8 +5,7 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
-@_implementationOnly import SwiftRadix
+@_implementationOnly import SwiftRadix // hex string
 
 /// MIDI 1.0 message OSC value as defined by the OSC 1.0 spec.
 ///

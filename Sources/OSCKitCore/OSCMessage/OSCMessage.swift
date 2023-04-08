@@ -5,8 +5,7 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
-@_implementationOnly import SwiftASCII
+@_implementationOnly import OTCore // .trimmed, .quoted, String.toData()
 
 /// OSC Message.
 public struct OSCMessage: OSCObject {

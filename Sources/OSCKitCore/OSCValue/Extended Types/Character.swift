@@ -5,8 +5,8 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
-@_implementationOnly import SwiftASCII
+@_implementationOnly import OTCore // Data<->number conversion, .int, .int32
+@_implementationOnly import SwiftASCII // ASCIICharacter
 
 // MARK: - OSC Encoding
 

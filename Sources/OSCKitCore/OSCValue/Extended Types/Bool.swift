@@ -5,7 +5,6 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
 
 private let oscTypeTagTrue: Character = "T"
 private let oscTypeTagFalse: Character = "F"

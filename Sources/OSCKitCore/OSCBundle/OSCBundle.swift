@@ -5,7 +5,7 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
+@_implementationOnly import OTCore // .trimmed, String.toData()
 
 // MARK: - OSCBundle
 

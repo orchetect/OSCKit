@@ -5,8 +5,8 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
-@_implementationOnly import SwiftASCII
+@_implementationOnly import OTCore // Data<->number conversion
+@_implementationOnly import SwiftASCII // ASCIIString
 
 private let defaultContextSingleton = OSCSerialization()
 
@@ -63,7 +63,7 @@ extension OSCValueDecoder {
         }
         
         let chunk = remainingData.subdata(
-            in: remainingData.startIndex ..<  remainingData.startIndex.advanced(by: 4)
+            in: remainingData.startIndex ..< remainingData.startIndex.advanced(by: 4)
         )
         
         guard let value = chunk.toInt32(from: .bigEndian)

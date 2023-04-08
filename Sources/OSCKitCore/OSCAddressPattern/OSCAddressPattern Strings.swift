@@ -5,8 +5,6 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
-@_implementationOnly import SwiftASCII
 
 // MARK: - Address Components
 

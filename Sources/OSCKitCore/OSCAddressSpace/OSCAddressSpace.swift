@@ -5,8 +5,6 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
-@_implementationOnly import SwiftASCII
 
 /// OSC address space populated with a local address tree by registering OSC methods, offering
 /// methods to match and dispatch against received OSC address patterns.

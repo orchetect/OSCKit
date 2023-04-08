@@ -5,7 +5,6 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
 
 extension OSCAddressPattern {
     /// OSC Address Component.
