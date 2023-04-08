@@ -432,13 +432,13 @@ try socket.send(osc)
 
 // It is also possible to override the destination host and/or port
 // on a per-message basis:
-try socket.send(osc, to: "192.168.0.3", port: 8001)
+try socket.send(osc, to: "192.168.0.3", port: 8000)
 ```
 
 ## Dependencies
 
 - [CocoaAsyncSocket](https://github.com/robbiehanson/CocoaAsyncSocket) is used by the `OSCKit` target for network sockets.
-- [SwiftASCII](https://github.com/orchetect/SwiftASCII) for ASCII string and character formatting and validation.
+- [SwiftASCII](https://github.com/orchetect/SwiftASCII) is used for ASCII string and character formatting and validation.
 
 ## Documentation
 
