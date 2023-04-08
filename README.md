@@ -13,9 +13,20 @@ Open Sound Control ([OSC](https://opensoundcontrol.stanford.edu)) library for ma
 - Thread-safe
 - Fully unit tested
 
-## Getting Started
+## Table of Contents
 
-### Swift Package Manager (SPM)
+- [Getting Started](#Getting-Started)
+- [Classes](#Classes)
+  - [OSCClient](#OSCClient), [OSCServer](#OSCServer), [OSCSocket](#OSCSocket)
+
+- [Sending OSC](#Sending-OSC)
+- [Receiving OSC](#Receiving-OSC)
+  - [Parsing Address Patterns](#Parsing-Address-Patterns)
+  - [Parsing Message Values](#Parsing-Message-Values)
+- [OSC Value Types](#OSC-Value-Types)
+- [OSCSocket Addenda](#OSCSocket-Addenda)
+
+## Getting Started
 
 1. Add OSCKit as a dependency using Swift Package Manager.
    - In an app project or framework, in Xcode:
@@ -31,24 +42,62 @@ Open Sound Control ([OSC](https://opensoundcontrol.stanford.edu)) library for ma
    ```swift
    import OSCKit
    ```
-   
+
    Or to import OSCKit without networking I/O in order to implement your own sockets:
-   
+
    ```swift
    import OSCKitCore
    ```
-   
-3. The [Examples](Examples) folder contains projects to get started.
 
-## Sending OSC
+3. The [Examples](Examples) folder contains projects to quickly get started.
 
-### Create OSC Client
+4. This README contains an overview of library features and explains how they work.
 
-A single global OSC client is all that is needed to send OSC packets. It can be used to send OSC messages to any receiver.
+5. Inline documentation in the codebase further explains details for classes and value types.
+
+## Classes
+
+### OSCClient
+
+A single global OSC client instance created once at app startup is often all that is needed.
+
+It can be used to send OSC messages to one or more many receivers on the network.
 
 ```swift
 let oscClient = OSCClient()
 ```
+
+See [Sending OSC](#Sending-OSC) for details on how to send messages.
+
+### OSCServer
+
+A single global OSC server instance is often created once at app startup to receive OSC messages on a specific local port. The default OSC port is 8000 but it may be set to any open port if desired.
+
+```swift
+let oscServer = OSCServer(port: 8000) { message, _ in
+    print("Received \(message)")
+}
+```
+
+See [Receiving OSC](#Receiving-OSC) for details on how to receive messages.
+
+### OSCSocket
+
+The `OSCSocket` class internally combines both a server and client sharing the same local UDP port number. What sets it apart from `OSCServer` and `OSCClient` is that it does not require enabling port reuse to accomplish this. It also can conceptually make communicating bidirectionally with a single remote host more intuitive.
+
+```swift
+let socket = OSCSocket(localPort: 8000) { message, _ in
+    print("Received \(message)")
+}
+```
+
+See [Sending OSC](#Sending-OSC) and [Receiving OSC](#Receiving-OSC) for details on how to send and receive messages.
+
+See also [OSCSocket Addenda](#OSCSocket-Addenda) for more details on setup and usage of `OSCSocket`.
+
+## Sending OSC
+
+Both `OSCClient` and `OSCSocket` are capable of sending messages with the same API.
 
 ### OSC Messages
 
@@ -108,15 +157,9 @@ OSCBundle(timeTag: .init(timeTag), [ ... ])
 
 ## Receiving OSC
 
-### Create OSC Server
+Both `OSCServer` and `OSCSocket` are capable of receiving messages with the same API.
 
-Create a server instance. A single global instance is often created once at app startup to receive OSC messages on a specific port. The default OSC port is 8000 but it may be set to any open port if desired.
-
-```swift
-let oscServer = OSCServer(port: 8000)
-```
-
-Set the receiver handler.
+If not already set during initialization, you may set the receiver handler using the `setHandler()` method.
 
 ```swift
 oscServer.setHandler { [weak self] oscMessage, timeTag in
@@ -134,7 +177,7 @@ private func handle(received oscMessage: OSCMessage) throws {
 }
 ```
 
-Then start the server to begin listening for inbound OSC packets.
+Then start the server/socket to begin listening for inbound OSC packets.
 
 ```swift
 // call this once, usually during your app's startup
@@ -145,7 +188,7 @@ If received OSC bundles contain a future time tag and the `OSCServer` is set to 
 
 Note that as per the OSC 1.1 proposal, this behavior has largely been deprecated. `OSCServer` will default to `.ignore` and not perform any scheduling unless explicitly set to `.osc1_0` mode.
 
-### Address Parsing
+### Parsing Address Patterns
 
 #### Option 1: Imperative address pattern matching
 
@@ -239,7 +282,7 @@ func performMethodA(_ str: String) { }
 func performMethodB(_ str: String, _ int: Int?) { }
 ```
 
-### Parsing OSC Message Values
+### Parsing Message Values
 
 #### Option 1: Use `masked()` to validate and unwrap expected value types
 
@@ -349,7 +392,7 @@ OSCKit also adds the following opaque type-erasure types:
 AnyOSCNumberValue // wraps any BinaryInteger or BinaryFloatingPoint
 ```
 
-## OSC Socket
+## OSCSocket Addenda
 
 The `OSCSocket` class internally combines both an OSC server and client sharing the same local UDP port number. What sets it apart from `OSCServer` and `OSCClient` is that it does not require enabling port reuse to accomplish this. It also can conceptually make communicating bidirectionally with a single remote host more intuitive.
 
@@ -392,9 +435,14 @@ try socket.send(osc)
 try socket.send(osc, to: "192.168.0.3", port: 8001)
 ```
 
+## Dependencies
+
+- [CocoaAsyncSocket](https://github.com/robbiehanson/CocoaAsyncSocket) is used by the `OSCKit` target for network sockets.
+- [SwiftASCII](https://github.com/orchetect/SwiftASCII) for ASCII string and character formatting and validation.
+
 ## Documentation
 
-Refer to this README's [Getting Started](#getting-started) section, and check out the [Example projects](Examples).
+Refer to this README for an overview of library features and syntax, and check out the [example projects](Examples).
 
 ## Author
 
