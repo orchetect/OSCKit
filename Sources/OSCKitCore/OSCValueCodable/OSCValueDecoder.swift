@@ -1,7 +1,7 @@
 //
 //  OSCValueDecoder.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -38,7 +38,8 @@ extension OSCValueDecoder {
     }
     
     /// Manually advance data read position.
-    /// This functionality will be automatically handled by local `read*()` methods if they succeed. This method is only provided for custom parsing requirements.
+    /// This functionality will be automatically handled by local `read*()` methods if they succeed.
+    /// This method is only provided for custom parsing requirements.
     ///
     /// - Throws: Error if position is advanced past the end of the available number of bytes.
     public mutating func advancePosition(by numberOfBytes: Int) throws {
@@ -186,9 +187,11 @@ extension OSCValueDecoder {
     
     /// Read a 4-byte aligned null-terminated ASCII string chunk.
     ///
-    /// The string is validated and an error is thrown if it contains non-ASCII characters which may be a sign the data is malformed. (OSC string encoding allows only ASCII characters.)
+    /// The string is validated and an error is thrown if it contains non-ASCII characters which may
+    /// be a sign the data is malformed. (OSC string encoding allows only ASCII characters.)
     public mutating func read4ByteAlignedNullTerminatedASCIIString() throws -> String {
-        // read4ByteAlignedNullTerminatedData takes care of data size validation so we don't need to do it here
+        // read4ByteAlignedNullTerminatedData takes care of data size validation so we don't need to
+        // do it here
         let chunk = try read4ByteAlignedNullTerminatedData()
         
         guard let value = ASCIIString(exactly: chunk.data)?.stringValue

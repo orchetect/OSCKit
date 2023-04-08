@@ -1,7 +1,7 @@
 //
 //  OSCObject Data Extensions.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -9,7 +9,8 @@ import Foundation
 extension Data {
     /// Parses raw data and returns valid OSC objects if data is successfully parsed as OSC.
     ///
-    /// - Throws: An error is thrown if data appears to be an OSC bundle or message but is malformed.
+    /// - Throws: An error is thrown if data appears to be an OSC bundle or message but is
+    /// malformed.
     ///
     /// Errors thrown will typically be a case of ``OSCDecodeError`` but other errors may be thrown.
     ///

@@ -1,13 +1,14 @@
 //
 //  OSCValues.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 public typealias OSCValues = [AnyOSCValue]
 
 extension OSCValues {
-    /// Syntactic convenience to allow the formation of an ``AnyOSCValue`` array by using `OSCValues()` as an initializer.
+    /// Syntactic convenience to allow the formation of an ``AnyOSCValue`` array by using
+    /// `OSCValues()` as an initializer.
     @_disfavoredOverload
     public init(_ values: [AnyOSCValue]) {
         self = values

@@ -1,7 +1,7 @@
 //
 //  OSCValueDecoder Read Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 #if shouldTestCurrentPlatform
@@ -279,8 +279,8 @@ final class OSCValueDecoder_Read_Tests: XCTestCase {
         
         // edge cases
         
-        // can't test byteLength of 0 because it causes an assert and we can't catch that in a unit test.
-        // it is however not an error condition, just a warning.
+        // can't test byteLength of 0 because it causes an assert and we can't catch that in a unit
+        // test. it is however not an error condition, just a warning.
         // XCTAssertEqual(try newDecoder { try $0.read(byteLength: 0) }, Data([]))
         
         // negative read count throws error

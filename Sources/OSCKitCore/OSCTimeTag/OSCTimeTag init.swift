@@ -1,7 +1,7 @@
 //
 //  OSCTimeTag init.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -17,7 +17,8 @@ extension OSCTimeTag {
     
     /// Returns a Time Tag representing a time in the future.
     ///
-    /// If the intention is to produce an immediate Time Tag, use ``immediate()`` instead of `init(timeIntervalSinceNow: 0.0)`.
+    /// If the intention is to produce an immediate Time Tag, use ``immediate()`` instead of
+    /// `init(timeIntervalSinceNow: 0.0)`.
     ///
     /// Passing `seconds` that is `< 0.0` will produce a Time Tag of ``now()``.
     public init(timeIntervalSinceNow seconds: TimeInterval) {
@@ -37,7 +38,8 @@ extension OSCTimeTag {
     
     /// Returns a Time Tag representing a time in the future.
     ///
-    /// If the intention is to produce an immediate Time Tag, use ``immediate()`` instead of `init(at: Date())`.
+    /// If the intention is to produce an immediate Time Tag, use ``immediate()`` instead of
+    /// `init(at: Date())`.
     ///
     /// Passing `Date` that is `< now` will produce a Time Tag of ``now()``.
     public init(future futureDate: Date) {

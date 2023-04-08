@@ -1,25 +1,27 @@
 //
 //  AnyOSCNumberValue.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
 
 /// A meta-type used in ``OSCValues`` `masked()` to opaquely mask any OSC number type.
-/// This type is not publicly initializable. Instead it is provided as a box for a type-erased number value when masking.
+/// This type is not publicly initialize-able. Instead it is provided as a box for a type-erased
+/// number value when masking.
 ///
 /// - ``base`` returns the strongly-typed number.
-/// - ``intValue`` and ``doubleValue`` can be used as a convenience to access the base value, converting from the base type if necessary.
+/// - ``intValue`` and ``doubleValue`` can be used as a convenience to access the base value,
+///   converting from the base type if necessary.
 public struct AnyOSCNumberValue {
     /// Base value storage.
     public let base: OSCNumberValueBase
     
-    init<B: OSCValue & BinaryInteger>(_ base: B) {
+    init(_ base: some OSCValue & BinaryInteger) {
         self.base = .int(base)
     }
     
-    init<B: OSCValue & BinaryFloatingPoint>(_ base: B) {
+    init(_ base: some OSCValue & BinaryFloatingPoint) {
         self.base = .float(base)
     }
     

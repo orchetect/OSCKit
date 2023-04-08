@@ -1,17 +1,20 @@
 //
 //  OSCValues Mask Methods.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
 
 extension OSCValues {
-    /// Returns `true` if an array of ``OSCValue`` values matches an expected value type mask (order and type of values).
+    /// Returns `true` if an array of ``OSCValue`` values matches an expected value type mask (order
+    /// and type of values).
     /// To make any mask value `Optional`, use its `*Optional` variant.
     ///
     /// Some opaque type(s) are available:
-    ///   - ``OSCValueToken/number`` & ``OSCValueToken/numberOptional``: Matches ``OSCValueToken/int32``, ``OSCValueToken/float32``, ``OSCValueToken/double``, or ``OSCValueToken/int64``.
+    ///   - ``OSCValueToken/number`` & ``OSCValueToken/numberOptional``: Matches
+    ///     ``OSCValueToken/int32``, ``OSCValueToken/float32``, ``OSCValueToken/double``, or
+    ///     ``OSCValueToken/int64``.
     ///
     /// - parameter expectedMask: ``OSCValueToken`` array representing a positive mask match.
     public func matches(

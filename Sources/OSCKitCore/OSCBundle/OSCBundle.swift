@@ -1,7 +1,7 @@
 //
 //  OSCBundle.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -15,7 +15,8 @@ public struct OSCBundle: OSCObject {
     /// Default value 1: means "immediate" in OSC spec.
     public let timeTag: OSCTimeTag
     
-    /// Elements contained within the bundle. These can be ``OSCBundle`` or ``OSCMessage`` instances.
+    /// Elements contained within the bundle. These can be ``OSCBundle`` or ``OSCMessage``
+    /// instances.
     public let elements: [any OSCObject]
     
     @usableFromInline

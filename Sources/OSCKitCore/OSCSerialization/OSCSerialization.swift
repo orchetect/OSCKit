@@ -1,14 +1,15 @@
 //
 //  OSCSerialization.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
 
 /// OSC Coding serialization context (global singleton).
 ///
-/// Register custom value types to enable ``OSCValueDecoder`` and ``OSCValues`` `masked()` support for them.
+/// Register custom value types to enable ``OSCValueDecoder`` and ``OSCValues`` `masked()` support
+/// for them.
 public final class OSCSerialization {
     /// Shared singleton instance.
     public static let shared: OSCSerialization = .init()
@@ -28,7 +29,8 @@ public final class OSCSerialization {
         }
     }
     
-    /// Register a concrete type that conforms to ``OSCValueCodable`` to make it available for OSC encoding and decoding.
+    /// Register a concrete type that conforms to ``OSCValueCodable`` to make it available for OSC
+    /// encoding and decoding.
     public func registerType(_ oscValueType: any OSCValueCodable.Type) throws {
         // throw an error if user attempts to register an already existing type tag
         

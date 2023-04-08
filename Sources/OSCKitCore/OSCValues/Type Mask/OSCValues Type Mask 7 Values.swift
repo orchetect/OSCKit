@@ -1,7 +1,7 @@
 //
 //  OSCValues Type Mask 7 Values.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -60,11 +60,15 @@ extension OSCValues {
     ///     [123, 456, 789].masked(String.self, Int.self, Int32?.self)
     ///     // throws error; mask does not match
     ///
-    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an ``OSCMessage``.
+    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will
+    /// be transparently encoded as their closest related OSC core type when encoding in an
+    /// ``OSCMessage``.
     ///
-    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core encoding value type) and may be used any where ``OSCValue`` is accepted.
+    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core
+    /// encoding value type) and may be used any where ``OSCValue`` is accepted.
     ///
-    /// OSCKit provides conformance for a number of such common Swift Standard Library types: `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
+    /// OSCKit provides conformance for a number of such common Swift Standard Library types:
+    /// `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
     ///
     /// (Note that `Int32`, `Int64`, `Float32` are already core `OSCValue` types.)
     ///
@@ -87,7 +91,9 @@ extension OSCValues {
     ///     AnyOSCNumberValue(Int8(123)).intValue // 123 as Int
     ///     AnyOSCNumberValue(Int8(123)).doubleValue // 123.0 as Double
     ///
-    /// One or more trailing types can also be expressed as as an `Optional` (ie: `Int32?.self`) which will match that value type or return `nil` if the value is missing in the base value array.
+    /// One or more trailing types can also be expressed as as an `Optional` (ie: `Int32?.self`)
+    /// which will match that value type or return `nil` if the value is missing in the base value
+    /// array.
     ///
     /// Core OSC concrete types:
     /// - `Int32.self`
@@ -195,11 +201,15 @@ extension OSCValues {
     ///     [123, 456, 789].masked(String.self, Int.self, Int32?.self)
     ///     // throws error; mask does not match
     ///
-    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an ``OSCMessage``.
+    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will
+    /// be transparently encoded as their closest related OSC core type when encoding in an
+    /// ``OSCMessage``.
     ///
-    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core encoding value type) and may be used any where ``OSCValue`` is accepted.
+    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core
+    /// encoding value type) and may be used any where ``OSCValue`` is accepted.
     ///
-    /// OSCKit provides conformance for a number of such common Swift Standard Library types: `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
+    /// OSCKit provides conformance for a number of such common Swift Standard Library types:
+    /// `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
     ///
     /// (Note that `Int32`, `Int64`, `Float32` are already core `OSCValue` types.)
     ///
@@ -222,7 +232,9 @@ extension OSCValues {
     ///     AnyOSCNumberValue(Int8(123)).intValue // 123 as Int
     ///     AnyOSCNumberValue(Int8(123)).doubleValue // 123.0 as Double
     ///
-    /// One or more trailing types can also be expressed as as an `Optional` (ie: `Int32?.self`) which will match that value type or return `nil` if the value is missing in the base value array.
+    /// One or more trailing types can also be expressed as as an `Optional` (ie: `Int32?.self`)
+    /// which will match that value type or return `nil` if the value is missing in the base value
+    /// array.
     ///
     /// Core OSC concrete types:
     /// - `Int32.self`
@@ -330,11 +342,15 @@ extension OSCValues {
     ///     [123, 456, 789].masked(String.self, Int.self, Int32?.self)
     ///     // throws error; mask does not match
     ///
-    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an ``OSCMessage``.
+    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will
+    /// be transparently encoded as their closest related OSC core type when encoding in an
+    /// ``OSCMessage``.
     ///
-    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core encoding value type) and may be used any where ``OSCValue`` is accepted.
+    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core
+    /// encoding value type) and may be used any where ``OSCValue`` is accepted.
     ///
-    /// OSCKit provides conformance for a number of such common Swift Standard Library types: `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
+    /// OSCKit provides conformance for a number of such common Swift Standard Library types:
+    /// `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
     ///
     /// (Note that `Int32`, `Int64`, `Float32` are already core `OSCValue` types.)
     ///
@@ -357,7 +373,9 @@ extension OSCValues {
     ///     AnyOSCNumberValue(Int8(123)).intValue // 123 as Int
     ///     AnyOSCNumberValue(Int8(123)).doubleValue // 123.0 as Double
     ///
-    /// One or more trailing types can also be expressed as as an `Optional` (ie: `Int32?.self`) which will match that value type or return `nil` if the value is missing in the base value array.
+    /// One or more trailing types can also be expressed as as an `Optional` (ie: `Int32?.self`)
+    /// which will match that value type or return `nil` if the value is missing in the base value
+    /// array.
     ///
     /// Core OSC concrete types:
     /// - `Int32.self`
@@ -465,11 +483,15 @@ extension OSCValues {
     ///     [123, 456, 789].masked(String.self, Int.self, Int32?.self)
     ///     // throws error; mask does not match
     ///
-    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an ``OSCMessage``.
+    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will
+    /// be transparently encoded as their closest related OSC core type when encoding in an
+    /// ``OSCMessage``.
     ///
-    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core encoding value type) and may be used any where ``OSCValue`` is accepted.
+    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core
+    /// encoding value type) and may be used any where ``OSCValue`` is accepted.
     ///
-    /// OSCKit provides conformance for a number of such common Swift Standard Library types: `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
+    /// OSCKit provides conformance for a number of such common Swift Standard Library types:
+    /// `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
     ///
     /// (Note that `Int32`, `Int64`, `Float32` are already core `OSCValue` types.)
     ///
@@ -492,7 +514,9 @@ extension OSCValues {
     ///     AnyOSCNumberValue(Int8(123)).intValue // 123 as Int
     ///     AnyOSCNumberValue(Int8(123)).doubleValue // 123.0 as Double
     ///
-    /// One or more trailing types can also be expressed as as an `Optional` (ie: `Int32?.self`) which will match that value type or return `nil` if the value is missing in the base value array.
+    /// One or more trailing types can also be expressed as as an `Optional` (ie: `Int32?.self`)
+    /// which will match that value type or return `nil` if the value is missing in the base value
+    /// array.
     ///
     /// Core OSC concrete types:
     /// - `Int32.self`
@@ -600,11 +624,15 @@ extension OSCValues {
     ///     [123, 456, 789].masked(String.self, Int.self, Int32?.self)
     ///     // throws error; mask does not match
     ///
-    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an ``OSCMessage``.
+    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will
+    /// be transparently encoded as their closest related OSC core type when encoding in an
+    /// ``OSCMessage``.
     ///
-    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core encoding value type) and may be used any where ``OSCValue`` is accepted.
+    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core
+    /// encoding value type) and may be used any where ``OSCValue`` is accepted.
     ///
-    /// OSCKit provides conformance for a number of such common Swift Standard Library types: `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
+    /// OSCKit provides conformance for a number of such common Swift Standard Library types:
+    /// `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
     ///
     /// (Note that `Int32`, `Int64`, `Float32` are already core `OSCValue` types.)
     ///
@@ -627,7 +655,9 @@ extension OSCValues {
     ///     AnyOSCNumberValue(Int8(123)).intValue // 123 as Int
     ///     AnyOSCNumberValue(Int8(123)).doubleValue // 123.0 as Double
     ///
-    /// One or more trailing types can also be expressed as as an `Optional` (ie: `Int32?.self`) which will match that value type or return `nil` if the value is missing in the base value array.
+    /// One or more trailing types can also be expressed as as an `Optional` (ie: `Int32?.self`)
+    /// which will match that value type or return `nil` if the value is missing in the base value
+    /// array.
     ///
     /// Core OSC concrete types:
     /// - `Int32.self`
@@ -735,11 +765,15 @@ extension OSCValues {
     ///     [123, 456, 789].masked(String.self, Int.self, Int32?.self)
     ///     // throws error; mask does not match
     ///
-    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an ``OSCMessage``.
+    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will
+    /// be transparently encoded as their closest related OSC core type when encoding in an
+    /// ``OSCMessage``.
     ///
-    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core encoding value type) and may be used any where ``OSCValue`` is accepted.
+    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core
+    /// encoding value type) and may be used any where ``OSCValue`` is accepted.
     ///
-    /// OSCKit provides conformance for a number of such common Swift Standard Library types: `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
+    /// OSCKit provides conformance for a number of such common Swift Standard Library types:
+    /// `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
     ///
     /// (Note that `Int32`, `Int64`, `Float32` are already core `OSCValue` types.)
     ///
@@ -762,7 +796,9 @@ extension OSCValues {
     ///     AnyOSCNumberValue(Int8(123)).intValue // 123 as Int
     ///     AnyOSCNumberValue(Int8(123)).doubleValue // 123.0 as Double
     ///
-    /// One or more trailing types can also be expressed as as an `Optional` (ie: `Int32?.self`) which will match that value type or return `nil` if the value is missing in the base value array.
+    /// One or more trailing types can also be expressed as as an `Optional` (ie: `Int32?.self`)
+    /// which will match that value type or return `nil` if the value is missing in the base value
+    /// array.
     ///
     /// Core OSC concrete types:
     /// - `Int32.self`
@@ -870,11 +906,15 @@ extension OSCValues {
     ///     [123, 456, 789].masked(String.self, Int.self, Int32?.self)
     ///     // throws error; mask does not match
     ///
-    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an ``OSCMessage``.
+    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will
+    /// be transparently encoded as their closest related OSC core type when encoding in an
+    /// ``OSCMessage``.
     ///
-    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core encoding value type) and may be used any where ``OSCValue`` is accepted.
+    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core
+    /// encoding value type) and may be used any where ``OSCValue`` is accepted.
     ///
-    /// OSCKit provides conformance for a number of such common Swift Standard Library types: `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
+    /// OSCKit provides conformance for a number of such common Swift Standard Library types:
+    /// `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
     ///
     /// (Note that `Int32`, `Int64`, `Float32` are already core `OSCValue` types.)
     ///
@@ -897,7 +937,9 @@ extension OSCValues {
     ///     AnyOSCNumberValue(Int8(123)).intValue // 123 as Int
     ///     AnyOSCNumberValue(Int8(123)).doubleValue // 123.0 as Double
     ///
-    /// One or more trailing types can also be expressed as as an `Optional` (ie: `Int32?.self`) which will match that value type or return `nil` if the value is missing in the base value array.
+    /// One or more trailing types can also be expressed as as an `Optional` (ie: `Int32?.self`)
+    /// which will match that value type or return `nil` if the value is missing in the base value
+    /// array.
     ///
     /// Core OSC concrete types:
     /// - `Int32.self`
@@ -1005,11 +1047,15 @@ extension OSCValues {
     ///     [123, 456, 789].masked(String.self, Int.self, Int32?.self)
     ///     // throws error; mask does not match
     ///
-    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will be transparently encoded as their closest related OSC core type when encoding in an ``OSCMessage``.
+    /// In addition to core OSC concrete types, various non-standard OSC types can be used and will
+    /// be transparently encoded as their closest related OSC core type when encoding in an
+    /// ``OSCMessage``.
     ///
-    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core encoding value type) and may be used any where ``OSCValue`` is accepted.
+    /// These types conform to the ``OSCInterpolatedValue`` protocol (which defines their core
+    /// encoding value type) and may be used any where ``OSCValue`` is accepted.
     ///
-    /// OSCKit provides conformance for a number of such common Swift Standard Library types: `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
+    /// OSCKit provides conformance for a number of such common Swift Standard Library types:
+    /// `Int8`, `Int16`, `UInt`, `UInt8`, `UInt16`, `UInt32`, `UInt64`, `Float16`, `Float80`.
     ///
     /// (Note that `Int32`, `Int64`, `Float32` are already core `OSCValue` types.)
     ///
@@ -1032,7 +1078,9 @@ extension OSCValues {
     ///     AnyOSCNumberValue(Int8(123)).intValue // 123 as Int
     ///     AnyOSCNumberValue(Int8(123)).doubleValue // 123.0 as Double
     ///
-    /// One or more trailing types can also be expressed as as an `Optional` (ie: `Int32?.self`) which will match that value type or return `nil` if the value is missing in the base value array.
+    /// One or more trailing types can also be expressed as as an `Optional` (ie: `Int32?.self`)
+    /// which will match that value type or return `nil` if the value is missing in the base value
+    /// array.
     ///
     /// Core OSC concrete types:
     /// - `Int32.self`

@@ -1,7 +1,7 @@
 //
 //  OSCMessageDecoder.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -11,7 +11,8 @@ import Foundation
 /// Internal:
 /// ``OSCMessage`` decoding methods.
 ///
-/// This is not meant to be instanced but instead provides static helper methods for OSC message decoding.
+/// This is not meant to be instanced but instead provides static helper methods for OSC message
+/// decoding.
 enum OSCMessageDecoder {
     /// Decodes OSC message raw data.
     static func decode(rawData: Data) throws ->

@@ -1,7 +1,7 @@
 //
 //  OSCNumberValue.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -25,11 +25,11 @@ internal struct OSCNumberValue<B: OSCValue> {
     /// Base value storage.
     public let base: OSCNumberValueBase
     
-    init<B: OSCValue & BinaryInteger>(_ base: B) {
+    init(_ base: some OSCValue & BinaryInteger) {
         self.base = .int(base)
     }
     
-    init<B: OSCValue & BinaryFloatingPoint>(_ base: B) {
+    init(_ base: some OSCValue & BinaryFloatingPoint) {
         self.base = .float(base)
     }
     

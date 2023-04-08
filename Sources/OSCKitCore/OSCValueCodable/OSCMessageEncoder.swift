@@ -1,7 +1,7 @@
 //
 //  OSCMessageEncoder.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -10,7 +10,9 @@ import Foundation
 
 /// ``OSCMessage`` encoder.
 ///
-/// Generally there is no need to directly instance or interact with this unless you are implementing custom OSC value types. OSC message encoding and decoding is handled automatically in OSCKit otherwise.
+/// Generally there is no need to directly instance or interact with this unless you are
+/// implementing custom OSC value types. OSC message encoding and decoding is handled automatically
+/// in OSCKit otherwise.
 public struct OSCMessageEncoder {
     var builderAddress: Data
     var builderTags: [ASCIICharacter] = []
@@ -47,7 +49,7 @@ public struct OSCMessageEncoder {
     }
     
     /// Add a value to the message encoder.
-    public mutating func encode<T: OSCValueEncodable>(_ value: T) throws {
+    public mutating func encode(_ value: some OSCValueEncodable) throws {
         try Self.encode(
             value,
             builderTags: &builderTags,

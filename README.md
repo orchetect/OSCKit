@@ -4,7 +4,7 @@
 
 [![CI Build Status](https://github.com/orchetect/OSCKit/actions/workflows/build.yml/badge.svg)](https://github.com/orchetect/OSCKit/actions/workflows/build.yml) ![Platforms - macOS 10.13+ | iOS 11+ | tvOS 11+](https://img.shields.io/badge/platforms-macOS%2010.13+%20|%20iOS%2011+%20|%20tvOS%2011+%20-lightgrey.svg?style=flat) [![Swift 5.7](https://img.shields.io/badge/Swift-5.7-orange.svg?style=flat)](https://developer.apple.com/swift) [![Xcode 14](https://img.shields.io/badge/Xcode-14-blue.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/OSCKit/blob/main/LICENSE)
 
-Open Sound Control library for macOS, iOS and tvOS written in Swift.
+Open Sound Control ([OSC](https://opensoundcontrol.stanford.edu)) library for macOS, iOS and tvOS written in Swift.
 
 - OSC address pattern matching and dispatch
 - Convenient OSC message value type masking, validation and strong-typing
@@ -24,7 +24,7 @@ Open Sound Control library for macOS, iOS and tvOS written in Swift.
 
    - In a Swift Package, add it to the Package.swift dependencies:
      ```swift
-     .package(url: "https://github.com/orchetect/OSCKit", from: "0.4.0")
+     .package(url: "https://github.com/orchetect/OSCKit", from: "0.5.0")
      ```
 
 2. Import the library:
@@ -32,7 +32,7 @@ Open Sound Control library for macOS, iOS and tvOS written in Swift.
    import OSCKit
    ```
    
-   Or to import OSCKit without networking I/O in order to implement your own UDP sockets:
+   Or to import OSCKit without networking I/O in order to implement your own sockets:
    
    ```swift
    import OSCKitCore
@@ -260,9 +260,9 @@ Validate and unwrap value array with expected members `String, Int, <number>?`:
 let (str, int, num) = try oscMessage.values.masked(String.self, 
                                                    Int.self,
                                                    AnyOSCNumberValue?.self)
-print(str, int, num.intValue)
-print(str, int, num.doubleValue)
-print(str, int, num.base) // access to the strongly typed integer or floating-point value
+print(str, int, num?.intValue)
+print(str, int, num?.doubleValue)
+print(str, int, num?.base) // access to the strongly typed integer or floating-point value
 ```
 
 #### Option 2: Manually unwrap expected value types
@@ -349,9 +349,52 @@ OSCKit also adds the following opaque type-erasure types:
 AnyOSCNumberValue // wraps any BinaryInteger or BinaryFloatingPoint
 ```
 
+## OSC Socket
+
+The `OSCSocket` class internally combines both an OSC server and client sharing the same local UDP port number. What sets it apart from `OSCServer` and `OSCClient` is that it does not require enabling port reuse to accomplish this. It also can conceptually make communicating bidirectionally with a single remote host more intuitive.
+
+This also fulfils a niche requirement for communicating with OSC devices such as the Behringer X32 & M32 which respond back using the UDP port that they receive OSC messages from. For example: if an OSC message was sent from port 8000 to the X32's port 10023, the X32 will respond by sending OSC messages back to you on port 8000.
+
+### Setup
+
+If not specified during initialization, the local port will be randomly assigned by the system. The same port will be used to both listen for incoming events and send outgoing events _from_. Either way, this port may only be specified at the time of initialization.
+
+The remote port may be omitted, in which case the same port number as the local port will be used. The remote port may be overridden if supplied as a pararmeter when calling `send()`.
+
+```swift
+// this would be a typical setup to interact with a remote Behringer X32.
+// randomly generate a local port, but always send messages to remote port 10023.
+let socket = OSCSocket(
+    remoteHost: "192.168.0.2",
+    remotePort: 10023
+) { message, _ in
+    print("Received \(message)")
+}
+```
+
+Similar to `OSCServer`, `OSCSocket` must be started before it can send or receive messages.
+
+```swift
+try socket.start()
+```
+
+### Sending to Remote Host
+
+The `send()` method may be used to send OSC messages and bundles.
+
+```swift
+// The remoteHost and/or remotePort supplied at the itme of
+// initialization will be used by default:
+try socket.send(osc)
+
+// It is also possible to override the destination host and/or port
+// on a per-message basis:
+try socket.send(osc, to: "192.168.0.3", port: 8001)
+```
+
 ## Documentation
 
-Will be added in future. In the meantime, refer to this README's [Getting Started](#getting-started) section, and check out the [Example projects](Examples).
+Refer to this README's [Getting Started](#getting-started) section, and check out the [Example projects](Examples).
 
 ## Author
 
@@ -367,4 +410,4 @@ If you enjoy using OSCKit and want to contribute to open-source financially, Git
 
 ## Contributions
 
-Contributions are welcome. Feel free to post an Issue to discuss.
+Contributions are welcome. Posting in [Discussions](https://github.com/orchetect/OSCKIt/discussions) first prior to new submitting PRs for features or modifications is encouraged.

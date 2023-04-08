@@ -1,7 +1,7 @@
 //
 //  OSCMIDIValue.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -22,7 +22,9 @@ public struct OSCMIDIValue {
     /// The message is built as 1-3 raw MIDI 1.0 message bytes, along with a port ID.
     ///
     /// - Parameters:
-    ///   - portID: An index number to identify a MIDI port. This is not part of the raw MIDI message bytes but is rather up to manufacturer or developer to decide how to use this OSC parameter. An ID of 0 can be used if not applicable.
+    ///   - portID: An index number to identify a MIDI port. This is not part of the raw MIDI
+    ///     message bytes but is rather up to manufacturer or developer to decide how to use this
+    ///     OSC parameter. An ID of 0 can be used if not applicable.
     ///   - status: MIDI 1.0 status byte.
     ///   - data1: MIDI status message data byte 1 (optional).
     ///   - data2: MIDI status message data byte 2 (optional).
@@ -47,7 +49,9 @@ extension OSCValue where Self == OSCMIDIValue {
     /// The message is built as 1-3 raw MIDI 1.0 message bytes, along with a port ID.
     ///
     /// - Parameters:
-    ///   - portID: An index number to identify a MIDI port. This is not part of the raw MIDI message bytes but is rather up to manufacturer or developer to decide how to use this OSC parameter. An ID of 0 can be used if not applicable.
+    ///   - portID: An index number to identify a MIDI port. This is not part of the raw MIDI
+    ///     message bytes but is rather up to manufacturer or developer to decide how to use this
+    ///     OSC parameter. An ID of 0 can be used if not applicable.
     ///   - status: MIDI 1.0 status byte.
     ///   - data1: MIDI status message data byte 1 (optional).
     ///   - data2: MIDI status message data byte 2 (optional).

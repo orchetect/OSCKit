@@ -1,7 +1,7 @@
 //
 //  OSCBundle Integrity Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 #if shouldTestCurrentPlatform
@@ -57,7 +57,8 @@ final class OSCBundle_Integrity_Tests: XCTestCase {
     // MARK: - Complex messages
     
     func testComplex() throws {
-        // this does not necessarily prove that encoding or decoding actually matches OSC spec, it simply ensures that rawData that OSCBundle generates can be decoded
+        // this does not necessarily prove that encoding or decoding actually matches OSC spec, it
+        // simply ensures that rawData that OSCBundle generates can be decoded
         
         // build bundle
         

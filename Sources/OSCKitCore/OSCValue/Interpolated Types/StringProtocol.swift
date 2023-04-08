@@ -1,7 +1,7 @@
 //
 //  StringProtocol.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2022 Steffan Andrews • Licensed under MIT License
+//  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -23,7 +23,7 @@ extension OSCInterpolatedValue
     } }
     
     public static var oscDecoding: OSCValueDecodingBlock { OSCValueDecodingBlock { decoder in
-        Self(stringLiteral: try CoreOSCValue.oscDecoding.block(&decoder))
+        try Self(stringLiteral: CoreOSCValue.oscDecoding.block(&decoder))
     } }
 }
 
