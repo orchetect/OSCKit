@@ -96,7 +96,7 @@ public final class OSCPeer: NSObject, _OSCServerProtocol {
         super.init()
         
         udpDelegate.oscServer = self
-        udpSocket.setDelegate(udpDelegate, delegateQueue: .main)
+        udpSocket.setDelegate(udpDelegate, delegateQueue: receiveQueue)
     }
     
     deinit {
