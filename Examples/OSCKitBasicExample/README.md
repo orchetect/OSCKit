@@ -6,7 +6,7 @@ This example demonstrates the most essential features of OSCKit.
 
 If you are adding OSCKit to a macOS project that has the Sandbox entitlement, ensure that the network options are enabled. These entitlement options are already set in the example project.
 
-![sandbox-network-connections](Images/sandbox-network-connections.png)
+![sandbox-network-connections](../../Images/sandbox-network-connections.png)
 
 ## Build Note
 
