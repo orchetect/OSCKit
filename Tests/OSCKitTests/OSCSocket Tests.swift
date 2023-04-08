@@ -1,5 +1,5 @@
 //
-//  OSCPeer Tests.swift
+//  OSCSocket Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
@@ -9,9 +9,9 @@
 import XCTest
 @testable import OSCKit
 
-final class OSCPeer_Tests: XCTestCase {
+final class OSCSocket_Tests: XCTestCase {
     func testEmptyBundle() throws {
-        let server = OSCPeer(host: "localhost", localPort: nil)
+        let server = OSCSocket(remoteHost: "localhost")
         
         let exp = expectation(description: "Message Dispatched")
         exp.isInverted = true // empty bundle produces no messages

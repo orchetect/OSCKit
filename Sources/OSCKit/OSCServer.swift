@@ -23,19 +23,17 @@ import OSCKitCore
 /// > greater than or equal to the OSC Time Tag of the enclosing bundle.
 public final class OSCServer: NSObject, _OSCServerProtocol {
     let udpSocket = GCDAsyncUdpSocket()
-    let udpDelegate = OSCServerDelegate()
+    let udpDelegate = OSCServerUDPDelegate()
     let receiveQueue: DispatchQueue
     let dispatchQueue: DispatchQueue
     var handler: ((_ message: OSCMessage, _ timeTag: OSCTimeTag) -> Void)?
-    
-    /// Returns a boolean indicating whether the OSC server has been started.
-    public private(set) var isStarted: Bool = false
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
     public var timeTagMode: OSCTimeTagMode
     
     /// UDP port used by the OSC server to listen for inbound OSC packets.
-    public private(set) var port: UInt16
+    /// This may only be set at the time of class initialization.
+    public private(set) var localPort: UInt16
     
     /// Enable local UDP port reuse. This property must be set prior to calling ``start()`` in order
     /// to take effect.
@@ -44,7 +42,10 @@ public final class OSCServer: NSObject, _OSCServerProtocol {
     /// multiple processes to simultaneously bind to the same address + port, you need to enable
     /// this functionality in the socket. All processes that wish to use the address+port
     /// simultaneously must all enable reuse port on the socket bound to that port.
-    public var enableReusePort: Bool = false
+    public var isPortReuseEnabled: Bool = false
+    
+    /// Returns a boolean indicating whether the OSC server has been started.
+    public private(set) var isStarted: Bool = false
     
     /// Initialize an OSC server.
     ///
@@ -59,7 +60,7 @@ public final class OSCServer: NSObject, _OSCServerProtocol {
         timeTagMode: OSCTimeTagMode = .ignore,
         handler: ((_ message: OSCMessage, _ timeTag: OSCTimeTag) -> Void)? = nil
     ) {
-        self.port = port
+        self.localPort = port
         self.timeTagMode = timeTagMode
         
         self.receiveQueue = receiveQueue
@@ -89,14 +90,14 @@ public final class OSCServer: NSObject, _OSCServerProtocol {
 // MARK: - Lifecycle
 
 extension OSCServer {
-    /// Bind the OSC server's local UDP port and begin listening for data.
+    /// Bind the local UDP port and begin listening for OSC packets.
     public func start() throws {
         guard !isStarted else { return }
         
         stop()
         
-        try udpSocket.enableReusePort(enableReusePort)
-        try udpSocket.bind(toPort: port)
+        try udpSocket.enableReusePort(isPortReuseEnabled)
+        try udpSocket.bind(toPort: localPort)
         try udpSocket.beginReceiving()
         
         isStarted = true

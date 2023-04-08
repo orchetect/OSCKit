@@ -1,5 +1,5 @@
 //
-//  OSCPeer.swift
+//  OSCSocket.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //  © 2020-2023 Steffan Andrews • Licensed under MIT License
 //
@@ -7,31 +7,40 @@
 import Foundation
 import CocoaAsyncSocket
 
-/// Sends and receive OSC packets over the network with an individual remote host.
-public final class OSCPeer: NSObject, _OSCServerProtocol {
+/// Sends and receives OSC packets over the network by binding a single local UDP port to both send
+/// OSC packets from and listen for incoming packets.
+public final class OSCSocket: NSObject, _OSCServerProtocol {
     let udpSocket = GCDAsyncUdpSocket()
-    let udpDelegate = OSCServerDelegate()
+    let udpDelegate = OSCServerUDPDelegate()
     let receiveQueue: DispatchQueue
     let dispatchQueue: DispatchQueue
     var handler: ((_ message: OSCMessage, _ timeTag: OSCTimeTag) -> Void)?
-    
-    /// Returns a boolean indicating whether the OSC peer server and client have been started.
-    public private(set) var isStarted: Bool = false
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
     public var timeTagMode: OSCTimeTagMode
     
     /// Remote network hostname.
-    public private(set) var host: String
+    /// If non-nil, this host will be used in calls to ``send(_:to:port:)``. The host may still be
+    /// overridden using the `host` parameter in the call to ``send(_:to:port:)`` ad-hoc if needed.
+    public var remoteHost: String?
     
-    /// UDP port used by to receive OSC packets.
+    private var _localPort: UInt16?
+    /// Local UDP port used to both send OSC packets from and listen for incoming packets.
+    /// This may only be set at the time of class initialization.
+    ///
+    /// Note that if `localPort` was not specified at the time of initialization, reading this
+    /// property may return a value of `0` until the first successful call to ``send(_:port:)`` is
+    /// made.
     ///
     /// The default port for OSC communication is 8000 but may change depending on device/software
     /// manufacturer.
-    public private(set) var localPort: UInt16
+    public var localPort: UInt16 {
+        udpSocket.localPort()
+    }
     
     private var _remotePort: UInt16?
     /// UDP port used by to send OSC packets.
+    /// This may be set at any time.
     ///
     /// The default port for OSC communication is 8000 but may change depending on device/software
     /// manufacturer.
@@ -42,7 +51,7 @@ public final class OSCPeer: NSObject, _OSCServerProtocol {
     
     private var _isIPv4BroadcastEnabled: Bool = false
     /// Enable sending IPv4 broadcast messages from the socket.
-    /// This may be set at any time, either before or after calling ``start()``.
+    /// This may be set at any time.
     ///
     /// By default, the socket will not allow you to send broadcast messages as a network safeguard
     /// and it is an opt-in feature.
@@ -70,22 +79,34 @@ public final class OSCPeer: NSObject, _OSCServerProtocol {
         }
     }
     
+    /// Enable local UDP port reuse. This property must be set prior to calling ``start()`` in order
+    /// to take effect.
+    ///
+    /// By default, only one socket can be bound to a given IP address + port at a time. To enable
+    /// multiple processes to simultaneously bind to the same address + port, you need to enable
+    /// this functionality in the socket. All processes that wish to use the address+port
+    /// simultaneously must all enable reuse port on the socket bound to that port.
+    public var isPortReuseEnabled: Bool = false
+    
+    /// Returns a boolean indicating whether the OSC socket has been started.
+    public private(set) var isStarted: Bool = false
+    
     /// Initialize with a remote hostname and UDP port.
     /// If `localPort` is `nil`, a random available port in the system will be chosen.
     /// If `remotePort` is `nil`, the resulting `localPort` value will be used.
     ///
     /// - Note: Ensure ``start()`` is called once in order to begin sending and receiving messages.
     public init(
-        host: String,
         localPort: UInt16? = nil,
+        remoteHost: String? = nil,
         remotePort: UInt16? = nil,
         receiveQueue: DispatchQueue = .main,
         dispatchQueue: DispatchQueue = .main,
         timeTagMode: OSCTimeTagMode = .ignore,
         handler: ((_ message: OSCMessage, _ timeTag: OSCTimeTag) -> Void)? = nil
     ) {
-        self.host = host
-        self.localPort = localPort ?? 0 // 0 causes system to assign random open port
+        self.remoteHost = remoteHost
+        self._localPort = localPort
         self._remotePort = remotePort
         self.timeTagMode = timeTagMode
         
@@ -115,18 +136,14 @@ public final class OSCPeer: NSObject, _OSCServerProtocol {
 
 // MARK: - Lifecycle
 
-extension OSCPeer {
-    /// Bind the local OSC UDP port and begin listening for data.
+extension OSCSocket {
+    /// Bind the local UDP port and begin listening for OSC packets.
     public func start() throws {
         guard !isStarted else { return }
         
-        try udpSocket.enableReusePort(true)
+        try udpSocket.enableReusePort(isPortReuseEnabled)
         try udpSocket.enableBroadcast(isIPv4BroadcastEnabled)
-        try udpSocket.bind(toPort: localPort)
-        
-        // update local port if it changed or was assigned by system
-        localPort = udpSocket.localPort()
-        
+        try udpSocket.bind(toPort: _localPort ?? 0) // 0 causes system to assign random open port
         try udpSocket.beginReceiving()
         
         isStarted = true
@@ -139,20 +156,31 @@ extension OSCPeer {
         isStarted = false
     }
     
-    /// Send an OSC bundle or message to the remote peer.
-    /// If `port` is non-nil, it will be used as the destination port.
-    /// Otherwise, the ``remotePort`` number will be used.
+    /// Send an OSC bundle or message to the remote host.
+    /// ``remoteHost`` and ``remotePort`` class properties are used unless one or both are
+    /// overridden in this call.
     ///
     /// The default port for OSC communication is 8000 but may change depending on device/software
     /// manufacturer.
     public func send(
         _ oscObject: any OSCObject,
+        to host: String? = nil,
         port: UInt16? = nil
     ) throws {
         guard isStarted else {
             throw GCDAsyncUdpSocketError(
                 .closedError,
-                userInfo: ["Reason": "OSC Peer has not been started yet."]
+                userInfo: ["Reason": "OSC socket has not been started yet."]
+            )
+        }
+        
+        guard let toHost = host ?? remoteHost else {
+            throw GCDAsyncUdpSocketError(
+                .closedError,
+                userInfo: [
+                    "Reason":
+                        "Remote host is not specified in either class remoteHost property or in host parameter of call to send()."
+                ]
             )
         }
         
@@ -160,7 +188,7 @@ extension OSCPeer {
         
         udpSocket.send(
             data,
-            toHost: host,
+            toHost: toHost,
             port: port ?? remotePort,
             withTimeout: 1.0,
             tag: 0

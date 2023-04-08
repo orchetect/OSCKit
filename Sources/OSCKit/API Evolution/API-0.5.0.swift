@@ -9,4 +9,9 @@ import Foundation
 extension OSCServer {
     @available(*, deprecated, renamed: "OSCTimeTagMode")
     public typealias TimeTagMode = OSCTimeTagMode
+    
+    @available(*, deprecated, renamed: "localPort")
+    public var port: UInt16 {
+        localPort
+    }
 }
