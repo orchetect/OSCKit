@@ -7,7 +7,7 @@
 #if shouldTestCurrentPlatform
 
 import XCTest
-import OSCKitCore
+@testable import OSCKitCore
 
 final class OSCBundle_rawData_Tests: XCTestCase {
     // swiftformat:options --wrapcollections preserve

@@ -9,14 +9,14 @@ import Cocoa
 class ViewController: NSViewController {
     @IBOutlet var localPortNumber: NSTextField!
     @IBOutlet var remotePortNumber: NSTextField!
-    @IBOutlet weak var remoteHost: NSTextField!
-    @IBOutlet weak var enablePortReuse: NSButton!
-    @IBOutlet weak var enableBroadcast: NSButton!
+    @IBOutlet var remoteHost: NSTextField!
+    @IBOutlet var enablePortReuse: NSButton!
+    @IBOutlet var enableBroadcast: NSButton!
     
-    @IBOutlet weak var startButton: NSButton!
-    @IBOutlet weak var stopButton: NSButton!
+    @IBOutlet var startButton: NSButton!
+    @IBOutlet var stopButton: NSButton!
     
-    @IBOutlet weak var sendOSCMessageButton: NSButton!
+    @IBOutlet var sendOSCMessageButton: NSButton!
     
     @IBAction
     func startOSCPeer(_ sender: Any?) {
@@ -27,12 +27,12 @@ class ViewController: NSViewController {
         appDelegate?.remoteHost = remoteHost.stringValue
         
         appDelegate?.localPort = !localPortNumber.stringValue.isEmpty
-        ? UInt16(localPortNumber.stringValue)
-        : nil
+            ? UInt16(localPortNumber.stringValue)
+            : nil
         
         appDelegate?.remotePort = !remotePortNumber.stringValue.isEmpty
-        ? UInt16(remotePortNumber.stringValue)
-        : nil
+            ? UInt16(remotePortNumber.stringValue)
+            : nil
         
         appDelegate?.isPortReuseEnabled = enablePortReuse.state == .on
         

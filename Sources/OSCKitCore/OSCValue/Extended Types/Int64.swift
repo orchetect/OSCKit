@@ -5,7 +5,6 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
 
 extension Int64: OSCValue {
     public static let oscValueToken: OSCValueToken = .int64

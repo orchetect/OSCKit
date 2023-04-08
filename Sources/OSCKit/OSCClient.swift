@@ -16,7 +16,8 @@ public final class OSCClient: NSObject {
     private let udpDelegate = OSCClientUDPDelegate()
     
     private var _localPort: UInt16?
-    /// Local UDP port used by the client to send OSC packets from. (This is not the remote port which is specified each time a call to ``send(_:to:port:)`` is made.)
+    /// Local UDP port used by the client to send OSC packets from. (This is not the remote port
+    /// which is specified each time a call to ``send(_:to:port:)`` is made.)
     /// This may only be set at the time of class initialization.
     ///
     /// Note that if `localPort` was not specified at the time of initialization, reading this
@@ -72,7 +73,7 @@ public final class OSCClient: NSObject {
     /// A random available port in the system will be chosen.
     /// Using this initializer does not require calling ``start()`` unless additional properties are
     /// modified such as ``isPortReuseEnabled`` or ``isIPv4BroadcastEnabled``.
-    public override init() {
+    override public init() {
         super.init()
         
         // delegate needed for local port binding and enable broadcast
@@ -89,7 +90,7 @@ public final class OSCClient: NSObject {
     ) {
         self.init()
         
-        self._localPort = localPort
+        _localPort = localPort
     }
     
     deinit {
@@ -143,6 +144,6 @@ extension OSCClient {
     }
 }
 
-fileprivate final class OSCClientUDPDelegate: NSObject, GCDAsyncUdpSocketDelegate {
+private final class OSCClientUDPDelegate: NSObject, GCDAsyncUdpSocketDelegate {
     // we don't care about handling any delegate methods here so none are overridden
 }

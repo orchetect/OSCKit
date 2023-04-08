@@ -5,8 +5,6 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
-@_implementationOnly import SwiftRadix
 
 /// MIDI 1.0 message OSC value as defined by the OSC 1.0 spec.
 ///
@@ -80,10 +78,10 @@ extension OSCMIDIValue: Equatable, Hashable {
 
 extension OSCMIDIValue: CustomStringConvertible {
     public var description: String {
-        let portIDHex = portID.hex.stringValue(padTo: 2, prefix: true)
-        let statusHex = status.hex.stringValue(padTo: 2, prefix: true)
-        let data1Hex = data1.hex.stringValue(padTo: 2, prefix: true)
-        let data2Hex = data2.hex.stringValue(padTo: 2, prefix: true)
+        let portIDHex = portID.hexString(padTo: 2, prefix: true)
+        let statusHex = status.hexString(padTo: 2, prefix: true)
+        let data1Hex = data1.hexString(padTo: 2, prefix: true)
+        let data2Hex = data2.hexString(padTo: 2, prefix: true)
         return "MIDI(portID: \(portIDHex), status: \(statusHex), data1: \(data1Hex), data2: \(data2Hex))"
     }
 }

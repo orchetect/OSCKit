@@ -5,7 +5,6 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
 
 // NOTE: Overloads that take variadic values were tested,
 // however for code consistency and conventional indentation, it is

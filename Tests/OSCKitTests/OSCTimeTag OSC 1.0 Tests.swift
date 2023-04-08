@@ -86,7 +86,7 @@ final class OSCTimeTag_OSC1_0_Tests: XCTestCase {
         
         try server.handle(payload: bundle)
         
-        wait(for: [expEarly], timeout: 0.99)
+        wait(for: [expEarly], timeout: 0.95)
         wait(for: [exp], timeout: 0.5)
     }
     

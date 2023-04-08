@@ -5,8 +5,6 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
-@_implementationOnly import SwiftASCII
 
 /// OSCAddressPattern
 ///
@@ -30,7 +28,8 @@ import Foundation
 ///   character in the string. Inside square brackets, the minus sign (`-`) and exclamation point
 ///   (`!`) have special meanings:
 ///   - Two characters separated by a minus sign indicate the range of characters between the given
-///     two in ASCII collating sequence. (A minus sign at the end of the string has no special meaning.)
+///     two in ASCII collating sequence. (A minus sign at the end of the string has no special
+///     meaning.)
 ///   - An exclamation point at the beginning of a bracketed string negates the sense of the list,
 ///     meaning that the list matches any character not in the list. (An exclamation point anywhere
 ///     besides the first character after the open bracket has no special meaning.)

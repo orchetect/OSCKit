@@ -5,7 +5,6 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
 
 extension OSCAddressPattern.Component {
     /// Evaluate pattern matching against a single path component in an OSC address.

@@ -5,7 +5,6 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
 
 extension String {
     /// Returns the address as individual path components (strings between `/` separators).

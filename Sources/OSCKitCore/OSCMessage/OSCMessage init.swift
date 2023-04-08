@@ -5,8 +5,7 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
-@_implementationOnly import SwiftASCII
+@_implementationOnly import SwiftASCII // internal inits
 
 // NOTE: Overloads that take variadic values were tested,
 // however for code consistency and proper indentation, it is

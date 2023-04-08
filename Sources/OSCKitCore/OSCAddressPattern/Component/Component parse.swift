@@ -5,7 +5,6 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
 
 extension OSCAddressPattern.Component {
     /// Initializes a new OSC address pattern ``Component`` instance tokenizing an individual path
@@ -213,9 +212,7 @@ extension OSCAddressPattern.Component {
     /// `{}` expression sub-parser.
     ///
     /// Matches any of a comma-separated list of strings.
-    internal static func parse(
-        braceExpression: Substring
-    ) -> Set<String> {
+    internal static func parse(braceExpression: Substring) -> Set<String> {
         braceExpression
             .split(separator: ",")
             .reduce(into: Set<String>()) {

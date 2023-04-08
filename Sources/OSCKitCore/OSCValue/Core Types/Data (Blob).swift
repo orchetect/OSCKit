@@ -5,7 +5,6 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
 
 extension Data: OSCValue {
     public static let oscValueToken: OSCValueToken = .blob

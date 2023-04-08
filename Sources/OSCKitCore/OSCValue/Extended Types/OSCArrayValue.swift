@@ -5,8 +5,7 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
-@_implementationOnly import SwiftASCII
+@_implementationOnly import SwiftASCII // ASCIICharacter
 
 /// OSC value array (as an OSC value type itself).
 public struct OSCArrayValue {

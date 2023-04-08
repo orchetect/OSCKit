@@ -5,7 +5,6 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
 
 extension Double: OSCValue {
     public static let oscValueToken: OSCValueToken = .double

@@ -5,8 +5,7 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
-@_implementationOnly import SwiftASCII
+@_implementationOnly import SwiftASCII // ASCIIString
 
 extension OSCAddressPattern {
     /// Create an OSC address from a raw `String` address.

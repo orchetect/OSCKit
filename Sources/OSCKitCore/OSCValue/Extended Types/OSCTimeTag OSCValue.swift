@@ -5,7 +5,6 @@
 //
 
 import Foundation
-@_implementationOnly import OTCore
 
 extension OSCTimeTag: OSCValue {
     public static let oscValueToken: OSCValueToken = .timeTag
