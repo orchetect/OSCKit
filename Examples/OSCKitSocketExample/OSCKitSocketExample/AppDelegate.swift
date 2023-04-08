@@ -41,7 +41,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             try newSocket.start()
             
-            print("Using local port \(newSocket.localPort) and remote port \(newSocket.remotePort) with remote host \(remoteHost).")
+            print(
+                "Using local port \(newSocket.localPort) and remote port \(newSocket.remotePort) with remote host \(remoteHost)."
+            )
         } catch {
             print("Error while starting OSC socket: \(error)")
         }

@@ -141,12 +141,12 @@ extension BinaryInteger {
     @inlinable
     var float32: Float32 { Float32(self) }
     
-#if !(arch(arm64) || arch(arm) || os(watchOS)) // Float80 is now removed for ARM
+    #if !(arch(arm64) || arch(arm) || os(watchOS)) // Float80 is now removed for ARM
     /// Same as `Float80()`
     /// (Functional convenience method)
     @inlinable
     var float80: Float80 { Float80(self) }
-#endif
+    #endif
 }
 
 extension StringProtocol {

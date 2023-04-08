@@ -12,7 +12,8 @@
 import Foundation
 
 extension StringProtocol {
-    /// Convenience function to return a new string with whitespaces and newlines trimmed off start and end.
+    /// Convenience function to return a new string with whitespaces and newlines trimmed off start
+    /// and end.
     @inlinable
     var trimmed: String {
         trimmingCharacters(in: .whitespacesAndNewlines)

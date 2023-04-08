@@ -18,13 +18,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         oscServer.setHandler { message, timeTag in
             print(message, "with time tag:", timeTag)
         }
-        //oscServer.isPortReuseEnabled = true
+        // oscServer.isPortReuseEnabled = true
         do { try oscServer.start() } catch { print(error) }
         
         // setup client
         
-        //oscClient.isPortReuseEnabled = true
-        //oscClient.isIPv4BroadcastEnabled = true
+        // oscClient.isPortReuseEnabled = true
+        // oscClient.isIPv4BroadcastEnabled = true
         do { try oscClient.start() } catch { print(error) }
     }
     

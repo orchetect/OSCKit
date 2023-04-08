@@ -44,7 +44,8 @@ extension Collection {
         return self[fromIndex]
     }
     
-    /// Returns the substring in the given range of character positions (offsets from the start index).
+    /// Returns the substring in the given range of character positions (offsets from the start
+    /// index).
     @_disfavoredOverload
     subscript(position offsetRange: ClosedRange<Int>) -> SubSequence {
         let fromIndex = index(startIndex, offsetBy: offsetRange.lowerBound)
@@ -52,7 +53,8 @@ extension Collection {
         return self[fromIndex ... toIndex]
     }
     
-    /// Returns the substring in the given range of character positions (offsets from the start index).
+    /// Returns the substring in the given range of character positions (offsets from the start
+    /// index).
     @_disfavoredOverload
     subscript(position offsetRange: Range<Int>) -> SubSequence {
         let fromIndex = index(startIndex, offsetBy: offsetRange.lowerBound)
@@ -60,21 +62,24 @@ extension Collection {
         return self[fromIndex ..< toIndex]
     }
     
-    /// Returns the substring in the given range of character positions (offsets from the start index).
+    /// Returns the substring in the given range of character positions (offsets from the start
+    /// index).
     @_disfavoredOverload
     subscript(position offsetRange: PartialRangeFrom<Int>) -> SubSequence {
         let fromIndex = index(startIndex, offsetBy: offsetRange.lowerBound)
         return self[fromIndex...]
     }
     
-    /// Returns the substring in the given range of character positions (offsets from the start index).
+    /// Returns the substring in the given range of character positions (offsets from the start
+    /// index).
     @_disfavoredOverload
     subscript(position offsetRange: PartialRangeThrough<Int>) -> SubSequence {
         let toIndex = index(startIndex, offsetBy: offsetRange.upperBound)
         return self[...toIndex]
     }
     
-    /// Returns the substring in the given range of character positions (offsets from the start index).
+    /// Returns the substring in the given range of character positions (offsets from the start
+    /// index).
     @_disfavoredOverload
     subscript(position offsetRange: PartialRangeUpTo<Int>) -> SubSequence {
         let toIndex = index(startIndex, offsetBy: offsetRange.upperBound)

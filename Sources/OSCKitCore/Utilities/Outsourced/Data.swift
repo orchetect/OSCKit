@@ -16,8 +16,7 @@ import Foundation
 extension Data {
     /// Returns an Int64 value from Data
     /// Returns nil if Data is not the correct length.
-    @_disfavoredOverload
-     func toInt(from endianness: NumberEndianness = .platformDefault) -> Int? {
+    func toInt(from endianness: NumberEndianness = .platformDefault) -> Int? {
         toNumber(from: endianness, toType: Int.self)
     }
 }
@@ -27,8 +26,7 @@ extension Data {
 extension Data {
     /// Returns a Int8 value from Data (stored as two's complement).
     /// Returns nil if Data is not the correct length.
-    @_disfavoredOverload
-     func toInt8() -> Int8? {
+    func toInt8() -> Int8? {
         guard count == 1 else { return nil }
         
         var int = UInt8()
@@ -44,8 +42,7 @@ extension Data {
 extension Data {
     /// Returns an Int16 value from Data
     /// Returns nil if Data is not the correct length.
-    @_disfavoredOverload
-     func toInt16(from endianness: NumberEndianness = .platformDefault) -> Int16? {
+    func toInt16(from endianness: NumberEndianness = .platformDefault) -> Int16? {
         toNumber(from: endianness, toType: Int16.self)
     }
 }
@@ -55,8 +52,7 @@ extension Data {
 extension Data {
     /// Returns an Int32 value from Data
     /// Returns nil if Data is not the correct length.
-    @_disfavoredOverload
-     func toInt32(from endianness: NumberEndianness = .platformDefault) -> Int32? {
+    func toInt32(from endianness: NumberEndianness = .platformDefault) -> Int32? {
         toNumber(from: endianness, toType: Int32.self)
     }
 }
@@ -66,8 +62,7 @@ extension Data {
 extension Data {
     /// Returns an Int64 value from Data
     /// Returns nil if Data is not the correct length.
-    @_disfavoredOverload
-     func toInt64(from endianness: NumberEndianness = .platformDefault) -> Int64? {
+    func toInt64(from endianness: NumberEndianness = .platformDefault) -> Int64? {
         toNumber(from: endianness, toType: Int64.self)
     }
 }
@@ -77,8 +72,7 @@ extension Data {
 extension Data {
     /// Returns a UInt value from Data.
     /// Returns nil if Data is not the correct length.
-    @_disfavoredOverload
-     func toUInt(from endianness: NumberEndianness = .platformDefault) -> UInt? {
+    func toUInt(from endianness: NumberEndianness = .platformDefault) -> UInt? {
         toNumber(from: endianness, toType: UInt.self)
     }
 }
@@ -88,8 +82,7 @@ extension Data {
 extension Data {
     /// Returns a UInt8 value from Data.
     /// Returns nil if Data is not the correct length.
-    @_disfavoredOverload
-     func toUInt8() -> UInt8? {
+    func toUInt8() -> UInt8? {
         guard count == 1 else { return nil }
         return first
     }
@@ -100,8 +93,7 @@ extension Data {
 extension Data {
     /// Returns a UInt16 value from Data.
     /// Returns nil if Data is not the correct length.
-    @_disfavoredOverload
-     func toUInt16(from endianness: NumberEndianness = .platformDefault) -> UInt16? {
+    func toUInt16(from endianness: NumberEndianness = .platformDefault) -> UInt16? {
         toNumber(from: endianness, toType: UInt16.self)
     }
 }
@@ -111,8 +103,7 @@ extension Data {
 extension Data {
     /// Returns a UInt32 value from Data.
     /// Returns nil if Data is not the correct length.
-    @_disfavoredOverload
-     func toUInt32(from endianness: NumberEndianness = .platformDefault) -> UInt32? {
+    func toUInt32(from endianness: NumberEndianness = .platformDefault) -> UInt32? {
         toNumber(from: endianness, toType: UInt32.self)
     }
 }
@@ -122,8 +113,7 @@ extension Data {
 extension Data {
     /// Returns a UInt64 value from Data.
     /// Returns nil if Data is not the correct length.
-    @_disfavoredOverload
-     func toUInt64(from endianness: NumberEndianness = .platformDefault) -> UInt64? {
+    func toUInt64(from endianness: NumberEndianness = .platformDefault) -> UInt64? {
         toNumber(from: endianness, toType: UInt64.self)
     }
 }
@@ -132,8 +122,7 @@ extension Data {
 
 extension Float32 {
     /// Returns Data representation of a Float32 value.
-    @_disfavoredOverload
-     func toData(_ endianness: NumberEndianness = .platformDefault) -> Data {
+    func toData(_ endianness: NumberEndianness = .platformDefault) -> Data {
         var number = self
         
         // TODO: Remove bindMemory(to:)
@@ -176,8 +165,7 @@ extension Float32 {
 extension Data {
     /// Returns a Float32 value from Data
     /// Returns nil if Data is != 4 bytes.
-    @_disfavoredOverload
-     func toFloat32(from endianness: NumberEndianness = .platformDefault) -> Float32? {
+    func toFloat32(from endianness: NumberEndianness = .platformDefault) -> Float32? {
         guard count == 4 else { return nil }
         
         // define conversions
@@ -185,7 +173,8 @@ extension Data {
         // this crashes if Data alignment isn't correct
         // let number = { self.withUnsafeBytes { $0.load(as: Float32.self) } }()
         
-        // since .load(as:) is not memory alignment safe, memcpy is the current workaround (as of Swift 5.3)
+        // since .load(as:) is not memory alignment safe, memcpy is the current workaround (as of
+        // Swift 5.3)
         // see for more info: https://bugs.swift.org/browse/SR-10273
         let number: Float32 = withUnsafeBytes {
             var value = Float32()
@@ -239,8 +228,7 @@ extension Data {
 
 extension Double {
     /// Returns Data representation of a Double value.
-    @_disfavoredOverload
-     func toData(_ endianness: NumberEndianness = .platformDefault) -> Data {
+    func toData(_ endianness: NumberEndianness = .platformDefault) -> Data {
         var number = self
         
         // TODO: Remove bindMemory(to:)
@@ -283,8 +271,7 @@ extension Double {
 extension Data {
     /// Returns a Double value from Data
     /// Returns nil if Data is != 8 bytes.
-    @_disfavoredOverload
-     func toDouble(from endianness: NumberEndianness = .platformDefault) -> Double? {
+    func toDouble(from endianness: NumberEndianness = .platformDefault) -> Double? {
         guard count == 8 else { return nil }
         
         // define conversions
@@ -292,7 +279,8 @@ extension Data {
         // this crashes if Data alignment isn't correct
         // let number: Double = { self.withUnsafeBytes { $0.load(as: Double.self) } }()
         
-        // since .load(as:) is not memory alignment safe, memcpy is the current workaround (as of Swift 5.3)
+        // since .load(as:) is not memory alignment safe, memcpy is the current workaround (as of
+        // Swift 5.3)
         // see for more info: https://bugs.swift.org/browse/SR-10273
         let number: Double = withUnsafeBytes {
             var value = Double()
@@ -345,9 +333,9 @@ extension Data {
 // MARK: - .toData
 
 extension FixedWidthInteger {
-    /// Returns Data representation of an integer. (Endianness has no effect on single-byte integers.)
-    @_disfavoredOverload
-     func toData(_ endianness: NumberEndianness = .platformDefault) -> Data {
+    /// Returns Data representation of an integer. (Endianness has no effect on single-byte
+    /// integers.)
+    func toData(_ endianness: NumberEndianness = .platformDefault) -> Data {
         var int: Self
         
         switch endianness {
@@ -385,7 +373,8 @@ extension Data {
         // this crashes if Data alignment isn't correct
         // let int: T = { self.withUnsafeBytes { $0.load(as: T.self) } }()
         
-        // since .load(as:) is not memory alignment safe, memcpy is the current workaround (as of Swift 5.3)
+        // since .load(as:) is not memory alignment safe, memcpy is the current workaround (as of
+        // Swift 5.3)
         // see for more info: https://bugs.swift.org/browse/SR-10273
         let int: T = withUnsafeBytes {
             var value = T()
@@ -426,27 +415,24 @@ extension Data {
 
 extension String {
     /// Returns a Data representation of a String, defaulting to utf8 encoding.
-    @_disfavoredOverload
-     func toData(using encoding: String.Encoding = .utf8) -> Data? {
+    func toData(using encoding: String.Encoding = .utf8) -> Data? {
         data(using: encoding)
     }
 }
 
 extension Data {
     /// Returns a String converted from Data. Optionally pass an encoding type.
-    @_disfavoredOverload
-     func toString(using encoding: String.Encoding = .utf8) -> String? {
+    func toString(using encoding: String.Encoding = .utf8) -> String? {
         String(data: self, encoding: encoding)
     }
 }
 
 // MARK: - Data Bytes
 
-extension Collection where Element == UInt8 {
+extension Collection<UInt8> {
     /// Same as `Data(self)`
     /// Returns a Data object using the array as bytes.
-    @_disfavoredOverload
-     var data: Data {
+    var data: Data {
         Data(self)
     }
 }
@@ -454,8 +440,7 @@ extension Collection where Element == UInt8 {
 extension Data {
     /// Returns an array of bytes.
     /// Same as `[UInt8](self)`
-    @_disfavoredOverload
-     var bytes: [UInt8] {
+    var bytes: [UInt8] {
         [UInt8](self)
     }
 }

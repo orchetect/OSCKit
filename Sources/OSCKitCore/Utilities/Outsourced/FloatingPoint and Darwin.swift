@@ -22,7 +22,8 @@ extension FloatingPoint {
     
     /// Returns both integral part and fractional part.
     ///
-    /// - Note: This method is more computationally efficient than calling both `.integral` and .`fraction` properties separately unless you only require one or the other.
+    /// - Note: This method is more computationally efficient than calling both `.integral` and
+    ///   `.fraction` properties separately unless you only require one or the other.
     ///
     /// This method can result in a non-trivial loss of precision for the fractional part.
     @inlinable
