@@ -1,7 +1,5 @@
 # ``OSCKit/AnyOSCNumberValue``
 
-Test
-
 @Comment {
     // -------------------------------------------------------------------
     // NOTE: This file is duplicated in both OSCKit and OSCKitCore targets.
@@ -12,8 +10,6 @@ Test
     //                     current target's name.
     // -------------------------------------------------------------------
 }
-
-Test
 
 ## Topics
 
