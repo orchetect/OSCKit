@@ -12,7 +12,8 @@ Open Sound Control (OSC) library for macOS, iOS and tvOS.
 - Support for custom OSC types
 - Thread-safe
 - Fully unit tested
-- Thorough documentation
+- Full DocC documentation
+
 
 - Tip: For a Getting Started guide, see the `OSCKit` module documentation.
 

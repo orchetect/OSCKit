@@ -12,7 +12,7 @@ Open Sound Control ([OSC](https://opensoundcontrol.stanford.edu)) library for ma
 - Support for custom OSC types
 - Thread-safe
 - Fully unit tested
-- Thorough documentation
+- Full DocC documentation
 
 ## Getting Started
 
