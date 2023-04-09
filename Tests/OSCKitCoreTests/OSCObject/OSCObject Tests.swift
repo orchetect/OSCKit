@@ -18,18 +18,18 @@ final class OSCObject_Tests: XCTestCase {
         let msg    = try OSCMessage("/").rawData()
         
         // OSC bundle
-        XCTAssert(bundle.appearsToBeOSC == .bundle)
-        XCTAssertFalse(bundle.appearsToBeOSC == .message)
+        XCTAssert(bundle.oscObjectType == .bundle)
+        XCTAssertFalse(bundle.oscObjectType == .message)
         
         // OSC message
-        XCTAssert(msg.appearsToBeOSC == .message)
-        XCTAssertFalse(msg.appearsToBeOSC == .bundle)
+        XCTAssert(msg.oscObjectType == .message)
+        XCTAssertFalse(msg.oscObjectType == .bundle)
         
         // empty bytes
-        XCTAssertNil(Data().appearsToBeOSC)
+        XCTAssertNil(Data().oscObjectType)
         
         // garbage bytes
-        XCTAssertNil(Data([0x98, 0x42, 0x01, 0x7E]).appearsToBeOSC)
+        XCTAssertNil(Data([0x98, 0x42, 0x01, 0x7E]).oscObjectType)
     }
 }
 

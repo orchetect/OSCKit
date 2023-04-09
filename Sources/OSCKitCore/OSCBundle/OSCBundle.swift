@@ -9,7 +9,13 @@ import Foundation
 // MARK: - OSCBundle
 
 /// OSC Bundle.
+///
+/// An OSC bundle can contain zero or more OSC messages and/or OSC bundles, sent in a single
+/// packet along with an OSC time tag. Bundles may recursively nest as long as the total data size
+/// fits within a single packet.
 public struct OSCBundle: OSCObject {
+    public static let oscObjectType: OSCObjectType = .bundle
+    
     /// Time tag.
     /// Default value 1: means "immediate" in OSC spec.
     public let timeTag: OSCTimeTag

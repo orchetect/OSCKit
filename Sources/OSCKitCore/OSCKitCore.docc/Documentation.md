@@ -12,71 +12,37 @@ Open Sound Control (OSC) library for macOS, iOS and tvOS.
 - Support for custom OSC types
 - Thread-safe
 - Fully unit tested
+- Thorough documentation
+
+- Tip: For a Getting Started guide, see the `OSCKit` module documentation.
+
+@Comment {
+    // -------------------------------------------------------------------
+    // NOTE: The following is identical between the OSCKit and OSCKitCore
+    // docc bundles, except that the OSCKit docc adds 'Getting Started'
+    // and 'I/O' topic sections at the top of the Topics list.
+    // -------------------------------------------------------------------
+}
 
 ## Topics
 
-### OSC Message
-
-- ``OSCMessage``
-- ``OSCAddressPattern``
-
-### OSC Bundle
+### OSC Bundles
 
 - ``OSCBundle``
 - ``OSCTimeTag``
 
+### OSC Messages
+
+- ``OSCMessage``
+- <doc:OSC-Address-Pattern-Parsing>
+- <doc:OSC-Value-Types>
+- <doc:OSC-Value-Parsing>
+
 ### OSC Data Protocol
 
 - ``OSCObject``
-
-### OSC Message Values
-
-- ``AnyOSCValue``
-- ``OSCValue``
-- ``OSCValues``
-- ``AnyOSCNumberValue``
-- ``OSCArrayValue``
-- ``OSCImpulseValue``
-- ``OSCMIDIValue``
-- ``OSCNullValue``
-- ``OSCStringAltValue``
-
-### OSC Value Masking
-
-- ``OSCValueToken``
-- ``OSCValueMaskError``
-
-### OSC Address Space
-
-- ``OSCAddressSpace``
-
-### OSC Serialization
-
-- ``OSCSerialization``
-- ``OSCSerializationError``
-
-### Implementing Custom OSC Values
-
-- ``OSCValueAtomicDecoder``
-- ``OSCValueAtomicEncoder``
-- ``OSCValueCodable``
-- ``OSCValueDecodable``
-- ``OSCValueDecoder``
-- ``OSCValueDecoderBlock``
-- ``OSCValueEncodable``
-- ``OSCValueEncoderBlock``
-- ``OSCValueTagIdentity``
-- ``OSCValueVariableDecoder``
-- ``OSCValueVariableEncoder``
-- ``OSCValueVariadicDecoder``
-- ``OSCValueVariadicEncoder``
-- ``OSCInterpolatedValue``
-- ``OSCNumberValueBase``
-- ``OSCValueMaskable``
-- ``OSCMessageEncoder``
-
-### Internals
-
-- ``OSCDecodeError``
-- ``OSCEncodeError``
 - ``OSCObjectType``
+
+### Advanced
+
+- <doc:OSC-Custom-Types>

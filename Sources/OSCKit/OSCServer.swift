@@ -10,17 +10,9 @@ import OSCKitCore
 
 /// Receives OSC packets from the network on a specific UDP listen port.
 ///
-/// > OSC 1.0 Spec:
-/// >
-/// > With regards OSC Bundle Time Tag:
-/// >
-/// > An OSC server must have access to a representation of the correct current absolute time. OSC
-/// > does not provide any mechanism for clock synchronization. If the time represented by the OSC
-/// > Time Tag is before or equal to the current time, the OSC Server should invoke the methods
-/// > immediately. Otherwise the OSC Time Tag represents a time in the future, and the OSC server
-/// > must store the OSC Bundle until the specified time and then invoke the appropriate OSC
-/// > Methods. When bundles contain other bundles, the OSC Time Tag of the enclosed bundle must be
-/// > greater than or equal to the OSC Time Tag of the enclosing bundle.
+/// A single global OSC server instance is often created once at app startup to receive OSC messages
+/// on a specific local port. The default OSC port is 8000 but it may be set to any open port if
+/// desired.
 public final class OSCServer: NSObject, _OSCServerProtocol {
     let udpSocket = GCDAsyncUdpSocket()
     let udpDelegate = OSCServerUDPDelegate()

@@ -7,7 +7,13 @@
 import Foundation
 
 /// OSC Message.
+///
+/// An OSC message contains an address pattern string, and zero or more values.
+/// An OSC message may by sent to a recipient by itself, or one or more messages may be packed into
+/// an OSC bundle and sent in a single packet.
 public struct OSCMessage: OSCObject {
+    public static let oscObjectType: OSCObjectType = .message
+    
     /// OSC message address pattern.
     public let addressPattern: OSCAddressPattern
     
