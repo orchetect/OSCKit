@@ -29,7 +29,7 @@ public final class OSCSocket: NSObject, _OSCServerProtocol {
     /// This may only be set at the time of class initialization.
     ///
     /// Note that if `localPort` was not specified at the time of initialization, reading this
-    /// property may return a value of `0` until the first successful call to ``send(_:port:)`` is
+    /// property may return a value of `0` until the first successful call to ``send(_:to:port:)`` is
     /// made.
     ///
     /// The default port for OSC communication is 8000 but may change depending on device/software
