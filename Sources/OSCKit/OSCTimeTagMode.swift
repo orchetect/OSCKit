@@ -10,6 +10,18 @@ import Foundation
 ///
 /// Time tag information is not altered; this simply dictates how the server reacts to time tag
 /// information.
+///
+/// > OSC 1.0 Spec:
+/// >
+/// > With regards OSC Bundle Time Tag:
+/// >
+/// > An OSC server must have access to a representation of the correct current absolute time. OSC
+/// > does not provide any mechanism for clock synchronization. If the time represented by the OSC
+/// > Time Tag is before or equal to the current time, the OSC Server should invoke the methods
+/// > immediately. Otherwise the OSC Time Tag represents a time in the future, and the OSC server
+/// > must store the OSC Bundle until the specified time and then invoke the appropriate OSC
+/// > Methods. When bundles contain other bundles, the OSC Time Tag of the enclosed bundle must be
+/// > greater than or equal to the OSC Time Tag of the enclosing bundle.
 public enum OSCTimeTagMode {
     /// Adopt OSC 1.0 spec behavior where time tags may be used to schedule received OSC bundles to
     /// be dispatched at a future time.

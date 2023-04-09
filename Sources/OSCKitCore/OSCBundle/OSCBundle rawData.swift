@@ -62,7 +62,7 @@ extension OSCBundle {
             
             let elementContents = rawData.subdata(in: ppos ..< ppos + elementSize)
             
-            guard let oscObject = elementContents.appearsToBeOSC else {
+            guard let oscObject = elementContents.oscObjectType else {
                 throw OSCDecodeError.malformed("Unrecognized bundle element encountered.")
             }
             

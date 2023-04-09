@@ -27,8 +27,8 @@ extension Data {
     
     /// Test if data appears to be an OSC bundle or OSC message. (Basic validation)
     ///
-    /// - Returns: An ``OSCObjectType`` case if validation succeeds. `nil` if neither.
-    public var appearsToBeOSC: OSCObjectType? {
+    /// - Returns: An ``OSCObjectType`` case if validation succeeds.
+    public var oscObjectType: OSCObjectType? {
         if appearsToBeOSCBundle {
             return .bundle
         } else if appearsToBeOSCMessage {

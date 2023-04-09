@@ -9,8 +9,8 @@ import CocoaAsyncSocket
 
 /// Sends OSC packets over the network using the UDP network protocol.
 ///
-/// A single client can serve the needs of an entire application. The client is capable of sending
-/// packets to arbitrary recipients and is not intrinsically bound to any single destination.
+/// A single global OSC client instance created once at app startup is often all that is needed. It
+/// can be used to send OSC messages to one or more many receivers on the network.
 public final class OSCClient: NSObject {
     private let udpSocket = GCDAsyncUdpSocket()
     private let udpDelegate = OSCClientUDPDelegate()

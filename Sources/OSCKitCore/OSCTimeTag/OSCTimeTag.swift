@@ -8,6 +8,9 @@ import Foundation
 
 /// OSC Time Tag.
 ///
+/// A special timestamp used in an OSC bundle. In most situations, it is recommended to ignore this
+/// time stamp and use the default value.
+///
 /// > OSC 1.0 Spec:
 /// >
 /// > Time tags are represented by a 64 bit fixed point number. The first 32 bits specify the number

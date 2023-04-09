@@ -18,7 +18,7 @@ import Foundation
 /// potential destinations of OSC messages received by the OSC server and correspond to each of the
 /// points of control that the application makes available.
 ///
-/// `methodname` is the method name in the following address examples:
+/// The `methodname` path component is the method name in the following address examples:
 ///
 ///     /methodname
 ///     /container1/container2/methodname
