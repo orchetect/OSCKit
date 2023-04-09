@@ -18,7 +18,7 @@ import OSCKitCore
 
 ## Classes
 
-- term ``OSCClient``: Send OSC messages to one more more hosts.
+- term ``OSCClient``: Send OSC messages.
 - term ``OSCServer``: Receive OSC messages.
 - term ``OSCSocket``: Send and receive OSC messages using a single local port.
 

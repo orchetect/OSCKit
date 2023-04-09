@@ -25,12 +25,25 @@ The special wrapper type `AnyOSCNumberValue` is able to match any number and pro
 Validate and unwrap value array with expected members `String, Int, <number>?`:
 
 ```swift
-let (str, int, num) = try oscMessage.values.masked(String.self, 
-                                                   Int.self,
-                                                   AnyOSCNumberValue?.self)
+let (str, int, num) = try oscMessage.values.masked(
+    String.self, Int.self, AnyOSCNumberValue?.self
+)
 print(str, int, num?.intValue)
 print(str, int, num?.doubleValue)
 print(str, int, num?.base) // access to the strongly typed integer or floating-point value
+```
+
+### Using matches(mask:) to test for a mask with type tokens
+
+If value unwrapping is not needed, a mere test of value types in an OSC value sequence can be done using a mask of ``OSCValueToken`` tokens.
+
+This can be useful at barriers in more complex codebases where early return or error-throwing due to mismatching value masks may be wanted before the values are ever unwrapped and statically typed.
+
+```swift
+// [String, Int, AnyOSCNumberValue?]
+guard oscMessage.values.matches(
+    mask: [.string, .int, .numberOptional]
+) else { return }
 ```
 
 ### Manually unwrapping expected value types
