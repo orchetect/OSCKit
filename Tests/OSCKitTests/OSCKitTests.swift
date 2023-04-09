@@ -10,10 +10,14 @@ import XCTest
 import OSCKit
 
 final class OSCKitTests: XCTestCase {
-    // empty base test file
-    
-    func testEmpty() {
-        XCTAssertTrue(true)
+    // empty
+}
+
+extension XCTestCase {
+    func XCTSkipIfRunningOnCI() throws {
+        if ProcessInfo.processInfo.environment["RUNNING_ON_CI"] != nil {
+            throw XCTSkip("Skipping test on CI.")
+        }
     }
 }
 

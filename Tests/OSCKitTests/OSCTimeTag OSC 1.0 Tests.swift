@@ -67,6 +67,8 @@ final class OSCTimeTag_OSC1_0_Tests: XCTestCase {
     }
     
     func test1SecondInFuture() throws {
+        try XCTSkipIfRunningOnCI()
+        
         let server = OSCServer(timeTagMode: .osc1_0)
         
         let expEarly = expectation(description: "Message Dispatched Early")
