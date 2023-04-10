@@ -17,7 +17,7 @@ final class OSCMessage_Codable_Tests: XCTestCase {
     fileprivate let decoder = JSONDecoder()
     
     // TODO: uncomment these tests once `OSCMessage.Codable` conformance is fixed
-    // these need reordering and new types added (ie: OSCImpulseValue)
+    // TODO: these need reordering and new types added (ie: OSCImpulseValue)
     
 //    func testAddressOnly() throws {
 //        let msg = OSCMessage(address: "/test/address")

@@ -418,7 +418,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
                                  0x72, 0x65, 0x73, 0x73, // "/testaddress"
                                  0x00, 0x00, 0x00, 0x00] // null null null null
         // value type(s)
-        knownGoodOSCRawBytes += [0x2C, 0x4E, 0x00, 0x00] // ",TF" null
+        knownGoodOSCRawBytes += [0x2C, 0x4E, 0x00, 0x00] // ",N" null null
         
         // decode
         
@@ -427,6 +427,69 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         XCTAssertEqual(msg.values.count, 1)
         let val = try XCTUnwrap(msg.values.first as? OSCNullValue)
         XCTAssertEqual(val, OSCNullValue())
+        
+        // re-encode
+        
+        let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
+        XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
+    }
+    
+    func testImpulse() throws {
+        // test an OSC message containing a single value
+        
+        // manually build a raw OSC message
+        
+        var knownGoodOSCRawBytes: [UInt8] = []
+        
+        // address
+        knownGoodOSCRawBytes += [0x2F, 0x74, 0x65, 0x73,
+                                 0x74, 0x61, 0x64, 0x64,
+                                 0x72, 0x65, 0x73, 0x73, // "/testaddress"
+                                 0x00, 0x00, 0x00, 0x00] // null null null null
+        // value type(s)
+        knownGoodOSCRawBytes += [0x2C, 0x49, 0x00, 0x00] // ",I" null null
+        
+        // decode
+        
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
+        XCTAssertEqual(msg.values.count, 1)
+        let val = try XCTUnwrap(msg.values[0] as? OSCImpulseValue)
+        XCTAssertEqual(val, OSCImpulseValue())
+        
+        // re-encode
+        
+        let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
+        XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
+    }
+    
+    func testArray() throws {
+        // test an OSC message containing a single value
+        
+        // manually build a raw OSC message
+        
+        var knownGoodOSCRawBytes: [UInt8] = []
+        
+        // address
+        knownGoodOSCRawBytes += [0x2F, 0x74, 0x65, 0x73,
+                                 0x74, 0x61, 0x64, 0x64,
+                                 0x72, 0x65, 0x73, 0x73, // "/testaddress"
+                                 0x00, 0x00, 0x00, 0x00] // null null null null
+        // value type(s)
+        knownGoodOSCRawBytes += [0x2C, 0x5B, 0x73, 0x69, // ",[si"
+                                 0x5D, 0x00, 0x00, 0x00] // "]" null null null
+        // string
+        knownGoodOSCRawBytes += [0x61, 0x62, 0x63, 0x00] // "abc" null
+        // int21
+        knownGoodOSCRawBytes += [0x00, 0x00, 0x00, 0xFF] // 255, big-endian
+        
+        // decode
+        
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
+        XCTAssertEqual(msg.values.count, 1)
+        let val = try XCTUnwrap(msg.values[0] as? OSCArrayValue)
+        XCTAssertEqual(val, OSCArrayValue(["abc", 255]))
         
         // re-encode
         
