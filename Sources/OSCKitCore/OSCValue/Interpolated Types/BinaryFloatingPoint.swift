@@ -39,3 +39,11 @@ extension Float80: OSCInterpolatedValue {
     public typealias CoreOSCValue = Double
 }
 #endif
+
+#if canImport(CoreGraphics)
+import CoreGraphics
+
+extension CGFloat: OSCInterpolatedValue {
+    public typealias CoreOSCValue = Double
+}
+#endif
