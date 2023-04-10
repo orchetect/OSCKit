@@ -103,7 +103,7 @@ extension OSCBundle: CustomStringConvertible {
     }
 }
 
-// TODO: Codable - fix or remove
+// TODO: Codable - fix or remove; would require OSCValue to conform to Codable too
 
 // extension OSCBundle: Codable {
 //    enum CodingKeys: String, CodingKey {

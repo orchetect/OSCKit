@@ -9,7 +9,7 @@ import Foundation
 /// OSC Message.
 ///
 /// An OSC message contains an address pattern string, and zero or more values.
-/// An OSC message may by sent to a recipient by itself, or one or more messages may be packed into
+/// An OSC message may be sent to a recipient by itself, or one or more messages may be packed into
 /// an OSC bundle and sent in a single packet.
 public struct OSCMessage: OSCObject {
     public static let oscObjectType: OSCObjectType = .message
@@ -70,7 +70,7 @@ extension OSCMessage {
 
 // MARK: - Codable
 
-// TODO: Codable - fix. needs Array implementation.
+// TODO: Codable - fix or remove; would require OSCValue to conform to Codable too
 
 // extension OSCMessage: Codable {
 //    enum CodingKeys: String, CodingKey {

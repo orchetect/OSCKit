@@ -31,7 +31,7 @@ public final class OSCSocket: NSObject, _OSCServerProtocol {
     
     /// Remote network hostname.
     /// If non-nil, this host will be used in calls to ``send(_:to:port:)``. The host may still be
-    /// overridden using the `host` parameter in the call to ``send(_:to:port:)`` ad-hoc if needed.
+    /// overridden using the `host` parameter in the call to ``send(_:to:port:)``..
     public var remoteHost: String?
     
     private var _localPort: UInt16?
@@ -49,8 +49,9 @@ public final class OSCSocket: NSObject, _OSCServerProtocol {
     }
     
     private var _remotePort: UInt16?
-    /// UDP port used by to send OSC packets.
-    /// This may be set at any time.
+    /// UDP port used by to send OSC packets. This may be set at any time.
+    /// This port will be used in calls to ``send(_:to:port:)``. The port may still be overridden
+    /// using the `port` parameter in the call to ``send(_:to:port:)``.
     ///
     /// The default port for OSC communication is 8000 but may change depending on device/software
     /// manufacturer.
