@@ -53,6 +53,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func stopOSCPeer(_ sender: Any?) {
         print("Stopping OSC socket.")
         oscSocket?.stop()
+        oscSocket = nil
     }
     
     /// Send a test OSC message.
@@ -60,7 +61,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func sendTestOSCMessage(_ sender: Any?) {
         do {
             try oscSocket?.send(
-                .message("/conduit/Status", values: ["System"])
+                .message("/some/address/method", values: ["Test string", 123])
             )
         } catch {
             print("Error while sending: \(error)")
