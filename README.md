@@ -51,6 +51,13 @@ Licensed under the MIT license. See [LICENSE](LICENSE) for details.
 
 If you enjoy using OSCKit and want to contribute to open-source financially, GitHub sponsorship is much appreciated. Feedback and code contributions are also welcome.
 
+## Community & Support
+
+Please do not email maintainers for technical support. Several options are available for questions and feature ideas:
+
+- Questions and feature ideas can be posted to [Discussions](https://github.com/orchetect/OSCKit/discussions).
+- If an issue is a verifiable bug with reproducible steps it may be posted in [Issues](https://github.com/orchetect/OSCKit/issues).
+
 ## Contributions
 
 Contributions are welcome. Posting in [Discussions](https://github.com/orchetect/OSCKIt/discussions) first prior to new submitting PRs for features or modifications is encouraged.
