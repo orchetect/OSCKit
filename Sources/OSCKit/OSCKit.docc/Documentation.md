@@ -26,6 +26,7 @@ Open Sound Control (OSC) library for macOS, iOS and tvOS.
 
 ### Getting Started
 - <doc:Getting-Started>
+- <doc:OSC-Value-Types>
 - <doc:Sending-OSC>
 - <doc:Receiving-OSC>
 

@@ -22,12 +22,15 @@ import OSCKitCore
 - term ``OSCServer``: Receive OSC messages.
 - term ``OSCSocket``: Send and receive OSC messages using a single local port.
 
+## Value Types
+
+- <doc:OSC-Value-Types>
+
 ## Sending and Receiving
 
 - <doc:Sending-OSC>
 - <doc:Receiving-OSC>
   - <doc:OSC-Address-Pattern-Parsing>
-  - <doc:OSC-Value-Types>
   - <doc:OSC-Value-Parsing>
 
 ## Example Code

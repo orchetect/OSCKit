@@ -1,6 +1,6 @@
 # OSC Value Parsing
 
-OSCKit supports several convenient methods of parsing OSC Message value collections.
+Methods for parsing OSC Message value collections.
 
 @Comment {
     // -------------------------------------------------------------------

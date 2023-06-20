@@ -1,6 +1,6 @@
 # OSC Address Pattern Parsing
 
-OSCKit supports several convenient methods of parsing OSC Message address patterns.
+Methods for parsing OSC Message address patterns.
 
 @Comment {
     // -------------------------------------------------------------------

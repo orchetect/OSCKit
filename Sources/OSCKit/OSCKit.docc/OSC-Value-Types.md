@@ -1,6 +1,6 @@
 # OSC Value Types
 
-OSCKit supports a variety of OSC Message value types.
+OSC Message value types.
 
 @Comment {
     // -------------------------------------------------------------------
