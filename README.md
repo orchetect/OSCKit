@@ -35,10 +35,6 @@ This includes a getting started guide, links to examples, and troubleshooting ti
 - [CocoaAsyncSocket](https://github.com/robbiehanson/CocoaAsyncSocket) is used by the `OSCKit` target for network sockets.
 - [SwiftASCII](https://github.com/orchetect/SwiftASCII) is used for ASCII string and character formatting and validation.
 
-## Documentation
-
-Refer to this README for an overview of library features and syntax, and check out the [example projects](Examples).
-
 ## Author
 
 Coded by a bunch of 🐹 hamsters in a trenchcoat that calls itself [@orchetect](https://github.com/orchetect).
