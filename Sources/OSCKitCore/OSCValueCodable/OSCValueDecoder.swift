@@ -5,7 +5,12 @@
 //
 
 import Foundation
+
+#if compiler(>=5.10)
+/* private */ import SwiftASCII // ASCIIString
+#else
 @_implementationOnly import SwiftASCII // ASCIIString
+#endif
 
 private let defaultContextSingleton = OSCSerialization()
 

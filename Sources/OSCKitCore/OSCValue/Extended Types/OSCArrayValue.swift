@@ -5,7 +5,12 @@
 //
 
 import Foundation
+
+#if compiler(>=5.10)
+/* private */ import SwiftASCII // ASCIICharacter
+#else
 @_implementationOnly import SwiftASCII // ASCIICharacter
+#endif
 
 /// OSC value array (as an OSC value type itself).
 public struct OSCArrayValue {

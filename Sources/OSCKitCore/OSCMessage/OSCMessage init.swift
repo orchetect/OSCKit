@@ -5,7 +5,12 @@
 //
 
 import Foundation
+
+#if compiler(>=5.10)
+/* private */ import SwiftASCII // internal inits
+#else
 @_implementationOnly import SwiftASCII // internal inits
+#endif
 
 // NOTE: Overloads that take variadic values were tested,
 // however for code consistency and proper indentation, it is
