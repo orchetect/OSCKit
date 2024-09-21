@@ -4,8 +4,6 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
-#if shouldTestCurrentPlatform
-
 import XCTest
 @testable import OSCKitCore
 
@@ -97,5 +95,3 @@ final class OSCAddressSpace_Utilities_Tests: XCTestCase {
         )
     }
 }
-
-#endif

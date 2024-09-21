@@ -4,8 +4,6 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
-#if shouldTestCurrentPlatform
-
 import XCTest
 import OSCKitCore
 
@@ -32,5 +30,3 @@ final class OSCObject_Tests: XCTestCase {
         XCTAssertNil(Data([0x98, 0x42, 0x01, 0x7E]).oscObjectType)
     }
 }
-
-#endif

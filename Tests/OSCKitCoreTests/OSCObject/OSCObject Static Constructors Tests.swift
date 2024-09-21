@@ -4,8 +4,6 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
-#if shouldTestCurrentPlatform
-
 import XCTest
 import OSCKitCore
 import SwiftASCII
@@ -56,5 +54,3 @@ final class OSCObject_StaticConstructors_Tests: XCTestCase {
         XCTAssertEqual(msg.values[0] as? Int32, Int32(123))
     }
 }
-
-#endif

@@ -4,8 +4,6 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
-#if shouldTestCurrentPlatform
-
 import XCTest
 @testable import OSCKitCore
 import SwiftASCII
@@ -218,5 +216,3 @@ final class OSCAddressPattern_Tests: XCTestCase {
         )
     }
 }
-
-#endif

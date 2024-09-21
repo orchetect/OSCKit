@@ -4,8 +4,6 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
-#if shouldTestCurrentPlatform
-
 import XCTest
 import OSCKitCore
 
@@ -266,5 +264,3 @@ private let date1Jan2200: Date = DateComponents(
     minute: 0,
     second: 0
 ).date!
-
-#endif

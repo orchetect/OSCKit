@@ -4,6 +4,8 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
+#if !os(watchOS)
+
 import Foundation
 import CocoaAsyncSocket
 
@@ -206,3 +208,5 @@ extension OSCSocket {
         )
     }
 }
+
+#endif

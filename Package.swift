@@ -27,7 +27,14 @@ let package = Package(
     targets: [
         .target(
             name: "OSCKit",
-            dependencies: ["OSCKitCore", "CocoaAsyncSocket"]
+            dependencies: [
+                "OSCKitCore",
+                .product(
+                    name: "CocoaAsyncSocket",
+                    package: "CocoaAsyncSocket",
+                    condition: .when(platforms: [.macOS, .macCatalyst, .iOS, .tvOS, .visionOS, .driverKit])
+                )
+            ]
         ),
         .target(
             name: "OSCKitCore",
@@ -45,31 +52,3 @@ let package = Package(
         )
     ]
 )
-
-func addShouldTestFlag(toTarget targetName: String) {
-    // swiftSettings may be nil so we can't directly append to it
-    
-    var swiftSettings = package.targets
-        .first(where: { $0.name == targetName })?
-        .swiftSettings ?? []
-    
-    swiftSettings.append(.define("shouldTestCurrentPlatform"))
-    
-    package.targets
-        .first(where: { $0.name == targetName })?
-        .swiftSettings = swiftSettings
-}
-
-func addShouldTestFlags() {
-    addShouldTestFlag(toTarget: "OSCKitTests")
-    addShouldTestFlag(toTarget: "OSCKitCoreTests")
-}
-
-// Swift version in Xcode 12.5.1 which introduced watchOS testing
-#if os(watchOS) && swift(>=5.4.2)
-addShouldTestFlags()
-#elseif os(watchOS)
-// don't add flag
-#else
-addShouldTestFlags()
-#endif

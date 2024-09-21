@@ -4,8 +4,6 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
-#if shouldTestCurrentPlatform
-
 import XCTest
 import OSCKitCore
 
@@ -258,5 +256,3 @@ final class OSCObject_rawData_Tests: XCTestCase {
         }
     }
 }
-
-#endif

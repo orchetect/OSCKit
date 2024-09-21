@@ -4,8 +4,6 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
-#if shouldTestCurrentPlatform
-
 import XCTest
 import OSCKitCore
 
@@ -162,5 +160,3 @@ final class OSCMessage_Codable_Tests: XCTestCase {
 //        XCTAssertEqual(msg, decoded)
 //    }
 }
-
-#endif

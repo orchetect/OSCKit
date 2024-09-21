@@ -4,6 +4,8 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
+#if !os(watchOS)
+
 import Foundation
 import CocoaAsyncSocket
 import OSCKitCore
@@ -102,3 +104,5 @@ extension OSCServer {
         isStarted = false
     }
 }
+
+#endif

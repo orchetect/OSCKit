@@ -4,6 +4,8 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
+#if !os(watchOS)
+
 import Foundation
 import CocoaAsyncSocket
 
@@ -147,3 +149,5 @@ extension OSCClient {
 private final class OSCClientUDPDelegate: NSObject, GCDAsyncUdpSocketDelegate {
     // we don't care about handling any delegate methods here so none are overridden
 }
+
+#endif

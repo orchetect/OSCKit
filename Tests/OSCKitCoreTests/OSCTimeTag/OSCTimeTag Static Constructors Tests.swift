@@ -4,8 +4,6 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
-#if shouldTestCurrentPlatform
-
 import XCTest
 import OSCKitCore
 
@@ -78,5 +76,3 @@ private let primeEpoch: Date = DateComponents(
     minute: 0,
     second: 0
 ).date!
-
-#endif

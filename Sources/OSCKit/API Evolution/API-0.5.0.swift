@@ -4,6 +4,8 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
+#if !os(watchOS)
+
 import Foundation
 
 extension OSCServer {
@@ -15,3 +17,5 @@ extension OSCServer {
         localPort
     }
 }
+
+#endif

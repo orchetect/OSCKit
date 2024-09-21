@@ -4,8 +4,6 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
-#if shouldTestCurrentPlatform
-
 import XCTest
 @testable import OSCKitCore
 
@@ -327,5 +325,3 @@ final class OSCAddressPattern_Component_Token_Tests: XCTestCase {
         XCTAssertTrue(t.isExhausted)
     }
 }
-
-#endif

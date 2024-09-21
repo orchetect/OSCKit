@@ -4,8 +4,6 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
-#if shouldTestCurrentPlatform
-
 import XCTest
 @testable import OSCKitCore
 
@@ -148,5 +146,3 @@ final class OSCBundle_Integrity_Tests: XCTestCase {
         XCTAssertEqual(element4.elements.count, 0)
     }
 }
-
-#endif
