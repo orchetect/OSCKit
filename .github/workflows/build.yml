@@ -36,8 +36,8 @@ jobs:
     - name: Unit Tests
       run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "OSCKit-CI" -destination "platform=macOS" | xcpretty && exit ${PIPESTATUS[0]}
 
-  macOS Latest (Latest Stable Xcode):
-    name: macOS Latest
+  macOS:
+    name: macOS Latest (Latest Stable Xcode)
     runs-on: macos-latest
     steps:
     - uses: actions/checkout@main
