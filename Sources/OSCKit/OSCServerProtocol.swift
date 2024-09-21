@@ -5,7 +5,6 @@
 //
 
 import Foundation
-import CocoaAsyncSocket
 
 /// Internal protocol that all objects who act as an OSC server adopt.
 /// Provides shared logic.
@@ -80,25 +79,5 @@ extension _OSCServerProtocol {
         ) { [weak self] in
             self?.handler?(message, timeTag)
         }
-    }
-}
-
-/// Internal UDP receiver class so as to not expose `GCDAsyncUdpSocketDelegate` methods as public.
-internal class OSCServerUDPDelegate: NSObject, GCDAsyncUdpSocketDelegate {
-    weak var oscServer: _OSCServerProtocol?
-    
-    init(oscServer: _OSCServerProtocol? = nil) {
-        self.oscServer = oscServer
-    }
-    
-    /// CocoaAsyncSocket receive delegate method implementation.
-    func udpSocket(
-        _ sock: GCDAsyncUdpSocket,
-        didReceive data: Data,
-        fromAddress address: Data,
-        withFilterContext filterContext: Any?
-    ) {
-        guard let payload = try? data.parseOSC() else { return }
-        try? oscServer?.handle(payload: payload)
     }
 }
