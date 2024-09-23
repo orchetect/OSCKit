@@ -20,7 +20,7 @@ The library is available as a Swift Package Manager (SPM) package.
 
 Use the URL `https://github.com/orchetect/OSCKit` when adding the library to a project or Swift package.
 
-See the [getting started guide](https://orchetect.github.io/OSCKit/documentation/osckit/getting-started) for a detailed walkthrough of how to get the most out of OSCKit.
+See the [getting started guide](https://orchetect.github.io/OSCKit/documentation/osckit/getting-started-with-osckit) for a detailed walkthrough of how to get the most out of OSCKit.
 
 The [Examples](Examples) folder also contains projects to quickly get started.
 
