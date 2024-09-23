@@ -6,8 +6,8 @@
 
 import Foundation
 
-#if compiler(>=5.10)
-/* private */ import SwiftASCII // internal inits
+#if compiler(>=6.0)
+internal import SwiftASCII // internal inits
 #else
 @_implementationOnly import SwiftASCII // internal inits
 #endif
