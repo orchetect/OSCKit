@@ -16,7 +16,7 @@ extension OSCValues {
     ///     ``OSCValueToken/int32``, ``OSCValueToken/float32``, ``OSCValueToken/double``, or
     ///     ``OSCValueToken/int64``.
     ///
-    /// - parameter expectedMask: ``OSCValueToken`` array representing a positive mask match.
+    /// - parameter mask: ``OSCValueToken`` array representing a positive mask match.
     public func matches(
         mask: [OSCValueToken]
     ) -> Bool {
