@@ -8,7 +8,7 @@ import Foundation
 
 /// ``OSCValue`` type tokens, including optional variants and opaque types.
 /// Useful for abstractions that mask sequences of values.
-public enum OSCValueToken: Int, CaseIterable, Equatable, Hashable {
+public enum OSCValueToken: Int, CaseIterable {
     // concrete types
     
     // -- core types
@@ -62,6 +62,18 @@ public enum OSCValueToken: Int, CaseIterable, Equatable, Hashable {
     /// (``int32``, ``float32``, ``double``, ``int64``) for an expected value placeholder.
     case numberOptional // accepts any OSC number type
 }
+
+// MARK: - Equatable, Hashable
+
+extension OSCValueToken: Equatable, Hashable {
+    // implementation is automatically synthesized by Swift
+}
+
+// MARK: - Sendable
+
+extension OSCValueToken: Sendable { }
+
+// MARK: - Properties
 
 extension OSCValueToken {
     /// Returns base mask type (by stripping 'optional' component if present).

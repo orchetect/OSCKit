@@ -18,3 +18,9 @@ extension OSCAddressPattern {
         init() { }
     }
 }
+
+extension OSCAddressPattern.Component: Equatable { }
+
+extension OSCAddressPattern.Component: Hashable { }
+
+extension OSCAddressPattern.Component: Sendable { }

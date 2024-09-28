@@ -28,6 +28,10 @@ extension OSCNullValue: Equatable, Hashable {
     // implementation is automatically synthesized by Swift
 }
 
+// MARK: - Sendable
+
+extension OSCNullValue: Sendable { }
+
 // MARK: - CustomStringConvertible
 
 extension OSCNullValue: CustomStringConvertible {

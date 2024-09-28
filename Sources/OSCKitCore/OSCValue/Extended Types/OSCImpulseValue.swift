@@ -28,6 +28,10 @@ extension OSCImpulseValue: Equatable, Hashable {
     // implementation is automatically synthesized by Swift
 }
 
+// MARK: - Sendable
+
+extension OSCImpulseValue: Sendable { }
+
 // MARK: - CustomStringConvertible
 
 extension OSCImpulseValue: CustomStringConvertible {

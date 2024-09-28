@@ -34,6 +34,10 @@ extension OSCStringAltValue: Equatable, Hashable {
     // implementation is automatically synthesized by Swift
 }
 
+// MARK: - Sendable
+
+extension OSCStringAltValue: Sendable { }
+
 // MARK: - CustomStringConvertible
 
 extension OSCStringAltValue: CustomStringConvertible {

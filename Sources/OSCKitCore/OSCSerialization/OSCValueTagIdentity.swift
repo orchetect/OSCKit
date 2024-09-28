@@ -33,6 +33,12 @@ public enum OSCValueTagIdentity: Equatable, Hashable {
     case variadic(minCount: Int?, maxCount: Int?)
 }
 
+// MARK: - Sendable
+
+extension OSCValueTagIdentity: Sendable { }
+
+// MARK: - Methods
+
 extension OSCValueTagIdentity {
     /// Returns `true` if the identity matches the given tag.
     /// If the identity is variadic, `false` is always returned.

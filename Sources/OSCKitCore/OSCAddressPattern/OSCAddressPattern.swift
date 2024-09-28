@@ -70,6 +70,10 @@ extension OSCAddressPattern: Hashable {
     }
 }
 
+// MARK: - Sendable
+
+extension OSCAddressPattern: Sendable { }
+
 // MARK: - ExpressibleByStringLiteral
 
 extension OSCAddressPattern: ExpressibleByStringLiteral {

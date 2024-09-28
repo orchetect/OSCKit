@@ -7,11 +7,14 @@
 import Foundation
 
 extension OSCAddressSpace {
-    /// A closure executed when an inbound OSC message address pattern matches a local OSC method.
-    public typealias MethodBlock = (_ values: OSCValues) -> Void
-    
     /// A unique identifier corresponding to an OSC Method that was registered.
-    public struct MethodID: Equatable, Hashable {
+    public struct MethodID {
         let uuid = UUID()
     }
 }
+
+extension OSCAddressSpace.MethodID: Equatable { }
+
+extension OSCAddressSpace.MethodID: Hashable { }
+
+extension OSCAddressSpace.MethodID: Sendable { }

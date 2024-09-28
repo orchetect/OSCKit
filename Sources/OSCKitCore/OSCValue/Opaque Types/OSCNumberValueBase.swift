@@ -48,6 +48,10 @@ extension OSCNumberValueBase {
     }
 }
 
+// MARK: - Sendable
+
+extension OSCNumberValueBase: Sendable { }
+
 // MARK: - CustomStringConvertible
 
 extension OSCNumberValueBase: CustomStringConvertible {

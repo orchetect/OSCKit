@@ -56,6 +56,10 @@ extension OSCArrayValue: Hashable {
     }
 }
 
+// MARK: - Sendable
+
+extension OSCArrayValue: Sendable { }
+
 // MARK: - CustomStringConvertible
 
 extension OSCArrayValue: CustomStringConvertible {

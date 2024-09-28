@@ -71,6 +71,10 @@ extension OSCBundle: Hashable {
     }
 }
 
+// MARK: - Sendable
+
+extension OSCBundle: Sendable { }
+
 // MARK: - CustomStringConvertible
 
 extension OSCBundle: CustomStringConvertible {

@@ -47,6 +47,10 @@ extension OSCTimeTag: Equatable, Hashable {
     // implementation is automatically synthesized by Swift
 }
 
+// MARK: - Sendable
+
+extension OSCTimeTag: Sendable { }
+
 // MARK: - CustomStringConvertible
 
 extension OSCTimeTag: CustomStringConvertible {

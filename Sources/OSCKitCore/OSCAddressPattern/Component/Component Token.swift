@@ -7,7 +7,7 @@
 import Foundation
 
 extension OSCAddressPattern.Component {
-    enum Token: Equatable, Hashable {
+    enum Token {
         /// One or more sequential literal characters.
         case literal(String)
         
@@ -24,6 +24,12 @@ extension OSCAddressPattern.Component {
         case strings(strings: Set<String>)
     }
 }
+
+extension OSCAddressPattern.Component.Token: Equatable { }
+
+extension OSCAddressPattern.Component.Token: Hashable { }
+
+extension OSCAddressPattern.Component.Token: Sendable { }
 
 extension OSCAddressPattern.Component.Token {
     enum CharacterGroup: Equatable, Hashable {

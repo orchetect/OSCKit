@@ -74,6 +74,10 @@ extension OSCMIDIValue: Equatable, Hashable {
     // implementation is automatically synthesized by Swift
 }
 
+// MARK: - Sendable
+
+extension OSCMIDIValue: Sendable { }
+
 // MARK: - CustomStringConvertible
 
 extension OSCMIDIValue: CustomStringConvertible {

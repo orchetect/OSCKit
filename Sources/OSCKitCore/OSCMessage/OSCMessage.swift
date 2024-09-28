@@ -42,6 +42,10 @@ extension OSCMessage: Hashable {
     }
 }
 
+// MARK: - Sendable
+
+extension OSCMessage: Sendable { }
+
 // MARK: - CustomStringConvertible
 
 extension OSCMessage: CustomStringConvertible {

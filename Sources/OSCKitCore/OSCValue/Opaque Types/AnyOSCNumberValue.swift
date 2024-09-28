@@ -64,6 +64,10 @@ extension AnyOSCNumberValue: Hashable {
     // implementation is automatically synthesized by Swift
 }
 
+// MARK: - Sendable
+
+extension AnyOSCNumberValue: Sendable { }
+
 // MARK: - CustomStringConvertible
 
 extension AnyOSCNumberValue: CustomStringConvertible {

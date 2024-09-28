@@ -36,6 +36,9 @@ public final class OSCAddressSpace {
 // MARK: - Address Registration
 
 extension OSCAddressSpace {
+    /// A closure executed when an inbound OSC message address pattern matches a local OSC method.
+    public typealias MethodBlock = @Sendable (_ values: OSCValues) -> Void
+    
     /// Register an OSC address.
     /// Returns a unique identifier assigned to the address's method.
     /// Replaces existing reference if one exists for that method already.
