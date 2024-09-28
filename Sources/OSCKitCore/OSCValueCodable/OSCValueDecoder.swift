@@ -12,8 +12,6 @@ internal import SwiftASCII // ASCIIString
 @_implementationOnly import SwiftASCII // ASCIIString
 #endif
 
-private let defaultContextSingleton = OSCSerialization()
-
 /// ``OSCValue`` decoder.
 public struct OSCValueDecoder {
     weak var context: OSCSerialization?
@@ -31,7 +29,7 @@ public struct OSCValueDecoder {
         context: OSCSerialization? = nil
     ) {
         self.data = data
-        self.context = context ?? defaultContextSingleton
+        self.context = context ?? OSCSerialization.shared
     }
 }
 
