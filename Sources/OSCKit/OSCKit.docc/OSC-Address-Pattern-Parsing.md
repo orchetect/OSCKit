@@ -101,7 +101,7 @@ func performMethodB(_ str: String, _ int: Int?) { }
 
 - When registering a local method, it can also store a closure. This closure can be executed automatically when matching against a received OSC message's address pattern.
 - When an OSC message is received:
-  - Pass its address pattern to the ``OSCAddressSpace/dispatch(_:on:)``.
+  - Pass its address pattern to the ``OSCAddressSpace/dispatch(_:)``.
   - This method will pattern-match it against all registered local addresses and execute their closures, optionally on a specified queue.
   - It also returns an array of local method IDs that match exactly like ``OSCAddressSpace/methods(matching:)`` (which may be discarded if handling of unregistered/unrecognized methods is not needed).
   - If the returned method ID array is empty, that indicates that no methods matched the address pattern. In this case you may want to handle the unhandled message in a special way.
@@ -120,8 +120,8 @@ addressSpace.register(localAddress: "/some/address/methodB") { values in
 ```
 
 ```swift
-func handle(message: OSCMessage) throws {
-    let ids = addressSpace.dispatch(message)
+func handle(message: OSCMessage) async throws {
+    let ids = await addressSpace.dispatch(message)
     if ids.isEmpty {
         print("Received unhandled OSC message:", message)
     }

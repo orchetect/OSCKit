@@ -10,8 +10,6 @@ If not already set during initialization, you may set the receiver handler using
 
 ```swift
 oscServer.setHandler { [weak self] oscMessage, timeTag in
-    // Note: handler is called on the main thread
-    // and is thread-safe in case it results in UI updates
     do {
         try self?.handle(received: oscMessage)
     } catch {

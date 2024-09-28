@@ -6,6 +6,8 @@
 
 import Foundation
 
+// TODO: It is likely possible to refactor all of the masking methods to use newer Swift Parameter Packs
+
 extension OSCValues {
     /// Returns the OSC value sequence as a strongly typed tuple
     /// if it matches the given mask of concrete value types.

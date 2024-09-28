@@ -12,7 +12,7 @@ The remote port may be omitted, in which case the same port number as the local 
 let socket = OSCSocket(
     remoteHost: "192.168.0.2",
     remotePort: 10023
-) { message, _ in
+) { message, timeTag in
     print("Received \(message)")
 }
 ```

@@ -3,7 +3,7 @@
 ### Setup
 
 ```swift
-let oscServer = OSCServer(port: 8000) { message, _ in
+let oscServer = OSCServer(port: 8000) { [weak self] message, timeTag in
     print("Received \(message)")
 }
 ```

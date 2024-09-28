@@ -13,7 +13,7 @@ To send a single message, construct an ``OSCMessage`` and send it using the clie
 ```swift
 let msg = OSCMessage("/msg2", values: ["string", 123])
 
-oscClient.send(msg, to: "192.168.1.2", port: 8000)
+try oscClient.send(msg, to: "192.168.1.2", port: 8000)
 ```
 
 ### OSC Bundles
@@ -33,7 +33,7 @@ let bundle = OSCBundle([
 ])
 
 // send the bundle
-oscClient.send(bundle, to: "192.168.1.2", port: 8000)
+try oscClient.send(bundle, to: "192.168.1.2", port: 8000)
 ```
 
 #### Sending with a Future Time Tag
