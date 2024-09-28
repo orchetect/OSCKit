@@ -68,25 +68,25 @@ extension OSCValueToken {
     public var baseType: Self {
         switch self {
         // core types
-        case .blob,         .blobOptional:      return .blob
-        case .float32,      .float32Optional:   return .float32
-        case .int32,        .int32Optional:     return .int32
-        case .string,       .stringOptional:    return .string
+        case .blob,      .blobOptional:      return .blob
+        case .float32,   .float32Optional:   return .float32
+        case .int32,     .int32Optional:     return .int32
+        case .string,    .stringOptional:    return .string
             
         // extended types
-        case .array,        .arrayOptional:     return .array
-        case .bool,         .boolOptional:      return .bool
-        case .character,    .characterOptional: return .character
-        case .double,       .doubleOptional:    return .double
-        case .int64,        .int64Optional:     return .int64
-        case .impulse,      .impulseOptional:     return .impulse
-        case .midi,         .midiOptional:      return .midi
-        case .null,         .nullOptional:      return .null
-        case .stringAlt,    .stringAltOptional: return .stringAlt
-        case .timeTag,      .timeTagOptional:   return .timeTag
+        case .array,     .arrayOptional:     return .array
+        case .bool,      .boolOptional:      return .bool
+        case .character, .characterOptional: return .character
+        case .double,    .doubleOptional:    return .double
+        case .int64,     .int64Optional:     return .int64
+        case .impulse,   .impulseOptional:   return .impulse
+        case .midi,      .midiOptional:      return .midi
+        case .null,      .nullOptional:      return .null
+        case .stringAlt, .stringAltOptional: return .stringAlt
+        case .timeTag,   .timeTagOptional:   return .timeTag
             
         // opaque types
-        case .number,       .numberOptional:    return .number
+        case .number,    .numberOptional:    return .number
         }
     }
     
@@ -152,25 +152,25 @@ extension OSCValueToken {
     public var maskReturnType: OSCValueMaskable.Type {
         switch self {
         // core types
-        case .blob,         .blobOptional:      return Data.self
-        case .float32,      .float32Optional:   return Float32.self
-        case .int32,        .int32Optional:     return Int32.self
-        case .string,       .stringOptional:    return String.self
+        case .blob,      .blobOptional:      return Data.self
+        case .float32,   .float32Optional:   return Float32.self
+        case .int32,     .int32Optional:     return Int32.self
+        case .string,    .stringOptional:    return String.self
 
         // extended types
-        case .array,        .arrayOptional:     return OSCArrayValue.self
-        case .bool,         .boolOptional:      return Bool.self
-        case .character,    .characterOptional: return Character.self
-        case .double,       .doubleOptional:    return Double.self
-        case .int64,        .int64Optional:     return Int64.self
-        case .impulse,      .impulseOptional:   return OSCImpulseValue.self
-        case .midi,         .midiOptional:      return OSCMIDIValue.self
-        case .null,         .nullOptional:      return OSCNullValue.self
-        case .stringAlt,    .stringAltOptional: return String.self
-        case .timeTag,      .timeTagOptional:   return Int64.self
+        case .array,     .arrayOptional:     return OSCArrayValue.self
+        case .bool,      .boolOptional:      return Bool.self
+        case .character, .characterOptional: return Character.self
+        case .double,    .doubleOptional:    return Double.self
+        case .int64,     .int64Optional:     return Int64.self
+        case .impulse,   .impulseOptional:   return OSCImpulseValue.self
+        case .midi,      .midiOptional:      return OSCMIDIValue.self
+        case .null,      .nullOptional:      return OSCNullValue.self
+        case .stringAlt, .stringAltOptional: return String.self
+        case .timeTag,   .timeTagOptional:   return Int64.self
 
         // opaque types
-        case .number,       .numberOptional:    return AnyOSCNumberValue.self
+        case .number,    .numberOptional:    return AnyOSCNumberValue.self
         }
     }
 }

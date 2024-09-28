@@ -10,7 +10,7 @@ import Foundation
 ///
 /// Register custom value types to enable ``OSCValueDecoder`` and ``OSCValues`` `masked()` support
 /// for them.
-public final class OSCSerialization {
+public final class OSCSerialization { // TODO: convert to actor/globalActor?
     /// Shared singleton instance.
     public static let shared: OSCSerialization = .init()
     

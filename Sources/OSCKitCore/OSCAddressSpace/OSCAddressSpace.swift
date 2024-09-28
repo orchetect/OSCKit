@@ -149,7 +149,11 @@ extension OSCAddressSpace {
         methodNodes(patternMatching: address)
             .map { $0.id }
     }
-    
+}
+
+// MARK: - Dispatch
+
+extension OSCAddressSpace {
     /// Executes the closure blocks (and passes the OSC message values to them) for all local OSC
     /// address nodes matching the address pattern in the OSC message.
     /// If a `queue` is supplied, blocks will be dispatched on the `queue` with its default QoS.
