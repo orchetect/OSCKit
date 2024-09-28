@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E20B015B2898E40600950A28 /* OSCKit in Frameworks */ = {isa = PBXBuildFile; productRef = E20B015A2898E40600950A28 /* OSCKit */; };
+		E22C843D2CA8C12400FA3C54 /* OSCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22C843C2CA8C12300FA3C54 /* OSCManager.swift */; };
 		E2D003D5289882820073ED8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D003D4289882820073ED8F /* AppDelegate.swift */; };
 		E2D003E82898834E0073ED8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2D003E52898834E0073ED8F /* Assets.xcassets */; };
 		E2D003E92898834E0073ED8F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2D003E62898834E0073ED8F /* Main.storyboard */; };
@@ -15,6 +16,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E22C843C2CA8C12300FA3C54 /* OSCManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSCManager.swift; sourceTree = "<group>"; };
 		E2D003D1289882820073ED8F /* OSCKitSocketExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSCKitSocketExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2D003D4289882820073ED8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2D003E42898834E0073ED8F /* OSCKitSocketExample.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = OSCKitSocketExample.entitlements; sourceTree = "<group>"; };
@@ -59,6 +61,7 @@
 				E2D003E32898834E0073ED8F /* Support */,
 				E2D003D4289882820073ED8F /* AppDelegate.swift */,
 				E2DF011229E13953005FC4FD /* ViewController.swift */,
+				E22C843C2CA8C12300FA3C54 /* OSCManager.swift */,
 			);
 			path = OSCKitSocketExample;
 			sourceTree = "<group>";
@@ -150,6 +153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2DF011329E13953005FC4FD /* ViewController.swift in Sources */,
+				E22C843D2CA8C12400FA3C54 /* OSCManager.swift in Sources */,
 				E2D003D5289882820073ED8F /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

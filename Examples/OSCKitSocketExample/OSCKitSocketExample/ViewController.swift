@@ -23,20 +23,21 @@ class ViewController: NSViewController {
         // update AppDelegate properties
         
         let appDelegate = NSApplication.shared.delegate as? AppDelegate
+        let oscManager = appDelegate?.oscManager
         
-        appDelegate?.remoteHost = remoteHost.stringValue
+        oscManager?.remoteHost = remoteHost.stringValue
         
-        appDelegate?.localPort = !localPortNumber.stringValue.isEmpty
+        oscManager?.localPort = !localPortNumber.stringValue.isEmpty
             ? UInt16(localPortNumber.stringValue)
             : nil
         
-        appDelegate?.remotePort = !remotePortNumber.stringValue.isEmpty
+        oscManager?.remotePort = !remotePortNumber.stringValue.isEmpty
             ? UInt16(remotePortNumber.stringValue)
             : nil
         
-        appDelegate?.isPortReuseEnabled = enablePortReuse.state == .on
+        oscManager?.isPortReuseEnabled = enablePortReuse.state == .on
         
-        appDelegate?.isIPv4BroadcastEnabled = enableBroadcast.state == .on
+        oscManager?.isIPv4BroadcastEnabled = enableBroadcast.state == .on
         
         // update local UI
         

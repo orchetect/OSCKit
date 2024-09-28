@@ -9,35 +9,24 @@ import OSCKit
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
-    let oscClient = OSCClient()
-    let oscServer = OSCServer(port: 8000)
+    let oscManager = OSCManager()
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // setup server
-        
-        oscServer.setHandler { message, timeTag in
-            print(message, "with time tag:", timeTag)
-        }
-        // oscServer.isPortReuseEnabled = true
-        do { try oscServer.start() } catch { print(error) }
-        
-        // setup client
-        
-        // oscClient.isPortReuseEnabled = true
-        // oscClient.isIPv4BroadcastEnabled = true
-        do { try oscClient.start() } catch { print(error) }
+        oscManager.start()
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
-        oscServer.stop()
+        oscManager.stop()
     }
-    
+}
+
+extension AppDelegate {
     /// Send a test OSC message.
     @IBAction
     func sendTestOSCMessage(_ sender: Any) {
-        try? oscClient.send(
+        oscManager.send(
             .message("/some/address/method", values: ["Test string", 123]),
-            to: "localhost", // remote IP address or hostname
+            to: "localhost", // destination IP address or hostname
             port: 8000 // standard OSC port but can be changed
         )
     }

@@ -8,12 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		E20B015B2898E40600950A28 /* OSCKit in Frameworks */ = {isa = PBXBuildFile; productRef = E20B015A2898E40600950A28 /* OSCKit */; };
+		E22C84412CA8C57E00FA3C54 /* OSCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22C84402CA8C57C00FA3C54 /* OSCManager.swift */; };
 		E2D003D5289882820073ED8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D003D4289882820073ED8F /* AppDelegate.swift */; };
 		E2D003E82898834E0073ED8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2D003E52898834E0073ED8F /* Assets.xcassets */; };
 		E2D003E92898834E0073ED8F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2D003E62898834E0073ED8F /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E22C84402CA8C57C00FA3C54 /* OSCManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSCManager.swift; sourceTree = "<group>"; };
 		E2D003D1289882820073ED8F /* OSCKitBasicExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OSCKitBasicExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2D003D4289882820073ED8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2D003E42898834E0073ED8F /* OSCKitBasicExample.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = OSCKitBasicExample.entitlements; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			children = (
 				E2D003E32898834E0073ED8F /* Support */,
 				E2D003D4289882820073ED8F /* AppDelegate.swift */,
+				E22C84402CA8C57C00FA3C54 /* OSCManager.swift */,
 			);
 			path = OSCKitBasicExample;
 			sourceTree = "<group>";
@@ -147,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2D003D5289882820073ED8F /* AppDelegate.swift in Sources */,
+				E22C84412CA8C57E00FA3C54 /* OSCManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

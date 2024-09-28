@@ -9,38 +9,18 @@ import OSCKit
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
-    let oscClient = OSCClient()
-    let oscServer = OSCServer(port: 8000)
-    let oscReceiver = OSCReceiver()
+    let oscManager = OSCManager()
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        setupOSCServer()
+        oscManager.start()
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
-        oscServer.stop()
+        oscManager.stop()
     }
-    
-    /// Call once at app startup.
-    private func setupOSCServer() {
-        oscServer.setHandler { [weak self] message, timeTag in
-            do {
-                try self?.oscReceiver.handle(
-                    message: message,
-                    timeTag: timeTag
-                )
-            } catch {
-                print(error)
-            }
-        }
-        
-        do {
-            try oscServer.start()
-        } catch {
-            print(error)
-        }
-    }
-    
+}
+
+extension AppDelegate {
     /// Send a test OSC message.
     @IBAction
     func sendTestOSCMessage(_ sender: Any) {
@@ -49,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             values: ["Test string", 123]
         )
         
-        try? oscClient.send(
+        oscManager.send(
             oscMessage,
             to: "localhost", // IP address or hostname
             port: 8000 // standard OSC port but can be changed
