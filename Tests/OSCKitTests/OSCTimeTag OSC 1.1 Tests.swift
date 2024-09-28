@@ -10,7 +10,7 @@ import XCTest
 @testable import OSCKit
 
 final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
-    func testDefault() throws {
+    func testDefault() async throws {
         let server = OSCServer(timeTagMode: .ignore)
         
         let exp = expectation(description: "Message Dispatched")
@@ -23,12 +23,12 @@ final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
             .message("/test", values: [Int32(123)])
         ])
         
-        try server.handle(payload: bundle)
+        try await server.handle(payload: bundle)
         
-        wait(for: [exp], timeout: 0.5)
+        await fulfillment(of: [exp], timeout: 0.5)
     }
     
-    func testImmediate() throws {
+    func testImmediate() async throws {
         let server = OSCServer(timeTagMode: .ignore)
         
         let exp = expectation(description: "Message Dispatched")
@@ -42,12 +42,12 @@ final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
             [.message("/test", values: [Int32(123)])]
         )
         
-        try server.handle(payload: bundle)
+        try await server.handle(payload: bundle)
         
-        wait(for: [exp], timeout: 0.5)
+        await fulfillment(of: [exp], timeout: 0.5)
     }
     
-    func testNow() throws {
+    func testNow() async throws {
         let server = OSCServer(timeTagMode: .ignore)
         
         let exp = expectation(description: "Message Dispatched")
@@ -61,12 +61,12 @@ final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
             [.message("/test", values: [Int32(123)])]
         )
         
-        try server.handle(payload: bundle)
+        try await server.handle(payload: bundle)
         
-        wait(for: [exp], timeout: 0.5)
+        await fulfillment(of: [exp], timeout: 0.5)
     }
     
-    func test1SecondInFuture() throws {
+    func test1SecondInFuture() async throws {
         let server = OSCServer(timeTagMode: .ignore)
         
         let exp = expectation(description: "Message Dispatched")
@@ -80,12 +80,12 @@ final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
             [.message("/test", values: [Int32(123)])]
         )
         
-        try server.handle(payload: bundle)
+        try await server.handle(payload: bundle)
         
-        wait(for: [exp], timeout: 0.5)
+        await fulfillment(of: [exp], timeout: 0.5)
     }
     
-    func testPast() throws {
+    func testPast() async throws {
         let server = OSCServer(timeTagMode: .ignore)
         
         let exp = expectation(description: "Message Dispatched")
@@ -99,9 +99,9 @@ final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
             [.message("/test", values: [Int32(123)])]
         )
         
-        try server.handle(payload: bundle)
+        try await server.handle(payload: bundle)
         
-        wait(for: [exp], timeout: 0.5)
+        await fulfillment(of: [exp], timeout: 0.5)
     }
 }
 

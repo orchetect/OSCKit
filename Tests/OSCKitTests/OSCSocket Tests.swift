@@ -10,7 +10,7 @@ import XCTest
 @testable import OSCKit
 
 final class OSCSocket_Tests: XCTestCase {
-    func testEmptyBundle() throws {
+    func testEmptyBundle() async throws {
         let server = OSCSocket(remoteHost: "localhost")
         
         let exp = expectation(description: "Message Dispatched")
@@ -22,9 +22,9 @@ final class OSCSocket_Tests: XCTestCase {
         
         let bundle = OSCBundle()
         
-        try server.handle(payload: bundle)
+        try await server.handle(payload: bundle)
         
-        wait(for: [exp], timeout: 1.0)
+        await fulfillment(of: [exp], timeout: 1.0)
     }
 }
 
