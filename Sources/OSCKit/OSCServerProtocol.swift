@@ -5,13 +5,13 @@
 //
 
 import Foundation
+import OSCKitCore
 
 /// Internal protocol that all objects who act as an OSC server adopt.
 /// Provides shared logic.
 internal protocol _OSCServerProtocol: AnyObject {
     var timeTagMode: OSCTimeTagMode { get set }
-    var dispatchQueue: DispatchQueue { get }
-    var handler: ((_ message: OSCMessage, _ timeTag: OSCTimeTag) -> Void)? { get set }
+    var handler: OSCHandlerBlock? { get set }
 }
 
 // MARK: - Handle and Dispatch
@@ -21,15 +21,15 @@ extension _OSCServerProtocol {
     func handle(
         payload: any OSCObject,
         timeTag: OSCTimeTag = .immediate()
-    ) throws {
+    ) async throws {
         switch payload {
         case let bundle as OSCBundle:
             for element in bundle.elements {
-                try handle(payload: element, timeTag: bundle.timeTag)
+                try await handle(payload: element, timeTag: bundle.timeTag)
             }
             
         case let message as OSCMessage:
-            schedule(message, at: timeTag)
+            await schedule(message, at: timeTag)
             
         default:
             assertionFailure("Unexpected OSCObject type encountered.")
@@ -39,22 +39,22 @@ extension _OSCServerProtocol {
     func schedule(
         _ message: OSCMessage,
         at timeTag: OSCTimeTag = .immediate()
-    ) {
+    ) async {
         switch timeTagMode {
         case .ignore:
-            dispatch(message, timeTag: timeTag)
+            await dispatch(message, timeTag: timeTag)
             
         case .osc1_0:
             // TimeTag of 1 has special meaning in OSC to dispatch "now".
             if timeTag.isImmediate {
-                dispatch(message, timeTag: timeTag)
+                await dispatch(message, timeTag: timeTag)
                 return
             }
             
             // If Time Tag is <= now, dispatch immediately.
             // Otherwise, schedule message for future dispatch.
             guard timeTag.isFuture else {
-                dispatch(message, timeTag: timeTag)
+                await dispatch(message, timeTag: timeTag)
                 return
             }
             
@@ -63,10 +63,8 @@ extension _OSCServerProtocol {
         }
     }
     
-    func dispatch(_ message: OSCMessage, timeTag: OSCTimeTag) {
-        dispatchQueue.async {
-            self.handler?(message, timeTag)
-        }
+    func dispatch(_ message: OSCMessage, timeTag: OSCTimeTag) async {
+        await self.handler?(message, timeTag)
     }
     
     func dispatch(
@@ -74,10 +72,23 @@ extension _OSCServerProtocol {
         timeTag: OSCTimeTag,
         at secondsFromNow: TimeInterval
     ) {
-        dispatchQueue.asyncAfter(
-            deadline: .now() + secondsFromNow
-        ) { [weak self] in
-            self?.handler?(message, timeTag)
+        var secondsFromNow = secondsFromNow
+        
+        // clamp lower bound to 0
+        guard secondsFromNow > 0 else {
+            // don't schedule, just dispatch it immediately
+            Task { await dispatch(message, timeTag: timeTag) }
+            return
+        }
+        
+        // safety check: protect again overflow
+        let maxSeconds = TimeInterval(UInt64.max / 1_000_000_000)
+        secondsFromNow = min(secondsFromNow, maxSeconds)
+        let nanoseconds = UInt64(secondsFromNow * 1_000_000_000)
+        
+        Task {
+            try await Task.sleep(nanoseconds: nanoseconds)
+            await self.handler?(message, timeTag)
         }
     }
 }

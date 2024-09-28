@@ -25,8 +25,7 @@ public final class OSCSocket: NSObject, _OSCServerProtocol {
     let udpSocket = GCDAsyncUdpSocket()
     let udpDelegate = OSCServerUDPDelegate()
     let receiveQueue: DispatchQueue
-    let dispatchQueue: DispatchQueue
-    var handler: ((_ message: OSCMessage, _ timeTag: OSCTimeTag) -> Void)?
+    var handler: OSCHandlerBlock?
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
     public var timeTagMode: OSCTimeTagMode
@@ -114,9 +113,8 @@ public final class OSCSocket: NSObject, _OSCServerProtocol {
         remoteHost: String? = nil,
         remotePort: UInt16? = nil,
         receiveQueue: DispatchQueue = .main,
-        dispatchQueue: DispatchQueue = .main,
         timeTagMode: OSCTimeTagMode = .ignore,
-        handler: ((_ message: OSCMessage, _ timeTag: OSCTimeTag) -> Void)? = nil
+        handler: OSCHandlerBlock? = nil
     ) {
         self.remoteHost = remoteHost
         self._localPort = localPort
@@ -124,7 +122,6 @@ public final class OSCSocket: NSObject, _OSCServerProtocol {
         self.timeTagMode = timeTagMode
         
         self.receiveQueue = receiveQueue
-        self.dispatchQueue = dispatchQueue
         self.handler = handler
         
         super.init()
@@ -138,10 +135,9 @@ public final class OSCSocket: NSObject, _OSCServerProtocol {
     }
     
     /// Set the handler closure. This closure will be called when OSC bundles or messages are
-    /// received. The handler is called on the `dispatchQueue` queue specified at time of
-    /// initialization.
+    /// received.
     public func setHandler(
-        _ handler: @escaping (_ message: OSCMessage, _ timeTag: OSCTimeTag) -> Void
+        _ handler: OSCHandlerBlock?
     ) {
         self.handler = handler
     }
