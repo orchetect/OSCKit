@@ -25,7 +25,7 @@ In order for a custom type to be usable as an OSC message value:
 
 1. It must conform to the ``OSCValue`` protocol.
 
-   - This implies that the type also conform to `Equatable`, `Hashable`, ``OSCValueCodable`` and ``OSCValueMaskable``.
+   - This implies that the type also conform to `Equatable`, `Hashable`, `Sendable`, ``OSCValueCodable`` and ``OSCValueMaskable``.
    - See the `/Sources/OSCKitCore/OSCValue/` folder for examples of how the protocol adoptions have been implemented for existing types.
 
 2. It must be registered with the global ``OSCSerialization`` singleton.
