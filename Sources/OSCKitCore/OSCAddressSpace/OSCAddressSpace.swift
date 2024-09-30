@@ -181,12 +181,12 @@ extension OSCAddressSpace {
     @discardableResult
     public func dispatch(
         _ message: OSCMessage
-    ) async -> [MethodID] {
+    ) -> [MethodID] {
         let nodes = methodNodes(patternMatching: message.addressPattern)
         
         for node in nodes {
             guard let block = node.block else { continue }
-            await block(message.values)
+            Task { await block(message.values) }
         }
         
         return nodes

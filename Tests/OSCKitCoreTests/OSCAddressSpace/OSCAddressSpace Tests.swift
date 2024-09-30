@@ -540,7 +540,7 @@ final class OSCAddressSpace_Tests: XCTestCase {
         }
     }
     
-    func testDispatchMatching() async {
+    func testDispatchMatching() {
         let addressSpace = OSCAddressSpace()
         
         let test1Exp = expectation(description: "test1 Closure Called")
@@ -563,11 +563,11 @@ final class OSCAddressSpace_Tests: XCTestCase {
             test3Exp.fulfill()
         }
         
-        let methodIDs = await addressSpace.dispatch(
+        let methodIDs = addressSpace.dispatch(
             OSCMessage("/base/test?", values: ["A string", 123])
         )
         
-        await fulfillment(of: [test1Exp, test2Exp, test3Exp], timeout: 1.0)
+        wait(for: [test1Exp, test2Exp, test3Exp], timeout: 1.0)
         
         XCTAssertEqual(methodIDs.count, 2)
         XCTAssertTrue(methodIDs.contains(id1))
