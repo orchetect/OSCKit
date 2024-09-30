@@ -47,7 +47,7 @@ final class OSCReceiver {
     
     public func handle(message: OSCMessage, timeTag: OSCTimeTag) async throws {
         // execute closures for matching methods, and returns the matching method IDs
-        let methodIDs = await addressSpace.dispatch(message)
+        let methodIDs = addressSpace.dispatch(message)
         
         // if no IDs are returned, it means that the OSC message address pattern did not match any
         // that were registered
