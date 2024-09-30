@@ -158,7 +158,7 @@ extension OSCAddressSpace {
         var idx = patternComponents.startIndex
         while idx < patternComponents.endIndex {
             let isLast = idx == patternComponents.indices.last
-            nodes = nodes.reduce(into: [Node]()) {
+            nodes = nodes.reduce(into: []) {
                 let m = $1.children(matching: patternComponents[idx])
                 if isLast {
                     $0.append(contentsOf: m.filter(\.isMethod))
