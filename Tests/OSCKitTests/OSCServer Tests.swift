@@ -22,7 +22,7 @@ final class OSCServer_Tests: XCTestCase {
         
         let bundle = OSCBundle()
         
-        try await server.handle(payload: bundle)
+        try await server._handle(payload: bundle)
         
         await fulfillment(of: [exp], timeout: 1.0)
     }

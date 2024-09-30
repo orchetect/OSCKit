@@ -26,7 +26,7 @@ internal class OSCServerUDPDelegate: NSObject, GCDAsyncUdpSocketDelegate {
     ) {
         guard let payload = try? data.parseOSC() else { return }
         guard let oscServer else { return }
-        Task { try? await oscServer.handle(payload: payload) }
+        Task { try? await oscServer._handle(payload: payload) }
     }
 }
 

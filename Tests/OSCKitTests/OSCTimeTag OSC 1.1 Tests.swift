@@ -23,7 +23,7 @@ final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
             .message("/test", values: [Int32(123)])
         ])
         
-        try await server.handle(payload: bundle)
+        try await server._handle(payload: bundle)
         
         await fulfillment(of: [exp], timeout: 0.5)
     }
@@ -42,7 +42,7 @@ final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
             [.message("/test", values: [Int32(123)])]
         )
         
-        try await server.handle(payload: bundle)
+        try await server._handle(payload: bundle)
         
         await fulfillment(of: [exp], timeout: 0.5)
     }
@@ -61,7 +61,7 @@ final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
             [.message("/test", values: [Int32(123)])]
         )
         
-        try await server.handle(payload: bundle)
+        try await server._handle(payload: bundle)
         
         await fulfillment(of: [exp], timeout: 0.5)
     }
@@ -80,7 +80,7 @@ final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
             [.message("/test", values: [Int32(123)])]
         )
         
-        try await server.handle(payload: bundle)
+        try await server._handle(payload: bundle)
         
         await fulfillment(of: [exp], timeout: 0.5)
     }
@@ -99,7 +99,7 @@ final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
             [.message("/test", values: [Int32(123)])]
         )
         
-        try await server.handle(payload: bundle)
+        try await server._handle(payload: bundle)
         
         await fulfillment(of: [exp], timeout: 0.5)
     }
