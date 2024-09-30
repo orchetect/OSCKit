@@ -24,7 +24,7 @@ import CocoaAsyncSocket
 public final class OSCSocket: NSObject, _OSCServerProtocol {
     let udpSocket = GCDAsyncUdpSocket()
     let udpDelegate = OSCServerUDPDelegate()
-    let receiveQueue: DispatchQueue
+    let receiveQueue = DispatchQueue(label: "org.orchetect.OSCKit.OSCSocket.receiveQueue")
     var handler: OSCHandlerBlock?
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
@@ -35,7 +35,6 @@ public final class OSCSocket: NSObject, _OSCServerProtocol {
     /// overridden using the `host` parameter in the call to ``send(_:to:port:)``..
     public var remoteHost: String?
     
-    private var _localPort: UInt16?
     /// Local UDP port used to both send OSC packets from and listen for incoming packets.
     /// This may only be set at the time of class initialization.
     ///
@@ -48,8 +47,8 @@ public final class OSCSocket: NSObject, _OSCServerProtocol {
     public var localPort: UInt16 {
         udpSocket.localPort()
     }
+    private var _localPort: UInt16?
     
-    private var _remotePort: UInt16?
     /// UDP port used by to send OSC packets. This may be set at any time.
     /// This port will be used in calls to ``send(_:to:port:)``. The port may still be overridden
     /// using the `port` parameter in the call to ``send(_:to:port:)``.
@@ -60,6 +59,7 @@ public final class OSCSocket: NSObject, _OSCServerProtocol {
         get { _remotePort ?? localPort }
         set { _remotePort = newValue }
     }
+    private var _remotePort: UInt16?
     
     private var _isIPv4BroadcastEnabled: Bool = false
     /// Enable sending IPv4 broadcast messages from the socket.
@@ -112,7 +112,6 @@ public final class OSCSocket: NSObject, _OSCServerProtocol {
         localPort: UInt16? = nil,
         remoteHost: String? = nil,
         remotePort: UInt16? = nil,
-        receiveQueue: DispatchQueue = .main,
         timeTagMode: OSCTimeTagMode = .ignore,
         handler: OSCHandlerBlock? = nil
     ) {
@@ -120,8 +119,6 @@ public final class OSCSocket: NSObject, _OSCServerProtocol {
         self._localPort = localPort
         self._remotePort = remotePort
         self.timeTagMode = timeTagMode
-        
-        self.receiveQueue = receiveQueue
         self.handler = handler
         
         super.init()
