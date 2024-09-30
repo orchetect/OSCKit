@@ -159,8 +159,7 @@ extension OSCAddressSpace {
 extension OSCAddressSpace {
     /// Executes the closure blocks (and passes the OSC message values to them) for all local OSC
     /// address nodes matching the address pattern in the OSC message.
-    /// If a `queue` is supplied, blocks will be dispatched on the `queue` with its default QoS.
-    /// If no `queue` is supplied, the closures are dispatched synchronously on the current queue.
+    /// address nodes matching the address pattern in the OSC message.
     ///
     /// - Remark: An OSC Method is defined as being the last path component in the address. OSC
     ///   Methods are the potential destinations of OSC messages received by the OSC server and

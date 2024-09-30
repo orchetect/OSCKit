@@ -120,8 +120,8 @@ addressSpace.register(localAddress: "/some/address/methodB") { values in
 ```
 
 ```swift
-func handle(message: OSCMessage) async throws {
-    let ids = await addressSpace.dispatch(message)
+func handle(message: OSCMessage) throws {
+    let ids = addressSpace.dispatch(message)
     if ids.isEmpty {
         print("Received unhandled OSC message:", message)
     }
