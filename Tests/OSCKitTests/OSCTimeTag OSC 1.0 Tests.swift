@@ -24,7 +24,7 @@ import Testing
             
             await server._handle(payload: bundle)
             
-            try await Task.sleep(for: .seconds(0.5))
+            try await Task.sleep(seconds: 0.5)
         }
     }
     
@@ -43,7 +43,7 @@ import Testing
             
             await server._handle(payload: bundle)
             
-            try await Task.sleep(for: .seconds(0.5))
+            try await Task.sleep(seconds: 0.5)
         }
     }
     
@@ -62,7 +62,7 @@ import Testing
             
             await server._handle(payload: bundle)
             
-            try await Task.sleep(for: .seconds(0.5))
+            try await Task.sleep(seconds: 0.5)
         }
     }
     
@@ -83,7 +83,7 @@ import Testing
             
             await server._handle(payload: bundle)
             
-            try await Task.sleep(for: .seconds(0.9)) // just under 1 second
+            try await Task.sleep(seconds: 0.9) // just under 1 second
         }
     }
     
@@ -105,7 +105,7 @@ import Testing
             await server._handle(payload: bundle)
             
             // Note: this may be flaky on slow CI systems
-            try await Task.sleep(for: .seconds(1.1)) // just over 1 second
+            try await Task.sleep(seconds: 1.1) // just over 1 second
         }
     }
     
@@ -124,7 +124,7 @@ import Testing
             
             await server._handle(payload: bundle)
             
-            try await Task.sleep(for: .seconds(0.5))
+            try await Task.sleep(seconds: 0.5)
         }
     }
 }

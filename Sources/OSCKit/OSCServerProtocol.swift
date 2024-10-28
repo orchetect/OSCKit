@@ -72,8 +72,6 @@ extension _OSCServerProtocol {
         timeTag: OSCTimeTag,
         at secondsFromNow: TimeInterval
     ) async {
-        var secondsFromNow = secondsFromNow
-        
         // clamp lower bound to 0
         guard secondsFromNow > 0 else {
             // don't schedule, just dispatch it immediately
@@ -81,13 +79,8 @@ extension _OSCServerProtocol {
             return
         }
         
-        // safety check: protect again overflow
-        let maxSeconds = TimeInterval(UInt64.max / 1_000_000_000)
-        secondsFromNow = min(secondsFromNow, maxSeconds)
-        let nanoseconds = UInt64(secondsFromNow * 1_000_000_000)
-        
         Task {
-            try? await Task.sleep(nanoseconds: nanoseconds)
+            try? await Task.sleep(seconds: secondsFromNow)
             await self.handler?(message, timeTag)
         }
     }

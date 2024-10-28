@@ -22,7 +22,7 @@ import Testing
             
             await server._handle(payload: bundle)
             
-            try await Task.sleep(for: .seconds(1))
+            try await Task.sleep(seconds: 1)
         }
     }
 }

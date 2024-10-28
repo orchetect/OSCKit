@@ -24,7 +24,7 @@ import Testing
             
             await server._handle(payload: bundle)
             
-            try await Task.sleep(for: .seconds(0.5))
+            try await Task.sleep(seconds: 0.5)
         }
     }
     
@@ -43,7 +43,7 @@ import Testing
             
             await server._handle(payload: bundle)
             
-            try await Task.sleep(for: .seconds(0.5))
+            try await Task.sleep(seconds: 0.5)
         }
     }
     
@@ -62,7 +62,7 @@ import Testing
             
             await server._handle(payload: bundle)
             
-            try await Task.sleep(for: .seconds(0.5))
+            try await Task.sleep(seconds: 0.5)
         }
     }
     
@@ -81,7 +81,7 @@ import Testing
             
             await server._handle(payload: bundle)
             
-            try await Task.sleep(for: .seconds(0.5))
+            try await Task.sleep(seconds: 0.5)
         }
     }
     
@@ -100,7 +100,7 @@ import Testing
             
             await server._handle(payload: bundle)
             
-            try await Task.sleep(for: .seconds(0.5))
+            try await Task.sleep(seconds: 0.5)
         }
     }
 }
