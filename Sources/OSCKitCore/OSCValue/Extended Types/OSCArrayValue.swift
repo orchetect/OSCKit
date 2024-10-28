@@ -37,14 +37,24 @@ extension OSCValue where Self == OSCArrayValue {
 // MARK: - Equatable
 
 extension OSCArrayValue: Equatable {
+    // custom operator logic is needed because array contains `any OSCValue`
     public static func == (lhs: Self, rhs: Self) -> Bool {
-        guard lhs.elements.count == lhs.elements.count else { return false }
-        for (lhsIndex, rhsIndex) in zip(lhs.elements.indices, rhs.elements.indices) {
-            guard lhs.elements[lhsIndex] == rhs.elements[rhsIndex] else {
-                return false
-            }
-        }
-        return true
+        lhs.elements == rhs.elements
+    }
+    
+    // additional operator overloads:
+    
+    public static func == (lhs: Self, rhs: [any OSCValue]) -> Bool {
+        lhs.elements == rhs
+    }
+    public static func != (lhs: Self, rhs: [any OSCValue]) -> Bool {
+        lhs.elements != rhs
+    }
+    public static func == (lhs: [any OSCValue], rhs: Self) -> Bool {
+        lhs == rhs.elements
+    }
+    public static func != (lhs: [any OSCValue], rhs: Self) -> Bool {
+        lhs != rhs.elements
     }
 }
 
