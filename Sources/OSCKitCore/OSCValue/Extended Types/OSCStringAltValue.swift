@@ -62,7 +62,7 @@ extension OSCStringAltValue: Sendable { }
 
 extension OSCStringAltValue: CustomStringConvertible {
     public var description: String {
-        "\(string)"
+        string
     }
 }
 
