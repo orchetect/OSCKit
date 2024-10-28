@@ -7,18 +7,12 @@
 /// Convenience typealias for `any` ``OSCValue``.
 public typealias AnyOSCValue = any OSCValue
 
-/// Compare two ``OSCValue`` instances.
-///
-/// - Note: This method is implemented as global since Swift will not allow ``AnyOSCValue``
-///   (`any OSCValue`) to conform to `Equatable`.
-public func == (lhs: AnyOSCValue, rhs: AnyOSCValue) -> Bool {
-    AnyHashable(lhs) == AnyHashable(rhs)
-}
-
-/// Compare two ``OSCValue`` instances.
-///
-/// - Note: This method is implemented as global since Swift will not allow ``AnyOSCValue``
-///   (`any OSCValue`) to conform to `Equatable`.
-public func != (lhs: AnyOSCValue, rhs: AnyOSCValue) -> Bool {
-    AnyHashable(lhs) != AnyHashable(rhs)
+extension OSCValue {
+    /// Compare hashes of two ``OSCValue`` instances.
+    ///
+    /// - Note: This method is a workaround since the compiler will not allow ``AnyOSCValue`` (`any OSCValue`) to be
+    ///   seen as conforming to `Equatable`.
+    func hashMatches(_ other: AnyOSCValue) -> Bool {
+        AnyHashable(self) == AnyHashable(other)
+    }
 }
