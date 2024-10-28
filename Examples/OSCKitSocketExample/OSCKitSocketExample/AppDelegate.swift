@@ -17,19 +17,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     @IBAction
     func startOSCPeer(_ sender: Any?) {
-        oscManager.start()
+        Task { await oscManager.start() }
     }
     
     @IBAction
     func stopOSCPeer(_ sender: Any?) {
-        oscManager.stop()
+        Task { await oscManager.stop() }
     }
     
     /// Send a test OSC message.
     @IBAction
     func sendTestOSCMessage(_ sender: Any?) {
-        oscManager.send(
-            .message("/some/address/method", values: ["Test string", 123])
-        )
+        Task {
+            await oscManager.send(
+                .message("/some/address/method", values: ["Test string", 123])
+            )
+        }
     }
 }

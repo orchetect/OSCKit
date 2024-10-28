@@ -12,11 +12,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     let oscManager = OSCManager()
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        oscManager.start()
+        Task { await oscManager.start() }
     }
     
     func applicationWillTerminate(_ aNotification: Notification) {
-        oscManager.stop()
+        Task { await oscManager.stop() }
     }
 }
 

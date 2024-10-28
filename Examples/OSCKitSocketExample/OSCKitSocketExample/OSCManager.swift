@@ -18,44 +18,43 @@ final class OSCManager {
     var isIPv4BroadcastEnabled: Bool = false
     
     init() { }
-    
-    deinit {
-        stop()
-    }
 }
 
 // MARK: - Lifecycle
 
 extension OSCManager {
     /// Call this once on app launch.
-    func start() {
-        guard socket == nil else { return }
-        
+    func start() async {
         do {
+            guard socket == nil else { return }
+            
             let newSocket = OSCSocket(
                 localPort: localPort,
                 remoteHost: remoteHost,
-                remotePort: remotePort
-            ) { message, timeTag in
-                print(message, "with time tag: \(timeTag)")
-            }
+                remotePort: remotePort,
+                isIPv4BroadcastEnabled: isPortReuseEnabled,
+                isPortReuseEnabled: isIPv4BroadcastEnabled
+            )
             socket = newSocket
             
-            newSocket.isPortReuseEnabled = isPortReuseEnabled
-            newSocket.isIPv4BroadcastEnabled = isIPv4BroadcastEnabled
+            await newSocket.setHandler { message, timeTag in
+                print(message, "with time tag: \(timeTag)")
+            }
             
-            try newSocket.start()
+            try await newSocket.start()
             
+            let lp = await newSocket.localPort
+            let rp = await newSocket.remotePort
             print(
-                "Using local port \(newSocket.localPort) and remote port \(newSocket.remotePort) with remote host \(remoteHost)."
+                "Using local port \(lp) and remote port \(rp) with remote host \(remoteHost)."
             )
         } catch {
             print("Error while starting OSC socket: \(error)")
         }
     }
     
-    func stop() {
-        socket?.stop()
+    func stop() async {
+        await socket?.stop()
         socket = nil
     }
 }
@@ -63,9 +62,9 @@ extension OSCManager {
 // MARK: - Send
 
 extension OSCManager {
-    func send(_ message: OSCMessage) {
+    func send(_ message: OSCMessage) async {
         do {
-            try socket?.send(message)
+            try await socket?.send(message)
         } catch {
             print(error)
         }

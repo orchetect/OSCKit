@@ -14,17 +14,13 @@ final class OSCManager {
     private let receiver = OSCReceiver()
     
     init() { }
-    
-    deinit {
-        stop()
-    }
 }
 
 // MARK: - Lifecycle
 
 extension OSCManager {
     /// Call once at app startup.
-    func start() {
+    func start() async {
         // setup client
         
         // client.isPortReuseEnabled = true // optionally enable port reuse
@@ -33,7 +29,7 @@ extension OSCManager {
         
         // setup server
         
-        server.setHandler { [weak self] message, timeTag in
+        await server.setHandler { [weak self] message, timeTag in
             do {
                 try self?.receiver.handle(
                     message: message,
@@ -45,12 +41,12 @@ extension OSCManager {
         }
         
         // server.isPortReuseEnabled = true // optionally enable port reuse
-        do { try server.start() } catch { print(error) }
+        do { try await server.start() } catch { print(error) }
     }
     
-    func stop() {
+    func stop() async {
         client.stop()
-        server.stop()
+        await server.stop()
     }
 }
 
