@@ -20,14 +20,11 @@ import Foundation
     
     /// Singleton init.
     init() {
-        Task {
-            do {
-                try await registerDefaultTypes()
-            } catch {
-                assertionFailure(
-                    "One or more types were already registered while initializing. This should not happen."
-                )
-            }
+        // register default types synchronously so they are available immediately
+        for oscValueType in Self.standardTypes {
+            tagIdentities.append(
+                (oscValueType.oscTagIdentity, oscValueType.self)
+            )
         }
     }
     
@@ -35,7 +32,15 @@ import Foundation
     /// encoding and decoding.
     public func registerType(_ oscValueType: any OSCValueCodable.Type) throws {
         // throw an error if user attempts to register an already existing type tag
+        try canRegisterType(oscValueType)
         
+        // add type's tag identity
+        tagIdentities.append(
+            (oscValueType.oscTagIdentity, oscValueType.self)
+        )
+    }
+    
+    private func canRegisterType(_ oscValueType: any OSCValueCodable.Type) throws {
         let staticTags = oscValueType
             .oscTagIdentity
             .staticTags()
@@ -46,41 +51,33 @@ import Foundation
                 throw OSCSerializationError.tagAlreadyRegistered
             }
         }
-        
-        // add type's tag identity
-        tagIdentities.append(
-            (oscValueType.oscTagIdentity, oscValueType.self)
-        )
     }
 }
 
 extension OSCSerialization {
-    /// Internal:
-    /// Register basic / default types.
-    /// This is called on singleton initialization and should not be called manually otherwise.
-    func registerDefaultTypes() throws {
-        try registerType(Int32.self)
-        try registerType(Float32.self)
-        try registerType(String.self)
-        try registerType(Data.self)
+    static let standardTypes: [any OSCValueCodable.Type] = [
+        Int32.self,
+        Float32.self,
+        String.self,
+        Data.self,
         
         // extended types
-        try registerType(Bool.self)
-        try registerType(Character.self)
-        try registerType(Double.self)
-        try registerType(Int64.self)
-        try registerType(OSCImpulseValue.self)
-        try registerType(OSCMIDIValue.self)
-        try registerType(OSCNullValue.self)
-        try registerType(OSCStringAltValue.self)
-        try registerType(OSCTimeTag.self)
+        Bool.self,
+        Character.self,
+        Double.self,
+        Int64.self,
+        OSCImpulseValue.self,
+        OSCMIDIValue.self,
+        OSCNullValue.self,
+        OSCStringAltValue.self,
+        OSCTimeTag.self,
         
         // variadic
-        // registerType(OSCValues.self) // can't use `any OSC Value` as a type :(
+        // OSCValues.self, // can't use `any OSC Value` as a type :(
         
         // this should be registered last in order
-        try registerType(OSCArrayValue.self)
-    }
+        OSCArrayValue.self
+    ]
     
     /// Internal:
     /// Returns tag identities for a given OSC-type tag character.
