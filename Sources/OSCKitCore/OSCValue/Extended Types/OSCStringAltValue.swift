@@ -30,7 +30,27 @@ extension OSCValue where Self == OSCStringAltValue {
 
 // MARK: - Equatable, Hashable
 
-extension OSCStringAltValue: Equatable, Hashable {
+extension OSCStringAltValue: Equatable {
+    // same-type implementation is automatically synthesized by Swift
+    
+    // additional operator overloads:
+    
+    public static func == (lhs: OSCStringAltValue, rhs: some StringProtocol) -> Bool {
+        lhs.string == rhs
+    }
+    public static func != (lhs: OSCStringAltValue, rhs: some StringProtocol) -> Bool {
+        lhs.string != rhs
+    }
+    
+    public static func == (lhs: some StringProtocol, rhs: OSCStringAltValue) -> Bool {
+        lhs == rhs.string
+    }
+    public static func != (lhs: some StringProtocol, rhs: OSCStringAltValue) -> Bool {
+        lhs != rhs.string
+    }
+}
+
+extension OSCStringAltValue: Hashable {
     // implementation is automatically synthesized by Swift
 }
 
