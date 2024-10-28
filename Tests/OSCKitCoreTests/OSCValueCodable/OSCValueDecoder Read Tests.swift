@@ -236,6 +236,19 @@ final class OSCValueDecoder_Read_Tests: XCTestCase {
         XCTAssertThrowsError(try decoder.readBlob())
     }
     
+    func testReadBlob_Padding_Malformed_LengthTooLarge() {
+        var data = Data()
+        data += [0x7F, 0x9F, 0xEF, 0xAE] // int32 data length value is way too large
+        data += [
+            1, 2, 3, 4,
+            5, 6, 7, 8,
+            9, 0x00, 0x00, 0x00
+        ] // valid data
+        
+        var decoder = OSCValueDecoder(data: data)
+        XCTAssertThrowsError(try decoder.readBlob())
+    }
+    
     func testReadBytesCount() {
         // (test harness)
         func newDecoder(readByteLength: Int) throws -> Data {
