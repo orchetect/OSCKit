@@ -4,8 +4,8 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
-import XCTest
 @testable import OSCKitCore
+import XCTest
 
 final class OSCBundle_rawData_Tests: XCTestCase {
     // swiftformat:options --wrapcollections preserve

@@ -6,8 +6,8 @@
 
 #if !os(watchOS)
 
-import Foundation
 @preconcurrency import CocoaAsyncSocket
+import Foundation
 
 /// Sends and receives OSC packets over the network by binding a single local UDP port to both send
 /// OSC packets from and listen for incoming packets.
@@ -47,6 +47,7 @@ public actor OSCSocket: _OSCServerProtocol {
     public var localPort: UInt16 {
         udpSocket.localPort()
     }
+
     private var _localPort: UInt16?
     
     /// UDP port used by to send OSC packets. This may be set at any time.
@@ -59,6 +60,7 @@ public actor OSCSocket: _OSCServerProtocol {
         get { _remotePort ?? localPort }
         set { _remotePort = newValue }
     }
+
     private var _remotePort: UInt16?
     
     /// Enable sending IPv4 broadcast messages from the socket.
@@ -118,8 +120,8 @@ public actor OSCSocket: _OSCServerProtocol {
         handler: OSCHandlerBlock? = nil
     ) {
         self.remoteHost = remoteHost
-        self._localPort = localPort
-        self._remotePort = remotePort
+        _localPort = localPort
+        _remotePort = remotePort
         self.timeTagMode = timeTagMode
         self.isIPv4BroadcastEnabled = isIPv4BroadcastEnabled
         self.isPortReuseEnabled = isPortReuseEnabled

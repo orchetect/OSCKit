@@ -6,8 +6,8 @@
 
 #if !os(watchOS)
 
-import Foundation
 @preconcurrency import CocoaAsyncSocket
+import Foundation
 
 /// Sends OSC packets over the network using the UDP network protocol.
 ///

@@ -86,11 +86,11 @@ extension OSCSerialization {
             .filter {
                 switch $0.0 {
                 case let .atomic(char):
-                    return char == character
+                    char == character
                 case let .variable(chars):
-                    return chars.contains(character)
+                    chars.contains(character)
                 case .variadic:
-                    return true
+                    true
                 }
             }
             .map { $0.1 }

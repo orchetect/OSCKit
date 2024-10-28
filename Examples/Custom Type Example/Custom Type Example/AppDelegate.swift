@@ -32,7 +32,7 @@ extension AppDelegate {
     /// Send a test OSC message.
     @IBAction
     func sendTestOSCMessage(_ sender: Any) {
-        let customType = CustomType(id: Int.random(in: 0...9), name: UUID().uuidString)
+        let customType = CustomType(id: Int.random(in: 0 ... 9), name: UUID().uuidString)
         oscManager.send(
             .message("/test", values: [customType]),
             to: "localhost", // destination IP address or hostname

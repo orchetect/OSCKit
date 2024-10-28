@@ -6,8 +6,8 @@
 
 #if !os(watchOS)
 
-import XCTest
 @testable import OSCKit
+import XCTest
 
 final class OSCTimeTag_OSC1_0_Tests: XCTestCase {
     func testDefault() async throws {

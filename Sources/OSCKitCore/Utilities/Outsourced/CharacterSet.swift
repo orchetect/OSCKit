@@ -23,8 +23,8 @@ extension CharacterSet {
     init(_ characters: [Character]) {
         self.init()
         
-        characters.forEach {
-            $0.unicodeScalars.forEach { insert($0) }
+        for character in characters {
+            character.unicodeScalars.forEach { insert($0) }
         }
     }
 }

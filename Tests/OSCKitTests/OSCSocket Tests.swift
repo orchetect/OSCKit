@@ -6,8 +6,8 @@
 
 #if !os(watchOS)
 
-import XCTest
 @testable import OSCKit
+import XCTest
 
 final class OSCSocket_Tests: XCTestCase {
     func testEmptyBundle() async throws {

@@ -4,9 +4,9 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
-import XCTest
 @testable import OSCKitCore
 import SwiftASCII
+import XCTest
 
 final class OSCValueTokenMethods_Tests: XCTestCase {
     override func setUp() { super.setUp() }
@@ -21,7 +21,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         let valType: OSCValueToken = .blob
         
         // includingOpaque: false
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
@@ -31,7 +31,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
         
         // includingOpaque: true
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(
@@ -53,7 +53,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         let valType: OSCValueToken = .float32
         
         // includingOpaque: false
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
@@ -63,7 +63,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
         
         // includingOpaque: true
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType, .number:
                 XCTAssertTrue(
@@ -85,7 +85,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         let valType: OSCValueToken = .int32
         
         // includingOpaque: false
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
@@ -95,7 +95,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
         
         // includingOpaque: true
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType, .number:
                 XCTAssertTrue(
@@ -117,7 +117,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         let valType: OSCValueToken = .string
         
         // includingOpaque: false
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
@@ -127,7 +127,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
         
         // includingOpaque: true
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(
@@ -151,7 +151,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         let valType: OSCValueToken = .array
         
         // includingOpaque: false
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
@@ -161,7 +161,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
         
         // includingOpaque: true
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(
@@ -183,7 +183,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         let valType: OSCValueToken = .bool
         
         // includingOpaque: false
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
@@ -193,7 +193,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
         
         // includingOpaque: true
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(
@@ -215,7 +215,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         let valType: OSCValueToken = .character
         
         // includingOpaque: false
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
@@ -225,7 +225,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
         
         // includingOpaque: true
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(
@@ -247,7 +247,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         let valType: OSCValueToken = .double
         
         // includingOpaque: false
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
@@ -257,7 +257,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
         
         // includingOpaque: true
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType, .number:
                 XCTAssertTrue(
@@ -279,7 +279,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         let valType: OSCValueToken = .int64
         
         // includingOpaque: false
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
@@ -289,7 +289,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
         
         // includingOpaque: true
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType, .number:
                 XCTAssertTrue(
@@ -311,7 +311,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         let valType: OSCValueToken = .impulse
         
         // includingOpaque: false
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
@@ -321,7 +321,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
         
         // includingOpaque: true
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(
@@ -343,7 +343,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         let valType: OSCValueToken = .midi
         
         // includingOpaque: false
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
@@ -353,7 +353,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
         
         // includingOpaque: true
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(
@@ -375,7 +375,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         let valType: OSCValueToken = .null
         
         // includingOpaque: false
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
@@ -385,7 +385,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
         
         // includingOpaque: true
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(
@@ -407,7 +407,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         let valType: OSCValueToken = .stringAlt
         
         // includingOpaque: false
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
@@ -417,7 +417,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
         
         // includingOpaque: true
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(
@@ -439,7 +439,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         let valType: OSCValueToken = .timeTag
         
         // includingOpaque: false
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
@@ -449,7 +449,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
         
         // includingOpaque: true
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(
@@ -473,7 +473,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         let valType: OSCValueToken = .number
         
         // includingOpaque: false
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType:
                 XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
@@ -483,7 +483,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
         
         // includingOpaque: true
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             case valType, .number:
                 XCTAssertTrue(

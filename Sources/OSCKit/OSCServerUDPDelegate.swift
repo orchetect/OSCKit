@@ -6,8 +6,8 @@
 
 #if !os(watchOS)
 
-import Foundation
 @preconcurrency import CocoaAsyncSocket
+import Foundation
 
 /// Internal UDP receiver class so as to not expose `GCDAsyncUdpSocketDelegate` methods as public.
 final class OSCServerUDPDelegate: NSObject, GCDAsyncUdpSocketDelegate, @unchecked Sendable { // TODO: unchecked
@@ -41,7 +41,6 @@ final class OSCServerUDPDelegate: NSObject, GCDAsyncUdpSocketDelegate, @unchecke
                 #if DEBUG
                 print("OSC parse error: \(error.localizedDescription)")
                 #endif
-                
             }
         }
     }

@@ -4,9 +4,9 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
-import XCTest
 @testable import OSCKitCore
 import SwiftASCII
+import XCTest
 
 final class OSCValueToken_Properties_Tests: XCTestCase {
     override func setUp() { super.setUp() }
@@ -15,7 +15,7 @@ final class OSCValueToken_Properties_Tests: XCTestCase {
     // MARK: - baseType
     
     func testBaseType() {
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             // concrete types
             
@@ -24,7 +24,6 @@ final class OSCValueToken_Properties_Tests: XCTestCase {
             case .float32:           XCTAssertEqual(token.baseType, .float32)
             case .int32:             XCTAssertEqual(token.baseType, .int32)
             case .string:            XCTAssertEqual(token.baseType, .string)
-            
             // -- extended types
             case .array:             XCTAssertEqual(token.baseType, .array)
             case .bool:              XCTAssertEqual(token.baseType, .bool)
@@ -36,19 +35,14 @@ final class OSCValueToken_Properties_Tests: XCTestCase {
             case .null:              XCTAssertEqual(token.baseType, .null)
             case .stringAlt:         XCTAssertEqual(token.baseType, .stringAlt)
             case .timeTag:           XCTAssertEqual(token.baseType, .timeTag)
-            
             // -- opaque types
-            
             case .number:            XCTAssertEqual(token.baseType, .number)
-            
             // optional versions of concrete types
-            
             // -- core types
             case .blobOptional:      XCTAssertEqual(token.baseType, .blob)
             case .float32Optional:   XCTAssertEqual(token.baseType, .float32)
             case .int32Optional:     XCTAssertEqual(token.baseType, .int32)
             case .stringOptional:    XCTAssertEqual(token.baseType, .string)
-            
             // -- extended types
             case .arrayOptional:     XCTAssertEqual(token.baseType, .array)
             case .boolOptional:      XCTAssertEqual(token.baseType, .bool)
@@ -60,7 +54,6 @@ final class OSCValueToken_Properties_Tests: XCTestCase {
             case .nullOptional:      XCTAssertEqual(token.baseType, .null)
             case .stringAltOptional: XCTAssertEqual(token.baseType, .stringAlt)
             case .timeTagOptional:   XCTAssertEqual(token.baseType, .timeTag)
-            
             // -- opaque types
             case .numberOptional:    XCTAssertEqual(token.baseType, .number)
             }
@@ -70,7 +63,7 @@ final class OSCValueToken_Properties_Tests: XCTestCase {
     // MARK: - isOptional
     
     func testIsOptional() {
-        OSCValueToken.allCases.forEach { token in
+        for token in OSCValueToken.allCases {
             switch token {
             // optional versions of concrete types
             
@@ -79,7 +72,6 @@ final class OSCValueToken_Properties_Tests: XCTestCase {
             case .float32Optional:   XCTAssertEqual(token.isOptional, true)
             case .int32Optional:     XCTAssertEqual(token.isOptional, true)
             case .stringOptional:    XCTAssertEqual(token.isOptional, true)
-            
             // -- extended types
             case .arrayOptional:     XCTAssertEqual(token.isOptional, true)
             case .boolOptional:      XCTAssertEqual(token.isOptional, true)
@@ -91,10 +83,8 @@ final class OSCValueToken_Properties_Tests: XCTestCase {
             case .nullOptional:      XCTAssertEqual(token.isOptional, true)
             case .stringAltOptional: XCTAssertEqual(token.isOptional, true)
             case .timeTagOptional:   XCTAssertEqual(token.isOptional, true)
-            
             // -- opaque types
             case .numberOptional:    XCTAssertEqual(token.isOptional, true)
-                
             default:                 XCTAssertEqual(token.isOptional, false)
             }
         }

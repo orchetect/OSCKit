@@ -4,9 +4,9 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
-import XCTest
 import OSCKitCore
 import SwiftASCII
+import XCTest
 
 final class OSCValues_TypeMask_Tests: XCTestCase {
     override func setUp() { super.setUp() }

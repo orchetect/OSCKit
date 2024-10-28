@@ -4,8 +4,8 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
-import XCTest
 import OSCKitCore
+import XCTest
 
 final class OSCKitCoreTests: XCTestCase {
     // empty

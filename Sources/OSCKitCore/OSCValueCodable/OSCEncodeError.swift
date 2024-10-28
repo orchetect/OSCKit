@@ -13,8 +13,8 @@ public enum OSCEncodeError: LocalizedError {
     
     public var errorDescription: String? {
         switch self {
-        case .general: return "General error."
-        case .unexpectedEncoder: return "Unexpected encoder type."
+        case .general: "General error."
+        case .unexpectedEncoder: "Unexpected encoder type."
         }
     }
 }

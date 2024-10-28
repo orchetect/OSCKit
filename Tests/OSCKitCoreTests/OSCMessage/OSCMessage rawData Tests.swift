@@ -4,9 +4,9 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
-import XCTest
 @testable import OSCKitCore
 import SwiftASCII
+import XCTest
 
 final class OSCMessage_rawData_Tests: XCTestCase {
     // swiftformat:options --wrapcollections preserve

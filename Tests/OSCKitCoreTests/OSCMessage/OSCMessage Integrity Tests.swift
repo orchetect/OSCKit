@@ -4,9 +4,9 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
-import XCTest
 @testable import OSCKitCore
 import SwiftASCII
+import XCTest
 
 final class OSCMessage_Integrity_Tests: XCTestCase {
     override func setUp() { super.setUp() }
@@ -82,7 +82,7 @@ final class OSCMessage_Integrity_Tests: XCTestCase {
         print("Values:", decoded.values)
         
         print("All values decoded:")
-        decoded.values.forEach { val in
+        for val in decoded.values {
             switch val {
             case let blob as Data:
                 print("blob bytes:", blob.hexStringArrayLiteral())

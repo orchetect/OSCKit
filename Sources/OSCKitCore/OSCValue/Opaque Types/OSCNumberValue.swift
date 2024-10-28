@@ -21,7 +21,7 @@ import Foundation
 /// Opaque OSC type `OSCNumberValue`:
 /// A box for OSC numeric value types.
 /// Mainly employed as a return type from value masking methods.
-internal struct OSCNumberValue<B: OSCValue> {
+struct OSCNumberValue<B: OSCValue> {
     /// Base value storage.
     public let base: OSCNumberValueBase
     
@@ -38,9 +38,9 @@ internal struct OSCNumberValue<B: OSCValue> {
     public var intValue: Int {
         switch base {
         case let .int(v):
-            return Int(v)
+            Int(v)
         case let .float(v):
-            return Int(v)
+            Int(v)
         }
     }
     
@@ -49,9 +49,9 @@ internal struct OSCNumberValue<B: OSCValue> {
     public var doubleValue: Double {
         switch base {
         case let .int(v):
-            return Double(v)
+            Double(v)
         case let .float(v):
-            return Double(v)
+            Double(v)
         }
     }
 }

@@ -65,8 +65,8 @@ extension OSCBundle: Hashable {
     public func hash(into hasher: inout Hasher) {
         // don't factor timeTag into hash
         
-        elements.forEach {
-            hasher.combine($0)
+        for element in elements {
+            hasher.combine(element)
         }
     }
 }

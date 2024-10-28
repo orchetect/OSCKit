@@ -14,9 +14,9 @@ public enum OSCValueMaskError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .invalidCount:
-            return "Invalid argument count"
+            "Invalid argument count"
         case .mismatchedTypes:
-            return "Mismatched types"
+            "Mismatched types"
         }
     }
 }

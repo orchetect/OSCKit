@@ -151,7 +151,7 @@ extension OSCAddressPattern.Component {
     /// - at the beginning of a bracketed string negates the sense of the list, meaning that the
     ///   list matches any character not in the list
     /// - `!` as any other char than first char has no special meaning
-    internal static func parse(
+    static func parse(
         bracketExpression: Substring
     ) -> (
         isExclusion: Bool,
@@ -212,7 +212,7 @@ extension OSCAddressPattern.Component {
     /// `{}` expression sub-parser.
     ///
     /// Matches any of a comma-separated list of strings.
-    internal static func parse(braceExpression: Substring) -> Set<String> {
+    static func parse(braceExpression: Substring) -> Set<String> {
         braceExpression
             .split(separator: ",")
             .reduce(into: Set<String>()) {

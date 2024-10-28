@@ -6,8 +6,8 @@
 
 #if !os(watchOS)
 
-import Foundation
 @preconcurrency import CocoaAsyncSocket
+import Foundation
 import OSCKitCore
 
 /// Receives OSC packets from the network on a specific UDP listen port.
@@ -51,7 +51,7 @@ public actor OSCServer: _OSCServerProtocol {
         timeTagMode: OSCTimeTagMode = .ignore,
         handler: OSCHandlerBlock? = nil
     ) {
-        self.localPort = port
+        localPort = port
         self.timeTagMode = timeTagMode
         
         self.handler = handler

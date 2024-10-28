@@ -47,7 +47,13 @@ extension OSCManager {
     func handle(message: OSCMessage, timeTag: OSCTimeTag) {
         do {
             let customTypeValue = try message.values.masked(CustomType.self)
-            print("OSC message with address \"\(message.addressPattern.stringValue)\" with CustomType value containing id:\(customTypeValue.id) and name:\(customTypeValue.name)")
+            
+            let msg = message.addressPattern.stringValue
+            let id = customTypeValue.id
+            let name = customTypeValue.name
+            print(
+                "OSC message with address \"\(msg)\" with CustomType value containing id:\(id) and name:\(name)"
+            )
         } catch {
             print("OSC message received that did not have exactly one value of type CustomType.")
         }

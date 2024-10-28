@@ -64,7 +64,7 @@ extension _OSCServerProtocol {
     }
     
     func _dispatch(_ message: OSCMessage, timeTag: OSCTimeTag) async {
-        await self.handler?(message, timeTag)
+        await handler?(message, timeTag)
     }
     
     func _dispatch(

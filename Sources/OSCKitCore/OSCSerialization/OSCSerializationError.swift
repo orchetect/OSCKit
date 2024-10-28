@@ -14,7 +14,7 @@ public enum OSCSerializationError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .tagAlreadyRegistered:
-            return "Tag already registered"
+            "Tag already registered"
         }
     }
 }

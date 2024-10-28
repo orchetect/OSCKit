@@ -45,11 +45,11 @@ extension OSCValueTagIdentity {
     public func isEqual(to otherTag: Character) -> Bool {
         switch self {
         case let .atomic(character):
-            return otherTag == character
+            otherTag == character
         case let .variable(array):
-            return array.contains(otherTag)
+            array.contains(otherTag)
         case .variadic:
-            return false
+            false
         }
     }
     
@@ -59,11 +59,11 @@ extension OSCValueTagIdentity {
     func staticTags() -> [Character] {
         switch self {
         case let .atomic(character):
-            return [character]
+            [character]
         case let .variable(array):
-            return array
+            array
         case .variadic:
-            return []
+            []
         }
     }
 }

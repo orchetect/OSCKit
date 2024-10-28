@@ -41,9 +41,9 @@ extension OSCNumberValueBase {
     public func anyHashable() -> AnyHashable {
         switch self {
         case let .int(v):
-            return AnyHashable(v)
+            AnyHashable(v)
         case let .float(v):
-            return AnyHashable(v)
+            AnyHashable(v)
         }
     }
 }
@@ -58,9 +58,9 @@ extension OSCNumberValueBase: CustomStringConvertible {
     public var description: String {
         switch self {
         case let .int(v):
-            return "\(v)"
+            "\(v)"
         case let .float(v):
-            return "\(v)"
+            "\(v)"
         }
     }
 }

@@ -30,9 +30,9 @@ public struct AnyOSCNumberValue {
     public var intValue: Int {
         switch base {
         case let .int(v):
-            return Int(v)
+            Int(v)
         case let .float(v):
-            return Int(v)
+            Int(v)
         }
     }
     
@@ -41,9 +41,9 @@ public struct AnyOSCNumberValue {
     public var doubleValue: Double {
         switch base {
         case let .int(v):
-            return Double(v)
+            Double(v)
         case let .float(v):
-            return Double(v)
+            Double(v)
         }
     }
 }

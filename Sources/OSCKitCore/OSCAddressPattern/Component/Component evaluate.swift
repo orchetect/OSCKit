@@ -33,8 +33,8 @@ extension OSCAddressPattern.Component {
         
         var state: [OSCAddressPatternToken] = []
         
-        tokens.forEach {
-            switch $0 {
+        for token in tokens {
+            switch token {
             case let .literal(literal):
                 let stateItem = Token.Literal(literal: literal)
                 state.append(stateItem)

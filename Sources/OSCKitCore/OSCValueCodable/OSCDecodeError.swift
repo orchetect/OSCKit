@@ -21,9 +21,9 @@ public enum OSCDecodeError: LocalizedError {
     
     public var errorDescription: String? {
         switch self {
-        case let .malformed(verboseError): return "Malformed data: \(verboseError)"
-        case let .unexpectedType(tag: tag): return "Unexpected OSC Type Tag: \(tag)"
-        case let .internalInconsistency(verboseError): return "Internal inconsistency: \(verboseError)"
+        case let .malformed(verboseError): "Malformed data: \(verboseError)"
+        case let .unexpectedType(tag: tag): "Unexpected OSC Type Tag: \(tag)"
+        case let .internalInconsistency(verboseError): "Internal inconsistency: \(verboseError)"
         }
     }
 }
