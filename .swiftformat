@@ -37,11 +37,11 @@
 --markcategories true
 --markextensions always
 --marktypes always
---maxwidth 100
---modifierorder 
---nevertrailing 
---nospaceoperators 
---nowrapoperators 
+--maxwidth 120
+--modifierorder
+--nevertrailing
+--nospaceoperators
+--nowrapoperators
 --octalgrouping 4,8
 --operatorfunc spaced
 --organizetypes actor,class,enum,struct
