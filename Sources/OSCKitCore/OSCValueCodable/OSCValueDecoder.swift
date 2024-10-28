@@ -258,7 +258,9 @@ extension OSCValueDecoder {
     /// Read an OSC blob data chunk.
     public mutating func readBlob() throws -> Data {
         // check for int32 length chunk
-        guard let blobSize = try? readInt32().int else {
+        // note: theoretical max IPv4 UDP packet size is 65507.
+        // this not a definitive check but can at least protect against malformed data
+        guard let blobSize = try? readInt32().int, blobSize < 65507 else {
             throw OSCDecodeError.malformed(
                 "Failed to read Int32 length chunk at start of 4-byte aligned null-terminated blob data chunk."
             )
@@ -273,6 +275,13 @@ extension OSCValueDecoder {
         if blobRawSize > data.count {
             throw OSCDecodeError.malformed(
                 "Not enough bytes in 4-byte aligned null-terminated blob data chunk."
+            )
+        }
+        
+        // sanity check to guard against crash
+        guard blobSize <= blobRawSize else {
+            throw OSCDecodeError.malformed(
+                "Encoded blob chunk length is greater than the available data length."
             )
         }
         
