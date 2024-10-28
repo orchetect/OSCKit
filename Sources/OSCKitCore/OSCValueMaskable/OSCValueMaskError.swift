@@ -7,7 +7,16 @@
 import Foundation
 
 /// Error thrown by ``OSCValues`` `masked(...)` methods.
-public enum OSCValueMaskError: Error {
+public enum OSCValueMaskError: LocalizedError {
     case invalidCount
     case mismatchedTypes
+    
+    public var errorDescription: String? {
+        switch self {
+        case .invalidCount:
+            return "Invalid argument count"
+        case .mismatchedTypes:
+            return "Mismatched types"
+        }
+    }
 }
