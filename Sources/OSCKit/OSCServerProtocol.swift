@@ -21,11 +21,11 @@ extension _OSCServerProtocol {
     func _handle(
         payload: sending any OSCObject,
         timeTag: OSCTimeTag = .immediate()
-    ) async throws {
+    ) async {
         switch payload {
         case let bundle as OSCBundle:
             for element in bundle.elements {
-                try await _handle(payload: element, timeTag: bundle.timeTag)
+                await _handle(payload: element, timeTag: bundle.timeTag)
             }
             
         case let message as OSCMessage:

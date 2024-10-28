@@ -34,8 +34,15 @@ final class OSCServerUDPDelegate: NSObject, GCDAsyncUdpSocketDelegate, @unchecke
         data: Data
     ) {
         Task {
-            guard let payload = try? await data.parseOSC() else { return }
-            try? await oscServer._handle(payload: payload)
+            do {
+                guard let payload = try await data.parseOSC() else { return }
+                await oscServer._handle(payload: payload)
+            } catch {
+                #if DEBUG
+                print("OSC parse error: \(error.localizedDescription)")
+                #endif
+                
+            }
         }
     }
 }

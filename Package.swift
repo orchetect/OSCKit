@@ -30,11 +30,13 @@ let package = Package(
                     package: "CocoaAsyncSocket",
                     condition: .when(platforms: [.macOS, .macCatalyst, .iOS, .tvOS, .visionOS, .driverKit])
                 )
-            ]
+            ],
+            swiftSettings: [.define("DEBUG", .when(configuration: .debug))]
         ),
         .target(
             name: "OSCKitCore",
-            dependencies: ["SwiftASCII"]
+            dependencies: ["SwiftASCII"],
+            swiftSettings: [.define("DEBUG", .when(configuration: .debug))]
         ),
         .testTarget(
             name: "OSCKitTests",
