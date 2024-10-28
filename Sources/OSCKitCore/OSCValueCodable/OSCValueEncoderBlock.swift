@@ -7,7 +7,7 @@
 import Foundation
 
 /// Protocol that ``OSCValue`` encoder block encapsulation objects adopt.
-public protocol OSCValueEncoderBlock {
+public protocol OSCValueEncoderBlock where Self: Sendable {
     associatedtype OSCEncoded: OSCValueEncodable
 }
 
@@ -15,7 +15,7 @@ public protocol OSCValueEncoderBlock {
 
 /// ``OSCValue`` atomic value encoder block encapsulation.
 public struct OSCValueAtomicEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEncoderBlock {
-    public typealias Block = (
+    public typealias Block = @Sendable (
         _ value: OSCEncoded
     ) throws -> (
         tag: Character,
@@ -31,7 +31,7 @@ public struct OSCValueAtomicEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEnco
 
 /// ``OSCValue`` variable value encoder block encapsulation.
 public struct OSCValueVariableEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEncoderBlock {
-    public typealias Block = (
+    public typealias Block = @Sendable (
         _ value: OSCEncoded
     ) throws -> (
         tag: Character,
@@ -47,7 +47,7 @@ public struct OSCValueVariableEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEn
 
 /// ``OSCValue`` variadic value encoder block encapsulation.
 public struct OSCValueVariadicEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEncoderBlock {
-    public typealias Block = (
+    public typealias Block = @Sendable (
         _ value: OSCEncoded
     ) throws -> (
         tags: [Character],

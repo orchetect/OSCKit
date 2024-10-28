@@ -55,7 +55,7 @@ final class OSCMessage_Integrity_Tests: XCTestCase {
         )
     }
     
-    func testConstructors() throws {
+    func testConstructors() async throws {
         // this does not necessarily prove that encoding or decoding actually matches OSC spec, it
         // simply ensures that a message that OSCMessage generates can also be decoded
         
@@ -74,7 +74,7 @@ final class OSCMessage_Integrity_Tests: XCTestCase {
         
         // decode
         
-        let decoded = try OSCMessage(from: msg)
+        let decoded = try await OSCMessage(from: msg)
         
         // just for debug log analysis, if needed
         

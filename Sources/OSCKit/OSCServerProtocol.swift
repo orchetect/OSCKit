@@ -9,7 +9,7 @@ import OSCKitCore
 
 /// Internal protocol that all objects who act as an OSC server adopt.
 /// Provides shared logic.
-internal protocol _OSCServerProtocol: AnyObject {
+protocol _OSCServerProtocol: AnyObject where Self: Actor, Self: Sendable {
     var timeTagMode: OSCTimeTagMode { get set }
     var handler: OSCHandlerBlock? { get set }
 }
@@ -19,7 +19,7 @@ internal protocol _OSCServerProtocol: AnyObject {
 extension _OSCServerProtocol {
     /// Handle incoming OSC data recursively.
     func _handle(
-        payload: any OSCObject,
+        payload: sending any OSCObject,
         timeTag: OSCTimeTag = .immediate()
     ) async throws {
         switch payload {
@@ -59,7 +59,7 @@ extension _OSCServerProtocol {
             }
             
             let secondsFromNow = timeTag.timeIntervalSinceNow()
-            _dispatch(message, timeTag: timeTag, at: secondsFromNow)
+            await _dispatch(message, timeTag: timeTag, at: secondsFromNow)
         }
     }
     
@@ -71,13 +71,13 @@ extension _OSCServerProtocol {
         _ message: OSCMessage,
         timeTag: OSCTimeTag,
         at secondsFromNow: TimeInterval
-    ) {
+    ) async {
         var secondsFromNow = secondsFromNow
         
         // clamp lower bound to 0
         guard secondsFromNow > 0 else {
             // don't schedule, just dispatch it immediately
-            Task { await _dispatch(message, timeTag: timeTag) }
+            await _dispatch(message, timeTag: timeTag)
             return
         }
         
@@ -87,7 +87,7 @@ extension _OSCServerProtocol {
         let nanoseconds = UInt64(secondsFromNow * 1_000_000_000)
         
         Task {
-            try await Task.sleep(nanoseconds: nanoseconds)
+            try? await Task.sleep(nanoseconds: nanoseconds)
             await self.handler?(message, timeTag)
         }
     }

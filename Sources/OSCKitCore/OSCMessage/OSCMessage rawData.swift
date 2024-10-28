@@ -11,11 +11,11 @@ import Foundation
 /// OSC Message.
 extension OSCMessage {
     /// Initialize by parsing raw OSC message data bytes.
-    public init(from rawData: Data) throws {
+    public init(from rawData: Data) async throws {
         // cache raw data
         _rawData = rawData
         
-        let decoded = try OSCMessageDecoder.decode(rawData: rawData)
+        let decoded = try await OSCMessageDecoder.decode(rawData: rawData)
         
         // update public properties
         addressPattern = .init(decoded.addressPattern)

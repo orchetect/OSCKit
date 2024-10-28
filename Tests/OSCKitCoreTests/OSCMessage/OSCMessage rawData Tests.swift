@@ -16,7 +16,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
     
     // MARK: - Core Types
     
-    func testEmpty() throws {
+    func testEmpty() async throws {
         // test an OSC message containing no values
         
         // manually build a raw OSC message
@@ -33,7 +33,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
         XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
         XCTAssertEqual(msg.values.count, 0)
         
@@ -43,7 +43,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
-    func testInt32() throws {
+    func testInt32() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -62,7 +62,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
         XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         let val = try XCTUnwrap(msg.values.first as? Int32)
@@ -74,7 +74,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
-    func testFloat32() throws {
+    func testFloat32() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -93,7 +93,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
         XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         let val = try XCTUnwrap(msg.values.first as? Float32)
@@ -105,7 +105,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
-    func testString() throws {
+    func testString() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -130,7 +130,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
         XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         let val = try XCTUnwrap(msg.values.first as? String)
@@ -142,7 +142,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
-    func testBlob() throws {
+    func testBlob() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -163,7 +163,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
         XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         let val = try XCTUnwrap(msg.values.first as? Data)
@@ -177,7 +177,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
     
     // MARK: - Extended Types
     
-    func testInt64() throws {
+    func testInt64() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -197,7 +197,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
         XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         let val = try XCTUnwrap(msg.values.first as? Int64)
@@ -209,7 +209,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
-    func testTimeTag() throws {
+    func testTimeTag() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -229,7 +229,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
         XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         let val = try XCTUnwrap(msg.values.first as? OSCTimeTag)
@@ -241,7 +241,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
-    func testDouble() throws {
+    func testDouble() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -261,7 +261,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
         XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         let val = try XCTUnwrap(msg.values.first as? Double)
@@ -273,7 +273,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
-    func testStringAlt() throws {
+    func testStringAlt() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -298,7 +298,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
         XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         let val = try XCTUnwrap(msg.values.first as? OSCStringAltValue)
@@ -310,7 +310,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
-    func testCharacter() throws {
+    func testCharacter() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -329,7 +329,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
         XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         let val = try XCTUnwrap(msg.values.first as? Character)
@@ -341,7 +341,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
-    func testMIDI() throws {
+    func testMIDI() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -360,7 +360,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
         XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         let val = try XCTUnwrap(msg.values.first as? OSCMIDIValue)
@@ -372,7 +372,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
-    func testBool() throws {
+    func testBool() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -389,7 +389,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
         XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
         XCTAssertEqual(msg.values.count, 2)
         let val1 = try XCTUnwrap(msg.values[0] as? Bool)
@@ -403,7 +403,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
-    func testNull() throws {
+    func testNull() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -420,7 +420,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
         XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         let val = try XCTUnwrap(msg.values.first as? OSCNullValue)
@@ -432,7 +432,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
-    func testImpulse() throws {
+    func testImpulse() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -449,7 +449,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
         XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         let val = try XCTUnwrap(msg.values[0] as? OSCImpulseValue)
@@ -461,7 +461,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         XCTAssertEqual(try newMsg.rawData(), knownGoodOSCRawBytes.data)
     }
     
-    func testArray() throws {
+    func testArray() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -483,7 +483,7 @@ final class OSCMessage_rawData_Tests: XCTestCase {
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
         XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
         XCTAssertEqual(msg.values.count, 1)
         let val = try XCTUnwrap(msg.values[0] as? OSCArrayValue)

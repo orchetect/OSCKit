@@ -11,29 +11,29 @@ final class OSCArrayValue_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
-    func testEmpty() throws {
+    func testEmpty() async throws {
         let msg = OSCMessage("/test", values: [OSCArrayValue([])])
         
         XCTAssertEqual(msg.values[0] as? OSCArrayValue, OSCArrayValue([]))
         
         // test encode and decode
         let rawData = try msg.rawData()
-        let decodedMsg = try OSCMessage(from: rawData)
+        let decodedMsg = try await OSCMessage(from: rawData)
         XCTAssertEqual(msg, decodedMsg)
     }
     
-    func testSimple() throws {
+    func testSimple() async throws {
         let msg = OSCMessage("/test", values: [OSCArrayValue([Int32(123)])])
         
         XCTAssertEqual(msg.values[0] as? OSCArrayValue, OSCArrayValue([Int32(123)]))
         
         // test encode and decode
         let rawData = try msg.rawData()
-        let decodedMsg = try OSCMessage(from: rawData)
+        let decodedMsg = try await OSCMessage(from: rawData)
         XCTAssertEqual(msg, decodedMsg)
     }
     
-    func testNested() throws {
+    func testNested() async throws {
         let msg = OSCMessage(
             "/test",
             values: [
@@ -77,7 +77,7 @@ final class OSCArrayValue_Tests: XCTestCase {
         
         // test encode and decode
         let rawData = try msg.rawData()
-        let decodedMsg = try OSCMessage(from: rawData)
+        let decodedMsg = try await OSCMessage(from: rawData)
         XCTAssertEqual(msg, decodedMsg)
     }
     

@@ -8,7 +8,7 @@ import Foundation
 
 extension OSCBundle {
     /// Initialize by parsing raw OSC bundle data bytes.
-    public init(from rawData: Data) throws {
+    public init(from rawData: Data) async throws {
         // cache raw data
         _rawData = rawData
         
@@ -68,11 +68,11 @@ extension OSCBundle {
             
             switch oscObject {
             case .bundle:
-                let newBundle = try OSCBundle(from: elementContents)
+                let newBundle = try await OSCBundle(from: elementContents)
                 extractedElements.append(newBundle)
                 
             case .message:
-                let newMessage = try OSCMessage(from: elementContents)
+                let newMessage = try await OSCMessage(from: elementContents)
                 extractedElements.append(newMessage)
             }
             

@@ -7,7 +7,7 @@
 #if !os(watchOS)
 
 import Foundation
-import CocoaAsyncSocket
+@preconcurrency import CocoaAsyncSocket
 import OSCKitCore
 
 /// Receives OSC packets from the network on a specific UDP listen port.
@@ -15,7 +15,7 @@ import OSCKitCore
 /// A single global OSC server instance is often created once at app startup to receive OSC messages
 /// on a specific local port. The default OSC port is 8000 but it may be set to any open port if
 /// desired.
-public final class OSCServer: NSObject, _OSCServerProtocol {
+public final actor OSCServer: NSObject, _OSCServerProtocol {
     let udpSocket = GCDAsyncUdpSocket()
     let udpDelegate = OSCServerUDPDelegate()
     let receiveQueue = DispatchQueue(label: "org.orchetect.OSCKit.OSCServer.receiveQueue")
@@ -60,10 +60,6 @@ public final class OSCServer: NSObject, _OSCServerProtocol {
         
         udpDelegate.oscServer = self
         udpSocket.setDelegate(udpDelegate, delegateQueue: receiveQueue)
-    }
-    
-    deinit {
-        stop()
     }
     
     /// Set the handler closure. This closure will be called when OSC bundles or messages are

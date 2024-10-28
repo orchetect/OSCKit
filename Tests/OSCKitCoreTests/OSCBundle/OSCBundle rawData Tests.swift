@@ -13,7 +13,7 @@ final class OSCBundle_rawData_Tests: XCTestCase {
     override func setUp() { super.setUp() }
     override func tearDown() { super.tearDown() }
     
-    func testEmpty() throws {
+    func testEmpty() async throws {
         // tests an empty OSC bundle
         
         // manually build a raw OSC bundle
@@ -29,7 +29,7 @@ final class OSCBundle_rawData_Tests: XCTestCase {
         
         // decode
         
-        let bundle = try OSCBundle(from: knownGoodOSCRawBytes.data)
+        let bundle = try await OSCBundle(from: knownGoodOSCRawBytes.data)
         
         XCTAssertEqual(bundle.timeTag.rawValue, 1)
         XCTAssertEqual(bundle.elements.count, 0)
@@ -39,7 +39,7 @@ final class OSCBundle_rawData_Tests: XCTestCase {
         XCTAssertEqual(try bundle.rawData(), knownGoodOSCRawBytes.data)
     }
     
-    func testSingleOSCMessage() throws {
+    func testSingleOSCMessage() async throws {
         // tests an OSC bundle, with one message containing an int32 value
         
         // manually build a raw OSC bundle
@@ -69,7 +69,7 @@ final class OSCBundle_rawData_Tests: XCTestCase {
         
         // decode
         
-        let bundle = try OSCBundle(from: knownGoodOSCRawBytes.data)
+        let bundle = try await OSCBundle(from: knownGoodOSCRawBytes.data)
         
         XCTAssertEqual(bundle.timeTag.rawValue, 1)
         XCTAssertEqual(bundle.elements.count, 1)

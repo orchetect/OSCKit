@@ -5,7 +5,7 @@
 //
 
 /// Enum describing an OSC message type.
-public enum OSCObjectType: Equatable, Hashable {
+public enum OSCObjectType: Equatable, Hashable, Sendable {
     case message
     case bundle
 }

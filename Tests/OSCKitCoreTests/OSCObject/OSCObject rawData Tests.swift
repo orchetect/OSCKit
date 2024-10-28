@@ -15,7 +15,7 @@ final class OSCObject_rawData_Tests: XCTestCase {
     
     // MARK: - Model UDP data receiver pattern
     
-    func testParseOSC_Model() throws {
+    func testParseOSC_Model() async throws {
         // (Raw data taken from testInt32() of "OSCMessage rawData Tests.swift")
         
         // manually build a raw OSC message
@@ -45,13 +45,14 @@ final class OSCObject_rawData_Tests: XCTestCase {
         }
         
         let remainingData = Data(knownGoodOSCRawBytes)
-        let oscObject = try XCTUnwrap(remainingData.parseOSC())
+        let _oscObject = try await remainingData.parseOSC()
+        let oscObject = try XCTUnwrap(_oscObject)
         handleOSCObject(oscObject)
     }
     
     // MARK: - Variations
     
-    func testParseOSC_Message() throws {
+    func testParseOSC_Message() async throws {
         // (Raw data taken from testInt32() of "OSCMessage rawData Tests.swift")
         
         // manually build a raw OSC message
@@ -72,7 +73,8 @@ final class OSCObject_rawData_Tests: XCTestCase {
         
         let remainingData = Data(knownGoodOSCRawBytes)
         
-        let oscObject = try XCTUnwrap(remainingData.parseOSC())
+        let _oscObject = try await remainingData.parseOSC()
+        let oscObject = try XCTUnwrap(_oscObject)
             
         switch oscObject {
         case let message as OSCMessage:
@@ -85,7 +87,7 @@ final class OSCObject_rawData_Tests: XCTestCase {
         }
     }
     
-    func testParseOSC_Bundle() throws {
+    func testParseOSC_Bundle() async throws {
         // (Raw data taken from testSingleOSCMessage() of "OSCBundle rawData Tests.swift")
         
         // manually build a raw OSC bundle
@@ -116,7 +118,7 @@ final class OSCObject_rawData_Tests: XCTestCase {
         // parse block
         
         let remainingData = Data(knownGoodOSCRawBytes)
-        let oscObject = try remainingData.parseOSC()
+        let oscObject = try await remainingData.parseOSC()
             
         switch oscObject {
         case let bundle as OSCBundle:
@@ -141,7 +143,7 @@ final class OSCObject_rawData_Tests: XCTestCase {
         }
     }
     
-    func testParseOSC_Message_Error() {
+    func testParseOSC_Message_Error() async {
         // manually build a MALFORMED raw OSC message
         
         var knownBadOSCRawBytes: [UInt8] = []
@@ -161,7 +163,7 @@ final class OSCObject_rawData_Tests: XCTestCase {
         let remainingData = Data(knownBadOSCRawBytes)
         
         do {
-            _ = try remainingData.parseOSC()
+            _ = try await remainingData.parseOSC()
             XCTFail("Should throw an error.")
         } catch _ as OSCDecodeError {
             // handle decode errors
@@ -172,7 +174,7 @@ final class OSCObject_rawData_Tests: XCTestCase {
         }
     }
     
-    func testParseOSC_Bundle_Error() {
+    func testParseOSC_Bundle_Error() async {
         // manually build a MALFORMED raw OSC bundle
         
         var knownGoodOSCRawBytes: [UInt8] = []
@@ -203,7 +205,7 @@ final class OSCObject_rawData_Tests: XCTestCase {
         let remainingData = Data(knownGoodOSCRawBytes)
         
         do {
-            _ = try remainingData.parseOSC()
+            _ = try await remainingData.parseOSC()
             XCTFail("Should throw an error.")
         } catch _ as OSCDecodeError {
             // handle decode errors
@@ -214,7 +216,7 @@ final class OSCObject_rawData_Tests: XCTestCase {
         }
     }
     
-    func testParseOSC_Bundle_ErrorInContainedMessage() {
+    func testParseOSC_Bundle_ErrorInContainedMessage() async {
         // manually build a MALFORMED raw OSC bundle
         
         var knownGoodOSCRawBytes: [UInt8] = []
@@ -245,7 +247,7 @@ final class OSCObject_rawData_Tests: XCTestCase {
         let remainingData = Data(knownGoodOSCRawBytes)
         
         do {
-            _ = try remainingData.parseOSC()
+            _ = try await remainingData.parseOSC()
             XCTFail("Should throw an error.")
         } catch _ as OSCDecodeError {
             // handle decode errors

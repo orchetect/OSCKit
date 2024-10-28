@@ -10,22 +10,24 @@ import Foundation
 ///
 /// Register custom value types to enable ``OSCValueDecoder`` and ``OSCValues`` `masked()` support
 /// for them.
-public final class OSCSerialization { // TODO: convert to actor/globalActor?
+@globalActor public final actor OSCSerialization { // TODO: convert to actor/globalActor?
     /// Shared singleton instance.
-    public static let shared: OSCSerialization = .init()
+    public static let shared = OSCSerialization()
     
     /// Internal:
     /// Registered tag identities repository.
     var tagIdentities: [(OSCValueTagIdentity, any OSCValueCodable.Type)] = []
     
     /// Singleton init.
-    internal required init() {
-        do {
-            try registerDefaultTypes()
-        } catch {
-            assertionFailure(
-                "One or more types were already registered while initializing. This should not happen."
-            )
+    init() {
+        Task {
+            do {
+                try await registerDefaultTypes()
+            } catch {
+                assertionFailure(
+                    "One or more types were already registered while initializing. This should not happen."
+                )
+            }
         }
     }
     

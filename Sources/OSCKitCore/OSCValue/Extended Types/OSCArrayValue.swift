@@ -149,7 +149,7 @@ extension OSCArrayValue: OSCValueDecodable {
                 )
             }
             
-            let tagsToAdvance = try OSCMessageDecoder.decodeValue(
+            let tagsToAdvance = try await OSCMessageDecoder.decodeValue(
                 initialChar: &tag,
                 currentTagIndex: &currentTagIndex,
                 tags: &remainingTags,

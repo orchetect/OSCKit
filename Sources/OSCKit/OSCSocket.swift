@@ -7,7 +7,7 @@
 #if !os(watchOS)
 
 import Foundation
-import CocoaAsyncSocket
+@preconcurrency import CocoaAsyncSocket
 
 /// Sends and receives OSC packets over the network by binding a single local UDP port to both send
 /// OSC packets from and listen for incoming packets.
@@ -21,7 +21,7 @@ import CocoaAsyncSocket
 /// X32 & M32 which respond back using the UDP port that they receive OSC messages from. For
 /// example: if an OSC message was sent from port 8000 to the X32's port 10023, the X32 will respond
 /// by sending OSC messages back to you on port 8000.
-public final class OSCSocket: NSObject, _OSCServerProtocol {
+public final actor OSCSocket: NSObject, _OSCServerProtocol {
     let udpSocket = GCDAsyncUdpSocket()
     let udpDelegate = OSCServerUDPDelegate()
     let receiveQueue = DispatchQueue(label: "org.orchetect.OSCKit.OSCSocket.receiveQueue")
@@ -125,10 +125,6 @@ public final class OSCSocket: NSObject, _OSCServerProtocol {
         
         udpDelegate.oscServer = self
         udpSocket.setDelegate(udpDelegate, delegateQueue: receiveQueue)
-    }
-    
-    deinit {
-        stop()
     }
     
     /// Set the handler closure. This closure will be called when OSC bundles or messages are

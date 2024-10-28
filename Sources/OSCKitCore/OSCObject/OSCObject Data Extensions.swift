@@ -15,11 +15,11 @@ extension Data {
     /// Errors thrown will typically be a case of ``OSCDecodeError`` but other errors may be thrown.
     ///
     /// - Returns: Decoded ``OSCObject``, or `nil` if not an OSC data packet.
-    public func parseOSC() throws -> (any OSCObject)? {
+    public func parseOSC() async throws -> (any OSCObject)? {
         if appearsToBeOSCBundle {
-            return try OSCBundle(from: self)
+            return try await OSCBundle(from: self)
         } else if appearsToBeOSCMessage {
-            return try OSCMessage(from: self)
+            return try await OSCMessage(from: self)
         }
         
         return nil

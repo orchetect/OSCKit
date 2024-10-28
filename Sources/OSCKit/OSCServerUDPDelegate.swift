@@ -7,10 +7,10 @@
 #if !os(watchOS)
 
 import Foundation
-import CocoaAsyncSocket
+@preconcurrency import CocoaAsyncSocket
 
 /// Internal UDP receiver class so as to not expose `GCDAsyncUdpSocketDelegate` methods as public.
-internal class OSCServerUDPDelegate: NSObject, GCDAsyncUdpSocketDelegate {
+internal final class OSCServerUDPDelegate: NSObject, GCDAsyncUdpSocketDelegate, @unchecked Sendable { // TODO: unchecked
     weak var oscServer: _OSCServerProtocol?
     
     init(oscServer: _OSCServerProtocol? = nil) {
@@ -24,9 +24,19 @@ internal class OSCServerUDPDelegate: NSObject, GCDAsyncUdpSocketDelegate {
         fromAddress address: Data,
         withFilterContext filterContext: Any?
     ) {
-        guard let payload = try? data.parseOSC() else { return }
         guard let oscServer else { return }
-        Task { try? await oscServer._handle(payload: payload) }
+        _handle(oscServer: oscServer, data: data)
+    }
+    
+    /// Stub required to take `oscServer` as sending.
+    private func _handle(
+        oscServer: sending _OSCServerProtocol,
+        data: Data
+    ) {
+        Task {
+            guard let payload = try? await data.parseOSC() else { return }
+            try? await oscServer._handle(payload: payload)
+        }
     }
 }
 

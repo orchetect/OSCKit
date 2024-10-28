@@ -7,7 +7,7 @@
 import Foundation
 
 /// Protocol that ``OSCValue`` decoder block encapsulation objects adopt.
-public protocol OSCValueDecoderBlock {
+public protocol OSCValueDecoderBlock where Self: Sendable {
     associatedtype OSCDecoded: OSCValueDecodable
 }
 
@@ -15,9 +15,9 @@ public protocol OSCValueDecoderBlock {
 
 /// ``OSCValue`` atomic value decoder block encapsulation.
 public struct OSCValueAtomicDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDecoderBlock {
-    public typealias Block = (
+    public typealias Block = @Sendable (
         _ decoder: inout OSCValueDecoder
-    ) throws -> OSCDecoded
+    ) async throws -> OSCDecoded
     
     public let block: Block
     
@@ -28,10 +28,10 @@ public struct OSCValueAtomicDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDeco
 
 /// ``OSCValue`` variable value decoder block encapsulation.
 public struct OSCValueVariableDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDecoderBlock {
-    public typealias Block = (
+    public typealias Block = @Sendable (
         _ tag: Character,
         _ decoder: inout OSCValueDecoder
-    ) throws -> OSCDecoded
+    ) async throws -> OSCDecoded
     
     public let block: Block
     
@@ -46,10 +46,10 @@ public struct OSCValueVariableDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDe
 /// Only throw an error if at least one expected tag is encountered but any other tags or value data
 /// is malformed.
 public struct OSCValueVariadicDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDecoderBlock {
-    public typealias Block = (
+    public typealias Block = @Sendable (
         _ tags: [Character],
         _ decoder: inout OSCValueDecoder
-    ) throws -> (tagCount: Int, value: OSCDecoded)?
+    ) async throws -> (tagCount: Int, value: OSCDecoded)?
     
     public let block: Block
     

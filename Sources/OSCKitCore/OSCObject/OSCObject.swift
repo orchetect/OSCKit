@@ -17,7 +17,7 @@ public protocol OSCObject: Equatable, Hashable where Self: Sendable {
     func rawData() throws -> Data
     
     /// Initialize by parsing raw OSC packet data bytes.
-    init(from rawData: Data) throws
+    init(from rawData: Data) async throws
 }
 
 extension OSCObject {

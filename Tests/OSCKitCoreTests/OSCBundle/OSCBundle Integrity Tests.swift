@@ -13,7 +13,7 @@ final class OSCBundle_Integrity_Tests: XCTestCase {
     
     // MARK: - Constructors
     
-    func testConstructors() throws {
+    func testConstructors() async throws {
         // empty
         
         let emptyBundle = OSCBundle([])
@@ -46,14 +46,14 @@ final class OSCBundle_Integrity_Tests: XCTestCase {
         
         // raw data
         
-        let rawData = try OSCBundle(from: OSCBundle.header + 20.int64.toData(.bigEndian))
+        let rawData = try await OSCBundle(from: OSCBundle.header + 20.int64.toData(.bigEndian))
         XCTAssertEqual(rawData.timeTag.rawValue, 20)
         XCTAssertEqual(rawData.elements.count, 0)
     }
     
     // MARK: - Complex messages
     
-    func testComplex() throws {
+    func testComplex() async throws {
         // this does not necessarily prove that encoding or decoding actually matches OSC spec, it
         // simply ensures that rawData that OSCBundle generates can be decoded
         
@@ -97,7 +97,7 @@ final class OSCBundle_Integrity_Tests: XCTestCase {
         
         // decode
         
-        let decodedOSCbundle = try OSCBundle(from: encodedOSCbundle)
+        let decodedOSCbundle = try await OSCBundle(from: encodedOSCbundle)
         
         // verify contents
         
