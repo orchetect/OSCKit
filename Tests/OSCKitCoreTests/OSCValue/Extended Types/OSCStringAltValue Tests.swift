@@ -5,16 +5,37 @@
 //
 
 import OSCKitCore
-import XCTest
+import Testing
 
-final class OSCStringAltValue_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
+@Suite struct OSCStringAltValue_Tests {
     // MARK: - `any OSCValue` Constructors
     
-    func testOSCValue_stringAlt() {
+    @Test func anyOSCValue_stringAlt() {
         let val: any OSCValue = .stringAlt("A string")
-        XCTAssertEqual(val as? OSCStringAltValue, OSCStringAltValue("A string"))
+        #expect(val as? OSCStringAltValue == OSCStringAltValue("A string"))
+    }
+    
+    // MARK: - Equatable Operators
+    
+    @Test func equatable() {
+        let stringAlt1 = OSCStringAltValue("A string")
+        let stringAlt2 = OSCStringAltValue("A string")
+        
+        #expect(stringAlt1 == stringAlt2)
+        #expect(stringAlt2 == stringAlt1)
+        
+        #expect(!(stringAlt1 != stringAlt2))
+        #expect(!(stringAlt2 != stringAlt1))
+    }
+    
+    @Test func equatableWithString() {
+        let string: String = "A string"
+        let stringAlt = OSCStringAltValue(string)
+        
+        #expect(string == stringAlt)
+        #expect(stringAlt == string)
+        
+        #expect(!(string != stringAlt))
+        #expect(!(stringAlt != string))
     }
 }
