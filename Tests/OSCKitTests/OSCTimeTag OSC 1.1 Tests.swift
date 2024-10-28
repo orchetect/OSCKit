@@ -7,101 +7,101 @@
 #if !os(watchOS)
 
 @testable import OSCKit
-import XCTest
+import Testing
 
-final class OSCTimeTag_OSC1_1_Tests: XCTestCase {
-    func testDefault() async throws {
-        let server = OSCServer(timeTagMode: .ignore)
-        
-        let exp = expectation(description: "Message Dispatched")
-        
-        await server.setHandler { _, _ in
-            exp.fulfill()
+@Suite struct OSCTimeTag_OSC1_1_Tests {
+    @Test func defaultTimeTag() async throws {
+        try await confirmation(expectedCount: 1) { confirmation in
+            let server = OSCServer(timeTagMode: .ignore)
+            
+            await server.setHandler { _, _ in
+                confirmation()
+            }
+            
+            let bundle = OSCBundle([
+                .message("/test", values: [Int32(123)])
+            ])
+            
+            await server._handle(payload: bundle)
+            
+            try await Task.sleep(for: .seconds(0.5))
         }
-        
-        let bundle = OSCBundle([
-            .message("/test", values: [Int32(123)])
-        ])
-        
-        await server._handle(payload: bundle)
-        
-        await fulfillment(of: [exp], timeout: 0.5)
     }
     
-    func testImmediate() async throws {
-        let server = OSCServer(timeTagMode: .ignore)
-        
-        let exp = expectation(description: "Message Dispatched")
-        
-        await server.setHandler { _, _ in
-            exp.fulfill()
+    @Test func immediate() async throws {
+        try await confirmation(expectedCount: 1) { confirmation in
+            let server = OSCServer(timeTagMode: .ignore)
+            
+            await server.setHandler { _, _ in
+                confirmation()
+            }
+            
+            let bundle = OSCBundle(
+                timeTag: .immediate(),
+                [.message("/test", values: [Int32(123)])]
+            )
+            
+            await server._handle(payload: bundle)
+            
+            try await Task.sleep(for: .seconds(0.5))
         }
-        
-        let bundle = OSCBundle(
-            timeTag: .immediate(),
-            [.message("/test", values: [Int32(123)])]
-        )
-        
-        await server._handle(payload: bundle)
-        
-        await fulfillment(of: [exp], timeout: 0.5)
     }
     
-    func testNow() async throws {
-        let server = OSCServer(timeTagMode: .ignore)
-        
-        let exp = expectation(description: "Message Dispatched")
-        
-        await server.setHandler { _, _ in
-            exp.fulfill()
+    @Test func now() async throws {
+        try await confirmation(expectedCount: 1) { confirmation in
+            let server = OSCServer(timeTagMode: .ignore)
+            
+            await server.setHandler { _, _ in
+                confirmation()
+            }
+            
+            let bundle = OSCBundle(
+                timeTag: .now(),
+                [.message("/test", values: [Int32(123)])]
+            )
+            
+            await server._handle(payload: bundle)
+            
+            try await Task.sleep(for: .seconds(0.5))
         }
-        
-        let bundle = OSCBundle(
-            timeTag: .now(),
-            [.message("/test", values: [Int32(123)])]
-        )
-        
-        await server._handle(payload: bundle)
-        
-        await fulfillment(of: [exp], timeout: 0.5)
     }
     
-    func test1SecondInFuture() async throws {
-        let server = OSCServer(timeTagMode: .ignore)
-        
-        let exp = expectation(description: "Message Dispatched")
-        
-        await server.setHandler { _, _ in
-            exp.fulfill()
+    @Test func oneSecondInFuture() async throws {
+        try await confirmation(expectedCount: 1) { confirmation in
+            let server = OSCServer(timeTagMode: .ignore)
+            
+            await server.setHandler { _, _ in
+                confirmation()
+            }
+            
+            let bundle = OSCBundle(
+                timeTag: .timeIntervalSinceNow(1.0),
+                [.message("/test", values: [Int32(123)])]
+            )
+            
+            await server._handle(payload: bundle)
+            
+            try await Task.sleep(for: .seconds(0.5))
         }
-        
-        let bundle = OSCBundle(
-            timeTag: .timeIntervalSinceNow(1.0),
-            [.message("/test", values: [Int32(123)])]
-        )
-        
-        await server._handle(payload: bundle)
-        
-        await fulfillment(of: [exp], timeout: 0.5)
     }
     
-    func testPast() async throws {
-        let server = OSCServer(timeTagMode: .ignore)
-        
-        let exp = expectation(description: "Message Dispatched")
-        
-        await server.setHandler { _, _ in
-            exp.fulfill()
+    @Test func past() async throws {
+        try await confirmation(expectedCount: 1) { confirmation in
+            let server = OSCServer(timeTagMode: .ignore)
+            
+            await server.setHandler { _, _ in
+                confirmation()
+            }
+            
+            let bundle = OSCBundle(
+                timeTag: .timeIntervalSinceNow(-1.0),
+                [.message("/test", values: [Int32(123)])]
+            )
+            
+            await server._handle(payload: bundle)
+            
+            try await Task.sleep(for: .seconds(0.5))
         }
-        
-        let bundle = OSCBundle(
-            timeTag: .timeIntervalSinceNow(-1.0),
-            [.message("/test", values: [Int32(123)])]
-        )
-        
-        await server._handle(payload: bundle)
-        
-        await fulfillment(of: [exp], timeout: 0.5)
     }
 }
 

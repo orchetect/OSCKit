@@ -7,24 +7,23 @@
 #if !os(watchOS)
 
 @testable import OSCKit
-import XCTest
+import Testing
 
-final class OSCServer_Tests: XCTestCase {
-    func testEmptyBundle() async throws {
-        let server = OSCServer()
-        
-        let exp = expectation(description: "Message Dispatched")
-        exp.isInverted = true // empty bundle produces no messages
-        
-        await server.setHandler { _, _ in
-            exp.fulfill()
+@Suite struct OSCServer_Tests {
+    @Test func emptyBundle() async throws {
+        try await confirmation(expectedCount: 0) { confirmation in
+            let server = OSCServer()
+            
+            await server.setHandler { _, _ in
+                confirmation()
+            }
+            
+            let bundle = OSCBundle()
+            
+            await server._handle(payload: bundle)
+            
+            try await Task.sleep(for: .seconds(1))
         }
-        
-        let bundle = OSCBundle()
-        
-        await server._handle(payload: bundle)
-        
-        await fulfillment(of: [exp], timeout: 1.0)
     }
 }
 

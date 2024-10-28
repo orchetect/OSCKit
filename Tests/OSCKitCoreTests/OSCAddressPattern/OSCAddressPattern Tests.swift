@@ -4,39 +4,37 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
+import Foundation
 @testable import OSCKitCore
 import SwiftASCII
-import XCTest
+import Testing
 
-final class OSCAddressPattern_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
-    func testInit_String() {
+@Suite struct OSCAddressPattern_Tests {
+    @Test func init_String() {
         let addr = OSCAddressPattern("/methodname")
-        XCTAssertEqual(addr.stringValue, "/methodname")
+        #expect(addr.stringValue == "/methodname")
     }
     
-    func testInit_ASCIIString() {
+    @Test func init_ASCIIString() {
         let addr = OSCAddressPattern(ascii: ASCIIString("/methodname"))
-        XCTAssertEqual(addr.stringValue, "/methodname")
+        #expect(addr.stringValue == "/methodname")
     }
     
-    func testInit_PathComponents_String() {
+    @Test func init_PathComponents_String() {
         let addr = OSCAddressPattern(pathComponents: ["container1", "methodname"])
-        XCTAssertEqual(addr.stringValue, "/container1/methodname")
+        #expect(addr.stringValue == "/container1/methodname")
     }
     
-    func testInit_PathComponents_ASCIIString() {
+    @Test func init_PathComponents_ASCIIString() {
         let addr =
             OSCAddressPattern(asciiPathComponents: [
                 ASCIIString("container1"),
                 ASCIIString("methodname")
             ])
-        XCTAssertEqual(addr.stringValue, "/container1/methodname")
+        #expect(addr.stringValue == "/container1/methodname")
     }
     
-    func testCodable() throws {
+    @Test func codable() throws {
         let encoder = JSONEncoder()
         let decoder = JSONDecoder()
         
@@ -45,173 +43,173 @@ final class OSCAddressPattern_Tests: XCTestCase {
         let encoded = try encoder.encode(str)
         let decoded = try decoder.decode(OSCAddressPattern.self, from: encoded)
         
-        XCTAssertEqual(str, decoded)
+        #expect(str == decoded)
     }
     
-    func testPathComponents() {
+    @Test func pathComponents() {
         // empty address
-        XCTAssertEqual(
-            OSCAddressPattern("").pathComponents,
+        #expect(
+            OSCAddressPattern("").pathComponents/*.map(String.init)*/ ==
             []
         )
         
         // base methodname of " " -- unconventional, but legal
-        XCTAssertEqual(
-            OSCAddressPattern(" ").pathComponents,
+        #expect(
+            OSCAddressPattern(" ").pathComponents ==
             [" "]
         )
         
         // undefined / invalid
-        XCTAssertEqual(
-            OSCAddressPattern("/").pathComponents,
+        #expect(
+            OSCAddressPattern("/").pathComponents ==
             []
         )
         
         // undefined / invalid
-        XCTAssertEqual(
-            OSCAddressPattern("//").pathComponents,
+        #expect(
+            OSCAddressPattern("//").pathComponents ==
             []
         )
         
         // valid
-        XCTAssertEqual(
-            OSCAddressPattern("/methodname").pathComponents,
+        #expect(
+            OSCAddressPattern("/methodname").pathComponents ==
             ["methodname"]
         )
         
         // strip trailing /
-        XCTAssertEqual(
-            OSCAddressPattern("/container1/").pathComponents,
+        #expect(
+            OSCAddressPattern("/container1/").pathComponents ==
             ["container1"]
         )
         
         // having trailing // is not valid -- basically malformed
-        XCTAssertEqual(
-            OSCAddressPattern("/container1//").pathComponents,
+        #expect(
+            OSCAddressPattern("/container1//").pathComponents ==
             ["container1", ""]
         )
         
         // valid
         // In OSC 1.1 Spec, the // character sequence has special meaning
-        XCTAssertEqual(
-            OSCAddressPattern("//methodname").pathComponents,
+        #expect(
+            OSCAddressPattern("//methodname").pathComponents ==
             ["", "methodname"]
         )
         
         // valid
-        XCTAssertEqual(
-            OSCAddressPattern("/container1/container2/methodname").pathComponents,
+        #expect(
+            OSCAddressPattern("/container1/container2/methodname").pathComponents ==
             ["container1", "container2", "methodname"]
         )
         
         // valid
-        XCTAssertEqual(
-            OSCAddressPattern("/container?/container2/methodname").pathComponents,
+        #expect(
+            OSCAddressPattern("/container?/container2/methodname").pathComponents ==
             ["container?", "container2", "methodname"]
         )
         
         // valid
-        XCTAssertEqual(
-            OSCAddressPattern("/container*/container2/methodname").pathComponents,
+        #expect(
+            OSCAddressPattern("/container*/container2/methodname").pathComponents ==
             ["container*", "container2", "methodname"]
         )
         
         // valid
-        XCTAssertEqual(
+        #expect(
             OSCAddressPattern(
                 "/container*/container2*abc{X,Y,Z}??[0-9A-F]/methodname*abc{X,Y,Z}??[0-9A-F]"
             )
-            .pathComponents,
+            .pathComponents ==
             ["container*", "container2*abc{X,Y,Z}??[0-9A-F]", "methodname*abc{X,Y,Z}??[0-9A-F]"]
         )
         
         // valid
         // In OSC 1.1 Spec, the // character sequence has special meaning
-        XCTAssertEqual(
-            OSCAddressPattern("/container1//methodname").pathComponents,
+        #expect(
+            OSCAddressPattern("/container1//methodname").pathComponents ==
             ["container1", "", "methodname"]
         )
         
         // leading /// is malformed, but possible to parse
-        XCTAssertEqual(
-            OSCAddressPattern("///methodname").pathComponents,
+        #expect(
+            OSCAddressPattern("///methodname").pathComponents ==
             ["", "", "methodname"]
         )
     }
     
-    func testPatternMatches() {
+    @Test func patternMatches() {
         // verbatim matches
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern("/test1/test3/methodA")
                 .matches(localAddress: "/test1/test3/methodA")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern("/test1/test3/methodA/")
                 .matches(localAddress: "/test1/test3/methodA")
         )
         
         // wildcard matches
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern("/test?/test?/method?")
                 .matches(localAddress: "/test1/test3/methodA")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern("/*/test?/method?")
                 .matches(localAddress: "/test1/test3/methodA")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern("/test?/*/method?")
                 .matches(localAddress: "/test1/test3/methodA")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern("/*/*/method?")
                 .matches(localAddress: "/test1/test3/methodA")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern("/*/*/*")
                 .matches(localAddress: "/test1/test3/methodA")
         )
         
         // wildcard mismatches
         
-        XCTAssertFalse(
-            OSCAddressPattern("/test?/test?/method?")
+        #expect(
+            !OSCAddressPattern("/test?/test?/method?")
                 .matches(localAddress: "/test1/test3/methodAA")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern("/test?/test?")
+        #expect(
+            !OSCAddressPattern("/test?/test?")
                 .matches(localAddress: "/test1/test3/methodA")
         )
         
         // name mismatches
         
-        XCTAssertFalse(
-            OSCAddressPattern("/test1/test3/methodA")
+        #expect(
+            !OSCAddressPattern("/test1/test3/methodA")
                 .matches(localAddress: "/test1/test3/methodB")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern("/test1/test3/methodA")
+        #expect(
+            !OSCAddressPattern("/test1/test3/methodA")
                 .matches(localAddress: "/test1/test3")
         )
         
         // path component count mismatches
         
-        XCTAssertFalse(
-            OSCAddressPattern("/test1/test3")
+        #expect(
+            !OSCAddressPattern("/test1/test3")
                 .matches(localAddress: "/test1/test3/methodA")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern("/test1")
+        #expect(
+            !OSCAddressPattern("/test1")
                 .matches(localAddress: "/test1/test3/methodA")
         )
     }
