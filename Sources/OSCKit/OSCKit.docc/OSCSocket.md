@@ -7,20 +7,25 @@ If not specified during initialization, the local port will be randomly assigned
 The remote port may be omitted, in which case the same port number as the local port will be used. The remote port may be overridden if supplied as a parameter when calling ``OSCSocket/send(_:to:port:)``.
 
 ```swift
-// this would be a typical setup to interact with a remote Behringer X32.
-// randomly generate a local port, but always send messages to remote port 10023.
-let socket = OSCSocket(
-    remoteHost: "192.168.0.2",
-    remotePort: 10023
-) { message, timeTag in
-    print("Received \(message)")
+let oscSocket: OSCSocket
+
+init() {
+    // This would be a typical setup to interact with a remote
+    // Behringer X32. Randomly generate a local port, but always
+    // send messages to remote port 10023.
+    oscSocket = OSCSocket(
+        remoteHost: "192.168.0.2",
+        remotePort: 10023
+    ) { [weak self] message, timeTag in
+        print("Received \(message)")
+    }
 }
 ```
 
 Similar to ``OSCServer``, an ``OSCSocket`` instance must be started before it can send or receive messages.
 
 ```swift
-try socket.start()
+try await oscSocket.start()
 ```
 
 ### Sending and Receiving OSC Messages
@@ -29,16 +34,18 @@ See <doc:Sending-OSC> and <doc:Receiving-OSC> for details on how to send and rec
 
 ### Addenda on Sending using OSCSocket
 
-The ``OSCSocket/send(_:to:port:)`` method may be used to send OSC messages and bundles.
+The ``OSCSocket/send(_:to:port:)`` method has a slightly different behavior on ``OSCSocket`` than it does on ``OSCClient``.
 
 ```swift
-// The remoteHost and/or remotePort supplied at the itme of
-// initialization will be used by default:
-try socket.send(osc)
+// The `remoteHost` and/or `remotePort` supplied at the time of
+// initialization can be used by default:
+let msg = OSCMessage("/test")
+try await oscSocket.send(msg)
 
 // It is also possible to override the destination host and/or port
 // on a per-message basis:
-try socket.send(osc, to: "192.168.0.3", port: 8000)
+let msg = OSCMessage("/test")
+try await oscSocket.send(msg, to: "192.168.0.3", port: 8000)
 ```
 
 ### Notes

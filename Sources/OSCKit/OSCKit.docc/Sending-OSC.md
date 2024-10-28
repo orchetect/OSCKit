@@ -6,12 +6,15 @@ Sending OSC messages and bundles.
 
 Both ``OSCClient`` and ``OSCSocket`` are capable of sending messages using the same API.
 
+Note that the `send(_:to:port:)` method on ``OSCClient`` is globally thread-safe and does not require `await`.
+The `send(_:to:port:)` method on ``OSCSocket`` requires `await` which can also be wrapped in `Task { }` if called from a non-asynchronous context.
+
 ### OSC Messages
 
 To send a single message, construct an ``OSCMessage`` and send it using the client or socket instance.
 
 ```swift
-let msg = OSCMessage("/msg2", values: ["string", 123])
+let msg = OSCMessage("/test", values: ["string", 123])
 
 try oscClient.send(msg, to: "192.168.1.2", port: 8000)
 ```
