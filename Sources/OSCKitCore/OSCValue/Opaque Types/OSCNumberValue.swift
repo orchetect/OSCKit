@@ -86,13 +86,16 @@ extension OSCNumberValue: CustomStringConvertible {
 
 // MARK: - OSC Encoding
 
-extension OSCNumberValue: OSCValueCodable { }
-
+@_documentation(visibility: internal)
 extension OSCNumberValue: OSCValue {
     // forward underlying type instead of using .number
     public static var oscValueToken: OSCValueToken { B.oscValueToken }
 }
 
+@_documentation(visibility: internal)
+extension OSCNumberValue: OSCValueCodable { }
+
+@_documentation(visibility: internal)
 extension OSCNumberValue: OSCValueEncodable {
     public typealias OSCEncoded = B.OSCEncoded
     public typealias OSCValueEncodingBlock = B.OSCValueEncodingBlock
@@ -100,6 +103,7 @@ extension OSCNumberValue: OSCValueEncodable {
     public static var oscEncoding: OSCValueEncodingBlock { B.oscEncoding }
 }
 
+@_documentation(visibility: internal)
 extension OSCNumberValue: OSCValueDecodable {
     public typealias OSCDecoded = B.OSCDecoded
     public typealias OSCValueDecodingBlock = B.OSCValueDecodingBlock

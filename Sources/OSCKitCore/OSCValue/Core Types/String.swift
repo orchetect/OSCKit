@@ -12,15 +12,18 @@ internal import SwiftASCII // ASCIIString
 @_implementationOnly import SwiftASCII // ASCIIString
 #endif
 
+@_documentation(visibility: internal)
 extension String: OSCValue {
     public static let oscValueToken: OSCValueToken = .string
 }
 
+@_documentation(visibility: internal)
 extension String: OSCValueCodable {
     static let oscTag: Character = "s"
     public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
 }
 
+@_documentation(visibility: internal)
 extension String: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
@@ -31,6 +34,7 @@ extension String: OSCValueEncodable {
     }
 }
 
+@_documentation(visibility: internal)
 extension String: OSCValueDecodable {
     public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { decoder in

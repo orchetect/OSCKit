@@ -46,15 +46,18 @@ extension OSCImpulseValue: Codable { }
 
 // MARK: - OSC Encoding
 
+@_documentation(visibility: internal)
 extension OSCImpulseValue: OSCValue {
     public static let oscValueToken: OSCValueToken = .impulse
 }
 
+@_documentation(visibility: internal)
 extension OSCImpulseValue: OSCValueCodable {
     static let oscTag: Character = "I"
     public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
 }
 
+@_documentation(visibility: internal)
 extension OSCImpulseValue: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
@@ -62,6 +65,7 @@ extension OSCImpulseValue: OSCValueEncodable {
     }
 }
 
+@_documentation(visibility: internal)
 extension OSCImpulseValue: OSCValueDecodable {
     public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { decoder in

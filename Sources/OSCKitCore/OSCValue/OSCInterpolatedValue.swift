@@ -23,6 +23,7 @@ public protocol OSCInterpolatedValue: OSCValue
 
 // MARK: - Default Implementation
 
+@_documentation(visibility: internal)
 extension OSCInterpolatedValue {
     public static var oscTagIdentity: OSCValueTagIdentity {
         CoreOSCValue.oscTagIdentity

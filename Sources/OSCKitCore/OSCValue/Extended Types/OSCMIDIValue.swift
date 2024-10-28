@@ -123,15 +123,18 @@ extension OSCMIDIValue: Codable {
 
 // MARK: - OSC Encoding
 
+@_documentation(visibility: internal)
 extension OSCMIDIValue: OSCValue {
     public static let oscValueToken: OSCValueToken = .midi
 }
 
+@_documentation(visibility: internal)
 extension OSCMIDIValue: OSCValueCodable {
     static let oscTag: Character = "m"
     public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
 }
 
+@_documentation(visibility: internal)
 extension OSCMIDIValue: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
@@ -142,6 +145,7 @@ extension OSCMIDIValue: OSCValueEncodable {
     }
 }
 
+@_documentation(visibility: internal)
 extension OSCMIDIValue: OSCValueDecodable {
     public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { decoder in

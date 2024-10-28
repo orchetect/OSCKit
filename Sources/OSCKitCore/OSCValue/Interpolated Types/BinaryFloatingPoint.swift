@@ -8,6 +8,7 @@ import Foundation
 
 // MARK: - BinaryFloatingPoint Default Implementation
 
+@_documentation(visibility: internal)
 extension OSCInterpolatedValue
     where Self: BinaryFloatingPoint,
     CoreOSCValue: BinaryFloatingPoint,
@@ -28,6 +29,7 @@ extension OSCInterpolatedValue
 // `Float` (aka `Float32`) is already a core type
 
 #if !(arch(i386) || arch(x86_64)) // Float16 won't compile for Intel
+@_documentation(visibility: internal)
 @available(macOS 11.0, iOS 14.0, tvOS 14.0, watchOS 7.0, *)
 extension Float16: OSCInterpolatedValue {
     public typealias CoreOSCValue = Float32
@@ -35,6 +37,7 @@ extension Float16: OSCInterpolatedValue {
 #endif
 
 #if !(arch(arm64) || arch(arm) || os(watchOS)) // Float80 is now removed for ARM
+@_documentation(visibility: internal)
 extension Float80: OSCInterpolatedValue {
     public typealias CoreOSCValue = Double
 }
@@ -43,6 +46,7 @@ extension Float80: OSCInterpolatedValue {
 #if canImport(CoreGraphics)
 import CoreGraphics
 
+@_documentation(visibility: internal)
 extension CGFloat: OSCInterpolatedValue {
     public typealias CoreOSCValue = Double
 }

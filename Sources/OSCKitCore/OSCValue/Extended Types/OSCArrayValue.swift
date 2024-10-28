@@ -102,14 +102,17 @@ extension OSCArrayValue: CustomStringConvertible {
 private let oscTypeTagOpen: Character = "["
 private let oscTypeTagClose: Character = "]"
 
+@_documentation(visibility: internal)
 extension OSCArrayValue: OSCValue {
     public static var oscValueToken: OSCValueToken { .array }
 }
 
+@_documentation(visibility: internal)
 extension OSCArrayValue: OSCValueCodable {
     public static let oscTagIdentity: OSCValueTagIdentity = .variadic(minCount: 2, maxCount: nil)
 }
 
+@_documentation(visibility: internal)
 extension OSCArrayValue: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueVariadicEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
@@ -136,6 +139,7 @@ extension OSCArrayValue: OSCValueEncodable {
     }
 }
 
+@_documentation(visibility: internal)
 extension OSCArrayValue: OSCValueDecodable {
     public typealias OSCValueDecodingBlock = OSCValueVariadicDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { tags, decoder in

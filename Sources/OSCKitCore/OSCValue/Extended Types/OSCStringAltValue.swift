@@ -72,15 +72,18 @@ extension OSCStringAltValue: Codable { }
 
 // MARK: - OSC Encoding
 
+@_documentation(visibility: internal)
 extension OSCStringAltValue: OSCValue {
     public static let oscValueToken: OSCValueToken = .stringAlt
 }
 
+@_documentation(visibility: internal)
 extension OSCStringAltValue: OSCValueCodable {
     static let oscTag: Character = "S"
     public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
 }
 
+@_documentation(visibility: internal)
 extension OSCStringAltValue: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
@@ -89,6 +92,7 @@ extension OSCStringAltValue: OSCValueEncodable {
     }
 }
 
+@_documentation(visibility: internal)
 extension OSCStringAltValue: OSCValueDecodable {
     public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { decoder in

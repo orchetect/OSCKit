@@ -8,6 +8,7 @@ import Foundation
 
 // MARK: - BinaryInteger Default Implementation
 
+@_documentation(visibility: internal)
 extension OSCInterpolatedValue
     where Self: BinaryInteger,
     CoreOSCValue: BinaryInteger,
@@ -27,16 +28,19 @@ extension OSCInterpolatedValue
 
 // MARK: - Individual Conformances
 
+@_documentation(visibility: internal)
 extension Int: OSCInterpolatedValue {
     // even though Int64 is a possible OSC type and would be safer,
     // Int32 is by far more common and is the preferred interpolation
     public typealias CoreOSCValue = Int32
 }
 
+@_documentation(visibility: internal)
 extension Int8: OSCInterpolatedValue {
     public typealias CoreOSCValue = Int32
 }
 
+@_documentation(visibility: internal)
 extension Int16: OSCInterpolatedValue {
     public typealias CoreOSCValue = Int32
 }
@@ -45,22 +49,27 @@ extension Int16: OSCInterpolatedValue {
 
 // `Int64` is already an extended type
 
+@_documentation(visibility: internal)
 extension UInt: OSCInterpolatedValue {
     public typealias CoreOSCValue = Int64
 }
 
+@_documentation(visibility: internal)
 extension UInt8: OSCInterpolatedValue {
     public typealias CoreOSCValue = Int32
 }
 
+@_documentation(visibility: internal)
 extension UInt16: OSCInterpolatedValue {
     public typealias CoreOSCValue = Int32
 }
 
+@_documentation(visibility: internal)
 extension UInt32: OSCInterpolatedValue {
     public typealias CoreOSCValue = Int64
 }
 
+@_documentation(visibility: internal)
 extension UInt64: OSCInterpolatedValue {
     public typealias CoreOSCValue = Int64
 }

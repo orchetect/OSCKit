@@ -46,15 +46,18 @@ extension OSCNullValue: Codable { }
 
 // MARK: - OSC Encoding
 
+@_documentation(visibility: internal)
 extension OSCNullValue: OSCValue {
     public static let oscValueToken: OSCValueToken = .null
 }
 
+@_documentation(visibility: internal)
 extension OSCNullValue: OSCValueCodable {
     static let oscTag: Character = "N"
     public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
 }
 
+@_documentation(visibility: internal)
 extension OSCNullValue: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
@@ -62,6 +65,7 @@ extension OSCNullValue: OSCValueEncodable {
     }
 }
 
+@_documentation(visibility: internal)
 extension OSCNullValue: OSCValueDecodable {
     public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { decoder in

@@ -9,16 +9,19 @@ import Foundation
 private let oscTypeTagTrue: Character = "T"
 private let oscTypeTagFalse: Character = "F"
 
+@_documentation(visibility: internal)
 extension Bool: OSCValue {
     public static let oscValueToken: OSCValueToken = .bool
 }
 
+@_documentation(visibility: internal)
 extension Bool: OSCValueCodable {
     public static let oscTagIdentity: OSCValueTagIdentity = .variable(
         [oscTypeTagTrue, oscTypeTagFalse]
     )
 }
 
+@_documentation(visibility: internal)
 extension Bool: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueVariableEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
@@ -29,6 +32,7 @@ extension Bool: OSCValueEncodable {
     }
 }
 
+@_documentation(visibility: internal)
 extension Bool: OSCValueDecodable {
     public typealias OSCValueDecodingBlock = OSCValueVariableDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { tag, decoder in

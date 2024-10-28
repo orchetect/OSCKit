@@ -6,15 +6,18 @@
 
 import Foundation
 
+@_documentation(visibility: internal)
 extension Data: OSCValue {
     public static let oscValueToken: OSCValueToken = .blob
 }
 
+@_documentation(visibility: internal)
 extension Data: OSCValueCodable {
     static let oscTag: Character = "b"
     public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
 }
 
+@_documentation(visibility: internal)
 extension Data: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
@@ -28,6 +31,7 @@ extension Data: OSCValueEncodable {
     }
 }
 
+@_documentation(visibility: internal)
 extension Data: OSCValueDecodable {
     public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { decoder in

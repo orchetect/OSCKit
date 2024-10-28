@@ -14,15 +14,18 @@ internal import SwiftASCII // ASCIICharacter
 
 // MARK: - OSC Encoding
 
+@_documentation(visibility: internal)
 extension Character: OSCValue {
     public static let oscValueToken: OSCValueToken = .character
 }
 
+@_documentation(visibility: internal)
 extension Character: OSCValueCodable {
     static let oscTag: Character = "c"
     public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
 }
 
+@_documentation(visibility: internal)
 extension Character: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
@@ -36,6 +39,7 @@ extension Character: OSCValueEncodable {
     }
 }
 
+@_documentation(visibility: internal)
 extension Character: OSCValueDecodable {
     public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { decoder in
