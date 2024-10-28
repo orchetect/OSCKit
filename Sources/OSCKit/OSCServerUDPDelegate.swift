@@ -10,7 +10,7 @@ import Foundation
 @preconcurrency import CocoaAsyncSocket
 
 /// Internal UDP receiver class so as to not expose `GCDAsyncUdpSocketDelegate` methods as public.
-internal final class OSCServerUDPDelegate: NSObject, GCDAsyncUdpSocketDelegate, @unchecked Sendable { // TODO: unchecked
+final class OSCServerUDPDelegate: NSObject, GCDAsyncUdpSocketDelegate, @unchecked Sendable { // TODO: unchecked
     weak var oscServer: _OSCServerProtocol?
     
     init(oscServer: _OSCServerProtocol? = nil) {

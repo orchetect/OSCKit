@@ -15,8 +15,8 @@ import OSCKitCore
 /// A single global OSC server instance is often created once at app startup to receive OSC messages
 /// on a specific local port. The default OSC port is 8000 but it may be set to any open port if
 /// desired.
-public final actor OSCServer: NSObject, _OSCServerProtocol {
-    let udpSocket = GCDAsyncUdpSocket()
+public actor OSCServer: _OSCServerProtocol {
+    let udpSocket: GCDAsyncUdpSocket
     let udpDelegate = OSCServerUDPDelegate()
     let receiveQueue = DispatchQueue(label: "org.orchetect.OSCKit.OSCServer.receiveQueue")
     var handler: OSCHandlerBlock?
@@ -56,10 +56,8 @@ public final actor OSCServer: NSObject, _OSCServerProtocol {
         
         self.handler = handler
         
-        super.init()
-        
+        udpSocket = GCDAsyncUdpSocket(delegate: udpDelegate, delegateQueue: receiveQueue)
         udpDelegate.oscServer = self
-        udpSocket.setDelegate(udpDelegate, delegateQueue: receiveQueue)
     }
     
     /// Set the handler closure. This closure will be called when OSC bundles or messages are

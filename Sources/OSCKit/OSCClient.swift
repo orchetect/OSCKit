@@ -13,7 +13,7 @@ import Foundation
 ///
 /// A single global OSC client instance created once at app startup is often all that is needed. It
 /// can be used to send OSC messages to one or more many receivers on the network.
-public final class OSCClient: NSObject {
+public final class OSCClient {
     private let udpSocket = GCDAsyncUdpSocket()
     private let udpDelegate = OSCClientUDPDelegate()
     
@@ -75,9 +75,7 @@ public final class OSCClient: NSObject {
     /// A random available port in the system will be chosen.
     /// Using this initializer does not require calling ``start()`` unless additional properties are
     /// modified such as ``isPortReuseEnabled`` or ``isIPv4BroadcastEnabled``.
-    override public init() {
-        super.init()
-        
+    public init() {
         // delegate needed for local port binding and enable broadcast
         udpSocket.setDelegate(udpDelegate, delegateQueue: .global())
     }
