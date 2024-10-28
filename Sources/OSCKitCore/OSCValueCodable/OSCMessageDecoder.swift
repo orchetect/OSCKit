@@ -13,9 +13,9 @@ import Foundation
 /// decoding.
 enum OSCMessageDecoder {
     /// Decodes OSC message raw data.
-    static func decode(rawData: Data) async throws ->
-        (addressPattern: String, values: OSCValues)
-    {
+    static func decode(
+        rawData: Data
+    ) async throws -> (addressPattern: String, values: OSCValues) {
         // validation: length
         if rawData.count % 4 != 0 { // isn't a multiple of 4 bytes (as per OSC spec)
             throw OSCDecodeError.malformed("Length not a multiple of 4 bytes.")

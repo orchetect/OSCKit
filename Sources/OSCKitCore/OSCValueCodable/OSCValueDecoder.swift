@@ -47,7 +47,8 @@ extension OSCValueDecoder {
     public mutating func advancePosition(by numberOfBytes: Int) throws {
         guard numberOfBytes <= remainingByteCount else {
             throw OSCDecodeError.malformed(
-                "Attempted to advance byte read position past end of available bytes. \(remainingByteCount) bytes remain but \(numberOfBytes) were advanced."
+                "Attempted to advance byte read position past end of available bytes."
+                    + " \(remainingByteCount) bytes remain but \(numberOfBytes) were advanced."
             )
         }
         pos += numberOfBytes
@@ -199,7 +200,8 @@ extension OSCValueDecoder {
         guard let value = ASCIIString(exactly: chunk.data)?.stringValue
         else {
             throw OSCDecodeError.malformed(
-                "Failed to form valid ASCII string from 4-byte aligned null-terminated ASCII string chunk. Non-ASCII characters may be present or the data is malformed."
+                "Failed to form valid ASCII string from 4-byte aligned null-terminated ASCII string chunk."
+                    + " Non-ASCII characters may be present or the data is malformed."
             )
         }
         
@@ -325,7 +327,8 @@ extension OSCValueDecoder {
         
         guard byteLength <= remainingByteCount else {
             throw OSCDecodeError.malformed(
-                "Not enough bytes remain in data stream. Attempted to read \(byteLength) bytes but only \(remainingData) bytes remain."
+                "Not enough bytes remain in data stream."
+                    + " Attempted to read \(byteLength) bytes but only \(remainingData) bytes remain."
             )
         }
         
