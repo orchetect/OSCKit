@@ -66,7 +66,6 @@ OSCKit also adds the following opaque type-erasure types.
 
 ## Topics
 
-- ``AnyOSCValue``
 - ``OSCValue``
 - ``OSCValues``
 - ``AnyOSCNumberValue``

@@ -44,7 +44,7 @@ extension OSCValueToken {
 }
 
 extension OSCValue {
-    /// A mechanism to easily return the static type of an ``AnyOSCValue`` instance.
+    /// A mechanism to easily return the static type of an `any` ``OSCValue`` instance.
     @_disfavoredOverload
     func getSelf() -> Self.Type {
         Self.self

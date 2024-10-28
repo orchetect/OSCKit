@@ -17,7 +17,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
     // MARK: ... Core types
     
     func testBaseTypeMatches_blob() {
-        let val: AnyOSCValue = Data([1, 2, 3])
+        let val: any OSCValue = Data([1, 2, 3])
         let valType: OSCValueToken = .blob
         
         // includingOpaque: false
@@ -49,7 +49,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_float32() {
-        let val: AnyOSCValue = Float32(123.45)
+        let val: any OSCValue = Float32(123.45)
         let valType: OSCValueToken = .float32
         
         // includingOpaque: false
@@ -81,7 +81,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_int32() {
-        let val: AnyOSCValue = Int32(123)
+        let val: any OSCValue = Int32(123)
         let valType: OSCValueToken = .int32
         
         // includingOpaque: false
@@ -113,7 +113,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_string() {
-        let val: AnyOSCValue = String("A string")
+        let val: any OSCValue = String("A string")
         let valType: OSCValueToken = .string
         
         // includingOpaque: false
@@ -147,7 +147,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
     // MARK: ... Extended types
     
     func testBaseTypeMatches_array() {
-        let val: AnyOSCValue = OSCArrayValue([Int32(123)])
+        let val: any OSCValue = OSCArrayValue([Int32(123)])
         let valType: OSCValueToken = .array
         
         // includingOpaque: false
@@ -179,7 +179,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_bool() {
-        let val: AnyOSCValue = true
+        let val: any OSCValue = true
         let valType: OSCValueToken = .bool
         
         // includingOpaque: false
@@ -211,7 +211,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_character() {
-        let val: AnyOSCValue = Character("A")
+        let val: any OSCValue = Character("A")
         let valType: OSCValueToken = .character
         
         // includingOpaque: false
@@ -243,7 +243,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_double() {
-        let val: AnyOSCValue = Double(456.78)
+        let val: any OSCValue = Double(456.78)
         let valType: OSCValueToken = .double
         
         // includingOpaque: false
@@ -275,7 +275,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_int64() {
-        let val: AnyOSCValue = Int64(456)
+        let val: any OSCValue = Int64(456)
         let valType: OSCValueToken = .int64
         
         // includingOpaque: false
@@ -307,7 +307,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_impulse() {
-        let val: AnyOSCValue = OSCImpulseValue()
+        let val: any OSCValue = OSCImpulseValue()
         let valType: OSCValueToken = .impulse
         
         // includingOpaque: false
@@ -339,7 +339,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_midi() {
-        let val: AnyOSCValue = OSCMIDIValue(portID: 0x00, status: 0x00, data1: 0x00, data2: 0x00)
+        let val: any OSCValue = OSCMIDIValue(portID: 0x00, status: 0x00, data1: 0x00, data2: 0x00)
         let valType: OSCValueToken = .midi
         
         // includingOpaque: false
@@ -371,7 +371,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_null() {
-        let val: AnyOSCValue = OSCNullValue()
+        let val: any OSCValue = OSCNullValue()
         let valType: OSCValueToken = .null
         
         // includingOpaque: false
@@ -403,7 +403,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_stringAlt() {
-        let val: AnyOSCValue = OSCStringAltValue("An alt string")
+        let val: any OSCValue = OSCStringAltValue("An alt string")
         let valType: OSCValueToken = .stringAlt
         
         // includingOpaque: false
@@ -435,7 +435,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
     }
     
     func testBaseTypeMatches_timeTag() {
-        let val: AnyOSCValue = OSCTimeTag(.init(456))
+        let val: any OSCValue = OSCTimeTag(.init(456))
         let valType: OSCValueToken = .timeTag
         
         // includingOpaque: false

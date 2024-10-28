@@ -90,7 +90,7 @@ extension OSCArrayValue: CustomStringConvertible {
 //       which defeats the purpose since it brings no real syntactic convenience.
 
 // extension OSCArrayValue: ExpressibleByArrayLiteral {
-//    public typealias ArrayLiteralElement = AnyOSCValue
+//    public typealias ArrayLiteralElement = any OSCValue
 //
 //    public init(arrayLiteral elements: ArrayLiteralElement...) {
 //        self.init(elements)

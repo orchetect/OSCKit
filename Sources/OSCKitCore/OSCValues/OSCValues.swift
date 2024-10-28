@@ -4,13 +4,13 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
-public typealias OSCValues = [AnyOSCValue]
+public typealias OSCValues = [any OSCValue]
 
 extension OSCValues {
-    /// Syntactic convenience to allow the formation of an ``AnyOSCValue`` array by using
+    /// Syntactic convenience to allow the formation of an `any` ``OSCValue`` array by using
     /// `OSCValues()` as an initializer.
     @_disfavoredOverload
-    public init(_ values: [AnyOSCValue]) {
+    public init(_ values: [any OSCValue]) {
         self = values
     }
 }

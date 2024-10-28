@@ -461,7 +461,7 @@ final class OSCValueToken_Tests: XCTestCase {
     func testMatchesValueMask_midi() {
         let mask: [OSCValueToken] = [.midi]
         
-        let value: AnyOSCValue = OSCMIDIValue(
+        let value: any OSCValue = OSCMIDIValue(
             portID: 1,
             status: 2,
             data1: 3
