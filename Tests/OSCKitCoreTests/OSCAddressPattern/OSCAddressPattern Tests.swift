@@ -49,7 +49,7 @@ import Testing
     @Test func pathComponents() {
         // empty address
         #expect(
-            OSCAddressPattern("").pathComponents/*.map(String.init)*/ ==
+            OSCAddressPattern("").pathComponents ==
             []
         )
         
