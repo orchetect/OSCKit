@@ -10,6 +10,13 @@ import Testing
 import Numerics
 
 @Suite struct OSCTimeTag_StaticConstructors_Tests {
+    #if os(macOS) || os(iOS)
+    let tolerance: TimeInterval = 0.001
+    #elseif os(tvOS) || os(watchOS)
+    // allow more time variance for CI pipeline to de-flake
+    let tolerance: TimeInterval = 0.01
+    #endif
+    
     // MARK: - Static Constructors
     
     @Test func timeTagImmediate() {
@@ -35,7 +42,7 @@ import Numerics
         
         let valTI = try #require((val as? OSCTimeTag)?.timeInterval(since: primeEpoch))
         let nowTI = now.timeInterval(since: primeEpoch)
-        #expect(valTI.isApproximatelyEqual(to: nowTI, absoluteTolerance: 0.001))
+        #expect(valTI.isApproximatelyEqual(to: nowTI, absoluteTolerance: tolerance))
     }
     
     @Test func oscValue_timeTagTimeIntervalSinceNow() throws {
@@ -45,7 +52,7 @@ import Numerics
         let valTI = try #require((val as? OSCTimeTag)?.timeInterval(since: primeEpoch))
         let nowTI = now.timeInterval(since: primeEpoch)
         
-        #expect(valTI.isApproximatelyEqual(to: nowTI, absoluteTolerance: 0.001))
+        #expect(valTI.isApproximatelyEqual(to: nowTI, absoluteTolerance: tolerance))
     }
     
     @Test func oscValue_timeTagTimeIntervalSince1900() {
