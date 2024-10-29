@@ -4,97 +4,95 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
+import Foundation
 import OSCKitCore
 import SwiftASCII
-import XCTest
+import Testing
 
-final class OSCValues_TypeMask_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
+@Suite struct OSCValues_TypeMask_Tests {
     // MARK: - 1 Value
     
-    func testValues_V0() throws {
+    @Test func values_V0() throws {
         // success
-        XCTAssertEqual(
+        #expect(
             try OSCValues([Int32(123)])
-                .masked(Int32.self),
+                .masked(Int32.self) ==
             123
         )
         
         // wrong type
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([Int32(123)])
                 .masked(Int64.self)
-        )
+        }
         
         // wrong number of values
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([])
                 .masked(Int32.self)
-        )
+        }
         
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([Int32(123), String("str")])
                 .masked(Int32.self)
-        )
+        }
     }
     
-    func testValues_V0o() throws {
+    @Test func values_V0o() throws {
         // success, has value
-        XCTAssertEqual(
+        #expect(
             try OSCValues([Int32(123)])
-                .masked(Int32?.self),
+                .masked(Int32?.self) ==
             123
         )
         
         // success, nil optional
-        XCTAssertEqual(
+        #expect(
             try OSCValues([])
-                .masked(Int32?.self),
+                .masked(Int32?.self) ==
             nil
         )
     }
     
     // MARK: - 2 Values
     
-    func testValues_V0_V1() throws {
+    @Test func values_V0_V1() throws {
         // success
         do {
             let values: OSCValues = [Int32(123), String("str")]
             
             let masked = try values.masked(Int32.self, String.self)
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
         }
         
         // wrong type
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([Int32(123), String("str")])
                 .masked(Int64.self, String.self)
-        )
+        }
         
         // wrong number of values
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([Int32(123)])
                 .masked(Int32.self, String.self)
-        )
+        }
         
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([Int32(123), String("str"), true])
                 .masked(Int32.self, String.self)
-        )
+        }
     }
     
-    func testValues_V0_V1o() throws {
+    @Test func values_V0_V1o() throws {
         // success, has value
         do {
             let masked = try OSCValues([Int32(123), String("str")])
                 .masked(Int32.self, String?.self)
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
         }
         
         // success, nil optional
@@ -102,18 +100,18 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
             let masked = try OSCValues([Int32(123)])
                 .masked(Int32.self, String?.self)
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, nil)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == nil)
         }
         
         // wrong value type
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([Int32(123), true])
                 .masked(Int32.self, String?.self)
-        )
+        }
     }
     
-    func testValues_V0o_V1o() throws {
+    @Test func values_V0o_V1o() throws {
         // success, has value
         do {
             let masked = try OSCValues([
@@ -125,8 +123,8 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 String?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
         }
         
         // success, nil optional
@@ -137,8 +135,8 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                     String?.self
                 )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, nil)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == nil)
         }
         
         // success, nil optional
@@ -149,24 +147,24 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                     String?.self
                 )
             
-            XCTAssertEqual(masked.0, nil)
-            XCTAssertEqual(masked.1, nil)
+            #expect(masked.0 == nil)
+            #expect(masked.1 == nil)
         }
         
         // wrong value type
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([Int32(123), true])
                 .masked(
                     Int32?.self,
                     String?.self
                 )
-        )
+        }
     }
     
     // MARK: - 3 Values
     // Note: 3 Values does not have exhaustive tests, only basic tests
     
-    func testValues_V0_V1_V2() throws {
+    @Test func values_V0_V1_V2() throws {
         // success
         do {
             let values: OSCValues = [
@@ -181,13 +179,13 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Bool.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
         }
         
         // wrong type
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -198,19 +196,19 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 String.self,
                 Bool.self
             )
-        )
+        }
         
         // wrong number of values
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([Int32(123), String("str")])
                 .masked(
                     Int32.self,
                     String.self,
                     Bool.self
                 )
-        )
+        }
         
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -222,10 +220,10 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 String.self,
                 Bool.self
             )
-        )
+        }
     }
     
-    func testValues_V0o_V1o_V2o() throws {
+    @Test func values_V0o_V1o_V2o() throws {
         let values: OSCValues = [
             Int32(123),
             String("str"),
@@ -239,9 +237,9 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Bool?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
         }
         
         do {
@@ -251,9 +249,9 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Bool?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
         }
         
         do {
@@ -263,9 +261,9 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Bool?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
         }
         
         do {
@@ -275,16 +273,16 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Bool?.self
             )
             
-            XCTAssertEqual(masked.0, nil)
-            XCTAssertEqual(masked.1, nil)
-            XCTAssertEqual(masked.2, nil)
+            #expect(masked.0 == nil)
+            #expect(masked.1 == nil)
+            #expect(masked.2 == nil)
         }
     }
     
     // MARK: - 4 Values
     // Note: 4 Values does not have exhaustive tests, only basic tests
     
-    func testValues_V0_V1_V2_V3() throws {
+    @Test func values_V0_V1_V2_V3() throws {
         // success
         do {
             let values: OSCValues = [
@@ -301,14 +299,14 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Float32.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
         }
         
         // wrong type
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -321,10 +319,10 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Bool.self,
                 Float32.self
             )
-        )
+        }
         
         // wrong number of values
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -336,9 +334,9 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Bool.self,
                 Float32.self
             )
-        )
+        }
         
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -352,10 +350,10 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Bool.self,
                 Float32.self
             )
-        )
+        }
     }
     
-    func testValues_V0o_V1o_V2o_V3o() throws {
+    @Test func values_V0o_V1o_V2o_V3o() throws {
         let values: OSCValues = [
             Int32(123),
             String("str"),
@@ -371,10 +369,10 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Float32?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
         }
         
         do {
@@ -385,10 +383,10 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Float32?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
         }
         
         do {
@@ -399,10 +397,10 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Float32?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
         }
         
         do {
@@ -413,17 +411,17 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Float32?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
         }
     }
     
     // MARK: - 5 Values
     // Note: 5 Values does not have exhaustive tests, only basic tests
     
-    func testValues_V0_V1_V2_V3_V4() throws {
+    @Test func values_V0_V1_V2_V3_V4() throws {
         // success
         do {
             let values: OSCValues = [
@@ -442,15 +440,15 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Data.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
         }
         
         // wrong type
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -465,10 +463,10 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Float32.self,
                 Data.self
             )
-        )
+        }
         
         // wrong number of values
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -482,9 +480,9 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Float32.self,
                 Data.self
             )
-        )
+        }
         
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -500,10 +498,10 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Float32.self,
                 Data.self
             )
-        )
+        }
     }
     
-    func testValues_V0o_V1o_V2o_V3o_V4o() throws {
+    @Test func values_V0o_V1o_V2o_V3o_V4o() throws {
         let values: OSCValues = [
             Int32(123),
             String("str"),
@@ -521,11 +519,11 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Data?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
         }
         
         do {
@@ -537,11 +535,11 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Data?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
         }
         
         do {
@@ -553,11 +551,11 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Data?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
         }
         
         do {
@@ -569,11 +567,11 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Data?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
         }
         
         do {
@@ -585,18 +583,18 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Data?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
         }
     }
     
     // MARK: - 6 Values
     // Note: 6 Values does not have exhaustive tests, only basic tests
     
-    func testValues_V0_V1_V2_V3_V4_V5() throws {
+    @Test func values_V0_V1_V2_V3_V4_V5() throws {
         // success
         do {
             let values: OSCValues = [
@@ -617,16 +615,16 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Double.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
         }
         
         // wrong type
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -643,10 +641,10 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Data.self,
                 Double.self
             )
-        )
+        }
         
         // wrong number of values
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -662,9 +660,9 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Data.self,
                 Double.self
             )
-        )
+        }
         
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -682,10 +680,10 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Data.self,
                 Double.self
             )
-        )
+        }
     }
     
-    func testValues_V0o_V1o_V2o_V3o_V4o_V5o() throws {
+    @Test func values_V0o_V1o_V2o_V3o_V4o_V5o() throws {
         let values: OSCValues = [
             Int32(123),
             String("str"),
@@ -705,12 +703,12 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Double?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
         }
         
         do {
@@ -723,12 +721,12 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Double?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
         }
         
         do {
@@ -741,12 +739,12 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Double?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
         }
         
         do {
@@ -759,12 +757,12 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Double?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
         }
         
         do {
@@ -777,12 +775,12 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Double?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
         }
         
         do {
@@ -795,19 +793,19 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Double?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
         }
     }
     
     // MARK: - 7 Values
     // Note: 7 Values does not have exhaustive tests, only basic tests
     
-    func testValues_V0_V1_V2_V3_V4_V5_V6() throws {
+    @Test func values_V0_V1_V2_V3_V4_V5_V6() throws {
         // success
         do {
             let values: OSCValues = [
@@ -830,17 +828,17 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Character.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
         }
         
         // wrong type
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -859,10 +857,10 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Double.self,
                 Character.self
             )
-        )
+        }
         
         // wrong number of values
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -880,9 +878,9 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Double.self,
                 Character.self
             )
-        )
+        }
         
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -902,10 +900,10 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Double.self,
                 Character.self
             )
-        )
+        }
     }
     
-    func testValues_V0o_V1o_V2o_V3o_V4o_V5o_V6o() throws {
+    @Test func values_V0o_V1o_V2o_V3o_V4o_V5o_V6o() throws {
         let values: OSCValues = [
             Int32(123),
             String("str"),
@@ -927,13 +925,13 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Character?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
         }
         
         do {
@@ -947,13 +945,13 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Character?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
         }
         
         do {
@@ -967,13 +965,13 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Character?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
         }
         
         do {
@@ -987,13 +985,13 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Character?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
         }
         
         do {
@@ -1007,13 +1005,13 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Character?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
         }
         
         do {
@@ -1027,13 +1025,13 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Character?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
         }
         
         do {
@@ -1047,20 +1045,20 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Character?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
         }
     }
     
     // MARK: - 8 Values
     // Note: 8 Values does not have exhaustive tests, only basic tests
     
-    func testValues_V0_V1_V2_V3_V4_V5_V6_V7() throws {
+    @Test func values_V0_V1_V2_V3_V4_V5_V6_V7() throws {
         // success
         do {
             let values: OSCValues = [
@@ -1085,18 +1083,18 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCTimeTag.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7.rawValue, 999)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7.rawValue == 999)
         }
         
         // wrong type
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -1117,10 +1115,10 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Character.self,
                 Int64.self
             )
-        )
+        }
         
         // wrong number of values
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -1140,9 +1138,9 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Character.self,
                 Int64.self
             )
-        )
+        }
         
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -1164,10 +1162,10 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 Character.self,
                 Int64.self
             )
-        )
+        }
     }
     
-    func testValues_V0o_V1o_V2o_V3o_V4o_V5o_V6o_V7o() throws {
+    @Test func values_V0o_V1o_V2o_V3o_V4o_V5o_V6o_V7o() throws {
         let values: OSCValues = [
             Int32(123),
             String("str"),
@@ -1191,14 +1189,14 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCTimeTag?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
         }
         
         do {
@@ -1213,14 +1211,14 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCTimeTag?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
         }
         
         do {
@@ -1235,14 +1233,14 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCTimeTag?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
         }
         
         do {
@@ -1257,14 +1255,14 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCTimeTag?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
         }
         
         do {
@@ -1279,14 +1277,14 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCTimeTag?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
         }
         
         do {
@@ -1301,14 +1299,14 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCTimeTag?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
         }
         
         do {
@@ -1323,14 +1321,14 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCTimeTag?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
         }
         
         do {
@@ -1345,21 +1343,21 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCTimeTag?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
         }
     }
     
     // MARK: - 9 Values
     // Note: 9 Values does not have exhaustive tests, only basic tests
     
-    func testValues_V0_V1_V2_V3_V4_V5_V6_V7_V8() throws {
+    @Test func values_V0_V1_V2_V3_V4_V5_V6_V7_V8() throws {
         // success
         do {
             let values: OSCValues = [
@@ -1386,19 +1384,19 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCStringAltValue.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7.rawValue, 999)
-            XCTAssertEqual(masked.8.string, "str2")
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7.rawValue == 999)
+            #expect(masked.8.string == "str2")
         }
         
         // wrong type
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -1421,10 +1419,10 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCTimeTag.self,
                 OSCStringAltValue.self
             )
-        )
+        }
         
         // wrong number of values
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -1446,9 +1444,9 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCTimeTag.self,
                 OSCStringAltValue.self
             )
-        )
+        }
         
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -1472,10 +1470,10 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCTimeTag.self,
                 OSCStringAltValue.self
             )
-        )
+        }
     }
     
-    func testValues_V0o_V1o_V2o_V3o_V4o_V5o_V6o_V7o_V8o() throws {
+    @Test func values_V0o_V1o_V2o_V3o_V4o_V5o_V6o_V7o_V8o() throws {
         let values: OSCValues = [
             Int32(123),
             String("str"),
@@ -1501,15 +1499,15 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCStringAltValue?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7.rawValue, 999)
-            XCTAssertEqual(masked.8?.string, "str2")
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7.rawValue == 999)
+            #expect(masked.8?.string == "str2")
         }
         
         do {
@@ -1525,15 +1523,15 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCStringAltValue?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
-            XCTAssertEqual(masked.8?.string, "str2")
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
+            #expect(masked.8?.string == "str2")
         }
         
         do {
@@ -1549,15 +1547,15 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCStringAltValue?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
-            XCTAssertEqual(masked.8?.string, "str2")
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
+            #expect(masked.8?.string == "str2")
         }
         
         do {
@@ -1573,15 +1571,15 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCStringAltValue?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
-            XCTAssertEqual(masked.8?.string, "str2")
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
+            #expect(masked.8?.string == "str2")
         }
         
         do {
@@ -1597,15 +1595,15 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCStringAltValue?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
-            XCTAssertEqual(masked.8?.string, "str2")
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
+            #expect(masked.8?.string == "str2")
         }
         
         do {
@@ -1621,15 +1619,15 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCStringAltValue?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
-            XCTAssertEqual(masked.8?.string, "str2")
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
+            #expect(masked.8?.string == "str2")
         }
         
         do {
@@ -1645,15 +1643,15 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCStringAltValue?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
-            XCTAssertEqual(masked.8?.string, "str2")
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
+            #expect(masked.8?.string == "str2")
         }
         
         do {
@@ -1669,15 +1667,15 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCStringAltValue?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
-            XCTAssertEqual(masked.8?.string, "str2")
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
+            #expect(masked.8?.string == "str2")
         }
         
         do {
@@ -1693,22 +1691,22 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCStringAltValue?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
-            XCTAssertEqual(masked.8?.string, "str2")
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
+            #expect(masked.8?.string == "str2")
         }
     }
     
     // MARK: - 10 Values
     // Note: 10 Values does not have exhaustive tests, only basic tests
     
-    func testValues_V0_V1_V2_V3_V4_V5_V6_V7_V8_V9() throws {
+    @Test func values_V0_V1_V2_V3_V4_V5_V6_V7_V8_V9() throws {
         // success
         do {
             let values: OSCValues = [
@@ -1737,20 +1735,20 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCMIDIValue.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7.rawValue, 999)
-            XCTAssertEqual(masked.8.string, "str2")
-            XCTAssertEqual(masked.9, OSCMIDIValue(portID: 0x00, status: 0xFF))
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7.rawValue == 999)
+            #expect(masked.8.string == "str2")
+            #expect(masked.9 == OSCMIDIValue(portID: 0x00, status: 0xFF))
         }
         
         // wrong type
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -1775,10 +1773,10 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCStringAltValue.self,
                 OSCMIDIValue.self
             )
-        )
+        }
         
         // wrong number of values
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -1802,9 +1800,9 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCStringAltValue.self,
                 OSCMIDIValue.self
             )
-        )
+        }
         
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([
                 Int32(123),
                 String("str"),
@@ -1830,10 +1828,10 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCStringAltValue.self,
                 OSCMIDIValue.self
             )
-        )
+        }
     }
     
-    func testValues_V0o_V1o_V2o_V3o_V4o_V5o_V6o_V7o_V8o_V9o() throws {
+    @Test func values_V0o_V1o_V2o_V3o_V4o_V5o_V6o_V7o_V8o_V9o() throws {
         let values: OSCValues = [
             Int32(123),
             String("str"),
@@ -1861,16 +1859,16 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCMIDIValue?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7.rawValue, 999)
-            XCTAssertEqual(masked.8.string, "str2")
-            XCTAssertEqual(masked.9, OSCMIDIValue(portID: 0x00, status: 0xFF))
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7.rawValue == 999)
+            #expect(masked.8.string == "str2")
+            #expect(masked.9 == OSCMIDIValue(portID: 0x00, status: 0xFF))
         }
         
         do {
@@ -1887,16 +1885,16 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCMIDIValue?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7.rawValue, 999)
-            XCTAssertEqual(masked.8?.string, "str2")
-            XCTAssertEqual(masked.9, OSCMIDIValue(portID: 0x00, status: 0xFF))
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7.rawValue == 999)
+            #expect(masked.8?.string == "str2")
+            #expect(masked.9 == OSCMIDIValue(portID: 0x00, status: 0xFF))
         }
         
         do {
@@ -1913,16 +1911,16 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCMIDIValue?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
-            XCTAssertEqual(masked.8?.string, "str2")
-            XCTAssertEqual(masked.9, OSCMIDIValue(portID: 0x00, status: 0xFF))
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
+            #expect(masked.8?.string == "str2")
+            #expect(masked.9 == OSCMIDIValue(portID: 0x00, status: 0xFF))
         }
         
         do {
@@ -1939,16 +1937,16 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCMIDIValue?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
-            XCTAssertEqual(masked.8?.string, "str2")
-            XCTAssertEqual(masked.9, OSCMIDIValue(portID: 0x00, status: 0xFF))
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
+            #expect(masked.8?.string == "str2")
+            #expect(masked.9 == OSCMIDIValue(portID: 0x00, status: 0xFF))
         }
         
         do {
@@ -1965,16 +1963,16 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCMIDIValue?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
-            XCTAssertEqual(masked.8?.string, "str2")
-            XCTAssertEqual(masked.9, OSCMIDIValue(portID: 0x00, status: 0xFF))
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
+            #expect(masked.8?.string == "str2")
+            #expect(masked.9 == OSCMIDIValue(portID: 0x00, status: 0xFF))
         }
         
         do {
@@ -1991,16 +1989,16 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCMIDIValue?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
-            XCTAssertEqual(masked.8?.string, "str2")
-            XCTAssertEqual(masked.9, OSCMIDIValue(portID: 0x00, status: 0xFF))
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
+            #expect(masked.8?.string == "str2")
+            #expect(masked.9 == OSCMIDIValue(portID: 0x00, status: 0xFF))
         }
         
         do {
@@ -2017,16 +2015,16 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCMIDIValue?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
-            XCTAssertEqual(masked.8?.string, "str2")
-            XCTAssertEqual(masked.9, OSCMIDIValue(portID: 0x00, status: 0xFF))
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
+            #expect(masked.8?.string == "str2")
+            #expect(masked.9 == OSCMIDIValue(portID: 0x00, status: 0xFF))
         }
         
         do {
@@ -2043,16 +2041,16 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCMIDIValue?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
-            XCTAssertEqual(masked.8?.string, "str2")
-            XCTAssertEqual(masked.9, OSCMIDIValue(portID: 0x00, status: 0xFF))
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
+            #expect(masked.8?.string == "str2")
+            #expect(masked.9 == OSCMIDIValue(portID: 0x00, status: 0xFF))
         }
         
         do {
@@ -2069,16 +2067,16 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCMIDIValue?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
-            XCTAssertEqual(masked.8?.string, "str2")
-            XCTAssertEqual(masked.9, OSCMIDIValue(portID: 0x00, status: 0xFF))
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
+            #expect(masked.8?.string == "str2")
+            #expect(masked.9 == OSCMIDIValue(portID: 0x00, status: 0xFF))
         }
         
         do {
@@ -2095,186 +2093,186 @@ final class OSCValues_TypeMask_Tests: XCTestCase {
                 OSCMIDIValue?.self
             )
             
-            XCTAssertEqual(masked.0, 123)
-            XCTAssertEqual(masked.1, "str")
-            XCTAssertEqual(masked.2, true)
-            XCTAssertEqual(masked.3, 456.78)
-            XCTAssertEqual(masked.4, Data([0x01]))
-            XCTAssertEqual(masked.5, 234.56)
-            XCTAssertEqual(masked.6, "C")
-            XCTAssertEqual(masked.7?.rawValue, 999)
-            XCTAssertEqual(masked.8?.string, "str2")
-            XCTAssertEqual(masked.9, OSCMIDIValue(portID: 0x00, status: 0xFF))
+            #expect(masked.0 == 123)
+            #expect(masked.1 == "str")
+            #expect(masked.2 == true)
+            #expect(masked.3 == 456.78)
+            #expect(masked.4 == Data([0x01]))
+            #expect(masked.5 == 234.56)
+            #expect(masked.6 == Character("C"))
+            #expect(masked.7?.rawValue == 999)
+            #expect(masked.8?.string == "str2")
+            #expect(masked.9 == OSCMIDIValue(portID: 0x00, status: 0xFF))
         }
     }
     
     // MARK: - Substitute types
     
-    func testSubstitution_Int() throws {
-        XCTAssertEqual(
+    @Test func substitution_Int() throws {
+        #expect(
             try OSCValues([Int32(123)])
-                .masked(Int.self),
+                .masked(Int.self) ==
             123
         )
         
-        XCTAssertEqual(
+        #expect(
             try OSCValues([Int64(123)])
-                .masked(Int.self),
+                .masked(Int.self) ==
             123
         )
         
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([Double(123)])
                 .masked(Int.self)
-        )
+        }
     }
     
-    func testSubstitution_Int_Optional() throws {
-        XCTAssertEqual(
+    @Test func substitution_Int_Optional() throws {
+        #expect(
             try OSCValues([Int32(123)])
-                .masked(Int?.self),
+                .masked(Int?.self) ==
             123
         )
         
-        XCTAssertEqual(
+        #expect(
             try OSCValues([Int64(123)])
-                .masked(Int?.self),
+                .masked(Int?.self) ==
             123
         )
         
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([Double(123)])
                 .masked(Int?.self)
-        )
+        }
     }
     
-    func testExclusivity_String() throws {
+    @Test func exclusivity_String() throws {
         // String should not substitute other string types
         // in the way that Int substitutes other integers.
         
         // String == String
-        XCTAssertEqual(
+        #expect(
             try OSCValues([String("str")])
-                .masked(String.self),
+                .masked(String.self) ==
             "str"
         )
         
         // OSCStringAltValue != String
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([OSCStringAltValue("str")])
                 .masked(String.self)
-        )
+        }
         
         // Character != String
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([Character("s")])
                 .masked(String.self)
-        )
+        }
     }
     
-    func testExclusivity_Character() throws {
+    @Test func exclusivity_Character() throws {
         // Character should not substitute other string types
         // in the way that Int substitutes other integers.
         
         // Character == Character
-        XCTAssertEqual(
+        #expect(
             try OSCValues([Character("a")])
-                .masked(Character.self),
-            "a"
+                .masked(Character.self) ==
+            Character("a")
         )
         
         // String != Character
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([String("a")])
                 .masked(Character.self)
-        )
+        }
         
         // OSCStringAltValue != Character
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([OSCStringAltValue("a")])
                 .masked(Character.self)
-        )
+        }
         
         // String of count>1 != Character
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([String("ab")])
                 .masked(Character.self)
-        )
+        }
         
         // OSCStringAltValue of count>1 != Character
-        XCTAssertThrowsError(
+        #expect(throws: OSCValueMaskError.self) {
             try OSCValues([OSCStringAltValue("ab")])
                 .masked(Character.self)
-        )
+        }
     }
     
     // MARK: - Meta type: AnyOSCNumberValue
     
-    func testAnyOSCNumberValue_Int32() throws {
+    @Test func anyOSCNumberValue_Int32() throws {
         let values: OSCValues = [Int32(123)]
         
         let masked = try values.masked(AnyOSCNumberValue.self)
         
         guard case let .int(v) = masked.base,
               let unwrapped = v as? Int32
-        else { XCTFail(); return }
+        else { Issue.record(); return }
         
-        XCTAssertEqual(unwrapped, 123)
+        #expect(unwrapped == 123)
     }
     
-    func testAnyOSCNumberValue_Float32() throws {
+    @Test func anyOSCNumberValue_Float32() throws {
         let values: OSCValues = [Float32(123.45)]
         
         let masked = try values.masked(AnyOSCNumberValue.self)
         
         guard case let .float(v) = masked.base,
               let unwrapped = v as? Float32
-        else { XCTFail(); return }
+        else { Issue.record(); return }
         
-        XCTAssertEqual(unwrapped, 123.45)
+        #expect(unwrapped == 123.45)
     }
     
-    func testAnyOSCNumberValue_Int64() throws {
+    @Test func anyOSCNumberValue_Int64() throws {
         let values: OSCValues = [Int64(123)]
         
         let masked = try values.masked(AnyOSCNumberValue.self)
         
         guard case let .int(v) = masked.base,
               let unwrapped = v as? Int64
-        else { XCTFail(); return }
+        else { Issue.record(); return }
         
-        XCTAssertEqual(unwrapped, 123)
+        #expect(unwrapped == 123)
     }
     
-    func testAnyOSCNumberValue_Double() throws {
+    @Test func anyOSCNumberValue_Double() throws {
         let values: OSCValues = [Double(123.45)]
         
         let masked = try values.masked(AnyOSCNumberValue.self)
         
         guard case let .float(v) = masked.base,
               let unwrapped = v as? Double
-        else { XCTFail(); return }
+        else { Issue.record(); return }
         
-        XCTAssertEqual(unwrapped, 123.45)
+        #expect(unwrapped == 123.45)
     }
     
-    func testAnyOSCNumberValue_Int32_Optional() throws {
+    @Test func anyOSCNumberValue_Int32_Optional() throws {
         let values: OSCValues = [Int32(123)]
         
         let masked = try values.masked(AnyOSCNumberValue?.self)
         
         guard case let .int(v) = masked?.base,
               let unwrapped = v as? Int32
-        else { XCTFail(); return }
+        else { Issue.record(); return }
         
-        XCTAssertEqual(unwrapped, Int32(123))
+        #expect(unwrapped == Int32(123))
     }
     
-    func testAnyOSCNumberValue_Int32_Optional_Nil() throws {
+    @Test func anyOSCNumberValue_Int32_Optional_Nil() throws {
         let values: OSCValues = []
         
         let masked = try values.masked(AnyOSCNumberValue?.self)
         
-        XCTAssertEqual(masked, nil)
+        #expect(masked == nil)
     }
 }

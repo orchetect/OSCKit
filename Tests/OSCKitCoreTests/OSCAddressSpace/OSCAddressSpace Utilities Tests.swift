@@ -5,93 +5,90 @@
 //
 
 @testable import OSCKitCore
-import XCTest
+import Testing
 
-final class OSCAddressSpace_Utilities_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
-    func testNodeValidateName() {
-        XCTAssertFalse(
-            OSCAddressSpace.Node.validate(name: "")
+@Suite struct OSCAddressSpace_Utilities_Tests {
+    @Test func nodeValidateName() {
+        #expect(
+            !OSCAddressSpace.Node.validate(name: "")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressSpace.Node.validate(name: "abcDEF1234")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressSpace.Node.validate(name: "abc]p} ,.DEF1234-")
         )
         
-        XCTAssertFalse(
-            OSCAddressSpace.Node.validate(name: "abc?d")
+        #expect(
+            !OSCAddressSpace.Node.validate(name: "abc?d")
         )
         
-        XCTAssertFalse(
-            OSCAddressSpace.Node.validate(name: "abc*")
+        #expect(
+            !OSCAddressSpace.Node.validate(name: "abc*")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressSpace.Node.validate(name: "a bc")
         )
         
-        XCTAssertFalse(
-            OSCAddressSpace.Node.validate(name: "abc{d,e}f")
+        #expect(
+            !OSCAddressSpace.Node.validate(name: "abc{d,e}f")
         )
         
-        XCTAssertFalse(
-            OSCAddressSpace.Node.validate(name: "abc{d,e}f")
+        #expect(
+            !OSCAddressSpace.Node.validate(name: "abc{d,e}f")
         )
         
-        XCTAssertFalse(
-            OSCAddressSpace.Node.validate(name: "/abcDEF1234")
+        #expect(
+            !OSCAddressSpace.Node.validate(name: "/abcDEF1234")
         )
         
-        XCTAssertFalse(
-            OSCAddressSpace.Node.validate(name: "abcDEF1234/")
+        #expect(
+            !OSCAddressSpace.Node.validate(name: "abcDEF1234/")
         )
     }
     
-    func testNodeValidateNameStrict() {
-        XCTAssertFalse(
-            OSCAddressSpace.Node.validate(name: "", strict: true)
+    @Test func nodeValidateNameStrict() {
+        #expect(
+            !OSCAddressSpace.Node.validate(name: "", strict: true)
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressSpace.Node.validate(name: "abcDEF1234", strict: true)
         )
         
-        XCTAssertFalse(
-            OSCAddressSpace.Node.validate(name: "abc]p} ,.DEF1234-", strict: true)
+        #expect(
+            !OSCAddressSpace.Node.validate(name: "abc]p} ,.DEF1234-", strict: true)
         )
         
-        XCTAssertFalse(
-            OSCAddressSpace.Node.validate(name: "abc?d", strict: true)
+        #expect(
+            !OSCAddressSpace.Node.validate(name: "abc?d", strict: true)
         )
         
-        XCTAssertFalse(
-            OSCAddressSpace.Node.validate(name: "abc*", strict: true)
+        #expect(
+            !OSCAddressSpace.Node.validate(name: "abc*", strict: true)
         )
         
-        XCTAssertFalse(
-            OSCAddressSpace.Node.validate(name: "a bc", strict: true)
+        #expect(
+            !OSCAddressSpace.Node.validate(name: "a bc", strict: true)
         )
         
-        XCTAssertFalse(
-            OSCAddressSpace.Node.validate(name: "abc{d,e}f", strict: true)
+        #expect(
+            !OSCAddressSpace.Node.validate(name: "abc{d,e}f", strict: true)
         )
         
-        XCTAssertFalse(
-            OSCAddressSpace.Node.validate(name: "abc{d,e}f", strict: true)
+        #expect(
+            !OSCAddressSpace.Node.validate(name: "abc{d,e}f", strict: true)
         )
         
-        XCTAssertFalse(
-            OSCAddressSpace.Node.validate(name: "/abcDEF1234", strict: true)
+        #expect(
+            !OSCAddressSpace.Node.validate(name: "/abcDEF1234", strict: true)
         )
         
-        XCTAssertFalse(
-            OSCAddressSpace.Node.validate(name: "abcDEF1234/", strict: true)
+        #expect(
+            !OSCAddressSpace.Node.validate(name: "abcDEF1234/", strict: true)
         )
     }
 }

@@ -1,4 +1,4 @@
-// swift-tools-version: 5.9
+// swift-tools-version: 6.0
 // (be sure to update the .swift-version file when this Swift version changes)
 
 import PackageDescription
@@ -18,7 +18,8 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/robbiehanson/CocoaAsyncSocket", from: "7.0.0"),
-        .package(url: "https://github.com/orchetect/SwiftASCII", from: "1.1.5")
+        .package(url: "https://github.com/orchetect/SwiftASCII", from: "1.1.5"),
+        .package(url: "https://github.com/apple/swift-numerics", from: "1.0.2")
     ],
     targets: [
         .target(
@@ -44,7 +45,10 @@ let package = Package(
         ),
         .testTarget(
             name: "OSCKitCoreTests",
-            dependencies: ["OSCKitCore"]
+            dependencies: [
+                "OSCKitCore",
+                .product(name: "Numerics", package: "swift-numerics")
+            ]
         )
     ]
 )

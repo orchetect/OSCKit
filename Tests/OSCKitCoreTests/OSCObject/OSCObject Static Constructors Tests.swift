@@ -6,51 +6,48 @@
 
 import OSCKitCore
 import SwiftASCII
-import XCTest
+import Testing
 
-final class OSCObject_StaticConstructors_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
+@Suite struct OSCObject_StaticConstructors_Tests {
     // MARK: - OSCMessage
     
-    func testOSCMessage_AddressPatternString() throws {
+    @Test func oscMessage_AddressPatternString() throws {
         let addr = String("/msg1")
         let obj: any OSCObject = .message(
             addr,
             values: [Int32(123)]
         )
         
-        let msg = try XCTUnwrap(obj as? OSCMessage)
+        let msg: OSCMessage = try #require(obj as? OSCMessage)
         
-        XCTAssertEqual(msg.addressPattern.stringValue, "/msg1")
-        XCTAssertEqual(msg.values[0] as? Int32, Int32(123))
+        #expect(msg.addressPattern.stringValue == "/msg1")
+        #expect(msg.values[0] as? Int32 == Int32(123))
     }
     
-    func testOSCMessage_AddressPattern() throws {
+    @Test func oscMessage_AddressPattern() throws {
         let obj: any OSCObject = .message(
             OSCAddressPattern("/msg1"),
             values: [Int32(123)]
         )
         
-        let msg = try XCTUnwrap(obj as? OSCMessage)
+        let msg: OSCMessage = try #require(obj as? OSCMessage)
         
-        XCTAssertEqual(msg.addressPattern.stringValue, "/msg1")
-        XCTAssertEqual(msg.values[0] as? Int32, Int32(123))
+        #expect(msg.addressPattern.stringValue == "/msg1")
+        #expect(msg.values[0] as? Int32 == Int32(123))
     }
     
     // MARK: - OSCBundle
     
-    func testOSCBundle() throws {
+    @Test func oscBundle() throws {
         let obj: any OSCObject = .bundle([
             .message("/", values: [Int32(123)])
         ])
         
-        let bundle = try XCTUnwrap(obj as? OSCBundle)
+        let bundle: OSCBundle = try #require(obj as? OSCBundle)
         
-        XCTAssertEqual(bundle.elements.count, 1)
+        #expect(bundle.elements.count == 1)
         
-        let msg = try XCTUnwrap(bundle.elements[0] as? OSCMessage)
-        XCTAssertEqual(msg.values[0] as? Int32, Int32(123))
+        let msg = try #require(bundle.elements[0] as? OSCMessage)
+        #expect(msg.values[0] as? Int32 == Int32(123))
     }
 }

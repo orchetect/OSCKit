@@ -4,62 +4,60 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
+import Foundation
 import OSCKitCore
-import XCTest
+import Testing
+import Numerics
 
-final class OSCTimeTag_StaticConstructors_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
+@Suite struct OSCTimeTag_StaticConstructors_Tests {
     // MARK: - Static Constructors
     
-    func testTimeTagImmediate() {
+    @Test func timeTagImmediate() {
         let val: OSCTimeTag = .immediate()
-        XCTAssertEqual(val, OSCTimeTag(1))
+        #expect(val == OSCTimeTag(1))
     }
     
     // MARK: - `any OSCValue` Constructors
     
-    func testOSCValue_timeTag() {
+    @Test func oscValue_timeTag() {
         let val: any OSCValue = .timeTag(123, era: 1)
-        XCTAssertEqual(val as? OSCTimeTag, OSCTimeTag(123, era: 1))
+        #expect(val as? OSCTimeTag == OSCTimeTag(123, era: 1))
     }
     
-    func testOSCValue_timeTagImmediate() {
+    @Test func oscValue_timeTagImmediate() {
         let val: any OSCValue = .timeTagImmediate()
-        XCTAssertEqual(val as? OSCTimeTag, OSCTimeTag.immediate())
+        #expect(val as? OSCTimeTag == OSCTimeTag.immediate())
     }
     
-    func testOSCValue_timeTagNow() throws {
+    @Test func oscValue_timeTagNow() throws {
         let val: any OSCValue = .timeTagNow()
         let now = OSCTimeTag.now()
         
-        let valTI = try XCTUnwrap((val as? OSCTimeTag)?.timeInterval(since: primeEpoch))
+        let valTI = try #require((val as? OSCTimeTag)?.timeInterval(since: primeEpoch))
         let nowTI = now.timeInterval(since: primeEpoch)
-        
-        XCTAssertEqual(valTI, nowTI, accuracy: 0.001)
+        #expect(valTI.isApproximatelyEqual(to: nowTI, absoluteTolerance: 0.001))
     }
     
-    func testOSCValue_timeTagTimeIntervalSinceNow() throws {
+    @Test func oscValue_timeTagTimeIntervalSinceNow() throws {
         let val: any OSCValue = .timeTag(timeIntervalSinceNow: 5.0)
         let now = OSCTimeTag(timeIntervalSinceNow: 5.0)
         
-        let valTI = try XCTUnwrap((val as? OSCTimeTag)?.timeInterval(since: primeEpoch))
+        let valTI = try #require((val as? OSCTimeTag)?.timeInterval(since: primeEpoch))
         let nowTI = now.timeInterval(since: primeEpoch)
         
-        XCTAssertEqual(valTI, nowTI, accuracy: 0.001)
+        #expect(valTI.isApproximatelyEqual(to: nowTI, absoluteTolerance: 0.001))
     }
     
-    func testOSCValue_timeTagTimeIntervalSince1900() {
+    @Test func oscValue_timeTagTimeIntervalSince1900() {
         let val: any OSCValue = .timeTag(timeIntervalSince1900: 9_467_107_200.0)
-        XCTAssertEqual(val as? OSCTimeTag, OSCTimeTag(timeIntervalSince1900: 9_467_107_200.0))
+        #expect(val as? OSCTimeTag == OSCTimeTag(timeIntervalSince1900: 9_467_107_200.0))
     }
     
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6, *)
-    func testOSCValue_timeTagFuture() {
+    @Test func oscValue_timeTagFuture() {
         let futureDate = Date().advanced(by: 200.0)
         let val: any OSCValue = .timeTag(future: futureDate)
-        XCTAssertEqual(val as? OSCTimeTag, OSCTimeTag(future: futureDate))
+        #expect(val as? OSCTimeTag == OSCTimeTag(future: futureDate))
     }
 }
 

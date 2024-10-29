@@ -8,7 +8,7 @@ import OSCKitCore
 import Testing
 
 @Suite struct OSCArrayValue_Tests {
-    @Test func testEmpty() async throws {
+    @Test func empty() async throws {
         let msg = OSCMessage("/test", values: [OSCArrayValue([])])
         
         #expect(msg.values[0] as? OSCArrayValue == OSCArrayValue([]))
@@ -19,7 +19,7 @@ import Testing
         #expect(msg == decodedMsg)
     }
     
-    @Test func testSimple() async throws {
+    @Test func simple() async throws {
         let msg = OSCMessage("/test", values: [OSCArrayValue([Int32(123)])])
         
         #expect(msg.values[0] as? OSCArrayValue == OSCArrayValue([Int32(123)]))
@@ -30,7 +30,7 @@ import Testing
         #expect(msg == decodedMsg)
     }
     
-    @Test func testNested() async throws {
+    @Test func nested() async throws {
         let msg = OSCMessage(
             "/test",
             values: [
@@ -80,7 +80,7 @@ import Testing
     
     // MARK: - `any OSCValue` Constructors
     
-    @Test func testOSCValue_array() {
+    @Test func oscValue_array() {
         let val: any OSCValue = .array([Int32(123)])
         #expect(
             val as? OSCArrayValue ==

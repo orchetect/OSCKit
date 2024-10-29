@@ -4,36 +4,34 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
+import Foundation
 import OSCKitCore
 import SwiftASCII
-import XCTest
+import Testing
 
-final class OSCValueToken_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
+@Suite struct OSCValueToken_Tests {
     // MARK: - [].matches(mask:) Types
     
     // MARK: ... Core types
     
-    func testMatchesValueMask_blob() {
+    @Test func matchesValueMask_blob() {
         let mask: [OSCValueToken] = [.blob]
         
         // success
-        XCTAssertTrue(
+        #expect(
             OSCValues([Data([1, 2, 3])])
                 .matches(mask: mask)
         )
         
         // fail - empty values array
-        XCTAssertFalse(
-            OSCValues()
+        #expect(
+            !OSCValues()
                 .matches(mask: mask)
         )
         
         // fail - related (but wrong) type
-        XCTAssertFalse(
-            OSCValues([
+        #expect(
+            !OSCValues([
                 OSCMIDIValue(
                     portID: 1,
                     status: 2,
@@ -44,421 +42,421 @@ final class OSCValueToken_Tests: XCTestCase {
         )
         
         // fail - matches but too many values
-        XCTAssertFalse(
-            OSCValues([Data([1, 2, 3]), Data([1, 2, 3])])
+        #expect(
+            !OSCValues([Data([1, 2, 3]), Data([1, 2, 3])])
                 .matches(mask: mask)
         )
     }
     
-    func testMatchesValueMask_int32() {
+    @Test func matchesValueMask_int32() {
         let mask: [OSCValueToken] = [.int32]
         
         // success
-        XCTAssertTrue(
+        #expect(
             OSCValues([Int32(1)])
                 .matches(mask: mask)
         )
         
         // fail - empty values array
-        XCTAssertFalse(
-            OSCValues()
+        #expect(
+            !OSCValues()
                 .matches(mask: mask)
         )
         
         // fail - related (but wrong) type
-        XCTAssertFalse(
-            OSCValues([Int64(1)])
+        #expect(
+            !OSCValues([Int64(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([UInt32(1)])
+        #expect(
+            !OSCValues([UInt32(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([UInt64(1)])
+        #expect(
+            !OSCValues([UInt64(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([OSCTimeTag(1)])
+        #expect(
+            !OSCValues([OSCTimeTag(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([String("1")])
+        #expect(
+            !OSCValues([String("1")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([OSCStringAltValue("1")])
+        #expect(
+            !OSCValues([OSCStringAltValue("1")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([Character("1")])
+        #expect(
+            !OSCValues([Character("1")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([true])
+        #expect(
+            !OSCValues([true])
                 .matches(mask: mask)
         )
         
         // fail - matches but too many values
-        XCTAssertFalse(
-            OSCValues([Int32(1), Int32(1)])
+        #expect(
+            !OSCValues([Int32(1), Int32(1)])
                 .matches(mask: mask)
         )
     }
     
-    func testMatchesValueMask_float32() {
+    @Test func matchesValueMask_float32() {
         let mask: [OSCValueToken] = [.float32]
         
         // success
-        XCTAssertTrue(
+        #expect(
             OSCValues([Float32(123.45)])
                 .matches(mask: mask)
         )
         
         // fail - empty values array
-        XCTAssertFalse(
-            OSCValues()
+        #expect(
+            !OSCValues()
                 .matches(mask: mask)
         )
         
         // fail - related (but wrong) type
-        XCTAssertFalse(
-            OSCValues([Double(123.45)])
+        #expect(
+            !OSCValues([Double(123.45)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([OSCTimeTag(123)])
+        #expect(
+            !OSCValues([OSCTimeTag(123)])
                 .matches(mask: mask)
         )
         
         // fail - matches but too many values
-        XCTAssertFalse(
-            OSCValues([Int32(123.45), Int32(123.45)])
+        #expect(
+            !OSCValues([Int32(123.45), Int32(123.45)])
                 .matches(mask: mask)
         )
     }
     
-    func testMatchesValueMask_string() {
+    @Test func matchesValueMask_string() {
         let mask: [OSCValueToken] = [.string]
         
         // success
-        XCTAssertTrue(
+        #expect(
             OSCValues([String("1")])
                 .matches(mask: mask)
         )
         
         // fail - empty values array
-        XCTAssertFalse(
-            OSCValues()
+        #expect(
+            !OSCValues()
                 .matches(mask: mask)
         )
         
         // fail - related (but wrong) type
-        XCTAssertFalse(
-            OSCValues([Character("1")])
+        #expect(
+            !OSCValues([Character("1")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([OSCStringAltValue("1")])
+        #expect(
+            !OSCValues([OSCStringAltValue("1")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([Int32(1)])
+        #expect(
+            !OSCValues([Int32(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([Int64(1)])
+        #expect(
+            !OSCValues([Int64(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([UInt32(1)])
+        #expect(
+            !OSCValues([UInt32(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([UInt64(1)])
+        #expect(
+            !OSCValues([UInt64(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([OSCTimeTag(1)])
+        #expect(
+            !OSCValues([OSCTimeTag(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([true])
+        #expect(
+            !OSCValues([true])
                 .matches(mask: mask)
         )
         
         // fail - matches but too many values
-        XCTAssertFalse(
-            OSCValues([String("1"), String("1")])
+        #expect(
+            !OSCValues([String("1"), String("1")])
                 .matches(mask: mask)
         )
     }
     
     // MARK: ... Extended types
     
-    func testMatchesValueMask_array() {
+    @Test func matchesValueMask_array() {
         let mask: [OSCValueToken] = [.array]
         
         let array = OSCArrayValue([Int32(1)])
         
         // success - match the fact that it's an array regardless of contents
-        XCTAssertTrue(
+        #expect(
             OSCValues([array])
                 .matches(mask: mask)
         )
-        XCTAssertTrue(
+        #expect(
             OSCValues([OSCArrayValue([])])
                 .matches(mask: mask)
         )
-        XCTAssertTrue(
+        #expect(
             OSCValues([OSCArrayValue([Int64(1)])])
                 .matches(mask: mask)
         )
         
         // fail - empty values array
-        XCTAssertFalse(
-            OSCValues()
+        #expect(
+            !OSCValues()
                 .matches(mask: mask)
         )
         
         // fail - related (but wrong) type
-        XCTAssertFalse(
-            OSCValues([Int32(1)])
+        #expect(
+            !OSCValues([Int32(1)])
                 .matches(mask: mask)
         )
         
         // fail - matches but too many values
-        XCTAssertFalse(
-            OSCValues([array, array])
+        #expect(
+            !OSCValues([array, array])
                 .matches(mask: mask)
         )
     }
     
-    func testMatchesValueMask_bool() {
+    @Test func matchesValueMask_bool() {
         let mask: [OSCValueToken] = [.bool]
         
         // success
-        XCTAssertTrue(
+        #expect(
             OSCValues([true])
                 .matches(mask: mask)
         )
         
         // fail - empty values array
-        XCTAssertFalse(
-            OSCValues()
+        #expect(
+            !OSCValues()
                 .matches(mask: mask)
         )
         
         // fail - related (but wrong) type
-        XCTAssertFalse(
-            OSCValues([Int32(1)])
+        #expect(
+            !OSCValues([Int32(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([UInt32(1)])
+        #expect(
+            !OSCValues([UInt32(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([UInt64(1)])
+        #expect(
+            !OSCValues([UInt64(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([OSCTimeTag(1)])
+        #expect(
+            !OSCValues([OSCTimeTag(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([String("1")])
+        #expect(
+            !OSCValues([String("1")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([OSCStringAltValue("1")])
+        #expect(
+            !OSCValues([OSCStringAltValue("1")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([Character("1")])
+        #expect(
+            !OSCValues([Character("1")])
                 .matches(mask: mask)
         )
         
         // fail - matches but too many values
-        XCTAssertFalse(
-            OSCValues([true, true])
+        #expect(
+            !OSCValues([true, true])
                 .matches(mask: mask)
         )
     }
     
-    func testMatchesValueMask_character() {
+    @Test func matchesValueMask_character() {
         let mask: [OSCValueToken] = [.character]
         
         // success
-        XCTAssertTrue(
+        #expect(
             OSCValues([Character("1")])
                 .matches(mask: mask)
         )
         
         // fail - empty values array
-        XCTAssertFalse(
-            OSCValues()
+        #expect(
+            !OSCValues()
                 .matches(mask: mask)
         )
         
         // fail - related (but wrong) type
-        XCTAssertFalse(
-            OSCValues([String("1")])
+        #expect(
+            !OSCValues([String("1")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([OSCStringAltValue("1")])
+        #expect(
+            !OSCValues([OSCStringAltValue("1")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([Int32(1)])
+        #expect(
+            !OSCValues([Int32(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([Int64(1)])
+        #expect(
+            !OSCValues([Int64(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([UInt32(1)])
+        #expect(
+            !OSCValues([UInt32(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([UInt64(1)])
+        #expect(
+            !OSCValues([UInt64(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([OSCTimeTag(1)])
+        #expect(
+            !OSCValues([OSCTimeTag(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([true])
+        #expect(
+            !OSCValues([true])
                 .matches(mask: mask)
         )
         
         // fail - matches but too many values
-        XCTAssertFalse(
-            OSCValues([Character("1"), Character("1")])
+        #expect(
+            !OSCValues([Character("1"), Character("1")])
                 .matches(mask: mask)
         )
     }
     
-    func testMatchesValueMask_double() {
+    @Test func matchesValueMask_double() {
         let mask: [OSCValueToken] = [.double]
         
         // success
-        XCTAssertTrue(
+        #expect(
             OSCValues([Double(123.45)])
                 .matches(mask: mask)
         )
         
         // fail - empty values array
-        XCTAssertFalse(
-            OSCValues()
+        #expect(
+            !OSCValues()
                 .matches(mask: mask)
         )
         
         // fail - related (but wrong) type
-        XCTAssertFalse(
-            OSCValues([Float32(123.45)])
+        #expect(
+            !OSCValues([Float32(123.45)])
                 .matches(mask: mask)
         )
         
         // fail - matches but too many values
-        XCTAssertFalse(
-            OSCValues([Double(123.45), Double(123.45)])
+        #expect(
+            !OSCValues([Double(123.45), Double(123.45)])
                 .matches(mask: mask)
         )
     }
     
-    func testMatchesValueMask_int64() {
+    @Test func matchesValueMask_int64() {
         let mask: [OSCValueToken] = [.int64]
         
         // success
-        XCTAssertTrue(
+        #expect(
             OSCValues([Int64(1)])
                 .matches(mask: mask)
         )
         
         // fail - empty values array
-        XCTAssertFalse(
-            OSCValues()
+        #expect(
+            !OSCValues()
                 .matches(mask: mask)
         )
         
         // fail - related (but wrong) type
-        XCTAssertFalse(
-            OSCValues([Int32(1)])
+        #expect(
+            !OSCValues([Int32(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([UInt32(1)])
+        #expect(
+            !OSCValues([UInt32(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([UInt64(1)])
+        #expect(
+            !OSCValues([UInt64(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([OSCTimeTag(1)])
+        #expect(
+            !OSCValues([OSCTimeTag(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([String("1")])
+        #expect(
+            !OSCValues([String("1")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([OSCStringAltValue("1")])
+        #expect(
+            !OSCValues([OSCStringAltValue("1")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([Character("1")])
+        #expect(
+            !OSCValues([Character("1")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([true])
+        #expect(
+            !OSCValues([true])
                 .matches(mask: mask)
         )
         
         // fail - matches but too many values
-        XCTAssertFalse(
-            OSCValues([Int64(1), Int64(1)])
+        #expect(
+            !OSCValues([Int64(1), Int64(1)])
                 .matches(mask: mask)
         )
     }
     
-    func testMatchesValueMask_impulse() {
+    @Test func matchesValueMask_impulse() {
         let mask: [OSCValueToken] = [.impulse]
         
         // success
-        XCTAssertTrue(
+        #expect(
             OSCValues([OSCImpulseValue()])
                 .matches(mask: mask)
         )
         
         // fail - empty values array
-        XCTAssertFalse(
-            OSCValues()
+        #expect(
+            !OSCValues()
                 .matches(mask: mask)
         )
         
         // fail - related (but wrong) type
-        XCTAssertFalse(
-            OSCValues([OSCNullValue()])
+        #expect(
+            !OSCValues([OSCNullValue()])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([true])
+        #expect(
+            !OSCValues([true])
                 .matches(mask: mask)
         )
         
         // fail - matches but too many values
-        XCTAssertFalse(
-            OSCValues([OSCImpulseValue(), OSCImpulseValue()])
+        #expect(
+            !OSCValues([OSCImpulseValue(), OSCImpulseValue()])
                 .matches(mask: mask)
         )
     }
     
-    func testMatchesValueMask_midi() {
+    @Test func matchesValueMask_midi() {
         let mask: [OSCValueToken] = [.midi]
         
         let value: any OSCValue = OSCMIDIValue(
@@ -468,324 +466,324 @@ final class OSCValueToken_Tests: XCTestCase {
         )
         
         // success
-        XCTAssertTrue(
+        #expect(
             OSCValues([value])
                 .matches(mask: mask)
         )
         
         // fail - empty values array
-        XCTAssertFalse(
-            OSCValues()
+        #expect(
+            !OSCValues()
                 .matches(mask: mask)
         )
         
         // fail - related (but wrong) type
-        XCTAssertFalse(
-            OSCValues([Data([1, 2, 3])])
+        #expect(
+            !OSCValues([Data([1, 2, 3])])
                 .matches(mask: mask)
         )
         
         // fail - matches but too many values
-        XCTAssertFalse(
-            OSCValues([value, value])
+        #expect(
+            !OSCValues([value, value])
                 .matches(mask: mask)
         )
     }
     
-    func testMatchesValueMask_null() {
+    @Test func matchesValueMask_null() {
         let mask: [OSCValueToken] = [.null]
         
         // success
-        XCTAssertTrue(
+        #expect(
             OSCValues([OSCNullValue()])
                 .matches(mask: mask)
         )
         
         // fail - empty values array
-        XCTAssertFalse(
-            OSCValues()
+        #expect(
+            !OSCValues()
                 .matches(mask: mask)
         )
         
         // fail - related (but wrong) type
-        XCTAssertFalse(
-            OSCValues([Int(0)])
+        #expect(
+            !OSCValues([Int(0)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([Int32(0)])
+        #expect(
+            !OSCValues([Int32(0)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([Data([0x00])])
+        #expect(
+            !OSCValues([Data([0x00])])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([String("\n")])
+        #expect(
+            !OSCValues([String("\n")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([OSCStringAltValue("\n")])
+        #expect(
+            !OSCValues([OSCStringAltValue("\n")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([Character("\n")])
+        #expect(
+            !OSCValues([Character("\n")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([OSCImpulseValue()])
+        #expect(
+            !OSCValues([OSCImpulseValue()])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([false])
+        #expect(
+            !OSCValues([false])
                 .matches(mask: mask)
         )
         
         // fail - matches but too many values
-        XCTAssertFalse(
-            OSCValues([OSCNullValue(), OSCNullValue()])
+        #expect(
+            !OSCValues([OSCNullValue(), OSCNullValue()])
                 .matches(mask: mask)
         )
     }
     
-    func testMatchesValueMask_stringAlt() {
+    @Test func matchesValueMask_stringAlt() {
         let mask: [OSCValueToken] = [.stringAlt]
         
         // success
-        XCTAssertTrue(
+        #expect(
             OSCValues([OSCStringAltValue("1")])
                 .matches(mask: mask)
         )
         
         // fail - empty values array
-        XCTAssertFalse(
-            OSCValues()
+        #expect(
+            !OSCValues()
                 .matches(mask: mask)
         )
         
         // fail - related (but wrong) type
-        XCTAssertFalse(
-            OSCValues([String("1")])
+        #expect(
+            !OSCValues([String("1")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([Character("1")])
+        #expect(
+            !OSCValues([Character("1")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([Int32(1)])
+        #expect(
+            !OSCValues([Int32(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([Int64(1)])
+        #expect(
+            !OSCValues([Int64(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([UInt32(1)])
+        #expect(
+            !OSCValues([UInt32(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([UInt64(1)])
+        #expect(
+            !OSCValues([UInt64(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([OSCTimeTag(1)])
+        #expect(
+            !OSCValues([OSCTimeTag(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([true])
+        #expect(
+            !OSCValues([true])
                 .matches(mask: mask)
         )
         
         // fail - matches but too many values
-        XCTAssertFalse(
-            OSCValues([OSCStringAltValue("1"), OSCStringAltValue("1")])
+        #expect(
+            !OSCValues([OSCStringAltValue("1"), OSCStringAltValue("1")])
                 .matches(mask: mask)
         )
     }
     
-    func testMatchesValueMask_timeTag() {
+    @Test func matchesValueMask_timeTag() {
         let mask: [OSCValueToken] = [.timeTag]
         
         // success
-        XCTAssertTrue(
+        #expect(
             OSCValues([OSCTimeTag(1)])
                 .matches(mask: mask)
         )
         
         // fail - empty values array
-        XCTAssertFalse(
-            OSCValues()
+        #expect(
+            !OSCValues()
                 .matches(mask: mask)
         )
         
         // fail - related (but wrong) type
-        XCTAssertFalse(
-            OSCValues([Int32(1)])
+        #expect(
+            !OSCValues([Int32(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([Int64(1)])
+        #expect(
+            !OSCValues([Int64(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([UInt32(1)])
+        #expect(
+            !OSCValues([UInt32(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([UInt64(1)])
+        #expect(
+            !OSCValues([UInt64(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([Float32(1)])
+        #expect(
+            !OSCValues([Float32(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([Double(1)])
+        #expect(
+            !OSCValues([Double(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([String("1")])
+        #expect(
+            !OSCValues([String("1")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([OSCStringAltValue("1")])
+        #expect(
+            !OSCValues([OSCStringAltValue("1")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([Character("1")])
+        #expect(
+            !OSCValues([Character("1")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([true])
+        #expect(
+            !OSCValues([true])
                 .matches(mask: mask)
         )
         
         // fail - matches but too many values
-        XCTAssertFalse(
-            OSCValues([OSCTimeTag(1), OSCTimeTag(1)])
+        #expect(
+            !OSCValues([OSCTimeTag(1), OSCTimeTag(1)])
                 .matches(mask: mask)
         )
     }
     
     // MARK: ... Opaque types
     
-    func testMatchesValueMask_number() {
+    @Test func matchesValueMask_number() {
         let mask: [OSCValueToken] = [.number]
         
         // success
-        XCTAssertTrue(
+        #expect(
             OSCValues([Int(1)])
                 .matches(mask: mask)
         )
-        XCTAssertTrue(
+        #expect(
             OSCValues([Int8(1)])
                 .matches(mask: mask)
         )
-        XCTAssertTrue(
+        #expect(
             OSCValues([Int16(1)])
                 .matches(mask: mask)
         )
-        XCTAssertTrue(
+        #expect(
             OSCValues([Int32(1)])
                 .matches(mask: mask)
         )
-        XCTAssertTrue(
+        #expect(
             OSCValues([Int64(1)])
                 .matches(mask: mask)
         )
-        XCTAssertTrue(
+        #expect(
             OSCValues([UInt8(1)])
                 .matches(mask: mask)
         )
-        XCTAssertTrue(
+        #expect(
             OSCValues([UInt(1)])
                 .matches(mask: mask)
         )
-        XCTAssertTrue(
+        #expect(
             OSCValues([UInt16(1)])
                 .matches(mask: mask)
         )
-        XCTAssertTrue(
+        #expect(
             OSCValues([UInt32(1)])
                 .matches(mask: mask)
         )
-        XCTAssertTrue(
+        #expect(
             OSCValues([UInt64(1)])
                 .matches(mask: mask)
         )
-        XCTAssertTrue(
+        #expect(
             OSCValues([Float32(1)])
                 .matches(mask: mask)
         )
-        XCTAssertTrue(
+        #expect(
             OSCValues([Double(1)])
                 .matches(mask: mask)
         )
         
         // fail - empty values array
-        XCTAssertFalse(
-            OSCValues()
+        #expect(
+            !OSCValues()
                 .matches(mask: mask)
         )
         
         // fail - related (but wrong) type
-        XCTAssertFalse(
-            OSCValues([String("1")])
+        #expect(
+            !OSCValues([String("1")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([OSCStringAltValue("1")])
+        #expect(
+            !OSCValues([OSCStringAltValue("1")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([Character("1")])
+        #expect(
+            !OSCValues([Character("1")])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([OSCTimeTag(1)])
+        #expect(
+            !OSCValues([OSCTimeTag(1)])
                 .matches(mask: mask)
         )
-        XCTAssertFalse(
-            OSCValues([true])
+        #expect(
+            !OSCValues([true])
                 .matches(mask: mask)
         )
         
         // fail - matches but too many values
-        XCTAssertFalse(
-            OSCValues([Int32(1), Int32(1)])
+        #expect(
+            !OSCValues([Int32(1), Int32(1)])
                 .matches(mask: mask)
         )
     }
     
     // MARK: ... Interpolated types
     
-    func testMatchesValueMask_int() {
+    @Test func matchesValueMask_int() {
         // Int is an interpolated value and therefore should
         // never match against any core OSC types
         
         let value = OSCValues([Int(1)])
         
         // -- core types
-        XCTAssertFalse(value.matches(mask: [.blob]))
-        XCTAssertFalse(value.matches(mask: [.float32]))
-        XCTAssertFalse(value.matches(mask: [.int32]))
-        XCTAssertFalse(value.matches(mask: [.string]))
+        #expect(!value.matches(mask: [.blob]))
+        #expect(!value.matches(mask: [.float32]))
+        #expect(!value.matches(mask: [.int32]))
+        #expect(!value.matches(mask: [.string]))
         
         // -- extended types
-        XCTAssertFalse(value.matches(mask: [.array]))
-        XCTAssertFalse(value.matches(mask: [.bool]))
-        XCTAssertFalse(value.matches(mask: [.character]))
-        XCTAssertFalse(value.matches(mask: [.double]))
-        XCTAssertFalse(value.matches(mask: [.int64]))
-        XCTAssertFalse(value.matches(mask: [.impulse]))
-        XCTAssertFalse(value.matches(mask: [.midi]))
-        XCTAssertFalse(value.matches(mask: [.midi]))
-        XCTAssertFalse(value.matches(mask: [.stringAlt]))
-        XCTAssertFalse(value.matches(mask: [.timeTag]))
+        #expect(!value.matches(mask: [.array]))
+        #expect(!value.matches(mask: [.bool]))
+        #expect(!value.matches(mask: [.character]))
+        #expect(!value.matches(mask: [.double]))
+        #expect(!value.matches(mask: [.int64]))
+        #expect(!value.matches(mask: [.impulse]))
+        #expect(!value.matches(mask: [.midi]))
+        #expect(!value.matches(mask: [.midi]))
+        #expect(!value.matches(mask: [.stringAlt]))
+        #expect(!value.matches(mask: [.timeTag]))
         
         // -- opaque types
-        XCTAssertTrue(value.matches(mask: [.number]))
+        #expect(value.matches(mask: [.number]))
     }
     
     // MARK: - Optional Variants
@@ -795,30 +793,30 @@ final class OSCValueToken_Tests: XCTestCase {
     
     // MARK: ... Core types
     
-    func testMatchesValueMask_int32Optional() {
+    @Test func matchesValueMask_int32Optional() {
         let mask: [OSCValueToken] = [.int32Optional]
         
         // success
-        XCTAssertTrue(
+        #expect(
             OSCValues([Int32(123)])
                 .matches(mask: mask)
         )
         
         // success - value was optional
-        XCTAssertTrue(
+        #expect(
             OSCValues()
                 .matches(mask: mask)
         )
         
         // fail - related (but wrong) type
-        XCTAssertFalse(
-            OSCValues([Int64(123)])
+        #expect(
+            !OSCValues([Int64(123)])
                 .matches(mask: mask)
         )
         
         // fail - matches but too many values
-        XCTAssertFalse(
-            OSCValues([Int32(123), Int32(123)])
+        #expect(
+            !OSCValues([Int32(123), Int32(123)])
                 .matches(mask: mask)
         )
     }
@@ -827,61 +825,61 @@ final class OSCValueToken_Tests: XCTestCase {
     
     // MARK: ... Opaque types
     
-    func testMatchesValueMask_numberOptional() {
+    @Test func matchesValueMask_numberOptional() {
         let mask: [OSCValueToken] = [.numberOptional]
         
         // success
-        XCTAssertTrue(
+        #expect(
             OSCValues([Int32(123)])
                 .matches(mask: mask)
         )
         
         // success - value was optional
-        XCTAssertTrue(
+        #expect(
             OSCValues()
                 .matches(mask: mask)
         )
         
         // success
-        XCTAssertTrue(
+        #expect(
             OSCValues([Int64(123)])
                 .matches(mask: mask)
         )
         
         // fail - matches but too many values
-        XCTAssertFalse(
-            OSCValues([Int32(123), Int32(123)])
+        #expect(
+            !OSCValues([Int32(123), Int32(123)])
                 .matches(mask: mask)
         )
     }
     
     // MARK: ... Interpolated types
     
-    func testMatchesValueMask_int_OptionalTokens() {
+    @Test func matchesValueMask_int_OptionalTokens() {
         // Int is an interpolated value and therefore should
         // never match against any core OSC types
         
         let value = OSCValues([Int(1)])
         
         // -- core types
-        XCTAssertFalse(value.matches(mask: [.blobOptional]))
-        XCTAssertFalse(value.matches(mask: [.float32Optional]))
-        XCTAssertFalse(value.matches(mask: [.int32Optional]))
-        XCTAssertFalse(value.matches(mask: [.stringOptional]))
+        #expect(!value.matches(mask: [.blobOptional]))
+        #expect(!value.matches(mask: [.float32Optional]))
+        #expect(!value.matches(mask: [.int32Optional]))
+        #expect(!value.matches(mask: [.stringOptional]))
         
         // -- extended types
-        XCTAssertFalse(value.matches(mask: [.arrayOptional]))
-        XCTAssertFalse(value.matches(mask: [.boolOptional]))
-        XCTAssertFalse(value.matches(mask: [.characterOptional]))
-        XCTAssertFalse(value.matches(mask: [.doubleOptional]))
-        XCTAssertFalse(value.matches(mask: [.int64Optional]))
-        XCTAssertFalse(value.matches(mask: [.impulseOptional]))
-        XCTAssertFalse(value.matches(mask: [.midiOptional]))
-        XCTAssertFalse(value.matches(mask: [.midiOptional]))
-        XCTAssertFalse(value.matches(mask: [.stringAltOptional]))
-        XCTAssertFalse(value.matches(mask: [.timeTagOptional]))
+        #expect(!value.matches(mask: [.arrayOptional]))
+        #expect(!value.matches(mask: [.boolOptional]))
+        #expect(!value.matches(mask: [.characterOptional]))
+        #expect(!value.matches(mask: [.doubleOptional]))
+        #expect(!value.matches(mask: [.int64Optional]))
+        #expect(!value.matches(mask: [.impulseOptional]))
+        #expect(!value.matches(mask: [.midiOptional]))
+        #expect(!value.matches(mask: [.midiOptional]))
+        #expect(!value.matches(mask: [.stringAltOptional]))
+        #expect(!value.matches(mask: [.timeTagOptional]))
         
         // -- opaque types
-        XCTAssertTrue(value.matches(mask: [.numberOptional]))
+        #expect(value.matches(mask: [.numberOptional]))
     }
 }

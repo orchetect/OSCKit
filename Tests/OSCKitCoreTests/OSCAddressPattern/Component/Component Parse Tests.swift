@@ -5,47 +5,44 @@
 //
 
 @testable import OSCKitCore
-import XCTest
+import Testing
 
-final class OSCAddressPattern_Component_Parse_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
-    func testBasic() {
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "").tokens,
+@Suite struct OSCAddressPattern_Component_Parse_Tests {
+    @Test func basic() {
+        #expect(
+            OSCAddressPattern.Component(string: "").tokens ==
             []
         )
         
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "1").tokens,
+        #expect(
+            OSCAddressPattern.Component(string: "1").tokens ==
             [.literal("1")]
         )
         
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "123").tokens,
+        #expect(
+            OSCAddressPattern.Component(string: "123").tokens ==
             [.literal("123")]
         )
     }
     
-    func testWildcard() {
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "*").tokens,
+    @Test func wildcard() {
+        #expect(
+            OSCAddressPattern.Component(string: "*").tokens ==
             [.zeroOrMoreWildcard]
         )
         
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "**").tokens,
+        #expect(
+            OSCAddressPattern.Component(string: "**").tokens ==
             [.zeroOrMoreWildcard]
         )
         
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "***").tokens,
+        #expect(
+            OSCAddressPattern.Component(string: "***").tokens ==
             [.zeroOrMoreWildcard]
         )
         
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "*abc*").tokens,
+        #expect(
+            OSCAddressPattern.Component(string: "*abc*").tokens ==
             [
                 .zeroOrMoreWildcard,
                 .literal("abc"),
@@ -53,8 +50,8 @@ final class OSCAddressPattern_Component_Parse_Tests: XCTestCase {
             ]
         )
         
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "**ab**c**").tokens,
+        #expect(
+            OSCAddressPattern.Component(string: "**ab**c**").tokens ==
             [
                 .zeroOrMoreWildcard,
                 .literal("ab"),
@@ -65,25 +62,25 @@ final class OSCAddressPattern_Component_Parse_Tests: XCTestCase {
         )
     }
     
-    func testBrackets() {
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "[]").tokens,
+    @Test func brackets() {
+        #expect(
+            OSCAddressPattern.Component(string: "[]").tokens ==
             [.singleChar(
                 isExclusion: false,
                 groups: []
             )]
         )
         
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "[a-z]").tokens,
+        #expect(
+            OSCAddressPattern.Component(string: "[a-z]").tokens ==
             [.singleChar(
                 isExclusion: false,
                 groups: [.asciiRange(start: "a", end: "z")]
             )]
         )
         
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "[a-z][A-Z][0-9]").tokens,
+        #expect(
+            OSCAddressPattern.Component(string: "[a-z][A-Z][0-9]").tokens ==
             [
                 .singleChar(
                     isExclusion: false,
@@ -100,8 +97,8 @@ final class OSCAddressPattern_Component_Parse_Tests: XCTestCase {
             ]
         )
         
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "[a-zA-Z0-9]").tokens,
+        #expect(
+            OSCAddressPattern.Component(string: "[a-zA-Z0-9]").tokens ==
             [
                 .singleChar(
                     isExclusion: false,
@@ -115,25 +112,25 @@ final class OSCAddressPattern_Component_Parse_Tests: XCTestCase {
         )
     }
     
-    func testBracketsExcluded() {
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "[!]").tokens,
+    @Test func bracketsExcluded() {
+        #expect(
+            OSCAddressPattern.Component(string: "[!]").tokens ==
             [.singleChar(
                 isExclusion: true,
                 groups: []
             )]
         )
         
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "[!a-z]").tokens,
+        #expect(
+            OSCAddressPattern.Component(string: "[!a-z]").tokens ==
             [.singleChar(
                 isExclusion: true,
                 groups: [.asciiRange(start: "a", end: "z")]
             )]
         )
         
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "[!a-z][A-Z][0-9]").tokens,
+        #expect(
+            OSCAddressPattern.Component(string: "[!a-z][A-Z][0-9]").tokens ==
             [
                 .singleChar(
                     isExclusion: true,
@@ -150,8 +147,8 @@ final class OSCAddressPattern_Component_Parse_Tests: XCTestCase {
             ]
         )
         
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "[!a-zA-Z0-9]").tokens,
+        #expect(
+            OSCAddressPattern.Component(string: "[!a-zA-Z0-9]").tokens ==
             [
                 .singleChar(
                     isExclusion: true,
@@ -165,41 +162,41 @@ final class OSCAddressPattern_Component_Parse_Tests: XCTestCase {
         )
     }
     
-    func testBraces() {
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "{}").tokens,
+    @Test func braces() {
+        #expect(
+            OSCAddressPattern.Component(string: "{}").tokens ==
             [.strings(strings: [])]
         )
         
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "{,}").tokens,
+        #expect(
+            OSCAddressPattern.Component(string: "{,}").tokens ==
             [.strings(strings: [])]
         )
         
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "{abc}").tokens,
+        #expect(
+            OSCAddressPattern.Component(string: "{abc}").tokens ==
             [.strings(strings: ["abc"])]
         )
         
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "{abc,def}").tokens,
+        #expect(
+            OSCAddressPattern.Component(string: "{abc,def}").tokens ==
             [.strings(strings: ["abc", "def"])]
         )
         
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "{abc,}").tokens,
+        #expect(
+            OSCAddressPattern.Component(string: "{abc,}").tokens ==
             [.strings(strings: ["abc"])]
         )
         
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "{,abc}").tokens,
+        #expect(
+            OSCAddressPattern.Component(string: "{,abc}").tokens ==
             [.strings(strings: ["abc"])]
         )
     }
     
-    func testComplex() {
-        XCTAssertEqual(
-            OSCAddressPattern.Component(string: "abc*{def,xyz}?[0-9]").tokens,
+    @Test func complex() {
+        #expect(
+            OSCAddressPattern.Component(string: "abc*{def,xyz}?[0-9]").tokens ==
             [
                 .literal("abc"),
                 .zeroOrMoreWildcard,

@@ -4,208 +4,192 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
+import Foundation
 import OSCKitCore
-import XCTest
+import Testing
 
-final class OSCTimeTag_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
-    func testInit_RawValue() {
+@Suite struct OSCTimeTag_Tests {
+    @Test func init_RawValue() {
         // ensure all raw values including 0 and 1 are allowed
-        XCTAssertEqual(OSCTimeTag(0).rawValue, 0)
-        XCTAssertEqual(OSCTimeTag(1).rawValue, 1)
-        XCTAssertEqual(OSCTimeTag(2).rawValue, 2)
-        XCTAssertEqual(OSCTimeTag(timeTag1Jan2022).rawValue, timeTag1Jan2022)
-        XCTAssertEqual(OSCTimeTag(timeTag1Jan2050, era: 1).rawValue, timeTag1Jan2050)
-        XCTAssertEqual(OSCTimeTag(timeTag1Jan2200, era: 2).rawValue, timeTag1Jan2200)
-        XCTAssertEqual(OSCTimeTag(UInt64.max).rawValue, UInt64.max)
+        #expect(OSCTimeTag(0).rawValue == 0)
+        #expect(OSCTimeTag(1).rawValue == 1)
+        #expect(OSCTimeTag(2).rawValue == 2)
+        #expect(OSCTimeTag(timeTag1Jan2022).rawValue == timeTag1Jan2022)
+        #expect(OSCTimeTag(timeTag1Jan2050, era: 1).rawValue == timeTag1Jan2050)
+        #expect(OSCTimeTag(timeTag1Jan2200, era: 2).rawValue == timeTag1Jan2200)
+        #expect(OSCTimeTag(UInt64.max).rawValue == UInt64.max)
     }
     
     // MARK: - .init(timeIntervalSinceNow:)
     
-    func testInit_timeIntervalSinceNow_Zero() {
+    @Test func init_timeIntervalSinceNow_Zero() {
         let tag = OSCTimeTag(timeIntervalSinceNow: 0.0)
         
-        XCTAssertGreaterThan(tag.rawValue, timeTag1Jan2022)
-        XCTAssertEqual(tag.era, 0)
-        XCTAssertFalse(tag.isImmediate)
-        XCTAssertFalse(tag.isFuture)
+        #expect(tag.rawValue > timeTag1Jan2022)
+        #expect(tag.era == 0)
+        #expect(!tag.isImmediate)
+        #expect(!tag.isFuture)
     }
     
-    func testInit_timeIntervalSinceNow_EdgeCase_Negative() {
+    @Test func init_timeIntervalSinceNow_EdgeCase_Negative() {
         let tag = OSCTimeTag(timeIntervalSinceNow: -10.0)
         
-        XCTAssertNotEqual(tag.rawValue, 0)
-        XCTAssertNotEqual(tag.rawValue, 1)
-        XCTAssertEqual(tag.era, 0)
-        XCTAssertFalse(tag.isImmediate)
-        XCTAssertFalse(tag.isFuture)
-        XCTAssertLessThan(tag.date, Date())
-        XCTAssertEqual(tag.timeIntervalSinceNow(), -10.0, accuracy: 0.001)
+        #expect(tag.rawValue != 0)
+        #expect(tag.rawValue != 1)
+        #expect(tag.era == 0)
+        #expect(!tag.isImmediate)
+        #expect(!tag.isFuture)
+        #expect(tag.date < Date())
+        #expect(tag.timeIntervalSinceNow().isApproximatelyEqual(to: -10.0, absoluteTolerance: 0.001))
+        
     }
     
     // MARK: - .init(timeIntervalSince1900:)
     
-    func testInit_timeIntervalSince1900_Zero() {
+    @Test func init_timeIntervalSince1900_Zero() {
         let tag = OSCTimeTag(timeIntervalSince1900: 0.0)
         
-        XCTAssertEqual(tag.rawValue, 0)
-        XCTAssertEqual(tag.era, 0)
-        XCTAssertFalse(tag.isImmediate)
-        XCTAssertFalse(tag.isFuture)
-        XCTAssertEqual(tag.date, primeEpoch)
-        XCTAssertLessThan(tag.timeIntervalSinceNow(), 0.0)
+        #expect(tag.rawValue == 0)
+        #expect(tag.era == 0)
+        #expect(!tag.isImmediate)
+        #expect(!tag.isFuture)
+        #expect(tag.date == primeEpoch)
+        #expect(tag.timeIntervalSinceNow() < 0.0)
     }
     
-    func testInit_timeIntervalSince1900() {
+    @Test func init_timeIntervalSince1900() {
         let tag = OSCTimeTag(timeIntervalSince1900: 10.0)
         
-        XCTAssertEqual(tag.rawValue, 10 << 32)
-        XCTAssertEqual(tag.era, 0)
-        XCTAssertFalse(tag.isImmediate)
-        XCTAssertFalse(tag.isFuture)
-        XCTAssertEqual(tag.date, primeEpoch + 10.0)
-        XCTAssertLessThan(tag.timeIntervalSinceNow(), 10.0)
+        #expect(tag.rawValue == 10 << 32)
+        #expect(tag.era == 0)
+        #expect(!tag.isImmediate)
+        #expect(!tag.isFuture)
+        #expect(tag.date == primeEpoch + 10.0)
+        #expect(tag.timeIntervalSinceNow() < 10.0)
     }
     
-    func testInit_timeIntervalSince1900_EdgeCase_Negative() {
+    @Test func init_timeIntervalSince1900_EdgeCase_Negative() {
         // negative values should clamp to 0.
         let tag = OSCTimeTag(timeIntervalSince1900: -1.0)
         
-        XCTAssertEqual(tag.rawValue, 0)
-        XCTAssertEqual(tag.era, 0)
-        XCTAssertFalse(tag.isImmediate)
-        XCTAssertFalse(tag.isFuture)
-        XCTAssertEqual(tag.date, primeEpoch)
-        XCTAssertLessThan(tag.timeIntervalSinceNow(), 0.0)
+        #expect(tag.rawValue == 0)
+        #expect(tag.era == 0)
+        #expect(!tag.isImmediate)
+        #expect(!tag.isFuture)
+        #expect(tag.date == primeEpoch)
+        #expect(tag.timeIntervalSinceNow() < 0.0)
     }
     
-    func testInit_timeIntervalSince1900_Known() {
+    @Test func init_timeIntervalSince1900_Known() {
         let tag = OSCTimeTag(timeIntervalSince1900: seconds1Jan2022)
         
-        XCTAssertEqual(tag.rawValue, timeTag1Jan2022)
-        XCTAssertEqual(tag.era, 0)
-        XCTAssertFalse(tag.isImmediate)
-        XCTAssertFalse(tag.isFuture)
-        XCTAssertEqual(tag.date, date1Jan2022)
-        XCTAssertLessThan(tag.timeIntervalSinceNow(), 0.0)
-        XCTAssertEqual(tag.timeInterval(since: primeEpoch), seconds1Jan2022)
+        #expect(tag.rawValue == timeTag1Jan2022)
+        #expect(tag.era == 0)
+        #expect(!tag.isImmediate)
+        #expect(!tag.isFuture)
+        #expect(tag.date == date1Jan2022)
+        #expect(tag.timeIntervalSinceNow() < 0.0)
+        #expect(tag.timeInterval(since: primeEpoch) == seconds1Jan2022)
     }
     
-    func testKnownEra0TimeTag() {
+    @Test func knownEra0TimeTag() {
         // use a known raw time tag value to test calculations
         // (for this test to succeed, the system's date must be > Jan 1st 2022)
         
         let tag = OSCTimeTag(timeTag1Jan2022)
         
-        XCTAssertEqual(tag.rawValue, timeTag1Jan2022)
-        XCTAssertEqual(tag.era, 0)
-        XCTAssertFalse(tag.isImmediate)
-        XCTAssertFalse(tag.isFuture)
-        XCTAssertLessThan(tag.date, Date())
-        XCTAssertLessThan(tag.timeIntervalSinceNow(), 0.0)
-        XCTAssertEqual(tag.timeInterval(since: primeEpoch), seconds1Jan2022)
+        #expect(tag.rawValue == timeTag1Jan2022)
+        #expect(tag.era == 0)
+        #expect(!tag.isImmediate)
+        #expect(!tag.isFuture)
+        #expect(tag.date < Date())
+        #expect(tag.timeIntervalSinceNow() < 0.0)
+        #expect(tag.timeInterval(since: primeEpoch) == seconds1Jan2022)
     }
     
-    func testKnownEra1TimeTag() {
+    @Test func knownEra1TimeTag() {
         // use a known raw time tag value to test calculations
         
         let tag = OSCTimeTag(timeTag1Jan2050, era: 1)
         
-        XCTAssertEqual(tag.rawValue, timeTag1Jan2050)
-        XCTAssertEqual(tag.era, 1)
-        XCTAssertFalse(tag.isImmediate)
-        XCTAssertFalse(tag.isFuture)
-        XCTAssertEqual(tag.date, date1Jan2050)
-        XCTAssertGreaterThan(tag.timeIntervalSinceNow(), 0.0)
-        XCTAssertEqual(tag.timeInterval(since: primeEpoch), seconds1Jan2050)
+        #expect(tag.rawValue == timeTag1Jan2050)
+        #expect(tag.era == 1)
+        #expect(!tag.isImmediate)
+        #expect(!tag.isFuture)
+        #expect(tag.date == date1Jan2050)
+        #expect(tag.timeIntervalSinceNow() > 0.0)
+        #expect(tag.timeInterval(since: primeEpoch) == seconds1Jan2050)
     }
     
-    func testKnownEra2TimeTag() {
+    @Test func knownEra2TimeTag() {
         // use a known raw time tag value to test calculations
         
         let tag = OSCTimeTag(timeTag1Jan2200, era: 2)
         
-        XCTAssertEqual(tag.rawValue, timeTag1Jan2200)
-        XCTAssertEqual(tag.era, 2)
-        XCTAssertFalse(tag.isImmediate)
-        XCTAssertFalse(tag.isFuture)
-        XCTAssertEqual(tag.date, date1Jan2200)
-        XCTAssertGreaterThan(tag.timeIntervalSinceNow(), 0.0)
-        XCTAssertEqual(tag.timeInterval(since: primeEpoch), seconds1Jan2200)
+        #expect(tag.rawValue == timeTag1Jan2200)
+        #expect(tag.era == 2)
+        #expect(!tag.isImmediate)
+        #expect(!tag.isFuture)
+        #expect(tag.date == date1Jan2200)
+        #expect(tag.timeIntervalSinceNow() > 0.0)
+        #expect(tag.timeInterval(since: primeEpoch) == seconds1Jan2200)
     }
     
     // MARK: - .immediate() (raw value of 1)
     
-    func testImmediate_Basics() {
+    @Test func immediate_Basics() {
         let tag = OSCTimeTag.immediate()
-        XCTAssertEqual(tag.rawValue, 1)
-        XCTAssertEqual(tag.era, Date().ntpEra)
-        XCTAssertTrue(tag.isImmediate)
-        XCTAssertFalse(tag.isFuture)
+        #expect(tag.rawValue == 1)
+        #expect(tag.era == Date().ntpEra)
+        #expect(tag.isImmediate)
+        #expect(!tag.isFuture)
     }
     
-    func testImmediate_date() {
+    @Test func immediate_date() {
         let tag = OSCTimeTag.immediate()
         let date = Date()
-        XCTAssertEqual(
-            tag.date.timeIntervalSince(date),
-            0.0,
-            accuracy: 0.001
-        )
+        #expect(tag.date.timeIntervalSince(date).isApproximatelyEqual(to: 0.0, absoluteTolerance: 0.001))
     }
     
-    func testImmediate_timeIntervalSinceNow() {
+    @Test func immediate_timeIntervalSinceNow() {
         let tag = OSCTimeTag.immediate()
         let captureSecondsFromNow = tag.timeIntervalSinceNow()
-        XCTAssertEqual(
-            captureSecondsFromNow,
-            0.0,
-            accuracy: 0.001
-        )
+        #expect(captureSecondsFromNow.isApproximatelyEqual(to: 0.0, absoluteTolerance: 0.001))
     }
     
     // MARK: - .now()
     
-    func testNow_rawValue() {
+    @Test func now_rawValue() {
         let tag = OSCTimeTag.now()
-        XCTAssertGreaterThan(tag.rawValue, timeTag1Jan2022)
+        #expect(tag.rawValue > timeTag1Jan2022)
     }
     
-    func testNow_era() {
+    @Test func now_era() {
         let tag = OSCTimeTag.now()
-        XCTAssertEqual(tag.era, Date().ntpEra)
+        #expect(tag.era == Date().ntpEra)
     }
     
-    func testNow_isImmediate() {
+    @Test func now_isImmediate() {
         let tag = OSCTimeTag.now()
-        XCTAssertFalse(tag.isImmediate)
+        #expect(!tag.isImmediate)
     }
     
-    func testNow_isFuture() {
+    @Test func now_isFuture() {
         let tag = OSCTimeTag.now()
-        XCTAssertFalse(tag.isFuture)
+        #expect(!tag.isFuture)
     }
     
-    func testNow_date() {
+    @Test func now_date() {
         let tag = OSCTimeTag.now()
         let captureDate = tag.date
-        XCTAssertEqual(
-            Date().timeIntervalSince(captureDate),
-            0.0,
-            accuracy: 0.001
-        )
+        #expect(Date().timeIntervalSince(captureDate).isApproximatelyEqual(to: 0.0, absoluteTolerance: 0.001))
+        
     }
     
-    func testNow_timeIntervalSinceNow() {
+    @Test func now_timeIntervalSinceNow() {
         let tag = OSCTimeTag.now()
         let captureSecondsFromNow = tag.timeIntervalSinceNow()
-        XCTAssertEqual(
-            captureSecondsFromNow,
-            0.0,
-            accuracy: 0.001
-        )
+        #expect(captureSecondsFromNow.isApproximatelyEqual(to: 0.0, absoluteTolerance: 0.001))
     }
 }
 

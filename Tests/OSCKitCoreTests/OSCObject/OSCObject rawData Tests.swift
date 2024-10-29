@@ -4,18 +4,16 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
+import Foundation
 import OSCKitCore
-import XCTest
+import Testing
 
-final class OSCObject_rawData_Tests: XCTestCase {
+@Suite struct OSCObject_rawData_Tests {
     // swiftformat:options --wrapcollections preserve
-    
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
     
     // MARK: - Model UDP data receiver pattern
     
-    func testParseOSC_Model() async throws {
+    @Test func parseOSC_Model() async throws {
         // (Raw data taken from testInt32() of "OSCMessage rawData Tests.swift")
         
         // manually build a raw OSC message
@@ -40,19 +38,19 @@ final class OSCObject_rawData_Tests: XCTestCase {
                 // handle message
                 _ = message
             default:
-                XCTFail()
+                Issue.record()
             }
         }
         
         let remainingData = Data(knownGoodOSCRawBytes)
         let _oscObject = try await remainingData.parseOSC()
-        let oscObject = try XCTUnwrap(_oscObject)
+        let oscObject = try #require(_oscObject)
         handleOSCObject(oscObject)
     }
     
     // MARK: - Variations
     
-    func testParseOSC_Message() async throws {
+    @Test func parseOSC_Message() async throws {
         // (Raw data taken from testInt32() of "OSCMessage rawData Tests.swift")
         
         // manually build a raw OSC message
@@ -74,20 +72,20 @@ final class OSCObject_rawData_Tests: XCTestCase {
         let remainingData = Data(knownGoodOSCRawBytes)
         
         let _oscObject = try await remainingData.parseOSC()
-        let oscObject = try XCTUnwrap(_oscObject)
+        let oscObject = try #require(_oscObject)
             
         switch oscObject {
         case let message as OSCMessage:
             // handle message
-            XCTAssertEqual(message.addressPattern.stringValue, "/testaddress")
-            XCTAssertEqual(message.values[0] as? Int32, Int32(255))
+            #expect(message.addressPattern.stringValue == "/testaddress")
+            #expect(message.values[0] as? Int32 == Int32(255))
                 
         default:
-            XCTFail()
+            Issue.record()
         }
     }
     
-    func testParseOSC_Bundle() async throws {
+    @Test func parseOSC_Bundle() async throws {
         // (Raw data taken from testSingleOSCMessage() of "OSCBundle rawData Tests.swift")
         
         // manually build a raw OSC bundle
@@ -123,27 +121,27 @@ final class OSCObject_rawData_Tests: XCTestCase {
         switch oscObject {
         case let bundle as OSCBundle:
             // handle bundle
-            XCTAssertEqual(bundle.timeTag.rawValue, 1)
-            XCTAssertEqual(bundle.elements.count, 1)
+            #expect(bundle.timeTag.rawValue == 1)
+            #expect(bundle.elements.count == 1)
                 
-            let msg = try XCTUnwrap(bundle.elements.first as? OSCMessage)
+            let msg = try #require(bundle.elements.first as? OSCMessage)
                 
-            XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
-            XCTAssertEqual(msg.values.count, 1)
+            #expect(msg.addressPattern.stringValue == "/testaddress")
+            #expect(msg.values.count == 1)
             
-            XCTAssertEqual(msg.values[0] as? Int32, Int32(255))
+            #expect(msg.values[0] as? Int32 == Int32(255))
                 
         case let message as OSCMessage:
             // handle message
             _ = message
-            XCTFail()
+            Issue.record()
                 
         default:
-            XCTFail()
+            Issue.record()
         }
     }
     
-    func testParseOSC_Message_Error() async {
+    @Test func parseOSC_Message_Error() async {
         // manually build a MALFORMED raw OSC message
         
         var knownBadOSCRawBytes: [UInt8] = []
@@ -164,17 +162,17 @@ final class OSCObject_rawData_Tests: XCTestCase {
         
         do {
             _ = try await remainingData.parseOSC()
-            XCTFail("Should throw an error.")
+            Issue.record("Should throw an error.")
         } catch _ as OSCDecodeError {
             // handle decode errors
-            XCTAssert(true)
+            // ✅
         } catch {
             // handle other errors
-            XCTFail("Wrong error thrown.")
+            Issue.record("Wrong error thrown.")
         }
     }
     
-    func testParseOSC_Bundle_Error() async {
+    @Test func parseOSC_Bundle_Error() async {
         // manually build a MALFORMED raw OSC bundle
         
         var knownGoodOSCRawBytes: [UInt8] = []
@@ -206,17 +204,17 @@ final class OSCObject_rawData_Tests: XCTestCase {
         
         do {
             _ = try await remainingData.parseOSC()
-            XCTFail("Should throw an error.")
+            Issue.record("Should throw an error.")
         } catch _ as OSCDecodeError {
             // handle decode errors
-            XCTAssert(true)
+            // ✅
         } catch {
             // handle other errors
-            XCTFail("Wrong error thrown.")
+            Issue.record("Wrong error thrown.")
         }
     }
     
-    func testParseOSC_Bundle_ErrorInContainedMessage() async {
+    @Test func parseOSC_Bundle_ErrorInContainedMessage() async {
         // manually build a MALFORMED raw OSC bundle
         
         var knownGoodOSCRawBytes: [UInt8] = []
@@ -248,13 +246,13 @@ final class OSCObject_rawData_Tests: XCTestCase {
         
         do {
             _ = try await remainingData.parseOSC()
-            XCTFail("Should throw an error.")
+            Issue.record("Should throw an error.")
         } catch _ as OSCDecodeError {
             // handle decode errors
-            XCTAssert(true)
+            // ✅
         } catch {
             // handle other errors
-            XCTFail("Wrong error thrown.")
+            Issue.record("Wrong error thrown.")
         }
     }
 }

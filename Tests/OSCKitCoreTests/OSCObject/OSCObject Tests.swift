@@ -4,29 +4,27 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
+import Foundation
 import OSCKitCore
-import XCTest
+import Testing
 
-final class OSCObject_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
-    func testAppearsToBeOSC() throws {
+@Suite struct OSCObject_Tests {
+    @Test func appearsToBeOSC() throws {
         let bundle = try OSCBundle([]).rawData()
         let msg    = try OSCMessage("/").rawData()
         
         // OSC bundle
-        XCTAssert(bundle.oscObjectType == .bundle)
-        XCTAssertFalse(bundle.oscObjectType == .message)
+        #expect(bundle.oscObjectType == .bundle)
+        #expect(bundle.oscObjectType != .message)
         
         // OSC message
-        XCTAssert(msg.oscObjectType == .message)
-        XCTAssertFalse(msg.oscObjectType == .bundle)
+        #expect(msg.oscObjectType == .message)
+        #expect(msg.oscObjectType != .bundle)
         
         // empty bytes
-        XCTAssertNil(Data().oscObjectType)
+        #expect(Data().oscObjectType == nil)
         
         // garbage bytes
-        XCTAssertNil(Data([0x98, 0x42, 0x01, 0x7E]).oscObjectType)
+        #expect(Data([0x98, 0x42, 0x01, 0x7E]).oscObjectType == nil)
     }
 }

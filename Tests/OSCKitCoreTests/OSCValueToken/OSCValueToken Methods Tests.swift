@@ -4,19 +4,17 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
+import Foundation
 @testable import OSCKitCore
 import SwiftASCII
-import XCTest
+import Testing
 
-final class OSCValueTokenMethods_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
+@Suite struct OSCValueTokenMethods_Tests {
     // MARK: - OSCValueToken.isBaseType(matching:)
     
     // MARK: ... Core types
     
-    func testBaseTypeMatches_blob() {
+    @Test func baseTypeMatches_blob() {
         let val: any OSCValue = Data([1, 2, 3])
         let valType: OSCValueToken = .blob
         
@@ -24,9 +22,9 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
+                #expect(val.oscValueToken.isBaseType(matching: token))
             default:
-                XCTAssertFalse(val.oscValueToken.isBaseType(matching: token), "\(token)")
+                #expect(!val.oscValueToken.isBaseType(matching: token), "\(token)")
             }
         }
         
@@ -34,13 +32,13 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(
+                #expect(
                     val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true)
                 )
             default:
-                XCTAssertFalse(
-                    val.oscValueToken
+                #expect(
+                    !val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true),
                     "\(token)"
                 )
@@ -48,7 +46,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
     }
     
-    func testBaseTypeMatches_float32() {
+    @Test func baseTypeMatches_float32() {
         let val: any OSCValue = Float32(123.45)
         let valType: OSCValueToken = .float32
         
@@ -56,9 +54,9 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
+                #expect(val.oscValueToken.isBaseType(matching: token))
             default:
-                XCTAssertFalse(val.oscValueToken.isBaseType(matching: token), "\(token)")
+                #expect(!val.oscValueToken.isBaseType(matching: token), "\(token)")
             }
         }
         
@@ -66,13 +64,13 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType, .number:
-                XCTAssertTrue(
+                #expect(
                     val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true)
                 )
             default:
-                XCTAssertFalse(
-                    val.oscValueToken
+                #expect(
+                    !val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true),
                     "\(token)"
                 )
@@ -80,7 +78,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
     }
     
-    func testBaseTypeMatches_int32() {
+    @Test func baseTypeMatches_int32() {
         let val: any OSCValue = Int32(123)
         let valType: OSCValueToken = .int32
         
@@ -88,9 +86,9 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
+                #expect(val.oscValueToken.isBaseType(matching: token))
             default:
-                XCTAssertFalse(val.oscValueToken.isBaseType(matching: token), "\(token)")
+                #expect(!val.oscValueToken.isBaseType(matching: token), "\(token)")
             }
         }
         
@@ -98,13 +96,13 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType, .number:
-                XCTAssertTrue(
+                #expect(
                     val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true)
                 )
             default:
-                XCTAssertFalse(
-                    val.oscValueToken
+                #expect(
+                    !val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true),
                     "\(token)"
                 )
@@ -112,7 +110,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
     }
     
-    func testBaseTypeMatches_string() {
+    @Test func baseTypeMatches_string() {
         let val: any OSCValue = String("A string")
         let valType: OSCValueToken = .string
         
@@ -120,9 +118,9 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
+                #expect(val.oscValueToken.isBaseType(matching: token))
             default:
-                XCTAssertFalse(val.oscValueToken.isBaseType(matching: token), "\(token)")
+                #expect(!val.oscValueToken.isBaseType(matching: token), "\(token)")
             }
         }
         
@@ -130,13 +128,13 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(
+                #expect(
                     val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true)
                 )
             default:
-                XCTAssertFalse(
-                    val.oscValueToken
+                #expect(
+                    !val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true),
                     "\(token)"
                 )
@@ -146,7 +144,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
     
     // MARK: ... Extended types
     
-    func testBaseTypeMatches_array() {
+    @Test func baseTypeMatches_array() {
         let val: any OSCValue = OSCArrayValue([Int32(123)])
         let valType: OSCValueToken = .array
         
@@ -154,9 +152,9 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
+                #expect(val.oscValueToken.isBaseType(matching: token))
             default:
-                XCTAssertFalse(val.oscValueToken.isBaseType(matching: token), "\(token)")
+                #expect(!val.oscValueToken.isBaseType(matching: token), "\(token)")
             }
         }
         
@@ -164,13 +162,13 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(
+                #expect(
                     val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true)
                 )
             default:
-                XCTAssertFalse(
-                    val.oscValueToken
+                #expect(
+                    !val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true),
                     "\(token)"
                 )
@@ -178,7 +176,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
     }
     
-    func testBaseTypeMatches_bool() {
+    @Test func baseTypeMatches_bool() {
         let val: any OSCValue = true
         let valType: OSCValueToken = .bool
         
@@ -186,9 +184,9 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
+                #expect(val.oscValueToken.isBaseType(matching: token))
             default:
-                XCTAssertFalse(val.oscValueToken.isBaseType(matching: token), "\(token)")
+                #expect(!val.oscValueToken.isBaseType(matching: token), "\(token)")
             }
         }
         
@@ -196,13 +194,13 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(
+                #expect(
                     val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true)
                 )
             default:
-                XCTAssertFalse(
-                    val.oscValueToken
+                #expect(
+                    !val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true),
                     "\(token)"
                 )
@@ -210,7 +208,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
     }
     
-    func testBaseTypeMatches_character() {
+    @Test func baseTypeMatches_character() {
         let val: any OSCValue = Character("A")
         let valType: OSCValueToken = .character
         
@@ -218,9 +216,9 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
+                #expect(val.oscValueToken.isBaseType(matching: token))
             default:
-                XCTAssertFalse(val.oscValueToken.isBaseType(matching: token), "\(token)")
+                #expect(!val.oscValueToken.isBaseType(matching: token), "\(token)")
             }
         }
         
@@ -228,13 +226,13 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(
+                #expect(
                     val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true)
                 )
             default:
-                XCTAssertFalse(
-                    val.oscValueToken
+                #expect(
+                    !val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true),
                     "\(token)"
                 )
@@ -242,7 +240,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
     }
     
-    func testBaseTypeMatches_double() {
+    @Test func baseTypeMatches_double() {
         let val: any OSCValue = Double(456.78)
         let valType: OSCValueToken = .double
         
@@ -250,9 +248,9 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
+                #expect(val.oscValueToken.isBaseType(matching: token))
             default:
-                XCTAssertFalse(val.oscValueToken.isBaseType(matching: token), "\(token)")
+                #expect(!val.oscValueToken.isBaseType(matching: token), "\(token)")
             }
         }
         
@@ -260,13 +258,13 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType, .number:
-                XCTAssertTrue(
+                #expect(
                     val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true)
                 )
             default:
-                XCTAssertFalse(
-                    val.oscValueToken
+                #expect(
+                    !val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true),
                     "\(token)"
                 )
@@ -274,7 +272,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
     }
     
-    func testBaseTypeMatches_int64() {
+    @Test func baseTypeMatches_int64() {
         let val: any OSCValue = Int64(456)
         let valType: OSCValueToken = .int64
         
@@ -282,9 +280,9 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
+                #expect(val.oscValueToken.isBaseType(matching: token))
             default:
-                XCTAssertFalse(val.oscValueToken.isBaseType(matching: token), "\(token)")
+                #expect(!val.oscValueToken.isBaseType(matching: token), "\(token)")
             }
         }
         
@@ -292,13 +290,13 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType, .number:
-                XCTAssertTrue(
+                #expect(
                     val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true)
                 )
             default:
-                XCTAssertFalse(
-                    val.oscValueToken
+                #expect(
+                    !val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true),
                     "\(token)"
                 )
@@ -306,7 +304,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
     }
     
-    func testBaseTypeMatches_impulse() {
+    @Test func baseTypeMatches_impulse() {
         let val: any OSCValue = OSCImpulseValue()
         let valType: OSCValueToken = .impulse
         
@@ -314,9 +312,9 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
+                #expect(val.oscValueToken.isBaseType(matching: token))
             default:
-                XCTAssertFalse(val.oscValueToken.isBaseType(matching: token), "\(token)")
+                #expect(!val.oscValueToken.isBaseType(matching: token), "\(token)")
             }
         }
         
@@ -324,13 +322,13 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(
+                #expect(
                     val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true)
                 )
             default:
-                XCTAssertFalse(
-                    val.oscValueToken
+                #expect(
+                    !val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true),
                     "\(token)"
                 )
@@ -338,7 +336,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
     }
     
-    func testBaseTypeMatches_midi() {
+    @Test func baseTypeMatches_midi() {
         let val: any OSCValue = OSCMIDIValue(portID: 0x00, status: 0x00, data1: 0x00, data2: 0x00)
         let valType: OSCValueToken = .midi
         
@@ -346,9 +344,9 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
+                #expect(val.oscValueToken.isBaseType(matching: token))
             default:
-                XCTAssertFalse(val.oscValueToken.isBaseType(matching: token), "\(token)")
+                #expect(!val.oscValueToken.isBaseType(matching: token), "\(token)")
             }
         }
         
@@ -356,13 +354,13 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(
+                #expect(
                     val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true)
                 )
             default:
-                XCTAssertFalse(
-                    val.oscValueToken
+                #expect(
+                    !val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true),
                     "\(token)"
                 )
@@ -370,7 +368,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
     }
     
-    func testBaseTypeMatches_null() {
+    @Test func baseTypeMatches_null() {
         let val: any OSCValue = OSCNullValue()
         let valType: OSCValueToken = .null
         
@@ -378,9 +376,9 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
+                #expect(val.oscValueToken.isBaseType(matching: token))
             default:
-                XCTAssertFalse(val.oscValueToken.isBaseType(matching: token), "\(token)")
+                #expect(!val.oscValueToken.isBaseType(matching: token), "\(token)")
             }
         }
         
@@ -388,13 +386,13 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(
+                #expect(
                     val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true)
                 )
             default:
-                XCTAssertFalse(
-                    val.oscValueToken
+                #expect(
+                    !val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true),
                     "\(token)"
                 )
@@ -402,7 +400,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
     }
     
-    func testBaseTypeMatches_stringAlt() {
+    @Test func baseTypeMatches_stringAlt() {
         let val: any OSCValue = OSCStringAltValue("An alt string")
         let valType: OSCValueToken = .stringAlt
         
@@ -410,9 +408,9 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
+                #expect(val.oscValueToken.isBaseType(matching: token))
             default:
-                XCTAssertFalse(val.oscValueToken.isBaseType(matching: token), "\(token)")
+                #expect(!val.oscValueToken.isBaseType(matching: token), "\(token)")
             }
         }
         
@@ -420,13 +418,13 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(
+                #expect(
                     val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true)
                 )
             default:
-                XCTAssertFalse(
-                    val.oscValueToken
+                #expect(
+                    !val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true),
                     "\(token)"
                 )
@@ -434,7 +432,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         }
     }
     
-    func testBaseTypeMatches_timeTag() {
+    @Test func baseTypeMatches_timeTag() {
         let val: any OSCValue = OSCTimeTag(.init(456))
         let valType: OSCValueToken = .timeTag
         
@@ -442,9 +440,9 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
+                #expect(val.oscValueToken.isBaseType(matching: token))
             default:
-                XCTAssertFalse(val.oscValueToken.isBaseType(matching: token), "\(token)")
+                #expect(!val.oscValueToken.isBaseType(matching: token), "\(token)")
             }
         }
         
@@ -452,13 +450,13 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(
+                #expect(
                     val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true)
                 )
             default:
-                XCTAssertFalse(
-                    val.oscValueToken
+                #expect(
+                    !val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true),
                     "\(token)"
                 )
@@ -468,7 +466,7 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
     
     // MARK: ... Opaque types
     
-    func testBaseTypeMatches_number() {
+    @Test func baseTypeMatches_number() {
         let val: any OSCValueMaskable = AnyOSCNumberValue(123)
         let valType: OSCValueToken = .number
         
@@ -476,9 +474,9 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType:
-                XCTAssertTrue(val.oscValueToken.isBaseType(matching: token))
+                #expect(val.oscValueToken.isBaseType(matching: token))
             default:
-                XCTAssertFalse(val.oscValueToken.isBaseType(matching: token), "\(token)")
+                #expect(!val.oscValueToken.isBaseType(matching: token), "\(token)")
             }
         }
         
@@ -486,13 +484,13 @@ final class OSCValueTokenMethods_Tests: XCTestCase {
         for token in OSCValueToken.allCases {
             switch token {
             case valType, .number:
-                XCTAssertTrue(
+                #expect(
                     val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true)
                 )
             default:
-                XCTAssertFalse(
-                    val.oscValueToken
+                #expect(
+                    !val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true),
                     "\(token)"
                 )

@@ -5,15 +5,12 @@
 //
 
 import OSCKitCore
-import XCTest
+import Testing
 
-final class OSCAddressSpace_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
+@Suite struct OSCAddressSpace_Tests {
     // MARK: - Address Registration
     
-    func testRegisterAddress_PathComponents() throws {
+    @Test func registerAddress_PathComponents() throws {
         let addressSpace = OSCAddressSpace()
         
         let t1ID = addressSpace.register(localAddress: ["test1"])
@@ -22,231 +19,231 @@ final class OSCAddressSpace_Tests: XCTestCase {
         
         // basic verbatim match to check if register worked
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1")) ==
             [t1ID]
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2")) ==
             [t2ID]
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test3/test4")),
+        #expect(
+            addressSpace.methods(matching: .init("/test3/test4")) ==
             [t3ID]
         )
     }
     
-    func testUnregisterAddress() throws {
+    @Test func unregisterAddress() throws {
         let addressSpace = OSCAddressSpace()
         
         let t1ID = addressSpace.register(localAddress: "/test1/test3/methodA"); _ = t1ID
         let t2ID = addressSpace.register(localAddress: "/test2/test4/methodB")
         
-        XCTAssertTrue(
+        #expect(
             addressSpace.unregister(localAddress: "/test1/test3/methodA")
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test3/methodA")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test3/methodA")) ==
             []
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test2/test4/methodB")),
+        #expect(
+            addressSpace.methods(matching: .init("/test2/test4/methodB")) ==
             [t2ID]
         )
         
         // should not match containers which are not also methods
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1")).count, 0
+        #expect(
+            addressSpace.methods(matching: .init("/test1")).count == 0
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test3")).count, 0
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test3")).count == 0
         )
     }
     
-    func testUnregisterAddress_PathComponents() throws {
+    @Test func unregisterAddress_PathComponents() throws {
         let addressSpace = OSCAddressSpace()
         
         let t1ID = addressSpace.register(localAddress: "/test1/test3/methodA"); _ = t1ID
         let t2ID = addressSpace.register(localAddress: "/test2/test4/methodB")
         
-        XCTAssertTrue(
+        #expect(
             addressSpace.unregister(localAddress: ["test1", "test3", "methodA"])
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test3/methodA")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test3/methodA")) ==
             []
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test2/test4/methodB")),
+        #expect(
+            addressSpace.methods(matching: .init("/test2/test4/methodB")) ==
             [t2ID]
         )
         
         // should not match containers which are not also methods
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1")).count, 0
+        #expect(
+            addressSpace.methods(matching: .init("/test1")).count == 0
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test3")).count, 0
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test3")).count == 0
         )
     }
     
-    func testRegisterAddress_MethodThatAlsoBecomesAContainer() throws {
+    @Test func registerAddress_MethodThatAlsoBecomesAContainer() throws {
         let addressSpace = OSCAddressSpace()
         
         let t0ID = addressSpace.register(localAddress: "/test1/test2")
         let t1ID = addressSpace.register(localAddress: "/test1/test2/methodA"); _ = t1ID
         
         // confirm registrations worked and match as methods
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2")) ==
             [t0ID]
         )
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2/methodA")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2/methodA")) ==
             [t1ID]
         )
     }
     
-    func testRegisterAddress_ContainerThatBecomesAMethod() throws {
+    @Test func registerAddress_ContainerThatBecomesAMethod() throws {
         let addressSpace = OSCAddressSpace()
         
         let t1ID = addressSpace.register(localAddress: "/test1/test2/methodA"); _ = t1ID
         let t0ID = addressSpace.register(localAddress: "/test1/test2")
         
         // confirm registrations worked and match as methods
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2")) ==
             [t0ID]
         )
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2/methodA")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2/methodA")) ==
             [t1ID]
         )
     }
     
-    func testUnregisterAddress_MethodThatAlsoBecomesAContainer_RemoveMethod() throws {
+    @Test func unregisterAddress_MethodThatAlsoBecomesAContainer_RemoveMethod() throws {
         let addressSpace = OSCAddressSpace()
         
         let t0ID = addressSpace.register(localAddress: "/test1/test2")
         let t1ID = addressSpace.register(localAddress: "/test1/test2/methodA"); _ = t1ID
         
         // unregister downstream method
-        XCTAssertTrue(
+        #expect(
             addressSpace.unregister(localAddress: ["test1", "test2", "methodA"])
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2/methodA")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2/methodA")) ==
             []
         )
         
         // should not modify pre-existing methods that were also containers
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2")) ==
             [t0ID]
         )
         
         // attempt to unregister again
-        XCTAssertFalse(
-            addressSpace.unregister(localAddress: ["test1", "test2", "methodA"])
+        #expect(
+            !addressSpace.unregister(localAddress: ["test1", "test2", "methodA"])
         )
     }
     
-    func testUnregisterAddress_ContainerThatBecomesAMethod_RemoveMethod() throws {
+    @Test func unregisterAddress_ContainerThatBecomesAMethod_RemoveMethod() throws {
         let addressSpace = OSCAddressSpace()
         
         let t1ID = addressSpace.register(localAddress: "/test1/test2/methodA"); _ = t1ID
         let t0ID = addressSpace.register(localAddress: "/test1/test2")
         
         // unregister downstream method
-        XCTAssertTrue(
+        #expect(
             addressSpace.unregister(localAddress: ["test1", "test2", "methodA"])
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2/methodA")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2/methodA")) ==
             []
         )
         
         // should not modify pre-existing methods that were also containers
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2")) ==
             [t0ID]
         )
         
         // attempt to unregister again
-        XCTAssertFalse(
-            addressSpace.unregister(localAddress: ["test1", "test2", "methodA"])
+        #expect(
+            !addressSpace.unregister(localAddress: ["test1", "test2", "methodA"])
         )
     }
     
-    func testUnregisterAddress_MethodThatAlsoBecomesAContainer_RemoveContainer() throws {
+    @Test func unregisterAddress_MethodThatAlsoBecomesAContainer_RemoveContainer() throws {
         let addressSpace = OSCAddressSpace()
         
         let t0ID = addressSpace.register(localAddress: "/test1/test2"); _ = t0ID
         let t1ID = addressSpace.register(localAddress: "/test1/test2/methodA")
         
         // unregister midstream container method
-        XCTAssertTrue(
+        #expect(
             addressSpace.unregister(localAddress: ["test1", "test2"])
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2")) ==
             []
         )
         
         // should not modify pre-existing downstream methods or containers
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2/methodA")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2/methodA")) ==
             [t1ID]
         )
         
         // attempt to unregister again
-        XCTAssertFalse(
-            addressSpace.unregister(localAddress: ["test1", "test2"])
+        #expect(
+            !addressSpace.unregister(localAddress: ["test1", "test2"])
         )
     }
     
-    func testUnregisterAddress_ContainerThatBecomesAMethod_RemoveContainer() throws {
+    @Test func unregisterAddress_ContainerThatBecomesAMethod_RemoveContainer() throws {
         let addressSpace = OSCAddressSpace()
         
         let t1ID = addressSpace.register(localAddress: "/test1/test2/methodA")
         let t0ID = addressSpace.register(localAddress: "/test1/test2"); _ = t0ID
         
         // unregister midstream container method
-        XCTAssertTrue(
+        #expect(
             addressSpace.unregister(localAddress: ["test1", "test2"])
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2")) ==
             []
         )
         
         // should not modify pre-existing downstream methods or containers
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2/methodA")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2/methodA")) ==
             [t1ID]
         )
         
         // attempt to unregister again
-        XCTAssertFalse(
-            addressSpace.unregister(localAddress: ["test1", "test2"])
+        #expect(
+            !addressSpace.unregister(localAddress: ["test1", "test2"])
         )
     }
     
-    func testUnregisterAllAddresses() throws {
+    @Test func unregisterAllAddresses() throws {
         let addressSpace = OSCAddressSpace()
         
         let _ = addressSpace.register(localAddress: "/test1/test3/methodA")
@@ -254,32 +251,32 @@ final class OSCAddressSpace_Tests: XCTestCase {
         
         addressSpace.unregisterAll()
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test3/methodA")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test3/methodA")) ==
             []
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test2/test4/methodB")),
+        #expect(
+            addressSpace.methods(matching: .init("/test2/test4/methodB")) ==
             []
         )
         
         // containers still exist
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1")) ==
             []
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test3")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test3")) ==
             []
         )
     }
     
     // MARK: - Matches
     
-    func testMethodsMatching_Root() throws {
+    @Test func methodsMatching_Root() throws {
         let addressSpace = OSCAddressSpace()
         
         let t1ID = addressSpace.register(localAddress: "/test1")
@@ -288,74 +285,74 @@ final class OSCAddressSpace_Tests: XCTestCase {
         
         // non-matches
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test")),
+        #expect(
+            addressSpace.methods(matching: .init("/test")) ==
             []
         )
         
         // verbatim matches
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1")) ==
             [t1ID]
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test2")),
+        #expect(
+            addressSpace.methods(matching: .init("/test2")) ==
             [t2ID]
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/")) ==
             [t1ID]
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test2/")),
+        #expect(
+            addressSpace.methods(matching: .init("/test2/")) ==
             [t2ID]
         )
         
         // wildcards
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test?")),
+        #expect(
+            addressSpace.methods(matching: .init("/test?")) ==
             [t1ID, t2ID]
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test*")),
+        #expect(
+            addressSpace.methods(matching: .init("/test*")) ==
             [t1ID, t2ID]
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test[12]")),
+        #expect(
+            addressSpace.methods(matching: .init("/test[12]")) ==
             [t1ID, t2ID]
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test[!3]")),
+        #expect(
+            addressSpace.methods(matching: .init("/test[!3]")) ==
             [t1ID, t2ID]
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test{1,2}")),
+        #expect(
+            addressSpace.methods(matching: .init("/test{1,2}")) ==
             [t1ID, t2ID]
         )
         
         // edge cases
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("")),
+        #expect(
+            addressSpace.methods(matching: .init("")) ==
             []
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/")),
+        #expect(
+            addressSpace.methods(matching: .init("/")) ==
             []
         )
     }
     
-    func testMethodsMatching_NestedMethods() throws {
+    @Test func methodsMatching_NestedMethods() throws {
         let addressSpace = OSCAddressSpace()
         
         let t1ID = addressSpace.register(localAddress: "/test1/test2/methodA")
@@ -363,96 +360,96 @@ final class OSCAddressSpace_Tests: XCTestCase {
                 
         // non-matches
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2/method")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2/method")) ==
             []
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2/methodAA")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2/methodAA")) ==
             []
         )
         
         // verbatim matches
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2/methodA")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2/methodA")) ==
             [t1ID]
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2/methodB")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2/methodB")) ==
             [t2ID]
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2/methodA/")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2/methodA/")) ==
             [t1ID]
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2/methodB/")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2/methodB/")) ==
             [t2ID]
         )
         
         // wildcards
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2/method?")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2/method?")) ==
             [t1ID, t2ID]
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2/method*")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2/method*")) ==
             [t1ID, t2ID]
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2/method[AB]")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2/method[AB]")) ==
             [t1ID, t2ID]
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2/method[!C]")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2/method[!C]")) ==
             [t1ID, t2ID]
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1/test2/method{A,B}")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1/test2/method{A,B}")) ==
             [t1ID, t2ID]
         )
         
         // partial path matches should not return containers
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test1")),
+        #expect(
+            addressSpace.methods(matching: .init("/test1")) ==
             []
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test?")),
+        #expect(
+            addressSpace.methods(matching: .init("/test?")) ==
             []
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test*")),
+        #expect(
+            addressSpace.methods(matching: .init("/test*")) ==
             []
         )
         
         // edge cases
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("")),
+        #expect(
+            addressSpace.methods(matching: .init("")) ==
             []
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/")),
+        #expect(
+            addressSpace.methods(matching: .init("/")) ==
             []
         )
     }
     
-    func testMethodsMatching_MultipleContainerMatches() throws {
+    @Test func methodsMatching_MultipleContainerMatches() throws {
         let addressSpace = OSCAddressSpace()
         
         let t1ID = addressSpace.register(localAddress: "/test1/test3/methodA")
@@ -460,28 +457,28 @@ final class OSCAddressSpace_Tests: XCTestCase {
         
         // wildcard matches
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test?/test?/method?")),
+        #expect(
+            addressSpace.methods(matching: .init("/test?/test?/method?")) ==
             [t1ID, t2ID]
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/*/test?/method?")),
+        #expect(
+            addressSpace.methods(matching: .init("/*/test?/method?")) ==
             [t1ID, t2ID]
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test?/*/method?")),
+        #expect(
+            addressSpace.methods(matching: .init("/test?/*/method?")) ==
             [t1ID, t2ID]
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/*/*/method?")),
+        #expect(
+            addressSpace.methods(matching: .init("/*/*/method?")) ==
             [t1ID, t2ID]
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/*/*/*")),
+        #expect(
+            addressSpace.methods(matching: .init("/*/*/*")) ==
             [t1ID, t2ID]
         )
         
@@ -491,28 +488,28 @@ final class OSCAddressSpace_Tests: XCTestCase {
         do {
             let matches = addressSpace.methods(matching: .init("/*/*/*"))
             
-            XCTAssertEqual(matches.count, 2)
-            XCTAssertTrue(matches.contains(t1ID))
-            XCTAssertTrue(matches.contains(t2ID))
+            #expect(matches.count == 2)
+            #expect(matches.contains(t1ID))
+            #expect(matches.contains(t2ID))
         }
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/*")),
+        #expect(
+            addressSpace.methods(matching: .init("/*")) ==
             []
         )
            
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/*/*")),
+        #expect(
+            addressSpace.methods(matching: .init("/*/*")) ==
             []
         )
         
-        XCTAssertEqual(
-            addressSpace.methods(matching: .init("/test?/test?")),
+        #expect(
+            addressSpace.methods(matching: .init("/test?/test?")) ==
             []
         )
     }
     
-    func testMethodsMatching_EdgeCases() {
+    @Test func methodsMatching_EdgeCases() {
         // ensure addresses are not sanitized in an unexpected way
         
         let addressSpace = OSCAddressSpace()
@@ -520,58 +517,60 @@ final class OSCAddressSpace_Tests: XCTestCase {
         do {
             let addr = "/test1/test3/vol-"
             let id = addressSpace.register(localAddress: addr)
-            XCTAssertEqual(
-                addressSpace.methods(matching: .init(addr)), [id]
+            #expect(
+                addressSpace.methods(matching: .init(addr)) == [id]
             )
         }
         do {
             let addr = "/test2/test4/vol+"
             let id = addressSpace.register(localAddress: addr)
-            XCTAssertEqual(
-                addressSpace.methods(matching: .init(addr)), [id]
+            #expect(
+                addressSpace.methods(matching: .init(addr)) == [id]
             )
         }
         do {
             let addr = #"/test2/test4/ajL_-du &@!)(}].,;:%$|\-"#
             let id = addressSpace.register(localAddress: addr)
-            XCTAssertEqual(
-                addressSpace.methods(matching: .init(addr)), [id]
+            #expect(
+                addressSpace.methods(matching: .init(addr)) == [id]
             )
         }
     }
     
-    func testDispatchMatching() {
+    @Test func dispatchMatching() async throws {
         let addressSpace = OSCAddressSpace()
         
-        let test1Exp = expectation(description: "test1 Closure Called")
-        let test2Exp = expectation(description: "test2 Closure Called")
-        let test3Exp = expectation(description: "test3 Closure Called")
-        test3Exp.isInverted = true
+        var id1: OSCAddressSpace.MethodID!
+        var id2: OSCAddressSpace.MethodID!
+        var id3: OSCAddressSpace.MethodID!
+        var methodIDs: [OSCAddressSpace.MethodID]!
         
-        let id1 = addressSpace.register(localAddress: "/base/test1") { values in
-            XCTAssert(values == ["A string", 123])
-            test1Exp.fulfill()
+        try await confirmation(expectedCount: 11) { confirmation in
+            id1 = addressSpace.register(localAddress: "/base/test1") { values in
+                #expect(values == ["A string", 123])
+                confirmation.confirm(count: 1)
+            }
+            
+            id2 = addressSpace.register(localAddress: "/base/test2") { values in
+                #expect(values == ["A string", 123])
+                confirmation.confirm(count: 10)
+            }
+            
+            // this shouldn't be called
+            id3 = addressSpace.register(localAddress: "/base/blah3") { values in
+                confirmation.confirm(count: 100)
+            }
+            
+            methodIDs = addressSpace.dispatch(
+                OSCMessage("/base/test?", values: ["A string", 123])
+            )
+            
+            try await Task.sleep(seconds: 0.5)
         }
         
-        let id2 = addressSpace.register(localAddress: "/base/test2") { values in
-            XCTAssert(values == ["A string", 123])
-            test2Exp.fulfill()
-        }
-        
-        // this shouldn't be called
-        let id3 = addressSpace.register(localAddress: "/base/blah3") { values in
-            test3Exp.fulfill()
-        }
-        
-        let methodIDs = addressSpace.dispatch(
-            OSCMessage("/base/test?", values: ["A string", 123])
-        )
-        
-        wait(for: [test1Exp, test2Exp, test3Exp], timeout: 1.0)
-        
-        XCTAssertEqual(methodIDs.count, 2)
-        XCTAssertTrue(methodIDs.contains(id1))
-        XCTAssertTrue(methodIDs.contains(id2))
+        #expect(methodIDs.count == 2)
+        #expect(methodIDs.contains(id1))
+        #expect(methodIDs.contains(id2))
         _ = id3
     }
 }

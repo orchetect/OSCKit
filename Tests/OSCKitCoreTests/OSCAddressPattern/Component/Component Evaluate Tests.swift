@@ -5,846 +5,841 @@
 //
 
 @testable import OSCKitCore
-import XCTest
+import Testing
 
-final class OSCAddressPattern_Component_Evaluate_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
-    // MARK: - Individual pattern types
-    
-    func testEmptyPattern() {
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "").evaluate(matching: "123")
+@Suite struct OSCAddressPattern_Component_Evaluate_Individual_Pattern_Types_Tests {
+    @Test func emptyPattern() {
+        #expect(
+            !OSCAddressPattern.Component(string: "").evaluate(matching: "123")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "").evaluate(matching: "")
         )
     }
     
-    func testBasicLiterals() {
-        XCTAssertTrue(
+    @Test func basicLiterals() {
+        #expect(
             OSCAddressPattern.Component(string: "123").evaluate(matching: "123")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "123").evaluate(matching: "ABC")
+        #expect(
+            !OSCAddressPattern.Component(string: "123").evaluate(matching: "ABC")
         )
         
         // edge cases
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "12").evaluate(matching: "123")
+        #expect(
+            !OSCAddressPattern.Component(string: "12").evaluate(matching: "123")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "1234").evaluate(matching: "123")
+        #expect(
+            !OSCAddressPattern.Component(string: "1234").evaluate(matching: "123")
         )
     }
     
-    func testVariableWildcard() {
-        XCTAssertTrue(
+    @Test func variableWildcard() {
+        #expect(
             OSCAddressPattern.Component(string: "*").evaluate(matching: "1")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*").evaluate(matching: "123")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "1*").evaluate(matching: "123")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "12*").evaluate(matching: "123")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "123*").evaluate(matching: "123")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*3").evaluate(matching: "123")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*23").evaluate(matching: "123")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*123").evaluate(matching: "123")
         )
     }
     
-    func testVariableWildcard_EdgeCases() {
-        XCTAssertTrue(
+    @Test func variableWildcard_EdgeCases() {
+        #expect(
             OSCAddressPattern.Component(string: "***").evaluate(matching: "1")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "****").evaluate(matching: "123")
         )
     }
     
-    func testSingleWildcard() {
-        XCTAssertTrue(
+    @Test func singleWildcard() {
+        #expect(
             OSCAddressPattern.Component(string: "?").evaluate(matching: "1")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "?").evaluate(matching: "123")
+        #expect(
+            !OSCAddressPattern.Component(string: "?").evaluate(matching: "123")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "???").evaluate(matching: "123")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "????").evaluate(matching: "123")
+        #expect(
+            !OSCAddressPattern.Component(string: "????").evaluate(matching: "123")
         )
     }
     
-    func testBracket() {
+    @Test func bracket() {
         // single chars
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[abc]").evaluate(matching: "a")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[abc]").evaluate(matching: "c")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[abc]").evaluate(matching: "d")
+        #expect(
+            !OSCAddressPattern.Component(string: "[abc]").evaluate(matching: "d")
         )
         
         // range
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[a-z]").evaluate(matching: "a")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[a-z]").evaluate(matching: "z")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[b-y]").evaluate(matching: "C")
+        #expect(
+            !OSCAddressPattern.Component(string: "[b-y]").evaluate(matching: "C")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[b-y]").evaluate(matching: "z")
+        #expect(
+            !OSCAddressPattern.Component(string: "[b-y]").evaluate(matching: "z")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[b-y]").evaluate(matching: "bb")
+        #expect(
+            !OSCAddressPattern.Component(string: "[b-y]").evaluate(matching: "bb")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[b-y]").evaluate(matching: "ab")
+        #expect(
+            !OSCAddressPattern.Component(string: "[b-y]").evaluate(matching: "ab")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[b-y]").evaluate(matching: "-")
+        #expect(
+            !OSCAddressPattern.Component(string: "[b-y]").evaluate(matching: "-")
         )
         
         // single-member range
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[b-b]").evaluate(matching: "b")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[b-b]").evaluate(matching: "a")
+        #expect(
+            !OSCAddressPattern.Component(string: "[b-b]").evaluate(matching: "a")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[b-b]").evaluate(matching: "c")
+        #expect(
+            !OSCAddressPattern.Component(string: "[b-b]").evaluate(matching: "c")
         )
         
         // invalid range
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[y-b]").evaluate(matching: "c")
+        #expect(
+            !OSCAddressPattern.Component(string: "[y-b]").evaluate(matching: "c")
         )
         
         // mixed ranges
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[a-z0-9]").evaluate(matching: "a")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[a-z0-9]").evaluate(matching: "1")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[a-z0-9]").evaluate(matching: "Z")
+        #expect(
+            !OSCAddressPattern.Component(string: "[a-z0-9]").evaluate(matching: "Z")
         )
         
         // mixed singles and ranges
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[a-z0-9XY]").evaluate(matching: "a")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[a-z0-9XY]").evaluate(matching: "1")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[a-z0-9XY]").evaluate(matching: "X")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[Xa-z0-9YZ]").evaluate(matching: "X")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[Xa-z0-9YZ]").evaluate(matching: "Y")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[Xa-z0-9YZ]").evaluate(matching: "Z")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[Xa-z0-9YZ]").evaluate(matching: "A")
+        #expect(
+            !OSCAddressPattern.Component(string: "[Xa-z0-9YZ]").evaluate(matching: "A")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[Xa-z0-9YZ]").evaluate(matching: "-")
+        #expect(
+            !OSCAddressPattern.Component(string: "[Xa-z0-9YZ]").evaluate(matching: "-")
         )
         
         // edge cases
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[-z]").evaluate(matching: "-")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[-z]").evaluate(matching: "z")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[-z]").evaluate(matching: "a")
+        #expect(
+            !OSCAddressPattern.Component(string: "[-z]").evaluate(matching: "a")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[a-]").evaluate(matching: "-")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[a-]").evaluate(matching: "a")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[a-]").evaluate(matching: "b")
+        #expect(
+            !OSCAddressPattern.Component(string: "[a-]").evaluate(matching: "b")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[b-y-]").evaluate(matching: "b")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[b-y-]").evaluate(matching: "y")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[b-y-]").evaluate(matching: "-")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[-b-y]").evaluate(matching: "b")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[-b-y]").evaluate(matching: "y")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[-b-y]").evaluate(matching: "-")
         )
     }
     
-    func testBracket_isExcluded_SingleChars() {
+    @Test func bracket_isExcluded_SingleChars() {
         // single chars
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[!abc]").evaluate(matching: "a")
+        #expect(
+            !OSCAddressPattern.Component(string: "[!abc]").evaluate(matching: "a")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[!abc]").evaluate(matching: "c")
+        #expect(
+            !OSCAddressPattern.Component(string: "[!abc]").evaluate(matching: "c")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[!abc]").evaluate(matching: "d")
         )
     }
     
-    func testBracket_isExcluded_Range() {
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[!b-y]").evaluate(matching: "b")
+    @Test func bracket_isExcluded_Range() {
+        #expect(
+            !OSCAddressPattern.Component(string: "[!b-y]").evaluate(matching: "b")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[!b-y]").evaluate(matching: "y")
+        #expect(
+            !OSCAddressPattern.Component(string: "[!b-y]").evaluate(matching: "y")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[!b-y]").evaluate(matching: "a")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[!b-y]").evaluate(matching: "z")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[!b-y]").evaluate(matching: "B")
         )
     }
     
-    func testBracket_SingleMemberRange() {
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[!b-b]").evaluate(matching: "b")
+    @Test func bracket_SingleMemberRange() {
+        #expect(
+            !OSCAddressPattern.Component(string: "[!b-b]").evaluate(matching: "b")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[!b-b]").evaluate(matching: "a")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[!b-b]").evaluate(matching: "c")
         )
     }
     
-    func testBracket_MixedRanges() {
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[!a-z0-9]").evaluate(matching: "a")
+    @Test func bracket_MixedRanges() {
+        #expect(
+            !OSCAddressPattern.Component(string: "[!a-z0-9]").evaluate(matching: "a")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[!a-z0-9]").evaluate(matching: "1")
+        #expect(
+            !OSCAddressPattern.Component(string: "[!a-z0-9]").evaluate(matching: "1")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[!a-z0-9]").evaluate(matching: "A")
         )
     }
     
-    func testBracket_EdgeCases() {
+    @Test func bracket_EdgeCases() {
         // invalid range
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[!y-b]").evaluate(matching: "c")
         )
         
         // edge cases
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[!]").evaluate(matching: "")
+        #expect(
+            !OSCAddressPattern.Component(string: "[!]").evaluate(matching: "")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[!]").evaluate(matching: "a")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[!!]").evaluate(matching: "a")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[!!]").evaluate(matching: "!")
+        #expect(
+            !OSCAddressPattern.Component(string: "[!!]").evaluate(matching: "!")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[!!a]").evaluate(matching: "a")
+        #expect(
+            !OSCAddressPattern.Component(string: "[!!a]").evaluate(matching: "a")
         )
     }
     
-    func testBracket_MixedSinglesAndRanges() {
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[!a-z0-9XY]").evaluate(matching: "a")
+    @Test func bracket_MixedSinglesAndRanges() {
+        #expect(
+            !OSCAddressPattern.Component(string: "[!a-z0-9XY]").evaluate(matching: "a")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[!a-z0-9XY]").evaluate(matching: "1")
+        #expect(
+            !OSCAddressPattern.Component(string: "[!a-z0-9XY]").evaluate(matching: "1")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[!a-z0-9XY]").evaluate(matching: "x")
+        #expect(
+            !OSCAddressPattern.Component(string: "[!a-z0-9XY]").evaluate(matching: "x")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[!a-z0-9XY]").evaluate(matching: "X")
+        #expect(
+            !OSCAddressPattern.Component(string: "[!a-z0-9XY]").evaluate(matching: "X")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[!a-z0-9XY]").evaluate(matching: "A")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[!a-z0-9XY]").evaluate(matching: "Z")
         )
     }
     
-    func testBrace() {
-        XCTAssertTrue(
+    @Test func brace() {
+        #expect(
             OSCAddressPattern.Component(string: "{abc}").evaluate(matching: "abc")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "{abc,def}").evaluate(matching: "abc")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "{def,abc}").evaluate(matching: "abc")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "{def}").evaluate(matching: "abc")
+        #expect(
+            !OSCAddressPattern.Component(string: "{def}").evaluate(matching: "abc")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "{def,ghi}").evaluate(matching: "abc")
+        #expect(
+            !OSCAddressPattern.Component(string: "{def,ghi}").evaluate(matching: "abc")
         )
     }
     
-    func testBrace_EdgeCases() {
-        XCTAssertTrue(
+    @Test func brace_EdgeCases() {
+        #expect(
             OSCAddressPattern.Component(string: "{,abc}").evaluate(matching: "abc")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "{abc,}").evaluate(matching: "abc")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "{,abc}").evaluate(matching: "")
+        #expect(
+            !OSCAddressPattern.Component(string: "{,abc}").evaluate(matching: "")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "{abc,}").evaluate(matching: "")
+        #expect(
+            !OSCAddressPattern.Component(string: "{abc,}").evaluate(matching: "")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "{}").evaluate(matching: "")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "{,}").evaluate(matching: "")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "{}abc").evaluate(matching: "abc")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "{,}abc").evaluate(matching: "abc")
         )
     }
     
-    func testBrace_Malformed_A() {
-        XCTAssertTrue(
+    @Test func brace_Malformed_A() {
+        #expect(
             OSCAddressPattern.Component(string: "{abc,def").evaluate(matching: "{abc,def")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "{abc,def").evaluate(matching: "abc")
+        #expect(
+            !OSCAddressPattern.Component(string: "{abc,def").evaluate(matching: "abc")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "{abc,def").evaluate(matching: "def")
+        #expect(
+            !OSCAddressPattern.Component(string: "{abc,def").evaluate(matching: "def")
         )
     }
     
-    func testBrace_Malformed_B() {
-        XCTAssertTrue(
+    @Test func brace_Malformed_B() {
+        #expect(
             OSCAddressPattern.Component(string: "}abc,def").evaluate(matching: "}abc,def")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "}abc,def").evaluate(matching: "abc")
+        #expect(
+            !OSCAddressPattern.Component(string: "}abc,def").evaluate(matching: "abc")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "}abc,def").evaluate(matching: "def")
+        #expect(
+            !OSCAddressPattern.Component(string: "}abc,def").evaluate(matching: "def")
         )
     }
     
-    func testBrace_Malformed_C() {
-        XCTAssertTrue(
+    @Test func brace_Malformed_C() {
+        #expect(
             OSCAddressPattern.Component(string: "{{abc,def").evaluate(matching: "{{abc,def")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "{{abc,def").evaluate(matching: "abc")
+        #expect(
+            !OSCAddressPattern.Component(string: "{{abc,def").evaluate(matching: "abc")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "{{abc,def").evaluate(matching: "def")
+        #expect(
+            !OSCAddressPattern.Component(string: "{{abc,def").evaluate(matching: "def")
         )
     }
     
-    func testBrace_Malformed_D() {
-        XCTAssertTrue(
+    @Test func brace_Malformed_D() {
+        #expect(
             OSCAddressPattern.Component(string: "abc,def}").evaluate(matching: "abc,def}")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "abc,def}").evaluate(matching: "abc")
+        #expect(
+            !OSCAddressPattern.Component(string: "abc,def}").evaluate(matching: "abc")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "abc,def}").evaluate(matching: "def")
+        #expect(
+            !OSCAddressPattern.Component(string: "abc,def}").evaluate(matching: "def")
         )
     }
     
-    func testBracketsAndBraces() {
-        XCTAssertTrue(
+    @Test func bracketsAndBraces() {
+        #expect(
             OSCAddressPattern.Component(string: "[0-9]{def,abc}").evaluate(matching: "1abc")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[0-9]{def,abc}").evaluate(matching: "1ABC")
+        #expect(
+            !OSCAddressPattern.Component(string: "[0-9]{def,abc}").evaluate(matching: "1ABC")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[0-9]{def,abc}").evaluate(matching: "zabc")
+        #expect(
+            !OSCAddressPattern.Component(string: "[0-9]{def,abc}").evaluate(matching: "zabc")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[0-9]{def,abc}").evaluate(matching: "1abcz")
+        #expect(
+            !OSCAddressPattern.Component(string: "[0-9]{def,abc}").evaluate(matching: "1abcz")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[0-9]{def,abc}").evaluate(matching: "1")
+        #expect(
+            !OSCAddressPattern.Component(string: "[0-9]{def,abc}").evaluate(matching: "1")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[0-9]{def,abc}").evaluate(matching: "abc")
+        #expect(
+            !OSCAddressPattern.Component(string: "[0-9]{def,abc}").evaluate(matching: "abc")
         )
     }
-    
-    // MARK: - Complex patterns
-    
-    func testComplex_A() {
+}
+
+@Suite struct OSCAddressPattern_Component_Evaluate_Complex_Patterns_Tests {
+    @Test func complex_A() {
         // abc*
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "abc*").evaluate(matching: "abc")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "abc*").evaluate(matching: "abcd")
         )
     }
     
-    func testComplex_B() {
+    @Test func complex_B() {
         // *abc
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*abc").evaluate(matching: "abc")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*abc").evaluate(matching: "xabc")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*abc").evaluate(matching: "xyabc")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "*abc").evaluate(matching: "abc1")
+        #expect(
+            !OSCAddressPattern.Component(string: "*abc").evaluate(matching: "abc1")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "*abc").evaluate(matching: "xyabc1")
+        #expect(
+            !OSCAddressPattern.Component(string: "*abc").evaluate(matching: "xyabc1")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "*abc").evaluate(matching: "xyABC")
+        #expect(
+            !OSCAddressPattern.Component(string: "*abc").evaluate(matching: "xyABC")
         )
     }
     
-    func testComplex_C() {
+    @Test func complex_C() {
         // *abc*
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*abc*").evaluate(matching: "abc")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*abc*").evaluate(matching: "abcd")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*abc*").evaluate(matching: "xabc")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*abc*").evaluate(matching: "xabcd")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*abc*").evaluate(matching: "xyabcde")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "*abc*").evaluate(matching: "xyABCde")
+        #expect(
+            !OSCAddressPattern.Component(string: "*abc*").evaluate(matching: "xyABCde")
         )
     }
     
-    func testComplex_D() {
+    @Test func complex_D() {
         // *a*bc*
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*a*bc*").evaluate(matching: "abc")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*a*bc*").evaluate(matching: "a1bc")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*a*bc*").evaluate(matching: "1abc")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*a*bc*").evaluate(matching: "abc1")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*a*bc*").evaluate(matching: "1a1bc")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*a*bc*").evaluate(matching: "a1bc1")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*a*bc*").evaluate(matching: "1a1bc1")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "*a*bc*").evaluate(matching: "a")
+        #expect(
+            !OSCAddressPattern.Component(string: "*a*bc*").evaluate(matching: "a")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "*a*bc*").evaluate(matching: "bc")
+        #expect(
+            !OSCAddressPattern.Component(string: "*a*bc*").evaluate(matching: "bc")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "*a*bc*").evaluate(matching: "bca")
+        #expect(
+            !OSCAddressPattern.Component(string: "*a*bc*").evaluate(matching: "bca")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "*a*bc*").evaluate(matching: "ABC")
+        #expect(
+            !OSCAddressPattern.Component(string: "*a*bc*").evaluate(matching: "ABC")
         )
     }
     
-    func testComplex_E() {
+    @Test func complex_E() {
         // abc*{def,xyz}[0-9]
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "abc*{def,xyz}[0-9]").evaluate(matching: "abcdef1")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "abc*{def,xyz}[0-9]").evaluate(matching: "abcXxyz2")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "abc*{def,xyz}[0-9]")
                 .evaluate(matching: "abcXXxyz2")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "abc*{def,xyz}[0-9]").evaluate(matching: "abcxyzX")
+        #expect(
+            !OSCAddressPattern.Component(string: "abc*{def,xyz}[0-9]").evaluate(matching: "abcxyzX")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "abc*{def,xyz}[0-9]")
+        #expect(
+            !OSCAddressPattern.Component(string: "abc*{def,xyz}[0-9]")
                 .evaluate(matching: "dummyName123")
         )
     }
     
-    func testComplex_F() {
+    @Test func complex_F() {
         // *abc{def,xyz}[0-9]
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*abc{def,xyz}[0-9]").evaluate(matching: "abcdef1")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*abc{def,xyz}[0-9]").evaluate(matching: "Xabcdef1")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "*abc{def,xyz}[0-9]")
                 .evaluate(matching: "XXabcdef1")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "*abc{def,xyz}[0-9]").evaluate(matching: "abcdefX")
+        #expect(
+            !OSCAddressPattern.Component(string: "*abc{def,xyz}[0-9]").evaluate(matching: "abcdefX")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "*abc{def,xyz}[0-9]").evaluate(matching: "abcdef1X")
+        #expect(
+            !OSCAddressPattern.Component(string: "*abc{def,xyz}[0-9]").evaluate(matching: "abcdef1X")
         )
     }
     
-    func testComplex_G() {
+    @Test func complex_G() {
         // abc*{def,xyz}[A-F0-9][A-F0-9]
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "abc*{def,xyz}[A-F0-9][A-F0-9]")
                 .evaluate(matching: "abcdef7F")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "abc*{def,xyz}[A-F0-9][A-F0-9]")
                 .evaluate(matching: "abcXdefF7")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "abc*{def,xyz}[A-F0-9][A-F0-9]")
+        #expect(
+            !OSCAddressPattern.Component(string: "abc*{def,xyz}[A-F0-9][A-F0-9]")
                 .evaluate(matching: "abcdefFG")
         )
     }
     
-    func testComplex_EdgeCases_WildcardInBrackets() {
+    @Test func complex_EdgeCases_WildcardInBrackets() {
         // test the use of wildcards within brackets.
         // according to the OSC 1.0 spec, wildcards are not special characters within brackets,
         // so we treat them as literal characters for sake of matching.
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[*abc]").evaluate(matching: "*")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[*abc]").evaluate(matching: "a")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[*abc]").evaluate(matching: "b")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[*abc]").evaluate(matching: "c")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[*abc]").evaluate(matching: "x")
+        #expect(
+            !OSCAddressPattern.Component(string: "[*abc]").evaluate(matching: "x")
         )
     }
     
-    func testComplex_EdgeCases_SingleWildcardInBrackets() {
+    @Test func complex_EdgeCases_SingleWildcardInBrackets() {
         // test the use of wildcards within brackets.
         // according to the OSC 1.0 spec, wildcards are not special characters within brackets,
         // so we treat them as literal characters for sake of matching.
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[?abc]").evaluate(matching: "?")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[?abc]").evaluate(matching: "a")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[?abc]").evaluate(matching: "b")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "[?abc]").evaluate(matching: "c")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "[?abc]").evaluate(matching: "x")
+        #expect(
+            !OSCAddressPattern.Component(string: "[?abc]").evaluate(matching: "x")
         )
     }
     
-    func testComplex_EdgeCases_WildcardInBraces() {
+    @Test func complex_EdgeCases_WildcardInBraces() {
         // test the use of wildcards within brackets.
         // according to the OSC 1.0 spec, wildcards are not special characters within brackets,
         // so we treat them as literal characters for sake of matching.
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "{*abc,def}").evaluate(matching: "*abc")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "{*abc,def}").evaluate(matching: "def")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "{*abc,def}").evaluate(matching: "abc")
+        #expect(
+            !OSCAddressPattern.Component(string: "{*abc,def}").evaluate(matching: "abc")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "{*abc,def}").evaluate(matching: "xabc")
+        #expect(
+            !OSCAddressPattern.Component(string: "{*abc,def}").evaluate(matching: "xabc")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "{*abc,def}").evaluate(matching: "xxabc")
+        #expect(
+            !OSCAddressPattern.Component(string: "{*abc,def}").evaluate(matching: "xxabc")
         )
     }
     
-    func testComplex_EdgeCases_SingleWildcardInBraces() {
+    @Test func complex_EdgeCases_SingleWildcardInBraces() {
         // test the use of wildcards within brackets.
         // according to the OSC 1.0 spec, wildcards are not special characters within brackets,
         // so we treat them as literal characters for sake of matching.
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "{?abc,def}").evaluate(matching: "?abc")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "{?abc,def}").evaluate(matching: "def")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "{?abc,def}").evaluate(matching: "abc")
+        #expect(
+            !OSCAddressPattern.Component(string: "{?abc,def}").evaluate(matching: "abc")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "{?abc,def}").evaluate(matching: "xabc")
+        #expect(
+            !OSCAddressPattern.Component(string: "{?abc,def}").evaluate(matching: "xabc")
         )
     }
     
-    func testComplex_EdgeCases_ExclamationPointInBraces() {
+    @Test func complex_EdgeCases_ExclamationPointInBraces() {
         // test the use of ! within brackets.
         // according to the OSC 1.0 spec, ! is only valid if used as the first
         // character within a [] bracketed expression, not within braces {}
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "{!abc,def}").evaluate(matching: "!abc")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "{!abc,def}").evaluate(matching: "def")
         )
         
-        XCTAssertFalse(
-            OSCAddressPattern.Component(string: "{!abc,def}").evaluate(matching: "abc")
+        #expect(
+            !OSCAddressPattern.Component(string: "{!abc,def}").evaluate(matching: "abc")
         )
     }
     
-    func testEdgeCases_CommonSymbols() {
-        XCTAssertTrue(
+    @Test func edgeCases_CommonSymbols() {
+        #expect(
             OSCAddressPattern.Component(string: "vol-").evaluate(matching: "vol-")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: "vol+").evaluate(matching: "vol+")
         )
         
-        XCTAssertTrue(
+        #expect(
             OSCAddressPattern.Component(string: ##"`!@#$%^&()-_=+,./<>;':"\|"##)
                 .evaluate(matching: ##"`!@#$%^&()-_=+,./<>;':"\|"##)
         )

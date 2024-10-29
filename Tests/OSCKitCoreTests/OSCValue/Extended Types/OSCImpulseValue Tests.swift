@@ -5,16 +5,13 @@
 //
 
 import OSCKitCore
-import XCTest
+import Testing
 
-final class OSCImpulseValue_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
+@Suite struct OSCImpulseValue_Tests {
     // MARK: - `any OSCValue` Constructors
     
-    func testOSCValue_impulse() {
+    @Test func oscValue_impulse() {
         let val: any OSCValue = .impulse
-        XCTAssertEqual(val as? OSCImpulseValue, OSCImpulseValue())
+        #expect(val as? OSCImpulseValue == OSCImpulseValue())
     }
 }

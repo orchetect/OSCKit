@@ -5,15 +5,12 @@
 //
 
 @testable import OSCKitCore
-import XCTest
+import Testing
 
-final class OSCBundle_rawData_Tests: XCTestCase {
+@Suite struct OSCBundle_rawData_Tests {
     // swiftformat:options --wrapcollections preserve
     
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
-    func testEmpty() async throws {
+    @Test func empty() async throws {
         // tests an empty OSC bundle
         
         // manually build a raw OSC bundle
@@ -31,15 +28,15 @@ final class OSCBundle_rawData_Tests: XCTestCase {
         
         let bundle = try await OSCBundle(from: knownGoodOSCRawBytes.data)
         
-        XCTAssertEqual(bundle.timeTag.rawValue, 1)
-        XCTAssertEqual(bundle.elements.count, 0)
+        #expect(bundle.timeTag.rawValue == 1)
+        #expect(bundle.elements.count == 0)
         
         // re-encode
         
-        XCTAssertEqual(try bundle.rawData(), knownGoodOSCRawBytes.data)
+        #expect(try bundle.rawData() == knownGoodOSCRawBytes.data)
     }
     
-    func testSingleOSCMessage() async throws {
+    @Test func singleOSCMessage() async throws {
         // tests an OSC bundle, with one message containing an int32 value
         
         // manually build a raw OSC bundle
@@ -71,17 +68,17 @@ final class OSCBundle_rawData_Tests: XCTestCase {
         
         let bundle = try await OSCBundle(from: knownGoodOSCRawBytes.data)
         
-        XCTAssertEqual(bundle.timeTag.rawValue, 1)
-        XCTAssertEqual(bundle.elements.count, 1)
+        #expect(bundle.timeTag.rawValue == 1)
+        #expect(bundle.elements.count == 1)
         
-        let msg = try XCTUnwrap(bundle.elements.first as? OSCMessage)
-        XCTAssertEqual(msg.addressPattern.stringValue, "/testaddress")
-        XCTAssertEqual(msg.values.count, 1)
-        let val = try XCTUnwrap(msg.values.first as? Int32)
-        XCTAssertEqual(val, 255)
+        let msg = try #require(bundle.elements.first as? OSCMessage)
+        #expect(msg.addressPattern.stringValue == "/testaddress")
+        #expect(msg.values.count == 1)
+        let val = try #require(msg.values.first as? Int32)
+        #expect(val == 255)
         
         // re-encode
         
-        XCTAssertEqual(try bundle.rawData(), knownGoodOSCRawBytes.data)
+        #expect(try bundle.rawData() == knownGoodOSCRawBytes.data)
     }
 }

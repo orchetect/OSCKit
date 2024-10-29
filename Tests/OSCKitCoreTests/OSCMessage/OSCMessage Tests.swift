@@ -6,69 +6,66 @@
 
 import OSCKitCore
 import SwiftASCII
-import XCTest
+import Testing
 
-final class OSCMessage_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
+@Suite struct OSCMessage_Tests {
     // MARK: - Equatable
     
-    func testEquatable() {
+    @Test func equatable() {
         let msg1 = OSCMessage("/msg1")
         let msg2 = OSCMessage("/msg2")
         let msg3 = OSCMessage("/msg1", values: [Int32(123)])
         
-        XCTAssert(msg1 == msg1)
-        XCTAssert(msg2 == msg2)
-        XCTAssert(msg3 == msg3)
+        #expect(msg1 == msg1)
+        #expect(msg2 == msg2)
+        #expect(msg3 == msg3)
         
-        XCTAssert(msg1 != msg2)
-        XCTAssert(msg1 != msg3)
+        #expect(msg1 != msg2)
+        #expect(msg1 != msg3)
         
-        XCTAssert(msg2 != msg3)
+        #expect(msg2 != msg3)
     }
     
     // MARK: - Hashable
     
-    func testHashable() {
+    @Test func hashable() {
         let msg1 = OSCMessage("/msg1")
         let msg2 = OSCMessage("/msg2")
         let msg3 = OSCMessage("/msg1", values: [Int32(123)])
         
         let set: Set<OSCMessage> = [msg1, msg1, msg2, msg2, msg3, msg3]
         
-        XCTAssertTrue(set == [msg1, msg2, msg3])
+        #expect(set == [msg1, msg2, msg3])
     }
     
     // MARK: - CustomStringConvertible
     
-    func testCustomStringConvertible1() {
+    @Test func customStringConvertible1() {
         let msg = OSCMessage("/")
         
-        XCTAssertEqual(msg.description, #"OSCMessage("/")"#)
+        #expect(msg.description == #"OSCMessage("/")"#)
     }
     
-    func testCustomStringConvertible2() {
+    @Test func customStringConvertible2() {
         let msg = OSCMessage(
             "/address",
             values: [Int32(123), String("A string")]
         )
         
-        XCTAssertEqual(
-            msg.description,
+        #expect(
+            msg.description ==
             #"OSCMessage("/address", values: [123, "A string"])"#
         )
     }
     
-    func testDescriptionPretty() {
+    @Test func descriptionPretty() {
         let msg = OSCMessage(
             "/address",
             values: [Int32(123), String("A string")]
         )
         
-        XCTAssertEqual(
-            msg.descriptionPretty,
+        #expect(
+            msg.descriptionPretty ==
             #"""
             OSCMessage("/address") with values:
               Int32: 123

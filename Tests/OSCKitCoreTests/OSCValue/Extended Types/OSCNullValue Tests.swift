@@ -5,16 +5,13 @@
 //
 
 import OSCKitCore
-import XCTest
+import Testing
 
-final class OSCNullValue_Tests: XCTestCase {
-    override func setUp() { super.setUp() }
-    override func tearDown() { super.tearDown() }
-    
+@Suite struct OSCNullValue_Tests {
     // MARK: - `any OSCValue` Constructors
     
-    func testOSCValue_null() {
+    @Test func oscValue_null() {
         let val: any OSCValue = .null
-        XCTAssertEqual(val as? OSCNullValue, OSCNullValue())
+        #expect(val as? OSCNullValue == OSCNullValue())
     }
 }
