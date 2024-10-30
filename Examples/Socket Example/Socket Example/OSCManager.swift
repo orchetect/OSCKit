@@ -32,8 +32,8 @@ extension OSCManager {
                 localPort: localPort,
                 remoteHost: remoteHost,
                 remotePort: remotePort,
-                isIPv4BroadcastEnabled: isPortReuseEnabled,
-                isPortReuseEnabled: isIPv4BroadcastEnabled
+                isPortReuseEnabled: isIPv4BroadcastEnabled,
+                isIPv4BroadcastEnabled: isPortReuseEnabled
             )
             socket = newSocket
             
