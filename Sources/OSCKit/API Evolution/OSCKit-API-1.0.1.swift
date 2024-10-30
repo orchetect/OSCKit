@@ -1,5 +1,5 @@
 //
-//  API-1.0.1.swift
+//  OSCKit-API-1.0.1.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
@@ -9,6 +9,7 @@
 import Foundation
 
 extension OSCSocket {
+    @_documentation(visibility: internal)
     @available(
         *,
         deprecated,
