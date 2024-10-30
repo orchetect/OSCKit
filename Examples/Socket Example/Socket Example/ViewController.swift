@@ -10,7 +10,6 @@ class ViewController: NSViewController {
     @IBOutlet var localPortNumber: NSTextField!
     @IBOutlet var remotePortNumber: NSTextField!
     @IBOutlet var remoteHost: NSTextField!
-    @IBOutlet var enablePortReuse: NSButton!
     @IBOutlet var enableBroadcast: NSButton!
     
     @IBOutlet var startButton: NSButton!
@@ -36,8 +35,6 @@ class ViewController: NSViewController {
                 ? UInt16(remotePortNumber.stringValue)
                 : nil
             
-            oscManager?.isPortReuseEnabled = enablePortReuse.state == .on
-            
             oscManager?.isIPv4BroadcastEnabled = enableBroadcast.state == .on
         }
         
@@ -46,7 +43,6 @@ class ViewController: NSViewController {
         localPortNumber.isEnabled = false
         remotePortNumber.isEnabled = false
         remoteHost.isEnabled = false
-        enablePortReuse.isEnabled = false
         enableBroadcast.isEnabled = false
         startButton.isEnabled = false
         stopButton.isEnabled = true
@@ -70,7 +66,6 @@ class ViewController: NSViewController {
         localPortNumber.isEnabled = true
         remotePortNumber.isEnabled = true
         remoteHost.isEnabled = true
-        enablePortReuse.isEnabled = true
         enableBroadcast.isEnabled = true
         startButton.isEnabled = true
         stopButton.isEnabled = false

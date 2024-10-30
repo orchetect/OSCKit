@@ -14,7 +14,6 @@ final class OSCManager {
     var localPort: UInt16?
     var remoteHost: String = ""
     var remotePort: UInt16?
-    var isPortReuseEnabled: Bool = false
     var isIPv4BroadcastEnabled: Bool = false
     
     init() { }
@@ -32,8 +31,7 @@ extension OSCManager {
                 localPort: localPort,
                 remoteHost: remoteHost,
                 remotePort: remotePort,
-                isPortReuseEnabled: isIPv4BroadcastEnabled,
-                isIPv4BroadcastEnabled: isPortReuseEnabled
+                isIPv4BroadcastEnabled: isIPv4BroadcastEnabled
             )
             socket = newSocket
             

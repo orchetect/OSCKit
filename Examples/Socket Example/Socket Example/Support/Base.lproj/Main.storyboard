@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23094" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23094"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -882,17 +883,10 @@
                                                                     </customSpacing>
                                                                 </stackView>
                                                                 <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="40" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="1s9-Vu-CSD">
-                                                                    <rect key="frame" x="100" y="36" width="305" height="16"/>
+                                                                    <rect key="frame" x="187" y="36" width="130" height="16"/>
                                                                     <subviews>
-                                                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="GHf-pj-uxR">
-                                                                            <rect key="frame" x="-2" y="-1" width="137" height="18"/>
-                                                                            <buttonCell key="cell" type="check" title="Enable Port Reuse" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Sg0-8A-U1I">
-                                                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                                                <font key="font" metaFont="system"/>
-                                                                            </buttonCell>
-                                                                        </button>
                                                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OBz-pb-50P">
-                                                                            <rect key="frame" x="173" y="-1" width="132" height="18"/>
+                                                                            <rect key="frame" x="-2" y="-1" width="132" height="18"/>
                                                                             <buttonCell key="cell" type="check" title="Enable Broadcast" bezelStyle="regularSquare" imagePosition="left" inset="2" id="Bg7-MM-03n">
                                                                                 <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                                                 <font key="font" metaFont="system"/>
@@ -901,10 +895,8 @@
                                                                     </subviews>
                                                                     <visibilityPriorities>
                                                                         <integer value="1000"/>
-                                                                        <integer value="1000"/>
                                                                     </visibilityPriorities>
                                                                     <customSpacing>
-                                                                        <real value="3.4028234663852886e+38"/>
                                                                         <real value="3.4028234663852886e+38"/>
                                                                     </customSpacing>
                                                                 </stackView>
@@ -1028,7 +1020,6 @@
                     </view>
                     <connections>
                         <outlet property="enableBroadcast" destination="OBz-pb-50P" id="E1r-fX-X2c"/>
-                        <outlet property="enablePortReuse" destination="GHf-pj-uxR" id="Rqf-HA-oXY"/>
                         <outlet property="localPortNumber" destination="SZr-kn-JBF" id="NuS-ca-yQz"/>
                         <outlet property="remoteHost" destination="uwN-I3-wAP" id="onl-25-Aq8"/>
                         <outlet property="remotePortNumber" destination="xiz-iK-zUs" id="HmT-R2-xK6"/>

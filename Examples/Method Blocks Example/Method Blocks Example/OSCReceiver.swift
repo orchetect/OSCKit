@@ -13,27 +13,27 @@ final class OSCReceiver {
     private let addressSpace = OSCAddressSpace()
     
     public init() {
-        // register local OSC method and supply a closure block
+        // Register local OSC method and supply a closure block
         addressSpace.register(localAddress: "/methodA") { values in
             guard let str = try? values.masked(String.self) else { return }
             print("Received methodA with value: \"\(str)\"")
         }
         
-        // register local OSC method and supply a closure block
+        // Register local OSC method and supply a closure block
         addressSpace.register(localAddress: "/some/address/methodB") { values in
             guard let (str, int) = try? values.masked(String.self, Int.self) else { return }
             print("Received methodB with values: [\"\(str)\", \(int)]")
         }
         
-        // instead of supplying a closure, it's also possible to forward to a function:
+        // Instead of supplying a closure, it's also possible to forward to a function:
         
-        // option 1: weak reference (recommended):
+        // Option 1: weak reference (recommended):
         addressSpace.register(
             localAddress: "/some/address/methodC",
             block: { [weak self] in self?.handleMethodC($0) }
         )
         
-        // option 2: strong reference (discouraged):
+        // Option 2: strong reference (discouraged):
         // addressSpace.register(
         //     localAddress: "/some/address/methodC",
         //     block: handleMethodC
@@ -46,10 +46,10 @@ final class OSCReceiver {
     }
     
     public func handle(message: OSCMessage, timeTag: OSCTimeTag) async throws {
-        // execute closures for matching methods, and returns the matching method IDs
+        // Execute closures for matching methods, and returns the matching method IDs
         let methodIDs = addressSpace.dispatch(message)
         
-        // if no IDs are returned, it means that the OSC message address pattern did not match any
+        // If no IDs are returned, it means that the OSC message address pattern did not match any
         // that were registered
         if methodIDs.isEmpty {
             print("No method registered for:", message)

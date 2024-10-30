@@ -22,25 +22,16 @@ extension OSCManager {
     /// Call once at app startup.
     func start() async {
         // setup client
-        
-        // client.isPortReuseEnabled = true // optionally enable port reuse
-        // client.isIPv4BroadcastEnabled = true // optionally enable IPv4 broadcast
         do { try client.start() } catch { print(error) }
         
         // setup server
-        
         await server.setHandler { [weak self] message, timeTag in
             do {
-                try self?.receiver.handle(
-                    message: message,
-                    timeTag: timeTag
-                )
+                try self?.receiver.handle(message: message, timeTag: timeTag)
             } catch {
                 print(error)
             }
         }
-        
-        // server.isPortReuseEnabled = true // optionally enable port reuse
         do { try await server.start() } catch { print(error) }
     }
     
@@ -53,11 +44,7 @@ extension OSCManager {
 // MARK: - Send
 
 extension OSCManager {
-    func send(
-        _ message: OSCMessage,
-        to host: String,
-        port: UInt16
-    ) {
+    func send(_ message: OSCMessage, to host: String, port: UInt16) {
         do {
             try client.send(message, to: host, port: port)
         } catch {
