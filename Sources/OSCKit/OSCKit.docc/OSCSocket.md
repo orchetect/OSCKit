@@ -2,7 +2,7 @@
 
 ### Setup
 
-If not specified during initialization, the local port will be randomly assigned by the system. The same port will be used to both listen for incoming events and send outgoing events _from_. Either way, this port may only be specified at the time of initialization.
+If not specified during initialization, the local port will be randomly assigned by the system. The same port will be used to both listen for incoming events and send outgoing events from. This port may only be configured at the time of initialization.
 
 The remote port may be omitted, in which case the same port number as the local port will be used. The remote port may be overridden if supplied as a parameter when calling ``OSCSocket/send(_:to:port:)``.
 

@@ -25,15 +25,15 @@ public actor OSCServer: _OSCServerProtocol {
     public var timeTagMode: OSCTimeTagMode
     
     /// UDP port used by the OSC server to listen for inbound OSC packets.
-    /// This may only be set at the time of class initialization.
+    /// This may only be set at the time of initialization.
     public private(set) var localPort: UInt16
     
     /// Enable local UDP port reuse. This property must be set prior to calling ``start()`` in order
     /// to take effect.
     ///
-    /// By default, only one socket can be bound to a given IP address + port at a time. To enable
-    /// multiple processes to simultaneously bind to the same address + port, you need to enable
-    /// this functionality in the socket. All processes that wish to use the address+port
+    /// By default, only one socket can be bound to a given IP address & port combination at a time. To enable
+    /// multiple processes to simultaneously bind to the same address & port, you need to enable
+    /// this functionality in the socket. All processes that wish to use the address & port
     /// simultaneously must all enable reuse port on the socket bound to that port.
     public let isPortReuseEnabled: Bool
     
@@ -45,7 +45,9 @@ public actor OSCServer: _OSCServerProtocol {
     /// The default port for OSC communication is 8000 but may change depending on device/software
     /// manufacturer.
     ///
-    /// - Note: Ensure ``start()`` is called once in order to begin receiving messages.
+    /// > Note:
+    /// >
+    /// > Ensure ``start()`` is called once after initialization in order to begin receiving messages.
     public init(
         port: UInt16 = 8000,
         timeTagMode: OSCTimeTagMode = .ignore,

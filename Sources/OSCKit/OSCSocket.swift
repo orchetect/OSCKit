@@ -12,7 +12,7 @@ import Foundation
 /// Sends and receives OSC packets over the network by binding a single local UDP port to both send
 /// OSC packets from and listen for incoming packets.
 ///
-/// The `OSCSocket` class internally combines both an OSC server and client sharing the same local
+/// The `OSCSocket` object internally combines both an OSC server and client sharing the same local
 /// UDP port number. What sets it apart from ``OSCServer`` and ``OSCClient`` is that it does not
 /// require enabling port reuse to accomplish this. It also can conceptually make communicating
 /// bidirectionally with a single remote host more intuitive.
@@ -36,14 +36,16 @@ public actor OSCSocket: _OSCServerProtocol {
     public var remoteHost: String?
     
     /// Local UDP port used to both send OSC packets from and listen for incoming packets.
-    /// This may only be set at the time of class initialization.
-    ///
-    /// Note that if `localPort` was not specified at the time of initialization, reading this
-    /// property may return a value of `0` until the first successful call to ``send(_:to:port:)`` is
-    /// made.
+    /// This may only be set at the time of initialization.
     ///
     /// The default port for OSC communication is 8000 but may change depending on device/software
     /// manufacturer.
+    ///
+    /// > Note:
+    /// >
+    /// > If `localPort` was not specified at the time of initialization, reading this
+    /// > property may return a value of `0` until the first successful call to ``send(_:to:port:)``
+    /// > is made.
     public var localPort: UInt16 {
         udpSocket.localPort()
     }
@@ -63,9 +65,9 @@ public actor OSCSocket: _OSCServerProtocol {
     
     /// Enable local UDP port reuse.
     ///
-    /// By default, only one socket can be bound to a given IP address + port at a time. To enable
-    /// multiple processes to simultaneously bind to the same address + port, you need to enable
-    /// this functionality in the socket. All processes that wish to use the address+port
+    /// By default, only one socket can be bound to a given IP address & port combination at a time. To enable
+    /// multiple processes to simultaneously bind to the same address & port, you need to enable
+    /// this functionality in the socket. All processes that wish to use the address & port
     /// simultaneously must all enable reuse port on the socket bound to that port.
     public let isPortReuseEnabled: Bool
     
@@ -96,7 +98,9 @@ public actor OSCSocket: _OSCServerProtocol {
     
     /// Initialize with a remote hostname and UDP port.
     ///
-    /// - Note: Ensure ``start()`` is called once in order to begin sending and receiving messages.
+    /// > Note:
+    /// >
+    /// > Ensure ``start()`` is called once after initialization in order to begin sending and receiving messages.
     ///
     /// - Parameters:
     ///   - localPort: Local port. If `nil`, a random available port in the system will be chosen.
@@ -161,7 +165,7 @@ extension OSCSocket {
     }
     
     /// Send an OSC bundle or message to the remote host.
-    /// ``remoteHost`` and ``remotePort`` class properties are used unless one or both are
+    /// The ``remoteHost`` and ``remotePort`` properties are used unless one or both are
     /// overridden in this call.
     ///
     /// The default port for OSC communication is 8000 but may change depending on device/software
@@ -183,7 +187,7 @@ extension OSCSocket {
                 .closedError,
                 userInfo: [
                     "Reason":
-                        "Remote host is not specified in either class remoteHost property or in host parameter of call to send()."
+                        "Remote host is not specified in OSCSocket.remoteHost property or in host parameter in call to send()."
                 ]
             )
         }

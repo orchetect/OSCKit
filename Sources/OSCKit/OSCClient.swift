@@ -12,7 +12,7 @@ import Foundation
 /// Sends OSC packets over the network using the UDP network protocol.
 ///
 /// A single global OSC client instance created once at app startup is often all that is needed. It
-/// can be used to send OSC messages to one or more many receivers on the network.
+/// can be used to send OSC messages to one or more receivers on the network.
 public final class OSCClient {
     private let udpSocket = GCDAsyncUdpSocket()
     private let udpDelegate = OSCClientUDPDelegate()
@@ -20,11 +20,13 @@ public final class OSCClient {
     private var _localPort: UInt16?
     /// Local UDP port used by the client to send OSC packets from. (This is not the remote port
     /// which is specified each time a call to ``send(_:to:port:)`` is made.)
-    /// This may only be set at the time of class initialization.
+    /// This may only be set at the time of initialization.
     ///
-    /// Note that if `localPort` was not specified at the time of initialization, reading this
-    /// property may return a value of `0` until the first successful call to ``send(_:to:port:)``
-    /// is made.
+    /// > Note:
+    /// >
+    /// > If `localPort` was not specified at the time of initialization, reading this
+    /// > property may return a value of `0` until the first successful call to ``send(_:to:port:)``
+    /// > is made.
     public var localPort: UInt16 {
         udpSocket.localPort()
     }
@@ -32,9 +34,9 @@ public final class OSCClient {
     /// Enable local UDP port reuse. This property must be set prior to calling ``start()`` in order
     /// to take effect.
     ///
-    /// By default, only one socket can be bound to a given IP address + port at a time. To enable
-    /// multiple processes to simultaneously bind to the same address + port, you need to enable
-    /// this functionality in the socket. All processes that wish to use the address+port
+    /// By default, only one socket can be bound to a given IP address & port combination at a time. To enable
+    /// multiple processes to simultaneously bind to the same address & port, you need to enable
+    /// this functionality in the socket. All processes that wish to use the address & port
     /// simultaneously must all enable reuse port on the socket bound to that port.
     public var isPortReuseEnabled: Bool = false
     
@@ -72,19 +74,34 @@ public final class OSCClient {
     public private(set) var isStarted: Bool = false
     
     /// Initialize an OSC client to send messages using the UDP network protocol.
+    ///
     /// A random available port in the system will be chosen.
-    /// Using this initializer does not require calling ``start()`` unless additional properties are
-    /// modified such as ``isPortReuseEnabled`` or ``isIPv4BroadcastEnabled``.
+    ///
+    /// Using this initializer does not require calling ``start()``.
     public init() {
         // delegate needed for local port binding and enable broadcast
         udpSocket.setDelegate(udpDelegate, delegateQueue: .global())
     }
     
-    /// Initialize an OSC client to send messages using the UDP network protocol.
-    /// It is not recommended to bind to a local port unless there is a particular need to have
-    /// control over which local port OSC messages originate from.
-    /// To allow the system to assign a random available local port, use the ``init()`` initializer
-    /// instead.
+    /// Initialize an OSC client to send messages using the UDP network protocol using a specific local port.
+    ///
+    /// > Note:
+    /// >
+    /// > Ensure ``start()`` is called once after initialization in order to begin sending messages.
+    ///
+    /// > Note:
+    /// >
+    /// > It is not typically necessary to bind to a static local port unless there is a particular need to have
+    /// > control over which local port OSC messages originate from. In most cases, a randomly assigned port is
+    /// > sufficient and prevents local port usage collisions.
+    /// >
+    /// > This may, however, be necessary in some cases where certain hardware devices expect to receive OSC from a
+    /// > prescribed remote sender port number. In this case it is often more advantageous to use the combined
+    /// > client/server ``OSCSocket`` object instead, which is designed to make working with these kind round-trip
+    /// > requirements more streamlined.
+    /// >
+    /// > To allow the system to assign a random available local port, use the ``init()`` initializer
+    /// > instead.
     public convenience init(
         localPort: UInt16,
         isPortReuseEnabled: Bool = false,
@@ -107,7 +124,7 @@ public final class OSCClient {
 extension OSCClient {
     /// Bind the local UDP port.
     /// This call is only necessary if a local port was specified at the time of class
-    /// initialization or class properties were modified after initialization.
+    /// initialization or if class properties were modified after initialization.
     public func start() throws {
         guard !isStarted else { return }
         
