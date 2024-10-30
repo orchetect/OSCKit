@@ -8,11 +8,13 @@ import Cocoa
 import OSCKit
 
 /// OSC lifecycle and send/receive manager.
-final class OSCManager {
+final class OSCManager: ObservableObject {
     private let client = OSCClient()
     private let server = OSCServer(port: 8000)
     
-    init() { }
+    init() {
+        Task { await start() }
+    }
 }
 
 // MARK: - Lifecycle

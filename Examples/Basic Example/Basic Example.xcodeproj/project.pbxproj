@@ -9,18 +9,16 @@
 /* Begin PBXBuildFile section */
 		E22C84412CA8C57E00FA3C54 /* OSCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22C84402CA8C57C00FA3C54 /* OSCManager.swift */; };
 		E2CE6F082CCF22A800F81BCE /* OSCKit in Frameworks */ = {isa = PBXBuildFile; productRef = E2CE6F072CCF22A800F81BCE /* OSCKit */; };
-		E2D003D5289882820073ED8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D003D4289882820073ED8F /* AppDelegate.swift */; };
+		E2D003D5289882820073ED8F /* BasicExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D003D4289882820073ED8F /* BasicExampleApp.swift */; };
 		E2D003E82898834E0073ED8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2D003E52898834E0073ED8F /* Assets.xcassets */; };
-		E2D003E92898834E0073ED8F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2D003E62898834E0073ED8F /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E22C84402CA8C57C00FA3C54 /* OSCManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSCManager.swift; sourceTree = "<group>"; };
 		E2D003D1289882820073ED8F /* Basic Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Basic Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E2D003D4289882820073ED8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E2D003D4289882820073ED8F /* BasicExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicExampleApp.swift; sourceTree = "<group>"; };
 		E2D003E42898834E0073ED8F /* Basic Example.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Basic Example.entitlements"; sourceTree = "<group>"; };
 		E2D003E52898834E0073ED8F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E2D003E72898834E0073ED8F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,7 +53,7 @@
 			isa = PBXGroup;
 			children = (
 				E2D003E32898834E0073ED8F /* Support */,
-				E2D003D4289882820073ED8F /* AppDelegate.swift */,
+				E2D003D4289882820073ED8F /* BasicExampleApp.swift */,
 				E22C84402CA8C57C00FA3C54 /* OSCManager.swift */,
 			);
 			path = "Basic Example";
@@ -66,7 +64,6 @@
 			children = (
 				E2D003E42898834E0073ED8F /* Basic Example.entitlements */,
 				E2D003E52898834E0073ED8F /* Assets.xcassets */,
-				E2D003E62898834E0073ED8F /* Main.storyboard */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -137,7 +134,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2D003E82898834E0073ED8F /* Assets.xcassets in Resources */,
-				E2D003E92898834E0073ED8F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -148,23 +144,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2D003D5289882820073ED8F /* AppDelegate.swift in Sources */,
+				E2D003D5289882820073ED8F /* BasicExampleApp.swift in Sources */,
 				E22C84412CA8C57E00FA3C54 /* OSCManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXVariantGroup section */
-		E2D003E62898834E0073ED8F /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E2D003E72898834E0073ED8F /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		E2D003DE289882850073ED8F /* Debug */ = {
@@ -220,7 +205,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -277,7 +262,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = "$(RECOMMENDED_MACOSX_DEPLOYMENT_TARGET)";
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -302,7 +287,6 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Basic Example";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -332,7 +316,6 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Basic Example";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INFOPLIST_KEY_NSMainStoryboardFile = Main;
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

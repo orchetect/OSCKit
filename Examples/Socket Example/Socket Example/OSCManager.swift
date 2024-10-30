@@ -8,13 +8,14 @@ import Cocoa
 import OSCKit
 
 /// OSC lifecycle and send/receive manager.
-final class OSCManager {
+@MainActor final class OSCManager: ObservableObject {
     private var socket: OSCSocket?
     
-    var localPort: UInt16?
-    var remoteHost: String = ""
-    var remotePort: UInt16?
-    var isIPv4BroadcastEnabled: Bool = false
+    @Published var localPort: UInt16 = 8000
+    @Published var remoteHost: String = "localhost"
+    @Published var remotePort: UInt16 = 8000
+    @Published var isIPv4BroadcastEnabled: Bool = false
+    @Published private(set) var isStarted: Bool = false
     
     init() { }
 }
@@ -41,17 +42,20 @@ extension OSCManager {
             
             try await newSocket.start()
             
+            isStarted = true
+            
             let lp = await newSocket.localPort
             let rp = await newSocket.remotePort
-            print(
-                "Using local port \(lp) and remote port \(rp) with remote host \(remoteHost)."
-            )
+            print("Using local port \(lp) and remote port \(rp) with remote host \(remoteHost).")
         } catch {
             print("Error while starting OSC socket: \(error)")
         }
     }
     
     func stop() async {
+        defer {
+            isStarted = false
+        }
         await socket?.stop()
         socket = nil
     }
