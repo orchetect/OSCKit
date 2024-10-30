@@ -86,11 +86,15 @@ public final class OSCClient {
     /// To allow the system to assign a random available local port, use the ``init()`` initializer
     /// instead.
     public convenience init(
-        localPort: UInt16
+        localPort: UInt16,
+        isPortReuseEnabled: Bool = false,
+        isIPv4BroadcastEnabled: Bool = false
     ) {
         self.init()
         
         _localPort = localPort
+        self.isPortReuseEnabled = isPortReuseEnabled
+        self.isIPv4BroadcastEnabled = isIPv4BroadcastEnabled
     }
     
     deinit {

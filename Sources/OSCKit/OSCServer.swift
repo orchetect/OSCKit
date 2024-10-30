@@ -35,7 +35,7 @@ public actor OSCServer: _OSCServerProtocol {
     /// multiple processes to simultaneously bind to the same address + port, you need to enable
     /// this functionality in the socket. All processes that wish to use the address+port
     /// simultaneously must all enable reuse port on the socket bound to that port.
-    public var isPortReuseEnabled: Bool = false
+    public let isPortReuseEnabled: Bool
     
     /// Returns a boolean indicating whether the OSC server has been started.
     public private(set) var isStarted: Bool = false
@@ -49,11 +49,12 @@ public actor OSCServer: _OSCServerProtocol {
     public init(
         port: UInt16 = 8000,
         timeTagMode: OSCTimeTagMode = .ignore,
+        isPortReuseEnabled: Bool = false,
         handler: OSCHandlerBlock? = nil
     ) {
         localPort = port
         self.timeTagMode = timeTagMode
-        
+        self.isPortReuseEnabled = isPortReuseEnabled
         self.handler = handler
         
         udpSocket = GCDAsyncUdpSocket(delegate: udpDelegate, delegateQueue: receiveQueue)

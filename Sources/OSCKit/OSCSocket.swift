@@ -47,7 +47,6 @@ public actor OSCSocket: _OSCServerProtocol {
     public var localPort: UInt16 {
         udpSocket.localPort()
     }
-
     private var _localPort: UInt16?
     
     /// UDP port used by to send OSC packets. This may be set at any time.
@@ -60,8 +59,15 @@ public actor OSCSocket: _OSCServerProtocol {
         get { _remotePort ?? localPort }
         set { _remotePort = newValue }
     }
-
     private var _remotePort: UInt16?
+    
+    /// Enable local UDP port reuse.
+    ///
+    /// By default, only one socket can be bound to a given IP address + port at a time. To enable
+    /// multiple processes to simultaneously bind to the same address + port, you need to enable
+    /// this functionality in the socket. All processes that wish to use the address+port
+    /// simultaneously must all enable reuse port on the socket bound to that port.
+    public let isPortReuseEnabled: Bool
     
     /// Enable sending IPv4 broadcast messages from the socket.
     ///
@@ -85,14 +91,6 @@ public actor OSCSocket: _OSCServerProtocol {
     /// therefore does not define broadcast addresses. Instead, IPv6 uses multicast addressing.
     public let isIPv4BroadcastEnabled: Bool
     
-    /// Enable local UDP port reuse.
-    ///
-    /// By default, only one socket can be bound to a given IP address + port at a time. To enable
-    /// multiple processes to simultaneously bind to the same address + port, you need to enable
-    /// this functionality in the socket. All processes that wish to use the address+port
-    /// simultaneously must all enable reuse port on the socket bound to that port.
-    public let isPortReuseEnabled: Bool
-    
     /// Returns a boolean indicating whether the OSC socket has been started.
     public private(set) var isStarted: Bool = false
     
@@ -105,26 +103,26 @@ public actor OSCSocket: _OSCServerProtocol {
     ///   - remoteHost: Remote hostname or IP address.
     ///   - remotePort: Remote port. `nil`, the resulting `localPort` value will be used.
     ///   - timeTagMode: OSC timetag mode. The default is recommended.
-    ///   - isIPv4BroadcastEnabled: Enable sending IPv4 broadcast messages from the socket.
-    ///     See ``isIPv4BroadcastEnabled`` for more details.
     ///   - isPortReuseEnabled: Enable local UDP port reuse.
     ///     See ``isPortReuseEnabled`` for more details.
+    ///   - isIPv4BroadcastEnabled: Enable sending IPv4 broadcast messages from the socket.
+    ///     See ``isIPv4BroadcastEnabled`` for more details.
     ///   - handler: Handler to call when OSC bundles or messages are received.
     public init(
         localPort: UInt16? = nil,
         remoteHost: String? = nil,
         remotePort: UInt16? = nil,
         timeTagMode: OSCTimeTagMode = .ignore,
-        isIPv4BroadcastEnabled: Bool = false,
         isPortReuseEnabled: Bool = false,
+        isIPv4BroadcastEnabled: Bool = false,
         handler: OSCHandlerBlock? = nil
     ) {
         self.remoteHost = remoteHost
         _localPort = localPort
         _remotePort = remotePort
         self.timeTagMode = timeTagMode
-        self.isIPv4BroadcastEnabled = isIPv4BroadcastEnabled
         self.isPortReuseEnabled = isPortReuseEnabled
+        self.isIPv4BroadcastEnabled = isIPv4BroadcastEnabled
         self.handler = handler
         
         udpSocket = GCDAsyncUdpSocket(delegate: udpDelegate, delegateQueue: receiveQueue, socketQueue: nil)
