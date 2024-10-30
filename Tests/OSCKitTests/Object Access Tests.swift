@@ -31,8 +31,6 @@ import Testing
         _ = await oscServer.isStarted
         _ = await oscServer.localPort
         // oscServer.localPort = 9000 // immutable actor
-        _ = await oscServer.isPortReuseEnabled
-        // oscServer.isPortReuseEnabled = true // immutable actor
         await oscServer.setHandler { message, timeTag in
             print(message)
         }
@@ -42,9 +40,6 @@ import Testing
             print(message)
         }
         _ = OSCServer(port: 8007, timeTagMode: .ignore) { message, timeTag in
-            print(message)
-        }
-        _ = OSCServer(port: 8008, timeTagMode: .ignore, isPortReuseEnabled: true) { message, timeTag in
             print(message)
         }
     }
@@ -59,8 +54,6 @@ import Testing
         // oscSocket.remoteHost = "192.168.0.10" // immutable actor
         _ = await oscSocket.remotePort
         // oscSocket.remotePort = 8000 // immutable actor
-        _ = await oscSocket.isPortReuseEnabled
-        // oscSocket.isPortReuseEnabled = true // immutable actor
         _ = await oscSocket.isIPv4BroadcastEnabled
         // oscSocket.isIPv4BroadcastEnabled = true // immutable actor
         await oscSocket.setHandler { message, timeTag in
@@ -77,15 +70,13 @@ import Testing
         }
         _ = OSCSocket(
             localPort: 8012,
-            timeTagMode: .ignore,
-            isPortReuseEnabled: true
+            timeTagMode: .ignore
         ) { message, timeTag in
             print(message)
         }
         _ = OSCSocket(
             localPort: 8013,
             timeTagMode: .ignore,
-            isPortReuseEnabled: true,
             isIPv4BroadcastEnabled: true
         ) { message, timeTag in
             print(message)
@@ -95,7 +86,6 @@ import Testing
             remoteHost: "192.168.0.10",
             remotePort: 8000,
             timeTagMode: .ignore,
-            isPortReuseEnabled: true,
             isIPv4BroadcastEnabled: true
         ) { message, timeTag in
             print(message)

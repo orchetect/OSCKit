@@ -63,14 +63,6 @@ public actor OSCSocket: _OSCServerProtocol {
     }
     private var _remotePort: UInt16?
     
-    /// Enable local UDP port reuse.
-    ///
-    /// By default, only one socket can be bound to a given IP address & port combination at a time. To enable
-    /// multiple processes to simultaneously bind to the same address & port, you need to enable
-    /// this functionality in the socket. All processes that wish to use the address & port
-    /// simultaneously must all enable reuse port on the socket bound to that port.
-    public let isPortReuseEnabled: Bool
-    
     /// Enable sending IPv4 broadcast messages from the socket.
     ///
     /// By default, the socket will not allow you to send broadcast messages as a network safeguard
@@ -106,9 +98,7 @@ public actor OSCSocket: _OSCServerProtocol {
     ///   - localPort: Local port. If `nil`, a random available port in the system will be chosen.
     ///   - remoteHost: Remote hostname or IP address.
     ///   - remotePort: Remote port. `nil`, the resulting `localPort` value will be used.
-    ///   - timeTagMode: OSC timetag mode. The default is recommended.
-    ///   - isPortReuseEnabled: Enable local UDP port reuse.
-    ///     See ``isPortReuseEnabled`` for more details.
+    ///   - timeTagMode: OSC time-tag mode. The default is recommended.
     ///   - isIPv4BroadcastEnabled: Enable sending IPv4 broadcast messages from the socket.
     ///     See ``isIPv4BroadcastEnabled`` for more details.
     ///   - handler: Handler to call when OSC bundles or messages are received.
@@ -117,7 +107,6 @@ public actor OSCSocket: _OSCServerProtocol {
         remoteHost: String? = nil,
         remotePort: UInt16? = nil,
         timeTagMode: OSCTimeTagMode = .ignore,
-        isPortReuseEnabled: Bool = false,
         isIPv4BroadcastEnabled: Bool = false,
         handler: OSCHandlerBlock? = nil
     ) {
@@ -125,7 +114,6 @@ public actor OSCSocket: _OSCServerProtocol {
         _localPort = localPort
         _remotePort = remotePort
         self.timeTagMode = timeTagMode
-        self.isPortReuseEnabled = isPortReuseEnabled
         self.isIPv4BroadcastEnabled = isIPv4BroadcastEnabled
         self.handler = handler
         
@@ -149,7 +137,6 @@ extension OSCSocket {
     public func start() throws {
         guard !isStarted else { return }
         
-        try udpSocket.enableReusePort(isPortReuseEnabled)
         try udpSocket.enableBroadcast(isIPv4BroadcastEnabled)
         try udpSocket.bind(toPort: _localPort ?? 0) // 0 causes system to assign random open port
         try udpSocket.beginReceiving()

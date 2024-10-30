@@ -13,7 +13,7 @@ extension OSCSocket {
     @available(
         *,
         deprecated,
-        renamed: "init(localPort:remoteHost:remotePort:timeTagMode:isPortReuseEnabled:isIPv4BroadcastEnabled:handler:)"
+        renamed: "init(localPort:remoteHost:remotePort:timeTagMode:isIPv4BroadcastEnabled:handler:)"
     )
     public init(
         localPort: UInt16? = nil,
@@ -29,7 +29,6 @@ extension OSCSocket {
             remoteHost: remoteHost,
             remotePort: remotePort,
             timeTagMode: timeTagMode,
-            isPortReuseEnabled: isPortReuseEnabled,
             isIPv4BroadcastEnabled: isIPv4BroadcastEnabled,
             handler: handler
         )

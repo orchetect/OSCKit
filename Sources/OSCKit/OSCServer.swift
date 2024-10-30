@@ -28,15 +28,6 @@ public actor OSCServer: _OSCServerProtocol {
     /// This may only be set at the time of initialization.
     public private(set) var localPort: UInt16
     
-    /// Enable local UDP port reuse. This property must be set prior to calling ``start()`` in order
-    /// to take effect.
-    ///
-    /// By default, only one socket can be bound to a given IP address & port combination at a time. To enable
-    /// multiple processes to simultaneously bind to the same address & port, you need to enable
-    /// this functionality in the socket. All processes that wish to use the address & port
-    /// simultaneously must all enable reuse port on the socket bound to that port.
-    public let isPortReuseEnabled: Bool
-    
     /// Returns a boolean indicating whether the OSC server has been started.
     public private(set) var isStarted: Bool = false
     
@@ -51,12 +42,10 @@ public actor OSCServer: _OSCServerProtocol {
     public init(
         port: UInt16 = 8000,
         timeTagMode: OSCTimeTagMode = .ignore,
-        isPortReuseEnabled: Bool = false,
         handler: OSCHandlerBlock? = nil
     ) {
         localPort = port
         self.timeTagMode = timeTagMode
-        self.isPortReuseEnabled = isPortReuseEnabled
         self.handler = handler
         
         udpSocket = GCDAsyncUdpSocket(delegate: udpDelegate, delegateQueue: receiveQueue)
@@ -81,7 +70,6 @@ extension OSCServer {
         
         stop()
         
-        try udpSocket.enableReusePort(isPortReuseEnabled)
         try udpSocket.bind(toPort: localPort)
         try udpSocket.beginReceiving()
         
