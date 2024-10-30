@@ -4,6 +4,7 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
+import Foundation
 import OSCKit
 
 /// OSC receiver.

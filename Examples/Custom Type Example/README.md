@@ -2,6 +2,10 @@
 
 This example demonstrates conforming a custom type to become OSC codable as an OSC message value.
 
+It will build for all platforms including macOS, iOS, tvOS and visionOS, and can be run in device simulators.
+
+## Disclaimer
+
 > [!IMPORTANT]
 >
 > This is an advanced feature and _**in almost every use case**_, it is not necessary to conform a custom type.

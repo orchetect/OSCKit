@@ -2,6 +2,8 @@
 
 This example demonstrates OSC communication using the `OSCSocket` class.
 
+It will build for all platforms including macOS, iOS, tvOS and visionOS, and can be run in device simulators.
+
 ## Overview
 
 The `OSCSocket` class internally combines both an OSC server and client sharing the same local UDP port number. What sets it apart from `OSCServer` and `OSCClient` is that it does not require enabling port reuse to accomplish this. It also can conceptually make communicating bidirectionally with a single remote host more intuitive.

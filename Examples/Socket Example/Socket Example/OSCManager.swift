@@ -4,7 +4,7 @@
 //  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
-import Cocoa
+import Foundation
 import OSCKit
 
 /// OSC lifecycle and send/receive manager.

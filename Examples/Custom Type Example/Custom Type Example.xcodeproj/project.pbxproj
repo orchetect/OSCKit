@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		E22C84412CA8C57E00FA3C54 /* OSCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22C84402CA8C57C00FA3C54 /* OSCManager.swift */; };
+		E2A34EBB2CD1FB5D00950E78 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A34EBA2CD1FB5C00950E78 /* ContentView.swift */; };
 		E2CE6F082CCF22A800F81BCE /* OSCKit in Frameworks */ = {isa = PBXBuildFile; productRef = E2CE6F072CCF22A800F81BCE /* OSCKit */; };
 		E2CE6F132CCF2EF300F81BCE /* CustomType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CE6F122CCF2EE400F81BCE /* CustomType.swift */; };
 		E2D003D5289882820073ED8F /* CustomTypeExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D003D4289882820073ED8F /* CustomTypeExampleApp.swift */; };
@@ -16,6 +17,7 @@
 
 /* Begin PBXFileReference section */
 		E22C84402CA8C57C00FA3C54 /* OSCManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSCManager.swift; sourceTree = "<group>"; };
+		E2A34EBA2CD1FB5C00950E78 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E2CE6F122CCF2EE400F81BCE /* CustomType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomType.swift; sourceTree = "<group>"; };
 		E2D003D1289882820073ED8F /* Custom Type Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Custom Type Example.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2D003D4289882820073ED8F /* CustomTypeExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTypeExampleApp.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			children = (
 				E2D003E32898834E0073ED8F /* Support */,
 				E2D003D4289882820073ED8F /* CustomTypeExampleApp.swift */,
+				E2A34EBA2CD1FB5C00950E78 /* ContentView.swift */,
 				E22C84402CA8C57C00FA3C54 /* OSCManager.swift */,
 				E2CE6F122CCF2EE400F81BCE /* CustomType.swift */,
 			);
@@ -149,6 +152,7 @@
 			files = (
 				E2D003D5289882820073ED8F /* CustomTypeExampleApp.swift in Sources */,
 				E22C84412CA8C57E00FA3C54 /* OSCManager.swift in Sources */,
+				E2A34EBB2CD1FB5D00950E78 /* ContentView.swift in Sources */,
 				E2CE6F132CCF2EF300F81BCE /* CustomType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -209,6 +213,8 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -216,6 +222,8 @@
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TVOS_DEPLOYMENT_TARGET = 14.0;
+				WATCHOS_DEPLOYMENT_TARGET = 7.9;
 			};
 			name = Debug;
 		};
@@ -266,12 +274,16 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				TVOS_DEPLOYMENT_TARGET = 14.0;
+				WATCHOS_DEPLOYMENT_TARGET = 7.9;
 			};
 			name = Release;
 		};
@@ -292,6 +304,8 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -299,8 +313,11 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.orchetect.OSCKit.CustomTypeExample${DEVELOPMENT_TEAM}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,3,7";
 			};
 			name = Debug;
 		};
@@ -321,6 +338,8 @@
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -328,8 +347,11 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.orchetect.OSCKit.CustomTypeExample${DEVELOPMENT_TEAM}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx xros xrsimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,3,7";
 			};
 			name = Release;
 		};
