@@ -2,22 +2,16 @@ version: 1
 builder:
   configs:
   - platform: macosSpm
-    swiftVersion: latestRelease
     scheme: OSCKit-CI
   - platform: macosXcodebuild
-    swiftVersion: latestRelease
     scheme: OSCKit-CI
   - platform: iOS
-    swiftVersion: latestRelease
     scheme: OSCKit-CI
   - platform: tvOS
-    swiftVersion: latestRelease
     scheme: OSCKit-CI
   - platform: watchOS
-    swiftVersion: latestRelease
     scheme: OSCKit-CI
   - platform: visionOS
-    swiftVersion: latestRelease
     scheme: OSCKit-CI
 external_links:
   documentation: "https://orchetect.github.io/OSCKit/"
