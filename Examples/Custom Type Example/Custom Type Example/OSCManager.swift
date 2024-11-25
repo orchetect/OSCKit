@@ -8,6 +8,7 @@ import Foundation
 import OSCKit
 
 /// OSC lifecycle and send/receive manager.
+@MainActor
 final class OSCManager: ObservableObject {
     private let client = OSCClient()
     private let server = OSCServer(port: 8000)
@@ -35,7 +36,7 @@ extension OSCManager {
         
         // setup server
         await server.setHandler { [weak self] message, timeTag in
-            self?.handle(message: message, timeTag: timeTag)
+            await self?.handle(message: message, timeTag: timeTag)
         }
         do { try await server.start() } catch { print(error) }
     }

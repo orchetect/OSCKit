@@ -10,7 +10,8 @@ import OSCKit
 /// OSC receiver.
 /// Registers local OSC addresses that our app is capable of recognizing and
 /// handles received bundles & messages.
-class OSCReceiver {
+@MainActor
+final class OSCReceiver {
     private let addressSpace = OSCAddressSpace()
     
     private let idMethodA: OSCAddressSpace.MethodID

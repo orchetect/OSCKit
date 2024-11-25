@@ -8,7 +8,8 @@ import Foundation
 import OSCKit
 
 /// OSC lifecycle and send/receive manager.
-@MainActor final class OSCManager: ObservableObject {
+@MainActor
+final class OSCManager: ObservableObject {
     private var socket: OSCSocket?
     
     @Published var localPort: UInt16 = 8000

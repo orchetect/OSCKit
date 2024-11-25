@@ -8,6 +8,7 @@ import Foundation
 import OSCKit
 
 /// OSC lifecycle and send/receive manager.
+@MainActor
 final class OSCManager: ObservableObject {
     private let client = OSCClient()
     private let server = OSCServer(port: 8000)
