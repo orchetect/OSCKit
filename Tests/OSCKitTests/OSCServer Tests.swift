@@ -73,6 +73,49 @@ struct OSCServer_Tests {
         #expect(receiver.messages[1] == msg2)
         #expect(receiver.messages[2] == msg3)
     }
+    
+    @Test func stressTest() async throws {
+        let server = OSCServer()
+        
+        final class Receiver: @unchecked Sendable {
+            var messages: [OSCMessage] = []
+            func received(_ message: OSCMessage) {
+                messages.append(message)
+            }
+        }
+        
+        let receiver = Receiver()
+        
+        server.setHandler { message, timeTag in
+            print("Handler received:", message.addressPattern)
+            DispatchQueue.global().sync {
+                receiver.received(message)
+            }
+        }
+        
+        let possibleValuePacks: [OSCValues] = [
+            [],
+            [UUID().uuidString],
+            [Int.random(in: 10_000 ... 10_000_000)],
+            [Int.random(in: 10_000 ... 10_000_000), UUID().uuidString, 456.78, true]
+        ]
+        
+        let sourceMessages: [OSCMessage] = Array(1...1000).map { value in
+            OSCMessage("/some/address/\(UUID().uuidString)", values: possibleValuePacks.randomElement()!)
+        }
+        
+        for message in sourceMessages {
+            DispatchQueue.main.async {
+                server._handle(payload: message)
+            }
+        }
+        
+        try await Task.sleep(seconds: 1.0)
+        
+        try #require(receiver.messages.count == 1000)
+        
+        #expect(receiver.messages == sourceMessages)
+    }
 }
 
 #endif
