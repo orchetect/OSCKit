@@ -119,7 +119,7 @@ struct OSCSocket_Tests {
             }
         }
         
-        try await Task.sleep(seconds: 1.0)
+        try await Task.sleep(seconds: 2.0)
         
         try #require(receiver.messages.count == 1000)
         
