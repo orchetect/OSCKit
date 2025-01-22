@@ -67,14 +67,14 @@ struct ContentView: View {
             
             RowView(label: "Start Socket") {
                 Button("Start") {
-                    Task { await oscManager.start() }
+                    oscManager.start()
                 }
                 .disabled(oscManager.isStarted)
             }
             
             RowView(label: "Stop Socket") {
                 Button("Stop") {
-                    Task { await oscManager.stop() }
+                    oscManager.stop()
                 }
                 .disabled(!oscManager.isStarted)
             }
@@ -83,11 +83,9 @@ struct ContentView: View {
     }
     
     private func sendTestOSCMessage() {
-        Task {
-            await oscManager.send(
-                .message("/some/address/method", values: ["Test string", 123])
-            )
-        }
+        oscManager.send(
+            .message("/some/address/method", values: ["Test string", 123])
+        )
     }
 }
 

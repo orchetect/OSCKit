@@ -8,21 +8,18 @@ import Foundation
 import OSCKit
 
 /// OSC lifecycle and send/receive manager.
-@MainActor
-final class OSCManager: ObservableObject {
+final class OSCManager: ObservableObject, Sendable {
     private let client = OSCClient()
     private let server = OSCServer(port: 8000)
     
     init() {
-        Task {
-            do {
-                try await OSCSerialization.shared.registerType(CustomType.self)
-            } catch {
-                print(error.localizedDescription)
-            }
-            
-            await start()
+        do {
+            try OSCSerialization.shared.registerType(CustomType.self)
+        } catch {
+            print(error.localizedDescription)
         }
+        
+        start()
     }
 }
 
@@ -30,20 +27,20 @@ final class OSCManager: ObservableObject {
 
 extension OSCManager {
     /// Call this once on app launch.
-    func start() async {
+    func start() {
         // setup client
         do { try client.start() } catch { print(error) }
         
         // setup server
-        await server.setHandler { [weak self] message, timeTag in
-            await self?.handle(message: message, timeTag: timeTag)
+        server.setHandler { [weak self] message, timeTag in
+            self?.handle(message: message, timeTag: timeTag)
         }
-        do { try await server.start() } catch { print(error) }
+        do { try server.start() } catch { print(error) }
     }
     
-    func stop() async {
+    func stop() {
         client.stop()
-        await server.stop()
+        server.stop()
     }
 }
 

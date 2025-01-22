@@ -16,7 +16,7 @@ import OSCKitCore
 // to use the OSC Type "string" as the underlying data storage within an OSC message. There are no particular benefits
 // or drawbacks of either choice, and is strictly implementation semantics.
 
-struct CustomType: Equatable, Hashable, Codable {
+struct CustomType: Equatable, Hashable, Codable, Sendable {
     let id: Int
     let name: String
 }

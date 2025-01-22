@@ -10,8 +10,7 @@ import OSCKit
 /// OSC receiver.
 /// Registers local OSC addresses that our app is capable of recognizing and
 /// handles received bundles & messages.
-@MainActor
-final class OSCReceiver {
+final class OSCReceiver: Sendable {
     private let addressSpace = OSCAddressSpace()
     
     public init() {
@@ -32,7 +31,7 @@ final class OSCReceiver {
         // Option 1: weak reference (recommended):
         addressSpace.register(
             localAddress: "/some/address/methodC",
-            block: { [weak self] in await self?.handleMethodC($0) }
+            block: { [weak self] in self?.handleMethodC($0) }
         )
         
         // Option 2: strong reference (discouraged):
@@ -47,7 +46,7 @@ final class OSCReceiver {
         print("Received methodC with values: [\"\(str)\", \(dbl as Any)]")
     }
     
-    public func handle(message: OSCMessage, timeTag: OSCTimeTag) async throws {
+    public func handle(message: OSCMessage, timeTag: OSCTimeTag) throws {
         // Execute closures for matching methods, and returns the matching method IDs
         let methodIDs = addressSpace.dispatch(message)
         
