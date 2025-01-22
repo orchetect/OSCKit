@@ -97,12 +97,16 @@ public final class OSCSocket: _OSCServerProtocol, @unchecked Sendable {
     /// > Ensure ``start()`` is called once after initialization in order to begin sending and receiving messages.
     ///
     /// - Parameters:
-    ///   - localPort: Local port. If `nil`, a random available port in the system will be chosen.
+    ///   - localPort: Local port to listen on for inbound OSC packets.
+    ///     If `nil`, a random available port in the system will be chosen.
     ///   - remoteHost: Remote hostname or IP address.
-    ///   - remotePort: Remote port. `nil`, the resulting `localPort` value will be used.
+    ///   - remotePort: Remote port on the remote host machine to send outbound OSC packets to.
+    ///     If `nil`, the `localPort` value will be used.
     ///   - timeTagMode: OSC time-tag mode. The default is recommended.
     ///   - isIPv4BroadcastEnabled: Enable sending IPv4 broadcast messages from the socket.
     ///     See ``isIPv4BroadcastEnabled`` for more details.
+    ///   - receiveQueue: Optionally supply a custom dispatch queue for receiving OSC packets and dispatching the
+    ///     handler callback closure.
     ///   - handler: Handler to call when OSC bundles or messages are received.
     public init(
         localPort: UInt16? = nil,
@@ -131,7 +135,9 @@ public final class OSCSocket: _OSCServerProtocol, @unchecked Sendable {
     public func setHandler(
         _ handler: OSCHandlerBlock?
     ) {
-        self.handler = handler
+        receiveQueue.async {
+            self.handler = handler
+        }
     }
 }
 

@@ -32,13 +32,20 @@ public final class OSCServer: _OSCServerProtocol, @unchecked Sendable {
     public private(set) var isStarted: Bool = false
     
     /// Initialize an OSC server.
-    ///
+    /// 
     /// The default port for OSC communication is 8000 but may change depending on device/software
     /// manufacturer.
-    ///
+    /// 
     /// > Note:
     /// >
     /// > Ensure ``start()`` is called once after initialization in order to begin receiving messages.
+    ///
+    /// - Parameters:
+    ///   - port: Local port to listen on for inbound OSC packets.
+    ///   - timeTagMode: OSC TimeTag mode. Default is recommended.
+    ///   - receiveQueue: Optionally supply a custom dispatch queue for receiving OSC packets and dispatching the
+    ///     handler callback closure.
+    ///   - handler: Handler to call when OSC bundles or messages are received.
     public init(
         port: UInt16 = 8000,
         timeTagMode: OSCTimeTagMode = .ignore,
@@ -60,7 +67,9 @@ public final class OSCServer: _OSCServerProtocol, @unchecked Sendable {
     public func setHandler(
         _ handler: OSCHandlerBlock?
     ) {
-        self.handler = handler
+        receiveQueue.async {
+            self.handler = handler
+        }
     }
 }
 
