@@ -1,8 +1,7 @@
 //
 //  Concurrency Extensions.swift
-//  OSCKit
-//
-//  Created by Steffan Andrews on 2024-10-28.
+//  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2020-2024 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
