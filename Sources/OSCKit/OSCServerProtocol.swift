@@ -9,7 +9,7 @@ import OSCKitCore
 
 /// Internal protocol that all objects who act as an OSC server adopt.
 /// Provides shared logic.
-protocol _OSCServerProtocol: AnyObject {
+protocol _OSCServerProtocol: AnyObject where Self: Sendable {
     var receiveQueue: DispatchQueue { get }
     var timeTagMode: OSCTimeTagMode { get set }
     var handler: OSCHandlerBlock? { get set }

@@ -12,7 +12,7 @@ import Foundation
 /// for them.
 public final class OSCSerialization {
     /// Shared singleton instance.
-    public static let shared = OSCSerialization()
+    public nonisolated(unsafe) static let shared = OSCSerialization()
     
     /// Internal:
     /// Registered tag identities repository.
