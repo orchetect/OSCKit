@@ -47,7 +47,7 @@ struct OSCServer_Tests {
         
         server.setHandler { message, timeTag in
             // print("Handler received:", message.addressPattern)
-            DispatchQueue.global().sync {
+            DispatchQueue.main.async {
                 receiver.received(message)
             }
         }
@@ -56,13 +56,10 @@ struct OSCServer_Tests {
         let msg2 = OSCMessage("/two")
         let msg3 = OSCMessage("/three")
         
-        DispatchQueue.main.async {
+        // use global thread to simulate internal network thread being a dedicated thread
+        DispatchQueue.global().async {
             server._handle(payload: msg1)
-        }
-        DispatchQueue.main.async {
             server._handle(payload: msg2)
-        }
-        DispatchQueue.main.async {
             server._handle(payload: msg3)
         }
         
@@ -89,7 +86,7 @@ struct OSCServer_Tests {
         let receiver = Receiver()
         
         server.setHandler { message, timeTag in
-            DispatchQueue.global().sync {
+            DispatchQueue.main.async {
                 receiver.received(message)
             }
         }
@@ -105,9 +102,57 @@ struct OSCServer_Tests {
             OSCMessage("/some/address/\(UUID().uuidString)", values: possibleValuePacks.randomElement()!)
         }
         
-        for message in sourceMessages {
-            DispatchQueue.main.async {
+        // use global thread to simulate internal network thread being a dedicated thread
+        DispatchQueue.global().async {
+            for message in sourceMessages {
                 server._handle(payload: message)
+            }
+        }
+        
+        try await Task.sleep(seconds: 1.0)
+        
+        try #require(receiver.messages.count == 1000)
+        
+        #expect(receiver.messages == sourceMessages)
+    }
+    
+    @Test
+    func stressTestLive() async throws {
+        let server = OSCServer(port: 8888, timeTagMode: .ignore, receiveQueue: nil, handler: nil)
+        try server.start()
+        
+        final class Receiver: @unchecked Sendable {
+            var messages: [OSCMessage] = []
+            func received(_ message: OSCMessage) {
+                messages.append(message)
+            }
+        }
+        
+        let receiver = Receiver()
+        
+        server.setHandler { message, timeTag in
+            DispatchQueue.main.async {
+                receiver.received(message)
+            }
+        }
+        
+        let possibleValuePacks: [OSCValues] = [
+            [],
+            [UUID().uuidString],
+            [Int.random(in: 10_000 ... 10_000_000)],
+            [Int.random(in: 10_000 ... 10_000_000), UUID().uuidString, 456.78, true]
+        ]
+        
+        let sourceMessages: [OSCMessage] = Array(1 ... 1000).map { value in
+            OSCMessage("/some/address/\(UUID().uuidString)", values: possibleValuePacks.randomElement()!)
+        }
+        
+        let client = OSCClient()
+        
+        // use global thread to simulate internal network thread being a dedicated thread
+        DispatchQueue.global().async {
+            for message in sourceMessages {
+                try? client.send(message, to: "localhost", port: 8888)
             }
         }
         
