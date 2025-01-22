@@ -45,7 +45,7 @@ struct OSCSocket_Tests {
         let receiver = Receiver()
         
         server.setHandler { message, timeTag in
-            print("Handler received:", message.addressPattern)
+            // print("Handler received:", message.addressPattern)
             DispatchQueue.global().sync {
                 receiver.received(message)
             }
