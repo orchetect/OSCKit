@@ -1,212 +1,218 @@
 //
 //  Component Parse Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 @testable import OSCKitCore
 import Testing
 
 @Suite struct OSCAddressPattern_Component_Parse_Tests {
-    @Test func basic() {
+    @Test
+    func basic() {
         #expect(
             OSCAddressPattern.Component(string: "").tokens ==
-            []
+                []
         )
         
         #expect(
             OSCAddressPattern.Component(string: "1").tokens ==
-            [.literal("1")]
+                [.literal("1")]
         )
         
         #expect(
             OSCAddressPattern.Component(string: "123").tokens ==
-            [.literal("123")]
+                [.literal("123")]
         )
     }
     
-    @Test func wildcard() {
+    @Test
+    func wildcard() {
         #expect(
             OSCAddressPattern.Component(string: "*").tokens ==
-            [.zeroOrMoreWildcard]
+                [.zeroOrMoreWildcard]
         )
         
         #expect(
             OSCAddressPattern.Component(string: "**").tokens ==
-            [.zeroOrMoreWildcard]
+                [.zeroOrMoreWildcard]
         )
         
         #expect(
             OSCAddressPattern.Component(string: "***").tokens ==
-            [.zeroOrMoreWildcard]
+                [.zeroOrMoreWildcard]
         )
         
         #expect(
             OSCAddressPattern.Component(string: "*abc*").tokens ==
-            [
-                .zeroOrMoreWildcard,
-                .literal("abc"),
-                .zeroOrMoreWildcard
-            ]
+                [
+                    .zeroOrMoreWildcard,
+                    .literal("abc"),
+                    .zeroOrMoreWildcard
+                ]
         )
         
         #expect(
             OSCAddressPattern.Component(string: "**ab**c**").tokens ==
-            [
-                .zeroOrMoreWildcard,
-                .literal("ab"),
-                .zeroOrMoreWildcard,
-                .literal("c"),
-                .zeroOrMoreWildcard
-            ]
+                [
+                    .zeroOrMoreWildcard,
+                    .literal("ab"),
+                    .zeroOrMoreWildcard,
+                    .literal("c"),
+                    .zeroOrMoreWildcard
+                ]
         )
     }
     
-    @Test func brackets() {
+    @Test
+    func brackets() {
         #expect(
             OSCAddressPattern.Component(string: "[]").tokens ==
-            [.singleChar(
-                isExclusion: false,
-                groups: []
-            )]
+                [.singleChar(
+                    isExclusion: false,
+                    groups: []
+                )]
         )
         
         #expect(
             OSCAddressPattern.Component(string: "[a-z]").tokens ==
-            [.singleChar(
-                isExclusion: false,
-                groups: [.asciiRange(start: "a", end: "z")]
-            )]
+                [.singleChar(
+                    isExclusion: false,
+                    groups: [.asciiRange(start: "a", end: "z")]
+                )]
         )
         
         #expect(
             OSCAddressPattern.Component(string: "[a-z][A-Z][0-9]").tokens ==
-            [
-                .singleChar(
-                    isExclusion: false,
-                    groups: [.asciiRange(start: "a", end: "z")]
-                ),
-                .singleChar(
-                    isExclusion: false,
-                    groups: [.asciiRange(start: "A", end: "Z")]
-                ),
-                .singleChar(
-                    isExclusion: false,
-                    groups: [.asciiRange(start: "0", end: "9")]
-                )
-            ]
+                [
+                    .singleChar(
+                        isExclusion: false,
+                        groups: [.asciiRange(start: "a", end: "z")]
+                    ),
+                    .singleChar(
+                        isExclusion: false,
+                        groups: [.asciiRange(start: "A", end: "Z")]
+                    ),
+                    .singleChar(
+                        isExclusion: false,
+                        groups: [.asciiRange(start: "0", end: "9")]
+                    )
+                ]
         )
         
         #expect(
             OSCAddressPattern.Component(string: "[a-zA-Z0-9]").tokens ==
-            [
-                .singleChar(
-                    isExclusion: false,
-                    groups: [
-                        .asciiRange(start: "a", end: "z"),
-                        .asciiRange(start: "A", end: "Z"),
-                        .asciiRange(start: "0", end: "9")
-                    ]
-                )
-            ]
+                [
+                    .singleChar(
+                        isExclusion: false,
+                        groups: [
+                            .asciiRange(start: "a", end: "z"),
+                            .asciiRange(start: "A", end: "Z"),
+                            .asciiRange(start: "0", end: "9")
+                        ]
+                    )
+                ]
         )
     }
     
-    @Test func bracketsExcluded() {
+    @Test
+    func bracketsExcluded() {
         #expect(
             OSCAddressPattern.Component(string: "[!]").tokens ==
-            [.singleChar(
-                isExclusion: true,
-                groups: []
-            )]
+                [.singleChar(
+                    isExclusion: true,
+                    groups: []
+                )]
         )
         
         #expect(
             OSCAddressPattern.Component(string: "[!a-z]").tokens ==
-            [.singleChar(
-                isExclusion: true,
-                groups: [.asciiRange(start: "a", end: "z")]
-            )]
+                [.singleChar(
+                    isExclusion: true,
+                    groups: [.asciiRange(start: "a", end: "z")]
+                )]
         )
         
         #expect(
             OSCAddressPattern.Component(string: "[!a-z][A-Z][0-9]").tokens ==
-            [
-                .singleChar(
-                    isExclusion: true,
-                    groups: [.asciiRange(start: "a", end: "z")]
-                ),
-                .singleChar(
-                    isExclusion: false,
-                    groups: [.asciiRange(start: "A", end: "Z")]
-                ),
-                .singleChar(
-                    isExclusion: false,
-                    groups: [.asciiRange(start: "0", end: "9")]
-                )
-            ]
+                [
+                    .singleChar(
+                        isExclusion: true,
+                        groups: [.asciiRange(start: "a", end: "z")]
+                    ),
+                    .singleChar(
+                        isExclusion: false,
+                        groups: [.asciiRange(start: "A", end: "Z")]
+                    ),
+                    .singleChar(
+                        isExclusion: false,
+                        groups: [.asciiRange(start: "0", end: "9")]
+                    )
+                ]
         )
         
         #expect(
             OSCAddressPattern.Component(string: "[!a-zA-Z0-9]").tokens ==
-            [
-                .singleChar(
-                    isExclusion: true,
-                    groups: [
-                        .asciiRange(start: "a", end: "z"),
-                        .asciiRange(start: "A", end: "Z"),
-                        .asciiRange(start: "0", end: "9")
-                    ]
-                )
-            ]
+                [
+                    .singleChar(
+                        isExclusion: true,
+                        groups: [
+                            .asciiRange(start: "a", end: "z"),
+                            .asciiRange(start: "A", end: "Z"),
+                            .asciiRange(start: "0", end: "9")
+                        ]
+                    )
+                ]
         )
     }
     
-    @Test func braces() {
+    @Test
+    func braces() {
         #expect(
             OSCAddressPattern.Component(string: "{}").tokens ==
-            [.strings(strings: [])]
+                [.strings(strings: [])]
         )
         
         #expect(
             OSCAddressPattern.Component(string: "{,}").tokens ==
-            [.strings(strings: [])]
+                [.strings(strings: [])]
         )
         
         #expect(
             OSCAddressPattern.Component(string: "{abc}").tokens ==
-            [.strings(strings: ["abc"])]
+                [.strings(strings: ["abc"])]
         )
         
         #expect(
             OSCAddressPattern.Component(string: "{abc,def}").tokens ==
-            [.strings(strings: ["abc", "def"])]
+                [.strings(strings: ["abc", "def"])]
         )
         
         #expect(
             OSCAddressPattern.Component(string: "{abc,}").tokens ==
-            [.strings(strings: ["abc"])]
+                [.strings(strings: ["abc"])]
         )
         
         #expect(
             OSCAddressPattern.Component(string: "{,abc}").tokens ==
-            [.strings(strings: ["abc"])]
+                [.strings(strings: ["abc"])]
         )
     }
     
-    @Test func complex() {
+    @Test
+    func complex() {
         #expect(
             OSCAddressPattern.Component(string: "abc*{def,xyz}?[0-9]").tokens ==
-            [
-                .literal("abc"),
-                .zeroOrMoreWildcard,
-                .strings(strings: ["def", "xyz"]),
-                .singleCharWildcard,
-                .singleChar(
-                    isExclusion: false,
-                    groups: [.asciiRange(start: "0", end: "9")]
-                )
-            ]
+                [
+                    .literal("abc"),
+                    .zeroOrMoreWildcard,
+                    .strings(strings: ["def", "xyz"]),
+                    .singleCharWildcard,
+                    .singleChar(
+                        isExclusion: false,
+                        groups: [.asciiRange(start: "0", end: "9")]
+                    )
+                ]
         )
     }
 }

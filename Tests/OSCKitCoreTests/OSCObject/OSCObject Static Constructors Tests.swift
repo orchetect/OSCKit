@@ -1,7 +1,7 @@
 //
 //  OSCObject Static Constructors Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import OSCKitCore
@@ -11,7 +11,8 @@ import Testing
 @Suite struct OSCObject_StaticConstructors_Tests {
     // MARK: - OSCMessage
     
-    @Test func oscMessage_AddressPatternString() throws {
+    @Test
+    func oscMessage_AddressPatternString() throws {
         let addr = String("/msg1")
         let obj: any OSCObject = .message(
             addr,
@@ -24,7 +25,8 @@ import Testing
         #expect(msg.values[0] as? Int32 == Int32(123))
     }
     
-    @Test func oscMessage_AddressPattern() throws {
+    @Test
+    func oscMessage_AddressPattern() throws {
         let obj: any OSCObject = .message(
             OSCAddressPattern("/msg1"),
             values: [Int32(123)]
@@ -38,7 +40,8 @@ import Testing
     
     // MARK: - OSCBundle
     
-    @Test func oscBundle() throws {
+    @Test
+    func oscBundle() throws {
         let obj: any OSCObject = .bundle([
             .message("/", values: [Int32(123)])
         ])

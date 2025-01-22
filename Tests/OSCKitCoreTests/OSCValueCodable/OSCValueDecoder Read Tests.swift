@@ -1,7 +1,7 @@
 //
 //  OSCValueDecoder Read Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -14,7 +14,8 @@ import Testing
     
     // MARK: - Data methods
     
-    @Test func readInt32() throws {
+    @Test
+    func readInt32() throws {
         // positive
         let data1 = Data([0x00, 0x00, 0x00, 0xFF])
         var decoder1 = OSCValueDecoder(data: data1)
@@ -33,7 +34,8 @@ import Testing
         #expect(throws: OSCDecodeError.self) { try decoder3.readInt32() }
     }
     
-    @Test func readInt64() throws {
+    @Test
+    func readInt64() throws {
         // positive
         let data1 = Data([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF])
         var decoder1 = OSCValueDecoder(data: data1)
@@ -50,10 +52,11 @@ import Testing
         // malformed
         let data3 = Data([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF])
         var decoder3 = OSCValueDecoder(data: data3)
-        #expect(throws: OSCDecodeError.self) {try decoder3.readInt64() }
+        #expect(throws: OSCDecodeError.self) { try decoder3.readInt64() }
     }
     
-    @Test func readUInt64() throws {
+    @Test
+    func readUInt64() throws {
         // value
         let data1 = Data([0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xFF])
         var decoder1 = OSCValueDecoder(data: data1)
@@ -66,7 +69,8 @@ import Testing
         #expect(throws: OSCDecodeError.self) { try decoder2.readUInt64() }
     }
     
-    @Test func readFloat32() throws {
+    @Test
+    func readFloat32() throws {
         // value
         let data1 = Data([0x42, 0xF6, 0xE6, 0x66]) // 123.45, big-endian
         var decoder1 = OSCValueDecoder(data: data1)
@@ -79,7 +83,8 @@ import Testing
         #expect(throws: OSCDecodeError.self) { try decoder2.readFloat32() }
     }
     
-    @Test func readDouble() throws {
+    @Test
+    func readDouble() throws {
         // value
         let data1 = Data([0x40, 0x5E, 0xDC, 0xCC, 0xCC, 0xCC, 0xCC, 0xCD]) // 123.45, big-endian
         var decoder1 = OSCValueDecoder(data: data1)
@@ -92,7 +97,8 @@ import Testing
         #expect(throws: OSCDecodeError.self) { try decoder2.readDouble() }
     }
     
-    @Test func read4ByteAlignedNullTerminatedASCIIString() throws {
+    @Test
+    func read4ByteAlignedNullTerminatedASCIIString() throws {
         // empty string
         
         let data1 = Data([0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04])
@@ -128,7 +134,8 @@ import Testing
         #expect(throws: OSCDecodeError.self) { try decoder6.read4ByteAlignedNullTerminatedASCIIString() }
     }
     
-    @Test func read4ByteAlignedNullTerminatedData() throws {
+    @Test
+    func read4ByteAlignedNullTerminatedData() throws {
         // empty string
         
         let data1 = Data([0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04])
@@ -142,7 +149,7 @@ import Testing
         var decoder2 = OSCValueDecoder(data: data2)
         #expect(
             try decoder2.read4ByteAlignedNullTerminatedData() ==
-            Data([0x53, 0x74, 0x72, 0x69, 0x6E, 0x67])
+                Data([0x53, 0x74, 0x72, 0x69, 0x6E, 0x67])
         )
         #expect(decoder2.pos == 8)
         
@@ -167,7 +174,8 @@ import Testing
         #expect(throws: OSCDecodeError.self) { try decoder6.read4ByteAlignedNullTerminatedData() }
     }
     
-    @Test func readBlob_Padding_ExactMultipleOf4Bytes() throws {
+    @Test
+    func readBlob_Padding_ExactMultipleOf4Bytes() throws {
         var data = Data()
         data += [0x00, 0x00, 0x00, 8] // int32 data length
         
@@ -181,7 +189,8 @@ import Testing
         #expect(blob == Data([1, 2, 3, 4, 5, 6, 7, 8]))
     }
     
-    @Test func readBlob2_Padding_ExpectedNullByteAlignment() throws {
+    @Test
+    func readBlob2_Padding_ExpectedNullByteAlignment() throws {
         var data = Data()
         data += [0x00, 0x00, 0x00, 9] // int32 data length
         data += [
@@ -195,7 +204,8 @@ import Testing
         #expect(blob == Data([1, 2, 3, 4, 5, 6, 7, 8, 9]))
     }
     
-    @Test func readBlob_Padding_Malformed_NotEnoughBytes1() throws {
+    @Test
+    func readBlob_Padding_Malformed_NotEnoughBytes1() throws {
         var data = Data()
         data += [0x00, 0x00, 0x00, 9] // int32 data length
         data += [
@@ -208,7 +218,8 @@ import Testing
         #expect(throws: OSCDecodeError.self) { try decoder.readBlob() }
     }
     
-    @Test func readBlob_Padding_Malformed_NotEnoughBytes2() throws {
+    @Test
+    func readBlob_Padding_Malformed_NotEnoughBytes2() throws {
         var data = Data()
         data += [0x00, 0x00, 0x00, 9] // int32 data length
         data += [
@@ -221,7 +232,8 @@ import Testing
         #expect(throws: OSCDecodeError.self) { try decoder.readBlob() }
     }
     
-    @Test func readBlob_Padding_Malformed_NullBytesNotNull() {
+    @Test
+    func readBlob_Padding_Malformed_NullBytesNotNull() {
         var data = Data()
         data += [0x00, 0x00, 0x00, 9] // int32 data length
         data += [
@@ -234,7 +246,8 @@ import Testing
         #expect(throws: OSCDecodeError.self) { try decoder.readBlob() }
     }
     
-    @Test func readBlob_Padding_Malformed_LengthTooLarge() {
+    @Test
+    func readBlob_Padding_Malformed_LengthTooLarge() {
         var data = Data()
         data += [0x7F, 0x9F, 0xEF, 0xAE] // int32 data length value is way too large
         data += [
@@ -247,7 +260,8 @@ import Testing
         #expect(throws: OSCDecodeError.self) { try decoder.readBlob() }
     }
     
-    @Test func readBytesCount() throws {
+    @Test
+    func readBytesCount() throws {
         // (test harness)
         func newDecoder(readByteLength: Int) throws -> Data {
             let data = Data([0x01, 0x02, 0x03, 0x04])
@@ -258,19 +272,19 @@ import Testing
         // success
         #expect(
             try newDecoder(readByteLength: 1) ==
-            Data([0x01])
+                Data([0x01])
         )
         #expect(
             try newDecoder(readByteLength: 2) ==
-            Data([0x01, 0x02])
+                Data([0x01, 0x02])
         )
         #expect(
             try newDecoder(readByteLength: 3) ==
-            Data([0x01, 0x02, 0x03])
+                Data([0x01, 0x02, 0x03])
         )
         #expect(
             try newDecoder(readByteLength: 4) ==
-            Data([0x01, 0x02, 0x03, 0x04])
+                Data([0x01, 0x02, 0x03, 0x04])
         )
         
         // failure - not enough bytes remaining

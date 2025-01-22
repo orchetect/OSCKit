@@ -1,7 +1,7 @@
 //
 //  OSCMessage Integrity Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -10,54 +10,56 @@ import SwiftASCII
 import Testing
 
 @Suite struct OSCMessage_Integrity_Tests {
-    @Test func initAddress() {
+    @Test
+    func initAddress() {
         // check that address and path components inits successfully create
         // correct OSCAddressPattern
         
         #expect(
             OSCMessage("/container1/container2")
                 .addressPattern.stringValue ==
-            "/container1/container2"
+                "/container1/container2"
         )
         
         #expect(
             OSCMessage(String("/container1/container2"))
                 .addressPattern.stringValue ==
-            "/container1/container2"
+                "/container1/container2"
         )
         
         #expect(
             OSCMessage(asciiAddressPattern: ASCIIString("/container1/container2"))
                 .addressPattern.stringValue ==
-            "/container1/container2"
+                "/container1/container2"
         )
         
         #expect(
             OSCMessage(OSCAddressPattern("/container1/container2"))
                 .addressPattern.stringValue ==
-            "/container1/container2"
+                "/container1/container2"
         )
         
         #expect(
             OSCMessage(addressPattern: ["container1", "container2"])
                 .addressPattern.stringValue ==
-            "/container1/container2"
+                "/container1/container2"
         )
         
         #expect(
             OSCMessage(asciiAddressPattern: [ASCIIString("container1"), ASCIIString("container2")])
                 .addressPattern.stringValue ==
-            "/container1/container2"
+                "/container1/container2"
         )
         
         #expect(
             OSCMessage(addressPattern: [String]())
                 .addressPattern.stringValue ==
-            "/"
+                "/"
         )
     }
     
-    @Test func constructors() async throws {
+    @Test
+    func constructors() async throws {
         // this does not necessarily prove that encoding or decoding actually matches OSC spec, it
         // simply ensures that a message that OSCMessage generates can also be decoded
         

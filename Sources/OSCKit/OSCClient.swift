@@ -1,7 +1,7 @@
 //
 //  OSCClient.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 #if !os(watchOS)
@@ -84,11 +84,11 @@ public final class OSCClient: @unchecked Sendable {
     }
     
     /// Initialize an OSC client to send messages using the UDP network protocol using a specific local port.
-    /// 
+    ///
     /// > Note:
     /// >
     /// > Ensure ``start()`` is called once after initialization in order to begin sending messages.
-    /// 
+    ///
     /// > Note:
     /// >
     /// > It is not typically necessary to bind to a static local port unless there is a particular need to have

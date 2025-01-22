@@ -1,7 +1,7 @@
 //
 //  OSCMessage rawData Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -14,7 +14,8 @@ import Testing
     
     // MARK: - Core Types
     
-    @Test func empty() async throws {
+    @Test
+    func empty() async throws {
         // test an OSC message containing no values
         
         // manually build a raw OSC message
@@ -33,7 +34,7 @@ import Testing
         
         let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
         #expect(msg.addressPattern.stringValue == "/testaddress")
-        #expect(msg.values.count == 0)
+        #expect(msg.values.isEmpty)
         
         // re-encode
         
@@ -41,7 +42,8 @@ import Testing
         #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
     }
     
-    @Test func int32() async throws {
+    @Test
+    func int32() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -72,7 +74,8 @@ import Testing
         #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
     }
     
-    @Test func float32() async throws {
+    @Test
+    func float32() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -103,7 +106,8 @@ import Testing
         #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
     }
     
-    @Test func string() async throws {
+    @Test
+    func string() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -140,7 +144,8 @@ import Testing
         #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
     }
     
-    @Test func blob() async throws {
+    @Test
+    func blob() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -175,7 +180,8 @@ import Testing
     
     // MARK: - Extended Types
     
-    @Test func int64() async throws {
+    @Test
+    func int64() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -207,7 +213,8 @@ import Testing
         #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
     }
     
-    @Test func timeTag() async throws {
+    @Test
+    func timeTag() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -239,7 +246,8 @@ import Testing
         #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
     }
     
-    @Test func double() async throws {
+    @Test
+    func double() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -271,7 +279,8 @@ import Testing
         #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
     }
     
-    @Test func stringAlt() async throws {
+    @Test
+    func stringAlt() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -308,7 +317,8 @@ import Testing
         #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
     }
     
-    @Test func character() async throws {
+    @Test
+    func character() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -339,7 +349,8 @@ import Testing
         #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
     }
     
-    @Test func midi() async throws {
+    @Test
+    func midi() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -370,7 +381,8 @@ import Testing
         #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
     }
     
-    @Test func bool() async throws {
+    @Test
+    func bool() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -399,7 +411,8 @@ import Testing
         #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
     }
     
-    @Test func null() async throws {
+    @Test
+    func null() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -428,7 +441,8 @@ import Testing
         #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
     }
     
-    @Test func impulse() async throws {
+    @Test
+    func impulse() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message
@@ -457,7 +471,8 @@ import Testing
         #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
     }
     
-    @Test func array() async throws {
+    @Test
+    func array() async throws {
         // test an OSC message containing a single value
         
         // manually build a raw OSC message

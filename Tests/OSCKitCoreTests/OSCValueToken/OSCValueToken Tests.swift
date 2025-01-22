@@ -1,7 +1,7 @@
 //
 //  OSCValueToken Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -14,7 +14,8 @@ import Testing
     
     // MARK: ... Core types
     
-    @Test func matchesValueMask_blob() {
+    @Test
+    func matchesValueMask_blob() {
         let mask: [OSCValueToken] = [.blob]
         
         // success
@@ -48,7 +49,8 @@ import Testing
         )
     }
     
-    @Test func matchesValueMask_int32() {
+    @Test
+    func matchesValueMask_int32() {
         let mask: [OSCValueToken] = [.int32]
         
         // success
@@ -104,7 +106,8 @@ import Testing
         )
     }
     
-    @Test func matchesValueMask_float32() {
+    @Test
+    func matchesValueMask_float32() {
         let mask: [OSCValueToken] = [.float32]
         
         // success
@@ -136,7 +139,8 @@ import Testing
         )
     }
     
-    @Test func matchesValueMask_string() {
+    @Test
+    func matchesValueMask_string() {
         let mask: [OSCValueToken] = [.string]
         
         // success
@@ -194,7 +198,8 @@ import Testing
     
     // MARK: ... Extended types
     
-    @Test func matchesValueMask_array() {
+    @Test
+    func matchesValueMask_array() {
         let mask: [OSCValueToken] = [.array]
         
         let array = OSCArrayValue([Int32(1)])
@@ -232,7 +237,8 @@ import Testing
         )
     }
     
-    @Test func matchesValueMask_bool() {
+    @Test
+    func matchesValueMask_bool() {
         let mask: [OSCValueToken] = [.bool]
         
         // success
@@ -284,7 +290,8 @@ import Testing
         )
     }
     
-    @Test func matchesValueMask_character() {
+    @Test
+    func matchesValueMask_character() {
         let mask: [OSCValueToken] = [.character]
         
         // success
@@ -340,7 +347,8 @@ import Testing
         )
     }
     
-    @Test func matchesValueMask_double() {
+    @Test
+    func matchesValueMask_double() {
         let mask: [OSCValueToken] = [.double]
         
         // success
@@ -368,7 +376,8 @@ import Testing
         )
     }
     
-    @Test func matchesValueMask_int64() {
+    @Test
+    func matchesValueMask_int64() {
         let mask: [OSCValueToken] = [.int64]
         
         // success
@@ -424,7 +433,8 @@ import Testing
         )
     }
     
-    @Test func matchesValueMask_impulse() {
+    @Test
+    func matchesValueMask_impulse() {
         let mask: [OSCValueToken] = [.impulse]
         
         // success
@@ -456,7 +466,8 @@ import Testing
         )
     }
     
-    @Test func matchesValueMask_midi() {
+    @Test
+    func matchesValueMask_midi() {
         let mask: [OSCValueToken] = [.midi]
         
         let value: any OSCValue = OSCMIDIValue(
@@ -490,7 +501,8 @@ import Testing
         )
     }
     
-    @Test func matchesValueMask_null() {
+    @Test
+    func matchesValueMask_null() {
         let mask: [OSCValueToken] = [.null]
         
         // success
@@ -546,7 +558,8 @@ import Testing
         )
     }
     
-    @Test func matchesValueMask_stringAlt() {
+    @Test
+    func matchesValueMask_stringAlt() {
         let mask: [OSCValueToken] = [.stringAlt]
         
         // success
@@ -602,7 +615,8 @@ import Testing
         )
     }
     
-    @Test func matchesValueMask_timeTag() {
+    @Test
+    func matchesValueMask_timeTag() {
         let mask: [OSCValueToken] = [.timeTag]
         
         // success
@@ -668,7 +682,8 @@ import Testing
     
     // MARK: ... Opaque types
     
-    @Test func matchesValueMask_number() {
+    @Test
+    func matchesValueMask_number() {
         let mask: [OSCValueToken] = [.number]
         
         // success
@@ -758,7 +773,8 @@ import Testing
     
     // MARK: ... Interpolated types
     
-    @Test func matchesValueMask_int() {
+    @Test
+    func matchesValueMask_int() {
         // Int is an interpolated value and therefore should
         // never match against any core OSC types
         
@@ -793,7 +809,8 @@ import Testing
     
     // MARK: ... Core types
     
-    @Test func matchesValueMask_int32Optional() {
+    @Test
+    func matchesValueMask_int32Optional() {
         let mask: [OSCValueToken] = [.int32Optional]
         
         // success
@@ -825,7 +842,8 @@ import Testing
     
     // MARK: ... Opaque types
     
-    @Test func matchesValueMask_numberOptional() {
+    @Test
+    func matchesValueMask_numberOptional() {
         let mask: [OSCValueToken] = [.numberOptional]
         
         // success
@@ -855,7 +873,8 @@ import Testing
     
     // MARK: ... Interpolated types
     
-    @Test func matchesValueMask_int_OptionalTokens() {
+    @Test
+    func matchesValueMask_int_OptionalTokens() {
         // Int is an interpolated value and therefore should
         // never match against any core OSC types
         

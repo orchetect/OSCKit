@@ -1,7 +1,7 @@
 //
 //  OSCObject rawData Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -13,7 +13,8 @@ import Testing
     
     // MARK: - Model UDP data receiver pattern
     
-    @Test func parseOSC_Model() async throws {
+    @Test
+    func parseOSC_Model() async throws {
         // (Raw data taken from testInt32() of "OSCMessage rawData Tests.swift")
         
         // manually build a raw OSC message
@@ -50,7 +51,8 @@ import Testing
     
     // MARK: - Variations
     
-    @Test func parseOSC_Message() async throws {
+    @Test
+    func parseOSC_Message() async throws {
         // (Raw data taken from testInt32() of "OSCMessage rawData Tests.swift")
         
         // manually build a raw OSC message
@@ -85,7 +87,8 @@ import Testing
         }
     }
     
-    @Test func parseOSC_Bundle() async throws {
+    @Test
+    func parseOSC_Bundle() async throws {
         // (Raw data taken from testSingleOSCMessage() of "OSCBundle rawData Tests.swift")
         
         // manually build a raw OSC bundle
@@ -141,7 +144,8 @@ import Testing
         }
     }
     
-    @Test func parseOSC_Message_Error() async {
+    @Test
+    func parseOSC_Message_Error() async {
         // manually build a MALFORMED raw OSC message
         
         var knownBadOSCRawBytes: [UInt8] = []
@@ -172,7 +176,8 @@ import Testing
         }
     }
     
-    @Test func parseOSC_Bundle_Error() async {
+    @Test
+    func parseOSC_Bundle_Error() async {
         // manually build a MALFORMED raw OSC bundle
         
         var knownGoodOSCRawBytes: [UInt8] = []
@@ -214,7 +219,8 @@ import Testing
         }
     }
     
-    @Test func parseOSC_Bundle_ErrorInContainedMessage() async {
+    @Test
+    func parseOSC_Bundle_ErrorInContainedMessage() async {
         // manually build a MALFORMED raw OSC bundle
         
         var knownGoodOSCRawBytes: [UInt8] = []

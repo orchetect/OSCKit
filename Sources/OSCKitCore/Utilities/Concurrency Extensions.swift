@@ -1,12 +1,12 @@
 //
 //  Concurrency Extensions.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
 
-fileprivate let maxSeconds = TimeInterval(UInt64.max / 1_000_000_000)
+private let maxSeconds = TimeInterval(UInt64.max / 1_000_000_000)
 
 @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 extension Task where Success == Never, Failure == Never {

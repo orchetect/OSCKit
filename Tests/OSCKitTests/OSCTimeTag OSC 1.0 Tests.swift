@@ -1,7 +1,7 @@
 //
 //  OSCTimeTag OSC 1.0 Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 #if !os(watchOS)
@@ -10,7 +10,8 @@
 import Testing
 
 @Suite struct OSCTimeTag_OSC1_0_Tests {
-    @Test func defaultTimeTag() async throws {
+    @Test
+    func defaultTimeTag() async throws {
         try await confirmation(expectedCount: 1) { confirmation in
             let server = OSCServer(timeTagMode: .osc1_0)
             
@@ -28,7 +29,8 @@ import Testing
         }
     }
     
-    @Test func immediate() async throws {
+    @Test
+    func immediate() async throws {
         try await confirmation(expectedCount: 1) { confirmation in
             let server = OSCServer(timeTagMode: .osc1_0)
             
@@ -47,7 +49,8 @@ import Testing
         }
     }
     
-    @Test func now() async throws {
+    @Test
+    func now() async throws {
         try await confirmation(expectedCount: 1) { confirmation in
             let server = OSCServer(timeTagMode: .osc1_0)
             
@@ -68,7 +71,8 @@ import Testing
     
     // TODO: this test can be flakey when run on CI systems because it is time-sensitive
     /// Tests that a message with a time-tag of 1 second in the future does not arrive early.
-    @Test func oneSecondInFuture_Early() async throws {
+    @Test
+    func oneSecondInFuture_Early() async throws {
         try await confirmation(expectedCount: 0) { confirmation in
             let server = OSCServer(timeTagMode: .osc1_0)
             
@@ -89,7 +93,8 @@ import Testing
     
     // TODO: this test can be flakey when run on CI systems because it is time-sensitive
     /// Tests that a message with a time-tag of 1 second in the future arrives after its intended scheduled time.
-    @Test func oneSecondInFuture_OnTimeOrThereafter() async throws {
+    @Test
+    func oneSecondInFuture_OnTimeOrThereafter() async throws {
         try await confirmation(expectedCount: 1) { confirmation in
             let server = OSCServer(timeTagMode: .osc1_0)
             
@@ -109,7 +114,8 @@ import Testing
         }
     }
     
-    @Test func past() async throws {
+    @Test
+    func past() async throws {
         try await confirmation(expectedCount: 1) { confirmation in
             let server = OSCServer(timeTagMode: .osc1_0)
             

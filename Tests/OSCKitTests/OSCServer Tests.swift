@@ -1,7 +1,7 @@
 //
 //  OSCServer Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 #if !os(watchOS)
@@ -12,7 +12,8 @@ import Testing
 
 @Suite(.serialized)
 struct OSCServer_Tests {
-    @Test func emptyBundle() async throws {
+    @Test
+    func emptyBundle() async throws {
         try await confirmation(expectedCount: 0) { confirmation in
             let server = OSCServer()
             
@@ -74,7 +75,8 @@ struct OSCServer_Tests {
         #expect(receiver.messages[2] == msg3)
     }
     
-    @Test func stressTest() async throws {
+    @Test
+    func stressTest() async throws {
         let server = OSCServer()
         
         final class Receiver: @unchecked Sendable {
@@ -99,7 +101,7 @@ struct OSCServer_Tests {
             [Int.random(in: 10_000 ... 10_000_000), UUID().uuidString, 456.78, true]
         ]
         
-        let sourceMessages: [OSCMessage] = Array(1...1000).map { value in
+        let sourceMessages: [OSCMessage] = Array(1 ... 1000).map { value in
             OSCMessage("/some/address/\(UUID().uuidString)", values: possibleValuePacks.randomElement()!)
         }
         

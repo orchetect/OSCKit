@@ -1,7 +1,7 @@
 //
 //  Object Access Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 #if !os(watchOS)
@@ -11,7 +11,8 @@ import Testing
 
 /// No functionality tests, just test that API compiles as expected.
 @Suite struct Object_Access_Tests {
-    @Test func oscClientAccess() async throws {
+    @Test
+    func oscClientAccess() async throws {
         let oscClient = OSCClient()
         
         oscClient.isIPv4BroadcastEnabled = true
@@ -19,13 +20,14 @@ import Testing
         oscClient.isPortReuseEnabled = true
         oscClient.isPortReuseEnabled = false
         
-        let _ = OSCClient(localPort: 8002)
-        let _ = OSCClient(localPort: 8003, isPortReuseEnabled: true)
-        let _ = OSCClient(localPort: 8004, isPortReuseEnabled: true, isIPv4BroadcastEnabled: true)
-        let _ = OSCClient(localPort: 8005, isIPv4BroadcastEnabled: true)
+        _ = OSCClient(localPort: 8002)
+        _ = OSCClient(localPort: 8003, isPortReuseEnabled: true)
+        _ = OSCClient(localPort: 8004, isPortReuseEnabled: true, isIPv4BroadcastEnabled: true)
+        _ = OSCClient(localPort: 8005, isIPv4BroadcastEnabled: true)
     }
     
-    @Test func oscServerAccess() async throws {
+    @Test
+    func oscServerAccess() async throws {
         let oscServer = OSCServer()
         
         _ = oscServer.isStarted
@@ -44,7 +46,8 @@ import Testing
         }
     }
     
-    @Test func oscSocketAccess() async throws {
+    @Test
+    func oscSocketAccess() async throws {
         let oscSocket = OSCSocket()
         
         _ = oscSocket.isStarted

@@ -1,7 +1,7 @@
 //
 //  OSCSocket Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 #if !os(watchOS)
@@ -12,7 +12,8 @@ import Testing
 
 @Suite(.serialized)
 struct OSCSocket_Tests {
-    @Test func emptyBundle() async throws {
+    @Test
+    func emptyBundle() async throws {
         try await confirmation(expectedCount: 0) { confirmation in
             let socket = OSCSocket(remoteHost: "localhost")
             

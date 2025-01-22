@@ -1,7 +1,7 @@
 //
 //  OSCServerUDPDelegate.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 #if !os(watchOS)
@@ -25,7 +25,7 @@ final class OSCServerUDPDelegate: NSObject, GCDAsyncUdpSocketDelegate, @unchecke
         withFilterContext filterContext: Any?
     ) {
         guard let oscServer else { return }
-        self._handle(oscServer: oscServer, data: data)
+        _handle(oscServer: oscServer, data: data)
     }
     
     /// Stub required to take `oscServer` as sending.

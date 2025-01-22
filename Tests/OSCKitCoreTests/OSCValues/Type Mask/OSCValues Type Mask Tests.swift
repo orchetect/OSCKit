@@ -1,7 +1,7 @@
 //
 //  OSCValues Type Mask Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -12,12 +12,13 @@ import Testing
 @Suite struct OSCValues_TypeMask_Tests {
     // MARK: - 1 Value
     
-    @Test func values_V0() throws {
+    @Test
+    func values_V0() throws {
         // success
         #expect(
             try OSCValues([Int32(123)])
                 .masked(Int32.self) ==
-            123
+                123
         )
         
         // wrong type
@@ -38,25 +39,27 @@ import Testing
         }
     }
     
-    @Test func values_V0o() throws {
+    @Test
+    func values_V0o() throws {
         // success, has value
         #expect(
             try OSCValues([Int32(123)])
                 .masked(Int32?.self) ==
-            123
+                123
         )
         
         // success, nil optional
         #expect(
             try OSCValues([])
                 .masked(Int32?.self) ==
-            nil
+                nil
         )
     }
     
     // MARK: - 2 Values
     
-    @Test func values_V0_V1() throws {
+    @Test
+    func values_V0_V1() throws {
         // success
         do {
             let values: OSCValues = [Int32(123), String("str")]
@@ -85,7 +88,8 @@ import Testing
         }
     }
     
-    @Test func values_V0_V1o() throws {
+    @Test
+    func values_V0_V1o() throws {
         // success, has value
         do {
             let masked = try OSCValues([Int32(123), String("str")])
@@ -111,7 +115,8 @@ import Testing
         }
     }
     
-    @Test func values_V0o_V1o() throws {
+    @Test
+    func values_V0o_V1o() throws {
         // success, has value
         do {
             let masked = try OSCValues([
@@ -164,7 +169,8 @@ import Testing
     // MARK: - 3 Values
     // Note: 3 Values does not have exhaustive tests, only basic tests
     
-    @Test func values_V0_V1_V2() throws {
+    @Test
+    func values_V0_V1_V2() throws {
         // success
         do {
             let values: OSCValues = [
@@ -223,7 +229,8 @@ import Testing
         }
     }
     
-    @Test func values_V0o_V1o_V2o() throws {
+    @Test
+    func values_V0o_V1o_V2o() throws {
         let values: OSCValues = [
             Int32(123),
             String("str"),
@@ -282,7 +289,8 @@ import Testing
     // MARK: - 4 Values
     // Note: 4 Values does not have exhaustive tests, only basic tests
     
-    @Test func values_V0_V1_V2_V3() throws {
+    @Test
+    func values_V0_V1_V2_V3() throws {
         // success
         do {
             let values: OSCValues = [
@@ -353,7 +361,8 @@ import Testing
         }
     }
     
-    @Test func values_V0o_V1o_V2o_V3o() throws {
+    @Test
+    func values_V0o_V1o_V2o_V3o() throws {
         let values: OSCValues = [
             Int32(123),
             String("str"),
@@ -421,7 +430,8 @@ import Testing
     // MARK: - 5 Values
     // Note: 5 Values does not have exhaustive tests, only basic tests
     
-    @Test func values_V0_V1_V2_V3_V4() throws {
+    @Test
+    func values_V0_V1_V2_V3_V4() throws {
         // success
         do {
             let values: OSCValues = [
@@ -501,7 +511,8 @@ import Testing
         }
     }
     
-    @Test func values_V0o_V1o_V2o_V3o_V4o() throws {
+    @Test
+    func values_V0o_V1o_V2o_V3o_V4o() throws {
         let values: OSCValues = [
             Int32(123),
             String("str"),
@@ -594,7 +605,8 @@ import Testing
     // MARK: - 6 Values
     // Note: 6 Values does not have exhaustive tests, only basic tests
     
-    @Test func values_V0_V1_V2_V3_V4_V5() throws {
+    @Test
+    func values_V0_V1_V2_V3_V4_V5() throws {
         // success
         do {
             let values: OSCValues = [
@@ -683,7 +695,8 @@ import Testing
         }
     }
     
-    @Test func values_V0o_V1o_V2o_V3o_V4o_V5o() throws {
+    @Test
+    func values_V0o_V1o_V2o_V3o_V4o_V5o() throws {
         let values: OSCValues = [
             Int32(123),
             String("str"),
@@ -805,7 +818,8 @@ import Testing
     // MARK: - 7 Values
     // Note: 7 Values does not have exhaustive tests, only basic tests
     
-    @Test func values_V0_V1_V2_V3_V4_V5_V6() throws {
+    @Test
+    func values_V0_V1_V2_V3_V4_V5_V6() throws {
         // success
         do {
             let values: OSCValues = [
@@ -903,7 +917,8 @@ import Testing
         }
     }
     
-    @Test func values_V0o_V1o_V2o_V3o_V4o_V5o_V6o() throws {
+    @Test
+    func values_V0o_V1o_V2o_V3o_V4o_V5o_V6o() throws {
         let values: OSCValues = [
             Int32(123),
             String("str"),
@@ -1058,7 +1073,8 @@ import Testing
     // MARK: - 8 Values
     // Note: 8 Values does not have exhaustive tests, only basic tests
     
-    @Test func values_V0_V1_V2_V3_V4_V5_V6_V7() throws {
+    @Test
+    func values_V0_V1_V2_V3_V4_V5_V6_V7() throws {
         // success
         do {
             let values: OSCValues = [
@@ -1165,7 +1181,8 @@ import Testing
         }
     }
     
-    @Test func values_V0o_V1o_V2o_V3o_V4o_V5o_V6o_V7o() throws {
+    @Test
+    func values_V0o_V1o_V2o_V3o_V4o_V5o_V6o_V7o() throws {
         let values: OSCValues = [
             Int32(123),
             String("str"),
@@ -1357,7 +1374,8 @@ import Testing
     // MARK: - 9 Values
     // Note: 9 Values does not have exhaustive tests, only basic tests
     
-    @Test func values_V0_V1_V2_V3_V4_V5_V6_V7_V8() throws {
+    @Test
+    func values_V0_V1_V2_V3_V4_V5_V6_V7_V8() throws {
         // success
         do {
             let values: OSCValues = [
@@ -1473,7 +1491,8 @@ import Testing
         }
     }
     
-    @Test func values_V0o_V1o_V2o_V3o_V4o_V5o_V6o_V7o_V8o() throws {
+    @Test
+    func values_V0o_V1o_V2o_V3o_V4o_V5o_V6o_V7o_V8o() throws {
         let values: OSCValues = [
             Int32(123),
             String("str"),
@@ -1706,7 +1725,8 @@ import Testing
     // MARK: - 10 Values
     // Note: 10 Values does not have exhaustive tests, only basic tests
     
-    @Test func values_V0_V1_V2_V3_V4_V5_V6_V7_V8_V9() throws {
+    @Test
+    func values_V0_V1_V2_V3_V4_V5_V6_V7_V8_V9() throws {
         // success
         do {
             let values: OSCValues = [
@@ -1831,7 +1851,8 @@ import Testing
         }
     }
     
-    @Test func values_V0o_V1o_V2o_V3o_V4o_V5o_V6o_V7o_V8o_V9o() throws {
+    @Test
+    func values_V0o_V1o_V2o_V3o_V4o_V5o_V6o_V7o_V8o_V9o() throws {
         let values: OSCValues = [
             Int32(123),
             String("str"),
@@ -2108,17 +2129,18 @@ import Testing
     
     // MARK: - Substitute types
     
-    @Test func substitution_Int() throws {
+    @Test
+    func substitution_Int() throws {
         #expect(
             try OSCValues([Int32(123)])
                 .masked(Int.self) ==
-            123
+                123
         )
         
         #expect(
             try OSCValues([Int64(123)])
                 .masked(Int.self) ==
-            123
+                123
         )
         
         #expect(throws: OSCValueMaskError.self) {
@@ -2127,17 +2149,18 @@ import Testing
         }
     }
     
-    @Test func substitution_Int_Optional() throws {
+    @Test
+    func substitution_Int_Optional() throws {
         #expect(
             try OSCValues([Int32(123)])
                 .masked(Int?.self) ==
-            123
+                123
         )
         
         #expect(
             try OSCValues([Int64(123)])
                 .masked(Int?.self) ==
-            123
+                123
         )
         
         #expect(throws: OSCValueMaskError.self) {
@@ -2146,7 +2169,8 @@ import Testing
         }
     }
     
-    @Test func exclusivity_String() throws {
+    @Test
+    func exclusivity_String() throws {
         // String should not substitute other string types
         // in the way that Int substitutes other integers.
         
@@ -2154,7 +2178,7 @@ import Testing
         #expect(
             try OSCValues([String("str")])
                 .masked(String.self) ==
-            "str"
+                "str"
         )
         
         // OSCStringAltValue != String
@@ -2170,7 +2194,8 @@ import Testing
         }
     }
     
-    @Test func exclusivity_Character() throws {
+    @Test
+    func exclusivity_Character() throws {
         // Character should not substitute other string types
         // in the way that Int substitutes other integers.
         
@@ -2178,7 +2203,7 @@ import Testing
         #expect(
             try OSCValues([Character("a")])
                 .masked(Character.self) ==
-            Character("a")
+                Character("a")
         )
         
         // String != Character
@@ -2208,7 +2233,8 @@ import Testing
     
     // MARK: - Meta type: AnyOSCNumberValue
     
-    @Test func anyOSCNumberValue_Int32() throws {
+    @Test
+    func anyOSCNumberValue_Int32() throws {
         let values: OSCValues = [Int32(123)]
         
         let masked = try values.masked(AnyOSCNumberValue.self)
@@ -2220,7 +2246,8 @@ import Testing
         #expect(unwrapped == 123)
     }
     
-    @Test func anyOSCNumberValue_Float32() throws {
+    @Test
+    func anyOSCNumberValue_Float32() throws {
         let values: OSCValues = [Float32(123.45)]
         
         let masked = try values.masked(AnyOSCNumberValue.self)
@@ -2232,7 +2259,8 @@ import Testing
         #expect(unwrapped == 123.45)
     }
     
-    @Test func anyOSCNumberValue_Int64() throws {
+    @Test
+    func anyOSCNumberValue_Int64() throws {
         let values: OSCValues = [Int64(123)]
         
         let masked = try values.masked(AnyOSCNumberValue.self)
@@ -2244,7 +2272,8 @@ import Testing
         #expect(unwrapped == 123)
     }
     
-    @Test func anyOSCNumberValue_Double() throws {
+    @Test
+    func anyOSCNumberValue_Double() throws {
         let values: OSCValues = [Double(123.45)]
         
         let masked = try values.masked(AnyOSCNumberValue.self)
@@ -2256,7 +2285,8 @@ import Testing
         #expect(unwrapped == 123.45)
     }
     
-    @Test func anyOSCNumberValue_Int32_Optional() throws {
+    @Test
+    func anyOSCNumberValue_Int32_Optional() throws {
         let values: OSCValues = [Int32(123)]
         
         let masked = try values.masked(AnyOSCNumberValue?.self)
@@ -2268,7 +2298,8 @@ import Testing
         #expect(unwrapped == Int32(123))
     }
     
-    @Test func anyOSCNumberValue_Int32_Optional_Nil() throws {
+    @Test
+    func anyOSCNumberValue_Int32_Optional_Nil() throws {
         let values: OSCValues = []
         
         let masked = try values.masked(AnyOSCNumberValue?.self)

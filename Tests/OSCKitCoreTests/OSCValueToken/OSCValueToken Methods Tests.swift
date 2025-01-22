@@ -1,7 +1,7 @@
 //
 //  OSCValueToken Methods Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -14,7 +14,8 @@ import Testing
     
     // MARK: ... Core types
     
-    @Test func baseTypeMatches_blob() {
+    @Test
+    func baseTypeMatches_blob() {
         let val: any OSCValue = Data([1, 2, 3])
         let valType: OSCValueToken = .blob
         
@@ -46,7 +47,8 @@ import Testing
         }
     }
     
-    @Test func baseTypeMatches_float32() {
+    @Test
+    func baseTypeMatches_float32() {
         let val: any OSCValue = Float32(123.45)
         let valType: OSCValueToken = .float32
         
@@ -78,7 +80,8 @@ import Testing
         }
     }
     
-    @Test func baseTypeMatches_int32() {
+    @Test
+    func baseTypeMatches_int32() {
         let val: any OSCValue = Int32(123)
         let valType: OSCValueToken = .int32
         
@@ -110,7 +113,8 @@ import Testing
         }
     }
     
-    @Test func baseTypeMatches_string() {
+    @Test
+    func baseTypeMatches_string() {
         let val: any OSCValue = String("A string")
         let valType: OSCValueToken = .string
         
@@ -144,7 +148,8 @@ import Testing
     
     // MARK: ... Extended types
     
-    @Test func baseTypeMatches_array() {
+    @Test
+    func baseTypeMatches_array() {
         let val: any OSCValue = OSCArrayValue([Int32(123)])
         let valType: OSCValueToken = .array
         
@@ -176,7 +181,8 @@ import Testing
         }
     }
     
-    @Test func baseTypeMatches_bool() {
+    @Test
+    func baseTypeMatches_bool() {
         let val: any OSCValue = true
         let valType: OSCValueToken = .bool
         
@@ -208,7 +214,8 @@ import Testing
         }
     }
     
-    @Test func baseTypeMatches_character() {
+    @Test
+    func baseTypeMatches_character() {
         let val: any OSCValue = Character("A")
         let valType: OSCValueToken = .character
         
@@ -240,7 +247,8 @@ import Testing
         }
     }
     
-    @Test func baseTypeMatches_double() {
+    @Test
+    func baseTypeMatches_double() {
         let val: any OSCValue = Double(456.78)
         let valType: OSCValueToken = .double
         
@@ -272,7 +280,8 @@ import Testing
         }
     }
     
-    @Test func baseTypeMatches_int64() {
+    @Test
+    func baseTypeMatches_int64() {
         let val: any OSCValue = Int64(456)
         let valType: OSCValueToken = .int64
         
@@ -304,7 +313,8 @@ import Testing
         }
     }
     
-    @Test func baseTypeMatches_impulse() {
+    @Test
+    func baseTypeMatches_impulse() {
         let val: any OSCValue = OSCImpulseValue()
         let valType: OSCValueToken = .impulse
         
@@ -336,7 +346,8 @@ import Testing
         }
     }
     
-    @Test func baseTypeMatches_midi() {
+    @Test
+    func baseTypeMatches_midi() {
         let val: any OSCValue = OSCMIDIValue(portID: 0x00, status: 0x00, data1: 0x00, data2: 0x00)
         let valType: OSCValueToken = .midi
         
@@ -368,7 +379,8 @@ import Testing
         }
     }
     
-    @Test func baseTypeMatches_null() {
+    @Test
+    func baseTypeMatches_null() {
         let val: any OSCValue = OSCNullValue()
         let valType: OSCValueToken = .null
         
@@ -400,7 +412,8 @@ import Testing
         }
     }
     
-    @Test func baseTypeMatches_stringAlt() {
+    @Test
+    func baseTypeMatches_stringAlt() {
         let val: any OSCValue = OSCStringAltValue("An alt string")
         let valType: OSCValueToken = .stringAlt
         
@@ -432,7 +445,8 @@ import Testing
         }
     }
     
-    @Test func baseTypeMatches_timeTag() {
+    @Test
+    func baseTypeMatches_timeTag() {
         let val: any OSCValue = OSCTimeTag(.init(456))
         let valType: OSCValueToken = .timeTag
         
@@ -466,7 +480,8 @@ import Testing
     
     // MARK: ... Opaque types
     
-    @Test func baseTypeMatches_number() {
+    @Test
+    func baseTypeMatches_number() {
         let val: any OSCValueMaskable = AnyOSCNumberValue(123)
         let valType: OSCValueToken = .number
         
