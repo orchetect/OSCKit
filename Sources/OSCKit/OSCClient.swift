@@ -13,7 +13,7 @@ import Foundation
 ///
 /// A single global OSC client instance created once at app startup is often all that is needed. It
 /// can be used to send OSC messages to one or more receivers on the network.
-public final class OSCClient {
+public final class OSCClient: @unchecked Sendable {
     private let udpSocket = GCDAsyncUdpSocket()
     private let udpDelegate = OSCClientUDPDelegate()
     
@@ -170,7 +170,7 @@ extension OSCClient {
     }
 }
 
-private final class OSCClientUDPDelegate: NSObject, GCDAsyncUdpSocketDelegate {
+private final class OSCClientUDPDelegate: NSObject, GCDAsyncUdpSocketDelegate, Sendable {
     // we don't care about handling any delegate methods here so none are overridden
 }
 

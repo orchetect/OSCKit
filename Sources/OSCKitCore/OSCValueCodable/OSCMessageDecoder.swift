@@ -15,7 +15,7 @@ enum OSCMessageDecoder {
     /// Decodes OSC message raw data.
     static func decode(
         rawData: Data
-    ) async throws -> (addressPattern: String, values: OSCValues) {
+    ) throws -> (addressPattern: String, values: OSCValues) {
         // validation: length
         if rawData.count % 4 != 0 { // isn't a multiple of 4 bytes (as per OSC spec)
             throw OSCDecodeError.malformed("Length not a multiple of 4 bytes.")
@@ -59,7 +59,7 @@ enum OSCMessageDecoder {
                 currentTagIndex += 1
                 
             default:
-                let tagsToAdvance = try await decodeValue(
+                let tagsToAdvance = try decodeValue(
                     initialChar: &char,
                     currentTagIndex: &currentTagIndex,
                     tags: &extractedOSCtags,
@@ -81,8 +81,8 @@ enum OSCMessageDecoder {
         tags: inout [Character],
         extractedValues: inout OSCValues,
         decoder: inout OSCValueDecoder
-    ) async throws -> Int {
-        let types = await OSCSerialization.shared.tagIdentities(for: initialChar)
+    ) throws -> Int {
+        let types = OSCSerialization.shared.tagIdentities(for: initialChar)
             .compactMap { $0 as? (any OSCValue.Type) }
         
         guard !types.isEmpty else {
@@ -97,7 +97,7 @@ enum OSCMessageDecoder {
         for type in types {
             guard !isTypeDecoded else { continue }
             
-            if let decoded = try await Self.decode(
+            if let decoded = try Self.decode(
                 forType: type,
                 char: initialChar,
                 charStream: tags[currentTagIndex...],
@@ -127,18 +127,18 @@ enum OSCMessageDecoder {
         char: Character,
         charStream: Array<Character>.SubSequence,
         decoder: inout OSCValueDecoder
-    ) async throws -> (tagCount: Int, value: any OSCValue)? {
+    ) throws -> (tagCount: Int, value: any OSCValue)? {
         switch T.oscDecoding {
         case let d as OSCValueAtomicDecoder<T>:
-            let decoded = try await d.block(&decoder)
+            let decoded = try d.block(&decoder)
             return (tagCount: 1, value: decoded)
             
         case let d as OSCValueVariableDecoder<T>:
-            let decoded = try await d.block(char, &decoder)
+            let decoded = try d.block(char, &decoder)
             return (tagCount: 1, value: decoded)
             
         case let d as OSCValueVariadicDecoder<T>:
-            let decoded = try await d.block(Array(charStream), &decoder)
+            let decoded = try d.block(Array(charStream), &decoder)
             return decoded
             
         default:

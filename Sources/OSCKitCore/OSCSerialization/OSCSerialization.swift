@@ -10,7 +10,7 @@ import Foundation
 ///
 /// Register custom value types to enable ``OSCValueDecoder`` and ``OSCValues`` `masked()` support
 /// for them.
-@globalActor public final actor OSCSerialization { // TODO: convert to actor/globalActor?
+public final class OSCSerialization {
     /// Shared singleton instance.
     public static let shared = OSCSerialization()
     
@@ -19,7 +19,7 @@ import Foundation
     var tagIdentities: [(OSCValueTagIdentity, any OSCValueCodable.Type)] = []
     
     /// Singleton init.
-    init() {
+    private init() {
         // register default types synchronously so they are available immediately
         for oscValueType in Self.standardTypes {
             tagIdentities.append(

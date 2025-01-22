@@ -17,7 +17,7 @@ public protocol OSCValueDecoderBlock where Self: Sendable {
 public struct OSCValueAtomicDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDecoderBlock {
     public typealias Block = @Sendable (
         _ decoder: inout OSCValueDecoder
-    ) async throws -> OSCDecoded
+    ) throws -> OSCDecoded
     
     public let block: Block
     
@@ -31,7 +31,7 @@ public struct OSCValueVariableDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDe
     public typealias Block = @Sendable (
         _ tag: Character,
         _ decoder: inout OSCValueDecoder
-    ) async throws -> OSCDecoded
+    ) throws -> OSCDecoded
     
     public let block: Block
     
@@ -49,7 +49,7 @@ public struct OSCValueVariadicDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDe
     public typealias Block = @Sendable (
         _ tags: [Character],
         _ decoder: inout OSCValueDecoder
-    ) async throws -> (tagCount: Int, value: OSCDecoded)?
+    ) throws -> (tagCount: Int, value: OSCDecoded)?
     
     public let block: Block
     

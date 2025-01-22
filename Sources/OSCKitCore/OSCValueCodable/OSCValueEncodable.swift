@@ -7,7 +7,7 @@
 import Foundation
 
 /// Protocol requirements for ``OSCValue`` encoding.
-public protocol OSCValueEncodable where Self: Sendable {
+public protocol OSCValueEncodable {
     associatedtype OSCEncoded: OSCValueEncodable
     associatedtype OSCValueEncodingBlock: OSCValueEncoderBlock
         where OSCValueEncodingBlock.OSCEncoded == OSCEncoded

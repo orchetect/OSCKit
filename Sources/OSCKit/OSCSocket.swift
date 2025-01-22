@@ -21,7 +21,7 @@ import Foundation
 /// X32 & M32 which respond back using the UDP port that they receive OSC messages from. For
 /// example: if an OSC message was sent from port 8000 to the X32's port 10023, the X32 will respond
 /// by sending OSC messages back to you on port 8000.
-public actor OSCSocket: _OSCServerProtocol {
+public final class OSCSocket: _OSCServerProtocol, @unchecked Sendable {
     let udpSocket: GCDAsyncUdpSocket
     let udpDelegate = OSCServerUDPDelegate()
     let receiveQueue = DispatchQueue(label: "org.orchetect.OSCKit.OSCSocket.receiveQueue")

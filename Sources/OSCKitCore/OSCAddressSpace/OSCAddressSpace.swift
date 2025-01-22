@@ -27,7 +27,7 @@ import Foundation
 ///
 ///  A container may also be a method. Simply register it the same way as other methods.
 ///
-public final class OSCAddressSpace {
+public final class OSCAddressSpace: @unchecked Sendable {
     var root: Node = .rootNodeFactory()
     
     public init() { }

@@ -11,4 +11,4 @@ import OSCKitCore
 public typealias OSCHandlerBlock = @Sendable (
     _ message: OSCMessage,
     _ timeTag: OSCTimeTag
-) async -> Void
+) -> Void

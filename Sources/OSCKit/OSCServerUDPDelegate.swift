@@ -25,18 +25,18 @@ final class OSCServerUDPDelegate: NSObject, GCDAsyncUdpSocketDelegate, @unchecke
         withFilterContext filterContext: Any?
     ) {
         guard let oscServer else { return }
-        _handle(oscServer: oscServer, data: data)
+        self._handle(oscServer: oscServer, data: data)
     }
     
     /// Stub required to take `oscServer` as sending.
     private func _handle(
-        oscServer: sending _OSCServerProtocol,
+        oscServer: _OSCServerProtocol,
         data: Data
     ) {
-        Task {
+        oscServer.receiveQueue.async {
             do {
-                guard let payload = try await data.parseOSC() else { return }
-                await oscServer._handle(payload: payload)
+                guard let payload = try data.parseOSC() else { return }
+                oscServer._handle(payload: payload)
             } catch {
                 #if DEBUG
                 print("OSC parse error: \(error.localizedDescription)")

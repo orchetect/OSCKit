@@ -15,7 +15,7 @@ extension OSCSocket {
         deprecated,
         renamed: "init(localPort:remoteHost:remotePort:timeTagMode:isIPv4BroadcastEnabled:handler:)"
     )
-    public init(
+    public convenience init(
         localPort: UInt16? = nil,
         remoteHost: String? = nil,
         remotePort: UInt16? = nil,

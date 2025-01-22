@@ -22,7 +22,7 @@ extension OSCInterpolatedValue
     } }
     
     public static var oscDecoding: OSCValueDecodingBlock { OSCValueDecodingBlock { decoder in
-        try await Self(CoreOSCValue.oscDecoding.block(&decoder))
+        try Self(CoreOSCValue.oscDecoding.block(&decoder))
     } }
 }
 
