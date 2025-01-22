@@ -15,7 +15,7 @@ import Testing
         
         // test encode and decode
         let rawData = try msg.rawData()
-        let decodedMsg = try await OSCMessage(from: rawData)
+        let decodedMsg = try OSCMessage(from: rawData)
         #expect(msg == decodedMsg)
     }
     
@@ -26,7 +26,7 @@ import Testing
         
         // test encode and decode
         let rawData = try msg.rawData()
-        let decodedMsg = try await OSCMessage(from: rawData)
+        let decodedMsg = try OSCMessage(from: rawData)
         #expect(msg == decodedMsg)
     }
     
@@ -74,7 +74,7 @@ import Testing
         
         // test encode and decode
         let rawData = try msg.rawData()
-        let decodedMsg = try await OSCMessage(from: rawData)
+        let decodedMsg = try OSCMessage(from: rawData)
         #expect(msg == decodedMsg)
     }
     

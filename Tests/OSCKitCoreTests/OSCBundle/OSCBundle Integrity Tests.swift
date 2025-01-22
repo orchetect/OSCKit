@@ -44,7 +44,7 @@ import Testing
         
         // raw data
         
-        let rawData = try await OSCBundle(from: OSCBundle.header + 20.int64.toData(.bigEndian))
+        let rawData = try OSCBundle(from: OSCBundle.header + 20.int64.toData(.bigEndian))
         #expect(rawData.timeTag.rawValue == 20)
         #expect(rawData.elements.count == 0)
     }
@@ -95,7 +95,7 @@ import Testing
         
         // decode
         
-        let decodedOSCbundle = try await OSCBundle(from: encodedOSCbundle)
+        let decodedOSCbundle = try OSCBundle(from: encodedOSCbundle)
         
         // verify contents
         

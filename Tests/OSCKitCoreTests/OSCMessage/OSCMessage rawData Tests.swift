@@ -31,7 +31,7 @@ import Testing
         
         // decode
         
-        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 0)
         
@@ -60,7 +60,7 @@ import Testing
         
         // decode
         
-        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values.first as? Int32)
@@ -91,7 +91,7 @@ import Testing
         
         // decode
         
-        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values.first as? Float32)
@@ -128,7 +128,7 @@ import Testing
         
         // decode
         
-        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val: String = try #require(msg.values.first as? String)
@@ -161,7 +161,7 @@ import Testing
         
         // decode
         
-        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values.first as? Data)
@@ -195,7 +195,7 @@ import Testing
         
         // decode
         
-        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values.first as? Int64)
@@ -227,7 +227,7 @@ import Testing
         
         // decode
         
-        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values.first as? OSCTimeTag)
@@ -259,7 +259,7 @@ import Testing
         
         // decode
         
-        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values.first as? Double)
@@ -296,7 +296,7 @@ import Testing
         
         // decode
         
-        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values.first as? OSCStringAltValue)
@@ -327,7 +327,7 @@ import Testing
         
         // decode
         
-        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values.first as? Character)
@@ -358,7 +358,7 @@ import Testing
         
         // decode
         
-        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values.first as? OSCMIDIValue)
@@ -387,7 +387,7 @@ import Testing
         
         // decode
         
-        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 2)
         #expect(msg.values[0] as? Bool == true)
@@ -416,7 +416,7 @@ import Testing
         
         // decode
         
-        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values.first as? OSCNullValue)
@@ -445,7 +445,7 @@ import Testing
         
         // decode
         
-        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values[0] as? OSCImpulseValue)
@@ -479,7 +479,7 @@ import Testing
         
         // decode
         
-        let msg = try await OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values[0] as? OSCArrayValue)

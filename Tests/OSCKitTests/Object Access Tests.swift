@@ -28,10 +28,10 @@ import Testing
     @Test func oscServerAccess() async throws {
         let oscServer = OSCServer()
         
-        _ = await oscServer.isStarted
-        _ = await oscServer.localPort
+        _ = oscServer.isStarted
+        _ = oscServer.localPort
         // oscServer.localPort = 9000 // immutable actor
-        await oscServer.setHandler { message, timeTag in
+        oscServer.setHandler { message, timeTag in
             print(message)
         }
         // oscServer.handler = { _,_ in } // immutable actor, use `setHandler()` instead
@@ -47,16 +47,16 @@ import Testing
     @Test func oscSocketAccess() async throws {
         let oscSocket = OSCSocket()
         
-        _ = await oscSocket.isStarted
-        _ = await oscSocket.localPort
+        _ = oscSocket.isStarted
+        _ = oscSocket.localPort
         // oscSocket.localPort = 9000 // immutable actor
-        _ = await oscSocket.remoteHost
+        _ = oscSocket.remoteHost
         // oscSocket.remoteHost = "192.168.0.10" // immutable actor
-        _ = await oscSocket.remotePort
+        _ = oscSocket.remotePort
         // oscSocket.remotePort = 8000 // immutable actor
-        _ = await oscSocket.isIPv4BroadcastEnabled
+        _ = oscSocket.isIPv4BroadcastEnabled
         // oscSocket.isIPv4BroadcastEnabled = true // immutable actor
-        await oscSocket.setHandler { message, timeTag in
+        oscSocket.setHandler { message, timeTag in
             print(message)
         }
         // oscSocket.handler = { _,_ in } // immutable actor, use `setHandler()` instead

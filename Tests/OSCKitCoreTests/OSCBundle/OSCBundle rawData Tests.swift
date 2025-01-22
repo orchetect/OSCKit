@@ -26,7 +26,7 @@ import Testing
         
         // decode
         
-        let bundle = try await OSCBundle(from: knownGoodOSCRawBytes.data)
+        let bundle = try OSCBundle(from: knownGoodOSCRawBytes.data)
         
         #expect(bundle.timeTag.rawValue == 1)
         #expect(bundle.elements.count == 0)
@@ -66,7 +66,7 @@ import Testing
         
         // decode
         
-        let bundle = try await OSCBundle(from: knownGoodOSCRawBytes.data)
+        let bundle = try OSCBundle(from: knownGoodOSCRawBytes.data)
         
         #expect(bundle.timeTag.rawValue == 1)
         #expect(bundle.elements.count == 1)

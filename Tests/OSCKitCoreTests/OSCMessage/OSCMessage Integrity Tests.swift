@@ -76,7 +76,7 @@ import Testing
         
         // decode
         
-        let decoded = try await OSCMessage(from: msg)
+        let decoded = try OSCMessage(from: msg)
         
         // just for debug log analysis, if needed
         

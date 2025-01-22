@@ -43,7 +43,7 @@ import Testing
         }
         
         let remainingData = Data(knownGoodOSCRawBytes)
-        let _oscObject = try await remainingData.parseOSC()
+        let _oscObject = try remainingData.parseOSC()
         let oscObject = try #require(_oscObject)
         handleOSCObject(oscObject)
     }
@@ -71,7 +71,7 @@ import Testing
         
         let remainingData = Data(knownGoodOSCRawBytes)
         
-        let _oscObject = try await remainingData.parseOSC()
+        let _oscObject = try remainingData.parseOSC()
         let oscObject = try #require(_oscObject)
             
         switch oscObject {
@@ -116,7 +116,7 @@ import Testing
         // parse block
         
         let remainingData = Data(knownGoodOSCRawBytes)
-        let oscObject = try await remainingData.parseOSC()
+        let oscObject = try remainingData.parseOSC()
             
         switch oscObject {
         case let bundle as OSCBundle:
@@ -161,7 +161,7 @@ import Testing
         let remainingData = Data(knownBadOSCRawBytes)
         
         do {
-            _ = try await remainingData.parseOSC()
+            _ = try remainingData.parseOSC()
             Issue.record("Should throw an error.")
         } catch _ as OSCDecodeError {
             // handle decode errors
@@ -203,7 +203,7 @@ import Testing
         let remainingData = Data(knownGoodOSCRawBytes)
         
         do {
-            _ = try await remainingData.parseOSC()
+            _ = try remainingData.parseOSC()
             Issue.record("Should throw an error.")
         } catch _ as OSCDecodeError {
             // handle decode errors
@@ -245,7 +245,7 @@ import Testing
         let remainingData = Data(knownGoodOSCRawBytes)
         
         do {
-            _ = try await remainingData.parseOSC()
+            _ = try remainingData.parseOSC()
             Issue.record("Should throw an error.")
         } catch _ as OSCDecodeError {
             // handle decode errors
