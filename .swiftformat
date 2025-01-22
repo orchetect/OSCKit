@@ -24,7 +24,7 @@
 --groupedextension "MARK: %c"
 --guardelse auto
 --header "\n {file}\n OSCKit • https://github.com/orchetect/OSCKit\n © 2020-{year} Steffan Andrews • Licensed under MIT License\n"
---hexgrouping 4,8
+--hexgrouping 8,8
 --hexliteralcase uppercase
 --ifdef no-indent
 --importgrouping alpha
@@ -37,7 +37,7 @@
 --markcategories true
 --markextensions always
 --marktypes always
---maxwidth 120
+--maxwidth 140
 --modifierorder
 --nevertrailing
 --nospaceoperators
