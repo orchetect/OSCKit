@@ -23,25 +23,27 @@ extension _OSCServerProtocol {
         payload: any OSCObject,
         timeTag: OSCTimeTag = .immediate()
     ) {
-        switch payload {
-        case let bundle as OSCBundle:
-            for element in bundle.elements {
-                _handle(payload: element, timeTag: bundle.timeTag)
+        receiveQueue.async {
+            switch payload {
+            case let bundle as OSCBundle:
+                for element in bundle.elements {
+                    self._handle(payload: element, timeTag: bundle.timeTag)
+                }
+                
+            case let message as OSCMessage:
+                self._schedule(message, at: timeTag)
+                
+            default:
+                assertionFailure("Unexpected OSCObject type encountered.")
             }
-            
-        case let message as OSCMessage:
-            _schedule(message, at: timeTag)
-            
-        default:
-            assertionFailure("Unexpected OSCObject type encountered.")
         }
     }
     
-    func _schedule(
+    private func _schedule(
         _ message: OSCMessage,
         at timeTag: OSCTimeTag = .immediate()
     ) {
-        switch timeTagMode {
+        switch self.timeTagMode {
         case .ignore:
             _dispatch(message, timeTag: timeTag)
             
@@ -64,11 +66,13 @@ extension _OSCServerProtocol {
         }
     }
     
-    func _dispatch(_ message: OSCMessage, timeTag: OSCTimeTag) {
-        handler?(message, timeTag)
+    private func _dispatch(_ message: OSCMessage, timeTag: OSCTimeTag) {
+        receiveQueue.async {
+            self.handler?(message, timeTag)
+        }
     }
     
-    func _dispatch(
+    private func _dispatch(
         _ message: OSCMessage,
         timeTag: OSCTimeTag,
         at secondsFromNow: TimeInterval

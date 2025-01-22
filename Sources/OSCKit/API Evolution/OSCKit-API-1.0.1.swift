@@ -13,8 +13,9 @@ extension OSCSocket {
     @available(
         *,
         deprecated,
-        renamed: "init(localPort:remoteHost:remotePort:timeTagMode:isIPv4BroadcastEnabled:handler:)"
+        renamed: "init(localPort:remoteHost:remotePort:timeTagMode:isIPv4BroadcastEnabled:receiveQueue:handler:)"
     )
+    @_disfavoredOverload
     public convenience init(
         localPort: UInt16? = nil,
         remoteHost: String? = nil,
@@ -30,6 +31,7 @@ extension OSCSocket {
             remotePort: remotePort,
             timeTagMode: timeTagMode,
             isIPv4BroadcastEnabled: isIPv4BroadcastEnabled,
+            receiveQueue: nil,
             handler: handler
         )
     }

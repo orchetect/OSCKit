@@ -24,7 +24,7 @@ import Foundation
 public final class OSCSocket: _OSCServerProtocol, @unchecked Sendable {
     let udpSocket: GCDAsyncUdpSocket
     let udpDelegate = OSCServerUDPDelegate()
-    let receiveQueue = DispatchQueue(label: "org.orchetect.OSCKit.OSCSocket.receiveQueue")
+    let receiveQueue: DispatchQueue
     var handler: OSCHandlerBlock?
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
@@ -110,6 +110,7 @@ public final class OSCSocket: _OSCServerProtocol, @unchecked Sendable {
         remotePort: UInt16? = nil,
         timeTagMode: OSCTimeTagMode = .ignore,
         isIPv4BroadcastEnabled: Bool = false,
+        receiveQueue: DispatchQueue? = nil,
         handler: OSCHandlerBlock? = nil
     ) {
         self.remoteHost = remoteHost
@@ -117,6 +118,8 @@ public final class OSCSocket: _OSCServerProtocol, @unchecked Sendable {
         _remotePort = remotePort
         self.timeTagMode = timeTagMode
         self.isIPv4BroadcastEnabled = isIPv4BroadcastEnabled
+        let receiveQueue = receiveQueue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCSocket.receiveQueue")
+        self.receiveQueue = receiveQueue
         self.handler = handler
         
         udpSocket = GCDAsyncUdpSocket(delegate: udpDelegate, delegateQueue: receiveQueue, socketQueue: nil)
