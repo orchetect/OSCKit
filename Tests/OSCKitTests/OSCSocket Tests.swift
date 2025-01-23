@@ -63,13 +63,62 @@ struct OSCSocket_Tests {
             server._handle(payload: msg3)
         }
         
-        try await Task.sleep(seconds: 0.5)
-        
-        try #require(receiver.messages.count == 3)
+        try await wait(require: { receiver.messages.count == 3 }, timeout: 5.0)
         
         #expect(receiver.messages[0] == msg1)
         #expect(receiver.messages[1] == msg2)
         #expect(receiver.messages[2] == msg3)
+    }
+    
+    @Test
+    func stressTest() async throws {
+        let socket = OSCSocket(
+            localPort: nil,
+            remoteHost: "localhost",
+            remotePort: nil,
+            timeTagMode: .ignore,
+            isIPv4BroadcastEnabled: false,
+            receiveQueue: nil,
+            handler: nil
+        )
+        try socket.start()
+        
+        final class Receiver: @unchecked Sendable {
+            var messages: [OSCMessage] = []
+            func received(_ message: OSCMessage) {
+                messages.append(message)
+            }
+        }
+        
+        let receiver = Receiver()
+        
+        socket.setHandler { message, timeTag in
+            DispatchQueue.main.async {
+                receiver.received(message)
+            }
+        }
+        
+        let possibleValuePacks: [OSCValues] = [
+            [],
+            [UUID().uuidString],
+            [Int.random(in: 10_000 ... 10_000_000)],
+            [Int.random(in: 10_000 ... 10_000_000), UUID().uuidString, 456.78, true]
+        ]
+        
+        let sourceMessages: [OSCMessage] = Array(1 ... 1000).map { value in
+            OSCMessage("/some/address/\(UUID().uuidString)", values: possibleValuePacks.randomElement()!)
+        }
+        
+        // use global thread to simulate internal network thread being a dedicated thread
+        DispatchQueue.global().async {
+            for message in sourceMessages {
+                socket._handle(payload: message)
+            }
+        }
+        
+        try await wait(require: { receiver.messages.count == 1000 }, timeout: 5.0)
+        
+        #expect(receiver.messages == sourceMessages)
     }
     
     @Test
@@ -119,9 +168,7 @@ struct OSCSocket_Tests {
             }
         }
         
-        try await Task.sleep(seconds: 2.0)
-        
-        try #require(receiver.messages.count == 1000)
+        try await wait(require: { receiver.messages.count == 1000 }, timeout: 10.0)
         
         #expect(receiver.messages == sourceMessages)
     }

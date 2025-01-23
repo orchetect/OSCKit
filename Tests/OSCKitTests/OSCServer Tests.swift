@@ -63,9 +63,7 @@ struct OSCServer_Tests {
             server._handle(payload: msg3)
         }
         
-        try await Task.sleep(seconds: 0.5)
-        
-        try #require(receiver.messages.count == 3)
+        try await wait(require: { receiver.messages.count == 3 }, timeout: 5.0)
         
         #expect(receiver.messages[0] == msg1)
         #expect(receiver.messages[1] == msg2)
@@ -109,9 +107,7 @@ struct OSCServer_Tests {
             }
         }
         
-        try await Task.sleep(seconds: 1.0)
-        
-        try #require(receiver.messages.count == 1000)
+        try await wait(require: { receiver.messages.count == 1000 }, timeout: 5.0)
         
         #expect(receiver.messages == sourceMessages)
     }
@@ -156,9 +152,7 @@ struct OSCServer_Tests {
             }
         }
         
-        try await Task.sleep(seconds: 2.0)
-        
-        try #require(receiver.messages.count == 1000)
+        try await wait(require: { receiver.messages.count == 1000 }, timeout: 10.0)
         
         #expect(receiver.messages == sourceMessages)
     }
