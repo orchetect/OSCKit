@@ -1,7 +1,7 @@
 //
 //  OSCServer.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 #if !os(watchOS)
@@ -15,10 +15,10 @@ import OSCKitCore
 /// A single global OSC server instance is often created once at app startup to receive OSC messages
 /// on a specific local port. The default OSC port is 8000 but it may be set to any open port if
 /// desired.
-public actor OSCServer: _OSCServerProtocol {
+public final class OSCServer: _OSCServerProtocol, @unchecked Sendable {
     let udpSocket: GCDAsyncUdpSocket
     let udpDelegate = OSCServerUDPDelegate()
-    let receiveQueue = DispatchQueue(label: "org.orchetect.OSCKit.OSCServer.receiveQueue")
+    let receiveQueue: DispatchQueue
     var handler: OSCHandlerBlock?
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
@@ -32,23 +32,33 @@ public actor OSCServer: _OSCServerProtocol {
     public private(set) var isStarted: Bool = false
     
     /// Initialize an OSC server.
-    ///
+    /// 
     /// The default port for OSC communication is 8000 but may change depending on device/software
     /// manufacturer.
-    ///
+    /// 
     /// > Note:
     /// >
     /// > Ensure ``start()`` is called once after initialization in order to begin receiving messages.
+    ///
+    /// - Parameters:
+    ///   - port: Local port to listen on for inbound OSC packets.
+    ///   - timeTagMode: OSC TimeTag mode. Default is recommended.
+    ///   - receiveQueue: Optionally supply a custom dispatch queue for receiving OSC packets and dispatching the
+    ///     handler callback closure. If `nil`, a dedicated internal background queue will be used.
+    ///   - handler: Handler to call when OSC bundles or messages are received.
     public init(
         port: UInt16 = 8000,
         timeTagMode: OSCTimeTagMode = .ignore,
+        receiveQueue: DispatchQueue? = nil,
         handler: OSCHandlerBlock? = nil
     ) {
         localPort = port
         self.timeTagMode = timeTagMode
+        let receiveQueue = receiveQueue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCServer.receiveQueue")
+        self.receiveQueue = receiveQueue
         self.handler = handler
         
-        udpSocket = GCDAsyncUdpSocket(delegate: udpDelegate, delegateQueue: receiveQueue)
+        udpSocket = GCDAsyncUdpSocket(delegate: udpDelegate, delegateQueue: receiveQueue, socketQueue: nil)
         udpDelegate.oscServer = self
     }
     
@@ -57,7 +67,9 @@ public actor OSCServer: _OSCServerProtocol {
     public func setHandler(
         _ handler: OSCHandlerBlock?
     ) {
-        self.handler = handler
+        receiveQueue.async {
+            self.handler = handler
+        }
     }
 }
 

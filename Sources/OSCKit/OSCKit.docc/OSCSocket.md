@@ -25,7 +25,7 @@ init() {
 Similar to ``OSCServer``, an ``OSCSocket`` instance must be started before it can send or receive messages.
 
 ```swift
-try await oscSocket.start()
+try oscSocket.start()
 ```
 
 ### Sending and Receiving OSC Messages
@@ -40,12 +40,12 @@ The ``OSCSocket/send(_:to:port:)`` method has a slightly different behavior on `
 // The `remoteHost` and/or `remotePort` supplied at the time of
 // initialization can be used by default:
 let msg = OSCMessage("/test")
-try await oscSocket.send(msg)
+try oscSocket.send(msg)
 
 // It is also possible to override the destination host and/or port
 // on a per-message basis:
 let msg = OSCMessage("/test")
-try await oscSocket.send(msg, to: "192.168.0.3", port: 8000)
+try oscSocket.send(msg, to: "192.168.0.3", port: 8000)
 ```
 
 ### Notes

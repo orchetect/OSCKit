@@ -1,7 +1,7 @@
 //
 //  OSCServerUDPDelegate.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 #if !os(watchOS)
@@ -30,13 +30,13 @@ final class OSCServerUDPDelegate: NSObject, GCDAsyncUdpSocketDelegate, @unchecke
     
     /// Stub required to take `oscServer` as sending.
     private func _handle(
-        oscServer: sending _OSCServerProtocol,
+        oscServer: _OSCServerProtocol,
         data: Data
     ) {
-        Task {
+        oscServer.receiveQueue.async {
             do {
-                guard let payload = try await data.parseOSC() else { return }
-                await oscServer._handle(payload: payload)
+                guard let payload = try data.parseOSC() else { return }
+                oscServer._handle(payload: payload)
             } catch {
                 #if DEBUG
                 print("OSC parse error: \(error.localizedDescription)")

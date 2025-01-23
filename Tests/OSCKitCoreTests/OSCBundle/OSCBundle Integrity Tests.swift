@@ -1,7 +1,7 @@
 //
 //  OSCBundle Integrity Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -11,12 +11,13 @@ import Testing
 @Suite struct OSCBundle_Integrity_Tests {
     // MARK: - Constructors
     
-    @Test func constructors() async throws {
+    @Test
+    func constructors() async throws {
         // empty
         
         let emptyBundle = OSCBundle([])
         #expect(emptyBundle.timeTag.rawValue == 1)
-        #expect(emptyBundle.elements.count == 0)
+        #expect(emptyBundle.elements.isEmpty)
         
         // timetag only
         
@@ -25,7 +26,7 @@ import Testing
             []
         )
         #expect(timeTagOnly.timeTag.rawValue == 20)
-        #expect(timeTagOnly.elements.count == 0)
+        #expect(timeTagOnly.elements.isEmpty)
         
         // elements only
         
@@ -44,14 +45,15 @@ import Testing
         
         // raw data
         
-        let rawData = try await OSCBundle(from: OSCBundle.header + 20.int64.toData(.bigEndian))
+        let rawData = try OSCBundle(from: OSCBundle.header + 20.int64.toData(.bigEndian))
         #expect(rawData.timeTag.rawValue == 20)
-        #expect(rawData.elements.count == 0)
+        #expect(rawData.elements.isEmpty)
     }
     
     // MARK: - Complex messages
     
-    @Test func complex() async throws {
+    @Test
+    func complex() async throws {
         // this does not necessarily prove that encoding or decoding actually matches OSC spec, it
         // simply ensures that rawData that OSCBundle generates can be decoded
         
@@ -95,7 +97,7 @@ import Testing
         
         // decode
         
-        let decodedOSCbundle = try await OSCBundle(from: encodedOSCbundle)
+        let decodedOSCbundle = try OSCBundle(from: encodedOSCbundle)
         
         // verify contents
         
@@ -108,7 +110,7 @@ import Testing
         
         let element1A = try #require(element1.elements[0] as? OSCMessage)
         #expect(element1A.addressPattern.stringValue == "/bundle1/msg")
-        #expect(element1A.values.count == 0)
+        #expect(element1A.values.isEmpty)
         
         let element2 = try #require(decodedOSCbundle.elements[1] as? OSCBundle)
         #expect(element2.timeTag.rawValue == 1)
@@ -141,6 +143,6 @@ import Testing
         // element 4
         let element4 = try #require(decodedOSCbundle.elements[3] as? OSCBundle)
         #expect(element4.timeTag.rawValue == 1)
-        #expect(element4.elements.count == 0)
+        #expect(element4.elements.isEmpty)
     }
 }

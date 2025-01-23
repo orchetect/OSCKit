@@ -1,7 +1,7 @@
 //
 //  OSCSocket.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 #if !os(watchOS)
@@ -21,10 +21,10 @@ import Foundation
 /// X32 & M32 which respond back using the UDP port that they receive OSC messages from. For
 /// example: if an OSC message was sent from port 8000 to the X32's port 10023, the X32 will respond
 /// by sending OSC messages back to you on port 8000.
-public actor OSCSocket: _OSCServerProtocol {
+public final class OSCSocket: _OSCServerProtocol, @unchecked Sendable {
     let udpSocket: GCDAsyncUdpSocket
     let udpDelegate = OSCServerUDPDelegate()
-    let receiveQueue = DispatchQueue(label: "org.orchetect.OSCKit.OSCSocket.receiveQueue")
+    let receiveQueue: DispatchQueue
     var handler: OSCHandlerBlock?
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
@@ -49,6 +49,7 @@ public actor OSCSocket: _OSCServerProtocol {
     public var localPort: UInt16 {
         udpSocket.localPort()
     }
+
     private var _localPort: UInt16?
     
     /// UDP port used by to send OSC packets. This may be set at any time.
@@ -61,6 +62,7 @@ public actor OSCSocket: _OSCServerProtocol {
         get { _remotePort ?? localPort }
         set { _remotePort = newValue }
     }
+
     private var _remotePort: UInt16?
     
     /// Enable sending IPv4 broadcast messages from the socket.
@@ -95,12 +97,16 @@ public actor OSCSocket: _OSCServerProtocol {
     /// > Ensure ``start()`` is called once after initialization in order to begin sending and receiving messages.
     ///
     /// - Parameters:
-    ///   - localPort: Local port. If `nil`, a random available port in the system will be chosen.
+    ///   - localPort: Local port to listen on for inbound OSC packets.
+    ///     If `nil`, a random available port in the system will be chosen.
     ///   - remoteHost: Remote hostname or IP address.
-    ///   - remotePort: Remote port. `nil`, the resulting `localPort` value will be used.
+    ///   - remotePort: Remote port on the remote host machine to send outbound OSC packets to.
+    ///     If `nil`, the `localPort` value will be used.
     ///   - timeTagMode: OSC time-tag mode. The default is recommended.
     ///   - isIPv4BroadcastEnabled: Enable sending IPv4 broadcast messages from the socket.
     ///     See ``isIPv4BroadcastEnabled`` for more details.
+    ///   - receiveQueue: Optionally supply a custom dispatch queue for receiving OSC packets and dispatching the
+    ///     handler callback closure. If `nil`, a dedicated internal background queue will be used.
     ///   - handler: Handler to call when OSC bundles or messages are received.
     public init(
         localPort: UInt16? = nil,
@@ -108,6 +114,7 @@ public actor OSCSocket: _OSCServerProtocol {
         remotePort: UInt16? = nil,
         timeTagMode: OSCTimeTagMode = .ignore,
         isIPv4BroadcastEnabled: Bool = false,
+        receiveQueue: DispatchQueue? = nil,
         handler: OSCHandlerBlock? = nil
     ) {
         self.remoteHost = remoteHost
@@ -115,6 +122,8 @@ public actor OSCSocket: _OSCServerProtocol {
         _remotePort = remotePort
         self.timeTagMode = timeTagMode
         self.isIPv4BroadcastEnabled = isIPv4BroadcastEnabled
+        let receiveQueue = receiveQueue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCSocket.receiveQueue")
+        self.receiveQueue = receiveQueue
         self.handler = handler
         
         udpSocket = GCDAsyncUdpSocket(delegate: udpDelegate, delegateQueue: receiveQueue, socketQueue: nil)
@@ -126,7 +135,9 @@ public actor OSCSocket: _OSCServerProtocol {
     public func setHandler(
         _ handler: OSCHandlerBlock?
     ) {
-        self.handler = handler
+        receiveQueue.async {
+            self.handler = handler
+        }
     }
 }
 

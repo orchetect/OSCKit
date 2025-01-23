@@ -1,7 +1,7 @@
 //
 //  OSCKit-API-1.0.1.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 #if !os(watchOS)
@@ -13,9 +13,10 @@ extension OSCSocket {
     @available(
         *,
         deprecated,
-        renamed: "init(localPort:remoteHost:remotePort:timeTagMode:isIPv4BroadcastEnabled:handler:)"
+        renamed: "init(localPort:remoteHost:remotePort:timeTagMode:isIPv4BroadcastEnabled:receiveQueue:handler:)"
     )
-    public init(
+    @_disfavoredOverload
+    public convenience init(
         localPort: UInt16? = nil,
         remoteHost: String? = nil,
         remotePort: UInt16? = nil,
@@ -30,6 +31,7 @@ extension OSCSocket {
             remotePort: remotePort,
             timeTagMode: timeTagMode,
             isIPv4BroadcastEnabled: isIPv4BroadcastEnabled,
+            receiveQueue: nil,
             handler: handler
         )
     }

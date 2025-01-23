@@ -1,7 +1,7 @@
 //
 //  BinaryFloatingPoint.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -22,7 +22,7 @@ extension OSCInterpolatedValue
     } }
     
     public static var oscDecoding: OSCValueDecodingBlock { OSCValueDecodingBlock { decoder in
-        try await Self(CoreOSCValue.oscDecoding.block(&decoder))
+        try Self(CoreOSCValue.oscDecoding.block(&decoder))
     } }
 }
 

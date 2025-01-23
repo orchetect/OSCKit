@@ -1,7 +1,7 @@
 //
 //  OSCMessage rawData.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -11,11 +11,11 @@ import Foundation
 /// OSC Message.
 extension OSCMessage {
     /// Initialize by parsing raw OSC message data bytes.
-    public init(from rawData: Data) async throws {
+    public init(from rawData: Data) throws {
         // cache raw data
         _rawData = rawData
         
-        let decoded = try await OSCMessageDecoder.decode(rawData: rawData)
+        let decoded = try OSCMessageDecoder.decode(rawData: rawData)
         
         // update public properties
         addressPattern = .init(decoded.addressPattern)

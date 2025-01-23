@@ -1,7 +1,7 @@
 //
 //  OSCMessage Codable Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -9,8 +9,8 @@ import OSCKitCore
 import Testing
 
 @Suite struct OSCMessage_Codable_Tests {
-    fileprivate let encoder = JSONEncoder()
-    fileprivate let decoder = JSONDecoder()
+    private let encoder = JSONEncoder()
+    private let decoder = JSONDecoder()
     
     // TODO: uncomment these tests once `OSCMessage.Codable` conformance is fixed
     // TODO: these need reordering and new types added (ie: OSCImpulseValue)

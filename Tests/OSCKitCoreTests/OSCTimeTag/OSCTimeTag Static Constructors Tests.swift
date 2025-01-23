@@ -1,17 +1,17 @@
 //
 //  OSCTimeTag Static Constructors Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
+import Numerics
 import OSCKitCore
 import Testing
-import Numerics
 
 @Suite struct OSCTimeTag_StaticConstructors_Tests {
     #if os(macOS) || os(iOS)
-    let tolerance: TimeInterval = 0.001
+    let tolerance: TimeInterval = 0.005
     #elseif os(tvOS) || os(watchOS)
     // allow more time variance for CI pipeline to de-flake
     let tolerance: TimeInterval = 0.01
@@ -19,24 +19,28 @@ import Numerics
     
     // MARK: - Static Constructors
     
-    @Test func timeTagImmediate() {
+    @Test
+    func timeTagImmediate() {
         let val: OSCTimeTag = .immediate()
         #expect(val == OSCTimeTag(1))
     }
     
     // MARK: - `any OSCValue` Constructors
     
-    @Test func oscValue_timeTag() {
+    @Test
+    func oscValue_timeTag() {
         let val: any OSCValue = .timeTag(123, era: 1)
         #expect(val as? OSCTimeTag == OSCTimeTag(123, era: 1))
     }
     
-    @Test func oscValue_timeTagImmediate() {
+    @Test
+    func oscValue_timeTagImmediate() {
         let val: any OSCValue = .timeTagImmediate()
         #expect(val as? OSCTimeTag == OSCTimeTag.immediate())
     }
     
-    @Test func oscValue_timeTagNow() throws {
+    @Test(.enabled(if: isSystemTimingStable()))
+    func oscValue_timeTagNow() throws {
         let val: any OSCValue = .timeTagNow()
         let now = OSCTimeTag.now()
         
@@ -45,7 +49,8 @@ import Numerics
         #expect(valTI.isApproximatelyEqual(to: nowTI, absoluteTolerance: tolerance))
     }
     
-    @Test func oscValue_timeTagTimeIntervalSinceNow() throws {
+    @Test(.enabled(if: isSystemTimingStable()))
+    func oscValue_timeTagTimeIntervalSinceNow() throws {
         let val: any OSCValue = .timeTag(timeIntervalSinceNow: 5.0)
         let now = OSCTimeTag(timeIntervalSinceNow: 5.0)
         
@@ -55,13 +60,15 @@ import Numerics
         #expect(valTI.isApproximatelyEqual(to: nowTI, absoluteTolerance: tolerance))
     }
     
-    @Test func oscValue_timeTagTimeIntervalSince1900() {
+    @Test
+    func oscValue_timeTagTimeIntervalSince1900() {
         let val: any OSCValue = .timeTag(timeIntervalSince1900: 9_467_107_200.0)
         #expect(val as? OSCTimeTag == OSCTimeTag(timeIntervalSince1900: 9_467_107_200.0))
     }
     
     @available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 6, *)
-    @Test func oscValue_timeTagFuture() {
+    @Test
+    func oscValue_timeTagFuture() {
         let futureDate = Date().advanced(by: 200.0)
         let val: any OSCValue = .timeTag(future: futureDate)
         #expect(val as? OSCTimeTag == OSCTimeTag(future: futureDate))

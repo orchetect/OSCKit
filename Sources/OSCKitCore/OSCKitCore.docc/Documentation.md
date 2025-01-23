@@ -10,7 +10,7 @@ Open Sound Control (OSC) library for macOS, iOS and tvOS.
 - Convenient OSC message value type masking, validation and strong-typing
 - Modular: use the provided UDP network layer by default, or use your own
 - Support for custom OSC types
-- Supports Swift Concurrency
+- Supports Swift 6 Concurrency
 - Fully unit tested
 - Full DocC documentation
 

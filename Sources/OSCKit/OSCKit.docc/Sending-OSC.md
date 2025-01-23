@@ -6,8 +6,7 @@ Sending OSC messages and bundles.
 
 Both ``OSCClient`` and ``OSCSocket`` are capable of sending messages using the same API.
 
-Note that the `send(_:to:port:)` method on ``OSCClient`` is globally thread-safe and does not require `await`.
-The `send(_:to:port:)` method on ``OSCSocket`` requires `await` which can also be wrapped in `Task { }` if called from a non-asynchronous context.
+Note that the `send(_:to:port:)` method on ``OSCClient`` is globally thread-safe.
 
 ### OSC Messages
 

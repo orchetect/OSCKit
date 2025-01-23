@@ -1,11 +1,11 @@
 //
 //  ContentView.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
-import SwiftUI
 import OSCKit
+import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject private var oscManager: OSCManager
@@ -63,6 +63,7 @@ struct ContentView: View {
         
         oscManager.send(oscMessage, to: "localhost", port: 8000)
     }
+
     private func sendTestOSCMessageCWithNoOptionalValue() {
         let oscMessage = OSCMessage(
             "/some/address/methodC",

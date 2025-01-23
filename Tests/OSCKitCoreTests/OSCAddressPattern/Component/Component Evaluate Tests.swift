@@ -1,14 +1,15 @@
 //
 //  Component Evaluate Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 @testable import OSCKitCore
 import Testing
 
 @Suite struct OSCAddressPattern_Component_Evaluate_Individual_Pattern_Types_Tests {
-    @Test func emptyPattern() {
+    @Test
+    func emptyPattern() {
         #expect(
             !OSCAddressPattern.Component(string: "").evaluate(matching: "123")
         )
@@ -18,7 +19,8 @@ import Testing
         )
     }
     
-    @Test func basicLiterals() {
+    @Test
+    func basicLiterals() {
         #expect(
             OSCAddressPattern.Component(string: "123").evaluate(matching: "123")
         )
@@ -38,7 +40,8 @@ import Testing
         )
     }
     
-    @Test func variableWildcard() {
+    @Test
+    func variableWildcard() {
         #expect(
             OSCAddressPattern.Component(string: "*").evaluate(matching: "1")
         )
@@ -72,7 +75,8 @@ import Testing
         )
     }
     
-    @Test func variableWildcard_EdgeCases() {
+    @Test
+    func variableWildcard_EdgeCases() {
         #expect(
             OSCAddressPattern.Component(string: "***").evaluate(matching: "1")
         )
@@ -82,7 +86,8 @@ import Testing
         )
     }
     
-    @Test func singleWildcard() {
+    @Test
+    func singleWildcard() {
         #expect(
             OSCAddressPattern.Component(string: "?").evaluate(matching: "1")
         )
@@ -100,7 +105,8 @@ import Testing
         )
     }
     
-    @Test func bracket() {
+    @Test
+    func bracket() {
         // single chars
         
         #expect(
@@ -264,7 +270,8 @@ import Testing
         )
     }
     
-    @Test func bracket_isExcluded_SingleChars() {
+    @Test
+    func bracket_isExcluded_SingleChars() {
         // single chars
         
         #expect(
@@ -280,7 +287,8 @@ import Testing
         )
     }
     
-    @Test func bracket_isExcluded_Range() {
+    @Test
+    func bracket_isExcluded_Range() {
         #expect(
             !OSCAddressPattern.Component(string: "[!b-y]").evaluate(matching: "b")
         )
@@ -302,7 +310,8 @@ import Testing
         )
     }
     
-    @Test func bracket_SingleMemberRange() {
+    @Test
+    func bracket_SingleMemberRange() {
         #expect(
             !OSCAddressPattern.Component(string: "[!b-b]").evaluate(matching: "b")
         )
@@ -316,7 +325,8 @@ import Testing
         )
     }
     
-    @Test func bracket_MixedRanges() {
+    @Test
+    func bracket_MixedRanges() {
         #expect(
             !OSCAddressPattern.Component(string: "[!a-z0-9]").evaluate(matching: "a")
         )
@@ -330,7 +340,8 @@ import Testing
         )
     }
     
-    @Test func bracket_EdgeCases() {
+    @Test
+    func bracket_EdgeCases() {
         // invalid range
         
         #expect(
@@ -360,7 +371,8 @@ import Testing
         )
     }
     
-    @Test func bracket_MixedSinglesAndRanges() {
+    @Test
+    func bracket_MixedSinglesAndRanges() {
         #expect(
             !OSCAddressPattern.Component(string: "[!a-z0-9XY]").evaluate(matching: "a")
         )
@@ -386,7 +398,8 @@ import Testing
         )
     }
     
-    @Test func brace() {
+    @Test
+    func brace() {
         #expect(
             OSCAddressPattern.Component(string: "{abc}").evaluate(matching: "abc")
         )
@@ -408,7 +421,8 @@ import Testing
         )
     }
     
-    @Test func brace_EdgeCases() {
+    @Test
+    func brace_EdgeCases() {
         #expect(
             OSCAddressPattern.Component(string: "{,abc}").evaluate(matching: "abc")
         )
@@ -442,7 +456,8 @@ import Testing
         )
     }
     
-    @Test func brace_Malformed_A() {
+    @Test
+    func brace_Malformed_A() {
         #expect(
             OSCAddressPattern.Component(string: "{abc,def").evaluate(matching: "{abc,def")
         )
@@ -456,7 +471,8 @@ import Testing
         )
     }
     
-    @Test func brace_Malformed_B() {
+    @Test
+    func brace_Malformed_B() {
         #expect(
             OSCAddressPattern.Component(string: "}abc,def").evaluate(matching: "}abc,def")
         )
@@ -470,7 +486,8 @@ import Testing
         )
     }
     
-    @Test func brace_Malformed_C() {
+    @Test
+    func brace_Malformed_C() {
         #expect(
             OSCAddressPattern.Component(string: "{{abc,def").evaluate(matching: "{{abc,def")
         )
@@ -484,7 +501,8 @@ import Testing
         )
     }
     
-    @Test func brace_Malformed_D() {
+    @Test
+    func brace_Malformed_D() {
         #expect(
             OSCAddressPattern.Component(string: "abc,def}").evaluate(matching: "abc,def}")
         )
@@ -498,7 +516,8 @@ import Testing
         )
     }
     
-    @Test func bracketsAndBraces() {
+    @Test
+    func bracketsAndBraces() {
         #expect(
             OSCAddressPattern.Component(string: "[0-9]{def,abc}").evaluate(matching: "1abc")
         )
@@ -526,7 +545,8 @@ import Testing
 }
 
 @Suite struct OSCAddressPattern_Component_Evaluate_Complex_Patterns_Tests {
-    @Test func complex_A() {
+    @Test
+    func complex_A() {
         // abc*
         
         #expect(
@@ -538,7 +558,8 @@ import Testing
         )
     }
     
-    @Test func complex_B() {
+    @Test
+    func complex_B() {
         // *abc
         
         #expect(
@@ -566,7 +587,8 @@ import Testing
         )
     }
     
-    @Test func complex_C() {
+    @Test
+    func complex_C() {
         // *abc*
         
         #expect(
@@ -594,7 +616,8 @@ import Testing
         )
     }
     
-    @Test func complex_D() {
+    @Test
+    func complex_D() {
         // *a*bc*
         
         #expect(
@@ -642,7 +665,8 @@ import Testing
         )
     }
     
-    @Test func complex_E() {
+    @Test
+    func complex_E() {
         // abc*{def,xyz}[0-9]
         
         #expect(
@@ -668,7 +692,8 @@ import Testing
         )
     }
     
-    @Test func complex_F() {
+    @Test
+    func complex_F() {
         // *abc{def,xyz}[0-9]
         
         #expect(
@@ -693,7 +718,8 @@ import Testing
         )
     }
     
-    @Test func complex_G() {
+    @Test
+    func complex_G() {
         // abc*{def,xyz}[A-F0-9][A-F0-9]
         
         #expect(
@@ -712,7 +738,8 @@ import Testing
         )
     }
     
-    @Test func complex_EdgeCases_WildcardInBrackets() {
+    @Test
+    func complex_EdgeCases_WildcardInBrackets() {
         // test the use of wildcards within brackets.
         // according to the OSC 1.0 spec, wildcards are not special characters within brackets,
         // so we treat them as literal characters for sake of matching.
@@ -738,7 +765,8 @@ import Testing
         )
     }
     
-    @Test func complex_EdgeCases_SingleWildcardInBrackets() {
+    @Test
+    func complex_EdgeCases_SingleWildcardInBrackets() {
         // test the use of wildcards within brackets.
         // according to the OSC 1.0 spec, wildcards are not special characters within brackets,
         // so we treat them as literal characters for sake of matching.
@@ -764,7 +792,8 @@ import Testing
         )
     }
     
-    @Test func complex_EdgeCases_WildcardInBraces() {
+    @Test
+    func complex_EdgeCases_WildcardInBraces() {
         // test the use of wildcards within brackets.
         // according to the OSC 1.0 spec, wildcards are not special characters within brackets,
         // so we treat them as literal characters for sake of matching.
@@ -790,7 +819,8 @@ import Testing
         )
     }
     
-    @Test func complex_EdgeCases_SingleWildcardInBraces() {
+    @Test
+    func complex_EdgeCases_SingleWildcardInBraces() {
         // test the use of wildcards within brackets.
         // according to the OSC 1.0 spec, wildcards are not special characters within brackets,
         // so we treat them as literal characters for sake of matching.
@@ -812,7 +842,8 @@ import Testing
         )
     }
     
-    @Test func complex_EdgeCases_ExclamationPointInBraces() {
+    @Test
+    func complex_EdgeCases_ExclamationPointInBraces() {
         // test the use of ! within brackets.
         // according to the OSC 1.0 spec, ! is only valid if used as the first
         // character within a [] bracketed expression, not within braces {}
@@ -830,7 +861,8 @@ import Testing
         )
     }
     
-    @Test func edgeCases_CommonSymbols() {
+    @Test
+    func edgeCases_CommonSymbols() {
         #expect(
             OSCAddressPattern.Component(string: "vol-").evaluate(matching: "vol-")
         )

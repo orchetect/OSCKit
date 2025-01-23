@@ -1,7 +1,7 @@
 //
 //  OSCBundle Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -11,7 +11,8 @@ import Testing
 @Suite struct OSCBundle_Tests {
     // MARK: - Equatable
     
-    @Test func equatable() {
+    @Test
+    func equatable() {
         let msg1 = OSCMessage("/msg1")
         let msg2 = OSCMessage("/msg2")
         let msg3 = OSCMessage("/msg1", values: [Int32(123)])
@@ -36,7 +37,8 @@ import Testing
     
     // MARK: - Hashable
     
-    @Test func hashable() {
+    @Test
+    func hashable() {
         let msg1 = OSCMessage("/msg1")
         let msg2 = OSCMessage("/msg2")
         let msg3 = OSCMessage("/msg1", values: [Int32(123)])
@@ -56,7 +58,8 @@ import Testing
     
     // MARK: - CustomStringConvertible
     
-    @Test func customStringConvertible_Immediate_EmptyElements() {
+    @Test
+    func customStringConvertible_Immediate_EmptyElements() {
         let bundle = OSCBundle([])
         
         let desc = bundle.description
@@ -64,7 +67,8 @@ import Testing
         #expect(desc == "OSCBundle()")
     }
     
-    @Test func customStringConvertible_SpecificTimeTag_EmptyElements() {
+    @Test
+    func customStringConvertible_SpecificTimeTag_EmptyElements() {
         let bundle = OSCBundle(timeTag: .init(123_456), [])
         
         let desc = bundle.description
@@ -72,7 +76,8 @@ import Testing
         #expect(desc == "OSCBundle(timeTag: 123456)")
     }
     
-    @Test func customStringConvertible_Immediate_OneMessage() {
+    @Test
+    func customStringConvertible_Immediate_OneMessage() {
         let bundle = OSCBundle([
             .message(
                 "/address",
@@ -87,11 +92,12 @@ import Testing
         
         #expect(
             desc ==
-            #"OSCBundle(elements: [OSCMessage("/address", values: [123, "A string"])])"#
+                #"OSCBundle(elements: [OSCMessage("/address", values: [123, "A string"])])"#
         )
     }
     
-    @Test func customStringConvertible_SpecificTimeTag_OneMessage() {
+    @Test
+    func customStringConvertible_SpecificTimeTag_OneMessage() {
         let bundle = OSCBundle(
             timeTag: .init(123_456),
             [
@@ -109,11 +115,12 @@ import Testing
         
         #expect(
             desc ==
-            #"OSCBundle(timeTag: 123456, elements: [OSCMessage("/address", values: [123, "A string"])])"#
+                #"OSCBundle(timeTag: 123456, elements: [OSCMessage("/address", values: [123, "A string"])])"#
         )
     }
     
-    @Test func descriptionPretty_Immediate_OneMessage() {
+    @Test
+    func descriptionPretty_Immediate_OneMessage() {
         let bundle = OSCBundle([
             .message(
                 "/address",
@@ -128,14 +135,15 @@ import Testing
         
         #expect(
             desc ==
-            #"""
-            OSCBundle() with elements:
-              OSCMessage("/address", values: [123, "A string"])
-            """#
+                #"""
+                OSCBundle() with elements:
+                  OSCMessage("/address", values: [123, "A string"])
+                """#
         )
     }
     
-    @Test func descriptionPretty_SpecificTimeTag_OneMessage() {
+    @Test
+    func descriptionPretty_SpecificTimeTag_OneMessage() {
         let bundle = OSCBundle(
             timeTag: .init(123_456),
             [
@@ -153,10 +161,10 @@ import Testing
         
         #expect(
             desc ==
-            #"""
-            OSCBundle(timeTag: 123456) with elements:
-              OSCMessage("/address", values: [123, "A string"])
-            """#
+                #"""
+                OSCBundle(timeTag: 123456) with elements:
+                  OSCMessage("/address", values: [123, "A string"])
+                """#
         )
     }
     
@@ -164,7 +172,7 @@ import Testing
     // @Test func codable() throws {
     //     let encoder = JSONEncoder()
     //     let decoder = JSONDecoder()
-    // 
+    //
     //     let str = OSCBundle(timeTag: .init(123_456), [
     //         .bundle([
     //             .message(
@@ -177,10 +185,10 @@ import Testing
     //             values: [Int32(456), String("Another string.")]
     //         )
     //     ])
-    // 
+    //
     //     let encoded = try encoder.encode(str)
     //     let decoded = try decoder.decode(OSCBundle.self, from: encoded)
-    // 
+    //
     //     #expect(str == decoded)
     // }
 }

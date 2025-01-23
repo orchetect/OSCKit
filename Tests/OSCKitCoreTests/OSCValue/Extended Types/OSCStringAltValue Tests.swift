@@ -1,7 +1,7 @@
 //
 //  OSCStringAltValue Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import OSCKitCore
@@ -10,14 +10,16 @@ import Testing
 @Suite struct OSCStringAltValue_Tests {
     // MARK: - `any OSCValue` Constructors
     
-    @Test func anyOSCValue_stringAlt() {
+    @Test
+    func anyOSCValue_stringAlt() {
         let val: any OSCValue = .stringAlt("A string")
         #expect(val as? OSCStringAltValue == OSCStringAltValue("A string"))
     }
     
     // MARK: - Equatable Operators
     
-    @Test func equatable() {
+    @Test
+    func equatable() {
         let stringAlt1 = OSCStringAltValue("A string")
         let stringAlt2 = OSCStringAltValue("A string")
         
@@ -28,8 +30,9 @@ import Testing
         #expect(!(stringAlt2 != stringAlt1))
     }
     
-    @Test func equatableWithString() {
-        let string: String = "A string"
+    @Test
+    func equatableWithString() {
+        let string = "A string"
         let stringAlt = OSCStringAltValue(string)
         
         #expect(string == stringAlt)

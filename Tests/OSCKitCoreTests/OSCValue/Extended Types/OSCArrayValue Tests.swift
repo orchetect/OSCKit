@@ -1,36 +1,39 @@
 //
 //  OSCArrayValue Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import OSCKitCore
 import Testing
 
 @Suite struct OSCArrayValue_Tests {
-    @Test func empty() async throws {
+    @Test
+    func empty() async throws {
         let msg = OSCMessage("/test", values: [OSCArrayValue([])])
         
         #expect(msg.values[0] as? OSCArrayValue == OSCArrayValue([]))
         
         // test encode and decode
         let rawData = try msg.rawData()
-        let decodedMsg = try await OSCMessage(from: rawData)
+        let decodedMsg = try OSCMessage(from: rawData)
         #expect(msg == decodedMsg)
     }
     
-    @Test func simple() async throws {
+    @Test
+    func simple() async throws {
         let msg = OSCMessage("/test", values: [OSCArrayValue([Int32(123)])])
         
         #expect(msg.values[0] as? OSCArrayValue == OSCArrayValue([Int32(123)]))
         
         // test encode and decode
         let rawData = try msg.rawData()
-        let decodedMsg = try await OSCMessage(from: rawData)
+        let decodedMsg = try OSCMessage(from: rawData)
         #expect(msg == decodedMsg)
     }
     
-    @Test func nested() async throws {
+    @Test
+    func nested() async throws {
         let msg = OSCMessage(
             "/test",
             values: [
@@ -74,23 +77,25 @@ import Testing
         
         // test encode and decode
         let rawData = try msg.rawData()
-        let decodedMsg = try await OSCMessage(from: rawData)
+        let decodedMsg = try OSCMessage(from: rawData)
         #expect(msg == decodedMsg)
     }
     
     // MARK: - `any OSCValue` Constructors
     
-    @Test func oscValue_array() {
+    @Test
+    func oscValue_array() {
         let val: any OSCValue = .array([Int32(123)])
         #expect(
             val as? OSCArrayValue ==
-            OSCArrayValue([Int32(123)])
+                OSCArrayValue([Int32(123)])
         )
     }
     
     // MARK: - Equatable Operators
     
-    @Test func equatable() {
+    @Test
+    func equatable() {
         let oscArray1 = OSCArrayValue([123, "A string"])
         let oscArray2 = OSCArrayValue([123, "A string"])
         
@@ -101,7 +106,8 @@ import Testing
         #expect(!(oscArray2 != oscArray1))
     }
     
-    @Test func equatableWithArray() {
+    @Test
+    func equatableWithArray() {
         let array: [any OSCValue] = [123, "A string"]
         let oscArray = OSCArrayValue([123, "A string"])
         

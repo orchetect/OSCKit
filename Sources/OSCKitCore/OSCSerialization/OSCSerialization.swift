@@ -1,7 +1,7 @@
 //
 //  OSCSerialization.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -10,16 +10,16 @@ import Foundation
 ///
 /// Register custom value types to enable ``OSCValueDecoder`` and ``OSCValues`` `masked()` support
 /// for them.
-@globalActor public final actor OSCSerialization { // TODO: convert to actor/globalActor?
+public final class OSCSerialization {
     /// Shared singleton instance.
-    public static let shared = OSCSerialization()
+    public nonisolated(unsafe) static let shared = OSCSerialization()
     
     /// Internal:
     /// Registered tag identities repository.
     var tagIdentities: [(OSCValueTagIdentity, any OSCValueCodable.Type)] = []
     
     /// Singleton init.
-    init() {
+    private init() {
         // register default types synchronously so they are available immediately
         for oscValueType in Self.standardTypes {
             tagIdentities.append(

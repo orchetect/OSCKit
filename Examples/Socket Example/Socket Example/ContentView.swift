@@ -1,11 +1,11 @@
 //
 //  ContentView.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
-import SwiftUI
 import OSCKit
+import SwiftUI
 
 struct ContentView: View {
     @EnvironmentObject private var oscManager: OSCManager
@@ -42,9 +42,9 @@ struct ContentView: View {
             Group {
                 RowView(label: "Local Port") {
                     TextField("", value: $oscManager.localPort, formatter: .networkPort)
-                        #if !os(macOS)
+                    #if !os(macOS)
                         .keyboardType(.decimalPad)
-                        #endif
+                    #endif
                 }
                 
                 RowView(label: "Remote Host") {
@@ -53,9 +53,9 @@ struct ContentView: View {
                 
                 RowView(label: "Remote Port") {
                     TextField("", value: $oscManager.remotePort, formatter: .networkPort)
-                        #if !os(macOS)
+                    #if !os(macOS)
                         .keyboardType(.decimalPad)
-                        #endif
+                    #endif
                 }
                 
                 RowView(label: "Enable Broadcast") {
@@ -67,14 +67,14 @@ struct ContentView: View {
             
             RowView(label: "Start Socket") {
                 Button("Start") {
-                    Task { await oscManager.start() }
+                    oscManager.start()
                 }
                 .disabled(oscManager.isStarted)
             }
             
             RowView(label: "Stop Socket") {
                 Button("Stop") {
-                    Task { await oscManager.stop() }
+                    oscManager.stop()
                 }
                 .disabled(!oscManager.isStarted)
             }
@@ -83,11 +83,9 @@ struct ContentView: View {
     }
     
     private func sendTestOSCMessage() {
-        Task {
-            await oscManager.send(
-                .message("/some/address/method", values: ["Test string", 123])
-            )
-        }
+        oscManager.send(
+            .message("/some/address/method", values: ["Test string", 123])
+        )
     }
 }
 

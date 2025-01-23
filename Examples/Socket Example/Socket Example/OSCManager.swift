@@ -1,14 +1,13 @@
 //
 //  OSCManager.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
 import OSCKit
 
 /// OSC lifecycle and send/receive manager.
-@MainActor
 final class OSCManager: ObservableObject {
     private var socket: OSCSocket?
     
@@ -25,7 +24,7 @@ final class OSCManager: ObservableObject {
 
 extension OSCManager {
     /// Call this once on app launch.
-    func start() async {
+    func start() {
         do {
             guard socket == nil else { return }
             
@@ -37,27 +36,27 @@ extension OSCManager {
             )
             socket = newSocket
             
-            await newSocket.setHandler { message, timeTag in
+            newSocket.setHandler { message, timeTag in
                 print(message, "with time tag: \(timeTag)")
             }
             
-            try await newSocket.start()
+            try newSocket.start()
             
             isStarted = true
             
-            let lp = await newSocket.localPort
-            let rp = await newSocket.remotePort
+            let lp = newSocket.localPort
+            let rp = newSocket.remotePort
             print("Using local port \(lp) and remote port \(rp) with remote host \(remoteHost).")
         } catch {
             print("Error while starting OSC socket: \(error)")
         }
     }
     
-    func stop() async {
+    func stop() {
         defer {
             isStarted = false
         }
-        await socket?.stop()
+        socket?.stop()
         socket = nil
     }
 }
@@ -65,9 +64,9 @@ extension OSCManager {
 // MARK: - Send
 
 extension OSCManager {
-    func send(_ message: OSCMessage) async {
+    func send(_ message: OSCMessage) {
         do {
-            try await socket?.send(message)
+            try socket?.send(message)
         } catch {
             print(error)
         }

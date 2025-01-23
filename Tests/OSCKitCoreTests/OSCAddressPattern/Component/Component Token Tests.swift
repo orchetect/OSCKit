@@ -1,14 +1,15 @@
 //
 //  Component Token Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 @testable import OSCKitCore
 import Testing
 
 @Suite struct OSCAddressPattern_Component_Token_Tests {
-    @Test func literal_Empty() {
+    @Test
+    func literal_Empty() {
         let t = OSCAddressPattern.Component.Token.Literal(literal: "")
         
         #expect(t.isExhausted)
@@ -19,7 +20,8 @@ import Testing
         #expect(t.isExhausted)
     }
     
-    @Test func literal_Basic() {
+    @Test
+    func literal_Basic() {
         let t = OSCAddressPattern.Component.Token.Literal(literal: "abc")
         
         #expect(t.isExhausted)
@@ -32,7 +34,8 @@ import Testing
         #expect(t.isExhausted)
     }
     
-    @Test func zeroOrMoreWildcard() {
+    @Test
+    func zeroOrMoreWildcard() {
         var t = OSCAddressPattern.Component.Token.ZeroOrMoreWildcard()
         
         #expect(!t.isExhausted)
@@ -86,7 +89,8 @@ import Testing
         #expect(!t.isExhausted)
     }
     
-    @Test func singleCharWildcard() {
+    @Test
+    func singleCharWildcard() {
         let t = OSCAddressPattern.Component.Token.SingleCharWildcard()
         
         #expect(t.isExhausted)
@@ -99,7 +103,8 @@ import Testing
         #expect(t.isExhausted)
     }
     
-    @Test func singleChar_Empty() {
+    @Test
+    func singleChar_Empty() {
         let t = OSCAddressPattern.Component.Token.SingleChar(
             isExclusion: false,
             groups: []
@@ -115,7 +120,8 @@ import Testing
         #expect(t.isExhausted)
     }
     
-    @Test func singleChar_Single() {
+    @Test
+    func singleChar_Single() {
         let t = OSCAddressPattern.Component.Token.SingleChar(
             isExclusion: false,
             groups: [.single("a")]
@@ -135,7 +141,8 @@ import Testing
         #expect(t.isExhausted)
     }
     
-    @Test func singleChar_Range() {
+    @Test
+    func singleChar_Range() {
         let t = OSCAddressPattern.Component.Token.SingleChar(
             isExclusion: false,
             groups: [.asciiRange(start: "b", end: "y")]
@@ -158,7 +165,8 @@ import Testing
         #expect(t.isExhausted)
     }
     
-    @Test func singleChar_SingleAndRange() {
+    @Test
+    func singleChar_SingleAndRange() {
         let t = OSCAddressPattern.Component.Token.SingleChar(
             isExclusion: false,
             groups: [
@@ -189,7 +197,8 @@ import Testing
         #expect(t.isExhausted)
     }
     
-    @Test func singleChar_Empty_isExclusion() {
+    @Test
+    func singleChar_Empty_isExclusion() {
         let t = OSCAddressPattern.Component.Token.SingleChar(
             isExclusion: true,
             groups: []
@@ -205,7 +214,8 @@ import Testing
         #expect(t.isExhausted)
     }
     
-    @Test func singleChar_Single_isExclusion() {
+    @Test
+    func singleChar_Single_isExclusion() {
         let t = OSCAddressPattern.Component.Token.SingleChar(
             isExclusion: true,
             groups: [.single("a")]
@@ -225,7 +235,8 @@ import Testing
         #expect(t.isExhausted)
     }
     
-    @Test func singleChar_Range_isExclusion() {
+    @Test
+    func singleChar_Range_isExclusion() {
         let t = OSCAddressPattern.Component.Token.SingleChar(
             isExclusion: true,
             groups: [.asciiRange(start: "b", end: "y")]
@@ -248,7 +259,8 @@ import Testing
         #expect(t.isExhausted)
     }
     
-    @Test func singleChar_SingleAndRange_isExclusion() {
+    @Test
+    func singleChar_SingleAndRange_isExclusion() {
         let t = OSCAddressPattern.Component.Token.SingleChar(
             isExclusion: true,
             groups: [
@@ -279,7 +291,8 @@ import Testing
         #expect(t.isExhausted)
     }
     
-    @Test func strings_Empty() {
+    @Test
+    func strings_Empty() {
         let t = OSCAddressPattern.Component.Token.Strings(strings: [])
         
         #expect(t.isExhausted)
@@ -291,7 +304,8 @@ import Testing
         #expect(t.isExhausted)
     }
     
-    @Test func strings_Single() {
+    @Test
+    func strings_Single() {
         let t = OSCAddressPattern.Component.Token.Strings(strings: ["abc"])
         
         #expect(t.isExhausted)
@@ -306,7 +320,8 @@ import Testing
         #expect(t.isExhausted)
     }
     
-    @Test func strings_Multiple() {
+    @Test
+    func strings_Multiple() {
         let t = OSCAddressPattern.Component.Token.Strings(strings: ["wxyz", "abc"])
         
         #expect(t.isExhausted)

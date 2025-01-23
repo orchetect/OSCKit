@@ -1,7 +1,7 @@
 //
 //  OSCStringAltValue.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -38,6 +38,7 @@ extension OSCStringAltValue: Equatable {
     public static func == (lhs: OSCStringAltValue, rhs: some StringProtocol) -> Bool {
         lhs.string == rhs
     }
+
     public static func != (lhs: OSCStringAltValue, rhs: some StringProtocol) -> Bool {
         lhs.string != rhs
     }
@@ -45,6 +46,7 @@ extension OSCStringAltValue: Equatable {
     public static func == (lhs: some StringProtocol, rhs: OSCStringAltValue) -> Bool {
         lhs == rhs.string
     }
+
     public static func != (lhs: some StringProtocol, rhs: OSCStringAltValue) -> Bool {
         lhs != rhs.string
     }
@@ -96,6 +98,6 @@ extension OSCStringAltValue: OSCValueEncodable {
 extension OSCStringAltValue: OSCValueDecodable {
     public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { decoder in
-        try await OSCStringAltValue(String.oscDecoding.block(&decoder))
+        try OSCStringAltValue(String.oscDecoding.block(&decoder))
     }
 }

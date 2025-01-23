@@ -1,7 +1,7 @@
 //
 //  Object Access Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 #if !os(watchOS)
@@ -11,7 +11,8 @@ import Testing
 
 /// No functionality tests, just test that API compiles as expected.
 @Suite struct Object_Access_Tests {
-    @Test func oscClientAccess() async throws {
+    @Test
+    func oscClientAccess() async throws {
         let oscClient = OSCClient()
         
         oscClient.isIPv4BroadcastEnabled = true
@@ -19,19 +20,20 @@ import Testing
         oscClient.isPortReuseEnabled = true
         oscClient.isPortReuseEnabled = false
         
-        let _ = OSCClient(localPort: 8002)
-        let _ = OSCClient(localPort: 8003, isPortReuseEnabled: true)
-        let _ = OSCClient(localPort: 8004, isPortReuseEnabled: true, isIPv4BroadcastEnabled: true)
-        let _ = OSCClient(localPort: 8005, isIPv4BroadcastEnabled: true)
+        _ = OSCClient(localPort: 8002)
+        _ = OSCClient(localPort: 8003, isPortReuseEnabled: true)
+        _ = OSCClient(localPort: 8004, isPortReuseEnabled: true, isIPv4BroadcastEnabled: true)
+        _ = OSCClient(localPort: 8005, isIPv4BroadcastEnabled: true)
     }
     
-    @Test func oscServerAccess() async throws {
+    @Test
+    func oscServerAccess() async throws {
         let oscServer = OSCServer()
         
-        _ = await oscServer.isStarted
-        _ = await oscServer.localPort
+        _ = oscServer.isStarted
+        _ = oscServer.localPort
         // oscServer.localPort = 9000 // immutable actor
-        await oscServer.setHandler { message, timeTag in
+        oscServer.setHandler { message, timeTag in
             print(message)
         }
         // oscServer.handler = { _,_ in } // immutable actor, use `setHandler()` instead
@@ -44,19 +46,20 @@ import Testing
         }
     }
     
-    @Test func oscSocketAccess() async throws {
+    @Test
+    func oscSocketAccess() async throws {
         let oscSocket = OSCSocket()
         
-        _ = await oscSocket.isStarted
-        _ = await oscSocket.localPort
+        _ = oscSocket.isStarted
+        _ = oscSocket.localPort
         // oscSocket.localPort = 9000 // immutable actor
-        _ = await oscSocket.remoteHost
+        _ = oscSocket.remoteHost
         // oscSocket.remoteHost = "192.168.0.10" // immutable actor
-        _ = await oscSocket.remotePort
+        _ = oscSocket.remotePort
         // oscSocket.remotePort = 8000 // immutable actor
-        _ = await oscSocket.isIPv4BroadcastEnabled
+        _ = oscSocket.isIPv4BroadcastEnabled
         // oscSocket.isIPv4BroadcastEnabled = true // immutable actor
-        await oscSocket.setHandler { message, timeTag in
+        oscSocket.setHandler { message, timeTag in
             print(message)
         }
         // oscSocket.handler = { _,_ in } // immutable actor, use `setHandler()` instead

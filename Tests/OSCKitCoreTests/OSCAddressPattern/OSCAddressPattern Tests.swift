@@ -1,7 +1,7 @@
 //
 //  OSCAddressPattern Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -10,22 +10,26 @@ import SwiftASCII
 import Testing
 
 @Suite struct OSCAddressPattern_Tests {
-    @Test func init_String() {
+    @Test
+    func init_String() {
         let addr = OSCAddressPattern("/methodname")
         #expect(addr.stringValue == "/methodname")
     }
     
-    @Test func init_ASCIIString() {
+    @Test
+    func init_ASCIIString() {
         let addr = OSCAddressPattern(ascii: ASCIIString("/methodname"))
         #expect(addr.stringValue == "/methodname")
     }
     
-    @Test func init_PathComponents_String() {
+    @Test
+    func init_PathComponents_String() {
         let addr = OSCAddressPattern(pathComponents: ["container1", "methodname"])
         #expect(addr.stringValue == "/container1/methodname")
     }
     
-    @Test func init_PathComponents_ASCIIString() {
+    @Test
+    func init_PathComponents_ASCIIString() {
         let addr =
             OSCAddressPattern(asciiPathComponents: [
                 ASCIIString("container1"),
@@ -34,7 +38,8 @@ import Testing
         #expect(addr.stringValue == "/container1/methodname")
     }
     
-    @Test func codable() throws {
+    @Test
+    func codable() throws {
         let encoder = JSONEncoder()
         let decoder = JSONDecoder()
         
@@ -46,72 +51,73 @@ import Testing
         #expect(str == decoded)
     }
     
-    @Test func pathComponents() {
+    @Test
+    func pathComponents() {
         // empty address
         #expect(
             OSCAddressPattern("").pathComponents ==
-            []
+                []
         )
         
         // base methodname of " " -- unconventional, but legal
         #expect(
             OSCAddressPattern(" ").pathComponents ==
-            [" "]
+                [" "]
         )
         
         // undefined / invalid
         #expect(
             OSCAddressPattern("/").pathComponents ==
-            []
+                []
         )
         
         // undefined / invalid
         #expect(
             OSCAddressPattern("//").pathComponents ==
-            []
+                []
         )
         
         // valid
         #expect(
             OSCAddressPattern("/methodname").pathComponents ==
-            ["methodname"]
+                ["methodname"]
         )
         
         // strip trailing /
         #expect(
             OSCAddressPattern("/container1/").pathComponents ==
-            ["container1"]
+                ["container1"]
         )
         
         // having trailing // is not valid -- basically malformed
         #expect(
             OSCAddressPattern("/container1//").pathComponents ==
-            ["container1", ""]
+                ["container1", ""]
         )
         
         // valid
         // In OSC 1.1 Spec, the // character sequence has special meaning
         #expect(
             OSCAddressPattern("//methodname").pathComponents ==
-            ["", "methodname"]
+                ["", "methodname"]
         )
         
         // valid
         #expect(
             OSCAddressPattern("/container1/container2/methodname").pathComponents ==
-            ["container1", "container2", "methodname"]
+                ["container1", "container2", "methodname"]
         )
         
         // valid
         #expect(
             OSCAddressPattern("/container?/container2/methodname").pathComponents ==
-            ["container?", "container2", "methodname"]
+                ["container?", "container2", "methodname"]
         )
         
         // valid
         #expect(
             OSCAddressPattern("/container*/container2/methodname").pathComponents ==
-            ["container*", "container2", "methodname"]
+                ["container*", "container2", "methodname"]
         )
         
         // valid
@@ -127,17 +133,18 @@ import Testing
         // In OSC 1.1 Spec, the // character sequence has special meaning
         #expect(
             OSCAddressPattern("/container1//methodname").pathComponents ==
-            ["container1", "", "methodname"]
+                ["container1", "", "methodname"]
         )
         
         // leading /// is malformed, but possible to parse
         #expect(
             OSCAddressPattern("///methodname").pathComponents ==
-            ["", "", "methodname"]
+                ["", "", "methodname"]
         )
     }
     
-    @Test func patternMatches() {
+    @Test
+    func patternMatches() {
         // verbatim matches
         
         #expect(

@@ -1,7 +1,7 @@
 //
 //  OSCAddressSpace.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -27,7 +27,7 @@ import Foundation
 ///
 ///  A container may also be a method. Simply register it the same way as other methods.
 ///
-public final class OSCAddressSpace {
+public final class OSCAddressSpace: @unchecked Sendable {
     var root: Node = .rootNodeFactory()
     
     public init() { }

@@ -1,7 +1,7 @@
 //
 //  OSCObject Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -9,7 +9,8 @@ import OSCKitCore
 import Testing
 
 @Suite struct OSCObject_Tests {
-    @Test func appearsToBeOSC() throws {
+    @Test
+    func appearsToBeOSC() throws {
         let bundle = try OSCBundle([]).rawData()
         let msg    = try OSCMessage("/").rawData()
         

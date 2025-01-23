@@ -1,7 +1,7 @@
 //
 //  OSCObject.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -17,7 +17,7 @@ public protocol OSCObject: Equatable, Hashable where Self: Sendable {
     func rawData() throws -> Data
     
     /// Initialize by parsing raw OSC packet data bytes.
-    init(from rawData: Data) async throws
+    init(from rawData: Data) throws
 }
 
 extension OSCObject {

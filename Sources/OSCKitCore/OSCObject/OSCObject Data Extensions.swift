@@ -1,7 +1,7 @@
 //
 //  OSCObject Data Extensions.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -15,11 +15,11 @@ extension Data {
     /// Errors thrown will typically be a case of ``OSCDecodeError`` but other errors may be thrown.
     ///
     /// - Returns: Decoded ``OSCObject``, or `nil` if not an OSC data packet.
-    public func parseOSC() async throws -> (any OSCObject)? {
+    public func parseOSC() throws -> (any OSCObject)? {
         if appearsToBeOSCBundle {
-            return try await OSCBundle(from: self)
+            return try OSCBundle(from: self)
         } else if appearsToBeOSCMessage {
-            return try await OSCMessage(from: self)
+            return try OSCMessage(from: self)
         }
         
         return nil

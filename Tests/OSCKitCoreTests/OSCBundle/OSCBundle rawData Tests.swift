@@ -1,7 +1,7 @@
 //
 //  OSCBundle rawData Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 @testable import OSCKitCore
@@ -10,7 +10,8 @@ import Testing
 @Suite struct OSCBundle_rawData_Tests {
     // swiftformat:options --wrapcollections preserve
     
-    @Test func empty() async throws {
+    @Test
+    func empty() async throws {
         // tests an empty OSC bundle
         
         // manually build a raw OSC bundle
@@ -26,17 +27,18 @@ import Testing
         
         // decode
         
-        let bundle = try await OSCBundle(from: knownGoodOSCRawBytes.data)
+        let bundle = try OSCBundle(from: knownGoodOSCRawBytes.data)
         
         #expect(bundle.timeTag.rawValue == 1)
-        #expect(bundle.elements.count == 0)
+        #expect(bundle.elements.isEmpty)
         
         // re-encode
         
         #expect(try bundle.rawData() == knownGoodOSCRawBytes.data)
     }
     
-    @Test func singleOSCMessage() async throws {
+    @Test
+    func singleOSCMessage() async throws {
         // tests an OSC bundle, with one message containing an int32 value
         
         // manually build a raw OSC bundle
@@ -66,7 +68,7 @@ import Testing
         
         // decode
         
-        let bundle = try await OSCBundle(from: knownGoodOSCRawBytes.data)
+        let bundle = try OSCBundle(from: knownGoodOSCRawBytes.data)
         
         #expect(bundle.timeTag.rawValue == 1)
         #expect(bundle.elements.count == 1)

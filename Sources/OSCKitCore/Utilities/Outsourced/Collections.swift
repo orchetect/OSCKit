@@ -12,7 +12,7 @@
 // MARK: - Operators
 
 extension Collection where Self: RangeReplaceableCollection,
-                           Self: MutableCollection {
+Self: MutableCollection {
     /// Syntactic sugar: Append an element to an array.
     @inlinable
     static func += (lhs: inout Self, rhs: Element) {

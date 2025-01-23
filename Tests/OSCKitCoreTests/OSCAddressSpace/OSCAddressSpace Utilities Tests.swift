@@ -1,14 +1,15 @@
 //
 //  OSCAddressSpace Utilities Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2024 Steffan Andrews • Licensed under MIT License
+//  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 @testable import OSCKitCore
 import Testing
 
 @Suite struct OSCAddressSpace_Utilities_Tests {
-    @Test func nodeValidateName() {
+    @Test
+    func nodeValidateName() {
         #expect(
             !OSCAddressSpace.Node.validate(name: "")
         )
@@ -50,7 +51,8 @@ import Testing
         )
     }
     
-    @Test func nodeValidateNameStrict() {
+    @Test
+    func nodeValidateNameStrict() {
         #expect(
             !OSCAddressSpace.Node.validate(name: "", strict: true)
         )
