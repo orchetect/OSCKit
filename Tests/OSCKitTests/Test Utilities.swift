@@ -4,8 +4,6 @@
 //  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
-#if !os(watchOS)
-
 import Foundation
 import Testing
 
@@ -58,5 +56,3 @@ func isSystemTimingStable(
     let range = (duration - tolerance) ... (duration + tolerance)
     return range.contains(diff)
 }
-
-#endif

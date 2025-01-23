@@ -126,6 +126,8 @@ struct OSCSocket_Tests {
     /// Online stress-test to ensure a large volume of OSC packets are received and dispatched in order.
     @MainActor @Test
     func stressTestOnline() async throws {
+        let isFlakey = !isSystemTimingStable()
+        
         let socket = OSCSocket(
             localPort: nil,
             remoteHost: "localhost",
@@ -135,10 +137,10 @@ struct OSCSocket_Tests {
             receiveQueue: nil,
             handler: nil
         )
-        try await Task.sleep(seconds: 0.2) // short wait for network layer setup
+        try await Task.sleep(seconds: isFlakey ? 1.0 : 0.1)
         
         try socket.start()
-        try await Task.sleep(seconds: 0.5) // short wait for network layer setup
+        try await Task.sleep(seconds: isFlakey ? 3.0 : 0.5)
         
         print("Using socket listen port \(socket.localPort), destination port \(socket.remotePort)")
         
@@ -175,7 +177,7 @@ struct OSCSocket_Tests {
             }
         }
         
-        await wait(expect: { receiver.messages.count == 1000 }, timeout: 10.0)
+        await wait(expect: { receiver.messages.count == 1000 }, timeout: isFlakey ? 20.0 : 2.0)
         try #require(receiver.messages.count == 1000)
         
         #expect(receiver.messages == sourceMessages)
