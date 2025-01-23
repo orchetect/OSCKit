@@ -106,7 +106,7 @@ public final class OSCSocket: _OSCServerProtocol, @unchecked Sendable {
     ///   - isIPv4BroadcastEnabled: Enable sending IPv4 broadcast messages from the socket.
     ///     See ``isIPv4BroadcastEnabled`` for more details.
     ///   - receiveQueue: Optionally supply a custom dispatch queue for receiving OSC packets and dispatching the
-    ///     handler callback closure.
+    ///     handler callback closure. If `nil`, a dedicated internal background queue will be used.
     ///   - handler: Handler to call when OSC bundles or messages are received.
     public init(
         localPort: UInt16? = nil,
