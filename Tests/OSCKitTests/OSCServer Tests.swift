@@ -12,6 +12,7 @@ import Testing
 
 @Suite(.serialized)
 struct OSCServer_Tests {
+    /// Check that an empty OSC bundle does not produce any OSC messages.
     @Test
     func emptyBundle() async throws {
         try await confirmation(expectedCount: 0) { confirmation in
@@ -70,8 +71,9 @@ struct OSCServer_Tests {
         #expect(receiver.messages[2] == msg3)
     }
     
+    /// Offline stress-test to ensure a large volume of OSC packets are received and dispatched in order.
     @Test
-    func stressTest() async throws {
+    func stressTestOffline() async throws {
         let server = OSCServer()
         
         final class Receiver: @unchecked Sendable {
@@ -112,8 +114,9 @@ struct OSCServer_Tests {
         #expect(receiver.messages == sourceMessages)
     }
     
+    /// Online stress-test to ensure a large volume of OSC packets are received and dispatched in order.
     @Test
-    func stressTestLive() async throws {
+    func stressTestOnline() async throws {
         let server = OSCServer(port: 8888, timeTagMode: .ignore, receiveQueue: nil, handler: nil)
         try server.start()
         
