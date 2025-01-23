@@ -135,7 +135,10 @@ struct OSCSocket_Tests {
             receiveQueue: nil,
             handler: nil
         )
+        try await Task.sleep(seconds: 0.2) // short wait for network layer setup
+        
         try socket.start()
+        try await Task.sleep(seconds: 0.5) // short wait for network layer setup
         
         final class Receiver: @unchecked Sendable {
             var messages: [OSCMessage] = []

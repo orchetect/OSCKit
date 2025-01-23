@@ -118,7 +118,10 @@ struct OSCServer_Tests {
     @Test
     func stressTestOnline() async throws {
         let server = OSCServer(port: 8888, timeTagMode: .ignore, receiveQueue: nil, handler: nil)
+        try await Task.sleep(seconds: 0.2) // short wait for network layer setup
+        
         try server.start()
+        try await Task.sleep(seconds: 0.5) // short wait for network layer setup
         
         final class Receiver: @unchecked Sendable {
             var messages: [OSCMessage] = []

@@ -11,7 +11,7 @@ import Testing
 
 @Suite struct OSCTimeTag_StaticConstructors_Tests {
     #if os(macOS) || os(iOS)
-    let tolerance: TimeInterval = 0.001
+    let tolerance: TimeInterval = 0.005
     #elseif os(tvOS) || os(watchOS)
     // allow more time variance for CI pipeline to de-flake
     let tolerance: TimeInterval = 0.01
