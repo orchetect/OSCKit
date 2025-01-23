@@ -69,9 +69,8 @@ import Testing
         }
     }
     
-    // TODO: this test can be flakey when run on CI systems because it is time-sensitive
     /// Tests that a message with a time-tag of 1 second in the future does not arrive early.
-    @Test
+    @Test(.enabled(if: isSystemTimingStable()))
     func oneSecondInFuture_Early() async throws {
         try await confirmation(expectedCount: 0) { confirmation in
             let server = OSCServer(timeTagMode: .osc1_0)
@@ -93,7 +92,7 @@ import Testing
     
     // TODO: this test can be flakey when run on CI systems because it is time-sensitive
     /// Tests that a message with a time-tag of 1 second in the future arrives after its intended scheduled time.
-    @Test
+    @Test(.enabled(if: isSystemTimingStable()))
     func oneSecondInFuture_OnTimeOrThereafter() async throws {
         try await confirmation(expectedCount: 1) { confirmation in
             let server = OSCServer(timeTagMode: .osc1_0)

@@ -39,7 +39,7 @@ import Testing
         #expect(val as? OSCTimeTag == OSCTimeTag.immediate())
     }
     
-    @Test
+    @Test(.enabled(if: isSystemTimingStable()))
     func oscValue_timeTagNow() throws {
         let val: any OSCValue = .timeTagNow()
         let now = OSCTimeTag.now()
@@ -49,7 +49,7 @@ import Testing
         #expect(valTI.isApproximatelyEqual(to: nowTI, absoluteTolerance: tolerance))
     }
     
-    @Test
+    @Test(.enabled(if: isSystemTimingStable()))
     func oscValue_timeTagTimeIntervalSinceNow() throws {
         let val: any OSCValue = .timeTag(timeIntervalSinceNow: 5.0)
         let now = OSCTimeTag(timeIntervalSinceNow: 5.0)

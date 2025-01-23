@@ -124,7 +124,7 @@ struct OSCSocket_Tests {
     }
     
     /// Online stress-test to ensure a large volume of OSC packets are received and dispatched in order.
-    @Test
+    @MainActor @Test
     func stressTestOnline() async throws {
         let socket = OSCSocket(
             localPort: nil,
@@ -139,6 +139,8 @@ struct OSCSocket_Tests {
         
         try socket.start()
         try await Task.sleep(seconds: 0.5) // short wait for network layer setup
+        
+        print("Using socket listen port \(socket.localPort), destination port \(socket.remotePort)")
         
         final class Receiver: @unchecked Sendable {
             var messages: [OSCMessage] = []
@@ -173,7 +175,8 @@ struct OSCSocket_Tests {
             }
         }
         
-        try await wait(require: { receiver.messages.count == 1000 }, timeout: 10.0)
+        await wait(expect: { receiver.messages.count == 1000 }, timeout: 10.0)
+        try #require(receiver.messages.count == 1000)
         
         #expect(receiver.messages == sourceMessages)
     }
