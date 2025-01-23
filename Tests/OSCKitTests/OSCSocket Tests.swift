@@ -169,7 +169,6 @@ struct OSCSocket_Tests {
         // use global thread to simulate internal network thread being a dedicated thread
         DispatchQueue.global().async {
             for message in sourceMessages {
-                // server._handle(payload: message)
                 try? socket.send(message)
             }
         }
