@@ -36,8 +36,8 @@ extension OSCManager {
             )
             socket = newSocket
             
-            newSocket.setHandler { message, timeTag in
-                print(message, "with time tag: \(timeTag)")
+            newSocket.setHandler { message, timeTag, host, port in
+                print("\(host):\(port) - \(message) with time tag: \(timeTag)")
             }
             
             try newSocket.start()

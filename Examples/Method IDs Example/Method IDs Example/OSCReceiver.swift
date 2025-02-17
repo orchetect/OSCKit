@@ -24,7 +24,7 @@ final class OSCReceiver: Sendable {
         idMethodC = addressSpace.register(localAddress: "/some/address/methodC")
     }
     
-    public func handle(message: OSCMessage, timeTag: OSCTimeTag) throws {
+    public func handle(message: OSCMessage, timeTag: OSCTimeTag, host: String, port: UInt16) throws {
         let ids = addressSpace.methods(matching: message.addressPattern)
         
         guard !ids.isEmpty else {
@@ -33,7 +33,7 @@ final class OSCReceiver: Sendable {
             return
         }
         
-        try ids.forEach { id in
+        for id in ids {
             switch id {
             case idMethodA:
                 let str = try message.values.masked(String.self)
