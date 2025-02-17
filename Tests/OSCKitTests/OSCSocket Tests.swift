@@ -31,7 +31,7 @@ struct OSCSocket_Tests {
     }
     
     /// Ensure rapidly received messages are dispatched in the order they are received.
-    @Test(arguments: 0 ... 10)
+    @MainActor @Test(arguments: 0 ... 10)
     func messageOrdering(iteration: Int) async throws {
         _ = iteration // argument value not used, just a mechanism to repeat the test X number of times
         
@@ -83,7 +83,7 @@ struct OSCSocket_Tests {
     }
     
     /// Offline stress-test to ensure a large volume of OSC packets are received and dispatched in order.
-    @Test
+    @MainActor @Test
     func stressTestOffline() async throws {
         let socket = OSCSocket(
             localPort: nil,
@@ -135,7 +135,7 @@ struct OSCSocket_Tests {
     }
     
     /// Online stress-test to ensure a large volume of OSC packets are received and dispatched in order.
-    @Test
+    @MainActor @Test
     func stressTestOnline() async throws {
         let isFlakey = !isSystemTimingStable()
         
