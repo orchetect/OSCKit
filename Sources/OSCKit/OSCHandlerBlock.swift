@@ -10,5 +10,7 @@ import OSCKitCore
 /// Received-message handler closure used by OSCKit socket classes.
 public typealias OSCHandlerBlock = @Sendable (
     _ message: OSCMessage,
-    _ timeTag: OSCTimeTag
+    _ timeTag: OSCTimeTag,
+    _ host: String,
+    _ port: UInt16
 ) -> Void
