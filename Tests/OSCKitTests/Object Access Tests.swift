@@ -33,15 +33,15 @@ import Testing
         _ = oscServer.isStarted
         _ = oscServer.localPort
         // oscServer.localPort = 9000 // immutable actor
-        oscServer.setHandler { message, timeTag in
+        oscServer.setHandler { message, timeTag, host, port in
             print(message)
         }
         // oscServer.handler = { _,_ in } // immutable actor, use `setHandler()` instead
         
-        _ = OSCServer(port: 8006) { message, timeTag in
+        _ = OSCServer(port: 8006) { message, timeTag, host, port in
             print(message)
         }
-        _ = OSCServer(port: 8007, timeTagMode: .ignore) { message, timeTag in
+        _ = OSCServer(port: 8007, timeTagMode: .ignore) { message, timeTag, host, port in
             print(message)
         }
     }
@@ -59,29 +59,29 @@ import Testing
         // oscSocket.remotePort = 8000 // immutable actor
         _ = oscSocket.isIPv4BroadcastEnabled
         // oscSocket.isIPv4BroadcastEnabled = true // immutable actor
-        oscSocket.setHandler { message, timeTag in
+        oscSocket.setHandler { message, timeTag, host, port in
             print(message)
         }
         // oscSocket.handler = { _,_ in } // immutable actor, use `setHandler()` instead
         
         _ = OSCSocket(localPort: 8009)
-        _ = OSCSocket(localPort: 8010) { message, timeTag in
+        _ = OSCSocket(localPort: 8010) { message, timeTag, host, port in
             print(message)
         }
-        _ = OSCSocket(localPort: 8011, timeTagMode: .ignore) { message, timeTag in
+        _ = OSCSocket(localPort: 8011, timeTagMode: .ignore) { message, timeTag, host, port in
             print(message)
         }
         _ = OSCSocket(
             localPort: 8012,
             timeTagMode: .ignore
-        ) { message, timeTag in
+        ) { message, timeTag, host, port in
             print(message)
         }
         _ = OSCSocket(
             localPort: 8013,
             timeTagMode: .ignore,
             isIPv4BroadcastEnabled: true
-        ) { message, timeTag in
+        ) { message, timeTag, host, port in
             print(message)
         }
         _ = OSCSocket(
@@ -90,7 +90,7 @@ import Testing
             remotePort: 8000,
             timeTagMode: .ignore,
             isIPv4BroadcastEnabled: true
-        ) { message, timeTag in
+        ) { message, timeTag, host, port in
             print(message)
         }
     }

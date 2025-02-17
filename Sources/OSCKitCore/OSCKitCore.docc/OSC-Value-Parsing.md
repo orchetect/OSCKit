@@ -73,8 +73,8 @@ print(str, int, dbl) // String, Int32?, Double?
 It may be desired to imperatively validate and cast values when their expected mask may be unknown.
 
 ```swift
-oscMessage.values.forEach { oscValue in
-    switch oscValue {
+for value in oscMessage.values {
+    switch value {
     case let val as String:
         print(val)
     case let val as Int32:
@@ -84,8 +84,6 @@ oscMessage.values.forEach { oscValue in
     }
 }
 ```
-
-## 
 
 ## Topics
 

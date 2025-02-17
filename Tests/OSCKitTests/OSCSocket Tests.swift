@@ -18,38 +18,38 @@ struct OSCSocket_Tests {
         try await confirmation(expectedCount: 0) { confirmation in
             let socket = OSCSocket(remoteHost: "localhost")
             
-            socket.setHandler { _, _ in
+            socket.setHandler { _, _, _, _ in
                 confirmation()
             }
             
             let bundle = OSCBundle()
             
-            socket._handle(payload: bundle)
+            socket._handle(payload: bundle, remoteHost: "localhost", remotePort: 8000)
             
             try await Task.sleep(seconds: 1)
         }
     }
     
     /// Ensure rapidly received messages are dispatched in the order they are received.
-    @Test(arguments: 0 ... 10)
+    @MainActor @Test(arguments: 0 ... 10)
     func messageOrdering(iteration: Int) async throws {
         _ = iteration // argument value not used, just a mechanism to repeat the test X number of times
         
         let server = OSCSocket()
         
-        final class Receiver: @unchecked Sendable {
-            var messages: [OSCMessage] = []
-            func received(_ message: OSCMessage) {
-                messages.append(message)
+        final actor Receiver {
+            var messages: [(message: OSCMessage, host: String, port: UInt16)] = []
+            func received(_ message: OSCMessage, host: String, port: UInt16) {
+                messages.append((message, host, port))
             }
         }
         
         let receiver = Receiver()
         
-        server.setHandler { message, timeTag in
+        server.setHandler { message, timeTag, host, port in
             // print("Handler received:", message.addressPattern)
-            DispatchQueue.main.async {
-                receiver.received(message)
+            Task { @MainActor in
+                await receiver.received(message, host: host, port: port)
             }
         }
         
@@ -59,20 +59,31 @@ struct OSCSocket_Tests {
         
         // use global thread to simulate internal network thread being a dedicated thread
         DispatchQueue.global().async {
-            server._handle(payload: msg1)
-            server._handle(payload: msg2)
-            server._handle(payload: msg3)
+            server._handle(payload: msg1, remoteHost: "localhost", remotePort: 8000)
+            server._handle(payload: msg2, remoteHost: "192.168.0.25", remotePort: 8001)
+            server._handle(payload: msg3, remoteHost: "10.0.0.50", remotePort: 8080)
         }
         
-        try await wait(require: { receiver.messages.count == 3 }, timeout: 5.0)
+        try await wait(require: { await receiver.messages.count == 3 }, timeout: 5.0)
         
-        #expect(receiver.messages[0] == msg1)
-        #expect(receiver.messages[1] == msg2)
-        #expect(receiver.messages[2] == msg3)
+        let message1 = await receiver.messages[0]
+        #expect(message1.message == msg1)
+        #expect(message1.host == "localhost")
+        #expect(message1.port == 8000)
+        
+        let message2 = await receiver.messages[1]
+        #expect(message2.message == msg2)
+        #expect(message2.host == "192.168.0.25")
+        #expect(message2.port == 8001)
+        
+        let message3 = await receiver.messages[2]
+        #expect(message3.message == msg3)
+        #expect(message3.host == "10.0.0.50")
+        #expect(message3.port == 8080)
     }
     
     /// Offline stress-test to ensure a large volume of OSC packets are received and dispatched in order.
-    @Test
+    @MainActor @Test
     func stressTestOffline() async throws {
         let socket = OSCSocket(
             localPort: nil,
@@ -85,7 +96,7 @@ struct OSCSocket_Tests {
         )
         try socket.start()
         
-        final class Receiver: @unchecked Sendable {
+        final actor Receiver {
             var messages: [OSCMessage] = []
             func received(_ message: OSCMessage) {
                 messages.append(message)
@@ -94,9 +105,9 @@ struct OSCSocket_Tests {
         
         let receiver = Receiver()
         
-        socket.setHandler { message, timeTag in
-            DispatchQueue.main.async {
-                receiver.received(message)
+        socket.setHandler { message, timeTag, host, port in
+            Task { @MainActor in
+                await receiver.received(message)
             }
         }
         
@@ -114,13 +125,13 @@ struct OSCSocket_Tests {
         // use global thread to simulate internal network thread being a dedicated thread
         DispatchQueue.global().async {
             for message in sourceMessages {
-                socket._handle(payload: message)
+                socket._handle(payload: message, remoteHost: "localhost", remotePort: 8000)
             }
         }
         
-        try await wait(require: { receiver.messages.count == 1000 }, timeout: 5.0)
+        try await wait(require: { await receiver.messages.count == 1000 }, timeout: 5.0)
         
-        #expect(receiver.messages == sourceMessages)
+        await #expect(receiver.messages == sourceMessages)
     }
     
     /// Online stress-test to ensure a large volume of OSC packets are received and dispatched in order.
@@ -144,7 +155,7 @@ struct OSCSocket_Tests {
         
         print("Using socket listen port \(socket.localPort), destination port \(socket.remotePort)")
         
-        final class Receiver: @unchecked Sendable {
+        final actor Receiver {
             var messages: [OSCMessage] = []
             func received(_ message: OSCMessage) {
                 messages.append(message)
@@ -153,9 +164,9 @@ struct OSCSocket_Tests {
         
         let receiver = Receiver()
         
-        socket.setHandler { message, timeTag in
-            DispatchQueue.main.async {
-                receiver.received(message)
+        socket.setHandler { message, timeTag, host, port in
+            Task { @MainActor in
+                await receiver.received(message)
             }
         }
         
@@ -177,10 +188,10 @@ struct OSCSocket_Tests {
             }
         }
         
-        await wait(expect: { receiver.messages.count == 1000 }, timeout: isFlakey ? 20.0 : 2.0)
-        try #require(receiver.messages.count == 1000)
+        await wait(expect: { await receiver.messages.count == 1000 }, timeout: isFlakey ? 20.0 : 2.0)
+        try await #require(receiver.messages.count == 1000)
         
-        #expect(receiver.messages == sourceMessages)
+        await #expect(receiver.messages == sourceMessages)
     }
 }
 

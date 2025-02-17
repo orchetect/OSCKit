@@ -15,7 +15,7 @@ import Testing
         try await confirmation(expectedCount: 1) { confirmation in
             let server = OSCServer(timeTagMode: .ignore)
             
-            server.setHandler { _, _ in
+            server.setHandler { _, _, _, _ in
                 confirmation()
             }
             
@@ -23,7 +23,7 @@ import Testing
                 .message("/test", values: [Int32(123)])
             ])
             
-            server._handle(payload: bundle)
+            server._handle(payload: bundle, remoteHost: "localhost", remotePort: 8000)
             
             try await Task.sleep(seconds: 0.5)
         }
@@ -34,7 +34,7 @@ import Testing
         try await confirmation(expectedCount: 1) { confirmation in
             let server = OSCServer(timeTagMode: .ignore)
             
-            server.setHandler { _, _ in
+            server.setHandler { _, _, _, _ in
                 confirmation()
             }
             
@@ -43,7 +43,7 @@ import Testing
                 [.message("/test", values: [Int32(123)])]
             )
             
-            server._handle(payload: bundle)
+            server._handle(payload: bundle, remoteHost: "localhost", remotePort: 8000)
             
             try await Task.sleep(seconds: 0.5)
         }
@@ -54,7 +54,7 @@ import Testing
         try await confirmation(expectedCount: 1) { confirmation in
             let server = OSCServer(timeTagMode: .ignore)
             
-            server.setHandler { _, _ in
+            server.setHandler { _, _, _, _ in
                 confirmation()
             }
             
@@ -63,7 +63,7 @@ import Testing
                 [.message("/test", values: [Int32(123)])]
             )
             
-            server._handle(payload: bundle)
+            server._handle(payload: bundle, remoteHost: "localhost", remotePort: 8000)
             
             try await Task.sleep(seconds: 0.5)
         }
@@ -74,7 +74,7 @@ import Testing
         try await confirmation(expectedCount: 1) { confirmation in
             let server = OSCServer(timeTagMode: .ignore)
             
-            server.setHandler { _, _ in
+            server.setHandler { _, _, _, _ in
                 confirmation()
             }
             
@@ -83,7 +83,7 @@ import Testing
                 [.message("/test", values: [Int32(123)])]
             )
             
-            server._handle(payload: bundle)
+            server._handle(payload: bundle, remoteHost: "localhost", remotePort: 8000)
             
             try await Task.sleep(seconds: 0.5)
         }
@@ -94,7 +94,7 @@ import Testing
         try await confirmation(expectedCount: 1) { confirmation in
             let server = OSCServer(timeTagMode: .ignore)
             
-            server.setHandler { _, _ in
+            server.setHandler { _, _, _, _ in
                 confirmation()
             }
             
@@ -103,7 +103,7 @@ import Testing
                 [.message("/test", values: [Int32(123)])]
             )
             
-            server._handle(payload: bundle)
+            server._handle(payload: bundle, remoteHost: "localhost", remotePort: 8000)
             
             try await Task.sleep(seconds: 0.5)
         }

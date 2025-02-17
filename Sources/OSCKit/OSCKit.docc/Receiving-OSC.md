@@ -9,15 +9,15 @@ Both ``OSCServer`` and ``OSCSocket`` are capable of receiving messages using the
 If not already set during initialization, you may set the receiver handler using the ``OSCServer/setHandler(_:)`` or ``OSCSocket/setHandler(_:)`` method.
 
 ```swift
-oscServer.setHandler { [weak self] oscMessage, timeTag in
+oscServer.setHandler { [weak self] message, timeTag, host, port in
     do {
-        try self?.handle(received: oscMessage)
+        try self?.handle(message: message, host: host, port: port)
     } catch {
         print(error)
     }
 }
 
-private func handle(received oscMessage: OSCMessage) throws {
+private func handle(message: OSCMessage, host: String, port: UInt16) throws {
     // handle received messages here
 }
 ```
