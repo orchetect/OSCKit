@@ -37,7 +37,7 @@ public final class OSCAddressSpace: @unchecked Sendable {
 
 extension OSCAddressSpace {
     /// A closure executed when an inbound OSC message address pattern matches a local OSC method.
-    public typealias MethodBlock = @Sendable (_ values: OSCValues) async -> Void
+    public typealias MethodBlock = @Sendable (_ values: OSCValues, _ host: String, _ port: UInt16) async -> Void
     
     /// Register an OSC address.
     /// Returns a unique identifier assigned to the address's method.
@@ -175,17 +175,18 @@ extension OSCAddressSpace {
     ///  A container may also be a method. Simply register it the same way as other methods.
     ///
     /// - Returns: The OSC method IDs that were matched (the same as calling
-    /// ``methods(matching:)``).
-    ///
+    ///   ``methods(matching:)``).
     @discardableResult
     public func dispatch(
-        _ message: OSCMessage
+        message: OSCMessage,
+        host: String,
+        port: UInt16
     ) -> [MethodID] {
         let nodes = methodNodes(patternMatching: message.addressPattern)
         
         for node in nodes {
             guard let block = node.block else { continue }
-            Task { await block(message.values) }
+            Task { await block(message.values, host, port) }
         }
         
         return nodes
