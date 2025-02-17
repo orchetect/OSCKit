@@ -561,23 +561,25 @@ import Testing
         var methodIDs: [OSCAddressSpace.MethodID]!
         
         try await confirmation(expectedCount: 11) { confirmation in
-            id1 = addressSpace.register(localAddress: "/base/test1") { values in
+            id1 = addressSpace.register(localAddress: "/base/test1") { values, host, port in
                 #expect(values == ["A string", 123])
                 confirmation.confirm(count: 1)
             }
             
-            id2 = addressSpace.register(localAddress: "/base/test2") { values in
+            id2 = addressSpace.register(localAddress: "/base/test2") { values, host, port in
                 #expect(values == ["A string", 123])
                 confirmation.confirm(count: 10)
             }
             
             // this shouldn't be called
-            id3 = addressSpace.register(localAddress: "/base/blah3") { values in
+            id3 = addressSpace.register(localAddress: "/base/blah3") { values, host, port in
                 confirmation.confirm(count: 100)
             }
             
             methodIDs = addressSpace.dispatch(
-                OSCMessage("/base/test?", values: ["A string", 123])
+                message: OSCMessage("/base/test?", values: ["A string", 123]),
+                host: "localhost",
+                port: 8000
             )
             
             try await Task.sleep(seconds: 0.5)
