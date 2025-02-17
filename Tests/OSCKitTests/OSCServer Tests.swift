@@ -37,7 +37,7 @@ struct OSCServer_Tests {
         
         let server = OSCServer()
         
-        final class Receiver: @unchecked Sendable {
+        final actor Receiver {
             var messages: [(message: OSCMessage, host: String, port: UInt16)] = []
             func received(_ message: OSCMessage, host: String, port: UInt16) {
                 messages.append((message, host, port))
@@ -48,8 +48,8 @@ struct OSCServer_Tests {
         
         server.setHandler { message, timeTag, host, port in
             // print("Handler received:", message.addressPattern)
-            DispatchQueue.main.async {
-                receiver.received(message, host: host, port: port)
+            Task { @MainActor in
+                await receiver.received(message, host: host, port: port)
             }
         }
         
@@ -64,19 +64,22 @@ struct OSCServer_Tests {
             server._handle(payload: msg3, remoteHost: "10.0.0.50", remotePort: 8080)
         }
         
-        try await wait(require: { receiver.messages.count == 3 }, timeout: 5.0)
+        try await wait(require: { await receiver.messages.count == 3 }, timeout: 5.0)
         
-        #expect(receiver.messages[0].message == msg1)
-        #expect(receiver.messages[0].host == "localhost")
-        #expect(receiver.messages[0].port == 8000)
+        let message1 = await receiver.messages[0]
+        #expect(message1.message == msg1)
+        #expect(message1.host == "localhost")
+        #expect(message1.port == 8000)
         
-        #expect(receiver.messages[1].message == msg2)
-        #expect(receiver.messages[1].host == "192.168.0.25")
-        #expect(receiver.messages[1].port == 8001)
+        let message2 = await receiver.messages[1]
+        #expect(message2.message == msg2)
+        #expect(message2.host == "192.168.0.25")
+        #expect(message2.port == 8001)
         
-        #expect(receiver.messages[2].message == msg3)
-        #expect(receiver.messages[2].host == "10.0.0.50")
-        #expect(receiver.messages[2].port == 8080)
+        let message3 = await receiver.messages[2]
+        #expect(message3.message == msg3)
+        #expect(message3.host == "10.0.0.50")
+        #expect(message3.port == 8080)
     }
     
     /// Offline stress-test to ensure a large volume of OSC packets are received and dispatched in order.
@@ -84,7 +87,7 @@ struct OSCServer_Tests {
     func stressTestOffline() async throws {
         let server = OSCServer()
         
-        final class Receiver: @unchecked Sendable {
+        final actor Receiver {
             var messages: [OSCMessage] = []
             func received(_ message: OSCMessage) {
                 messages.append(message)
@@ -94,8 +97,8 @@ struct OSCServer_Tests {
         let receiver = Receiver()
         
         server.setHandler { message, timeTag, host, port in
-            DispatchQueue.main.async {
-                receiver.received(message)
+            Task { @MainActor in
+                await receiver.received(message)
             }
         }
         
@@ -117,13 +120,13 @@ struct OSCServer_Tests {
             }
         }
         
-        try await wait(require: { receiver.messages.count == 1000 }, timeout: 5.0)
+        try await wait(require: { await receiver.messages.count == 1000 }, timeout: 5.0)
         
-        #expect(receiver.messages == sourceMessages)
+        await #expect(receiver.messages == sourceMessages)
     }
     
     /// Online stress-test to ensure a large volume of OSC packets are received and dispatched in order.
-    @MainActor @Test
+    @Test
     func stressTestOnline() async throws {
         let isFlakey = !isSystemTimingStable()
         
@@ -135,7 +138,7 @@ struct OSCServer_Tests {
         
         print("Using server listen port \(server.localPort)")
         
-        final class Receiver: @unchecked Sendable {
+        final actor Receiver {
             var messages: [OSCMessage] = []
             func received(_ message: OSCMessage) {
                 messages.append(message)
@@ -145,8 +148,8 @@ struct OSCServer_Tests {
         let receiver = Receiver()
         
         server.setHandler { message, timeTag, host, port in
-            DispatchQueue.main.async {
-                receiver.received(message)
+            Task { @MainActor in
+                await receiver.received(message)
             }
         }
         
@@ -170,10 +173,10 @@ struct OSCServer_Tests {
             }
         }
         
-        await wait(expect: { receiver.messages.count == 1000 }, timeout: isFlakey ? 20.0 : 2.0)
-        try #require(receiver.messages.count == 1000)
+        await wait(expect: { await receiver.messages.count == 1000 }, timeout: isFlakey ? 20.0 : 2.0)
+        try await #require(receiver.messages.count == 1000)
         
-        #expect(receiver.messages == sourceMessages)
+        await #expect(receiver.messages == sourceMessages)
     }
 }
 
