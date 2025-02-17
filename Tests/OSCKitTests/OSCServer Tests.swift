@@ -18,13 +18,13 @@ struct OSCServer_Tests {
         try await confirmation(expectedCount: 0) { confirmation in
             let server = OSCServer()
             
-            server.setHandler { _, _ in
+            server.setHandler { _, _, _, _ in
                 confirmation()
             }
             
             let bundle = OSCBundle()
             
-            server._handle(payload: bundle)
+            server._handle(payload: bundle, remoteHost: "localhost", remotePort: 8000)
             
             try await Task.sleep(seconds: 1)
         }
@@ -38,18 +38,18 @@ struct OSCServer_Tests {
         let server = OSCServer()
         
         final class Receiver: @unchecked Sendable {
-            var messages: [OSCMessage] = []
-            func received(_ message: OSCMessage) {
-                messages.append(message)
+            var messages: [(message: OSCMessage, host: String, port: UInt16)] = []
+            func received(_ message: OSCMessage, host: String, port: UInt16) {
+                messages.append((message, host, port))
             }
         }
         
         let receiver = Receiver()
         
-        server.setHandler { message, timeTag in
+        server.setHandler { message, timeTag, host, port in
             // print("Handler received:", message.addressPattern)
             DispatchQueue.main.async {
-                receiver.received(message)
+                receiver.received(message, host: host, port: port)
             }
         }
         
@@ -59,16 +59,24 @@ struct OSCServer_Tests {
         
         // use global thread to simulate internal network thread being a dedicated thread
         DispatchQueue.global().async {
-            server._handle(payload: msg1)
-            server._handle(payload: msg2)
-            server._handle(payload: msg3)
+            server._handle(payload: msg1, remoteHost: "localhost", remotePort: 8000)
+            server._handle(payload: msg2, remoteHost: "192.168.0.25", remotePort: 8001)
+            server._handle(payload: msg3, remoteHost: "10.0.0.50", remotePort: 8080)
         }
         
         try await wait(require: { receiver.messages.count == 3 }, timeout: 5.0)
         
-        #expect(receiver.messages[0] == msg1)
-        #expect(receiver.messages[1] == msg2)
-        #expect(receiver.messages[2] == msg3)
+        #expect(receiver.messages[0].message == msg1)
+        #expect(receiver.messages[0].host == "localhost")
+        #expect(receiver.messages[0].port == 8000)
+        
+        #expect(receiver.messages[1].message == msg2)
+        #expect(receiver.messages[1].host == "192.168.0.25")
+        #expect(receiver.messages[1].port == 8001)
+        
+        #expect(receiver.messages[2].message == msg3)
+        #expect(receiver.messages[2].host == "10.0.0.50")
+        #expect(receiver.messages[2].port == 8080)
     }
     
     /// Offline stress-test to ensure a large volume of OSC packets are received and dispatched in order.
@@ -85,7 +93,7 @@ struct OSCServer_Tests {
         
         let receiver = Receiver()
         
-        server.setHandler { message, timeTag in
+        server.setHandler { message, timeTag, host, port in
             DispatchQueue.main.async {
                 receiver.received(message)
             }
@@ -105,7 +113,7 @@ struct OSCServer_Tests {
         // use global thread to simulate internal network thread being a dedicated thread
         DispatchQueue.global().async {
             for message in sourceMessages {
-                server._handle(payload: message)
+                server._handle(payload: message, remoteHost: "localhost", remotePort: 8000)
             }
         }
         
@@ -136,7 +144,7 @@ struct OSCServer_Tests {
         
         let receiver = Receiver()
         
-        server.setHandler { message, timeTag in
+        server.setHandler { message, timeTag, host, port in
             DispatchQueue.main.async {
                 receiver.received(message)
             }
