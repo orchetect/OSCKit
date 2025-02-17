@@ -133,7 +133,8 @@ extension OSCAddressSpace {
     /// Returns all OSC address nodes matching the address pattern.
     ///
     /// - Note: This will not automatically execute the closure blocks that may be associated with
-    ///   the methods. To execute the closures, invoke the ``dispatch(_:)`` function instead.
+    ///   the methods. To execute the closures, invoke the ``dispatch(message:host:port:)`` function
+    ///   instead.
     ///
     /// - Remark: An OSC Method is defined as being the last path component in the address. OSC
     ///   Methods are the potential destinations of OSC messages received by the OSC server and

@@ -6,7 +6,7 @@
 let oscServer: OSCServer
 
 init() {
-    oscServer = OSCServer(port: 8000) { [weak self] message, timeTag in
+    oscServer = OSCServer(port: 8000) { [weak self] message, timeTag, host, port in
         print("Received \(message)")
     }
 }

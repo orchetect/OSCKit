@@ -20,10 +20,11 @@ potential destinations of OSC messages received by the OSC server and correspond
 points of control that the application makes available.
 
 The `methodname` path component is the method name in the following address examples:
-  ```
-  /methodname
-  /container1/container2/methodname
-  ```
+
+```
+/methodname
+/container1/container2/methodname
+```
 
 Any other path components besides the last are referred to as _containers_.
 
@@ -35,7 +36,7 @@ Simple matching can be performed using the ``OSCAddressPattern/matches(localAddr
 
 ```swift
 // example: received OSC message with address "/{some,other}/address/*"
-private func handle(received message: OSCMessage) throws {
+private func handle(message: OSCMessage, host: String, port: UInt16) throws {
     let pattern = message.addressPattern
     if pattern.matches(localAddress: "/some/address/methodA") { 
         // (will match in this example)
@@ -76,10 +77,10 @@ let idMethodB = addressSpace.register(localAddress: "/some/address/methodB")
 ```
 
 ```swift
-func handle(message: OSCMessage) throws {
+func handle(message: OSCMessage, host: String, port: UInt16) throws {
     let ids = addressSpace.methods(matching: message.addressPattern)
     
-    try ids.forEach { id in
+    for id in ids {
         switch id {
         case idMethodA:
             let str = try message.values.masked(String.self)
@@ -101,7 +102,7 @@ func performMethodB(_ str: String, _ int: Int?) { }
 
 - When registering a local method, it can also store a closure. This closure can be executed automatically when matching against a received OSC message's address pattern.
 - When an OSC message is received:
-  - Pass its address pattern to the ``OSCAddressSpace/dispatch(_:)``.
+  - Pass its address pattern to the ``OSCAddressSpace/dispatch(message:host:port:)``.
   - This method will pattern-match it against all registered local addresses and execute their closures.
   - It also returns an array of local method IDs that match exactly like ``OSCAddressSpace/methods(matching:)`` (which may be discarded if handling of unregistered/unrecognized methods is not needed).
   - If the returned method ID array is empty, that indicates that no methods matched the address pattern. In this case you may want to handle the unhandled message in a special way.
@@ -109,19 +110,19 @@ func performMethodB(_ str: String, _ int: Int?) { }
 ```swift
 // instance address space and register methods only once, usually at app startup.
 let addressSpace = OSCAddressSpace()
-addressSpace.register(localAddress: "/methodA") { values in
+addressSpace.register(localAddress: "/methodA") { values, host, port in
     guard let str = try? message.values.masked(String.self) else { return }
     performMethodA(str)
 }
-addressSpace.register(localAddress: "/some/address/methodB") { values in
+addressSpace.register(localAddress: "/some/address/methodB") { values, host, port in
     guard let (str, int) = try message.values.masked(String.self, Int?.self) else { return }
     performMethodB(str, int)
 }
 ```
 
 ```swift
-func handle(message: OSCMessage) throws {
-    let ids = addressSpace.dispatch(message)
+func handle(message: OSCMessage, host: String, port: UInt16) throws {
+    let ids = addressSpace.dispatch(message: message, host: host, port: port)
     if ids.isEmpty {
         print("Received unhandled OSC message:", message)
     }

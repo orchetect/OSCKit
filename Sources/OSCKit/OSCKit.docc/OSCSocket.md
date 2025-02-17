@@ -16,7 +16,7 @@ init() {
     oscSocket = OSCSocket(
         remoteHost: "192.168.0.2",
         remotePort: 10023
-    ) { [weak self] message, timeTag in
+    ) { [weak self] message, timeTag, host, port in
         print("Received \(message)")
     }
 }
