@@ -10,7 +10,7 @@ builder:
   - platform: tvOS
     scheme: OSCKit-CI
   - platform: watchOS
-    scheme: OSCKit-CI
+    scheme: NOT-SUPPORTED
   - platform: visionOS
     scheme: OSCKit-CI
 external_links:
