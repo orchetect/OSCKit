@@ -62,7 +62,7 @@ OSCKit also adds the following opaque type-erasure types.
 
 | Type                  | Description                                          |
 | --------------------- | ---------------------------------------------------- |
-| ``AnyOSCNumberValue`` | Wraps any `BinaryInteger` or `BinaryFloatingPoint`. Used when masking OSC values to mask a type-erased number, and is not meant to be constructed directly. |
+| ``AnyOSCNumberValue`` | Wraps any `BinaryInteger`, `BinaryFloatingPoint` or `Bool`. Used when masking OSC values to mask a type-erased number, and is not meant to be constructed directly. |
 
 ## Topics
 

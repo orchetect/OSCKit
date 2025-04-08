@@ -7,7 +7,7 @@
 import Foundation
 
 /// A meta-type used in ``OSCValues`` `masked()` to opaquely mask any OSC number type.
-/// This type is not publicly initialize-able. Instead it is provided as a box for a type-erased
+/// This type is not publicly initialize-able; instead, it is provided as a box for a type-erased
 /// number value when masking.
 ///
 /// - ``base`` returns the strongly-typed number.

@@ -6,7 +6,7 @@
 
 import Foundation
 
-/// Type-erased OSC number value base value encapsulation.
+/// Type-erased OSC number value encapsulation.
 public enum OSCNumberValueBase {
     /// Boolean value.
     case bool(Bool)
