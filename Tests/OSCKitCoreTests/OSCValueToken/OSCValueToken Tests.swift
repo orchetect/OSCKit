@@ -771,6 +771,95 @@ import Testing
         )
     }
     
+    @Test
+    func matchesValueMask_numberOrBool() {
+        let mask: [OSCValueToken] = [.numberOrBool]
+        
+        // success
+        #expect(
+            OSCValues([Int(1)])
+                .matches(mask: mask)
+        )
+        #expect(
+            OSCValues([Int8(1)])
+                .matches(mask: mask)
+        )
+        #expect(
+            OSCValues([Int16(1)])
+                .matches(mask: mask)
+        )
+        #expect(
+            OSCValues([Int32(1)])
+                .matches(mask: mask)
+        )
+        #expect(
+            OSCValues([Int64(1)])
+                .matches(mask: mask)
+        )
+        #expect(
+            OSCValues([UInt8(1)])
+                .matches(mask: mask)
+        )
+        #expect(
+            OSCValues([UInt(1)])
+                .matches(mask: mask)
+        )
+        #expect(
+            OSCValues([UInt16(1)])
+                .matches(mask: mask)
+        )
+        #expect(
+            OSCValues([UInt32(1)])
+                .matches(mask: mask)
+        )
+        #expect(
+            OSCValues([UInt64(1)])
+                .matches(mask: mask)
+        )
+        #expect(
+            OSCValues([Float32(1)])
+                .matches(mask: mask)
+        )
+        #expect(
+            OSCValues([Double(1)])
+                .matches(mask: mask)
+        )
+        #expect(
+            OSCValues([true])
+                .matches(mask: mask)
+        )
+        
+        // fail - empty values array
+        #expect(
+            !OSCValues()
+                .matches(mask: mask)
+        )
+        
+        // fail - related (but wrong) type
+        #expect(
+            !OSCValues([String("1")])
+                .matches(mask: mask)
+        )
+        #expect(
+            !OSCValues([OSCStringAltValue("1")])
+                .matches(mask: mask)
+        )
+        #expect(
+            !OSCValues([Character("1")])
+                .matches(mask: mask)
+        )
+        #expect(
+            !OSCValues([OSCTimeTag(1)])
+                .matches(mask: mask)
+        )
+        
+        // fail - matches but too many values
+        #expect(
+            !OSCValues([Int32(1), Int32(1)])
+                .matches(mask: mask)
+        )
+    }
+    
     // MARK: ... Interpolated types
     
     @Test
@@ -800,6 +889,7 @@ import Testing
         
         // -- opaque types
         #expect(value.matches(mask: [.number]))
+        #expect(value.matches(mask: [.numberOrBool]))
     }
     
     // MARK: - Optional Variants
@@ -871,6 +961,35 @@ import Testing
         )
     }
     
+    @Test
+    func matchesValueMask_numberOrBoolOptional() {
+        let mask: [OSCValueToken] = [.numberOrBoolOptional]
+        
+        // success
+        #expect(
+            OSCValues([Int32(123)])
+                .matches(mask: mask)
+        )
+        
+        // success - value was optional
+        #expect(
+            OSCValues()
+                .matches(mask: mask)
+        )
+        
+        // success
+        #expect(
+            OSCValues([Int64(123)])
+                .matches(mask: mask)
+        )
+        
+        // fail - matches but too many values
+        #expect(
+            !OSCValues([Int32(123), Int32(123)])
+                .matches(mask: mask)
+        )
+    }
+    
     // MARK: ... Interpolated types
     
     @Test
@@ -900,5 +1019,6 @@ import Testing
         
         // -- opaque types
         #expect(value.matches(mask: [.numberOptional]))
+        #expect(value.matches(mask: [.numberOrBoolOptional]))
     }
 }

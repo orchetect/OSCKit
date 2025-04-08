@@ -65,7 +65,7 @@ import Testing
         // includingOpaque: true
         for token in OSCValueToken.allCases {
             switch token {
-            case valType, .number:
+            case valType, .number, .numberOrBool:
                 #expect(
                     val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true)
@@ -98,7 +98,7 @@ import Testing
         // includingOpaque: true
         for token in OSCValueToken.allCases {
             switch token {
-            case valType, .number:
+            case valType, .number, .numberOrBool:
                 #expect(
                     val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true)
@@ -199,7 +199,7 @@ import Testing
         // includingOpaque: true
         for token in OSCValueToken.allCases {
             switch token {
-            case valType:
+            case valType, .numberOrBool:
                 #expect(
                     val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true)
@@ -265,7 +265,7 @@ import Testing
         // includingOpaque: true
         for token in OSCValueToken.allCases {
             switch token {
-            case valType, .number:
+            case valType, .number, .numberOrBool:
                 #expect(
                     val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true)
@@ -298,7 +298,7 @@ import Testing
         // includingOpaque: true
         for token in OSCValueToken.allCases {
             switch token {
-            case valType, .number:
+            case valType, .number, .numberOrBool:
                 #expect(
                     val.oscValueToken
                         .isBaseType(matching: token, includingOpaque: true)
@@ -480,35 +480,42 @@ import Testing
     
     // MARK: ... Opaque types
     
-    @Test
-    func baseTypeMatches_number() {
-        let val: any OSCValueMaskable = AnyOSCNumberValue(123)
-        let valType: OSCValueToken = .number
+    /// `AnyOSCNumberValue` will always carry the OSC value token `numberOrBool`, which means
+    /// the `includingOpaque` parameter will have no effect.
+    /// 
+    /// Note that even though `Int32` is a core OSC type, it's still type-erased here.
+    @Test(
+        arguments: [
+            AnyOSCNumberValue(Int(123)),
+            AnyOSCNumberValue(Int32(456)),
+            AnyOSCNumberValue(Double(150.5)),
+            AnyOSCNumberValue(Bool(true))
+        ]
+    )
+    func baseTypeMatches_numberOrBool(val: AnyOSCNumberValue) async {
+        #expect(val.oscValueToken == .numberOrBool)
         
         // includingOpaque: false
         for token in OSCValueToken.allCases {
+            let result = val.oscValueToken.isBaseType(matching: token)
+            
             switch token {
-            case valType:
-                #expect(val.oscValueToken.isBaseType(matching: token))
+            case .numberOrBool:
+                #expect(result, "\(token)")
             default:
-                #expect(!val.oscValueToken.isBaseType(matching: token), "\(token)")
+                #expect(!result, "\(token)")
             }
         }
         
         // includingOpaque: true
         for token in OSCValueToken.allCases {
+            let result = val.oscValueToken.isBaseType(matching: token, includingOpaque: true)
+            
             switch token {
-            case valType, .number:
-                #expect(
-                    val.oscValueToken
-                        .isBaseType(matching: token, includingOpaque: true)
-                )
+            case .numberOrBool:
+                #expect(result, "\(token)")
             default:
-                #expect(
-                    !val.oscValueToken
-                        .isBaseType(matching: token, includingOpaque: true),
-                    "\(token)"
-                )
+                #expect(!result, "\(token)")
             }
         }
     }

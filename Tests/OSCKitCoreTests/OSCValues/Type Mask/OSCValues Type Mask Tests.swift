@@ -2234,6 +2234,18 @@ import Testing
     // MARK: - Meta type: AnyOSCNumberValue
     
     @Test
+    func anyOSCNumberValue_Bool() throws {
+        let values: OSCValues = [Bool(true)]
+        
+        let masked = try values.masked(AnyOSCNumberValue.self)
+        
+        guard case let .bool(unwrapped) = masked.base
+        else { Issue.record(); return }
+        
+        #expect(unwrapped == true)
+    }
+    
+    @Test
     func anyOSCNumberValue_Int32() throws {
         let values: OSCValues = [Int32(123)]
         

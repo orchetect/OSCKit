@@ -118,6 +118,12 @@ import Testing
     // MARK: - Opaque types
     
     @Test
+    func anyOSCNumberValue_Bool() throws {
+        let val = try [Bool(true)].masked(AnyOSCNumberValue.self)
+        #expect("\(val)" == "true")
+    }
+    
+    @Test
     func anyOSCNumberValue_Int() throws {
         let val = try [Int(123)].masked(AnyOSCNumberValue.self)
         #expect("\(val)" == "123")
