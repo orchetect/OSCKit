@@ -11,8 +11,8 @@ import Foundation
 /// number value when masking.
 ///
 /// - ``base`` returns the strongly-typed number.
-/// - ``intValue`` and ``doubleValue`` can be used as a convenience to access the base value,
-///   converting from the base type if necessary.
+/// - ``boolValue``, ``intValue`` and ``doubleValue`` can be used as a convenience to access the
+///   base value, converting from the base type if necessary.
 public struct AnyOSCNumberValue {
     /// Base value storage.
     public let base: OSCNumberValueBase
@@ -27,6 +27,19 @@ public struct AnyOSCNumberValue {
     
     init(_ base: some OSCValue & BinaryFloatingPoint) {
         self.base = .float(base)
+    }
+    
+    /// Returns the boxed value as an `Bool`, lossily converting format if necessary.
+    /// Provided as a convenience. To get the actual stored value, unwrap the enum case instead.
+    public var boolValue: Bool {
+        switch base {
+        case let .bool(v):
+            v
+        case let .int(v):
+            Int(v) >= 1
+        case let .float(v):
+            Double(v) >= 1.0
+        }
     }
     
     /// Returns the boxed value as an `Int`, lossily converting format if necessary.
