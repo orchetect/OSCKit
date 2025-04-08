@@ -8,7 +8,7 @@ import Foundation
 
 /// ``OSCValue`` type tokens, including optional variants and opaque types.
 /// Useful for abstractions that mask sequences of values.
-public enum OSCValueToken: Int, CaseIterable {
+public enum OSCValueToken: CaseIterable {
     // concrete types
     
     // -- core types
