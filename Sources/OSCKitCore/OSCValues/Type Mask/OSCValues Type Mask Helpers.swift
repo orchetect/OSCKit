@@ -51,6 +51,8 @@ extension OSCValues {
                 return AnyOSCNumberValue(int) as! MaskType // guaranteed
             case let float as any (OSCValue & BinaryFloatingPoint):
                 return AnyOSCNumberValue(float) as! MaskType // guaranteed
+            case let bool as Bool:
+                return AnyOSCNumberValue(bool) as! MaskType // guaranteed
             default:
                 throw OSCValueMaskError.mismatchedTypes
             }

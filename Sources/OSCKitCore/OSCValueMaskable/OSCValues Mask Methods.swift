@@ -15,6 +15,8 @@ extension OSCValues {
     ///   - ``OSCValueToken/number`` & ``OSCValueToken/numberOptional``: Matches
     ///     ``OSCValueToken/int32``, ``OSCValueToken/float32``, ``OSCValueToken/double``, or
     ///     ``OSCValueToken/int64``.
+    ///   - ``OSCValueToken/numberOrBool`` & ``OSCValueToken/numberOrBoolOptional``: Matches
+    ///     all ``OSCValueToken/number`` types as well as ``OSCValueToken/bool``.
     ///
     /// - parameter mask: ``OSCValueToken`` array representing a positive mask match.
     public func matches(
@@ -31,7 +33,7 @@ extension OSCValues {
             
             if indices.contains(idx) {
                 switch mask[idx] {
-                case .number, .numberOptional:
+                case .number, .numberOptional, .numberOrBool, .numberOrBoolOptional:
                     // pass through to be matched as a core type
                     break
                 default:

@@ -23,7 +23,6 @@ extension OSCValueToken {
         
         if includingOpaque {
             // handle all opaque types
-            // for now, it's just `.number` unless more are added to OSCKit in future
             
             switch token {
             case .number:
@@ -31,6 +30,15 @@ extension OSCValueToken {
                     self == .float32 ||
                     self == .int64 ||
                     self == .double
+                {
+                    return true
+                }
+            case .numberOrBool:
+                if self == .int32 ||
+                    self == .float32 ||
+                    self == .int64 ||
+                    self == .double ||
+                    self == .bool
                 {
                     return true
                 }

@@ -34,7 +34,12 @@ public enum OSCValueToken: Int, CaseIterable {
     /// Meta type: Number.
     /// Not a specific type like the others. Used when defining a mask to accept numeric value types
     /// (``int32``, ``float32``, ``double``, ``int64``) for an expected value placeholder.
-    case number // accepts any OSC number type
+    case number // accepts any OSC number type, but not Bool
+    
+    /// Meta type: Number or Boolean.
+    /// Not a specific type like the others. Used when defining a mask to accept numeric value types
+    /// (``int32``, ``float32``, ``double``, ``int64``, ``bool``) for an expected value placeholder.
+    case numberOrBool // accepts any OSC number type or Bool
     
     // optional versions of concrete types
     
@@ -57,10 +62,16 @@ public enum OSCValueToken: Int, CaseIterable {
     case timeTagOptional
     
     // -- opaque types
+    
     /// Meta type: Number (Optional variant).
     /// Not a specific type like the others. Used when defining a mask to accept numeric value types
     /// (``int32``, ``float32``, ``double``, ``int64``) for an expected value placeholder.
-    case numberOptional // accepts any OSC number type
+    case numberOptional // accepts any OSC number type, but not Bool
+    
+    /// Meta type: Number or Boolean (Optional variant).
+    /// Not a specific type like the others. Used when defining a mask to accept numeric value types
+    /// (``int32``, ``float32``, ``double``, ``int64``, ``bool``) for an expected value placeholder.
+    case numberOrBoolOptional // accepts any OSC number type or Bool
 }
 
 // MARK: - Equatable, Hashable
@@ -80,23 +91,24 @@ extension OSCValueToken {
     public var baseType: Self {
         switch self {
         // core types
-        case .blob,      .blobOptional:      .blob
-        case .float32,   .float32Optional:   .float32
-        case .int32,     .int32Optional:     .int32
-        case .string,    .stringOptional:    .string
+        case .blob,         .blobOptional:         .blob
+        case .float32,      .float32Optional:      .float32
+        case .int32,        .int32Optional:        .int32
+        case .string,       .stringOptional:       .string
         // extended types
-        case .array,     .arrayOptional:     .array
-        case .bool,      .boolOptional:      .bool
-        case .character, .characterOptional: .character
-        case .double,    .doubleOptional:    .double
-        case .int64,     .int64Optional:     .int64
-        case .impulse,   .impulseOptional:   .impulse
-        case .midi,      .midiOptional:      .midi
-        case .null,      .nullOptional:      .null
-        case .stringAlt, .stringAltOptional: .stringAlt
-        case .timeTag,   .timeTagOptional:   .timeTag
+        case .array,        .arrayOptional:        .array
+        case .bool,         .boolOptional:         .bool
+        case .character,    .characterOptional:    .character
+        case .double,       .doubleOptional:       .double
+        case .int64,        .int64Optional:        .int64
+        case .impulse,      .impulseOptional:      .impulse
+        case .midi,         .midiOptional:         .midi
+        case .null,         .nullOptional:         .null
+        case .stringAlt,    .stringAltOptional:    .stringAlt
+        case .timeTag,      .timeTagOptional:      .timeTag
         // opaque types
-        case .number,    .numberOptional:    .number
+        case .number,       .numberOptional:       .number
+        case .numberOrBool, .numberOrBoolOptional: .numberOrBool
         }
     }
     
@@ -126,7 +138,8 @@ extension OSCValueToken {
             false
             
         // opaque types
-        case .number:
+        case .number,
+             .numberOrBool:
             false
             
         // optional versions of concrete types
@@ -151,7 +164,8 @@ extension OSCValueToken {
             true
             
         // -- opaque types
-        case .numberOptional:
+        case .numberOptional,
+             .numberOrBoolOptional:
             true
         }
     }
@@ -162,23 +176,24 @@ extension OSCValueToken {
     public var maskReturnType: OSCValueMaskable.Type {
         switch self {
         // core types
-        case .blob,      .blobOptional:      Data.self
-        case .float32,   .float32Optional:   Float32.self
-        case .int32,     .int32Optional:     Int32.self
-        case .string,    .stringOptional:    String.self
+        case .blob,         .blobOptional:         Data.self
+        case .float32,      .float32Optional:      Float32.self
+        case .int32,        .int32Optional:        Int32.self
+        case .string,       .stringOptional:       String.self
         // extended types
-        case .array,     .arrayOptional:     OSCArrayValue.self
-        case .bool,      .boolOptional:      Bool.self
-        case .character, .characterOptional: Character.self
-        case .double,    .doubleOptional:    Double.self
-        case .int64,     .int64Optional:     Int64.self
-        case .impulse,   .impulseOptional:   OSCImpulseValue.self
-        case .midi,      .midiOptional:      OSCMIDIValue.self
-        case .null,      .nullOptional:      OSCNullValue.self
-        case .stringAlt, .stringAltOptional: String.self
-        case .timeTag,   .timeTagOptional:   Int64.self
+        case .array,        .arrayOptional:        OSCArrayValue.self
+        case .bool,         .boolOptional:         Bool.self
+        case .character,    .characterOptional:    Character.self
+        case .double,       .doubleOptional:       Double.self
+        case .int64,        .int64Optional:        Int64.self
+        case .impulse,      .impulseOptional:      OSCImpulseValue.self
+        case .midi,         .midiOptional:         OSCMIDIValue.self
+        case .null,         .nullOptional:         OSCNullValue.self
+        case .stringAlt,    .stringAltOptional:    String.self
+        case .timeTag,      .timeTagOptional:      Int64.self
         // opaque types
-        case .number,    .numberOptional:    AnyOSCNumberValue.self
+        case .number,       .numberOptional:       AnyOSCNumberValue.self
+        case .numberOrBool, .numberOrBoolOptional: AnyOSCNumberValue.self
         }
     }
 }
