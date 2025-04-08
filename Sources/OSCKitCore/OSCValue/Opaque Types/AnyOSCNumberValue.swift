@@ -71,7 +71,7 @@ public struct AnyOSCNumberValue {
 
 @_documentation(visibility: internal)
 extension AnyOSCNumberValue: OSCValueMaskable {
-    public static let oscValueToken: OSCValueToken = .number
+    public static let oscValueToken: OSCValueToken = .numberOrBool
 }
 
 // MARK: - Equatable
