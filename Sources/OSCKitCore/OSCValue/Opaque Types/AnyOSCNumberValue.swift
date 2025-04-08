@@ -31,6 +31,10 @@ public struct AnyOSCNumberValue {
     
     /// Returns the boxed value as an `Bool`, lossily converting format if necessary.
     /// Provided as a convenience. To get the actual stored value, unwrap the enum case instead.
+    ///
+    /// In the event the wrapped type is numeric and not a boolean, values equal to or greater than
+    /// `1` will return `true`, whereas values less than `1` (including negative values) will return
+    /// `false`.
     public var boolValue: Bool {
         switch base {
         case let .bool(v):
