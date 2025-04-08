@@ -25,6 +25,10 @@ struct OSCNumberValue<B: OSCValue> {
     /// Base value storage.
     public let base: OSCNumberValueBase
     
+    init(_ base: Bool) {
+        self.base = .bool(base)
+    }
+    
     init(_ base: some OSCValue & BinaryInteger) {
         self.base = .int(base)
     }
@@ -37,6 +41,8 @@ struct OSCNumberValue<B: OSCValue> {
     /// Provided as a convenience. To get the actual stored value, unwrap the enum case instead.
     public var intValue: Int {
         switch base {
+        case let .bool(v):
+            v ? 1 : 0
         case let .int(v):
             Int(v)
         case let .float(v):
@@ -48,6 +54,8 @@ struct OSCNumberValue<B: OSCValue> {
     /// Provided as a convenience. To get the actual stored value, unwrap the enum case instead.
     public var doubleValue: Double {
         switch base {
+        case let .bool(v):
+            v ? 1.0 : 0.0
         case let .int(v):
             Double(v)
         case let .float(v):

@@ -6,8 +6,11 @@
 
 import Foundation
 
-/// OSC number value type-erased base value encapsulation.
+/// Type-erased OSC number value base value encapsulation.
 public enum OSCNumberValueBase {
+    /// Boolean value.
+    case bool(Bool)
+    
     /// Integer value.
     case int(any(OSCValue & BinaryInteger))
     
@@ -28,6 +31,8 @@ extension OSCNumberValueBase: Equatable {
 extension OSCNumberValueBase: Hashable {
     public func hash(into hasher: inout Hasher) {
         switch self {
+        case let .bool(v):
+            hasher.combine(v)
         case let .int(v):
             hasher.combine(v)
         case let .float(v):
@@ -40,6 +45,8 @@ extension OSCNumberValueBase {
     /// Unwraps the base value and returns it as an `AnyHashable` instance.
     public func anyHashable() -> AnyHashable {
         switch self {
+        case let .bool(v):
+            AnyHashable(v)
         case let .int(v):
             AnyHashable(v)
         case let .float(v):
@@ -57,6 +64,8 @@ extension OSCNumberValueBase: Sendable { }
 extension OSCNumberValueBase: CustomStringConvertible {
     public var description: String {
         switch self {
+        case let .bool(v):
+            "\(v)"
         case let .int(v):
             "\(v)"
         case let .float(v):
