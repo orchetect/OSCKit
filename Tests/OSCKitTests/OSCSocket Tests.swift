@@ -148,10 +148,10 @@ struct OSCSocket_Tests {
             receiveQueue: nil,
             handler: nil
         )
-        try await Task.sleep(seconds: isFlakey ? 1.0 : 0.1)
+        try await Task.sleep(seconds: isFlakey ? 5.0 : 0.1)
         
         try socket.start()
-        try await Task.sleep(seconds: isFlakey ? 3.0 : 0.5)
+        try await Task.sleep(seconds: isFlakey ? 5.0 : 0.5)
         
         print("Using socket listen port \(socket.localPort), destination port \(socket.remotePort)")
         

@@ -131,10 +131,10 @@ struct OSCServer_Tests {
         let isFlakey = !isSystemTimingStable()
         
         let server = OSCServer(port: 8888, timeTagMode: .ignore, receiveQueue: nil, handler: nil)
-        try await Task.sleep(seconds: isFlakey ? 1.0 : 0.1)
+        try await Task.sleep(seconds: isFlakey ? 5.0 : 0.1)
         
         try server.start()
-        try await Task.sleep(seconds: isFlakey ? 3.0 : 0.5)
+        try await Task.sleep(seconds: isFlakey ? 5.0 : 0.5)
         
         print("Using server listen port \(server.localPort)")
         
