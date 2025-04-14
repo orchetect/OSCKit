@@ -16,14 +16,14 @@ public final class OSCSerialization {
     
     /// Internal:
     /// Registered tag identities repository.
-    var tagIdentities: [(OSCValueTagIdentity, any OSCValueCodable.Type)] = []
+    var tagIdentities: [(identity: OSCValueTagIdentity, oscValueType: any OSCValueCodable.Type)] = []
     
     /// Singleton init.
     private init() {
         // register default types synchronously so they are available immediately
         for oscValueType in Self.standardTypes {
             tagIdentities.append(
-                (oscValueType.oscTagIdentity, oscValueType.self)
+                (oscValueType.oscTagIdentity, oscValueType: oscValueType.self)
             )
         }
     }
@@ -84,7 +84,7 @@ extension OSCSerialization {
     func tagIdentities(for character: Character) -> [any OSCValueCodable.Type] {
         tagIdentities
             .filter {
-                switch $0.0 {
+                switch $0.identity {
                 case let .atomic(char):
                     char == character
                 case let .variable(chars):
@@ -93,7 +93,7 @@ extension OSCSerialization {
                     true
                 }
             }
-            .map { $0.1 }
+            .map { $0.oscValueType }
     }
     
     /// Internal:
@@ -101,7 +101,7 @@ extension OSCSerialization {
     func tagIdentities(contains character: Character) -> Bool {
         tagIdentities
             .contains {
-                $0.0.isEqual(to: character)
+                $0.identity.isEqual(to: character)
             }
     }
 }
