@@ -82,10 +82,10 @@ enum OSCMessageDecoder {
         extractedValues: inout OSCValues,
         decoder: inout OSCValueDecoder
     ) throws -> Int {
-        let types = OSCSerialization.shared.tagIdentities(for: initialChar)
+        let concreteTypes = OSCSerialization.shared.concreteTypes(for: initialChar)
             .compactMap { $0 as? (any OSCValue.Type) }
         
-        guard !types.isEmpty else {
+        guard !concreteTypes.isEmpty else {
             throw OSCDecodeError.malformed(
                 "No concrete type found to decode OSC type tag: \(initialChar)"
             )
@@ -94,11 +94,11 @@ enum OSCMessageDecoder {
         var tagsToAdvance = 0
         
         var isTypeDecoded = false
-        for type in types {
+        for concreteType in concreteTypes {
             guard !isTypeDecoded else { continue }
             
             if let decoded = try Self.decode(
-                forType: type,
+                forType: concreteType,
                 char: initialChar,
                 charStream: tags[currentTagIndex...],
                 decoder: &decoder

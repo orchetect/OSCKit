@@ -16,32 +16,32 @@ public final class OSCSerialization {
     
     /// Internal:
     /// Registered tag identities repository.
-    var tagIdentities: [(identity: OSCValueTagIdentity, oscValueType: any OSCValueCodable.Type)] = []
+    var tagIdentities: [(identity: OSCValueTagIdentity, concreteType: any OSCValueCodable.Type)] = []
     
     /// Singleton init.
     private init() {
         // register default types synchronously so they are available immediately
-        for oscValueType in Self.standardTypes {
+        for concreteType in Self.standardTypes {
             tagIdentities.append(
-                (oscValueType.oscTagIdentity, oscValueType: oscValueType.self)
+                (concreteType.oscTagIdentity, concreteType: concreteType.self)
             )
         }
     }
     
     /// Register a concrete type that conforms to ``OSCValueCodable`` to make it available for OSC
-    /// encoding and decoding.
-    public func registerType(_ oscValueType: any OSCValueCodable.Type) throws {
+    /// encoding, decoding and value masking.
+    public func registerType(_ concreteType: any OSCValueCodable.Type) throws {
         // throw an error if user attempts to register an already existing type tag
-        try canRegisterType(oscValueType)
+        try canRegisterType(concreteType)
         
         // add type's tag identity
         tagIdentities.append(
-            (oscValueType.oscTagIdentity, oscValueType.self)
+            (concreteType.oscTagIdentity, concreteType.self)
         )
     }
     
-    private func canRegisterType(_ oscValueType: any OSCValueCodable.Type) throws {
-        let staticTags = oscValueType
+    private func canRegisterType(_ concreteType: any OSCValueCodable.Type) throws {
+        let staticTags = concreteType
             .oscTagIdentity
             .staticTags()
         
@@ -80,8 +80,8 @@ extension OSCSerialization {
     ]
     
     /// Internal:
-    /// Returns tag identities for a given OSC-type tag character.
-    func tagIdentities(for character: Character) -> [any OSCValueCodable.Type] {
+    /// Returns concrete type(s) for a given OSC-type tag character.
+    func concreteTypes(for character: Character) -> [any OSCValueCodable.Type] {
         tagIdentities
             .filter {
                 switch $0.identity {
@@ -93,7 +93,7 @@ extension OSCSerialization {
                     true
                 }
             }
-            .map { $0.oscValueType }
+            .map { $0.concreteType }
     }
     
     /// Internal:
