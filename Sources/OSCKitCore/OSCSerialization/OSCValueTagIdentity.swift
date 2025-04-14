@@ -17,8 +17,8 @@ public enum OSCValueTagIdentity: Equatable, Hashable {
     /// content of the value.
     /// All possible type tags must be finite and known at compile time.
     ///
-    /// An example is Boolean (true/false). A single instance of the concrete type occupies a single
-    /// tag but the tag may be "t" or "f".
+    /// An example is Boolean (true/false). A single instance of the concrete type (`Bool`) occupies
+    /// a single tag character but the character may be `T` or `F`.
     case variable([Character])
     
     /// Variadic:
