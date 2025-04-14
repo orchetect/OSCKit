@@ -9,7 +9,7 @@ public enum OSCValueTagIdentity: Equatable, Hashable {
     /// Atomic:
     /// The OSC value is identified with a single static OSC-type tag character.
     ///
-    /// Most OSC values are represented in this manner. ie: "i" for Int32, "s" for String, etc.
+    /// Most OSC values are represented in this manner. ie: `i` for `Int32`, `s` for `String`, etc.
     case atomic(Character)
     
     /// Variable:
@@ -27,7 +27,7 @@ public enum OSCValueTagIdentity: Equatable, Hashable {
     /// validation. Very few implementations will require this pattern.
     ///
     /// One (perhaps the only) example of a variadic implementation is an OSC value array. It starts
-    /// with the "[" tag and ends with the "]" tag and may contain zero or more atomic values. It
+    /// with the `[` tag and ends with the `]` tag and may contain zero or more atomic values. It
     /// would have a `minCount` of 2 and a `maxCount` of `nil`. Variadic is how OSCKit itself
     /// internally implements OSC array encoding and decoding.
     case variadic(minCount: Int?, maxCount: Int?)
