@@ -15,10 +15,10 @@ public struct OSCMessage: OSCObject {
     public static let oscObjectType: OSCObjectType = .message
     
     /// OSC message address pattern.
-    public let addressPattern: OSCAddressPattern
+    public var addressPattern: OSCAddressPattern
     
     /// OSC values (arguments) contained within the message.
-    public let values: OSCValues
+    public var values: OSCValues
     
     @usableFromInline
     let _rawData: Data?
