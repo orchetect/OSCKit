@@ -18,11 +18,11 @@ public struct OSCBundle: OSCObject {
     
     /// Time tag.
     /// Default value 1: means "immediate" in OSC spec.
-    public let timeTag: OSCTimeTag
+    public var timeTag: OSCTimeTag
     
     /// Elements contained within the bundle. These can be ``OSCBundle`` or ``OSCMessage``
     /// instances.
-    public let elements: [any OSCObject]
+    public var elements: [any OSCObject]
     
     @usableFromInline
     let _rawData: Data?
