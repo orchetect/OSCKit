@@ -49,7 +49,7 @@ If you enjoy using OSCKit and want to contribute to open-source financially, Git
 
 ## Community & Support
 
-Please do not email maintainers for technical support. Several options are available for questions and feature ideas:
+Please do not email maintainers for technical support. Several options are available for issues and questions:
 
 - Questions and feature ideas can be posted to [Discussions](https://github.com/orchetect/OSCKit/discussions).
 - If an issue is a verifiable bug with reproducible steps it may be posted in [Issues](https://github.com/orchetect/OSCKit/issues).
