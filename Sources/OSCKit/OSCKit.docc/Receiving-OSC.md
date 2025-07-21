@@ -4,7 +4,7 @@ Receiving OSC messages and bundles.
 
 ## Overview
 
-Both ``OSCUDPServer`` and ``OSCSocket`` are capable of receiving messages using the same API.
+Both ``OSCUDPServer`` and ``OSCUDPSocket`` are capable of receiving messages using the same API.
 
 If not already set during initialization, you may set the receiver handler using the ``OSCUDPServer/setHandler(_:)`` or ``OSCUDPServer/setHandler(_:)`` method.
 

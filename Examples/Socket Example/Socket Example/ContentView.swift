@@ -13,7 +13,7 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 20) {
             Group {
-                Text("The OSCSocket class is designed to send and receive OSC using a single local port.")
+                Text("The OSCUDPSocket class is designed to send and receive OSC using a single local port.")
                 
                 Text("Received OSC messages are logged to the console in this example.")
                 

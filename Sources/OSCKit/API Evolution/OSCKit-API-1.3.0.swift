@@ -14,4 +14,7 @@ public typealias OSCClient = OSCUDPClient
 @available(*, deprecated, renamed: "OSCUDPServer")
 public typealias OSCServer = OSCUDPServer
 
+@available(*, deprecated, renamed: "OSCUDPSocket")
+public typealias OSCSocket = OSCUDPSocket
+
 #endif

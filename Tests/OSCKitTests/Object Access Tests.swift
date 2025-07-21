@@ -48,7 +48,7 @@ import Testing
     
     @Test
     func oscSocketAccess() async throws {
-        let oscSocket = OSCSocket()
+        let oscSocket = OSCUDPSocket()
         
         _ = oscSocket.isStarted
         _ = oscSocket.localPort
@@ -64,27 +64,27 @@ import Testing
         }
         // oscSocket.handler = { _,_ in } // immutable actor, use `setHandler()` instead
         
-        _ = OSCSocket(localPort: 8009)
-        _ = OSCSocket(localPort: 8010) { message, timeTag, host, port in
+        _ = OSCUDPSocket(localPort: 8009)
+        _ = OSCUDPSocket(localPort: 8010) { message, timeTag, host, port in
             print(message)
         }
-        _ = OSCSocket(localPort: 8011, timeTagMode: .ignore) { message, timeTag, host, port in
+        _ = OSCUDPSocket(localPort: 8011, timeTagMode: .ignore) { message, timeTag, host, port in
             print(message)
         }
-        _ = OSCSocket(
+        _ = OSCUDPSocket(
             localPort: 8012,
             timeTagMode: .ignore
         ) { message, timeTag, host, port in
             print(message)
         }
-        _ = OSCSocket(
+        _ = OSCUDPSocket(
             localPort: 8013,
             timeTagMode: .ignore,
             isIPv4BroadcastEnabled: true
         ) { message, timeTag, host, port in
             print(message)
         }
-        _ = OSCSocket(
+        _ = OSCUDPSocket(
             localPort: 8014,
             remoteHost: "192.168.0.10",
             remotePort: 8000,

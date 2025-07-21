@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension OSCSocket {
+extension OSCUDPSocket {
     @_documentation(visibility: internal)
     @available(
         *,

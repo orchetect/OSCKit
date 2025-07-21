@@ -1,5 +1,5 @@
 //
-//  OSCSocket.swift
+//  OSCUDPSocket.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
@@ -12,7 +12,7 @@ import Foundation
 /// Sends and receives OSC packets over the network by binding a single local UDP port to both send
 /// OSC packets from and listen for incoming packets.
 ///
-/// The `OSCSocket` object internally combines both an OSC server and client sharing the same local
+/// The `OSCUDPSocket` object internally combines both an OSC server and client sharing the same local
 /// UDP port number. What sets it apart from ``OSCUDPServer`` and ``OSCUDPClient`` is that it does not
 /// require enabling port reuse to accomplish this. It also can conceptually make communicating
 /// bidirectionally with a single remote host more intuitive.
@@ -21,7 +21,7 @@ import Foundation
 /// X32 & M32 which respond back using the UDP port that they receive OSC messages from. For
 /// example: if an OSC message was sent from port 8000 to the X32's port 10023, the X32 will respond
 /// by sending OSC messages back to you on port 8000.
-public final class OSCSocket: _OSCServerProtocol, @unchecked Sendable {
+public final class OSCUDPSocket: _OSCServerProtocol, @unchecked Sendable {
     let udpSocket: GCDAsyncUdpSocket
     let udpDelegate = OSCUDPServerDelegate()
     let receiveQueue: DispatchQueue
@@ -120,7 +120,7 @@ public final class OSCSocket: _OSCServerProtocol, @unchecked Sendable {
         _remotePort = remotePort
         self.timeTagMode = timeTagMode
         self.isIPv4BroadcastEnabled = isIPv4BroadcastEnabled
-        let receiveQueue = receiveQueue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCSocket.receiveQueue")
+        let receiveQueue = receiveQueue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCUDPSocket.receiveQueue")
         self.receiveQueue = receiveQueue
         self.handler = handler
         
@@ -141,7 +141,7 @@ public final class OSCSocket: _OSCServerProtocol, @unchecked Sendable {
 
 // MARK: - Lifecycle
 
-extension OSCSocket {
+extension OSCUDPSocket {
     /// Bind the local UDP port and begin listening for OSC packets.
     public func start() throws {
         guard !isStarted else { return }
@@ -183,7 +183,7 @@ extension OSCSocket {
                 .closedError,
                 userInfo: [
                     "Reason":
-                        "Remote host is not specified in OSCSocket.remoteHost property or in host parameter in call to send()."
+                        "Remote host is not specified in OSCUDPSocket.remoteHost property or in host parameter in call to send()."
                 ]
             )
         }

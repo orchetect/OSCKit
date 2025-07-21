@@ -52,7 +52,7 @@ extension OSCUDPServer {
     }
 }
 
-extension OSCSocket {
+extension OSCUDPSocket {
     @_documentation(visibility: internal)
     @available(
         *,

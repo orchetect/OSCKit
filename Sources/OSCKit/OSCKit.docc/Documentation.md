@@ -34,7 +34,7 @@ Open Sound Control (OSC) library for macOS, iOS and tvOS.
 
 - ``OSCUDPClient``
 - ``OSCUDPServer``
-- ``OSCSocket``
+- ``OSCUDPSocket``
 - ``OSCTimeTagMode``
 - ``OSCHandlerBlock``
 

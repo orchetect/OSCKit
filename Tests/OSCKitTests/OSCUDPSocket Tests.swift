@@ -1,5 +1,5 @@
 //
-//  OSCSocket Tests.swift
+//  OSCUDPSocket Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
@@ -11,12 +11,12 @@ import Foundation
 import Testing
 
 @Suite(.serialized)
-struct OSCSocket_Tests {
+struct OSCUDPSocket_Tests {
     /// Check that an empty OSC bundle does not produce any OSC messages.
     @Test
     func emptyBundle() async throws {
         try await confirmation(expectedCount: 0) { confirmation in
-            let socket = OSCSocket(remoteHost: "localhost")
+            let socket = OSCUDPSocket(remoteHost: "localhost")
             
             socket.setHandler { _, _, _, _ in
                 confirmation()
@@ -35,7 +35,7 @@ struct OSCSocket_Tests {
     func messageOrdering(iteration: Int) async throws {
         _ = iteration // argument value not used, just a mechanism to repeat the test X number of times
         
-        let server = OSCSocket()
+        let server = OSCUDPSocket()
         
         final actor Receiver {
             var messages: [(message: OSCMessage, host: String, port: UInt16)] = []
@@ -85,7 +85,7 @@ struct OSCSocket_Tests {
     /// Offline stress-test to ensure a large volume of OSC packets are received and dispatched in order.
     @MainActor @Test
     func stressTestOffline() async throws {
-        let socket = OSCSocket(
+        let socket = OSCUDPSocket(
             localPort: nil,
             remoteHost: "localhost",
             remotePort: nil,
@@ -139,7 +139,7 @@ struct OSCSocket_Tests {
     func stressTestOnline() async throws {
         let isFlakey = !isSystemTimingStable()
         
-        let socket = OSCSocket(
+        let socket = OSCUDPSocket(
             localPort: nil,
             remoteHost: "localhost",
             remotePort: nil,
