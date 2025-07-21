@@ -10,13 +10,15 @@
 import Foundation
 
 /// Internal UDP receiver class so as to not expose `GCDAsyncUdpSocketDelegate` methods as public.
-final class OSCUDPServerDelegate: NSObject, GCDAsyncUdpSocketDelegate, @unchecked Sendable { // TODO: unchecked
+final class OSCUDPServerDelegate: NSObject {
     weak var oscServer: _OSCServerProtocol?
     
     init(oscServer: _OSCServerProtocol? = nil) {
         self.oscServer = oscServer
     }
-    
+}
+
+extension OSCUDPServerDelegate: GCDAsyncUdpSocketDelegate {
     /// CocoaAsyncSocket receive delegate method implementation.
     func udpSocket(
         _ sock: GCDAsyncUdpSocket,
@@ -57,5 +59,7 @@ final class OSCUDPServerDelegate: NSObject, GCDAsyncUdpSocketDelegate, @unchecke
         }
     }
 }
+
+extension OSCUDPServerDelegate: @unchecked Sendable { } // TODO: unchecked
 
 #endif

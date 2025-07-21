@@ -15,7 +15,7 @@ import OSCKitCore
 /// A single global OSC server instance is often created once at app startup to receive OSC messages
 /// on a specific local port. The default OSC port is 8000 but it may be set to any open port if
 /// desired.
-public final class OSCUDPServer: _OSCServerProtocol, @unchecked Sendable {
+public final class OSCUDPServer: _OSCServerProtocol {
     let udpSocket: GCDAsyncUdpSocket
     let udpDelegate = OSCUDPServerDelegate()
     let receiveQueue: DispatchQueue
@@ -72,6 +72,8 @@ public final class OSCUDPServer: _OSCServerProtocol, @unchecked Sendable {
         }
     }
 }
+
+extension OSCUDPServer: @unchecked Sendable { }
 
 // MARK: - Lifecycle
 

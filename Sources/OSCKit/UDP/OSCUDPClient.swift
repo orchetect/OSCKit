@@ -13,7 +13,7 @@ import Foundation
 ///
 /// A single global OSC client instance created once at app startup is often all that is needed. It
 /// can be used to send OSC messages to one or more receivers on the network.
-public final class OSCUDPClient: @unchecked Sendable {
+public final class OSCUDPClient {
     private let udpSocket = GCDAsyncUdpSocket()
     private let udpDelegate = OSCUDPClientDelegate()
     
@@ -123,6 +123,8 @@ public final class OSCUDPClient: @unchecked Sendable {
         stop()
     }
 }
+
+extension OSCUDPClient: @unchecked Sendable { }
 
 // MARK: - Lifecycle
 
