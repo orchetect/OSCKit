@@ -44,3 +44,9 @@ public enum OSCTimeTagMode {
     /// > reserved to mean 'immediately'."
     case ignore
 }
+
+extension OSCTimeTagMode: Equatable { }
+
+extension OSCTimeTagMode: Hashable { }
+
+extension OSCTimeTagMode: Sendable { }
