@@ -182,7 +182,7 @@ extension OSCUDPSocket {
         
         guard let toHost = host ?? remoteHost else {
             throw GCDAsyncUdpSocketError(
-                .closedError,
+                .badParamError,
                 userInfo: [
                     "Reason":
                         "Remote host is not specified in OSCUDPSocket.remoteHost property or in host parameter in call to send()."
