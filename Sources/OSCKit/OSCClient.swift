@@ -17,7 +17,6 @@ public final class OSCClient: @unchecked Sendable {
     private let udpSocket = GCDAsyncUdpSocket()
     private let udpDelegate = OSCClientUDPDelegate()
     
-    private var _localPort: UInt16?
     /// Local UDP port used by the client from which to send OSC packets. (This is not the remote port
     /// which is specified each time a call to ``send(_:to:port:)`` is made.)
     /// This may only be set at the time of initialization.
@@ -30,6 +29,7 @@ public final class OSCClient: @unchecked Sendable {
     public var localPort: UInt16 {
         udpSocket.localPort()
     }
+    private var _localPort: UInt16?
     
     /// Enable local UDP port reuse by other processes.
     /// This property must be set prior to calling ``start()`` in order to take effect.
@@ -40,7 +40,6 @@ public final class OSCClient: @unchecked Sendable {
     /// simultaneously must all enable reuse port on the socket bound to that port.
     public var isPortReuseEnabled: Bool = false
     
-    private var _isIPv4BroadcastEnabled: Bool = false
     /// Enable sending IPv4 broadcast messages from the socket.
     /// This may be set at any time.
     ///
@@ -69,6 +68,7 @@ public final class OSCClient: @unchecked Sendable {
             try? udpSocket.enableBroadcast(newValue)
         }
     }
+    private var _isIPv4BroadcastEnabled: Bool = false
     
     /// Returns a boolean indicating whether the OSC client has been started.
     public private(set) var isStarted: Bool = false
