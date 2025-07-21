@@ -1,5 +1,5 @@
 //
-//  OSCServer Tests.swift
+//  OSCUDPServer Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
@@ -11,12 +11,12 @@ import Foundation
 import Testing
 
 @Suite(.serialized)
-struct OSCServer_Tests {
+struct OSCUDPServer_Tests {
     /// Check that an empty OSC bundle does not produce any OSC messages.
     @Test
     func emptyBundle() async throws {
         try await confirmation(expectedCount: 0) { confirmation in
-            let server = OSCServer()
+            let server = OSCUDPServer()
             
             server.setHandler { _, _, _, _ in
                 confirmation()
@@ -35,7 +35,7 @@ struct OSCServer_Tests {
     func messageOrdering(iteration: Int) async throws {
         _ = iteration // argument value not used, just a mechanism to repeat the test X number of times
         
-        let server = OSCServer()
+        let server = OSCUDPServer()
         
         final actor Receiver {
             var messages: [(message: OSCMessage, host: String, port: UInt16)] = []
@@ -85,7 +85,7 @@ struct OSCServer_Tests {
     /// Offline stress-test to ensure a large volume of OSC packets are received and dispatched in order.
     @MainActor @Test
     func stressTestOffline() async throws {
-        let server = OSCServer()
+        let server = OSCUDPServer()
         
         final actor Receiver {
             var messages: [OSCMessage] = []
@@ -130,7 +130,7 @@ struct OSCServer_Tests {
     func stressTestOnline() async throws {
         let isFlakey = !isSystemTimingStable()
         
-        let server = OSCServer(port: 8888, timeTagMode: .ignore, receiveQueue: nil, handler: nil)
+        let server = OSCUDPServer(port: 8888, timeTagMode: .ignore, receiveQueue: nil, handler: nil)
         try await Task.sleep(seconds: isFlakey ? 5.0 : 0.1)
         
         try server.start()

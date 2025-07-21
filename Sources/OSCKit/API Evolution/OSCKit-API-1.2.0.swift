@@ -16,7 +16,7 @@ public typealias LegacyOSCHandlerBlock = @Sendable (
     _ timeTag: OSCTimeTag
 ) -> Void
 
-extension OSCServer {
+extension OSCUDPServer {
     @_documentation(visibility: internal)
     @available(
         *,

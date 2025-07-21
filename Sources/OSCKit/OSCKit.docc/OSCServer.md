@@ -1,12 +1,12 @@
-# ``OSCKit/OSCServer``
+# ``OSCKit/OSCUDPServer``
 
 ### Setup
 
 ```swift
-let oscServer: OSCServer
+let oscServer: OSCUDPServer
 
 init() {
-    oscServer = OSCServer(port: 8000) { [weak self] message, timeTag, host, port in
+    oscServer = OSCUDPServer(port: 8000) { [weak self] message, timeTag, host, port in
         print("Received \(message)")
     }
 }

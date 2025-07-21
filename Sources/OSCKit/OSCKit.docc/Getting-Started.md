@@ -19,7 +19,7 @@ import OSCKitCore
 ## Classes
 
 - term ``OSCUDPClient``: Send OSC messages over UDP.
-- term ``OSCServer``: Receive OSC messages over UDP.
+- term ``OSCUDPServer``: Receive OSC messages over UDP.
 - term ``OSCSocket``: Send and receive OSC messages over UDP using a single local port.
 
 ## Value Types

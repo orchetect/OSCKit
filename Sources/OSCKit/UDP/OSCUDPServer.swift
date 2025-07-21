@@ -1,5 +1,5 @@
 //
-//  OSCServer.swift
+//  OSCUDPServer.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
@@ -15,9 +15,9 @@ import OSCKitCore
 /// A single global OSC server instance is often created once at app startup to receive OSC messages
 /// on a specific local port. The default OSC port is 8000 but it may be set to any open port if
 /// desired.
-public final class OSCServer: _OSCServerProtocol, @unchecked Sendable {
+public final class OSCUDPServer: _OSCServerProtocol, @unchecked Sendable {
     let udpSocket: GCDAsyncUdpSocket
-    let udpDelegate = OSCServerUDPDelegate()
+    let udpDelegate = OSCUDPServerDelegate()
     let receiveQueue: DispatchQueue
     var handler: OSCHandlerBlock?
     
@@ -54,7 +54,7 @@ public final class OSCServer: _OSCServerProtocol, @unchecked Sendable {
     ) {
         localPort = port
         self.timeTagMode = timeTagMode
-        let receiveQueue = receiveQueue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCServer.receiveQueue")
+        let receiveQueue = receiveQueue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCUDPServer.receiveQueue")
         self.receiveQueue = receiveQueue
         self.handler = handler
         
@@ -75,7 +75,7 @@ public final class OSCServer: _OSCServerProtocol, @unchecked Sendable {
 
 // MARK: - Lifecycle
 
-extension OSCServer {
+extension OSCUDPServer {
     /// Bind the local UDP port and begin listening for OSC packets.
     public func start() throws {
         guard !isStarted else { return }

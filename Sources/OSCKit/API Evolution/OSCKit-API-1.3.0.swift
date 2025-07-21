@@ -11,4 +11,7 @@ import Foundation
 @available(*, deprecated, renamed: "OSCUDPClient")
 public typealias OSCClient = OSCUDPClient
 
+@available(*, deprecated, renamed: "OSCUDPServer")
+public typealias OSCServer = OSCUDPServer
+
 #endif

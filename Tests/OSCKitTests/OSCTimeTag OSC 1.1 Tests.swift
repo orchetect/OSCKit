@@ -13,7 +13,7 @@ import Testing
     @Test
     func defaultTimeTag() async throws {
         try await confirmation(expectedCount: 1) { confirmation in
-            let server = OSCServer(timeTagMode: .ignore)
+            let server = OSCUDPServer(timeTagMode: .ignore)
             
             server.setHandler { _, _, _, _ in
                 confirmation()
@@ -32,7 +32,7 @@ import Testing
     @Test
     func immediate() async throws {
         try await confirmation(expectedCount: 1) { confirmation in
-            let server = OSCServer(timeTagMode: .ignore)
+            let server = OSCUDPServer(timeTagMode: .ignore)
             
             server.setHandler { _, _, _, _ in
                 confirmation()
@@ -52,7 +52,7 @@ import Testing
     @Test
     func now() async throws {
         try await confirmation(expectedCount: 1) { confirmation in
-            let server = OSCServer(timeTagMode: .ignore)
+            let server = OSCUDPServer(timeTagMode: .ignore)
             
             server.setHandler { _, _, _, _ in
                 confirmation()
@@ -72,7 +72,7 @@ import Testing
     @Test
     func oneSecondInFuture() async throws {
         try await confirmation(expectedCount: 1) { confirmation in
-            let server = OSCServer(timeTagMode: .ignore)
+            let server = OSCUDPServer(timeTagMode: .ignore)
             
             server.setHandler { _, _, _, _ in
                 confirmation()
@@ -92,7 +92,7 @@ import Testing
     @Test
     func past() async throws {
         try await confirmation(expectedCount: 1) { confirmation in
-            let server = OSCServer(timeTagMode: .ignore)
+            let server = OSCUDPServer(timeTagMode: .ignore)
             
             server.setHandler { _, _, _, _ in
                 confirmation()

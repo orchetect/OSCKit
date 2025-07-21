@@ -28,7 +28,7 @@ import Testing
     
     @Test
     func oscServerAccess() async throws {
-        let oscServer = OSCServer()
+        let oscServer = OSCUDPServer()
         
         _ = oscServer.isStarted
         _ = oscServer.localPort
@@ -38,10 +38,10 @@ import Testing
         }
         // oscServer.handler = { _,_ in } // immutable actor, use `setHandler()` instead
         
-        _ = OSCServer(port: 8006) { message, timeTag, host, port in
+        _ = OSCUDPServer(port: 8006) { message, timeTag, host, port in
             print(message)
         }
-        _ = OSCServer(port: 8007, timeTagMode: .ignore) { message, timeTag, host, port in
+        _ = OSCUDPServer(port: 8007, timeTagMode: .ignore) { message, timeTag, host, port in
             print(message)
         }
     }

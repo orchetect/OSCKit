@@ -22,7 +22,7 @@ init() {
 }
 ```
 
-Similar to ``OSCServer``, an ``OSCSocket`` instance must be started before it can send or receive messages.
+Similar to ``OSCUDPServer``, an ``OSCSocket`` instance must be started before it can send or receive messages.
 
 ```swift
 try oscSocket.start()

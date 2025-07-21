@@ -1,5 +1,5 @@
 //
-//  OSCServerUDPDelegate.swift
+//  OSCUDPServerDelegate.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
@@ -10,7 +10,7 @@
 import Foundation
 
 /// Internal UDP receiver class so as to not expose `GCDAsyncUdpSocketDelegate` methods as public.
-final class OSCServerUDPDelegate: NSObject, GCDAsyncUdpSocketDelegate, @unchecked Sendable { // TODO: unchecked
+final class OSCUDPServerDelegate: NSObject, GCDAsyncUdpSocketDelegate, @unchecked Sendable { // TODO: unchecked
     weak var oscServer: _OSCServerProtocol?
     
     init(oscServer: _OSCServerProtocol? = nil) {
