@@ -1,5 +1,5 @@
 //
-//  OSCClient.swift
+//  OSCUDPClient.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
@@ -13,9 +13,9 @@ import Foundation
 ///
 /// A single global OSC client instance created once at app startup is often all that is needed. It
 /// can be used to send OSC messages to one or more receivers on the network.
-public final class OSCClient: @unchecked Sendable {
+public final class OSCUDPClient: @unchecked Sendable {
     private let udpSocket = GCDAsyncUdpSocket()
-    private let udpDelegate = OSCClientUDPDelegate()
+    private let udpDelegate = OSCUDPClientDelegate()
     
     /// Local UDP port used by the client from which to send OSC packets. (This is not the remote port
     /// which is specified each time a call to ``send(_:to:port:)`` is made.)
@@ -126,7 +126,7 @@ public final class OSCClient: @unchecked Sendable {
 
 // MARK: - Lifecycle
 
-extension OSCClient {
+extension OSCUDPClient {
     /// Bind the local UDP port.
     /// This call is only necessary if a local port was specified at the time of class
     /// initialization or if class properties were modified after initialization.
@@ -170,7 +170,7 @@ extension OSCClient {
     }
 }
 
-private final class OSCClientUDPDelegate: NSObject, GCDAsyncUdpSocketDelegate, Sendable {
+private final class OSCUDPClientDelegate: NSObject, GCDAsyncUdpSocketDelegate, Sendable {
     // we don't care about handling any delegate methods here so none are overridden
 }
 

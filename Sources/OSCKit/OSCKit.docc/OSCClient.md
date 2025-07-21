@@ -1,9 +1,9 @@
-# ``OSCKit/OSCClient``
+# ``OSCKit/OSCUDPClient``
 
 ### Setup
 
 ```swift
-let oscClient = OSCClient()
+let oscClient = OSCUDPClient()
 ```
 
 ### Sending OSC Messages

@@ -4,9 +4,9 @@ Sending OSC messages and bundles.
 
 ## Overview
 
-Both ``OSCClient`` and ``OSCSocket`` are capable of sending messages using the same API.
+Both ``OSCUDPClient`` and ``OSCSocket`` are capable of sending messages using the same API.
 
-Note that the `send(_:to:port:)` method on ``OSCClient`` is globally thread-safe.
+Note that the `send(_:to:port:)` method on ``OSCUDPClient`` is globally thread-safe.
 
 ### OSC Messages
 

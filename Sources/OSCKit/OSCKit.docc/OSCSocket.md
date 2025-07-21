@@ -34,7 +34,7 @@ See <doc:Sending-OSC> and <doc:Receiving-OSC> for details on how to send and rec
 
 ### Addenda on Sending using OSCSocket
 
-The ``OSCSocket/send(_:to:port:)`` method has a slightly different behavior on ``OSCSocket`` than it does on ``OSCClient``.
+The ``OSCSocket/send(_:to:port:)`` method has a slightly different behavior on ``OSCSocket`` than it does on ``OSCUDPClient``.
 
 ```swift
 // The `remoteHost` and/or `remotePort` supplied at the time of

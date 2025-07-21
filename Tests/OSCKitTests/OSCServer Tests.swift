@@ -164,7 +164,7 @@ struct OSCServer_Tests {
             OSCMessage("/some/address/\(UUID().uuidString)", values: possibleValuePacks.randomElement()!)
         }
         
-        let client = OSCClient()
+        let client = OSCUDPClient()
         
         // use global thread to simulate internal network thread being a dedicated thread
         DispatchQueue.global().async {

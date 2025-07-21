@@ -13,17 +13,17 @@ import Testing
 @Suite struct Object_Access_Tests {
     @Test
     func oscClientAccess() async throws {
-        let oscClient = OSCClient()
+        let oscClient = OSCUDPClient()
         
         oscClient.isIPv4BroadcastEnabled = true
         oscClient.isIPv4BroadcastEnabled = false
         oscClient.isPortReuseEnabled = true
         oscClient.isPortReuseEnabled = false
         
-        _ = OSCClient(localPort: 8002)
-        _ = OSCClient(localPort: 8003, isPortReuseEnabled: true)
-        _ = OSCClient(localPort: 8004, isPortReuseEnabled: true, isIPv4BroadcastEnabled: true)
-        _ = OSCClient(localPort: 8005, isIPv4BroadcastEnabled: true)
+        _ = OSCUDPClient(localPort: 8002)
+        _ = OSCUDPClient(localPort: 8003, isPortReuseEnabled: true)
+        _ = OSCUDPClient(localPort: 8004, isPortReuseEnabled: true, isIPv4BroadcastEnabled: true)
+        _ = OSCUDPClient(localPort: 8005, isIPv4BroadcastEnabled: true)
     }
     
     @Test
