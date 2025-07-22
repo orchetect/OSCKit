@@ -24,7 +24,7 @@ import Foundation
 public final class OSCUDPSocket {
     let udpSocket: GCDAsyncUdpSocket
     let udpDelegate = OSCUDPServerDelegate()
-    let receiveQueue: DispatchQueue
+    let queue: DispatchQueue
     var handler: OSCHandlerBlock?
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
@@ -103,7 +103,7 @@ public final class OSCUDPSocket {
     ///   - timeTagMode: OSC time-tag mode. The default is recommended.
     ///   - isIPv4BroadcastEnabled: Enable sending IPv4 broadcast messages from the socket.
     ///     See ``isIPv4BroadcastEnabled`` for more details.
-    ///   - receiveQueue: Optionally supply a custom dispatch queue for receiving OSC packets and dispatching the
+    ///   - queue: Optionally supply a custom dispatch queue for receiving OSC packets and dispatching the
     ///     handler callback closure. If `nil`, a dedicated internal background queue will be used.
     ///   - handler: Handler to call when OSC bundles or messages are received.
     public init(
@@ -112,7 +112,7 @@ public final class OSCUDPSocket {
         remotePort: UInt16? = nil,
         timeTagMode: OSCTimeTagMode = .ignore,
         isIPv4BroadcastEnabled: Bool = false,
-        receiveQueue: DispatchQueue? = nil,
+        queue: DispatchQueue? = nil,
         handler: OSCHandlerBlock? = nil
     ) {
         self.remoteHost = remoteHost
@@ -120,11 +120,11 @@ public final class OSCUDPSocket {
         _remotePort = remotePort
         self.timeTagMode = timeTagMode
         self.isIPv4BroadcastEnabled = isIPv4BroadcastEnabled
-        let receiveQueue = receiveQueue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCUDPSocket.receiveQueue")
-        self.receiveQueue = receiveQueue
+        let queue = queue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCUDPSocket.queue")
+        self.queue = queue
         self.handler = handler
         
-        udpSocket = GCDAsyncUdpSocket(delegate: udpDelegate, delegateQueue: receiveQueue, socketQueue: nil)
+        udpSocket = GCDAsyncUdpSocket(delegate: udpDelegate, delegateQueue: queue, socketQueue: nil)
         udpDelegate.oscServer = self
     }
 }
@@ -206,7 +206,7 @@ extension OSCUDPSocket {
     public func setHandler(
         _ handler: OSCHandlerBlock?
     ) {
-        receiveQueue.async {
+        queue.async {
             self.handler = handler
         }
     }

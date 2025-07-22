@@ -10,7 +10,7 @@ import OSCKitCore
 /// Internal protocol that all objects who act as an OSC server adopt.
 /// Provides shared logic.
 protocol _OSCServerProtocol: AnyObject where Self: Sendable {
-    var receiveQueue: DispatchQueue { get }
+    var queue: DispatchQueue { get }
     var timeTagMode: OSCTimeTagMode { get set }
     var handler: OSCHandlerBlock? { get set }
 }
@@ -25,7 +25,7 @@ extension _OSCServerProtocol {
         remoteHost: String,
         remotePort: UInt16
     ) {
-        receiveQueue.async {
+        queue.async {
             switch payload {
             case let bundle as OSCBundle:
                 for element in bundle.elements {
@@ -92,7 +92,7 @@ extension _OSCServerProtocol {
         remoteHost: String,
         remotePort: UInt16
     ) {
-        receiveQueue.async {
+        queue.async {
             self.handler?(message, timeTag, remoteHost, remotePort)
         }
     }
@@ -112,7 +112,7 @@ extension _OSCServerProtocol {
         }
         
         let usec = Int(secondsFromNow * TimeInterval(USEC_PER_SEC))
-        receiveQueue.asyncAfter(deadline: .now() + .microseconds(usec)) { [weak self] in
+        queue.asyncAfter(deadline: .now() + .microseconds(usec)) { [weak self] in
             self?.handler?(message, timeTag, remoteHost, remotePort)
         }
     }

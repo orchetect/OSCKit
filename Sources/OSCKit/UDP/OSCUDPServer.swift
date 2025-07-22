@@ -18,7 +18,7 @@ import OSCKitCore
 public final class OSCUDPServer: _OSCServerProtocol {
     let udpSocket: GCDAsyncUdpSocket
     let udpDelegate = OSCUDPServerDelegate()
-    let receiveQueue: DispatchQueue
+    let queue: DispatchQueue
     var handler: OSCHandlerBlock?
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
@@ -43,24 +43,24 @@ public final class OSCUDPServer: _OSCServerProtocol {
     /// - Parameters:
     ///   - port: Local port to listen on for inbound OSC packets.
     ///   - timeTagMode: OSC TimeTag mode. Default is recommended.
-    ///   - receiveQueue: Optionally supply a custom dispatch queue for receiving OSC packets and dispatching the
+    ///   - queue: Optionally supply a custom dispatch queue for receiving OSC packets and dispatching the
     ///     handler callback closure. If `nil`, a dedicated internal background queue will be used.
     ///   - handler: Handler to call when OSC bundles or messages are received.
     public init(
         port: UInt16 = 8000,
         timeTagMode: OSCTimeTagMode = .ignore,
-        receiveQueue: DispatchQueue? = nil,
+        queue: DispatchQueue? = nil,
         handler: OSCHandlerBlock? = nil
     ) {
         // TODO: allow specifying interface?
         
         localPort = port
         self.timeTagMode = timeTagMode
-        let receiveQueue = receiveQueue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCUDPServer.receiveQueue")
-        self.receiveQueue = receiveQueue
+        let queue = queue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCUDPServer.queue")
+        self.queue = queue
         self.handler = handler
         
-        udpSocket = GCDAsyncUdpSocket(delegate: udpDelegate, delegateQueue: receiveQueue, socketQueue: nil)
+        udpSocket = GCDAsyncUdpSocket(delegate: udpDelegate, delegateQueue: queue, socketQueue: nil)
         udpDelegate.oscServer = self
     }
 }
@@ -98,7 +98,7 @@ extension OSCUDPServer {
     public func setHandler(
         _ handler: OSCHandlerBlock?
     ) {
-        receiveQueue.async {
+        queue.async {
             self.handler = handler
         }
     }
