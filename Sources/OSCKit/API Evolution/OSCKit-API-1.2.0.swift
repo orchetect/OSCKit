@@ -33,7 +33,7 @@ extension OSCUDPServer {
         self.init(
             port: port,
             timeTagMode: timeTagMode,
-            receiveQueue: receiveQueue,
+            queue: receiveQueue,
             handler: { message, timeTag, _, _ in handler(message, timeTag) }
         )
     }
@@ -66,7 +66,7 @@ extension OSCUDPSocket {
         remotePort: UInt16? = nil,
         timeTagMode: OSCTimeTagMode = .ignore,
         isIPv4BroadcastEnabled: Bool = false,
-        receiveQueue: DispatchQueue? = nil,
+        queue: DispatchQueue? = nil,
         handler: @escaping LegacyOSCHandlerBlock
     ) {
         self.init(
@@ -75,7 +75,7 @@ extension OSCUDPSocket {
             remotePort: remotePort,
             timeTagMode: timeTagMode,
             isIPv4BroadcastEnabled: isIPv4BroadcastEnabled,
-            receiveQueue: nil,
+            queue: nil,
             handler: { message, timeTag, _, _ in handler(message, timeTag) }
         )
     }
