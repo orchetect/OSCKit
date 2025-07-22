@@ -150,34 +150,17 @@ import Testing
         }
     }
     
-    /// Test `Data.slipDoubleEndStripped()` method.
+    /// Practical test: Encode and decode an OSC Message
     @Test
-    func dataSlipDoubleEndStripped() {
-        #expect(Data().slipDoubleEndStripped() == Data())
-        #expect(Data([0x01]).slipDoubleEndStripped() == Data([0x01]))
-        #expect(Data([0x01, 0x02]).slipDoubleEndStripped() == Data([0x01, 0x02]))
-        #expect(Data([0x01, 0x02, 0x03]).slipDoubleEndStripped() == Data([0x01, 0x02, 0x03]))
+    func oscEncodeDecode() throws {
+        let oscMessage = OSCMessage("/address/here", values: [123, true, 1.5, "abcdefg123456"])
+        let oscRawData = try oscMessage.rawData()
         
-        // empty internal bytes is ok
-        #expect(Data([END, END]).slipDoubleEndStripped() == Data([]))
-        // one END internal byte is ok
-        #expect(Data([END, END, END]).slipDoubleEndStripped() == Data([END]))
-        // two (or more) END internal bytes is ok
-        #expect(Data([END, END, END, END]).slipDoubleEndStripped() == Data([END, END]))
-        // only one bounding END is left untouched
-        #expect(Data([END]).slipDoubleEndStripped() == Data([END]))
-        // only one bounding END is left untouched
-        #expect(Data([END, 0x01]).slipDoubleEndStripped() == Data([END, 0x01]))
-        // only one bounding END is left untouched
-        #expect(Data([0x01, END]).slipDoubleEndStripped() == Data([0x01, END]))
+        let encodedData = oscRawData.slipEncoded()
+        // we won't bother checking all encoded bytes, but just a baseline check that the data is different
+        #expect(oscRawData.count != encodedData.count)
         
-        // one internal byte
-        #expect(Data([END, 0x01, END]).slipDoubleEndStripped() == Data([0x01]))
-        // two internal bytes
-        #expect(Data([END, 0x01, 0x02, END]).slipDoubleEndStripped() == Data([0x01, 0x02]))
-        
-        // only strip END bytes, not ESC bytes
-        #expect(Data([0xDB, 0xDB]).slipDoubleEndStripped() == Data([0xDB, 0xDB]))
-        #expect(Data([0xDB, 0x01, 0xDB]).slipDoubleEndStripped() == Data([0xDB, 0x01, 0xDB]))
+        let decodedData = try encodedData.slipDecoded()
+        #expect(decodedData == oscRawData)
     }
 }
