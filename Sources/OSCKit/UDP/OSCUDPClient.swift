@@ -114,6 +114,8 @@ public final class OSCUDPClient {
     ) {
         self.init()
         
+        // TODO: allow specifying interface?
+        
         _localPort = localPort
         self.isPortReuseEnabled = isPortReuseEnabled
         self.isIPv4BroadcastEnabled = isIPv4BroadcastEnabled

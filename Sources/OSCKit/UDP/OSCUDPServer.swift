@@ -52,6 +52,8 @@ public final class OSCUDPServer: _OSCServerProtocol {
         receiveQueue: DispatchQueue? = nil,
         handler: OSCHandlerBlock? = nil
     ) {
+        // TODO: allow specifying interface?
+        
         localPort = port
         self.timeTagMode = timeTagMode
         let receiveQueue = receiveQueue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCUDPServer.receiveQueue")
