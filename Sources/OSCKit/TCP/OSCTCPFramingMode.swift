@@ -26,6 +26,9 @@ public enum OSCTCPFramingMode {
     /// > established its efficiency and superiority over the OSC 1.0 size-count-preamble recommendation when recovering
     /// > from damaged stream data.
     case osc1_1
+    
+    /// None: Send OSC packet bytes as-is.
+    case none
 }
 
 extension OSCTCPFramingMode: Equatable { }
