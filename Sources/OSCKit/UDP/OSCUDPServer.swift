@@ -63,16 +63,6 @@ public final class OSCUDPServer: _OSCServerProtocol {
         udpSocket = GCDAsyncUdpSocket(delegate: udpDelegate, delegateQueue: receiveQueue, socketQueue: nil)
         udpDelegate.oscServer = self
     }
-    
-    /// Set the handler closure. This closure will be called when OSC bundles or messages are
-    /// received.
-    public func setHandler(
-        _ handler: OSCHandlerBlock?
-    ) {
-        receiveQueue.async {
-            self.handler = handler
-        }
-    }
 }
 
 extension OSCUDPServer: @unchecked Sendable { }
@@ -97,6 +87,20 @@ extension OSCUDPServer {
         udpSocket.close()
         
         isStarted = false
+    }
+}
+
+// MARK: - Properties
+
+extension OSCUDPServer {
+    /// Set the handler closure. This closure will be called when OSC bundles or messages are
+    /// received.
+    public func setHandler(
+        _ handler: OSCHandlerBlock?
+    ) {
+        receiveQueue.async {
+            self.handler = handler
+        }
     }
 }
 

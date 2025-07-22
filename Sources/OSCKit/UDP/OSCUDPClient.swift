@@ -152,7 +152,11 @@ extension OSCUDPClient {
         
         isStarted = false
     }
-    
+}
+
+// MARK: - Communication
+
+extension OSCUDPClient {
     /// Send an OSC bundle or message ad-hoc to a recipient on the network.
     ///
     /// The default port for OSC communication is 8000 but may change depending on device/software
@@ -172,10 +176,6 @@ extension OSCUDPClient {
             tag: 0
         )
     }
-}
-
-private final class OSCUDPClientDelegate: NSObject, GCDAsyncUdpSocketDelegate, Sendable {
-    // we don't care about handling any delegate methods here so none are overridden
 }
 
 #endif

@@ -21,7 +21,7 @@ import Foundation
 /// X32 & M32 which respond back using the UDP port that they receive OSC messages from. For
 /// example: if an OSC message was sent from port 8000 to the X32's port 10023, the X32 will respond
 /// by sending OSC messages back to you on port 8000.
-public final class OSCUDPSocket: _OSCServerProtocol {
+public final class OSCUDPSocket {
     let udpSocket: GCDAsyncUdpSocket
     let udpDelegate = OSCUDPServerDelegate()
     let receiveQueue: DispatchQueue
@@ -127,16 +127,6 @@ public final class OSCUDPSocket: _OSCServerProtocol {
         udpSocket = GCDAsyncUdpSocket(delegate: udpDelegate, delegateQueue: receiveQueue, socketQueue: nil)
         udpDelegate.oscServer = self
     }
-    
-    /// Set the handler closure. This closure will be called when OSC bundles or messages are
-    /// received.
-    public func setHandler(
-        _ handler: OSCHandlerBlock?
-    ) {
-        receiveQueue.async {
-            self.handler = handler
-        }
-    }
 }
 
 extension OSCUDPSocket: @unchecked Sendable { }
@@ -161,7 +151,11 @@ extension OSCUDPSocket {
         
         isStarted = false
     }
-    
+}
+
+// MARK: - Communication
+
+extension OSCUDPSocket {
     /// Send an OSC bundle or message to the remote host.
     /// The ``remoteHost`` and ``remotePort`` properties are used unless one or both are
     /// overridden in this call.
@@ -199,6 +193,22 @@ extension OSCUDPSocket {
             withTimeout: 1.0,
             tag: 0
         )
+    }
+}
+
+extension OSCUDPSocket: _OSCServerProtocol { }
+
+// MARK: - Properties
+
+extension OSCUDPSocket {
+    /// Set the handler closure. This closure will be called when OSC bundles or messages are
+    /// received.
+    public func setHandler(
+        _ handler: OSCHandlerBlock?
+    ) {
+        receiveQueue.async {
+            self.handler = handler
+        }
     }
 }
 
