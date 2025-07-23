@@ -11,7 +11,6 @@ public enum SLIPDecodingError: LocalizedError, Equatable, Hashable {
     case doubleEscapeBytes
     case missingEscapeByte
     case missingEscapedCharacter
-    case unexpectedEndByte
     
     public var errorDescription: String? {
         switch self {
@@ -21,8 +20,6 @@ public enum SLIPDecodingError: LocalizedError, Equatable, Hashable {
             "SLIP packet data is malformed. Encountered an escaped character but missing preceding escape byte."
         case .missingEscapedCharacter:
             "SLIP packet data is malformed. Encountered an escape byte but missing subsequent escaped character."
-        case .unexpectedEndByte:
-            "SLIP packet data is malformed. Unexpected end byte encountered before end of SLIP packet."
         }
     }
 }
@@ -69,29 +66,29 @@ extension Data {
         return output
     }
     
-    /// Returns the SLIP-encoded packet data stripped of its SLIP encoding.
-    func slipDecoded() throws -> Data {
-        let endStrippedData = slipDoubleEndStripped()
+    /// Returns an array of SLIP-encoded packets stripped of their SLIP encoding.
+    ///
+    /// This can accommodate one or more packets in the same data stream. Each packet is
+    /// returned as an element in the array.
+    func slipDecoded() throws -> [Data] {
+        var packets: [Data] = []
         
-        var output = Data()
+        var currentPacketData = Data()
         var isEscaped = false
         
-        for index in endStrippedData.indices {
-            switch endStrippedData[index] {
+        for index in indices {
+            switch self[index] {
             case SLIPByte.end.rawValue:
                 // END should never come after the escape char preamble
                 guard !isEscaped else { throw SLIPDecodingError.missingEscapedCharacter}
                 
-                // as a failsafe, allow one or more sequential END bytes, but only at the start or end of the packet
-                
-                // allow at start of packet
-                if output.isEmpty { break }
-                
-                // allow at end of packet
-                guard endStrippedData[index...].allSatisfy({ $0 == SLIPByte.end.rawValue }) else {
-                    throw SLIPDecodingError.unexpectedEndByte
+                // consider the END byte the end of the current packet
+                if !currentPacketData.isEmpty {
+                    packets.append(currentPacketData)
+                    currentPacketData = Data()
                 }
-                break
+                
+                // discard one or more sequential END bytes before, between, and after each packet
                 
             case SLIPByte.esc.rawValue:
                 // we should never get more than one consecutive ESC byte
@@ -104,37 +101,31 @@ extension Data {
                 guard isEscaped else { throw SLIPDecodingError.missingEscapeByte}
                 isEscaped = false // reset ESC
                 
-                output.append(SLIPByte.end.rawValue)
+                currentPacketData.append(SLIPByte.end.rawValue)
                 
             case SLIPByte.escEsc.rawValue:
                 // must follow an ESC byte
                 guard isEscaped else { throw SLIPDecodingError.missingEscapeByte}
                 isEscaped = false // reset ESC
                 
-                output.append(SLIPByte.esc.rawValue)
+                currentPacketData.append(SLIPByte.esc.rawValue)
                 
             default:
                 // the only two bytes that should follow an ESC byte are ESC_END and ESC_ESC
                 guard !isEscaped else { throw SLIPDecodingError.missingEscapedCharacter}
                 
-                output.append(endStrippedData[index])
+                currentPacketData.append(self[index])
             }
         }
         
         // failsafe: ensure we are not ending while escaped (check if final byte was ESC)
         guard !isEscaped else { throw SLIPDecodingError.missingEscapedCharacter}
         
-        return output
-    }
-    
-    /// Returns the SLIP-encoded packet data stripped of its leading and trailing SLIP END characters, if any.
-    func slipDoubleEndStripped() -> Data {
-        guard count >= 2 else { return self }
+        // add final packet if needed
+        if !currentPacketData.isEmpty {
+            packets.append(currentPacketData)
+        }
         
-        guard first == SLIPByte.end.rawValue,
-              last == SLIPByte.end.rawValue
-        else { return self }
-        
-        return dropFirst().dropLast()
+        return packets
     }
 }

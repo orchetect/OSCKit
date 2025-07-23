@@ -42,50 +42,71 @@ import Testing
         )
     }
     
-    /// Test `Data.slipDecoded()` method.
+    /// Test `Data.slipDecoded()` method containing one or fewer packets.
     @Test
-    func dataSlipDecoded() throws {
+    func dataSlipDecoded_SinglePacket() throws {
         // without double END bytes
-        #expect(try Data().slipDecoded() == Data())
-        #expect(try Data([0x01]).slipDecoded() == Data([0x01]))
-        #expect(try Data([0x01, 0x02]).slipDecoded() == Data([0x01, 0x02]))
-        #expect(try Data([0x01, 0x02, 0x03]).slipDecoded() == Data([0x01, 0x02, 0x03]))
+        #expect(try Data().slipDecoded() == [])
+        #expect(try Data([0x01]).slipDecoded() == [Data([0x01])])
+        #expect(try Data([0x01, 0x02]).slipDecoded() == [Data([0x01, 0x02])])
+        #expect(try Data([0x01, 0x02, 0x03]).slipDecoded() == [Data([0x01, 0x02, 0x03])])
         
         // with double END bytes
-        #expect(try Data([END, END]).slipDecoded() == Data())
-        #expect(try Data([END, 0x01, END]).slipDecoded() == Data([0x01]))
-        #expect(try Data([END, 0x01, 0x02, END]).slipDecoded() == Data([0x01, 0x02]))
-        #expect(try Data([END, 0x01, 0x02, 0x03, END]).slipDecoded() == Data([0x01, 0x02, 0x03]))
+        #expect(try Data([END, END]).slipDecoded() == [])
+        #expect(try Data([END, 0x01, END]).slipDecoded() == [Data([0x01])])
+        #expect(try Data([END, 0x01, 0x02, END]).slipDecoded() == [Data([0x01, 0x02])])
+        #expect(try Data([END, 0x01, 0x02, 0x03, END]).slipDecoded() == [Data([0x01, 0x02, 0x03])])
         
         // without double END bytes
-        #expect(try Data([ESC, ESC_END]).slipDecoded() == Data([END]))
-        #expect(try Data([ESC, ESC_ESC]).slipDecoded() == Data([ESC]))
-        #expect(try Data([ESC, ESC_END, ESC, ESC_END]).slipDecoded() == Data([END, END]))
-        #expect(try Data([ESC, ESC_ESC, ESC, ESC_ESC]).slipDecoded() == Data([ESC, ESC]))
-        #expect(try Data([ESC, ESC_ESC, ESC, ESC_END]).slipDecoded() == Data([ESC, END]))
-        #expect(try Data([ESC, ESC_END, ESC, ESC_ESC]).slipDecoded() == Data([END, ESC]))
+        #expect(try Data([ESC, ESC_END]).slipDecoded() == [Data([END])])
+        #expect(try Data([ESC, ESC_ESC]).slipDecoded() == [Data([ESC])])
+        #expect(try Data([ESC, ESC_END, ESC, ESC_END]).slipDecoded() == [Data([END, END])])
+        #expect(try Data([ESC, ESC_ESC, ESC, ESC_ESC]).slipDecoded() == [Data([ESC, ESC])])
+        #expect(try Data([ESC, ESC_ESC, ESC, ESC_END]).slipDecoded() == [Data([ESC, END])])
+        #expect(try Data([ESC, ESC_END, ESC, ESC_ESC]).slipDecoded() == [Data([END, ESC])])
         
         // with double END bytes
-        #expect(try Data([END, ESC, ESC_END, END]).slipDecoded() == Data([END]))
-        #expect(try Data([END, ESC, ESC_ESC, END]).slipDecoded() == Data([ESC]))
-        #expect(try Data([END, ESC, ESC_END, ESC, ESC_END, END]).slipDecoded() == Data([END, END]))
-        #expect(try Data([END, ESC, ESC_ESC, ESC, ESC_ESC, END]).slipDecoded() == Data([ESC, ESC]))
-        #expect(try Data([END, ESC, ESC_ESC, ESC, ESC_END, END]).slipDecoded() == Data([ESC, END]))
-        #expect(try Data([END, ESC, ESC_END, ESC, ESC_ESC, END]).slipDecoded() == Data([END, ESC]))
+        #expect(try Data([END, ESC, ESC_END, END]).slipDecoded() == [Data([END])])
+        #expect(try Data([END, ESC, ESC_ESC, END]).slipDecoded() == [Data([ESC])])
+        #expect(try Data([END, ESC, ESC_END, ESC, ESC_END, END]).slipDecoded() == [Data([END, END])])
+        #expect(try Data([END, ESC, ESC_ESC, ESC, ESC_ESC, END]).slipDecoded() == [Data([ESC, ESC])])
+        #expect(try Data([END, ESC, ESC_ESC, ESC, ESC_END, END]).slipDecoded() == [Data([ESC, END])])
+        #expect(try Data([END, ESC, ESC_END, ESC, ESC_ESC, END]).slipDecoded() == [Data([END, ESC])])
         
-        #expect(try Data([END, 0x01, ESC, ESC_ESC, 0x02, ESC, ESC_END, 0x03, END]).slipDecoded() == Data([0x01, ESC, 0x02, END, 0x03]))
+        #expect(
+            try Data([END, 0x01, ESC, ESC_ESC, 0x02, ESC, ESC_END, 0x03, END]).slipDecoded()
+                == [Data([0x01, ESC, 0x02, END, 0x03])]
+        )
         
         // more than one END byte at start
-        #expect(try Data([END, END, 0x01]).slipDecoded() == Data([0x01]))
-        #expect(try Data([END, END, END, 0x01]).slipDecoded() == Data([0x01]))
-        #expect(try Data([END, END, 0x01, END]).slipDecoded() == Data([0x01]))
-        #expect(try Data([END, END, END, 0x01, END]).slipDecoded() == Data([0x01]))
+        #expect(try Data([END, END, 0x01]).slipDecoded() == [Data([0x01])])
+        #expect(try Data([END, END, END, 0x01]).slipDecoded() == [Data([0x01])])
+        #expect(try Data([END, END, 0x01, END]).slipDecoded() == [Data([0x01])])
+        #expect(try Data([END, END, END, 0x01, END]).slipDecoded() == [Data([0x01])])
         
         // more than one END byte at end
-        #expect(try Data([0x01, END, END]).slipDecoded() == Data([0x01]))
-        #expect(try Data([END, 0x01, END, END]).slipDecoded() == Data([0x01]))
-        #expect(try Data([0x01, END, END, END]).slipDecoded() == Data([0x01]))
-        #expect(try Data([END, 0x01, END, END, END]).slipDecoded() == Data([0x01]))
+        #expect(try Data([0x01, END, END]).slipDecoded() == [Data([0x01])])
+        #expect(try Data([END, 0x01, END, END]).slipDecoded() == [Data([0x01])])
+        #expect(try Data([0x01, END, END, END]).slipDecoded() == [Data([0x01])])
+        #expect(try Data([END, 0x01, END, END, END]).slipDecoded() == [Data([0x01])])
+    }
+    
+    /// Test `Data.slipDecoded()` method containing two or more packets.
+    @Test
+    func dataSlipDecoded_MultiplePackets() throws {
+        #expect(try Data([END, END, 0x01, END]).slipDecoded() == [Data([0x01])])
+        
+        #expect(try Data([END, 0x01, END, 0x02, END]).slipDecoded() == [Data([0x01]), Data([0x02])])
+        
+        #expect(
+            try Data([END, 0x01, 0x02, END, 0x03, 0x04, END]).slipDecoded()
+                == [Data([0x01, 0x02]), Data([0x03, 0x04])]
+        )
+        
+        #expect(
+            try Data([END, 0x01, END, 0x02, END, 0x03, END]).slipDecoded()
+                == [Data([0x01]), Data([0x02]), Data([0x03])]
+        )
     }
     
     /// Test for error: two consecutive ESC bytes is not technically valid.
@@ -136,20 +157,6 @@ import Testing
         }
     }
     
-    /// Test for error: Unexpected END byte in middle of packet data.
-    @Test
-    func dataSlipDecoded_UnexpectedEndByte() throws {
-        #expect(throws: SLIPDecodingError.unexpectedEndByte) {
-            try Data([0x01, END, 0x02, END]).slipDecoded()
-        }
-        #expect(throws: SLIPDecodingError.unexpectedEndByte) {
-            try Data([END, 0x01, END, 0x02, END]).slipDecoded()
-        }
-        #expect(throws: SLIPDecodingError.unexpectedEndByte) {
-            try Data([0x01, END, 0x02]).slipDecoded()
-        }
-    }
-    
     /// Practical test: Encode and decode an OSC Message
     @Test
     func oscEncodeDecode() throws {
@@ -161,6 +168,6 @@ import Testing
         #expect(oscRawData.count != encodedData.count)
         
         let decodedData = try encodedData.slipDecoded()
-        #expect(decodedData == oscRawData)
+        #expect(decodedData == [oscRawData])
     }
 }
