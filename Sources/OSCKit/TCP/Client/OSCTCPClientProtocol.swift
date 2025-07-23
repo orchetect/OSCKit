@@ -20,7 +20,7 @@ extension _OSCTCPClientProtocol {
     /// Send an OSC packet.
     ///
     /// - Parameters:
-    ///   - oscObject: OSC data.
+    ///   - oscObject: OSC bundle or message.
     ///   - tag: Server Connection Client Session ID. Applies only to TCP server to determine which connected socket to
     ///     send to.
     func _send(_ oscObject: any OSCObject, tag: OSCTCPClientSessionID) throws {
@@ -32,22 +32,19 @@ extension _OSCTCPClientProtocol {
         // }
         
         // pack data
-        let data: Data
-        switch framingMode {
+        let data: Data = switch framingMode {
         case .osc1_0:
             // OSC packet framed using size-count preamble
             // 4-byte int for size
-            let oscData = try oscObject.rawData()
-            let length = oscData.count.toData(.platformDefault) // TODO: not sure if int type and endianness is correct
-            data = length + oscData
+            try oscObject.rawData().sizePreambleEncoded()
             
         case .osc1_1:
             // OSC packet framed using SLIP (double END) protocol: http://www.rfc-editor.org/rfc/rfc1055.txt
-            data = try oscObject.rawData().slipEncoded()
+            try oscObject.rawData().slipEncoded()
             
         case .none:
             // no framing, send OSC bytes as-is
-            data = try oscObject.rawData()
+            try oscObject.rawData()
         }
         
         // send packet

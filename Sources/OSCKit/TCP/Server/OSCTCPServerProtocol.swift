@@ -17,10 +17,18 @@ protocol _OSCTCPServerProtocol: _OSCServerProtocol {
 
 extension _OSCTCPServerProtocol {
     func _handle(receivedData data: Data, on sock: GCDAsyncSocket, tag: Int) {
+        // this must also accommodate more than one packet in the data
+        
         let oscPackets: [Data]
         switch framingMode {
         case .osc1_0:
-            fatalError() // TODO: finish this (must accommodate more than one packet in the data)
+            do {
+                oscPackets = try data.sizePreambleDecoded()
+            } catch {
+                print(error.localizedDescription)
+                oscPackets = []
+            }
+            
         case .osc1_1:
             do {
                 oscPackets = try data.slipDecoded()
@@ -28,8 +36,10 @@ extension _OSCTCPServerProtocol {
                 print(error.localizedDescription)
                 oscPackets = []
             }
+            
         case .none:
-            oscPackets = [data] // TODO: this may contain more than one OSC packet - how to parse??
+            // TODO: data may contain more than one OSC packet - how to parse??
+            oscPackets = [data]
         }
         
         guard !oscPackets.isEmpty else {
