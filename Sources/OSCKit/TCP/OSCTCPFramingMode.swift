@@ -6,7 +6,7 @@
 
 import Foundation
 
-/// TCP packet framing modes for TCP-based OSC sockets.
+/// Packet framing modes for TCP-based OSC sockets.
 public enum OSCTCPFramingMode {
     /// OSC 1.0 mode: Size-count-preamble.
     ///
