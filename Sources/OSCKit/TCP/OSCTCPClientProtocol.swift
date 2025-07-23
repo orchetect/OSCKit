@@ -21,8 +21,9 @@ extension _OSCTCPClientProtocol {
     ///
     /// - Parameters:
     ///   - oscObject: OSC data.
-    ///   - tag: Server Connection Client ID. Applies only to TCP server to determine which connected socket to send to.
-    func _send(_ oscObject: any OSCObject, tag: OSCTCPClientID) throws {
+    ///   - tag: Server Connection Client Session ID. Applies only to TCP server to determine which connected socket to
+    ///     send to.
+    func _send(_ oscObject: any OSCObject, tag: OSCTCPClientSessionID) throws {
         // guard isConnected else {
         //     throw GCDAsyncUdpSocketError(
         //         .closedError,

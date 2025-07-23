@@ -14,8 +14,8 @@ final class OSCTCPServerDelegate: NSObject {
     weak var oscServer: _OSCTCPServerProtocol?
     let framingMode: OSCTCPFramingMode
     
-    /// Currently connected clients.
-    var clients: [OSCTCPClientID: OSCTCPServerConnection] = [:]
+    /// Currently connected client sessions.
+    var clients: [OSCTCPClientSessionID: OSCTCPServerConnection] = [:]
     
     init(framingMode: OSCTCPFramingMode) {
         self.framingMode = framingMode
@@ -84,7 +84,7 @@ extension OSCTCPServerDelegate {
 
 extension OSCTCPServerDelegate {
     /// Generate a new client ID that is not currently in use by any connected client(s).
-    private func newClientID() -> OSCTCPClientID {
+    private func newClientID() -> OSCTCPClientSessionID {
         var clientID: Int = 0
         while clientID == 0 || clients.keys.contains(clientID) {
             // don't allow 0 or negative numbers

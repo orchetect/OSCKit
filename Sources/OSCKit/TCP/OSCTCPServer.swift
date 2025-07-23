@@ -141,12 +141,16 @@ extension OSCTCPServer {
         }
     }
     
-    /// Returns a dictionary of currently connected clients keyed by client ID.
+    /// Returns a dictionary of currently connected clients keyed by client session ID.
     ///
-    /// Note that this ID is transient and is randomly-assigned upon each new connection.
-    public var clients: [OSCTCPClientID: (hostname: String, port: UInt16)] {
+    /// > Note:
+    /// >
+    /// > A client ID is transient and only valid for the lifecycle of the connection. Client IDs are randomly-assigned
+    /// > upon each newly-made connection. For this reason, these IDs should not be stored, but instead queried from the
+    /// > OSC TCP server at the time of requiring to use an ID.
+    public var clients: [OSCTCPClientSessionID: (hostname: String, port: UInt16)] {
         tcpDelegate.clients
-            .reduce(into: [:] as [OSCTCPClientID: (hostname: String, port: UInt16)]) { base, element in
+            .reduce(into: [:] as [OSCTCPClientSessionID: (hostname: String, port: UInt16)]) { base, element in
                 base[element.key] = (
                     hostname: element.value.tcpSocket.connectedHost ?? "",
                     port: element.value.tcpSocket.connectedPort
