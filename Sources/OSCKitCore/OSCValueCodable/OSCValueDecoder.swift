@@ -65,9 +65,9 @@ extension OSCValueDecoder {
             )
         }
         
-        let chunk = remainingData.subdata(
-            in: remainingData.startIndex ..< remainingData.startIndex.advanced(by: 4)
-        )
+        let chunk = remainingData[
+            remainingData.startIndex ..< remainingData.startIndex + 4
+        ]
         
         guard let value = chunk.toInt32(from: .bigEndian)
         else {
@@ -91,9 +91,9 @@ extension OSCValueDecoder {
             )
         }
         
-        let chunk = remainingData.subdata(
-            in: remainingData.startIndex ..< remainingData.startIndex.advanced(by: 8)
-        )
+        let chunk = remainingData[
+            remainingData.startIndex ..< remainingData.startIndex + 8
+        ]
         
         guard let value = chunk.toInt64(from: .bigEndian)
         else {
@@ -117,9 +117,9 @@ extension OSCValueDecoder {
             )
         }
         
-        let chunk = remainingData.subdata(
-            in: remainingData.startIndex ..< remainingData.startIndex.advanced(by: 8)
-        )
+        let chunk = remainingData[
+            remainingData.startIndex ..< remainingData.startIndex + 8
+        ]
         
         guard let value = chunk.toUInt64(from: .bigEndian)
         else {
@@ -144,9 +144,9 @@ extension OSCValueDecoder {
             )
         }
         
-        let chunk = remainingData.subdata(
-            in: remainingData.startIndex ..< remainingData.startIndex.advanced(by: 4)
-        )
+        let chunk = remainingData[
+            remainingData.startIndex ..< remainingData.startIndex + 4
+        ]
         
         guard let value = chunk.toFloat32(from: .bigEndian)
         else {
@@ -171,9 +171,9 @@ extension OSCValueDecoder {
             )
         }
         
-        let chunk = remainingData.subdata(
-            in: remainingData.startIndex ..< remainingData.startIndex.advanced(by: 8)
-        )
+        let chunk = remainingData[
+            remainingData.startIndex ..< remainingData.startIndex + 8
+        ]
         
         guard let value = chunk.toDouble(from: .bigEndian)
         else {
@@ -254,7 +254,7 @@ extension OSCValueDecoder {
         
         try advancePosition(by: byteCount)
         
-        return data.subdata(in: data.startIndex ..< nullIndex)
+        return data[data.startIndex ..< nullIndex]
     }
     
     /// Read an OSC blob data chunk.
@@ -289,11 +289,9 @@ extension OSCValueDecoder {
         
         // check to see if any pad bytes are all nulls
         
-        guard data
-            .subdata(
-                in: data.startIndex.advanced(by: blobSize)
-                    ..< data.startIndex.advanced(by: blobRawSize)
-            )
+        guard data[
+            data.startIndex + blobSize ..< data.startIndex + blobRawSize
+        ]
             .allSatisfy({ $0 == 0x00 })
         else {
             throw OSCDecodeError.malformed(
@@ -301,10 +299,9 @@ extension OSCValueDecoder {
             )
         }
         
-        let chunk = data.subdata(
-            in: data.startIndex
-                ..< data.startIndex.advanced(by: blobSize)
-        )
+        let chunk = data[
+            data.startIndex ..< data.startIndex + blobSize
+        ]
         
         let byteCount = blobRawSize
         try advancePosition(by: byteCount)
@@ -332,9 +329,9 @@ extension OSCValueDecoder {
             )
         }
         
-        let chunk = remainingData.subdata(
-            in: remainingData.startIndex ..< remainingData.startIndex.advanced(by: byteLength)
-        )
+        let chunk = remainingData[
+            remainingData.startIndex ..< remainingData.startIndex + byteLength
+        ]
         
         try advancePosition(by: byteLength)
         
