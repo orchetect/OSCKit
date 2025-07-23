@@ -52,7 +52,7 @@ public final class OSCTCPClient {
         self.queue = queue
         self.handler = handler
         
-        tcpDelegate = OSCTCPClientDelegate(framingMode: framingMode)
+        tcpDelegate = OSCTCPClientDelegate()
         tcpSocket = GCDAsyncSocket(delegate: tcpDelegate, delegateQueue: queue, socketQueue: nil)
         tcpDelegate.oscServer = self
     }

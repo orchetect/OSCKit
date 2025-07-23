@@ -28,7 +28,7 @@ final class OSCTCPServerConnection {
         self.framingMode = framingMode
         self.delegate = delegate
         
-        tcpDelegate = OSCTCPClientDelegate(framingMode: framingMode)
+        tcpDelegate = OSCTCPClientDelegate()
         tcpDelegate.oscServer = self
     }
     

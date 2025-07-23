@@ -12,11 +12,8 @@ import Foundation
 /// Internal TCP receiver class so as to not expose `GCDAsyncSocketDelegate` methods as public.
 final class OSCTCPClientDelegate: NSObject {
     weak var oscServer: _OSCTCPServerProtocol?
-    let framingMode: OSCTCPFramingMode
     
-    init(framingMode: OSCTCPFramingMode) {
-        self.framingMode = framingMode
-    }
+    // init() { } // already implemented by NSObject
 }
 
 // extension OSCTCPClientDelegate: @unchecked Sendable { } // TODO: make Sendable
