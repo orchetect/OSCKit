@@ -18,7 +18,7 @@ public struct OSCValueDecoder {
     
     let data: Data
     var remainingData: Data {
-        data[pos...]
+        data[position: pos...]
     }
     
     var pos: Int = 0
