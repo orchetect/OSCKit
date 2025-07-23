@@ -35,4 +35,6 @@ extension OSCTCPFramingMode: Equatable { }
 
 extension OSCTCPFramingMode: Hashable { }
 
+extension OSCTCPFramingMode: CaseIterable { }
+
 extension OSCTCPFramingMode: Sendable { }
