@@ -15,7 +15,7 @@ final class OSCTCPServerDelegate: NSObject {
     let framingMode: OSCTCPFramingMode
     
     /// Currently connected client sessions.
-    var clients: [OSCTCPClientSessionID: OSCTCPServerConnection] = [:]
+    var clients: [OSCTCPClientSessionID: OSCTCPServer.ClientConnection] = [:]
     
     init(framingMode: OSCTCPFramingMode) {
         self.framingMode = framingMode
@@ -36,7 +36,7 @@ extension OSCTCPServerDelegate: GCDAsyncSocketDelegate {
     func socket(_ sock: GCDAsyncSocket, didAcceptNewSocket newSocket: GCDAsyncSocket) {
         // add new connection to connections dictionary
         let clientID = newClientID()
-        let newConnection = OSCTCPServerConnection(
+        let newConnection = OSCTCPServer.ClientConnection(
             tcpSocket: newSocket,
             tcpSocketTag: clientID,
             framingMode: framingMode,
