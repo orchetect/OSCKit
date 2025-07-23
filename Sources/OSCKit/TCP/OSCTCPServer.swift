@@ -97,21 +97,21 @@ extension OSCTCPServer {
 // MARK: - Communication
 
 extension OSCTCPServer: _OSCTCPClientProtocol {
-    /// Send an OSC packet to all connected clients.
+    /// Send an OSC bundle or message to all connected clients.
     public func send(_ oscObject: any OSCObject) throws {
         let clientIDs = Array(tcpDelegate.clients.keys)
         
         try send(oscObject, toClientIDs: clientIDs)
     }
     
-    /// Send an OSC packet to one or more connected clients.
+    /// Send an OSC bundle or message to one or more connected clients.
     public func send(_ oscObject: any OSCObject, toClientIDs clientIDs: [Int]) throws {
         for clientID in clientIDs {
             try _send(oscObject, toClientID: clientID)
         }
     }
     
-    /// Send an OSC packet to an individual connected client.
+    /// Send an OSC bundle or message to an individual connected client.
     func _send(_ oscObject: any OSCObject, toClientID clientID: Int) throws {
         guard let connection = tcpDelegate.clients[clientID] else {
             throw GCDAsyncUdpSocketError(
@@ -131,8 +131,8 @@ extension OSCTCPServer: _OSCTCPServerProtocol {
 // MARK: - Properties
 
 extension OSCTCPServer {
-    /// Set the handler closure. This closure will be called when OSC bundles or messages are
-    /// received.
+    /// Set the receive handler closure.
+    /// This closure will be called when OSC bundles or messages are received.
     public func setHandler(
         _ handler: OSCHandlerBlock?
     ) {

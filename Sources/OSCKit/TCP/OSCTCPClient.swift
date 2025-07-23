@@ -98,6 +98,7 @@ extension OSCTCPClient {
 // MARK: - Communication
 
 extension OSCTCPClient: _OSCTCPClientProtocol {
+    /// Send an OSC bundle or message to the host.
     public func send(_ oscObject: any OSCObject) throws {
         try _send(oscObject, tag: 0)
     }
@@ -110,8 +111,8 @@ extension OSCTCPClient: _OSCTCPServerProtocol {
 // MARK: - Properties
 
 extension OSCTCPClient {
-    /// Set the handler closure. This closure will be called when OSC bundles or messages are
-    /// received.
+    /// Set the receive handler closure.
+    /// This closure will be called when OSC bundles or messages are received.
     public func setHandler(
         _ handler: OSCHandlerBlock?
     ) {

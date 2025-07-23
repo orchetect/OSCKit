@@ -201,8 +201,8 @@ extension OSCUDPSocket: _OSCServerProtocol { }
 // MARK: - Properties
 
 extension OSCUDPSocket {
-    /// Set the handler closure. This closure will be called when OSC bundles or messages are
-    /// received.
+    /// Set the receive handler closure.
+    /// This closure will be called when OSC bundles or messages are received.
     public func setHandler(
         _ handler: OSCHandlerBlock?
     ) {
