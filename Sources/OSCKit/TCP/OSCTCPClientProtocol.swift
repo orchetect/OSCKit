@@ -10,7 +10,8 @@
 import OSCKitCore
 import Foundation
 
-public protocol OSCTCPClientProtocol {
+/// Internal protocol that TCP-based OSC classes adopt in order to send OSC packets.
+protocol OSCTCPClientProtocol {
     /// Send an OSC packet.
     func send(_ oscObject: any OSCObject) throws
 }

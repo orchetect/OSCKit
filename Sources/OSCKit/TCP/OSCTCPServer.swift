@@ -128,14 +128,14 @@ extension OSCTCPServer {
     /// Returns a dictionary of currently connected clients keyed by client ID.
     ///
     /// Note that this ID is transient and is randomly-assigned upon each new connection.
-    public var clients: [Int: (hostname: String, port: UInt16)] {
+    public var clients: [OSCTCPClientID: (hostname: String, port: UInt16)] {
         tcpDelegate.clients
             .reduce(into: [:] as [Int: (hostname: String, port: UInt16)]) { base, element in
-            base[element.key] = (
-                hostname: element.value.tcpSocket.connectedHost ?? "",
-                port: element.value.tcpSocket.connectedPort
-            )
-        }
+                base[element.key] = (
+                    hostname: element.value.tcpSocket.connectedHost ?? "",
+                    port: element.value.tcpSocket.connectedPort
+                )
+            }
     }
 }
 

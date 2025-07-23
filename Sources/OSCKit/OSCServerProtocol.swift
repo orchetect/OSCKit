@@ -7,8 +7,7 @@
 import Foundation
 import OSCKitCore
 
-/// Internal protocol that all objects who act as an OSC server adopt.
-/// Provides shared logic.
+/// Internal protocol that TCP-based OSC classes adopt in order to handle incoming OSC data.
 protocol _OSCServerProtocol: AnyObject where Self: Sendable {
     var queue: DispatchQueue { get }
     var timeTagMode: OSCTimeTagMode { get set }

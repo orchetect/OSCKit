@@ -14,7 +14,8 @@ final class OSCTCPServerDelegate: NSObject {
     weak var oscServer: _OSCServerProtocol?
     let framingMode: OSCTCPFramingMode
     
-    var clients: [Int: OSCTCPServerConnection] = [:]
+    /// Currently connected clients.
+    var clients: [OSCTCPClientID: OSCTCPServerConnection] = [:]
     
     init(framingMode: OSCTCPFramingMode) {
         self.framingMode = framingMode
@@ -28,6 +29,26 @@ final class OSCTCPServerDelegate: NSObject {
 // extension OSCTCPClientDelegate: @unchecked Sendable { } // TODO: make Sendable
 
 extension OSCTCPServerDelegate: GCDAsyncSocketDelegate {
+    func newSocketQueueForConnection(fromAddress address: Data, on sock: GCDAsyncSocket) -> dispatch_queue_t? {
+        oscServer?.queue
+    }
+    
+    func socket(_ sock: GCDAsyncSocket, didAcceptNewSocket newSocket: GCDAsyncSocket) {
+        // add new connection to connections dictionary
+        let clientID = newClientID()
+        let newConnection = OSCTCPServerConnection(
+            tcpSocket: newSocket,
+            tcpSocketTag: clientID,
+            framingMode: framingMode,
+            delegate: self
+        )
+        clients[clientID] = newConnection
+        newSocket.delegate = self
+        
+        // read initial data
+        newSocket.readData(withTimeout: -1, tag: clientID)
+    }
+    
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
         defer {
             // request socket to continue reading data
@@ -71,26 +92,8 @@ extension OSCTCPServerDelegate: GCDAsyncSocketDelegate {
         }
     }
     
-    func newSocketQueueForConnection(fromAddress address: Data, on sock: GCDAsyncSocket) -> dispatch_queue_t? {
-        oscServer?.queue
-    }
-    
-    func socket(_ sock: GCDAsyncSocket, didAcceptNewSocket newSocket: GCDAsyncSocket) {
-        let sockID = newSockID()
-        let newConnection = OSCTCPServerConnection(
-            tcpSocket: newSocket,
-            tcpSocketTag: sockID,
-            framingMode: framingMode,
-            delegate: self
-        )
-        clients[sockID] = newConnection
-        newSocket.delegate = self
-        
-        // read initial data
-        newSocket.readData(withTimeout: -1, tag: sockID)
-    }
-    
     func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: (any Error)?) {
+        // remove connection from connections dictionary
         let disconnectedClients = clients
             .filter { $0.value.tcpSocket == sock }
         
@@ -104,6 +107,7 @@ extension OSCTCPServerDelegate: GCDAsyncSocketDelegate {
 // MARK: - Methods
 
 extension OSCTCPServerDelegate {
+    /// Close connections for any connected clients and remove them from the list of connected clients.
     func closeClients() {
         clients.forEach { $0.value.close()}
         clients.removeAll()
@@ -113,13 +117,15 @@ extension OSCTCPServerDelegate {
 // MARK: - Utilities
 
 extension OSCTCPServerDelegate {
-    func newSockID() -> Int {
-        var sockID: Int = 0
-        while sockID == 0 || clients.keys.contains(sockID) {
+    /// Generate a new client ID that is not currently in use by any connected client(s).
+    private func newClientID() -> OSCTCPClientID {
+        var clientID: Int = 0
+        while clientID == 0 || clients.keys.contains(clientID) {
             // don't allow 0 or negative numbers
-            sockID = Int.random(in: 1 ... Int.max)
+            clientID = Int.random(in: 1 ... Int.max)
         }
-        return sockID
+        assert(clientID > 0)
+        return clientID
     }
 }
 
