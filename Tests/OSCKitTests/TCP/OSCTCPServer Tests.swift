@@ -212,6 +212,60 @@ struct OSCTCPServer_Tests {
         await #expect(serverReceiver.messages.count == expectedMsgCount) // should not have changed
     }
     
+    /// Check that connections are added when an incoming connection is made,
+    /// and check that connections are removed when a connection is closed remotely.
+    @MainActor @Test
+    func clientConnectDisconnect() async throws {
+        let isFlakey = !isSystemTimingStable()
+        
+        // setup server
+        
+        // binding to port 0 will cause the system to assign a random available port
+        let server = OSCTCPServer(localPort: 0, timeTagMode: .ignore, framingMode: .osc1_1)
+        try await Task.sleep(seconds: isFlakey ? 5.0 : 0.1)
+        
+        try server.start()
+        try await Task.sleep(seconds: isFlakey ? 5.0 : 0.5)
+        
+        print("Using server listen port \(server.localPort)")
+        
+        // setup client 1
+        // (must be done after calling start on server so we have a non-zero local server port to use)
+        
+        let client1 = OSCTCPClient(remoteHost: "localhost", remotePort: server.localPort, timeTagMode: .ignore, framingMode: .osc1_1)
+        try await Task.sleep(seconds: isFlakey ? 5.0 : 0.1)
+        
+        try client1.connect()
+        try await Task.sleep(seconds: isFlakey ? 5.0 : 0.5)
+        
+        #expect(server.clients.count == 1)
+        
+        // setup client 2
+        // (must be done after calling start on server so we have a non-zero local server port to use)
+        
+        let client2 = OSCTCPClient(remoteHost: "localhost", remotePort: server.localPort, timeTagMode: .ignore, framingMode: .osc1_1)
+        try await Task.sleep(seconds: isFlakey ? 5.0 : 0.1)
+        
+        try client2.connect()
+        try await Task.sleep(seconds: isFlakey ? 5.0 : 0.5)
+        
+        #expect(server.clients.count == 2)
+        
+        // disconnect client 1
+        
+        client1.close()
+        try await Task.sleep(seconds: isFlakey ? 5.0 : 1.0)
+        
+        #expect(server.clients.count == 1)
+        
+        // disconnect client 2
+        
+        client2.close()
+        try await Task.sleep(seconds: isFlakey ? 5.0 : 1.0)
+        
+        #expect(server.clients.count == 0)
+    }
+    
     // TODO: add tests for clients connecting, disconnecting, and reconnecting (check for memory leaks?)
     // TODO: add tests involving multiple connected clients
 }
