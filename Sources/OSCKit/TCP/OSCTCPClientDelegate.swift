@@ -37,41 +37,7 @@ extension OSCTCPClientDelegate: GCDAsyncSocketDelegate {
             sock.readData(withTimeout: -1, tag: tag)
         }
         
-        guard let oscServer else { return }
-        
-        // TODO: deduplicate this code in OSCTCPServerDelegate
-        let oscPackets: [Data]
-        switch framingMode {
-        case .osc1_0:
-            fatalError() // TODO: finish this (must accommodate more than one packet in the data)
-            break
-        case .osc1_1:
-            do { oscPackets = try data.slipDecoded() }
-            catch {
-                print(error.localizedDescription)
-                oscPackets = []
-            }
-        case .none:
-            oscPackets = [data] // TODO: this may contain more than one OSC packet - how to parse??
-        }
-        
-        guard !oscPackets.isEmpty else {
-            print("Failed to parse incoming TCP data as OSC")
-            return
-        }
-        
-        let remoteHost = sock.connectedHost ?? ""
-        let remotePort = sock.connectedPort
-        for oscPacketData in oscPackets {
-            do {
-                guard let oscObject = try oscPacketData.parseOSC() else {
-                    continue
-                }
-                oscServer._handle(payload: oscObject, remoteHost: remoteHost, remotePort: remotePort)
-            } catch {
-                print(error.localizedDescription)
-            }
-        }
+        oscServer?._handle(receivedData: data, on: sock, tag: tag)
     }
 }
 
