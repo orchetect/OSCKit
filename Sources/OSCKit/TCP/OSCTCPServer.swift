@@ -24,6 +24,9 @@ public final class OSCTCPServer {
     /// Local network port.
     public private(set) var localPort: UInt16
     
+    /// Network interface to restrict connections to.
+    public let interface: String?
+    
     /// Initialize with a remote hostname and UDP port.
     ///
     /// > Note:
@@ -32,12 +35,14 @@ public final class OSCTCPServer {
     /// > The connection may be closed at any time by calling ``stop()`` and then restarted again as needed.
     public init(
         localPort: UInt16,
+        interface: String? = nil,
         timeTagMode: OSCTimeTagMode = .ignore,
         framingMode: OSCTCPFramingMode = .osc1_1,
         queue: DispatchQueue? = nil,
         handler: OSCHandlerBlock? = nil
     ) {
         self.localPort = localPort
+        self.interface = interface
         self.timeTagMode = timeTagMode
         self.framingMode = framingMode
         let queue = queue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCTCPServer.queue")
@@ -61,8 +66,7 @@ public final class OSCTCPServer {
 extension OSCTCPServer {
     /// Starts listening for inbound connections.
     public func start() throws {
-        // TODO: allow specifying interface?
-        try tcpSocket.accept(onInterface: nil, port: localPort)
+        try tcpSocket.accept(onInterface: interface, port: localPort)
         
         // update local port in case port 0 was passed and the system assigned a new port
         localPort = tcpSocket.localPort

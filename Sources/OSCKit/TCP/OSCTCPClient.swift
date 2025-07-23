@@ -27,6 +27,9 @@ public final class OSCTCPClient {
     /// Remote network port.
     public let remotePort: UInt16
     
+    /// Network interface to restrict connections to.
+    public let interface: String?
+    
     /// Returns a boolean indicating whether the OSC socket is connected to the remote host.
     public var isConnected: Bool { tcpSocket.isConnected }
     
@@ -39,6 +42,7 @@ public final class OSCTCPClient {
     public init(
         remoteHost: String,
         remotePort: UInt16,
+        interface: String? = nil,
         timeTagMode: OSCTimeTagMode = .ignore,
         framingMode: OSCTCPFramingMode = .osc1_1,
         queue: DispatchQueue? = nil,
@@ -46,6 +50,7 @@ public final class OSCTCPClient {
     ) {
         self.remoteHost = remoteHost
         self.remotePort = remotePort
+        self.interface = interface
         self.timeTagMode = timeTagMode
         self.framingMode = framingMode
         let queue = queue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCTCPClient.queue")
@@ -69,8 +74,7 @@ public final class OSCTCPClient {
 extension OSCTCPClient {
     /// Connects to the remote host.
     public func connect() throws {
-        // TODO: allow specifying interface?
-        try tcpSocket.connect(toHost: remoteHost, onPort: remotePort, withTimeout: 10.0)
+        try tcpSocket.connect(toHost: remoteHost, onPort: remotePort, viaInterface: interface, withTimeout: 10.0)
     }
     
     /// Close the connection, if any.
