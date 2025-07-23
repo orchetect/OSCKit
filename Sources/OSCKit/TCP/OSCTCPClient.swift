@@ -75,7 +75,7 @@ extension OSCTCPClient {
     
     /// Close the connection, if any.
     public func close() {
-        tcpSocket.disconnectAfterReadingAndWriting()
+        tcpSocket.disconnectAfterWriting()
     }
 }
 

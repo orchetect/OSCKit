@@ -36,6 +36,10 @@ extension OSCTCPClientDelegate: GCDAsyncSocketDelegate {
         
         oscServer?._handle(receivedData: data, on: sock, tag: tag)
     }
+    
+    func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: (any Error)?) {
+        // empty
+    }
 }
 
 #endif
