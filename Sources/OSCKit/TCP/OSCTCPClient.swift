@@ -11,6 +11,8 @@ import OSCKitCore
 import Foundation
 
 /// Connects to a remote host via TCP connection in order to send and receive OSC packets over the network.
+///
+/// Use this class when a bidirectional TCP connection is desired to be made to a remote host.
 public final class OSCTCPClient {
     let tcpSocket: GCDAsyncSocket
     let tcpDelegate: OSCTCPClientDelegate
@@ -34,11 +36,21 @@ public final class OSCTCPClient {
     public var isConnected: Bool { tcpSocket.isConnected }
     
     /// Initialize with a remote hostname and UDP port.
-    ///
+    /// 
     /// > Note:
     /// >
     /// > Call ``connect()`` to connect to the remote host in order to begin sending messages.
     /// > The connection may be closed at any time by calling ``close()`` and then reconnected again as needed.
+    ///
+    /// - Parameters:
+    ///   - remoteHost: Remote hostname or IP address.
+    ///   - remotePort: Remote port number.
+    ///   - interface: Optionally specify a network interface to restrict connections to.
+    ///   - timeTagMode: OSC TimeTag mode. (Default is recommended.)
+    ///   - framingMode: TCP framing mode. Both server and client must use the same framing mode. (Default is recommended.)
+    ///   - queue: Optionally supply a custom dispatch queue for receiving OSC packets and dispatching the
+    ///     handler callback closure. If `nil`, a dedicated internal background queue will be used.
+    ///   - handler: Handler to call when OSC bundles or messages are received.
     public init(
         remoteHost: String,
         remotePort: UInt16,

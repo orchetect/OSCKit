@@ -11,6 +11,9 @@ import OSCKitCore
 import Foundation
 
 /// Listens on a local port for TCP connections in order to send and receive OSC packets over the network.
+///
+/// Use this class when you are taking the role of the host and one or more remote clients will want to connect via
+/// bidirectional TCP connection.
 public final class OSCTCPServer {
     let tcpSocket: GCDAsyncSocket
     let tcpDelegate: OSCTCPServerDelegate
@@ -28,11 +31,20 @@ public final class OSCTCPServer {
     public let interface: String?
     
     /// Initialize with a remote hostname and UDP port.
-    ///
+    /// 
     /// > Note:
     /// >
     /// > Call ``start()`` to begin listening for connections.
     /// > The connection may be closed at any time by calling ``stop()`` and then restarted again as needed.
+    ///
+    /// - Parameters:
+    ///   - localPort: Local network port to listen for inbound connections.
+    ///   - interface: Optionally specify a network interface to restrict connections to.
+    ///   - timeTagMode: OSC TimeTag mode. Default is recommended.
+    ///   - framingMode: TCP framing mode. Both server and client must use the same framing mode. (Default is recommended.)
+    ///   - queue: Optionally supply a custom dispatch queue for receiving OSC packets and dispatching the
+    ///     handler callback closure. If `nil`, a dedicated internal background queue will be used.
+    ///   - handler: Handler to call when OSC bundles or messages are received.
     public init(
         localPort: UInt16,
         interface: String? = nil,

@@ -42,7 +42,7 @@ public final class OSCUDPServer {
     ///
     /// - Parameters:
     ///   - port: Local port to listen on for inbound OSC packets.
-    ///   - timeTagMode: OSC TimeTag mode. Default is recommended.
+    ///   - timeTagMode: OSC TimeTag mode. (Default is recommended.)
     ///   - queue: Optionally supply a custom dispatch queue for receiving OSC packets and dispatching the
     ///     handler callback closure. If `nil`, a dedicated internal background queue will be used.
     ///   - handler: Handler to call when OSC bundles or messages are received.
