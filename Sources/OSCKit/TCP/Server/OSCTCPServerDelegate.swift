@@ -60,6 +60,7 @@ extension OSCTCPServerDelegate: GCDAsyncSocketDelegate {
     
     func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: (any Error)?) {
         // remove connection from connections dictionary
+        
         let disconnectedClients = clients
             .filter { $0.value.tcpSocket == sock }
         
@@ -75,7 +76,7 @@ extension OSCTCPServerDelegate: GCDAsyncSocketDelegate {
 extension OSCTCPServerDelegate {
     /// Close connections for any connected clients and remove them from the list of connected clients.
     func closeClients() {
-        clients.forEach { $0.value.close()}
+        clients.forEach { $0.value.close() }
         clients.removeAll()
     }
 }

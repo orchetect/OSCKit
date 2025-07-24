@@ -29,10 +29,10 @@ public enum OSCTCPFramingMode {
     /// See [RFC 1055 Specification](https://www.rfc-editor.org/rfc/rfc1055.txt)
     case osc1_1
     
+    // TODO: 'none' is implemented in the codebase, however there is an issue with OSCTCPServer where more than one received packet may be contained in the data received.
     /// None: Send OSC packet bytes as-is.
     @available(*, unavailable, message: "Not yet implemented.")
     case none
-    // TODO: 'none' is implemented in the codebase, however there is an issue with OSCTCPServer where more than one received packet may be contained in the data received.
 }
 
 extension OSCTCPFramingMode: Equatable { }
