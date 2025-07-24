@@ -14,7 +14,7 @@ extension Data {
         /// END (Packet end byte)
         case end = 0xC0
         
-        /// ESC (Packet escape end)
+        /// ESC (Packet escape byte)
         case esc = 0xDB
         
         /// ESC_END (Escaped 'end' byte)
@@ -61,7 +61,7 @@ extension Data {
         for index in indices {
             switch self[index] {
             case SLIPByte.end.rawValue:
-                // END should never come after the escape char preamble
+                // END should never come after an escape byte
                 guard !isEscaped else { throw SLIPDecodingError.missingEscapedCharacter}
                 
                 // consider the END byte the end of the current packet

@@ -1,5 +1,5 @@
 //
-//  Size Preamble Coding.swift
+//  Packet Length Header Coding.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
@@ -7,17 +7,17 @@
 import Foundation
 
 extension Data {
-    /// Returns the data encoded as a size-count-preamble framed datagram.
-    func sizePreambleEncoded(endianness: NumberEndianness = .platformDefault) -> Data {
+    /// Returns the data encoded as a packet-length header framed datagram.
+    func packetLengthHeaderEncoded(endianness: NumberEndianness = .platformDefault) -> Data {
         let length = UInt32(count)
             .toData(endianness)
         return length + self
     }
     
-    /// Decodes data that may contain one or more size-count-preamble framed datagrams.
+    /// Decodes data that may contain one or more packet-length header framed datagrams.
     ///
     /// The structure is one or more of: a UInt32 length value followed by a sequence of bytes of that length.
-    func sizePreambleDecoded(endianness: NumberEndianness = .platformDefault) throws -> [Data] {
+    func packetLengthHeaderDecoded(endianness: NumberEndianness = .platformDefault) throws -> [Data] {
         var sequences: [SubSequence] = []
         
         var offset: Index = startIndex

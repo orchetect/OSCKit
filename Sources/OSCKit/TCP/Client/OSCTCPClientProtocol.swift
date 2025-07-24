@@ -34,9 +34,9 @@ extension _OSCTCPClientProtocol {
         // pack data
         let data: Data = switch framingMode {
         case .osc1_0:
-            // OSC packet framed using size-count preamble
+            // OSC packet framed using a packet-length header
             // 4-byte int for size
-            try oscObject.rawData().sizePreambleEncoded(endianness: .bigEndian)
+            try oscObject.rawData().packetLengthHeaderEncoded(endianness: .bigEndian)
             
         case .osc1_1:
             // OSC packet framed using SLIP (double END) protocol: http://www.rfc-editor.org/rfc/rfc1055.txt
