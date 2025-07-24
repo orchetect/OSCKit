@@ -113,7 +113,7 @@ struct OSCTCPServer_Tests {
     /// - This test is repeated for each TCP framing mode.
     /// - This also tests that when passing local port 0 to server's init, after calling `start()` the `localPort`
     ///   property is then populated with the system-assigned port.
-    @MainActor @Test(arguments: /*OSCTCPFramingMode.allCases*/ [.osc1_1] as [OSCTCPFramingMode])
+    @MainActor @Test(arguments: /*OSCTCPFramingMode.allCases*/ [.osc1_0, .osc1_1] as [OSCTCPFramingMode])
     func stressTestOnline(framingMode: OSCTCPFramingMode) async throws {
         let isFlakey = !isSystemTimingStable()
         
