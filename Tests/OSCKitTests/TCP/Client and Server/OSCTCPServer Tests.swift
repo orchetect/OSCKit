@@ -18,7 +18,7 @@ struct OSCTCPServer_Tests {
         _ = iteration // argument value not used, just a mechanism to repeat the test X number of times
         
         // we aren't starting the server, so passing port 0 has no meaningful effect
-        let server = OSCTCPServer(localPort: 0, timeTagMode: .ignore, framingMode: .none)
+        let server = OSCTCPServer(localPort: 0, timeTagMode: .ignore)
         
         final actor Receiver {
             var messages: [(message: OSCMessage, host: String, port: UInt16)] = []
@@ -69,7 +69,7 @@ struct OSCTCPServer_Tests {
     @MainActor @Test
     func stressTestOffline() async throws {
         // we aren't starting the server, so passing port 0 has no meaningful effect
-        let server = OSCTCPServer(localPort: 0, timeTagMode: .ignore, framingMode: .none)
+        let server = OSCTCPServer(localPort: 0, timeTagMode: .ignore)
         
         final actor Receiver {
             var messages: [OSCMessage] = []
@@ -113,7 +113,7 @@ struct OSCTCPServer_Tests {
     /// - This test is repeated for each TCP framing mode.
     /// - This also tests that when passing local port 0 to server's init, after calling `start()` the `localPort`
     ///   property is then populated with the system-assigned port.
-    @MainActor @Test(arguments: /*OSCTCPFramingMode.allCases*/ [.osc1_0, .osc1_1] as [OSCTCPFramingMode])
+    @MainActor @Test(arguments: OSCTCPFramingMode.allCases)
     func stressTestOnline(framingMode: OSCTCPFramingMode) async throws {
         let isFlakey = !isSystemTimingStable()
         

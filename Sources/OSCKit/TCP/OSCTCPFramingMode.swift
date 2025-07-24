@@ -30,13 +30,20 @@ public enum OSCTCPFramingMode {
     case osc1_1
     
     /// None: Send OSC packet bytes as-is.
+    @available(*, unavailable, message: "Not yet implemented.")
     case none
+    // TODO: 'none' is implemented in the codebase, however there is an issue with OSCTCPServer where more than one received packet may be contained in the data received. A solution needs to be found to either parse out multiple consecutive OSC bundles/messages from raw data, or somehow intuit packet byte offsets within the data.
 }
 
 extension OSCTCPFramingMode: Equatable { }
 
 extension OSCTCPFramingMode: Hashable { }
 
-extension OSCTCPFramingMode: CaseIterable { }
+extension OSCTCPFramingMode: CaseIterable {
+    // TODO: Manual allCases implementation is only necessary because the 'none' case is marked unavailable, preventing Swift from automatically synthesizing allCases
+    public static var allCases: [OSCTCPFramingMode] {
+        [.osc1_0, .osc1_1]
+    }
+}
 
 extension OSCTCPFramingMode: Sendable { }
