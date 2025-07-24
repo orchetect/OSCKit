@@ -8,38 +8,38 @@ import Foundation
 
 extension Data {
     /// Returns the data encoded as a size-count-preamble framed datagram.
-    func sizePreambleEncoded() -> Data {
+    func sizePreambleEncoded(endianness: NumberEndianness = .platformDefault) -> Data {
         let length = UInt32(count)
-            .toData(.platformDefault) // TODO: not sure if int type and endianness is correct
+            .toData(endianness)
         return length + self
     }
     
     /// Decodes data that may contain one or more size-count-preamble framed datagrams.
     ///
     /// The structure is one or more of: a UInt32 length value followed by a sequence of bytes of that length.
-    func sizePreambleDecoded() throws -> [Data] {
+    func sizePreambleDecoded(endianness: NumberEndianness = .platformDefault) throws -> [Data] {
         var sequences: [SubSequence] = []
         
         var offset: Index = startIndex
         
         while offset < endIndex {
-            let lengthFieldRange = offset ..< index(offset, offsetBy: 4)
-            guard indices.contains(lengthFieldRange) else {
-                throw DecodingError.dataCorrupted(DecodingError.Context(codingPath: [], debugDescription: ""))
+            guard offset + 4 <= endIndex else {
+                throw SizePreambleDecodingError.notEnoughBytes
             }
+            let lengthFieldRange = offset ..< offset + 4
             
             guard let length = self[lengthFieldRange]
-                .toUInt32(from: .platformDefault) // TODO: not sure if int type and endianness is correct
+                .toUInt32(from: endianness)
             else {
                 throw SizePreambleDecodingError.notEnoughBytes
             }
             
             offset = lengthFieldRange.endIndex
             
-            let packetRange = offset ..< index(offset, offsetBy: Int(length))
-            guard indices.contains(packetRange) else {
+            guard offset + Int(length) <= endIndex else {
                 throw SizePreambleDecodingError.notEnoughBytes
             }
+            let packetRange = offset ..< offset + Int(length)
             
             offset = packetRange.endIndex
             

@@ -23,7 +23,7 @@ extension _OSCTCPServerProtocol {
         switch framingMode {
         case .osc1_0:
             do {
-                oscPackets = try data.sizePreambleDecoded()
+                oscPackets = try data.sizePreambleDecoded(endianness: .bigEndian)
             } catch {
                 print(error.localizedDescription)
                 oscPackets = []
