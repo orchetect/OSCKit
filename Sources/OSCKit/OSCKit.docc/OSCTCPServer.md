@@ -16,13 +16,14 @@ let oscServer = OSCTCPServer(
 Then in order to bind to the local network port and begin listening for inbound connections:
 
 ```swift
+// call this once, usually during your app's startup
 try oscServer.start()
 ```
 
 Inbound client connections are automatically accepted. One or more remote clients may be connected to a single
 local server at the same time, each with their own independent bidirectional connection to the server.
 
-OSC bundles and messages may be sent to all clients at once, or sent to individual clients discretely.
+OSC messages and bundles may be sent to all clients at once, or sent to individual clients discretely.
 
 > Important:
 >

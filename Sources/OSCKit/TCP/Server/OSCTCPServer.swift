@@ -43,7 +43,7 @@ public final class OSCTCPServer {
     /// > Note:
     /// >
     /// > Call ``start()`` to begin listening for connections.
-    /// > The connection may be closed at any time by calling ``stop()`` and then restarted again as needed.
+    /// > The connections may be closed at any time by calling ``stop()`` and then restarted again as needed.
     ///
     /// - Parameters:
     ///   - port: Local network port to listen for inbound connections.
@@ -154,8 +154,8 @@ extension OSCTCPServer {
     /// > Note:
     /// >
     /// > A client ID is transient and only valid for the lifecycle of the connection. Client IDs are randomly-assigned
-    /// > upon each newly-made connection. For this reason, these IDs should not be stored, but instead queried from the
-    /// > OSC TCP server at the time of requiring to use an ID.
+    /// > upon each newly-made connection. For this reason, these IDs should not be stored persistently, but instead
+    /// > queried from the OSC TCP server when a client connects or analyzing currently-connected clients.
     public var clients: [OSCTCPClientSessionID: (host: String, port: UInt16)] {
         tcpDelegate.clients
             .reduce(into: [:] as [OSCTCPClientSessionID: (host: String, port: UInt16)]) { base, element in

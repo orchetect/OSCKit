@@ -41,19 +41,19 @@ Note that as per the OSC 1.1 proposal, this behavior has largely been deprecated
 
 Both ``OSCTCPClient`` and ``OSCTCPServer`` are capable of receiving messages using the same API.
 
-If not already set during initialization, you may set the receiver handler using the ``OSCUDPServer/setHandler(_:)`` or ``OSCUDPServer/setHandler(_:)`` method.
+If not already set during initialization, you may set the receiver handler using the ``OSCTCPClient/setHandler(_:)`` or ``OSCTCPServer/setHandler(_:)`` method.
 
 ```swift
 oscServer.setHandler { [weak self] message, timeTag, host, port in
-do {
-try self?.handle(message: message, host: host, port: port)
-} catch {
-print(error)
-}
+    do {
+        try self?.handle(message: message, host: host, port: port)
+    } catch {
+        print(error)
+    }
 }
 
 private func handle(message: OSCMessage, host: String, port: UInt16) throws {
-// handle received messages here
+    // handle received messages here
 }
 ```
 

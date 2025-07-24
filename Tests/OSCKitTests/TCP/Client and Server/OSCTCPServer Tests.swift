@@ -266,6 +266,7 @@ struct OSCTCPServer_Tests {
         #expect(server.clients.count == 0)
     }
     
+    // TODO: add tests for starting TCP server then stopping it then restarting it again
     // TODO: add tests for clients connecting, disconnecting, and reconnecting (check for memory leaks?)
     // TODO: add tests involving multiple connected clients
 }
