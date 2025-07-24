@@ -4,11 +4,13 @@ Sending OSC messages and bundles.
 
 ## Overview
 
-Both ``OSCUDPClient`` and ``OSCUDPSocket`` are capable of sending messages using the same API.
+For the UDP protocol, both ``OSCUDPClient`` and ``OSCUDPSocket`` are capable of sending messages using the same API.
 
 Note that the `send(_:to:port:)` method on ``OSCUDPClient`` is globally thread-safe.
 
-### OSC Messages
+For the TCP protocol, both ``OSCTCPClient`` and ``OSCTCPServer`` are capable of sending messages using slightly different API.
+
+## OSC Messages
 
 To send a single message, construct an ``OSCMessage`` and send it using the client or socket instance.
 
@@ -18,7 +20,7 @@ let msg = OSCMessage("/test", values: ["string", 123])
 try oscClient.send(msg, to: "192.168.1.2", port: 8000)
 ```
 
-### OSC Bundles
+## OSC Bundles
 
 To send multiple OSC messages or nested OSC bundles to the same destination at the same time, pack them in an `OSCBundle` and send it using the client or socket instance.
 
@@ -38,7 +40,7 @@ let bundle = OSCBundle([
 try oscClient.send(bundle, to: "192.168.1.2", port: 8000)
 ```
 
-#### Sending with a Future Time Tag
+### Sending with a Future Time Tag
 
 OSC bundles carry a time tag. If not specified, by default a time tag equivalent to "immediate" is used, which indicates to receivers that they should handle the bundle and the message(s) it contains immediately upon receiving them.
 

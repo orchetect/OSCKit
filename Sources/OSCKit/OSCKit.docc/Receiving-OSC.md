@@ -4,12 +4,16 @@ Receiving OSC messages and bundles.
 
 ## Overview
 
+OSCKit offers a set of classes for both UDP and TCP network communication.
+
+## UDP
+
 Both ``OSCUDPServer`` and ``OSCUDPSocket`` are capable of receiving messages using the same API.
 
 If not already set during initialization, you may set the receiver handler using the ``OSCUDPServer/setHandler(_:)`` or ``OSCUDPServer/setHandler(_:)`` method.
 
 ```swift
-oscServer.setHandler { [weak self] message, timeTag, host, port in
+oscServer.setHandler { [weak self] message, timeTag, hostname, port in
     do {
         try self?.handle(message: message, host: host, port: port)
     } catch {
@@ -32,6 +36,12 @@ try oscServer.start()
 If received OSC bundles contain a future time tag and the `OSCUDPServer` is set to `.osc1_0` mode, these bundles will be held in memory automatically and scheduled to be dispatched to the handler at the future time.
 
 Note that as per the OSC 1.1 proposal, this behavior has largely been deprecated. `OSCUDPServer` will default to `.ignore` and not perform any scheduling unless explicitly set to `.osc1_0` mode.
+
+## TCP
+
+Both ``OSCTCPClient`` and ``OSCTCPServer`` are capable of receiving messages using the same API.
+
+
 
 ## Topics
 

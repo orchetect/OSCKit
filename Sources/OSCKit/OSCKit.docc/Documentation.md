@@ -32,11 +32,23 @@ Open Sound Control (OSC) library for macOS, iOS and tvOS.
 
 ### OSC I/O
 
+- ``OSCTimeTagMode``
+- ``OSCHandlerBlock``
+
+### OSC I/O (UDP)
+
 - ``OSCUDPClient``
 - ``OSCUDPServer``
 - ``OSCUDPSocket``
-- ``OSCTimeTagMode``
-- ``OSCHandlerBlock``
+
+### OSC I/O (TCP)
+
+- ``OSCTCPClient``
+- ``OSCTCPServer``
+- ``OSCTCPFramingMode``
+- ``OSCTCPClientSessionID``
+- ``OSCTCPPacketLengthHeaderDecodingError``
+- ``OSCTCPSLIPDecodingError``
 
 ### OSC Bundles
 

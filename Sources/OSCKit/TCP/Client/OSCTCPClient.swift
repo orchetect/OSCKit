@@ -13,6 +13,14 @@ import Foundation
 /// Connects to a remote host via TCP connection in order to send and receive OSC packets over the network.
 ///
 /// Use this class when a bidirectional TCP connection is desired to be made to a remote host.
+///
+/// A TCP connection is also generally more reliable than using the UDP protocol.
+///
+/// Since TCP is inherently a bidirectional network connection, both ``OSCTCPClient`` and ``OSCTCPServer`` can send and
+/// receive once a connection is made. Messages sent by the server are only received by the client, and vice-versa.
+///
+/// What differentiates this client class from the server class is that the client class is designed to connect to a
+/// remote TCP server. (Whereas, the server is designed to listen for inbound connections.)
 public final class OSCTCPClient {
     let tcpSocket: GCDAsyncSocket
     let tcpDelegate: OSCTCPClientDelegate

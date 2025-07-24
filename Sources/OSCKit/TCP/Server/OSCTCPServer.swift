@@ -14,6 +14,14 @@ import Foundation
 ///
 /// Use this class when you are taking the role of the host and one or more remote clients will want to connect via
 /// bidirectional TCP connection.
+///
+/// A TCP connection is also generally more reliable than using the UDP protocol.
+///
+/// Since TCP is inherently a bidirectional network connection, both ``OSCTCPClient`` and ``OSCTCPServer`` can send and
+/// receive once a connection is made. Messages sent by the server are only received by the client, and vice-versa.
+///
+/// What differentiates this server class from the client class is that the server is designed to listen for inbound
+/// connections. (Whereas, the client class is designed to connect to a remote TCP server.)
 public final class OSCTCPServer {
     let tcpSocket: GCDAsyncSocket
     let tcpDelegate: OSCTCPServerDelegate
