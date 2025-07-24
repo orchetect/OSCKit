@@ -79,7 +79,7 @@ public final class OSCTCPClient {
     }
 }
 
-// extension OSCTCPClient: @unchecked Sendable { } // TODO: make Sendable
+extension OSCTCPClient: @unchecked Sendable { } // TODO: unchecked
 
 // MARK: - Lifecycle
 

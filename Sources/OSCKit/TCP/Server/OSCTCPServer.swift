@@ -71,7 +71,7 @@ public final class OSCTCPServer {
     }
 }
 
-// extension OSCTCPServer: @unchecked Sendable { } // TODO: make Sendable
+extension OSCTCPServer: @unchecked Sendable { } // TODO: unchecked
 
 // MARK: - Lifecycle
 

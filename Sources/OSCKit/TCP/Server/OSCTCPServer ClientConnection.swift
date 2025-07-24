@@ -40,6 +40,8 @@ extension OSCTCPServer {
     }
 }
 
+extension OSCTCPServer.ClientConnection: @unchecked Sendable { } // TODO: unchecked
+
 // MARK: - Lifecycle
 
 extension OSCTCPServer.ClientConnection {

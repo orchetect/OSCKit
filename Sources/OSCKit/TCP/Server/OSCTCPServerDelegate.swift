@@ -26,7 +26,7 @@ final class OSCTCPServerDelegate: NSObject {
     }
 }
 
-// extension OSCTCPClientDelegate: @unchecked Sendable { } // TODO: make Sendable
+extension OSCTCPServerDelegate: @unchecked Sendable { } // TODO: unchecked
 
 extension OSCTCPServerDelegate: GCDAsyncSocketDelegate {
     func newSocketQueueForConnection(fromAddress address: Data, on sock: GCDAsyncSocket) -> dispatch_queue_t? {
