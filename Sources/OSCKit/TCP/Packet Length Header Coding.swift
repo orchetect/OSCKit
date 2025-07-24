@@ -24,20 +24,20 @@ extension Data {
         
         while offset < endIndex {
             guard offset + 4 <= endIndex else {
-                throw SizePreambleDecodingError.notEnoughBytes
+                throw OSCTCPPacketLengthHeaderDecodingError.notEnoughBytes
             }
             let lengthFieldRange = offset ..< offset + 4
             
             guard let length = self[lengthFieldRange]
                 .toUInt32(from: endianness)
             else {
-                throw SizePreambleDecodingError.notEnoughBytes
+                throw OSCTCPPacketLengthHeaderDecodingError.notEnoughBytes
             }
             
             offset = lengthFieldRange.endIndex
             
             guard offset + Int(length) <= endIndex else {
-                throw SizePreambleDecodingError.notEnoughBytes
+                throw OSCTCPPacketLengthHeaderDecodingError.notEnoughBytes
             }
             let packetRange = offset ..< offset + Int(length)
             
@@ -51,8 +51,8 @@ extension Data {
     }
 }
 
-/// Error cases thrown while decoding packet data encoded with the SLIP protocol (RFC 1055).
-public enum SizePreambleDecodingError: LocalizedError, Equatable, Hashable {
+/// Error cases thrown while decoding packet data encoded with packet-length header framing.
+public enum OSCTCPPacketLengthHeaderDecodingError: LocalizedError, Equatable, Hashable {
     case notEnoughBytes
     
     public var errorDescription: String? {

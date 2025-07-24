@@ -62,17 +62,17 @@ import Testing
     @Test
     func dataPacketLengthHeaderDecoded_SinglePacket_EdgeCases() throws {
         // not enough bytes
-        #expect(throws: SizePreambleDecodingError.notEnoughBytes) {
+        #expect(throws: OSCTCPPacketLengthHeaderDecodingError.notEnoughBytes) {
             try Data([0x01, 0x00, 0x00, 0x00]).packetLengthHeaderDecoded(endianness: .littleEndian)
         }
         
         // too many bytes
-        #expect(throws: SizePreambleDecodingError.notEnoughBytes) {
+        #expect(throws: OSCTCPPacketLengthHeaderDecodingError.notEnoughBytes) {
             try Data([0x01, 0x00, 0x00, 0x00, 0x40, 0x41]).packetLengthHeaderDecoded(endianness: .littleEndian)
         }
         
         // wrong UInt32 size encoding endianness
-        #expect(throws: SizePreambleDecodingError.notEnoughBytes) {
+        #expect(throws: OSCTCPPacketLengthHeaderDecodingError.notEnoughBytes) {
             try Data([0x00, 0x00, 0x00, 0x01, 0x40]).packetLengthHeaderDecoded(endianness: .littleEndian)
         }
     }
@@ -130,21 +130,21 @@ import Testing
     @Test
     func dataPacketLengthHeaderDecoded_MultiplePackets_EdgeCases() throws {
         // one valid packet and one packet with not enough bytes
-        #expect(throws: SizePreambleDecodingError.notEnoughBytes) {
+        #expect(throws: OSCTCPPacketLengthHeaderDecodingError.notEnoughBytes) {
             try Data([0x01, 0x00, 0x00, 0x00, 0x40,
                       0x02, 0x00, 0x00, 0x00, 0x41])
                 .packetLengthHeaderDecoded(endianness: .littleEndian)
         }
         
         // one valid packet and one packet with not enough bytes
-        #expect(throws: SizePreambleDecodingError.notEnoughBytes) {
+        #expect(throws: OSCTCPPacketLengthHeaderDecodingError.notEnoughBytes) {
             try Data([0x01, 0x00, 0x00, 0x00, 0x40,
                       0x01, 0x00, 0x00, 0x00, 0x41, 0x42])
                 .packetLengthHeaderDecoded(endianness: .littleEndian)
         }
         
         // two valid packets and one packet with not enough bytes
-        #expect(throws: SizePreambleDecodingError.notEnoughBytes) {
+        #expect(throws: OSCTCPPacketLengthHeaderDecodingError.notEnoughBytes) {
             try Data([0x01, 0x00, 0x00, 0x00, 0x40,
                       0x02, 0x00, 0x00, 0x00, 0x41, 0x42,
                       0x02, 0x00, 0x00, 0x00, 0x43])
@@ -152,7 +152,7 @@ import Testing
         }
         
         // two packets with wrong UInt32 size encoding endianness
-        #expect(throws: SizePreambleDecodingError.notEnoughBytes) {
+        #expect(throws: OSCTCPPacketLengthHeaderDecodingError.notEnoughBytes) {
             try Data([0x00, 0x00, 0x00, 0x01, 0x40,
                       0x00, 0x00, 0x00, 0x02, 0x41, 0x42])
                 .packetLengthHeaderDecoded(endianness: .littleEndian)
