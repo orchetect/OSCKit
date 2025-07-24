@@ -32,7 +32,7 @@ public enum OSCTCPFramingMode {
     /// None: Send OSC packet bytes as-is.
     @available(*, unavailable, message: "Not yet implemented.")
     case none
-    // TODO: 'none' is implemented in the codebase, however there is an issue with OSCTCPServer where more than one received packet may be contained in the data received. A solution needs to be found to either parse out multiple consecutive OSC bundles/messages from raw data, or somehow intuit packet byte offsets within the data.
+    // TODO: 'none' is implemented in the codebase, however there is an issue with OSCTCPServer where more than one received packet may be contained in the data received.
 }
 
 extension OSCTCPFramingMode: Equatable { }

@@ -17,7 +17,8 @@ protocol _OSCTCPServerProtocol: _OSCServerProtocol {
 
 extension _OSCTCPServerProtocol {
     func _handle(receivedData data: Data, on sock: GCDAsyncSocket, tag: Int) {
-        // this must also accommodate more than one packet in the data
+        // This routine must accommodate more than one consecutive packet contained in the data
+        // which may happen when multiple packets are sent rapidly from a client.
         
         let oscPackets: [Data]
         switch framingMode {
@@ -25,25 +26,34 @@ extension _OSCTCPServerProtocol {
             do {
                 oscPackets = try data.packetLengthHeaderDecoded(endianness: .bigEndian)
             } catch {
-                print(error.localizedDescription)
-                oscPackets = []
+                #if DEBUG
+                print("OSC 1.0 packet-length header decoding error:", error.localizedDescription)
+                #endif
+                
+                return
             }
             
         case .osc1_1:
             do {
                 oscPackets = try data.slipDecoded()
             } catch {
-                print(error.localizedDescription)
-                oscPackets = []
+                #if DEBUG
+                print("OSC 1.1 SLIP decoding error:", error.localizedDescription)
+                #endif
+                
+                return
             }
             
         case .none:
-            // TODO: data may contain more than one OSC packet - how to parse??
+            // TODO: data may contain more than one OSC packet - need to figure out how to either parse out multiple consecutive OSC bundles/messages from raw data, or somehow intuit packet byte offsets within the data if possible.
             oscPackets = [data]
         }
         
         guard !oscPackets.isEmpty else {
-            print("Failed to parse incoming TCP data as OSC")
+            #if DEBUG
+            print("Failed to parse OSC objects from incoming TCP data.")
+            #endif
+            
             return
         }
         
@@ -52,11 +62,17 @@ extension _OSCTCPServerProtocol {
         for oscPacketData in oscPackets {
             do {
                 guard let oscObject = try oscPacketData.parseOSC() else {
+                    #if DEBUG
+                    print("Error parsing OSC object from incoming TCP data; it may not be OSC data or may be malformed.")
+                    #endif
+                    
                     continue
                 }
                 self._handle(payload: oscObject, remoteHost: remoteHost, remotePort: remotePort)
             } catch {
+                #if DEBUG
                 print(error.localizedDescription)
+                #endif
             }
         }
     }
