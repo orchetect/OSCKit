@@ -62,7 +62,7 @@ extension Data {
             switch self[index] {
             case SLIPByte.end.rawValue:
                 // END should never come after an escape byte
-                guard !isEscaped else { throw SLIPDecodingError.missingEscapedCharacter}
+                guard !isEscaped else { throw OSCTCPSLIPDecodingError.missingEscapedCharacter}
                 
                 // consider the END byte the end of the current packet
                 if !currentPacketData.isEmpty {
@@ -74,34 +74,34 @@ extension Data {
                 
             case SLIPByte.esc.rawValue:
                 // we should never get more than one consecutive ESC byte
-                guard !isEscaped else { throw SLIPDecodingError.doubleEscapeBytes}
+                guard !isEscaped else { throw OSCTCPSLIPDecodingError.doubleEscapeBytes}
                 
                 isEscaped = true
                 
             case SLIPByte.escEnd.rawValue:
                 // must follow an ESC byte
-                guard isEscaped else { throw SLIPDecodingError.missingEscapeByte}
+                guard isEscaped else { throw OSCTCPSLIPDecodingError.missingEscapeByte}
                 isEscaped = false // reset ESC
                 
                 currentPacketData.append(SLIPByte.end.rawValue)
                 
             case SLIPByte.escEsc.rawValue:
                 // must follow an ESC byte
-                guard isEscaped else { throw SLIPDecodingError.missingEscapeByte}
+                guard isEscaped else { throw OSCTCPSLIPDecodingError.missingEscapeByte}
                 isEscaped = false // reset ESC
                 
                 currentPacketData.append(SLIPByte.esc.rawValue)
                 
             default:
                 // the only two bytes that should follow an ESC byte are ESC_END and ESC_ESC
-                guard !isEscaped else { throw SLIPDecodingError.missingEscapedCharacter}
+                guard !isEscaped else { throw OSCTCPSLIPDecodingError.missingEscapedCharacter}
                 
                 currentPacketData.append(self[index])
             }
         }
         
         // failsafe: ensure we are not ending while escaped (check if final byte was ESC)
-        guard !isEscaped else { throw SLIPDecodingError.missingEscapedCharacter}
+        guard !isEscaped else { throw OSCTCPSLIPDecodingError.missingEscapedCharacter}
         
         // add final packet if needed
         if !currentPacketData.isEmpty {
@@ -113,7 +113,7 @@ extension Data {
 }
 
 /// Error cases thrown while decoding packet data encoded with the SLIP protocol (RFC 1055).
-public enum SLIPDecodingError: LocalizedError, Equatable, Hashable {
+public enum OSCTCPSLIPDecodingError: LocalizedError, Equatable, Hashable {
     case doubleEscapeBytes
     case missingEscapeByte
     case missingEscapedCharacter

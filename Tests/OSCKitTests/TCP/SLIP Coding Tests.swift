@@ -112,13 +112,13 @@ import Testing
     /// Test for error: two consecutive ESC bytes is not technically valid.
     @Test
     func dataSlipDecoded_DoubleEscapeBytes() throws {
-        #expect(throws: SLIPDecodingError.doubleEscapeBytes) {
+        #expect(throws: OSCTCPSLIPDecodingError.doubleEscapeBytes) {
             try Data([END, 0x01, ESC, ESC, 0x02, END]).slipDecoded()
         }
-        #expect(throws: SLIPDecodingError.doubleEscapeBytes) {
+        #expect(throws: OSCTCPSLIPDecodingError.doubleEscapeBytes) {
             try Data([END, 0x01, ESC, ESC, ESC_END, 0x02, END]).slipDecoded()
         }
-        #expect(throws: SLIPDecodingError.doubleEscapeBytes) {
+        #expect(throws: OSCTCPSLIPDecodingError.doubleEscapeBytes) {
             try Data([END, 0x01, ESC, ESC, ESC_END, ESC_END, 0x02, END]).slipDecoded()
         }
     }
@@ -126,16 +126,16 @@ import Testing
     /// Test for error: encountering an escaped character without first receiving an ESC byte.
     @Test
     func dataSlipDecoded_MissingEscapeByte() throws {
-        #expect(throws: SLIPDecodingError.missingEscapeByte) {
+        #expect(throws: OSCTCPSLIPDecodingError.missingEscapeByte) {
             try Data([END, 0x01, ESC_ESC, 0x02, END]).slipDecoded()
         }
-        #expect(throws: SLIPDecodingError.missingEscapeByte) {
+        #expect(throws: OSCTCPSLIPDecodingError.missingEscapeByte) {
             try Data([END, 0x01, ESC_END, 0x02, END]).slipDecoded()
         }
-        #expect(throws: SLIPDecodingError.missingEscapeByte) {
+        #expect(throws: OSCTCPSLIPDecodingError.missingEscapeByte) {
             try Data([END, ESC_ESC, END]).slipDecoded()
         }
-        #expect(throws: SLIPDecodingError.missingEscapeByte) {
+        #expect(throws: OSCTCPSLIPDecodingError.missingEscapeByte) {
             try Data([END, ESC_END, END]).slipDecoded()
         }
     }
@@ -143,16 +143,16 @@ import Testing
     /// Test for error: missing valid escaped character after receiving ESC byte.
     @Test
     func dataSlipDecoded_MissingEscapedCharacter() throws {
-        #expect(throws: SLIPDecodingError.missingEscapedCharacter) {
+        #expect(throws: OSCTCPSLIPDecodingError.missingEscapedCharacter) {
             try Data([END, 0x01, ESC, 0x02, END]).slipDecoded()
         }
-        #expect(throws: SLIPDecodingError.missingEscapedCharacter) {
+        #expect(throws: OSCTCPSLIPDecodingError.missingEscapedCharacter) {
             try Data([END, 0x01, ESC, 0x02, ESC_END, END]).slipDecoded()
         }
-        #expect(throws: SLIPDecodingError.missingEscapedCharacter) {
+        #expect(throws: OSCTCPSLIPDecodingError.missingEscapedCharacter) {
             try Data([END, 0x01, ESC, 0x02, ESC_ESC, END]).slipDecoded()
         }
-        #expect(throws: SLIPDecodingError.missingEscapedCharacter) {
+        #expect(throws: OSCTCPSLIPDecodingError.missingEscapedCharacter) {
             try Data([END, 0x01, ESC, END]).slipDecoded()
         }
     }
