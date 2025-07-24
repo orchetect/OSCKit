@@ -18,7 +18,7 @@ struct OSCTCPServer_Tests {
         _ = iteration // argument value not used, just a mechanism to repeat the test X number of times
         
         // we aren't starting the server, so passing port 0 has no meaningful effect
-        let server = OSCTCPServer(localPort: 0, timeTagMode: .ignore)
+        let server = OSCTCPServer(port: 0, timeTagMode: .ignore)
         
         final actor Receiver {
             var messages: [(message: OSCMessage, host: String, port: UInt16)] = []
@@ -69,7 +69,7 @@ struct OSCTCPServer_Tests {
     @MainActor @Test
     func stressTestOffline() async throws {
         // we aren't starting the server, so passing port 0 has no meaningful effect
-        let server = OSCTCPServer(localPort: 0, timeTagMode: .ignore)
+        let server = OSCTCPServer(port: 0, timeTagMode: .ignore)
         
         final actor Receiver {
             var messages: [OSCMessage] = []
@@ -120,7 +120,7 @@ struct OSCTCPServer_Tests {
         // setup server
         
         // binding to port 0 will cause the system to assign a random available port
-        let server = OSCTCPServer(localPort: 0, timeTagMode: .ignore, framingMode: framingMode)
+        let server = OSCTCPServer(port: 0, timeTagMode: .ignore, framingMode: framingMode)
         try await Task.sleep(seconds: isFlakey ? 5.0 : 0.1)
         
         try server.start()
@@ -221,7 +221,7 @@ struct OSCTCPServer_Tests {
         // setup server
         
         // binding to port 0 will cause the system to assign a random available port
-        let server = OSCTCPServer(localPort: 0, timeTagMode: .ignore, framingMode: .osc1_1)
+        let server = OSCTCPServer(port: 0, timeTagMode: .ignore, framingMode: .osc1_1)
         try await Task.sleep(seconds: isFlakey ? 5.0 : 0.1)
         
         try server.start()

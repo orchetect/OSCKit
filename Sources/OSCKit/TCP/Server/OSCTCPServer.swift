@@ -46,7 +46,7 @@ public final class OSCTCPServer {
     /// > The connection may be closed at any time by calling ``stop()`` and then restarted again as needed.
     ///
     /// - Parameters:
-    ///   - localPort: Local network port to listen for inbound connections.
+    ///   - port: Local network port to listen for inbound connections.
     ///   - interface: Optionally specify a network interface to restrict connections to.
     ///   - timeTagMode: OSC TimeTag mode. Default is recommended.
     ///   - framingMode: TCP framing mode. Both server and client must use the same framing mode. (Default is recommended.)
@@ -54,14 +54,14 @@ public final class OSCTCPServer {
     ///     handler callback closure. If `nil`, a dedicated internal background queue will be used.
     ///   - handler: Handler to call when OSC bundles or messages are received.
     public init(
-        localPort: UInt16,
+        port: UInt16,
         interface: String? = nil,
         timeTagMode: OSCTimeTagMode = .ignore,
         framingMode: OSCTCPFramingMode = .osc1_1,
         queue: DispatchQueue? = nil,
         handler: OSCHandlerBlock? = nil
     ) {
-        self.localPort = localPort
+        self.localPort = port
         self.interface = interface
         self.timeTagMode = timeTagMode
         self.framingMode = framingMode
