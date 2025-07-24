@@ -9,7 +9,7 @@ let oscClient = OSCTCPClient(
     remoteHost: "192.168.1.20",
     remotePort: 3032,
     framingMode: tcpFramingMode
-) { [weak self] message, timeTag, hostname, port in
+) { [weak self] message, timeTag, host, port in
     print("Received \(message) from server")
 }
 ```

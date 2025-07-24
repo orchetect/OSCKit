@@ -30,7 +30,7 @@ struct ContentView: View {
         
         oscManager.send(
             .message("/test", values: [customType]),
-            to: "localhost", // destination IP address or hostname
+            to: "localhost", // destination IP address or host
             port: 8000 // standard OSC port but can be changed
         )
     }

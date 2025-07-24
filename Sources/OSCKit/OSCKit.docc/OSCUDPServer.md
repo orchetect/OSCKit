@@ -6,7 +6,7 @@
 let oscServer: OSCUDPServer
 
 init() {
-    oscServer = OSCUDPServer(port: 8000) { [weak self] message, timeTag, hostname, port in
+    oscServer = OSCUDPServer(port: 8000) { [weak self] message, timeTag, host, port in
         print("Received \(message)")
     }
 }

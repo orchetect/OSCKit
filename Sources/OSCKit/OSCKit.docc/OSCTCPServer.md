@@ -8,8 +8,8 @@ let tcpFramingMode: OSCTCPFramingMode = .osc1_1
 let oscServer = OSCTCPServer(
     localPort: 3032,
     framingMode: tcpFramingMode
-) { [weak self] message, timeTag, hostname, port in
-    print("Received \(message) from client \(hostname)")
+) { [weak self] message, timeTag, client, port in
+    print("Received \(message) from client \(client)")
 }
 ```
 

@@ -13,7 +13,7 @@ Both ``OSCUDPServer`` and ``OSCUDPSocket`` are capable of receiving messages usi
 If not already set during initialization, you may set the receiver handler using the ``OSCUDPServer/setHandler(_:)`` or ``OSCUDPServer/setHandler(_:)`` method.
 
 ```swift
-oscServer.setHandler { [weak self] message, timeTag, hostname, port in
+oscServer.setHandler { [weak self] message, timeTag, host, port in
     do {
         try self?.handle(message: message, host: host, port: port)
     } catch {
@@ -41,7 +41,33 @@ Note that as per the OSC 1.1 proposal, this behavior has largely been deprecated
 
 Both ``OSCTCPClient`` and ``OSCTCPServer`` are capable of receiving messages using the same API.
 
+If not already set during initialization, you may set the receiver handler using the ``OSCUDPServer/setHandler(_:)`` or ``OSCUDPServer/setHandler(_:)`` method.
 
+```swift
+oscServer.setHandler { [weak self] message, timeTag, host, port in
+do {
+try self?.handle(message: message, host: host, port: port)
+} catch {
+print(error)
+}
+}
+
+private func handle(message: OSCMessage, host: String, port: UInt16) throws {
+// handle received messages here
+}
+```
+
+For a client, connect to the remote host:
+
+```swift
+try oscClient.connect()
+```
+
+For a server, bind to the local network port and begin listening for inbound connections:
+
+```swift
+try oscServer.start()
+```
 
 ## Topics
 

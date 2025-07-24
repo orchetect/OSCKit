@@ -28,7 +28,7 @@ struct ContentView: View {
     private func sendTestOSCMessage() {
         oscManager.send(
             .message("/some/address/method", values: ["Test string", 123]),
-            to: "localhost", // destination IP address or hostname
+            to: "localhost", // destination IP address or host
             port: 8000 // standard OSC port but can be changed
         )
     }
