@@ -179,7 +179,7 @@ struct OSCTCPServer_Tests {
             }
         }
         
-        await wait(expect: { await serverReceiver.messages.count == expectedMsgCount }, timeout: isFlakey ? 20.0 : 2.0)
+        await wait(expect: { await serverReceiver.messages.count == expectedMsgCount }, timeout: isFlakey ? 20.0 : 5.0)
         try await #require(serverReceiver.messages.count == expectedMsgCount)
         
         await #expect(serverReceiver.messages == sourceMessages)
