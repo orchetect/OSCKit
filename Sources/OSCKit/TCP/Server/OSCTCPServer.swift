@@ -96,9 +96,9 @@ extension OSCTCPServer {
         localPort = tcpSocket.localPort
     }
     
-    /// Close the connection, if any, and stop listening for inbound connections.
+    /// Closes any open client connections and stops listening for inbound connection requests.
     public func stop() {
-        // disconnect clients
+        // disconnect all clients
         tcpDelegate.closeClients()
         
         // close server
@@ -190,6 +190,11 @@ extension OSCTCPServer {
                     port: element.value.remotePort
                 )
             }
+    }
+    
+    /// Disconnect a connected client from the server.
+    public func disconnectClient(clientID: OSCTCPClientSessionID) {
+        tcpDelegate.closeClient(clientID: clientID)
     }
 }
 

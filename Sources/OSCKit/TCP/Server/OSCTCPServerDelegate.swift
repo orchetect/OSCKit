@@ -113,8 +113,15 @@ extension OSCTCPServerDelegate: GCDAsyncSocketDelegate {
 extension OSCTCPServerDelegate {
     /// Close connections for any connected clients and remove them from the list of connected clients.
     func closeClients() {
-        clients.forEach { $0.value.close() }
-        clients.removeAll()
+        for clientID in clients.keys {
+            closeClient(clientID: clientID)
+        }
+    }
+    
+    /// Close a connection and remove it from the list of connected clients.
+    func closeClient(clientID: Int) {
+        clients[clientID]?.close()
+        clients[clientID] = nil
     }
 }
 
