@@ -68,7 +68,7 @@ extension _OSCTCPHandlerProtocol {
                     
                     continue
                 }
-                self._handle(payload: oscObject, remoteHost: remoteHost, remotePort: remotePort)
+                _handle(payload: oscObject, remoteHost: remoteHost, remotePort: remotePort)
             } catch {
                 #if DEBUG
                 print(error.localizedDescription)
