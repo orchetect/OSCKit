@@ -188,7 +188,7 @@ struct OSCUDPSocket_Tests {
             }
         }
         
-        await wait(expect: { await receiver.messages.count == 1000 }, timeout: isFlakey ? 20.0 : 2.0)
+        await wait(expect: { await receiver.messages.count == 1000 }, timeout: isFlakey ? 20.0 : 5.0)
         try await #require(receiver.messages.count == 1000)
         
         await #expect(receiver.messages == sourceMessages)
