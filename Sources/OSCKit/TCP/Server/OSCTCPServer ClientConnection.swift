@@ -53,13 +53,13 @@ extension OSCTCPServer.ClientConnection {
 
 // MARK: - Communication
 
-extension OSCTCPServer.ClientConnection: _OSCTCPClientProtocol {
-    func send(_ oscObject: any OSCKitCore.OSCObject) throws {
+extension OSCTCPServer.ClientConnection: _OSCTCPSendProtocol {
+    func send(_ oscObject: any OSCObject) throws {
         try _send(oscObject, tag: tcpSocketTag)
     }
 }
 
-extension OSCTCPServer.ClientConnection: _OSCTCPServerProtocol {
+extension OSCTCPServer.ClientConnection: _OSCTCPHandlerProtocol {
     var queue: DispatchQueue {
         tcpSocket.delegateQueue ?? .global()
     }
@@ -73,7 +73,7 @@ extension OSCTCPServer.ClientConnection: _OSCTCPServerProtocol {
     }
 }
 
-// Shared between _OSCTCPClientProtocol and _OSCTCPServerProtocol
+// Shared between _OSCTCPSendProtocol and _OSCTCPHandlerProtocol
 extension OSCTCPServer.ClientConnection {
     typealias Notification = OSCTCPServer.Notification
 }

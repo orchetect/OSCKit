@@ -1,5 +1,5 @@
 //
-//  OSCTCPServerProtocol.swift
+//  OSCTCPHandlerProtocol.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
@@ -9,18 +9,13 @@
 @preconcurrency import CocoaAsyncSocket
 import Foundation
 
-public protocol OSCTCPServerProtocol {
-    associatedtype Notification
-    typealias NotificationHandlerBlock = (_ notification: Notification) -> Void
-}
-
 /// Internal protocol that TCP-based OSC classes adopt in order to handle incoming OSC data.
-protocol _OSCTCPServerProtocol: _OSCHandlerProtocol, OSCTCPServerProtocol {
+protocol _OSCTCPHandlerProtocol: _OSCHandlerProtocol {
     var tcpSocket: GCDAsyncSocket { get }
     var framingMode: OSCTCPFramingMode { get }
 }
 
-extension _OSCTCPServerProtocol {
+extension _OSCTCPHandlerProtocol {
     func _handle(receivedData data: Data, on sock: GCDAsyncSocket, tag: Int) {
         // This routine must accommodate more than one consecutive packet contained in the data
         // which may happen when multiple packets are sent rapidly from a client.

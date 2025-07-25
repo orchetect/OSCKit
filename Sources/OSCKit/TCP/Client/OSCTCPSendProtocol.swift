@@ -1,5 +1,5 @@
 //
-//  OSCTCPClientProtocol.swift
+//  OSCTCPSendProtocol.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
@@ -10,18 +10,13 @@
 import OSCKitCore
 import Foundation
 
-public protocol OSCTCPClientProtocol {
-    associatedtype Notification
-    typealias NotificationHandlerBlock = (_ notification: Notification) -> Void
-}
-
 /// Internal protocol that TCP-based OSC classes adopt in order to send OSC packets.
-protocol _OSCTCPClientProtocol: AnyObject, OSCTCPClientProtocol where Self: Sendable {
+protocol _OSCTCPSendProtocol: AnyObject where Self: Sendable {
     var tcpSocket: GCDAsyncSocket { get }
     var framingMode: OSCTCPFramingMode { get }
 }
 
-extension _OSCTCPClientProtocol {
+extension _OSCTCPSendProtocol {
     /// Send an OSC packet.
     ///
     /// - Parameters:

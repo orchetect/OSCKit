@@ -28,6 +28,7 @@ public final class OSCTCPClient {
     let framingMode: OSCTCPFramingMode
     var receiveHandler: OSCHandlerBlock?
     var notificationHandler: NotificationHandlerBlock?
+    public typealias NotificationHandlerBlock = (_ notification: Notification) -> Void
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
     public var timeTagMode: OSCTimeTagMode
@@ -113,7 +114,7 @@ extension OSCTCPClient {
 
 // MARK: - Communication
 
-extension OSCTCPClient: _OSCTCPClientProtocol {
+extension OSCTCPClient: _OSCTCPSendProtocol {
     /// Send an OSC bundle or message to the host.
     public func send(_ oscObject: any OSCObject) throws {
         try _send(oscObject, tag: 0)
@@ -132,7 +133,7 @@ extension OSCTCPClient: _OSCTCPGeneratesClientNotificationsProtocol {
     }
 }
 
-extension OSCTCPClient: _OSCTCPServerProtocol {
+extension OSCTCPClient: _OSCTCPHandlerProtocol {
     // provides implementation for dispatching incoming OSC data
 }
 
