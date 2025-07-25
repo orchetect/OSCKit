@@ -165,6 +165,7 @@ struct OSCUDPServer_Tests {
         }
         
         let client = OSCUDPClient()
+        try await Task.sleep(seconds: isFlakey ? 5.0 : 0.1)
         
         // use global thread to simulate internal network thread being a dedicated thread
         DispatchQueue.global().async {
