@@ -93,8 +93,15 @@ extension OSCTCPClient: @unchecked Sendable { } // TODO: unchecked
 
 extension OSCTCPClient {
     /// Connects to the remote host.
-    public func connect() throws {
-        try tcpSocket.connect(toHost: remoteHost, onPort: remotePort, viaInterface: interface, withTimeout: 10.0)
+    ///
+    /// - Parameter timeout: Optionally supply a timeout period in seconds. Passing `nil` will not employ a timeout.
+    public func connect(timeout: TimeInterval? = nil) throws {
+        try tcpSocket.connect(
+            toHost: remoteHost,
+            onPort: remotePort,
+            viaInterface: interface,
+            withTimeout: timeout ?? -1 // default to no timeout if nil
+        )
     }
     
     /// Close the connection, if any.
