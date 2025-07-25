@@ -18,7 +18,7 @@ struct OSCUDPSocket_Tests {
         try await confirmation(expectedCount: 0) { confirmation in
             let socket = OSCUDPSocket(remoteHost: "localhost")
             
-            socket.setHandler { _, _, _, _ in
+            socket.setReceiveHandler { _, _, _, _ in
                 confirmation()
             }
             
@@ -46,7 +46,7 @@ struct OSCUDPSocket_Tests {
         
         let receiver = Receiver()
         
-        server.setHandler { message, timeTag, host, port in
+        server.setReceiveHandler { message, timeTag, host, port in
             // print("Handler received:", message.addressPattern)
             Task { @MainActor in
                 await receiver.received(message, host: host, port: port)
@@ -105,7 +105,7 @@ struct OSCUDPSocket_Tests {
         
         let receiver = Receiver()
         
-        socket.setHandler { message, timeTag, host, port in
+        socket.setReceiveHandler { message, timeTag, host, port in
             Task { @MainActor in
                 await receiver.received(message)
             }
@@ -164,7 +164,7 @@ struct OSCUDPSocket_Tests {
         
         let receiver = Receiver()
         
-        socket.setHandler { message, timeTag, host, port in
+        socket.setReceiveHandler { message, timeTag, host, port in
             Task { @MainActor in
                 await receiver.received(message)
             }

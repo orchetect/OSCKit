@@ -10,7 +10,7 @@ OSCKit offers a set of classes for both UDP and TCP network communication.
 
 Both ``OSCUDPServer`` and ``OSCUDPSocket`` are capable of receiving messages using the same API.
 
-If not already set during initialization, you may set the receiver handler using the ``OSCUDPServer/setHandler(_:)`` or ``OSCUDPServer/setHandler(_:)`` method.
+If not already set during initialization, you may set the receiver handler using the ``OSCUDPServer/setReceiveHandler(_:)`` or ``OSCUDPServer/setReceiveHandler(_:)`` method.
 
 ```swift
 oscServer.setReceiveHandler { [weak self] message, timeTag, host, port in
@@ -41,7 +41,7 @@ Note that as per the OSC 1.1 proposal, this behavior has largely been deprecated
 
 Both ``OSCTCPClient`` and ``OSCTCPServer`` are capable of receiving messages using the same API.
 
-If not already set during initialization, you may set the receiver handler using the ``OSCTCPClient/setHandler(_:)`` or ``OSCTCPServer/setHandler(_:)`` method.
+If not already set during initialization, you may set the receiver handler using the ``OSCTCPClient/setReceiveHandler(_:)`` or ``OSCTCPServer/setReceiveHandler(_:)`` method.
 
 ```swift
 oscServer.setReceiveHandler { [weak self] message, timeTag, host, port in

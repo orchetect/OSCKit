@@ -33,10 +33,10 @@ import Testing
         _ = oscServer.isStarted
         _ = oscServer.localPort
         // oscServer.localPort = 9000 // immutable actor
-        oscServer.setHandler { message, timeTag, host, port in
+        oscServer.setReceiveHandler { message, timeTag, host, port in
             print(message)
         }
-        // oscServer.handler = { _,_ in } // immutable actor, use `setHandler()` instead
+        // oscServer.receiveHandler = { _,_ in } // immutable actor, use `setReceiveHandler()` instead
         
         _ = OSCUDPServer(port: 8006) { message, timeTag, host, port in
             print(message)
@@ -59,10 +59,10 @@ import Testing
         // oscSocket.remotePort = 8000 // immutable actor
         _ = oscSocket.isIPv4BroadcastEnabled
         // oscSocket.isIPv4BroadcastEnabled = true // immutable actor
-        oscSocket.setHandler { message, timeTag, host, port in
+        oscSocket.setReceiveHandler { message, timeTag, host, port in
             print(message)
         }
-        // oscSocket.handler = { _,_ in } // immutable actor, use `setHandler()` instead
+        // oscSocket.receiveHandler = { _,_ in } // immutable actor, use `setReceiveHandler()` instead
         
         _ = OSCUDPSocket(localPort: 8009)
         _ = OSCUDPSocket(localPort: 8010) { message, timeTag, host, port in

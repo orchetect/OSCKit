@@ -15,7 +15,7 @@ import Testing
         try await confirmation(expectedCount: 1) { confirmation in
             let server = OSCUDPServer(timeTagMode: .osc1_0)
             
-            server.setHandler { _, _, _, _ in
+            server.setReceiveHandler { _, _, _, _ in
                 confirmation()
             }
             
@@ -34,7 +34,7 @@ import Testing
         try await confirmation(expectedCount: 1) { confirmation in
             let server = OSCUDPServer(timeTagMode: .osc1_0)
             
-            server.setHandler { _, _, _, _ in
+            server.setReceiveHandler { _, _, _, _ in
                 confirmation()
             }
             
@@ -54,7 +54,7 @@ import Testing
         try await confirmation(expectedCount: 1) { confirmation in
             let server = OSCUDPServer(timeTagMode: .osc1_0)
             
-            server.setHandler { _, _, _, _ in
+            server.setReceiveHandler { _, _, _, _ in
                 confirmation()
             }
             
@@ -75,7 +75,7 @@ import Testing
         try await confirmation(expectedCount: 0) { confirmation in
             let server = OSCUDPServer(timeTagMode: .osc1_0)
             
-            server.setHandler { _, _, _, _ in
+            server.setReceiveHandler { _, _, _, _ in
                 confirmation()
             }
             
@@ -97,7 +97,7 @@ import Testing
         try await confirmation(expectedCount: 1) { confirmation in
             let server = OSCUDPServer(timeTagMode: .osc1_0)
             
-            server.setHandler { _, _, _, _ in
+            server.setReceiveHandler { _, _, _, _ in
                 confirmation()
             }
             
@@ -118,7 +118,7 @@ import Testing
         try await confirmation(expectedCount: 1) { confirmation in
             let server = OSCUDPServer(timeTagMode: .osc1_0)
             
-            server.setHandler { _, _, _, _ in
+            server.setReceiveHandler { _, _, _, _ in
                 confirmation()
             }
             

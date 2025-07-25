@@ -18,7 +18,7 @@ struct OSCUDPServer_Tests {
         try await confirmation(expectedCount: 0) { confirmation in
             let server = OSCUDPServer()
             
-            server.setHandler { _, _, _, _ in
+            server.setReceiveHandler { _, _, _, _ in
                 confirmation()
             }
             
@@ -46,7 +46,7 @@ struct OSCUDPServer_Tests {
         
         let receiver = Receiver()
         
-        server.setHandler { message, timeTag, host, port in
+        server.setReceiveHandler { message, timeTag, host, port in
             // print("Handler received:", message.addressPattern)
             Task { @MainActor in
                 await receiver.received(message, host: host, port: port)
@@ -96,7 +96,7 @@ struct OSCUDPServer_Tests {
         
         let receiver = Receiver()
         
-        server.setHandler { message, timeTag, host, port in
+        server.setReceiveHandler { message, timeTag, host, port in
             Task { @MainActor in
                 await receiver.received(message)
             }
@@ -147,7 +147,7 @@ struct OSCUDPServer_Tests {
         
         let receiver = Receiver()
         
-        server.setHandler { message, timeTag, host, port in
+        server.setReceiveHandler { message, timeTag, host, port in
             Task { @MainActor in
                 await receiver.received(message)
             }

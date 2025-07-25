@@ -29,7 +29,7 @@ struct OSCTCPServer_Tests {
         
         let receiver = Receiver()
         
-        server.setHandler { message, timeTag, host, port in
+        server.setReceiveHandler { message, timeTag, host, port in
             // print("Handler received:", message.addressPattern)
             Task { @MainActor in
                 await receiver.received(message, host: host, port: port)
@@ -80,7 +80,7 @@ struct OSCTCPServer_Tests {
         
         let receiver = Receiver()
         
-        server.setHandler { message, timeTag, host, port in
+        server.setReceiveHandler { message, timeTag, host, port in
             Task { @MainActor in
                 await receiver.received(message)
             }
@@ -164,7 +164,7 @@ struct OSCTCPServer_Tests {
         
         let serverReceiver = Receiver()
         
-        server.setHandler { message, timeTag, host, port in
+        server.setReceiveHandler { message, timeTag, host, port in
             Task { @MainActor in
                 await serverReceiver.received(message)
             }
@@ -188,7 +188,7 @@ struct OSCTCPServer_Tests {
         
         let clientReceiver = Receiver()
         
-        client.setHandler { message, timeTag, host, port in
+        client.setReceiveHandler { message, timeTag, host, port in
             Task { @MainActor in
                 await clientReceiver.received(message)
             }

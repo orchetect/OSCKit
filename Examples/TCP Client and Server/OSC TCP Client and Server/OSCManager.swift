@@ -30,7 +30,7 @@ extension OSCManager {
         // setup server
         let newServer = OSCTCPServer(port: serverPort, framingMode: framingMode)
         server = newServer
-        newServer.setHandler { /* [weak self] */ message, timeTag, host, port in
+        newServer.setReceiveHandler { /* [weak self] */ message, timeTag, host, port in
             print("From client: \(message) with time tag: \(timeTag) from: \(host):\(port)")
         }
         do {
@@ -45,7 +45,7 @@ extension OSCManager {
     func connectClient() {
         let newClient = OSCTCPClient(remoteHost: clientHost, remotePort: clientPort, framingMode: framingMode)
         client = newClient
-        newClient.setHandler { /* [weak self] */ message, timeTag, host, port in
+        newClient.setReceiveHandler { /* [weak self] */ message, timeTag, host, port in
             print("From server: \(message) with time tag: \(timeTag) from: \(host):\(port)")
         }
         

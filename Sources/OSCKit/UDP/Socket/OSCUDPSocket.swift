@@ -105,7 +105,7 @@ public final class OSCUDPSocket {
     ///     See ``isIPv4BroadcastEnabled`` for more details.
     ///   - queue: Optionally supply a custom dispatch queue for receiving OSC packets and dispatching the
     ///     handler callback closure. If `nil`, a dedicated internal background queue will be used.
-    ///   - handler: Handler to call when OSC bundles or messages are received.
+    ///   - receiveHandler: Handler to call when OSC bundles or messages are received.
     public init(
         localPort: UInt16? = nil,
         remoteHost: String? = nil,
@@ -203,7 +203,7 @@ extension OSCUDPSocket: _OSCServerProtocol { }
 extension OSCUDPSocket {
     /// Set the receive handler closure.
     /// This closure will be called when OSC bundles or messages are received.
-    public func setHandler(
+    public func setReceiveHandler(
         _ handler: OSCHandlerBlock?
     ) {
         queue.async {

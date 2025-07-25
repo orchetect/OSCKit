@@ -27,7 +27,7 @@ extension OSCManager {
         do { try client.start() } catch { print(error) }
         
         // setup server
-        server.setHandler { [weak self] message, timeTag, host, port in
+        server.setReceiveHandler { [weak self] message, timeTag, host, port in
             do {
                 try self?.receiver.handle(message: message, timeTag: timeTag, host: host, port: port)
             } catch {

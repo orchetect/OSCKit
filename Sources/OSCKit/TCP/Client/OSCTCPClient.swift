@@ -128,7 +128,7 @@ extension OSCTCPClient: _OSCTCPServerProtocol {
 extension OSCTCPClient {
     /// Set the receive handler closure.
     /// This closure will be called when OSC bundles or messages are received.
-    public func setHandler(
+    public func setReceiveHandler(
         _ handler: OSCHandlerBlock?
     ) {
         queue.async {
