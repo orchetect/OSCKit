@@ -31,6 +31,9 @@ public final class OSCUDPClient {
     }
     private var _localPort: UInt16?
     
+    /// Network interface to restrict connections to.
+    public private(set) var interface: String?
+    
     /// Enable local UDP port reuse by other processes.
     /// This property must be set prior to calling ``start()`` in order to take effect.
     ///
@@ -105,18 +108,19 @@ public final class OSCUDPClient {
     ///
     /// - Parameters:
     ///   - localPort: Local UDP port used by the client from which to send OSC packets.
+    ///   - interface: Optionally specify a network interface for which to constrain communication.
     ///   - isPortReuseEnabled: Enable local UDP port reuse by other processes.
     ///   - isIPv4BroadcastEnabled: Enable sending IPv4 broadcast messages from the socket.
     public convenience init(
         localPort: UInt16,
+        interface: String? = nil,
         isPortReuseEnabled: Bool = false,
         isIPv4BroadcastEnabled: Bool = false
     ) {
         self.init()
         
-        // TODO: allow specifying interface?
-        
         _localPort = localPort
+        self.interface = interface
         self.isPortReuseEnabled = isPortReuseEnabled
         self.isIPv4BroadcastEnabled = isIPv4BroadcastEnabled
     }
@@ -141,7 +145,10 @@ extension OSCUDPClient {
         
         try udpSocket.enableReusePort(isPortReuseEnabled)
         try udpSocket.enableBroadcast(isIPv4BroadcastEnabled)
-        try udpSocket.bind(toPort: _localPort ?? 0) // 0 causes system to assign random open port
+        try udpSocket.bind(
+            toPort: _localPort ?? 0, // 0 causes system to assign random open port
+            interface: interface
+        )
         
         isStarted = true
     }
