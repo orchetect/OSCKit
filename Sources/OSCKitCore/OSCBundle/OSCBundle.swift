@@ -132,7 +132,7 @@ extension OSCBundle: CustomStringConvertible {
 // MARK: - Header
 
 extension OSCBundle {
-    /// Constant caching an OSCBundle header
+    /// Constant caching an OSCBundle header.
     public static let header: Data = OSCMessageEncoder.fourNullBytePadded(
         "#bundle".toData(using: .nonLossyASCII) ?? Data()
     )
