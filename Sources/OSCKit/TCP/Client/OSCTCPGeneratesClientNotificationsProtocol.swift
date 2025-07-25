@@ -4,14 +4,16 @@
 //  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
+#if !os(watchOS)
+
+@preconcurrency import CocoaAsyncSocket
+
 protocol _OSCTCPGeneratesClientNotificationsProtocol {
-    func _generateConnectedNotification(
-        remoteHost: String,
-        remotePort: UInt16
-    )
+    func _generateConnectedNotification()
     
     func _generateDisconnectedNotification(
-        remoteHost: String,
-        remotePort: UInt16
+        error: GCDAsyncSocketError?
     )
 }
+
+#endif

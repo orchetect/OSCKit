@@ -28,10 +28,7 @@ extension OSCTCPClientDelegate: GCDAsyncSocketDelegate {
         oscServer?.tcpSocket.readData(withTimeout: -1, tag: 0)
         
         // send notification
-        oscServer?._generateConnectedNotification(
-            remoteHost: sock.connectedHost ?? "",
-            remotePort: sock.connectedPort
-        )
+        oscServer?._generateConnectedNotification()
     }
     
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
@@ -44,10 +41,18 @@ extension OSCTCPClientDelegate: GCDAsyncSocketDelegate {
     }
     
     func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: (any Error)?) {
+        // errors should only ever be of type `GCDAsyncSocketError`
+        var error = err as? GCDAsyncSocketError
+        // CocoaAsyncSocket populates `err` with GCDAsyncSocketError.closedError
+        // whenever the remote peer closes its connection intentionally,
+        // so we'll interpret that as a non-error condition
+        if error?.code == GCDAsyncSocketError.closedError {
+            error = nil
+        }
+        
         // send notification
         oscServer?._generateDisconnectedNotification(
-            remoteHost: sock.connectedHost ?? "",
-            remotePort: sock.connectedPort
+            error: error
         )
     }
 }

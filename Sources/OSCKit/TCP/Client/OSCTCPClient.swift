@@ -28,7 +28,7 @@ public final class OSCTCPClient {
     let framingMode: OSCTCPFramingMode
     var receiveHandler: OSCHandlerBlock?
     var notificationHandler: NotificationHandlerBlock?
-    public typealias NotificationHandlerBlock = (_ notification: Notification) -> Void
+    public typealias NotificationHandlerBlock = @Sendable (_ notification: Notification) -> Void
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
     public var timeTagMode: OSCTimeTagMode
@@ -96,13 +96,14 @@ extension OSCTCPClient: @unchecked Sendable { } // TODO: unchecked
 extension OSCTCPClient {
     /// Connects to the remote host.
     ///
-    /// - Parameter timeout: Optionally supply a timeout period in seconds. Passing `nil` will not employ a timeout.
-    public func connect(timeout: TimeInterval? = nil) throws {
+    /// - Parameters:
+    ///   - timeout: Supply a timeout period in seconds.
+    public func connect(timeout: TimeInterval = 5.0) throws {
         try tcpSocket.connect(
             toHost: remoteHost,
             onPort: remotePort,
             viaInterface: interface,
-            withTimeout: timeout ?? -1 // default to no timeout if nil
+            withTimeout: max(1.0, timeout) // negative values mean indefinite (no timeout) which is a bit dangerous
         )
     }
     
@@ -122,13 +123,13 @@ extension OSCTCPClient: _OSCTCPSendProtocol {
 }
 
 extension OSCTCPClient: _OSCTCPGeneratesClientNotificationsProtocol {
-    func _generateConnectedNotification(remoteHost: String, remotePort: UInt16) {
-        let notif: Notification = .connected(remoteHost: remoteHost, remotePort: remotePort)
+    func _generateConnectedNotification() {
+        let notif: Notification = .connected
         notificationHandler?(notif)
     }
     
-    func _generateDisconnectedNotification(remoteHost: String, remotePort: UInt16) {
-        let notif: Notification = .disconnected(remoteHost: remoteHost, remotePort: remotePort)
+    func _generateDisconnectedNotification(error: GCDAsyncSocketError?) {
+        let notif: Notification = .disconnected(error: error)
         notificationHandler?(notif)
     }
 }

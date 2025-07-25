@@ -29,7 +29,7 @@ public final class OSCTCPServer {
     let framingMode: OSCTCPFramingMode
     var receiveHandler: OSCHandlerBlock?
     var notificationHandler: NotificationHandlerBlock?
-    public typealias NotificationHandlerBlock = (_ notification: Notification) -> Void
+    public typealias NotificationHandlerBlock = @Sendable (_ notification: Notification) -> Void
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
     public var timeTagMode: OSCTimeTagMode
@@ -144,8 +144,8 @@ extension OSCTCPServer: _OSCTCPGeneratesServerNotificationsProtocol {
         notificationHandler?(notif)
     }
     
-    func _generateDisconnectedNotification(remoteHost: String, remotePort: UInt16, clientID: OSCTCPClientSessionID) {
-        let notif: Notification = .disconnected(remoteHost: remoteHost, remotePort: remotePort, clientID: clientID)
+    func _generateDisconnectedNotification(remoteHost: String, remotePort: UInt16, clientID: OSCTCPClientSessionID, error: GCDAsyncSocketError?) {
+        let notif: Notification = .disconnected(remoteHost: remoteHost, remotePort: remotePort, clientID: clientID, error: error)
         notificationHandler?(notif)
     }
 }
@@ -184,8 +184,8 @@ extension OSCTCPServer {
         tcpDelegate.clients
             .reduce(into: [:] as [OSCTCPClientSessionID: (host: String, port: UInt16)]) { base, element in
                 base[element.key] = (
-                    host: element.value.tcpSocket.connectedHost ?? "",
-                    port: element.value.tcpSocket.connectedPort
+                    host: element.value.remoteHost,
+                    port: element.value.remotePort
                 )
             }
     }

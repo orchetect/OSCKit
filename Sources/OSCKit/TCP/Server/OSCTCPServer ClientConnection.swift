@@ -15,6 +15,8 @@ extension OSCTCPServer {
     final class ClientConnection {
         weak var delegate: OSCTCPServerDelegate?
         let tcpSocket: GCDAsyncSocket
+        let remoteHost: String // cached, since GCDAsyncSocket resets it upon disconnection
+        let remotePort: UInt16 // cached, since GCDAsyncSocket resets it upon disconnection
         let tcpDelegate: OSCTCPClientDelegate
         let tcpSocketTag: Int
         let framingMode: OSCTCPFramingMode
@@ -26,6 +28,8 @@ extension OSCTCPServer {
             delegate: OSCTCPServerDelegate?
         ) {
             self.tcpSocket = tcpSocket
+            remoteHost = tcpSocket.connectedHost ?? ""
+            remotePort = tcpSocket.connectedPort
             self.tcpSocketTag = tcpSocketTag
             self.framingMode = framingMode
             self.delegate = delegate
@@ -74,7 +78,10 @@ extension OSCTCPServer.ClientConnection: _OSCTCPHandlerProtocol {
 }
 
 extension OSCTCPServer.ClientConnection: _OSCTCPGeneratesClientNotificationsProtocol {
-    func _generateConnectedNotification(remoteHost: String, remotePort: UInt16) {
+    // note that this is never called because when a remote connection closes, its socket does not fire
+    // `socketDidDisconnect(...)` in GCDAsyncSocketDelegate, but we have to implement this due to
+    // other protocol requirements
+    func _generateConnectedNotification() {
         delegate?.oscServer?._generateConnectedNotification(
             remoteHost: remoteHost,
             remotePort: remotePort,
@@ -82,11 +89,15 @@ extension OSCTCPServer.ClientConnection: _OSCTCPGeneratesClientNotificationsProt
         )
     }
     
-    func _generateDisconnectedNotification(remoteHost: String, remotePort: UInt16) {
+    // note that this is never called because when a remote connection closes, its socket does not fire
+    // `socketDidDisconnect(...)` in GCDAsyncSocketDelegate, but we have to implement this due to
+    // other protocol requirements
+    func _generateDisconnectedNotification(error: GCDAsyncSocketError?) {
         delegate?.oscServer?._generateDisconnectedNotification(
             remoteHost: remoteHost,
             remotePort: remotePort,
-            clientID: tcpSocketTag
+            clientID: tcpSocketTag,
+            error: error
         )
     }
 }

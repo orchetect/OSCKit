@@ -50,8 +50,8 @@ extension OSCTCPServerDelegate: GCDAsyncSocketDelegate {
         
         // send notification
         oscServer?._generateConnectedNotification(
-            remoteHost: sock.connectedHost ?? "",
-            remotePort: sock.connectedPort,
+            remoteHost: newSocket.connectedHost ?? "",
+            remotePort: newSocket.connectedPort,
             clientID: clientID
         )
     }
@@ -68,22 +68,41 @@ extension OSCTCPServerDelegate: GCDAsyncSocketDelegate {
     func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: (any Error)?) {
         // remove connection from connections dictionary
         
-        // in almost all cases, this should only return one result and not more than one.
-        let disconnectedClients = clients
+        // in almost all cases, this should only return one client,
+        // however for sake of over-engineering, we'll remove all matches
+        let disconnectedClients: [(clientID: Int, host: String, port: UInt16)] = clients
             .filter { $0.value.tcpSocket == sock }
-        let clientIDs = disconnectedClients.keys
+            .map {
+                (
+                    clientID: $0.key,
+                    host: $0.value.remoteHost,
+                    port: $0.value.remotePort
+                )
+            }
         
-        for (sockID, socket) in disconnectedClients {
-            socket.delegate = nil
-            clients[sockID] = nil
+        for (clientID, _, _) in disconnectedClients {
+            clients[clientID]?.delegate = nil
+            clients[clientID] = nil
+        }
+        
+        // errors should only ever be of type `GCDAsyncSocketError`
+        var error = err as? GCDAsyncSocketError
+        // CocoaAsyncSocket populates `err` with GCDAsyncSocketError.closedError
+        // whenever the remote peer closes its connection intentionally,
+        // so we'll interpret that as a non-error condition
+        if error?.code == GCDAsyncSocketError.closedError {
+            error = nil
         }
         
         // send notification
-        for clientID in clientIDs {
+        // note that sock.connectedHost will be nil, and sock.connectedPort will be 0
+        // so we need to grab host/port from the local clients info
+        for (clientID, host, port) in disconnectedClients {
             oscServer?._generateDisconnectedNotification(
-                remoteHost: sock.connectedHost ?? "",
-                remotePort: sock.connectedPort,
-                clientID: clientID
+                remoteHost: host,
+                remotePort: port,
+                clientID: clientID,
+                error: error
             )
         }
     }
