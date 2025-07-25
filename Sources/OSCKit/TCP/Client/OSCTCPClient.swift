@@ -48,7 +48,7 @@ public final class OSCTCPClient {
     /// 
     /// > Note:
     /// >
-    /// > Call ``connect()`` to connect to the remote host in order to begin sending messages.
+    /// > Call ``connect(timeout:)`` to connect to the remote host in order to begin sending messages.
     /// > The connection may be closed at any time by calling ``close()`` and then reconnected again as needed.
     ///
     /// - Parameters:
