@@ -26,7 +26,7 @@ public final class OSCTCPClient {
     let tcpDelegate: OSCTCPClientDelegate
     let queue: DispatchQueue
     let framingMode: OSCTCPFramingMode
-    var handler: OSCHandlerBlock?
+    var receiveHandler: OSCHandlerBlock?
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
     public var timeTagMode: OSCTimeTagMode
@@ -58,7 +58,7 @@ public final class OSCTCPClient {
     ///   - framingMode: TCP framing mode. Both server and client must use the same framing mode. (Default is recommended.)
     ///   - queue: Optionally supply a custom dispatch queue for receiving OSC packets and dispatching the
     ///     handler callback closure. If `nil`, a dedicated internal background queue will be used.
-    ///   - handler: Handler to call when OSC bundles or messages are received.
+    ///   - receiveHandler: Handler to call when OSC bundles or messages are received.
     public init(
         remoteHost: String,
         remotePort: UInt16,
@@ -66,7 +66,7 @@ public final class OSCTCPClient {
         timeTagMode: OSCTimeTagMode = .ignore,
         framingMode: OSCTCPFramingMode = .osc1_1,
         queue: DispatchQueue? = nil,
-        handler: OSCHandlerBlock? = nil
+        receiveHandler: OSCHandlerBlock? = nil
     ) {
         self.remoteHost = remoteHost
         self.remotePort = remotePort
@@ -75,7 +75,7 @@ public final class OSCTCPClient {
         self.framingMode = framingMode
         let queue = queue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCTCPClient.queue")
         self.queue = queue
-        self.handler = handler
+        self.receiveHandler = receiveHandler
         
         tcpDelegate = OSCTCPClientDelegate()
         tcpSocket = GCDAsyncSocket(delegate: tcpDelegate, delegateQueue: queue, socketQueue: nil)
@@ -132,7 +132,7 @@ extension OSCTCPClient {
         _ handler: OSCHandlerBlock?
     ) {
         queue.async {
-            self.handler = handler
+            self.receiveHandler = handler
         }
     }
 }

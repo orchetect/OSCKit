@@ -92,7 +92,7 @@ struct OSCUDPSocket_Tests {
             timeTagMode: .ignore,
             isIPv4BroadcastEnabled: false,
             queue: nil,
-            handler: nil
+            receiveHandler: nil
         )
         try socket.start()
         
@@ -146,7 +146,7 @@ struct OSCUDPSocket_Tests {
             timeTagMode: .ignore,
             isIPv4BroadcastEnabled: false,
             queue: nil,
-            handler: nil
+            receiveHandler: nil
         )
         try await Task.sleep(seconds: isFlakey ? 5.0 : 0.1)
         

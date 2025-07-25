@@ -34,7 +34,7 @@ extension OSCUDPServer {
             port: port,
             timeTagMode: timeTagMode,
             queue: receiveQueue,
-            handler: { message, timeTag, _, _ in handler(message, timeTag) }
+            receiveHandler: { message, timeTag, _, _ in handler(message, timeTag) }
         )
     }
     
@@ -76,7 +76,7 @@ extension OSCUDPSocket {
             timeTagMode: timeTagMode,
             isIPv4BroadcastEnabled: isIPv4BroadcastEnabled,
             queue: nil,
-            handler: { message, timeTag, _, _ in handler(message, timeTag) }
+            receiveHandler: { message, timeTag, _, _ in handler(message, timeTag) }
         )
     }
     
@@ -90,7 +90,7 @@ extension OSCUDPSocket {
     public func setHandler(
         _ handler: @escaping LegacyOSCHandlerBlock
     ) {
-        setHandler { message, timeTag, _, _ in handler(message, timeTag) }
+        setReceiveHandler { message, timeTag, _, _ in handler(message, timeTag) }
     }
 }
 

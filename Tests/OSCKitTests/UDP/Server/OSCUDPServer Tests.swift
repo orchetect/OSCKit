@@ -130,7 +130,7 @@ struct OSCUDPServer_Tests {
     func stressTestOnline() async throws {
         let isFlakey = !isSystemTimingStable()
         
-        let server = OSCUDPServer(port: 8888, timeTagMode: .ignore, queue: nil, handler: nil)
+        let server = OSCUDPServer(port: 8888, timeTagMode: .ignore, queue: nil, receiveHandler: nil)
         try await Task.sleep(seconds: isFlakey ? 5.0 : 0.1)
         
         try server.start()

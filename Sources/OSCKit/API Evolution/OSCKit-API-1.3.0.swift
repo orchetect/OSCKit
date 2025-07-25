@@ -22,7 +22,7 @@ public typealias OSCSocket = OSCUDPSocket
 
 extension OSCUDPServer {
     @_documentation(visibility: internal)
-    @available(*, deprecated, renamed: "init(port:timeTagMode:queue:handler:)")
+    @available(*, deprecated, renamed: "init(port:timeTagMode:queue:receiveHandler:)")
     @_disfavoredOverload
     public convenience init(
         port: UInt16 = 8000,
@@ -30,13 +30,22 @@ extension OSCUDPServer {
         receiveQueue: DispatchQueue? = nil,
         handler: OSCHandlerBlock? = nil
     ) {
-        self.init(port: port, timeTagMode: timeTagMode, queue: receiveQueue, handler: handler)
+        self.init(port: port, timeTagMode: timeTagMode, queue: receiveQueue, receiveHandler: handler)
+    }
+    
+    @_documentation(visibility: internal)
+    @available(*, deprecated, renamed: "setReceiveHandler")
+    @_disfavoredOverload
+    public func setHandler(
+        _ handler: OSCHandlerBlock?
+    ) {
+        setReceiveHandler(handler)
     }
 }
 
 extension OSCUDPSocket {
     @_documentation(visibility: internal)
-    @available(*, deprecated, renamed: "init(localPort:remoteHost:remotePort:timeTagMode:isIPv4BroadcastEnabled:queue:handler:)")
+    @available(*, deprecated, renamed: "init(localPort:remoteHost:remotePort:timeTagMode:isIPv4BroadcastEnabled:queue:receiveHandler:)")
     @_disfavoredOverload
     public convenience init(
         localPort: UInt16? = nil,
@@ -54,8 +63,17 @@ extension OSCUDPSocket {
             timeTagMode: timeTagMode,
             isIPv4BroadcastEnabled: isIPv4BroadcastEnabled,
             queue: receiveQueue,
-            handler: handler
+            receiveHandler: handler
         )
+    }
+    
+    @_documentation(visibility: internal)
+    @available(*, deprecated, renamed: "setReceiveHandler")
+    @_disfavoredOverload
+    public func setHandler(
+        _ handler: OSCHandlerBlock?
+    ) {
+        setReceiveHandler(handler)
     }
 }
 

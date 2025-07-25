@@ -27,7 +27,7 @@ public final class OSCTCPServer {
     let tcpDelegate: OSCTCPServerDelegate
     let queue: DispatchQueue
     let framingMode: OSCTCPFramingMode
-    var handler: OSCHandlerBlock?
+    var receiveHandler: OSCHandlerBlock?
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
     public var timeTagMode: OSCTimeTagMode
@@ -52,14 +52,14 @@ public final class OSCTCPServer {
     ///   - framingMode: TCP framing mode. Both server and client must use the same framing mode. (Default is recommended.)
     ///   - queue: Optionally supply a custom dispatch queue for receiving OSC packets and dispatching the
     ///     handler callback closure. If `nil`, a dedicated internal background queue will be used.
-    ///   - handler: Handler to call when OSC bundles or messages are received.
+    ///   - receiveHandler: Handler to call when OSC bundles or messages are received.
     public init(
         port: UInt16,
         interface: String? = nil,
         timeTagMode: OSCTimeTagMode = .ignore,
         framingMode: OSCTCPFramingMode = .osc1_1,
         queue: DispatchQueue? = nil,
-        handler: OSCHandlerBlock? = nil
+        receiveHandler: OSCHandlerBlock? = nil
     ) {
         self.localPort = port
         self.interface = interface
@@ -67,7 +67,7 @@ public final class OSCTCPServer {
         self.framingMode = framingMode
         let queue = queue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCTCPServer.queue")
         self.queue = queue
-        self.handler = handler
+        self.receiveHandler = receiveHandler
         
         tcpDelegate = OSCTCPServerDelegate(framingMode: framingMode)
         tcpSocket = GCDAsyncSocket(delegate: tcpDelegate, delegateQueue: queue, socketQueue: nil)
@@ -141,11 +141,11 @@ extension OSCTCPServer: _OSCTCPServerProtocol {
 extension OSCTCPServer {
     /// Set the receive handler closure.
     /// This closure will be called when OSC bundles or messages are received.
-    public func setHandler(
+    public func setReceiveHandler(
         _ handler: OSCHandlerBlock?
     ) {
         queue.async {
-            self.handler = handler
+            self.receiveHandler = handler
         }
     }
     

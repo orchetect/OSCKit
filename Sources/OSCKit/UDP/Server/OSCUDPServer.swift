@@ -19,7 +19,7 @@ public final class OSCUDPServer {
     let udpSocket: GCDAsyncUdpSocket
     let udpDelegate = OSCUDPServerDelegate()
     let queue: DispatchQueue
-    var handler: OSCHandlerBlock?
+    var receiveHandler: OSCHandlerBlock?
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
     public var timeTagMode: OSCTimeTagMode
@@ -45,12 +45,12 @@ public final class OSCUDPServer {
     ///   - timeTagMode: OSC TimeTag mode. (Default is recommended.)
     ///   - queue: Optionally supply a custom dispatch queue for receiving OSC packets and dispatching the
     ///     handler callback closure. If `nil`, a dedicated internal background queue will be used.
-    ///   - handler: Handler to call when OSC bundles or messages are received.
+    ///   - receiveHandler: Handler to call when OSC bundles or messages are received.
     public init(
         port: UInt16 = 8000,
         timeTagMode: OSCTimeTagMode = .ignore,
         queue: DispatchQueue? = nil,
-        handler: OSCHandlerBlock? = nil
+        receiveHandler: OSCHandlerBlock? = nil
     ) {
         // TODO: allow specifying interface?
         
@@ -58,7 +58,7 @@ public final class OSCUDPServer {
         self.timeTagMode = timeTagMode
         let queue = queue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCUDPServer.queue")
         self.queue = queue
-        self.handler = handler
+        self.receiveHandler = receiveHandler
         
         udpSocket = GCDAsyncUdpSocket(delegate: udpDelegate, delegateQueue: queue, socketQueue: nil)
         udpDelegate.oscServer = self
@@ -105,7 +105,7 @@ extension OSCUDPServer {
         _ handler: OSCHandlerBlock?
     ) {
         queue.async {
-            self.handler = handler
+            self.receiveHandler = handler
         }
     }
 }

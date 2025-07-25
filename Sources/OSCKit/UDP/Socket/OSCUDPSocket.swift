@@ -25,7 +25,7 @@ public final class OSCUDPSocket {
     let udpSocket: GCDAsyncUdpSocket
     let udpDelegate = OSCUDPServerDelegate()
     let queue: DispatchQueue
-    var handler: OSCHandlerBlock?
+    var receiveHandler: OSCHandlerBlock?
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
     public var timeTagMode: OSCTimeTagMode
@@ -113,7 +113,7 @@ public final class OSCUDPSocket {
         timeTagMode: OSCTimeTagMode = .ignore,
         isIPv4BroadcastEnabled: Bool = false,
         queue: DispatchQueue? = nil,
-        handler: OSCHandlerBlock? = nil
+        receiveHandler: OSCHandlerBlock? = nil
     ) {
         self.remoteHost = remoteHost
         _localPort = localPort
@@ -122,7 +122,7 @@ public final class OSCUDPSocket {
         self.isIPv4BroadcastEnabled = isIPv4BroadcastEnabled
         let queue = queue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCUDPSocket.queue")
         self.queue = queue
-        self.handler = handler
+        self.receiveHandler = receiveHandler
         
         udpSocket = GCDAsyncUdpSocket(delegate: udpDelegate, delegateQueue: queue, socketQueue: nil)
         udpDelegate.oscServer = self
@@ -207,7 +207,7 @@ extension OSCUDPSocket {
         _ handler: OSCHandlerBlock?
     ) {
         queue.async {
-            self.handler = handler
+            self.receiveHandler = handler
         }
     }
 }

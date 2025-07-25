@@ -13,7 +13,7 @@ Both ``OSCUDPServer`` and ``OSCUDPSocket`` are capable of receiving messages usi
 If not already set during initialization, you may set the receiver handler using the ``OSCUDPServer/setHandler(_:)`` or ``OSCUDPServer/setHandler(_:)`` method.
 
 ```swift
-oscServer.setHandler { [weak self] message, timeTag, host, port in
+oscServer.setReceiveHandler { [weak self] message, timeTag, host, port in
     do {
         try self?.handle(message: message, host: host, port: port)
     } catch {
@@ -44,7 +44,7 @@ Both ``OSCTCPClient`` and ``OSCTCPServer`` are capable of receiving messages usi
 If not already set during initialization, you may set the receiver handler using the ``OSCTCPClient/setHandler(_:)`` or ``OSCTCPServer/setHandler(_:)`` method.
 
 ```swift
-oscServer.setHandler { [weak self] message, timeTag, host, port in
+oscServer.setReceiveHandler { [weak self] message, timeTag, host, port in
     do {
         try self?.handle(message: message, host: host, port: port)
     } catch {

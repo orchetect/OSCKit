@@ -13,7 +13,7 @@ extension OSCUDPSocket {
     @available(
         *,
         deprecated,
-        renamed: "init(localPort:remoteHost:remotePort:timeTagMode:isIPv4BroadcastEnabled:queue:handler:)"
+        renamed: "init(localPort:remoteHost:remotePort:timeTagMode:isIPv4BroadcastEnabled:queue:receiveHandler:)"
     )
     @_disfavoredOverload
     public convenience init(
@@ -32,7 +32,7 @@ extension OSCUDPSocket {
             timeTagMode: timeTagMode,
             isIPv4BroadcastEnabled: isIPv4BroadcastEnabled,
             queue: nil,
-            handler: handler
+            receiveHandler: handler
         )
     }
 }

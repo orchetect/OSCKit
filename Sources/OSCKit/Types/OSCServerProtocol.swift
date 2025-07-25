@@ -10,8 +10,8 @@ import OSCKitCore
 /// Internal protocol that TCP-based OSC classes adopt in order to handle incoming OSC data.
 protocol _OSCServerProtocol: AnyObject where Self: Sendable {
     var queue: DispatchQueue { get }
-    var timeTagMode: OSCTimeTagMode { get set }
-    var handler: OSCHandlerBlock? { get set }
+    var timeTagMode: OSCTimeTagMode { get }
+    var receiveHandler: OSCHandlerBlock? { get }
 }
 
 // MARK: - Handle and Dispatch
@@ -92,7 +92,7 @@ extension _OSCServerProtocol {
         remotePort: UInt16
     ) {
         queue.async {
-            self.handler?(message, timeTag, remoteHost, remotePort)
+            self.receiveHandler?(message, timeTag, remoteHost, remotePort)
         }
     }
     
@@ -112,7 +112,7 @@ extension _OSCServerProtocol {
         
         let usec = Int(secondsFromNow * TimeInterval(USEC_PER_SEC))
         queue.asyncAfter(deadline: .now() + .microseconds(usec)) { [weak self] in
-            self?.handler?(message, timeTag, remoteHost, remotePort)
+            self?.receiveHandler?(message, timeTag, remoteHost, remotePort)
         }
     }
 }

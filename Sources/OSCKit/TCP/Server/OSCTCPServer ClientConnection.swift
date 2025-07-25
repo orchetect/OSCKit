@@ -65,21 +65,11 @@ extension OSCTCPServer.ClientConnection: _OSCTCPServerProtocol {
     }
     
     var timeTagMode: OSCTimeTagMode {
-        get {
-            delegate?.oscServer?.timeTagMode ?? .ignore
-        }
-        set {
-            delegate?.oscServer?.timeTagMode = newValue
-        }
+        delegate?.oscServer?.timeTagMode ?? .ignore
     }
     
-    var handler: OSCHandlerBlock? {
-        get {
-            delegate?.oscServer?.handler
-        }
-        set {
-            delegate?.oscServer?.handler = newValue
-        }
+    var receiveHandler: OSCHandlerBlock? {
+        delegate?.oscServer?.receiveHandler
     }
 }
 
