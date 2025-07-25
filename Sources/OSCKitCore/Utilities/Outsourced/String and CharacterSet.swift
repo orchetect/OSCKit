@@ -16,13 +16,13 @@ import Foundation
 extension StringProtocol {
     /// Returns true if the string is entirely comprised of ASCII characters (0-127).
     @inlinable @_disfavoredOverload
-    var isASCII: Bool {
+    package var isASCII: Bool {
         allSatisfy(\.isASCII)
     }
     
     /// Returns true if all characters in the string are contained in the character set.
     @_disfavoredOverload
-    func isOnly(
+    package func isOnly(
         _ characterSet: CharacterSet,
         _ characterSets: CharacterSet...
     ) -> Bool {
@@ -35,14 +35,14 @@ extension StringProtocol {
     
     /// Returns true if all characters in the string are contained in the character set.
     @_disfavoredOverload
-    func isOnly(characters: String) -> Bool {
+    package func isOnly(characters: String) -> Bool {
         let characterSet = CharacterSet(charactersIn: characters)
         return allSatisfy(characterSet.contains(_:))
     }
     
     /// Returns true if any character in the string are contained in the character set.
     @_disfavoredOverload
-    func contains(
+    package func contains(
         any characterSet: CharacterSet,
         _ characterSets: CharacterSet...
     ) -> Bool {
@@ -59,7 +59,7 @@ extension StringProtocol {
     
     /// Returns true if any character in the string are contained in the character set.
     @_disfavoredOverload
-    func contains(anyCharacters characters: String) -> Bool {
+    package func contains(anyCharacters characters: String) -> Bool {
         let characterSet = CharacterSet(charactersIn: characters)
         
         for char in self {

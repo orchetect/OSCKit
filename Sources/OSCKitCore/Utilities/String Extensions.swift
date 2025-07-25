@@ -8,7 +8,7 @@ import Foundation
 
 extension String {
     /// Returns the address as individual path components (strings between `/` separators).
-    var oscAddressPathComponents: [Substring] {
+    package var oscAddressPathComponents: [Substring] {
         guard !isEmpty else { return [] }
         
         var addressSlice = self[startIndex...]

@@ -13,7 +13,7 @@ import Darwin
 
 extension FloatingPoint {
     /// Similar to `Int.quotientAndRemainder(dividingBy:)` from the standard Swift library.
-    func quotientAndRemainder(dividingBy rhs: Self) -> (quotient: Self, remainder: Self) {
+    package func quotientAndRemainder(dividingBy rhs: Self) -> (quotient: Self, remainder: Self) {
         let calculation = self / rhs
         let integral = trunc(calculation)
         let fraction = self - (integral * rhs)
@@ -27,7 +27,7 @@ extension FloatingPoint {
     ///
     /// This method can result in a non-trivial loss of precision for the fractional part.
     @inlinable
-    var integralAndFraction: (integral: Self, fraction: Self) {
+    package var integralAndFraction: (integral: Self, fraction: Self) {
         let integral = trunc(self)
         let fraction = self - integral
         return (integral: integral, fraction: fraction)
@@ -35,7 +35,7 @@ extension FloatingPoint {
     
     /// Returns the integral part (digits before the decimal point)
     @inlinable
-    var integral: Self {
+    package var integral: Self {
         integralAndFraction.integral
     }
     
@@ -43,7 +43,7 @@ extension FloatingPoint {
     ///
     /// - Note: this method can result in a non-trivial loss of precision for the fractional part.
     @inlinable
-    var fraction: Self {
+    package var fraction: Self {
         integralAndFraction.fraction
     }
 }
