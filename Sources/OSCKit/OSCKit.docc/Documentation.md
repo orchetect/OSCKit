@@ -47,8 +47,6 @@ Open Sound Control (OSC) library for macOS, iOS and tvOS.
 - ``OSCTCPServer``
 - ``OSCTCPFramingMode``
 - ``OSCTCPClientSessionID``
-- ``OSCTCPNotification``
-- ``OSCTCPNotificationHandlerBlock``
 - ``OSCTCPPacketLengthHeaderDecodingError``
 - ``OSCTCPSLIPDecodingError``
 

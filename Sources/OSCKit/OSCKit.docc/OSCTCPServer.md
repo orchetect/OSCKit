@@ -13,6 +13,16 @@ let oscServer = OSCTCPServer(
 }
 ```
 
+Connection state notifications can be observed by providing a handler closure:
+
+```swift
+oscServer.setNotificationHandler { [weak self] notification in
+    switch notification {
+        // ...
+    }
+}
+```
+
 Then in order to bind to the local network port and begin listening for inbound connections:
 
 ```swift

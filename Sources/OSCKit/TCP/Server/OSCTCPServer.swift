@@ -29,6 +29,8 @@ public final class OSCTCPServer {
     let framingMode: OSCTCPFramingMode
     var receiveHandler: OSCHandlerBlock?
     var notificationHandler: NotificationHandlerBlock?
+    
+    /// Notification handler closure.
     public typealias NotificationHandlerBlock = @Sendable (_ notification: Notification) -> Void
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
@@ -49,7 +51,7 @@ public final class OSCTCPServer {
     ///
     /// - Parameters:
     ///   - port: Local network port to listen for inbound connections.
-    ///   - interface: Optionally specify a network interface to restrict connections to.
+    ///   - interface: Optionally specify a network interface for which to constrain connections.
     ///   - timeTagMode: OSC TimeTag mode. Default is recommended.
     ///   - framingMode: TCP framing mode. Both server and client must use the same framing mode. (Default is recommended.)
     ///   - queue: Optionally supply a custom dispatch queue for receiving OSC packets and dispatching the

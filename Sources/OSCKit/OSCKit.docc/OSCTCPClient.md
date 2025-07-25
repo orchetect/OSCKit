@@ -14,6 +14,16 @@ let oscClient = OSCTCPClient(
 }
 ```
 
+Connection state notifications can be observed by providing a handler closure:
+
+```swift
+oscClient.setNotificationHandler { [weak self] notification in
+    switch notification {
+        // ...
+    }
+}
+```
+
 Then in order to connect to the remote server:
 
 ```swift
