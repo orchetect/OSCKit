@@ -47,6 +47,11 @@ extension OSCTCPServerDelegate: GCDAsyncSocketDelegate {
         
         // read initial data
         newSocket.readData(withTimeout: -1, tag: clientID)
+        
+        // send notification
+        oscServer?.notificationHandler?(
+            .connected(remoteHost: sock.connectedHost ?? "", remotePort: sock.connectedPort)
+        )
     }
     
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
@@ -68,6 +73,11 @@ extension OSCTCPServerDelegate: GCDAsyncSocketDelegate {
             socket.delegate = nil
             clients[sockID] = nil
         }
+        
+        // send notification
+        oscServer?.notificationHandler?(
+            .disconnected(remoteHost: sock.connectedHost ?? "", remotePort: sock.connectedPort)
+        )
     }
 }
 

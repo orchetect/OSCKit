@@ -14,6 +14,7 @@ import Foundation
 protocol _OSCTCPClientProtocol: AnyObject where Self: Sendable {
     var tcpSocket: GCDAsyncSocket { get }
     var framingMode: OSCTCPFramingMode { get }
+    var notificationHandler: OSCTCPNotificationHandlerBlock? { get }
 }
 
 extension _OSCTCPClientProtocol {

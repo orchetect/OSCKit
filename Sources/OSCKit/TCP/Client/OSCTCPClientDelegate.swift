@@ -26,6 +26,11 @@ extension OSCTCPClientDelegate: GCDAsyncSocketDelegate {
     func socket(_ sock: GCDAsyncSocket, didConnectToHost host: String, port: UInt16) {
         // read initial data
         oscServer?.tcpSocket.readData(withTimeout: -1, tag: 0)
+        
+        // send notification
+        oscServer?.notificationHandler?(
+            .connected(remoteHost: sock.connectedHost ?? "", remotePort: sock.connectedPort)
+        )
     }
     
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
@@ -38,7 +43,10 @@ extension OSCTCPClientDelegate: GCDAsyncSocketDelegate {
     }
     
     func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: (any Error)?) {
-        // empty
+        // send notification
+        oscServer?.notificationHandler?(
+            .disconnected(remoteHost: sock.connectedHost ?? "", remotePort: sock.connectedPort)
+        )
     }
 }
 

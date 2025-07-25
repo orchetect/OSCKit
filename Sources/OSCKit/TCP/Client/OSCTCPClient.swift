@@ -27,6 +27,7 @@ public final class OSCTCPClient {
     let queue: DispatchQueue
     let framingMode: OSCTCPFramingMode
     var receiveHandler: OSCHandlerBlock?
+    var notificationHandler: OSCTCPNotificationHandlerBlock?
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
     public var timeTagMode: OSCTimeTagMode
@@ -133,6 +134,16 @@ extension OSCTCPClient {
     ) {
         queue.async {
             self.receiveHandler = handler
+        }
+    }
+    
+    /// Set the notification handler closure.
+    /// This closure will be called when a notification is generated, such as connection and disconnection events.
+    public func setNotificationHandler(
+        _ handler: OSCTCPNotificationHandlerBlock?
+    ) {
+        queue.async {
+            self.notificationHandler = handler
         }
     }
 }

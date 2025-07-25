@@ -71,6 +71,10 @@ extension OSCTCPServer.ClientConnection: _OSCTCPServerProtocol {
     var receiveHandler: OSCHandlerBlock? {
         delegate?.oscServer?.receiveHandler
     }
+    
+    var notificationHandler: OSCTCPNotificationHandlerBlock? {
+        delegate?.oscServer?.notificationHandler
+    }
 }
 
 #endif

@@ -13,6 +13,7 @@ import Foundation
 protocol _OSCTCPServerProtocol: _OSCServerProtocol {
     var tcpSocket: GCDAsyncSocket { get }
     var framingMode: OSCTCPFramingMode { get }
+    var notificationHandler: OSCTCPNotificationHandlerBlock? { get }
 }
 
 extension _OSCTCPServerProtocol {
