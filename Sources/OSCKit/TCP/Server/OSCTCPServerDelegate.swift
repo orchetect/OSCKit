@@ -45,15 +45,15 @@ extension OSCTCPServerDelegate: GCDAsyncSocketDelegate {
         clients[clientID] = newConnection
         newSocket.delegate = self
         
-        // read initial data
-        newSocket.readData(withTimeout: -1, tag: clientID)
-        
         // send notification
         oscServer?._generateConnectedNotification(
             remoteHost: newSocket.connectedHost ?? "",
             remotePort: newSocket.connectedPort,
             clientID: clientID
         )
+        
+        // read initial data
+        newSocket.readData(withTimeout: -1, tag: clientID)
     }
     
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {

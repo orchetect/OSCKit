@@ -24,11 +24,11 @@ extension OSCTCPClientDelegate: GCDAsyncSocketDelegate {
     }
     
     func socket(_ sock: GCDAsyncSocket, didConnectToHost host: String, port: UInt16) {
-        // read initial data
-        oscServer?.tcpSocket.readData(withTimeout: -1, tag: 0)
-        
         // send notification
         oscServer?._generateConnectedNotification()
+        
+        // read initial data
+        oscServer?.tcpSocket.readData(withTimeout: -1, tag: 0)
     }
     
     func socket(_ sock: GCDAsyncSocket, didRead data: Data, withTag tag: Int) {
