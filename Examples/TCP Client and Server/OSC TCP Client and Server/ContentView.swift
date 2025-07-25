@@ -69,10 +69,12 @@ struct ContentView: View {
                 .disabled(!oscManager.isServerStarted)
             }
             
-            Button("Send Test OSC Message") {
-                sendTestOSCMessageToAllClients()
+            RowView(label: "") {
+                Button("Send Test OSC Message") {
+                    sendTestOSCMessageToAllClients()
+                }
+                .disabled(!oscManager.isServerStarted)
             }
-            .disabled(!oscManager.isServerStarted)
             
             Divider()
             

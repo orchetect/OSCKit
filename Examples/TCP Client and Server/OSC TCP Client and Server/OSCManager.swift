@@ -8,6 +8,7 @@ import Foundation
 import OSCKit
 
 /// OSC lifecycle and send/receive manager.
+@MainActor
 final class OSCManager: ObservableObject {
     private var client: OSCTCPClient?
     private var server: OSCTCPServer?
@@ -31,16 +32,15 @@ extension OSCManager {
         let newServer = OSCTCPServer(port: serverPort, framingMode: framingMode)
         server = newServer
         
-        newServer.setReceiveHandler { /* [weak self] */ message, timeTag, host, port in
-            print("From client: \(message) with time tag: \(timeTag) from: \(host):\(port)")
+        newServer.setReceiveHandler { [weak self] message, timeTag, host, port in
+            Task { @MainActor in
+                self?.handle(messageFromClient: message, timeTag: timeTag, host: host, port: port)
+            }
         }
         
-        newServer.setNotificationHandler { notification in
-            switch notification {
-            case let .connected(remoteHost: remoteHost, remotePort: remotePort, clientID: _):
-                print("Server accepted connection from: \(remoteHost):\(remotePort)")
-            case let .disconnected(remoteHost: remoteHost, remotePort: remotePort, clientID: _):
-                print("Server was notified that remote client has disconnected: \(remoteHost):\(remotePort)")
+        newServer.setNotificationHandler { [weak self] notification in
+            Task { @MainActor in
+                self?.handle(serverNotification: notification)
             }
         }
         
@@ -57,22 +57,20 @@ extension OSCManager {
         let newClient = OSCTCPClient(remoteHost: clientHost, remotePort: clientPort, framingMode: framingMode)
         client = newClient
         
-        newClient.setReceiveHandler { /* [weak self] */ message, timeTag, host, port in
-            print("From server: \(message) with time tag: \(timeTag) from: \(host):\(port)")
+        newClient.setReceiveHandler { [weak self] message, timeTag, host, port in
+            Task { @MainActor in
+                self?.handle(messageFromServer: message, timeTag: timeTag, host: host, port: port)
+            }
         }
         
-        newClient.setNotificationHandler { notification in
-            switch notification {
-            case let .connected(remoteHost: remoteHost, remotePort: remotePort):
-                print("Client \(remoteHost):\(remotePort) connected to the server.")
-            case let .disconnected(remoteHost: remoteHost, remotePort: remotePort):
-                print("Client \(remoteHost):\(remotePort) disconnected from the server.")
+        newClient.setNotificationHandler { [weak self] notification in
+            Task { @MainActor in
+                self?.handle(clientNotification: notification)
             }
         }
         
         do {
-            try newClient.connect()
-            isClientConnected = true
+            try newClient.connect(timeout: 5)
         } catch {
             print(error)
             isClientConnected = false
@@ -87,6 +85,52 @@ extension OSCManager {
     func stopServer() {
         server?.stop()
         isServerStarted = false
+    }
+}
+
+// MARK: - Receive
+
+extension OSCManager {
+    func handle(messageFromClient message: OSCMessage, timeTag: OSCTimeTag, host: String, port: UInt16) {
+        print("From client: \(message) with time tag: \(timeTag) from: \(host):\(port)")
+    }
+    
+    func handle(messageFromServer message: OSCMessage, timeTag: OSCTimeTag, host: String, port: UInt16) {
+        print("From server: \(message) with time tag: \(timeTag) from: \(host):\(port)")
+    }
+    
+    func handle(clientNotification notification: OSCTCPClient.Notification) {
+        switch notification {
+        case .connected:
+            print("Local client connected to remote server")
+            
+            isClientConnected = true
+            
+        case let .disconnected(error: error):
+            var logMessage = "Local client disconnected from remote server"
+            if let error {
+                logMessage += " due to error: \(error.localizedDescription)"
+            }
+            print(logMessage)
+            
+            isClientConnected = false
+        }
+    }
+    
+    func handle(serverNotification notification: OSCTCPServer.Notification) {
+        switch notification {
+        case let .connected(remoteHost: remoteHost, remotePort: remotePort, clientID: _):
+            print("Local server accepted connection from remote client \(remoteHost):\(remotePort)")
+            
+        case let .disconnected(remoteHost: remoteHost, remotePort: remotePort, clientID: _, error: error):
+            var logMessage = "Local server was notified that remote client \(remoteHost):\(remotePort) has disconnected"
+            if let error {
+                logMessage += " due to error: \(error.localizedDescription)"
+            }
+            print(logMessage)
+            
+            isClientConnected = false
+        }
     }
 }
 
