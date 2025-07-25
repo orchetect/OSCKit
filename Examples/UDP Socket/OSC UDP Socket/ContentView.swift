@@ -38,7 +38,7 @@ struct ContentView: View {
     
     @ViewBuilder
     private var configurationView: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 20) {
             Group {
                 RowView(label: "Local Port") {
                     TextField("", value: $oscManager.localPort, formatter: .networkPort)
@@ -99,9 +99,14 @@ struct RowView<Content: View>: View {
     var body: some View {
         HStack(spacing: 20) {
             Text(label)
-                .frame(maxWidth: labelColumnWidth, alignment: .trailing)
-            content()
-                .frame(maxWidth: controlColumnWidth, alignment: .leading)
+            Spacer()
+            VStack(alignment: .trailing) {
+                content()
+                    .multilineTextAlignment(.trailing)
+                #if os(macOS)
+                    .frame(maxWidth: 200, alignment: .trailing)
+                #endif
+            }
         }
     }
 }

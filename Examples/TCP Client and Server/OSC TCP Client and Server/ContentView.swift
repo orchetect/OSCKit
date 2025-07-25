@@ -14,6 +14,7 @@ struct ContentView: View {
         VStack(spacing: 20) {
             Group {
                 Text("Received OSC messages are logged to the console.")
+                Text("Notifications from OSC server and OSC client are logged to the console.")
             }
             .multilineTextAlignment(.center)
             

@@ -48,6 +48,7 @@ extension OSCManager {
             let rp = newSocket.remotePort
             print("Using local port \(lp) and remote port \(rp) with remote host \(remoteHost).")
         } catch {
+            socket = nil
             print("Error while starting OSC socket: \(error)")
         }
     }

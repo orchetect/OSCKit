@@ -30,9 +30,20 @@ extension OSCManager {
         // setup server
         let newServer = OSCTCPServer(port: serverPort, framingMode: framingMode)
         server = newServer
+        
         newServer.setReceiveHandler { /* [weak self] */ message, timeTag, host, port in
             print("From client: \(message) with time tag: \(timeTag) from: \(host):\(port)")
         }
+        
+        newServer.setNotificationHandler { notification in
+            switch notification {
+            case let .connected(remoteHost: remoteHost, remotePort: remotePort, clientID: _):
+                print("Server accepted connection from: \(remoteHost):\(remotePort)")
+            case let .disconnected(remoteHost: remoteHost, remotePort: remotePort, clientID: _):
+                print("Server was notified that remote client has disconnected: \(remoteHost):\(remotePort)")
+            }
+        }
+        
         do {
             try newServer.start()
             isServerStarted = true
@@ -45,8 +56,18 @@ extension OSCManager {
     func connectClient() {
         let newClient = OSCTCPClient(remoteHost: clientHost, remotePort: clientPort, framingMode: framingMode)
         client = newClient
+        
         newClient.setReceiveHandler { /* [weak self] */ message, timeTag, host, port in
             print("From server: \(message) with time tag: \(timeTag) from: \(host):\(port)")
+        }
+        
+        newClient.setNotificationHandler { notification in
+            switch notification {
+            case let .connected(remoteHost: remoteHost, remotePort: remotePort):
+                print("Client \(remoteHost):\(remotePort) connected to the server.")
+            case let .disconnected(remoteHost: remoteHost, remotePort: remotePort):
+                print("Client \(remoteHost):\(remotePort) disconnected from the server.")
+            }
         }
         
         do {
