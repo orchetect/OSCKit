@@ -28,6 +28,9 @@ public final class OSCUDPServer {
     /// This may only be set at the time of initialization.
     public private(set) var localPort: UInt16
     
+    /// Network interface to restrict connections to.
+    public private(set) var interface: String?
+    
     /// Returns a boolean indicating whether the OSC server has been started.
     public private(set) var isStarted: Bool = false
     
@@ -42,19 +45,20 @@ public final class OSCUDPServer {
     ///
     /// - Parameters:
     ///   - port: Local port to listen on for inbound OSC packets.
+    ///   - interface: Optionally specify a network interface for which to constrain communication.
     ///   - timeTagMode: OSC TimeTag mode. (Default is recommended.)
     ///   - queue: Optionally supply a custom dispatch queue for receiving OSC packets and dispatching the
     ///     handler callback closure. If `nil`, a dedicated internal background queue will be used.
     ///   - receiveHandler: Handler to call when OSC bundles or messages are received.
     public init(
         port: UInt16 = 8000,
+        interface: String? = nil,
         timeTagMode: OSCTimeTagMode = .ignore,
         queue: DispatchQueue? = nil,
         receiveHandler: OSCHandlerBlock? = nil
     ) {
-        // TODO: allow specifying interface?
-        
         localPort = port
+        self.interface = interface
         self.timeTagMode = timeTagMode
         let queue = queue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCUDPServer.queue")
         self.queue = queue
@@ -76,7 +80,7 @@ extension OSCUDPServer {
         
         stop()
         
-        try udpSocket.bind(toPort: localPort)
+        try udpSocket.bind(toPort: localPort, interface: interface)
         try udpSocket.beginReceiving()
         
         isStarted = true
