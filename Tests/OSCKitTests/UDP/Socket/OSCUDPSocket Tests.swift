@@ -182,9 +182,11 @@ struct OSCUDPSocket_Tests {
         }
         
         // use global thread to simulate internal network thread being a dedicated thread
+        let srcLocSocketSend: SourceLocation = #_sourceLocation
         DispatchQueue.global().async {
             for message in sourceMessages {
-                try? socket.send(message)
+                do { try socket.send(message) }
+                catch { Issue.record(error, sourceLocation: srcLocSocketSend) }
             }
         }
         

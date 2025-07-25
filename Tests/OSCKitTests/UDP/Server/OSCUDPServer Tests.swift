@@ -168,9 +168,11 @@ struct OSCUDPServer_Tests {
         try await Task.sleep(seconds: isFlakey ? 5.0 : 0.1)
         
         // use global thread to simulate internal network thread being a dedicated thread
+        let srcLocSendToServer: SourceLocation = #_sourceLocation
         DispatchQueue.global().async {
             for message in sourceMessages {
-                try? client.send(message, to: "localhost", port: 8888)
+                do { try client.send(message, to: "localhost", port: 8888) }
+                catch { Issue.record(error, sourceLocation: srcLocSendToServer) }
             }
         }
         
