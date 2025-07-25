@@ -63,6 +63,9 @@ public final class OSCUDPSocket {
     }
     private var _remotePort: UInt16?
     
+    /// Network interface to restrict connections to.
+    public private(set) var interface: String?
+    
     /// Enable sending IPv4 broadcast messages from the socket.
     ///
     /// By default, the socket will not allow you to send broadcast messages as a network safeguard
@@ -100,6 +103,7 @@ public final class OSCUDPSocket {
     ///   - remoteHost: Remote hostname or IP address.
     ///   - remotePort: Remote port on the remote host machine to send outbound OSC packets to.
     ///     If `nil`, the `localPort` value will be used.
+    ///   - interface: Optionally specify a network interface for which to constrain communication.
     ///   - timeTagMode: OSC time-tag mode. The default is recommended.
     ///   - isIPv4BroadcastEnabled: Enable sending IPv4 broadcast messages from the socket.
     ///     See ``isIPv4BroadcastEnabled`` for more details.
@@ -110,6 +114,7 @@ public final class OSCUDPSocket {
         localPort: UInt16? = nil,
         remoteHost: String? = nil,
         remotePort: UInt16? = nil,
+        interface: String? = nil,
         timeTagMode: OSCTimeTagMode = .ignore,
         isIPv4BroadcastEnabled: Bool = false,
         queue: DispatchQueue? = nil,
@@ -118,6 +123,7 @@ public final class OSCUDPSocket {
         self.remoteHost = remoteHost
         _localPort = localPort
         _remotePort = remotePort
+        self.interface = interface
         self.timeTagMode = timeTagMode
         self.isIPv4BroadcastEnabled = isIPv4BroadcastEnabled
         let queue = queue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCUDPSocket.queue")
@@ -139,7 +145,10 @@ extension OSCUDPSocket {
         guard !isStarted else { return }
         
         try udpSocket.enableBroadcast(isIPv4BroadcastEnabled)
-        try udpSocket.bind(toPort: _localPort ?? 0) // 0 causes system to assign random open port
+        try udpSocket.bind(
+            toPort: _localPort ?? 0, // 0 causes system to assign random open port
+            interface: interface
+        )
         try udpSocket.beginReceiving()
         
         isStarted = true
