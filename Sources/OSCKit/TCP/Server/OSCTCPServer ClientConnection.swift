@@ -73,11 +73,6 @@ extension OSCTCPServer.ClientConnection: _OSCTCPHandlerProtocol {
     }
 }
 
-// Shared between _OSCTCPSendProtocol and _OSCTCPHandlerProtocol
-extension OSCTCPServer.ClientConnection {
-    typealias Notification = OSCTCPServer.Notification
-}
-
 extension OSCTCPServer.ClientConnection: _OSCTCPGeneratesClientNotificationsProtocol {
     func _generateConnectedNotification(remoteHost: String, remotePort: UInt16) {
         delegate?.oscServer?._generateConnectedNotification(
