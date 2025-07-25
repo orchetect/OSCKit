@@ -11,7 +11,7 @@ import Foundation
 
 /// Internal TCP receiver class so as to not expose `GCDAsyncSocketDelegate` methods as public.
 final class OSCTCPServerDelegate: NSObject {
-    weak var oscServer: _OSCTCPServerProtocol?
+    weak var oscServer: (any _OSCTCPServerProtocol & _OSCTCPGeneratesServerNotificationsProtocol)?
     let framingMode: OSCTCPFramingMode
     
     /// Currently connected client sessions.
@@ -49,8 +49,10 @@ extension OSCTCPServerDelegate: GCDAsyncSocketDelegate {
         newSocket.readData(withTimeout: -1, tag: clientID)
         
         // send notification
-        oscServer?.notificationHandler?(
-            .connected(remoteHost: sock.connectedHost ?? "", remotePort: sock.connectedPort)
+        oscServer?._generateConnectedNotification(
+            remoteHost: sock.connectedHost ?? "",
+            remotePort: sock.connectedPort,
+            clientID: clientID
         )
     }
     
@@ -66,8 +68,10 @@ extension OSCTCPServerDelegate: GCDAsyncSocketDelegate {
     func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: (any Error)?) {
         // remove connection from connections dictionary
         
+        // in almost all cases, this should only return one result and not more than one.
         let disconnectedClients = clients
             .filter { $0.value.tcpSocket == sock }
+        let clientIDs = disconnectedClients.keys
         
         for (sockID, socket) in disconnectedClients {
             socket.delegate = nil
@@ -75,9 +79,13 @@ extension OSCTCPServerDelegate: GCDAsyncSocketDelegate {
         }
         
         // send notification
-        oscServer?.notificationHandler?(
-            .disconnected(remoteHost: sock.connectedHost ?? "", remotePort: sock.connectedPort)
-        )
+        for clientID in clientIDs {
+            oscServer?._generateDisconnectedNotification(
+                remoteHost: sock.connectedHost ?? "",
+                remotePort: sock.connectedPort,
+                clientID: clientID
+            )
+        }
     }
 }
 

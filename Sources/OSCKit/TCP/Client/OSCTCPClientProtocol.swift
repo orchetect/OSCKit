@@ -10,11 +10,15 @@
 import OSCKitCore
 import Foundation
 
+public protocol OSCTCPClientProtocol {
+    associatedtype Notification
+    typealias NotificationHandlerBlock = (_ notification: Notification) -> Void
+}
+
 /// Internal protocol that TCP-based OSC classes adopt in order to send OSC packets.
-protocol _OSCTCPClientProtocol: AnyObject where Self: Sendable {
+protocol _OSCTCPClientProtocol: AnyObject, OSCTCPClientProtocol where Self: Sendable {
     var tcpSocket: GCDAsyncSocket { get }
     var framingMode: OSCTCPFramingMode { get }
-    var notificationHandler: OSCTCPNotificationHandlerBlock? { get }
 }
 
 extension _OSCTCPClientProtocol {

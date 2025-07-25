@@ -71,9 +71,28 @@ extension OSCTCPServer.ClientConnection: _OSCTCPServerProtocol {
     var receiveHandler: OSCHandlerBlock? {
         delegate?.oscServer?.receiveHandler
     }
+}
+
+// Shared between _OSCTCPClientProtocol and _OSCTCPServerProtocol
+extension OSCTCPServer.ClientConnection {
+    typealias Notification = OSCTCPServer.Notification
+}
+
+extension OSCTCPServer.ClientConnection: _OSCTCPGeneratesClientNotificationsProtocol {
+    func _generateConnectedNotification(remoteHost: String, remotePort: UInt16) {
+        delegate?.oscServer?._generateConnectedNotification(
+            remoteHost: remoteHost,
+            remotePort: remotePort,
+            clientID: tcpSocketTag
+        )
+    }
     
-    var notificationHandler: OSCTCPNotificationHandlerBlock? {
-        delegate?.oscServer?.notificationHandler
+    func _generateDisconnectedNotification(remoteHost: String, remotePort: UInt16) {
+        delegate?.oscServer?._generateDisconnectedNotification(
+            remoteHost: remoteHost,
+            remotePort: remotePort,
+            clientID: tcpSocketTag
+        )
     }
 }
 

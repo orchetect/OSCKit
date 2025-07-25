@@ -27,7 +27,7 @@ public final class OSCTCPClient {
     let queue: DispatchQueue
     let framingMode: OSCTCPFramingMode
     var receiveHandler: OSCHandlerBlock?
-    var notificationHandler: OSCTCPNotificationHandlerBlock?
+    var notificationHandler: NotificationHandlerBlock?
     
     /// Time tag mode. Determines how OSC bundle time tags are handled.
     public var timeTagMode: OSCTimeTagMode
@@ -120,6 +120,18 @@ extension OSCTCPClient: _OSCTCPClientProtocol {
     }
 }
 
+extension OSCTCPClient: _OSCTCPGeneratesClientNotificationsProtocol {
+    func _generateConnectedNotification(remoteHost: String, remotePort: UInt16) {
+        let notif: Notification = .connected(remoteHost: remoteHost, remotePort: remotePort)
+        notificationHandler?(notif)
+    }
+    
+    func _generateDisconnectedNotification(remoteHost: String, remotePort: UInt16) {
+        let notif: Notification = .disconnected(remoteHost: remoteHost, remotePort: remotePort)
+        notificationHandler?(notif)
+    }
+}
+
 extension OSCTCPClient: _OSCTCPServerProtocol {
     // provides implementation for dispatching incoming OSC data
 }
@@ -140,7 +152,7 @@ extension OSCTCPClient {
     /// Set the notification handler closure.
     /// This closure will be called when a notification is generated, such as connection and disconnection events.
     public func setNotificationHandler(
-        _ handler: OSCTCPNotificationHandlerBlock?
+        _ handler: NotificationHandlerBlock?
     ) {
         queue.async {
             self.notificationHandler = handler

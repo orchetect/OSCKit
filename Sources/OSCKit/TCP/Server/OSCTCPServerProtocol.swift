@@ -9,11 +9,15 @@
 @preconcurrency import CocoaAsyncSocket
 import Foundation
 
+public protocol OSCTCPServerProtocol {
+    associatedtype Notification
+    typealias NotificationHandlerBlock = (_ notification: Notification) -> Void
+}
+
 /// Internal protocol that TCP-based OSC classes adopt in order to handle incoming OSC data.
-protocol _OSCTCPServerProtocol: _OSCServerProtocol {
+protocol _OSCTCPServerProtocol: _OSCServerProtocol, OSCTCPServerProtocol {
     var tcpSocket: GCDAsyncSocket { get }
     var framingMode: OSCTCPFramingMode { get }
-    var notificationHandler: OSCTCPNotificationHandlerBlock? { get }
 }
 
 extension _OSCTCPServerProtocol {

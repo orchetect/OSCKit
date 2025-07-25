@@ -11,7 +11,7 @@ import Foundation
 
 /// Internal TCP receiver class so as to not expose `GCDAsyncSocketDelegate` methods as public.
 final class OSCTCPClientDelegate: NSObject {
-    weak var oscServer: _OSCTCPServerProtocol?
+    weak var oscServer: (any _OSCTCPServerProtocol & _OSCTCPGeneratesClientNotificationsProtocol)?
     
     // init() { } // already implemented by NSObject
 }
@@ -28,8 +28,9 @@ extension OSCTCPClientDelegate: GCDAsyncSocketDelegate {
         oscServer?.tcpSocket.readData(withTimeout: -1, tag: 0)
         
         // send notification
-        oscServer?.notificationHandler?(
-            .connected(remoteHost: sock.connectedHost ?? "", remotePort: sock.connectedPort)
+        oscServer?._generateConnectedNotification(
+            remoteHost: sock.connectedHost ?? "",
+            remotePort: sock.connectedPort
         )
     }
     
@@ -44,8 +45,9 @@ extension OSCTCPClientDelegate: GCDAsyncSocketDelegate {
     
     func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: (any Error)?) {
         // send notification
-        oscServer?.notificationHandler?(
-            .disconnected(remoteHost: sock.connectedHost ?? "", remotePort: sock.connectedPort)
+        oscServer?._generateDisconnectedNotification(
+            remoteHost: sock.connectedHost ?? "",
+            remotePort: sock.connectedPort
         )
     }
 }
