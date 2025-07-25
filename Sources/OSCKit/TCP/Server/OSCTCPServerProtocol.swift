@@ -15,7 +15,7 @@ public protocol OSCTCPServerProtocol {
 }
 
 /// Internal protocol that TCP-based OSC classes adopt in order to handle incoming OSC data.
-protocol _OSCTCPServerProtocol: _OSCServerProtocol, OSCTCPServerProtocol {
+protocol _OSCTCPServerProtocol: _OSCHandlerProtocol, OSCTCPServerProtocol {
     var tcpSocket: GCDAsyncSocket { get }
     var framingMode: OSCTCPFramingMode { get }
 }

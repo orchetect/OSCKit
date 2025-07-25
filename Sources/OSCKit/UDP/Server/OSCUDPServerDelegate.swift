@@ -11,9 +11,9 @@ import Foundation
 
 /// Internal UDP receiver class so as to not expose `GCDAsyncUdpSocketDelegate` methods as public.
 final class OSCUDPServerDelegate: NSObject {
-    weak var oscServer: _OSCServerProtocol?
+    weak var oscServer: _OSCHandlerProtocol?
     
-    init(oscServer: _OSCServerProtocol? = nil) {
+    init(oscServer: _OSCHandlerProtocol? = nil) {
         self.oscServer = oscServer
     }
 }
@@ -42,7 +42,7 @@ extension OSCUDPServerDelegate: GCDAsyncUdpSocketDelegate {
     
     /// Stub required to take `oscServer` as sending.
     private func _handle(
-        oscServer: _OSCServerProtocol,
+        oscServer: _OSCHandlerProtocol,
         data: Data,
         remoteHost: String,
         remotePort: UInt16

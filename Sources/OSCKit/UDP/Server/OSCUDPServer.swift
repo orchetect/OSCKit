@@ -92,7 +92,7 @@ extension OSCUDPServer {
 
 // MARK: - Communication
 
-extension OSCUDPServer: _OSCServerProtocol {
+extension OSCUDPServer: _OSCHandlerProtocol {
     // provides implementation for dispatching incoming OSC data
 }
 

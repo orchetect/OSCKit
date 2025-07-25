@@ -1,5 +1,5 @@
 //
-//  OSCServerProtocol.swift
+//  OSCHandlerProtocol.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
@@ -8,7 +8,7 @@ import Foundation
 import OSCKitCore
 
 /// Internal protocol that TCP-based OSC classes adopt in order to handle incoming OSC data.
-protocol _OSCServerProtocol: AnyObject where Self: Sendable {
+protocol _OSCHandlerProtocol: AnyObject where Self: Sendable {
     var queue: DispatchQueue { get }
     var timeTagMode: OSCTimeTagMode { get }
     var receiveHandler: OSCHandlerBlock? { get }
@@ -16,7 +16,7 @@ protocol _OSCServerProtocol: AnyObject where Self: Sendable {
 
 // MARK: - Handle and Dispatch
 
-extension _OSCServerProtocol {
+extension _OSCHandlerProtocol {
     /// Handle incoming OSC data recursively.
     func _handle(
         payload: any OSCObject,
