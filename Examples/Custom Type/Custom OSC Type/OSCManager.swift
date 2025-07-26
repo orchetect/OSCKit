@@ -55,7 +55,7 @@ extension OSCManager {
             let id = customTypeValue.id
             let name = customTypeValue.name
             print(
-                "OSC message from \(host):\(port), address \"\(msg)\", CustomType value containing id:\(id) and name:\(name)"
+                "OSC message from \(host) port \(port), address \"\(msg)\", CustomType value containing id:\(id) and name:\(name)"
             )
         } catch {
             print("OSC message received that did not have exactly one value of type CustomType.")

@@ -17,13 +17,13 @@ final class OSCReceiver: Sendable {
         // Register local OSC method and supply a closure block
         addressSpace.register(localAddress: "/methodA") { values, host, port in
             guard let str = try? values.masked(String.self) else { return }
-            print("Received methodA from \(host):\(port) with value: \"\(str)\"")
+            print("Received methodA from \(host) port \(port) with value: \"\(str)\"")
         }
         
         // Register local OSC method and supply a closure block
         addressSpace.register(localAddress: "/some/address/methodB") { values, host, port in
             guard let (str, int) = try? values.masked(String.self, Int.self) else { return }
-            print("Received methodB from \(host):\(port) with values: [\"\(str)\", \(int)]")
+            print("Received methodB from \(host) port \(port) with values: [\"\(str)\", \(int)]")
         }
         
         // Instead of supplying a closure, it's also possible to forward to a function:
@@ -45,7 +45,7 @@ final class OSCReceiver: Sendable {
     
     private func handleMethodC(values: OSCValues, host: String, port: UInt16) {
         guard let (str, dbl) = try? values.masked(String.self, Double?.self) else { return }
-        print("Received methodC from \(host):\(port) with values: [\"\(str)\", \(dbl as Any)]")
+        print("Received methodC from \(host) port \(port) with values: [\"\(str)\", \(dbl as Any)]")
     }
     
     public func handle(message: OSCMessage, timeTag: OSCTimeTag, host: String, port: UInt16) throws {

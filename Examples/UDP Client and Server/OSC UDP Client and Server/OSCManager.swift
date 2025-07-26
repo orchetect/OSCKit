@@ -42,7 +42,7 @@ extension OSCManager {
 
 extension OSCManager {
     func handle(message: OSCMessage, timeTag: OSCTimeTag, host: String, port: UInt16) {
-        print("\(message) with time tag: \(timeTag) from: \(host):\(port)")
+        print("\(message) with time tag: \(timeTag) from: \(host) port \(port)")
     }
 }
 

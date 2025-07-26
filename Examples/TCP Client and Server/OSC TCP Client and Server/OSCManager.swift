@@ -92,11 +92,11 @@ extension OSCManager {
 
 extension OSCManager {
     func handle(messageFromClient message: OSCMessage, timeTag: OSCTimeTag, host: String, port: UInt16) {
-        print("From client: \(message) with time tag: \(timeTag) from: \(host):\(port)")
+        print("From client: \(message) with time tag: \(timeTag) from: \(host) port \(port)")
     }
     
     func handle(messageFromServer message: OSCMessage, timeTag: OSCTimeTag, host: String, port: UInt16) {
-        print("From server: \(message) with time tag: \(timeTag) from: \(host):\(port)")
+        print("From server: \(message) with time tag: \(timeTag) from: \(host) port \(port)")
     }
     
     func handle(clientNotification notification: OSCTCPClient.Notification) {
@@ -120,10 +120,10 @@ extension OSCManager {
     func handle(serverNotification notification: OSCTCPServer.Notification) {
         switch notification {
         case let .connected(remoteHost: remoteHost, remotePort: remotePort, clientID: _):
-            print("Local server accepted connection from remote client \(remoteHost):\(remotePort)")
+            print("Local server accepted connection from remote client \(remoteHost) port \(remotePort)")
             
         case let .disconnected(remoteHost: remoteHost, remotePort: remotePort, clientID: _, error: error):
-            var logMessage = "Local server was notified that remote client \(remoteHost):\(remotePort) has disconnected"
+            var logMessage = "Local server was notified that remote client \(remoteHost) port \(remotePort) has disconnected"
             if let error {
                 logMessage += " due to error: \(error.localizedDescription)"
             }
