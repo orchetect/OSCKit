@@ -1,4 +1,6 @@
 name: build
+permissions:
+  contents: read
 
 on:
   push:
@@ -133,27 +135,32 @@ jobs:
       with:
         xcode-version: latest-stable
     
-    - name: Basic Example - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
-      run: xcodebuild -project "Examples/Basic Example/Basic Example.xcodeproj" -resolvePackageDependencies | xcbeautify && exit ${PIPESTATUS[0]}
-    - name: Basic Example - Build
-      run: xcodebuild build -project "Examples/Basic Example/Basic Example.xcodeproj" -scheme "Basic Example" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify && exit ${PIPESTATUS[0]}
+    - name: Custom Type - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
+      run: xcodebuild -project "Examples/Custom Type/Custom OSC Type.xcodeproj" -resolvePackageDependencies | xcbeautify && exit ${PIPESTATUS[0]}
+    - name: Custom Type - Build
+      run: xcodebuild build -project "Examples/Custom Type/Custom OSC Type.xcodeproj" -scheme "Custom OSC Type" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify && exit ${PIPESTATUS[0]}
     
-    - name: Custom Type Example - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
-      run: xcodebuild -project "Examples/Custom Type Example/Custom Type Example.xcodeproj" -resolvePackageDependencies | xcbeautify && exit ${PIPESTATUS[0]}
-    - name: Custom Type Example - Build
-      run: xcodebuild build -project "Examples/Custom Type Example/Custom Type Example.xcodeproj" -scheme "Custom Type Example" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify && exit ${PIPESTATUS[0]}
+    - name: Method Blocks - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
+      run: xcodebuild -project "Examples/Method Blocks/OSC Method Blocks.xcodeproj" -resolvePackageDependencies | xcbeautify && exit ${PIPESTATUS[0]}
+    - name: Method Blocks - Build
+      run: xcodebuild build -project "Examples/Method Blocks/OSC Method Blocks.xcodeproj" -scheme "OSC Method Blocks" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify && exit ${PIPESTATUS[0]}
       
-    - name: Method Blocks Example - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
-      run: xcodebuild -project "Examples/Method Blocks Example/Method Blocks Example.xcodeproj" -resolvePackageDependencies | xcbeautify && exit ${PIPESTATUS[0]}
-    - name: Method Blocks Example - Build
-      run: xcodebuild build -project "Examples/Method Blocks Example/Method Blocks Example.xcodeproj" -scheme "Method Blocks Example" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify && exit ${PIPESTATUS[0]}
+    - name: Method IDs - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
+      run: xcodebuild -project "Examples/Method IDs/OSC Method IDs.xcodeproj" -resolvePackageDependencies | xcbeautify && exit ${PIPESTATUS[0]}
+    - name: Method IDs - Build
+      run: xcodebuild build -project "Examples/Method IDs/OSC Method IDs.xcodeproj" -scheme "OSC Method IDs" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify && exit ${PIPESTATUS[0]}
       
-    - name: Method IDs Example - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
-      run: xcodebuild -project "Examples/Method IDs Example/Method IDs Example.xcodeproj" -resolvePackageDependencies | xcbeautify && exit ${PIPESTATUS[0]}
-    - name: Method IDs Example - Build
-      run: xcodebuild build -project "Examples/Method IDs Example/Method IDs Example.xcodeproj" -scheme "Method IDs Example" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify && exit ${PIPESTATUS[0]}
+    - name: TCP Client and Server - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
+      run: xcodebuild -project "Examples/TCP Client and Server/OSC TCP Client and Server.xcodeproj" -resolvePackageDependencies | xcbeautify && exit ${PIPESTATUS[0]}
+    - name: TCP Client and Server - Build
+      run: xcodebuild build -project "Examples/TCP Client and Server/OSC TCP Client and Server.xcodeproj" -scheme "OSC TCP Client and Server" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify && exit ${PIPESTATUS[0]}
       
-    - name: Socket Example - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
-      run: xcodebuild -project "Examples/Socket Example/Socket Example.xcodeproj" -resolvePackageDependencies | xcbeautify && exit ${PIPESTATUS[0]}
-    - name: Socket Example - Build
-      run: xcodebuild build -project "Examples/Socket Example/Socket Example.xcodeproj" -scheme "Socket Example" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify && exit ${PIPESTATUS[0]}
+    - name: UDP Client and Server - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
+      run: xcodebuild -project "Examples/UDP Client and Server/OSC UDP Client and Server.xcodeproj" -resolvePackageDependencies | xcbeautify && exit ${PIPESTATUS[0]}
+    - name: UDP Client and Server - Build
+      run: xcodebuild build -project "Examples/UDP Client and Server/OSC UDP Client and Server.xcodeproj" -scheme "OSC UDP Client and Server" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify && exit ${PIPESTATUS[0]}
+      
+    - name: UDP Socket - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
+      run: xcodebuild -project "Examples/UDP Socket/OSC UDP Socket.xcodeproj" -resolvePackageDependencies | xcbeautify && exit ${PIPESTATUS[0]}
+    - name: UDP Socket - Build
+      run: xcodebuild build -project "Examples/UDP Socket/OSC UDP Socket.xcodeproj" -scheme "OSC UDP Socket" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify && exit ${PIPESTATUS[0]}

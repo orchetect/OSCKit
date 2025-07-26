@@ -16,7 +16,7 @@ public typealias LegacyOSCHandlerBlock = @Sendable (
     _ timeTag: OSCTimeTag
 ) -> Void
 
-extension OSCServer {
+extension OSCUDPServer {
     @_documentation(visibility: internal)
     @available(
         *,
@@ -33,8 +33,8 @@ extension OSCServer {
         self.init(
             port: port,
             timeTagMode: timeTagMode,
-            receiveQueue: receiveQueue,
-            handler: { message, timeTag, _, _ in handler(message, timeTag) }
+            queue: receiveQueue,
+            receiveHandler: { message, timeTag, _, _ in handler(message, timeTag) }
         )
     }
     
@@ -52,7 +52,7 @@ extension OSCServer {
     }
 }
 
-extension OSCSocket {
+extension OSCUDPSocket {
     @_documentation(visibility: internal)
     @available(
         *,
@@ -66,7 +66,7 @@ extension OSCSocket {
         remotePort: UInt16? = nil,
         timeTagMode: OSCTimeTagMode = .ignore,
         isIPv4BroadcastEnabled: Bool = false,
-        receiveQueue: DispatchQueue? = nil,
+        queue: DispatchQueue? = nil,
         handler: @escaping LegacyOSCHandlerBlock
     ) {
         self.init(
@@ -75,8 +75,8 @@ extension OSCSocket {
             remotePort: remotePort,
             timeTagMode: timeTagMode,
             isIPv4BroadcastEnabled: isIPv4BroadcastEnabled,
-            receiveQueue: nil,
-            handler: { message, timeTag, _, _ in handler(message, timeTag) }
+            queue: nil,
+            receiveHandler: { message, timeTag, _, _ in handler(message, timeTag) }
         )
     }
     
@@ -90,7 +90,7 @@ extension OSCSocket {
     public func setHandler(
         _ handler: @escaping LegacyOSCHandlerBlock
     ) {
-        setHandler { message, timeTag, _, _ in handler(message, timeTag) }
+        setReceiveHandler { message, timeTag, _, _ in handler(message, timeTag) }
     }
 }
 

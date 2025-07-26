@@ -8,7 +8,7 @@ Open Sound Control ([OSC](https://opensoundcontrol.stanford.edu)) library for ma
 
 - OSC address pattern matching and dispatch
 - Convenient OSC message value type masking, validation and strong-typing
-- Modular: use the provided UDP network layer by default, or use your own
+- Modular: use the provided UDP or TCP network layer by default, or use your own
 - Support for custom OSC types
 - Supports Swift 6 strict concurrency
 - Fully unit tested

@@ -43,7 +43,7 @@ extension OSCMessage {
     
     /// Create an OSC message from OSC address pattern path components and zero or more OSC values
     /// (arguments).
-    /// Empty path components is equivalent to the address of "/".
+    /// An empty path components sequence is equivalent to the address of "/".
     public init<S>(
         addressPattern pathComponents: S,
         values: OSCValues = []
@@ -70,7 +70,7 @@ extension OSCMessage {
     /// Internal:
     /// Create an OSC message from ``ASCIIString`` OSC address pattern path components and zero or
     /// more OSC values (arguments).
-    /// Empty path components is equivalent to the address of "/".
+    /// An empty path components sequence is equivalent to the address of "/".
     init<S>(
         asciiAddressPattern pathComponents: S,
         values: OSCValues = []

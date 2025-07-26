@@ -16,7 +16,7 @@ import Foundation
 extension Data {
     /// Returns an Int64 value from Data
     /// Returns nil if Data is not the correct length.
-    func toInt(from endianness: NumberEndianness = .platformDefault) -> Int? {
+    package func toInt(from endianness: NumberEndianness = .platformDefault) -> Int? {
         toNumber(from: endianness, toType: Int.self)
     }
 }
@@ -26,7 +26,7 @@ extension Data {
 extension Data {
     /// Returns a Int8 value from Data (stored as two's complement).
     /// Returns nil if Data is not the correct length.
-    func toInt8() -> Int8? {
+    package func toInt8() -> Int8? {
         guard count == 1 else { return nil }
         
         var int = UInt8()
@@ -42,7 +42,7 @@ extension Data {
 extension Data {
     /// Returns an Int16 value from Data
     /// Returns nil if Data is not the correct length.
-    func toInt16(from endianness: NumberEndianness = .platformDefault) -> Int16? {
+    package func toInt16(from endianness: NumberEndianness = .platformDefault) -> Int16? {
         toNumber(from: endianness, toType: Int16.self)
     }
 }
@@ -52,7 +52,7 @@ extension Data {
 extension Data {
     /// Returns an Int32 value from Data
     /// Returns nil if Data is not the correct length.
-    func toInt32(from endianness: NumberEndianness = .platformDefault) -> Int32? {
+    package func toInt32(from endianness: NumberEndianness = .platformDefault) -> Int32? {
         toNumber(from: endianness, toType: Int32.self)
     }
 }
@@ -62,7 +62,7 @@ extension Data {
 extension Data {
     /// Returns an Int64 value from Data
     /// Returns nil if Data is not the correct length.
-    func toInt64(from endianness: NumberEndianness = .platformDefault) -> Int64? {
+    package func toInt64(from endianness: NumberEndianness = .platformDefault) -> Int64? {
         toNumber(from: endianness, toType: Int64.self)
     }
 }
@@ -72,7 +72,7 @@ extension Data {
 extension Data {
     /// Returns a UInt value from Data.
     /// Returns nil if Data is not the correct length.
-    func toUInt(from endianness: NumberEndianness = .platformDefault) -> UInt? {
+    package func toUInt(from endianness: NumberEndianness = .platformDefault) -> UInt? {
         toNumber(from: endianness, toType: UInt.self)
     }
 }
@@ -82,7 +82,7 @@ extension Data {
 extension Data {
     /// Returns a UInt8 value from Data.
     /// Returns nil if Data is not the correct length.
-    func toUInt8() -> UInt8? {
+    package func toUInt8() -> UInt8? {
         guard count == 1 else { return nil }
         return first
     }
@@ -93,7 +93,7 @@ extension Data {
 extension Data {
     /// Returns a UInt16 value from Data.
     /// Returns nil if Data is not the correct length.
-    func toUInt16(from endianness: NumberEndianness = .platformDefault) -> UInt16? {
+    package func toUInt16(from endianness: NumberEndianness = .platformDefault) -> UInt16? {
         toNumber(from: endianness, toType: UInt16.self)
     }
 }
@@ -103,7 +103,7 @@ extension Data {
 extension Data {
     /// Returns a UInt32 value from Data.
     /// Returns nil if Data is not the correct length.
-    func toUInt32(from endianness: NumberEndianness = .platformDefault) -> UInt32? {
+    package func toUInt32(from endianness: NumberEndianness = .platformDefault) -> UInt32? {
         toNumber(from: endianness, toType: UInt32.self)
     }
 }
@@ -113,7 +113,7 @@ extension Data {
 extension Data {
     /// Returns a UInt64 value from Data.
     /// Returns nil if Data is not the correct length.
-    func toUInt64(from endianness: NumberEndianness = .platformDefault) -> UInt64? {
+    package func toUInt64(from endianness: NumberEndianness = .platformDefault) -> UInt64? {
         toNumber(from: endianness, toType: UInt64.self)
     }
 }
@@ -122,7 +122,7 @@ extension Data {
 
 extension Float32 {
     /// Returns Data representation of a Float32 value.
-    func toData(_ endianness: NumberEndianness = .platformDefault) -> Data {
+    package func toData(_ endianness: NumberEndianness = .platformDefault) -> Data {
         var number = self
         
         // TODO: Remove bindMemory(to:)
@@ -165,7 +165,7 @@ extension Float32 {
 extension Data {
     /// Returns a Float32 value from Data
     /// Returns nil if Data is != 4 bytes.
-    func toFloat32(from endianness: NumberEndianness = .platformDefault) -> Float32? {
+    package func toFloat32(from endianness: NumberEndianness = .platformDefault) -> Float32? {
         guard count == 4 else { return nil }
         
         // define conversions
@@ -228,7 +228,7 @@ extension Data {
 
 extension Double {
     /// Returns Data representation of a Double value.
-    func toData(_ endianness: NumberEndianness = .platformDefault) -> Data {
+    package func toData(_ endianness: NumberEndianness = .platformDefault) -> Data {
         var number = self
         
         // TODO: Remove bindMemory(to:)
@@ -271,7 +271,7 @@ extension Double {
 extension Data {
     /// Returns a Double value from Data
     /// Returns nil if Data is != 8 bytes.
-    func toDouble(from endianness: NumberEndianness = .platformDefault) -> Double? {
+    package func toDouble(from endianness: NumberEndianness = .platformDefault) -> Double? {
         guard count == 8 else { return nil }
         
         // define conversions
@@ -335,7 +335,7 @@ extension Data {
 extension FixedWidthInteger {
     /// Returns Data representation of an integer. (Endianness has no effect on single-byte
     /// integers.)
-    func toData(_ endianness: NumberEndianness = .platformDefault) -> Data {
+    package func toData(_ endianness: NumberEndianness = .platformDefault) -> Data {
         var int: Self = switch endianness {
         case .platformDefault: self
         case .littleEndian:    littleEndian
@@ -360,7 +360,7 @@ extension FixedWidthInteger {
 
 extension Data {
     /// Internal use.
-    func toNumber<T: FixedWidthInteger>(
+    package func toNumber<T: FixedWidthInteger>(
         from endianness: NumberEndianness = .platformDefault,
         toType: T.Type
     ) -> T? {
@@ -413,14 +413,14 @@ extension Data {
 
 extension String {
     /// Returns a Data representation of a String, defaulting to utf8 encoding.
-    func toData(using encoding: String.Encoding = .utf8) -> Data? {
+    package func toData(using encoding: String.Encoding = .utf8) -> Data? {
         data(using: encoding)
     }
 }
 
 extension Data {
     /// Returns a String converted from Data. Optionally pass an encoding type.
-    func toString(using encoding: String.Encoding = .utf8) -> String? {
+    package func toString(using encoding: String.Encoding = .utf8) -> String? {
         String(data: self, encoding: encoding)
     }
 }
@@ -430,7 +430,7 @@ extension Data {
 extension Collection<UInt8> {
     /// Same as `Data(self)`
     /// Returns a Data object using the array as bytes.
-    var data: Data {
+    package var data: Data {
         Data(self)
     }
 }
@@ -438,7 +438,7 @@ extension Collection<UInt8> {
 extension Data {
     /// Returns an array of bytes.
     /// Same as `[UInt8](self)`
-    var bytes: [UInt8] {
+    package var bytes: [UInt8] {
         [UInt8](self)
     }
 }

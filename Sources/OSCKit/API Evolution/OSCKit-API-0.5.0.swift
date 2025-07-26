@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension OSCServer {
+extension OSCUDPServer {
     @_documentation(visibility: internal)
     @available(*, deprecated, renamed: "OSCTimeTagMode")
     public typealias TimeTagMode = OSCTimeTagMode

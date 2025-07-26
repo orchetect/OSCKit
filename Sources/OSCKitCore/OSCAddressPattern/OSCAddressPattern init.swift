@@ -31,7 +31,7 @@ extension OSCAddressPattern {
     /// Create an OSC address from individual path components.
     /// The path component strings will be converted to valid ASCII, lossily converting or removing
     /// invalid non-ASCII characters if necessary.
-    /// Empty path components is equivalent to the address of "/".
+    /// An empty path components sequence is equivalent to the address of "/".
     public init<S>(pathComponents lossy: S) where S: BidirectionalCollection,
         S.Element: StringProtocol
     {
@@ -43,7 +43,7 @@ extension OSCAddressPattern {
     /// Create an OSC address from individual path components.
     /// The path component strings will be converted to ASCII strings, lossily converting or
     /// removing invalid non-ASCII characters if necessary.
-    /// Empty path components is equivalent to the address of "/".
+    /// An empty path components sequence is equivalent to the address of "/".
     init<S>(asciiPathComponents: S) where S: BidirectionalCollection, S.Element == ASCIIString {
         let ascii = ASCIICharacter("/") + asciiPathComponents.joined(separator: "/")
         self.init(ascii: ascii)

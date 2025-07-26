@@ -8,12 +8,12 @@
 
 import Foundation
 
-extension OSCSocket {
+extension OSCUDPSocket {
     @_documentation(visibility: internal)
     @available(
         *,
         deprecated,
-        renamed: "init(localPort:remoteHost:remotePort:timeTagMode:isIPv4BroadcastEnabled:receiveQueue:handler:)"
+        renamed: "init(localPort:remoteHost:remotePort:timeTagMode:isIPv4BroadcastEnabled:queue:receiveHandler:)"
     )
     @_disfavoredOverload
     public convenience init(
@@ -31,8 +31,8 @@ extension OSCSocket {
             remotePort: remotePort,
             timeTagMode: timeTagMode,
             isIPv4BroadcastEnabled: isIPv4BroadcastEnabled,
-            receiveQueue: nil,
-            handler: handler
+            queue: nil,
+            receiveHandler: handler
         )
     }
 }

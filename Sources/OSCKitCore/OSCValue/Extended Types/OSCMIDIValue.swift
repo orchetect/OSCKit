@@ -151,11 +151,13 @@ extension OSCMIDIValue: OSCValueDecodable {
     public static let oscDecoding = OSCValueDecodingBlock { decoder in
         let bytes = try decoder.read(byteLength: 4)
         
+        let startIndex = bytes.startIndex
+        
         return OSCMIDIValue(
-            portID: bytes[0],
-            status: bytes[1],
-            data1: bytes[2],
-            data2: bytes[3]
+            portID: bytes[startIndex],
+            status: bytes[startIndex + 1],
+            data1: bytes[startIndex + 2],
+            data2: bytes[startIndex + 3]
         )
     }
 }

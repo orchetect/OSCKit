@@ -128,7 +128,7 @@ public struct OSCMessageEncoder {
 extension OSCMessageEncoder {
     /// Pads `data` to 4-byte aligned null-terminated format.
     public static func fourNullBytePad(_ data: inout Data) {
-        data.append(.init(
+        data.append(Data(
             repeating: 0x00,
             count: (4 - (data.count % 4))
         ))
@@ -136,9 +136,8 @@ extension OSCMessageEncoder {
     
     /// Returns `data` padded to 4-byte aligned null-terminated format.
     public static func fourNullBytePadded(_ data: Data) -> Data {
-        data + .init(
-            repeating: 0x00,
-            count: (4 - (data.count % 4))
-        )
+        var copy = data
+        fourNullBytePad(&copy)
+        return copy
     }
 }

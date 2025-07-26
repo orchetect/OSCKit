@@ -7,7 +7,7 @@
 // MARK: - OSCKitOptional
 
 /// Protocol describing an optional, used to enable extensions on types such as `Type<T>?`.
-protocol OSCKitOptional {
+package protocol OSCKitOptional {
     associatedtype Wrapped
     
     /// Semantic workaround used to enable extensions on types such as `Type<T>?
@@ -18,14 +18,14 @@ protocol OSCKitOptional {
 extension OSCKitOptional {
     /// Same as `Wrapped?.none`.
     @inlinable
-    static var noneValue: Wrapped? {
+    package static var noneValue: Wrapped? {
         .none
     }
 }
 
 extension Optional: OSCKitOptional {
     @inlinable
-    var optional: Wrapped? {
+    package var optional: Wrapped? {
         self
     }
 }

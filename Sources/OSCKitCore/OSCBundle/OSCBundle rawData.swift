@@ -14,53 +14,53 @@ extension OSCBundle {
         
         // parse a raw OSC packet and populates the struct's properties
         
-        let len = rawData.count
-        var ppos = 0 // parse byte position
+        let length = rawData.count
+        var offset = rawData.startIndex // parse byte position
         
         // validation: length. all bundles must include the header (8 bytes) and timetag (8 bytes).
-        if len < 16 {
-            throw OSCDecodeError.malformed("Data length too short. (Length is \(len))")
+        if length < 16 {
+            throw OSCDecodeError.malformed("Data length too short. (Length is \(length))")
         }
         
         // validation: check header
-        if rawData.subdata(in: Range(ppos ... ppos + 7)) != OSCBundle.header {
+        if rawData[offset ..< offset + 8]
+            != OSCBundle.header
+        {
             throw OSCDecodeError.malformed("Bundle header is not present or is malformed.")
         }
         
         // set up object array
-        var extractedElements = [any OSCObject]()
+        var extractedElements: [any OSCObject] = []
         
-        ppos += 8
+        offset += 8
         
-        guard let extractedTimeTag = rawData
-            .subdata(in: ppos ..< ppos + 8)
+        guard let extractedTimeTag = rawData[offset ..< offset + 8]
             .toUInt64(from: .bigEndian)
         else {
             throw OSCDecodeError.malformed("Could not convert timetag to UInt64.")
         }
         
-        ppos += 8
+        offset += 8
         
-        while ppos < len {
+        while offset < rawData.endIndex {
             // int32 size chunk
-            if rawData.count - (ppos + 3) < 0 {
+            guard offset + 4 <= rawData.endIndex else {
                 throw OSCDecodeError.malformed("Data bytes ended earlier than expected.")
             }
-            guard let elementSize = rawData
-                .subdata(in: ppos ..< ppos + 4)
+            guard let elementSize = rawData[offset ..< offset + 4]
                 .toInt32(from: .bigEndian)?.int
             else {
                 throw OSCDecodeError.malformed("Could not convert element size to Int32.")
             }
             
-            ppos += 4
+            offset += 4
             
             // test for bundle or message
-            if rawData.count - (ppos + elementSize) < 0 {
+            guard (offset + elementSize) <= rawData.endIndex else {
                 throw OSCDecodeError.malformed("Data bytes ended earlier than expected.")
             }
             
-            let elementContents = rawData.subdata(in: ppos ..< ppos + elementSize)
+            let elementContents = rawData[offset ..< offset + elementSize]
             
             guard let oscObject = elementContents.oscObjectType else {
                 throw OSCDecodeError.malformed("Unrecognized bundle element encountered.")
@@ -76,7 +76,7 @@ extension OSCBundle {
                 extractedElements.append(newMessage)
             }
             
-            ppos += elementSize
+            offset += elementSize
         }
         
         // update public properties
@@ -94,12 +94,13 @@ extension OSCBundle {
         
         // max UDP IPv4 packet size is 65507 bytes,
         // 10kb is reasonable buffer for typical OSC bundles
-        var data = Data()
-        data.reserveCapacity(10000)
+        var data = Data(capacity: 10000)
         
-        data.append(OSCBundle.header) // prime the header
+        // prime the header
+        data.append(OSCBundle.header)
         
-        data.append(timeTag.rawValue.toData(.bigEndian)) // add timetag
+        // add timetag
+        data.append(timeTag.rawValue.toData(.bigEndian))
         
         for element in elements {
             let raw = try element.rawData()
