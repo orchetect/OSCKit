@@ -1,6 +1,6 @@
 # ``OSCKit``
 
-Open Sound Control (OSC) library for macOS, iOS and tvOS.
+Open Sound Control (OSC) library for macOS, iOS, tvOS and visionOS.
 
 ## Overview
 
