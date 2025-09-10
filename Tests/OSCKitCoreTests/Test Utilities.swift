@@ -8,6 +8,12 @@ import CoreFoundation
 import Foundation
 import Testing
 
+#if canImport(Darwin)
+import Darwin
+#elseif canImport(Glibc)
+import Glibc
+#endif
+
 /// Use as a condition for individual tests that rely on stable/precise system timing.
 func isSystemTimingStable(
     duration: TimeInterval = 0.1,
