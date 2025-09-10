@@ -222,6 +222,6 @@ jobs:
     steps:
     - uses: actions/checkout@main
     - name: Build # for the time being, only the OSCKitCore library target is supported on Linux
-      run: swift build --product OSCKitCore
+      run: swift build --target OSCKitCore
     - name: Unit Tests
-      run: swift test --product OSCKitCore
+      run: swift test --target OSCKitCore
