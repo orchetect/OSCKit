@@ -9,7 +9,11 @@
 /// ----------------------------------------------
 /// ----------------------------------------------
 
+#if canImport(Darwin)
 import Darwin
+#elseif canImport(Glibc)
+import Glibc
+#endif
 
 extension FloatingPoint {
     /// Similar to `Int.quotientAndRemainder(dividingBy:)` from the standard Swift library.
