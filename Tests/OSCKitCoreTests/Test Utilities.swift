@@ -4,6 +4,7 @@
 //  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
+import CoreFoundation
 import Foundation
 import Testing
 

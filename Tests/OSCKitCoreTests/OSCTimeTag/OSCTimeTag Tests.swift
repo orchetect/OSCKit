@@ -10,7 +10,7 @@ import Testing
 
 @Suite struct OSCTimeTag_Tests {
     // De-flake mitigation: allow more time variance for CI pipeline
-    #if os(macOS)
+    #if os(macOS) || os(linux)
     let tolerance: TimeInterval = 0.001
     #elseif targetEnvironment(macCatalyst) || os(iOS) || os(tvOS) || os(watchOS)
     let tolerance: TimeInterval = 0.01
