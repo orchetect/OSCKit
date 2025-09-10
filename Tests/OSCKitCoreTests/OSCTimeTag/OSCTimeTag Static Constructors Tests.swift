@@ -10,11 +10,13 @@ import OSCKitCore
 import Testing
 
 @Suite struct OSCTimeTag_StaticConstructors_Tests {
-    #if os(macOS) || os(iOS) || os(linux)
+    #if os(macOS) || os(iOS)
     let tolerance: TimeInterval = 0.005
     #elseif os(tvOS) || os(watchOS)
     // allow more time variance for CI pipeline to de-flake
     let tolerance: TimeInterval = 0.01
+    #else // linux
+    let tolerance: TimeInterval = 0.005
     #endif
     
     // MARK: - Static Constructors
