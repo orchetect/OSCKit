@@ -71,7 +71,7 @@ jobs:
 
   iOS:
     name: iOS
-    runs-on: macos-lates
+    runs-on: macos-latest
     steps:
     - uses: actions/checkout@main
     - uses: maxim-lobanov/setup-xcode@v1
@@ -107,7 +107,7 @@ jobs:
 
   tvOS:
     name: tvOS
-    runs-on: macos-lates
+    runs-on: macos-latest
     steps:
     - uses: actions/checkout@main
     - uses: maxim-lobanov/setup-xcode@v1
@@ -143,7 +143,7 @@ jobs:
       
   watchOS:
     name: watchOS
-    runs-on: macos-lates
+    runs-on: macos-latest
     steps:
     - uses: actions/checkout@main
     - uses: maxim-lobanov/setup-xcode@v1
@@ -215,3 +215,13 @@ jobs:
       run: xcodebuild -project "Examples/UDP Socket/OSC UDP Socket.xcodeproj" -resolvePackageDependencies | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     - name: UDP Socket - Build
       run: xcodebuild build -project "Examples/UDP Socket/OSC UDP Socket.xcodeproj" -scheme "OSC UDP Socket" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+
+  linux:
+    name: Linux (OSCKitCore)
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@main
+    - name: Build
+      run: swift build
+    - name: Unit Tests
+      run: swift test

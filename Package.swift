@@ -6,22 +6,48 @@ import PackageDescription
 let package = Package(
     name: "OSCKit",
     platforms: [.macOS(.v10_15), .iOS(.v13), .tvOS(.v13)],
-    products: [
-        .library(
-            name: "OSCKit",
-            targets: ["OSCKit"]
-        ),
-        .library(
-            name: "OSCKitCore",
-            targets: ["OSCKitCore"]
-        )
-    ],
-    dependencies: [
-        .package(url: "https://github.com/robbiehanson/CocoaAsyncSocket", from: "7.0.0"),
-        .package(url: "https://github.com/orchetect/SwiftASCII", from: "1.1.5"),
+    products: products,
+    dependencies: dependencies,
+    targets: targets
+)
+
+var products: [Product] {
+    var products: [Product] = []
+    
+    #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
+    products += [
+        .library(name: "OSCKit", targets: ["OSCKit"])
+    ]
+    #endif
+    
+    products += [
+        .library(name: "OSCKitCore", targets: ["OSCKitCore"])
+    ]
+    return products
+}
+
+var dependencies: [Package.Dependency] {
+    var dependencies: [Package.Dependency] = []
+    
+    #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
+    dependencies += [
+        .package(url: "https://github.com/robbiehanson/CocoaAsyncSocket", from: "7.0.0")
+    ]
+    #endif
+    
+    dependencies += [
+        .package(url: "https://github.com/orchetect/SwiftASCII", from: "1.2.0"),
         .package(url: "https://github.com/apple/swift-numerics", from: "1.0.2")
-    ],
-    targets: [
+    ]
+    
+    return dependencies
+}
+
+var targets: [Target] {
+    var targets: [Target] = []
+    
+    #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
+    targets += [
         .target(
             name: "OSCKit",
             dependencies: [
@@ -34,14 +60,18 @@ let package = Package(
             ],
             swiftSettings: [.define("DEBUG", .when(configuration: .debug))]
         ),
+        .testTarget(
+            name: "OSCKitTests",
+            dependencies: ["OSCKit"]
+        )
+    ]
+    #endif
+    
+    targets += [
         .target(
             name: "OSCKitCore",
             dependencies: ["SwiftASCII"],
             swiftSettings: [.define("DEBUG", .when(configuration: .debug))]
-        ),
-        .testTarget(
-            name: "OSCKitTests",
-            dependencies: ["OSCKit"]
         ),
         .testTarget(
             name: "OSCKitCoreTests",
@@ -51,4 +81,6 @@ let package = Package(
             ]
         )
     ]
-)
+    
+    return targets
+}
