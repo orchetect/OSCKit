@@ -71,7 +71,7 @@ jobs:
 
   iOS:
     name: iOS
-    runs-on: macos-lates
+    runs-on: macos-latest
     steps:
     - uses: actions/checkout@main
     - uses: maxim-lobanov/setup-xcode@v1
@@ -107,7 +107,7 @@ jobs:
 
   tvOS:
     name: tvOS
-    runs-on: macos-lates
+    runs-on: macos-latest
     steps:
     - uses: actions/checkout@main
     - uses: maxim-lobanov/setup-xcode@v1
@@ -143,7 +143,7 @@ jobs:
       
   watchOS:
     name: watchOS
-    runs-on: macos-lates
+    runs-on: macos-latest
     steps:
     - uses: actions/checkout@main
     - uses: maxim-lobanov/setup-xcode@v1
