@@ -221,7 +221,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@main
-    - name: Build # for the time being, only the OSCKitCore library target is supported on Linux
-      run: swift build --target OSCKitCore --target OSCKitCoreTests
+    - name: Build
+      run: swift build
     - name: Unit Tests
-      run: swift test --skip-build
+      run: swift test
