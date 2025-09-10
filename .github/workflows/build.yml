@@ -215,3 +215,13 @@ jobs:
       run: xcodebuild -project "Examples/UDP Socket/OSC UDP Socket.xcodeproj" -resolvePackageDependencies | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     - name: UDP Socket - Build
       run: xcodebuild build -project "Examples/UDP Socket/OSC UDP Socket.xcodeproj" -scheme "OSC UDP Socket" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+
+  linux:
+    name: Linux (OSCKitCore)
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@main
+    - name: Build # for the time being, only the OSCKitCore library target is supported on Linux
+      run: swift build --product OSCKitCore
+    - name: Unit Tests
+      run: swift test --product OSCKitCore
