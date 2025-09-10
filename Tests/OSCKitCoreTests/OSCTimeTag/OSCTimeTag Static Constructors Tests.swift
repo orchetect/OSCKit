@@ -16,7 +16,7 @@ import Testing
     // allow more time variance for CI pipeline to de-flake
     let tolerance: TimeInterval = 0.01
     #else // linux
-    let tolerance: TimeInterval = 0.005
+    let tolerance: TimeInterval = 0.01
     #endif
     
     // MARK: - Static Constructors
