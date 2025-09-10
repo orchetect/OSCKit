@@ -18,7 +18,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/robbiehanson/CocoaAsyncSocket", from: "7.0.0"),
-        .package(url: "https://github.com/orchetect/SwiftASCII", from: "1.1.5"),
+        .package(url: "https://github.com/lhoward/SwiftASCII", branch: "lhoward/linux"),
         .package(url: "https://github.com/apple/swift-numerics", from: "1.0.2")
     ],
     targets: [
