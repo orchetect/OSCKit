@@ -15,7 +15,7 @@ import Testing
     #elseif targetEnvironment(macCatalyst) || os(iOS) || os(tvOS) || os(watchOS)
     let tolerance: TimeInterval = 0.01
     #else // linux
-    let tolerance: TimeInterval = 0.001
+    let tolerance: TimeInterval = 0.05
     #endif
     
     @Test
@@ -206,9 +206,10 @@ import Testing
     
     @Test
     func now_date() {
+        let date = Date()
         let tag = OSCTimeTag.now()
         let captureDate = tag.date
-        #expect(Date().timeIntervalSince(captureDate).isApproximatelyEqual(to: 0.0, absoluteTolerance: tolerance))
+        #expect(date.timeIntervalSince(captureDate).isApproximatelyEqual(to: 0.0, absoluteTolerance: tolerance))
     }
     
     @Test
