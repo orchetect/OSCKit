@@ -37,7 +37,7 @@ jobs:
       with:
         xcode-version: latest-stable
     - name: Build
-      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=macOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     - name: Unit Tests
       run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "platform=macOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
 
@@ -52,7 +52,7 @@ jobs:
     - name: Set Package to Swift 6.0
       run: swift package tools-version --set "6.0"
     - name: Build
-      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=macOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     - name: Unit Tests
       run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "platform=macOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
       
@@ -65,7 +65,7 @@ jobs:
       with:
         xcode-version: latest-stable
     - name: Build
-      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=macOS,variant=Mac Catalyst,name=Any Mac" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=macOS,variant=Mac Catalyst" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     - name: Unit Tests
       run: xcodebuild test -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "platform=macOS,variant=Mac Catalyst" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
 
@@ -77,8 +77,10 @@ jobs:
     - uses: maxim-lobanov/setup-xcode@v1
       with:
         xcode-version: latest-stable
+    - name: Prepare Platform
+      run: xcodebuild -downloadPlatform iOS
     - name: Build
-      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=iOS Simulator,name=Any iOS Device" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=iOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     - name: Prepare Destination Device Name
       id: destnameprep
       # As of GitHub's updates to the macOS-15 runner summer 2025, randomly Xcode may not list any simulators.
@@ -113,8 +115,10 @@ jobs:
     - uses: maxim-lobanov/setup-xcode@v1
       with:
         xcode-version: latest-stable
+    - name: Prepare Platform
+      run: xcodebuild -downloadPlatform tvOS
     - name: Build
-      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=tvOS Simulator,name=Any tvOS Simulator Device" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=tvOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     - name: Prepare Destination Device Name
       id: destnameprep
       # As of GitHub's updates to the macOS-15 runner summer 2025, randomly Xcode may not list any simulators.
@@ -149,8 +153,10 @@ jobs:
     - uses: maxim-lobanov/setup-xcode@v1
       with:
         xcode-version: latest-stable
+    - name: Prepare Platform
+      run: xcodebuild -downloadPlatform watchOS
     - name: Build
-      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=watchOS Simulator,name=Any watchOS Simulator Device" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+      run: xcodebuild build -workspace ".swiftpm/xcode/package.xcworkspace" -scheme "$SCHEME" -destination "generic/platform=watchOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     - name: Prepare Destination Device Name
       id: destnameprep
       # As of GitHub's updates to the macOS-15 runner summer 2025, randomly Xcode may not list any simulators.
@@ -189,32 +195,32 @@ jobs:
     - name: Custom Type - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
       run: xcodebuild -project "Examples/Custom Type/Custom OSC Type.xcodeproj" -resolvePackageDependencies | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     - name: Custom Type - Build
-      run: xcodebuild build -project "Examples/Custom Type/Custom OSC Type.xcodeproj" -scheme "Custom OSC Type" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+      run: xcodebuild build -project "Examples/Custom Type/Custom OSC Type.xcodeproj" -scheme "Custom OSC Type" -destination "generic/platform=macOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     
     - name: Method Blocks - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
       run: xcodebuild -project "Examples/Method Blocks/OSC Method Blocks.xcodeproj" -resolvePackageDependencies | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     - name: Method Blocks - Build
-      run: xcodebuild build -project "Examples/Method Blocks/OSC Method Blocks.xcodeproj" -scheme "OSC Method Blocks" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+      run: xcodebuild build -project "Examples/Method Blocks/OSC Method Blocks.xcodeproj" -scheme "OSC Method Blocks" -destination "generic/platform=macOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
       
     - name: Method IDs - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
       run: xcodebuild -project "Examples/Method IDs/OSC Method IDs.xcodeproj" -resolvePackageDependencies | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     - name: Method IDs - Build
-      run: xcodebuild build -project "Examples/Method IDs/OSC Method IDs.xcodeproj" -scheme "OSC Method IDs" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+      run: xcodebuild build -project "Examples/Method IDs/OSC Method IDs.xcodeproj" -scheme "OSC Method IDs" -destination "generic/platform=macOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
       
     - name: TCP Client and Server - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
       run: xcodebuild -project "Examples/TCP Client and Server/OSC TCP Client and Server.xcodeproj" -resolvePackageDependencies | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     - name: TCP Client and Server - Build
-      run: xcodebuild build -project "Examples/TCP Client and Server/OSC TCP Client and Server.xcodeproj" -scheme "OSC TCP Client and Server" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+      run: xcodebuild build -project "Examples/TCP Client and Server/OSC TCP Client and Server.xcodeproj" -scheme "OSC TCP Client and Server" -destination "generic/platform=macOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
       
     - name: UDP Client and Server - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
       run: xcodebuild -project "Examples/UDP Client and Server/OSC UDP Client and Server.xcodeproj" -resolvePackageDependencies | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     - name: UDP Client and Server - Build
-      run: xcodebuild build -project "Examples/UDP Client and Server/OSC UDP Client and Server.xcodeproj" -scheme "OSC UDP Client and Server" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+      run: xcodebuild build -project "Examples/UDP Client and Server/OSC UDP Client and Server.xcodeproj" -scheme "OSC UDP Client and Server" -destination "generic/platform=macOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
       
     - name: UDP Socket - Resolve Package Dependencies # needed because sometimes xcodebuild fails otherwise
       run: xcodebuild -project "Examples/UDP Socket/OSC UDP Socket.xcodeproj" -resolvePackageDependencies | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
     - name: UDP Socket - Build
-      run: xcodebuild build -project "Examples/UDP Socket/OSC UDP Socket.xcodeproj" -scheme "OSC UDP Socket" -destination "generic/platform=macOS,name=Any Mac" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+      run: xcodebuild build -project "Examples/UDP Socket/OSC UDP Socket.xcodeproj" -scheme "OSC UDP Socket" -destination "generic/platform=macOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
 
   linux:
     name: Linux (OSCKitCore)
