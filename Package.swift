@@ -23,6 +23,7 @@ var products: [Product] {
     products += [
         .library(name: "OSCKitCore", targets: ["OSCKitCore"])
     ]
+    
     return products
 }
 
