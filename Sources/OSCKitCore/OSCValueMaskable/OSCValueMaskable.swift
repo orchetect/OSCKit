@@ -7,7 +7,7 @@
 import Foundation
 
 /// Protocol which all maskable ``OSCValue`` types conform.
-public protocol OSCValueMaskable {
+public protocol OSCValueMaskable: SendableMetatype {
     /// Token describing the OSC value's OSC type.
     static var oscValueToken: OSCValueToken { get }
 }

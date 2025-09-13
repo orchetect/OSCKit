@@ -9,7 +9,7 @@ import Foundation
 // MARK: - OSCObject
 
 /// Protocol adopted by all OSC data objects, namely ``OSCMessage`` and ``OSCBundle``.
-public protocol OSCObject: Equatable, Hashable where Self: Sendable {
+public protocol OSCObject: Equatable, Hashable, Sendable {
     /// Enum case describing the OSC object type.
     static var oscObjectType: OSCObjectType { get }
     
