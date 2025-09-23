@@ -261,9 +261,9 @@ import Testing
     }
     
     @Test
-    func readBytesCount() throws {
+    func readBytesCount() async throws {
         // (test harness)
-        func newDecoder(readByteLength: Int) throws -> Data {
+        @Sendable func newDecoder(readByteLength: Int) throws -> Data {
             let data = Data([0x01, 0x02, 0x03, 0x04])
             var decoder = OSCValueDecoder(data: data)
             return try decoder.read(byteLength: readByteLength)
@@ -289,17 +289,22 @@ import Testing
         
         // failure - not enough bytes remaining
         #expect(throws: OSCDecodeError.self) {
-            try newDecoder(readByteLength: 5)
+            _ = try newDecoder(readByteLength: 5)
         }
         #expect(throws: OSCDecodeError.self) {
-            try newDecoder(readByteLength: 6)
+            _ = try newDecoder(readByteLength: 6)
         }
         
         // edge cases
         
-        // can't test byteLength of 0 because it causes an assert and we can't catch that in a unit
-        // test. it is however not an error condition, just a warning.
-        // #expect(try newDecoder { try $0.read(byteLength: 0) }, Data([]))
+        // test byte length of 0 which causes an assert.
+        // it is however not an error condition, just a warning.
+        // only asserts in debug builds. only testable with Xcode 26+ on macOS.
+        #if os(macOS) && DEBUG && compiler(>=6.2)
+        await #expect(processExitsWith: .failure) {
+            _ = try newDecoder(readByteLength: 0)
+        }
+        #endif
         
         // negative read count throws error
         #expect(throws: OSCDecodeError.self) {

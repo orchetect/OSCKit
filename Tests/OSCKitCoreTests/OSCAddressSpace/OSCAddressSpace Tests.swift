@@ -37,6 +37,28 @@ import Testing
     }
     
     @Test
+    func registerAddress_EmptyAddress() async throws {
+        // only asserts in debug builds. only testable with Xcode 26+ on macOS.
+        #if os(macOS) && DEBUG && compiler(>=6.2)
+        await #expect(processExitsWith: .failure) {
+            let addressSpace = OSCAddressSpace()
+            let _ = addressSpace.register(localAddress: "")
+        }
+        #endif
+    }
+    
+    @Test
+    func registerAddress_PathComponents_EmptyAddress() async throws {
+        // only asserts in debug builds. only testable with Xcode 26+ on macOS.
+        #if os(macOS) && DEBUG && compiler(>=6.2)
+        await #expect(processExitsWith: .failure) {
+            let addressSpace = OSCAddressSpace()
+            let _ = addressSpace.register(localAddress: [] as [String])
+        }
+        #endif
+    }
+    
+    @Test
     func unregisterAddress() throws {
         let addressSpace = OSCAddressSpace()
         

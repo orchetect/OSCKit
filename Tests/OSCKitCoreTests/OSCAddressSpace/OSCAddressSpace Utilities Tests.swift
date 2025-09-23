@@ -15,6 +15,10 @@ import Testing
         )
         
         #expect(
+            OSCAddressSpace.Node.validate(name: " ")
+        )
+        
+        #expect(
             OSCAddressSpace.Node.validate(name: "abcDEF1234")
         )
         
@@ -55,6 +59,10 @@ import Testing
     func nodeValidateNameStrict() {
         #expect(
             !OSCAddressSpace.Node.validate(name: "", strict: true)
+        )
+        
+        #expect(
+            !OSCAddressSpace.Node.validate(name: " ", strict: true)
         )
         
         #expect(
