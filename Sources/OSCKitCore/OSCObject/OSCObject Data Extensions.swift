@@ -14,11 +14,13 @@ extension Data {
     ///   errors may be thrown.
     ///
     /// - Returns: Decoded ``OSCObject``, or `nil` if not an OSC data packet.
-    public func parseOSC() throws -> (any OSCObject)? {
+    package func parseOSCPacket() throws -> OSCPacket? {
         if appearsToBeOSCBundle {
-            return try OSCBundle(from: self)
+            let bundle = try OSCBundle(from: self)
+            return .bundle(bundle)
         } else if appearsToBeOSCMessage {
-            return try OSCMessage(from: self)
+            let message = try OSCMessage(from: self)
+            return .message(message)
         }
         
         return nil
@@ -27,7 +29,7 @@ extension Data {
     /// Test if data appears to be an OSC bundle or OSC message. (Basic validation)
     ///
     /// - Returns: An ``OSCObjectType`` case if validation succeeds.
-    public var oscObjectType: OSCObjectType? {
+    package var oscObjectType: OSCObjectType? {
         if appearsToBeOSCBundle {
             return .bundle
         } else if appearsToBeOSCMessage {

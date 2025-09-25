@@ -48,7 +48,7 @@ extension OSCUDPServerDelegate: GCDAsyncUdpSocketDelegate {
         remotePort: UInt16
     ) {
         do {
-            guard let payload = try data.parseOSC() else { return }
+            guard let payload = try data.parseOSCPacket()?.oscObject else { return }
             oscServer._handle(payload: payload, remoteHost: remoteHost, remotePort: remotePort)
         } catch {
             #if DEBUG

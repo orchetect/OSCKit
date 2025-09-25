@@ -61,7 +61,7 @@ extension _OSCTCPHandlerProtocol {
         let remotePort = sock.connectedPort
         for oscPacketData in oscPackets {
             do {
-                guard let oscObject = try oscPacketData.parseOSC() else {
+                guard let oscObject = try oscPacketData.parseOSCPacket()?.oscObject else {
                     #if DEBUG
                     print("Error parsing OSC object from incoming TCP data; it may not be OSC data or may be malformed.")
                     #endif

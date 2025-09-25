@@ -21,6 +21,8 @@ extension OSCPacket: Hashable { }
 
 extension OSCPacket: Sendable { }
 
+// MARK: - Raw Data
+
 extension OSCPacket {
     /// Initialize by parsing raw OSC packet data bytes.
     ///
@@ -32,18 +34,11 @@ extension OSCPacket {
     ///   and a new instance will be created. If the packet data is not an OSC packet, `nil` will
     ///   be returned.
     public init?(from rawData: Data) throws {
-        guard let oscObject = try rawData.parseOSC() else {
+        guard let oscPacket = try rawData.parseOSCPacket() else {
             return nil
         }
         
-        switch oscObject {
-        case let bundle as OSCBundle:
-            self = .bundle(bundle)
-        case let message as OSCMessage:
-            self = .message(message)
-        default:
-            throw OSCDecodeError.malformed("Unhandled OSC object class.")
-        }
+        self = oscPacket
     }
     
     /// Returns raw OSC packet data constructed from the struct's properties.
@@ -59,6 +54,14 @@ extension OSCPacket {
         switch self {
         case .message: .message
         case .bundle: .bundle
+        }
+    }
+    
+    /// Returns the enum case unwrapped, typed as ``OSCObject``.
+    package var oscObject: any OSCObject {
+        switch self {
+        case let .bundle(bundle): bundle
+        case let .message(message): message
         }
     }
 }
