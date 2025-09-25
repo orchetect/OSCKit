@@ -23,7 +23,7 @@ extension Bool: OSCValueCodable {
 
 @_documentation(visibility: internal)
 extension Bool: OSCValueEncodable {
-    public typealias OSCValueEncodingBlock = OSCValueVariableEncoder<OSCEncoded>
+    public typealias OSCValueEncodingBlock = OSCValueVariableTagEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
         (
             tag: value ? oscTypeTagTrue : oscTypeTagFalse,

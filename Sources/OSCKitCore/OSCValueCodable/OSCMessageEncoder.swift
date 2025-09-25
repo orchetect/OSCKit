@@ -77,7 +77,7 @@ public struct OSCMessageEncoder {
                 builderValuesChunk += data
             }
             
-        case let e as OSCValueVariableEncoder<T>:
+        case let e as OSCValueVariableTagEncoder<T>:
             let encoded = try e.block(value)
             
             builderTags += ASCIICharacter(encoded.tag)
