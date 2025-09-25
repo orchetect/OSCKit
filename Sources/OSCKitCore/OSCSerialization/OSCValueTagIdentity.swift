@@ -11,12 +11,13 @@ public enum OSCValueTagIdentity: Equatable, Hashable {
     /// Most OSC values are represented in this manner. ie: `i` for `Int32`, `s` for `String`, etc.
     case tag(Character)
     
-    /// The OSC value occupies a single static OSC-type tag character but it varies depending on the
-    /// content of the value.
+    /// The OSC value occupies a single OSC-type tag character when encoded but it varies depending
+    /// on the nature of the value or the content of the value's data payload.
     /// All possible type tags must be finite and known at compile time.
     ///
     /// An example is Boolean (true/false). A single instance of the concrete type (`Bool`) occupies
-    /// a single tag character but the character may be `T` or `F`.
+    /// a single tag character when encoded but the character may be `T` or `F`. Variable is how OSCKit
+    /// itself internally implements `Bool` encoding and decoding.
     case variable([Character])
     
     /// The OSC "value" may be complex in nature and occupies one or more OSC-type tag characters
@@ -50,9 +51,9 @@ extension OSCValueTagIdentity {
         }
     }
     
-    /// Returns static tag(s) of the tag identity.
+    /// Returns known static tag(s) of the tag identity.
     /// If the identity is variadic, an empty array is always returned since the tags are known only
-    /// to the type's `OSCValueCodable` implementation.
+    /// to the type's ``OSCValueCodable`` implementation.
     func staticTags() -> [Character] {
         switch self {
         case let .tag(character):
