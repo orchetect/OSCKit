@@ -14,7 +14,7 @@ extension Float32: OSCValue {
 @_documentation(visibility: internal)
 extension Float32: OSCValueCodable {
     static let oscTag: Character = "f"
-    public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
+    public static let oscTagIdentity: OSCValueTagIdentity = .tag(oscTag)
 }
 
 @_documentation(visibility: internal)

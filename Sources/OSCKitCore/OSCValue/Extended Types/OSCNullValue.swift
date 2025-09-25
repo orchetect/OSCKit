@@ -54,7 +54,7 @@ extension OSCNullValue: OSCValue {
 @_documentation(visibility: internal)
 extension OSCNullValue: OSCValueCodable {
     static let oscTag: Character = "N"
-    public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
+    public static let oscTagIdentity: OSCValueTagIdentity = .tag(oscTag)
 }
 
 @_documentation(visibility: internal)

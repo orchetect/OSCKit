@@ -20,7 +20,7 @@ extension String: OSCValue {
 @_documentation(visibility: internal)
 extension String: OSCValueCodable {
     static let oscTag: Character = "s"
-    public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
+    public static let oscTagIdentity: OSCValueTagIdentity = .tag(oscTag)
 }
 
 @_documentation(visibility: internal)

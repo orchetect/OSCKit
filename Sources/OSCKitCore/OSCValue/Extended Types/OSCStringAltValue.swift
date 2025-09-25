@@ -82,7 +82,7 @@ extension OSCStringAltValue: OSCValue {
 @_documentation(visibility: internal)
 extension OSCStringAltValue: OSCValueCodable {
     static let oscTag: Character = "S"
-    public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
+    public static let oscTagIdentity: OSCValueTagIdentity = .tag(oscTag)
 }
 
 @_documentation(visibility: internal)

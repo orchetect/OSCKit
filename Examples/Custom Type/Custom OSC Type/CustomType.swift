@@ -33,8 +33,9 @@ extension CustomType: OSCValueCodable {
     // uses an OSC Type Tag that already exists.
     // For a reference of existing OSC Type Tags, see the OSC 1.0 spec online.
     static let oscTag: Character = "j"
-    // atomic indicates that the tag is static and will never change based on its data content
-    static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
+    
+    // establishes that the tag is static and will never change based on its data payload
+    static let oscTagIdentity: OSCValueTagIdentity = .tag(oscTag)
 }
 
 extension CustomType: OSCValueEncodable {

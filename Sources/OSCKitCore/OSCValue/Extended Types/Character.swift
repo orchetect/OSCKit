@@ -22,7 +22,7 @@ extension Character: OSCValue {
 @_documentation(visibility: internal)
 extension Character: OSCValueCodable {
     static let oscTag: Character = "c"
-    public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
+    public static let oscTagIdentity: OSCValueTagIdentity = .tag(oscTag)
 }
 
 @_documentation(visibility: internal)

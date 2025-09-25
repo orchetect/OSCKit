@@ -85,7 +85,7 @@ extension OSCSerialization {
         tagIdentities
             .filter {
                 switch $0.identity {
-                case let .atomic(char):
+                case let .tag(char):
                     char == character
                 case let .variable(chars):
                     chars.contains(character)

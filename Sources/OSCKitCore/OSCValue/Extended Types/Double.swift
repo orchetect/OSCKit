@@ -14,7 +14,7 @@ extension Double: OSCValue {
 @_documentation(visibility: internal)
 extension Double: OSCValueCodable {
     static let oscTag: Character = "d"
-    public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
+    public static let oscTagIdentity: OSCValueTagIdentity = .tag(oscTag)
 }
 
 @_documentation(visibility: internal)

@@ -14,7 +14,7 @@ extension OSCTimeTag: OSCValue {
 @_documentation(visibility: internal)
 extension OSCTimeTag: OSCValueCodable {
     static let oscTag: Character = "t"
-    public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
+    public static let oscTagIdentity: OSCValueTagIdentity = .tag(oscTag)
 }
 
 @_documentation(visibility: internal)

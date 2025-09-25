@@ -14,7 +14,7 @@ extension Int64: OSCValue {
 @_documentation(visibility: internal)
 extension Int64: OSCValueCodable {
     static let oscTag: Character = "h"
-    public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
+    public static let oscTagIdentity: OSCValueTagIdentity = .tag(oscTag)
 }
 
 @_documentation(visibility: internal)

@@ -131,7 +131,7 @@ extension OSCMIDIValue: OSCValue {
 @_documentation(visibility: internal)
 extension OSCMIDIValue: OSCValueCodable {
     static let oscTag: Character = "m"
-    public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
+    public static let oscTagIdentity: OSCValueTagIdentity = .tag(oscTag)
 }
 
 @_documentation(visibility: internal)

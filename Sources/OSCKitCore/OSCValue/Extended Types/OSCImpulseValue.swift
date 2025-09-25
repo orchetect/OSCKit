@@ -54,7 +54,7 @@ extension OSCImpulseValue: OSCValue {
 @_documentation(visibility: internal)
 extension OSCImpulseValue: OSCValueCodable {
     static let oscTag: Character = "I"
-    public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
+    public static let oscTagIdentity: OSCValueTagIdentity = .tag(oscTag)
 }
 
 @_documentation(visibility: internal)
