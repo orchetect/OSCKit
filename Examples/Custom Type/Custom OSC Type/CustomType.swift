@@ -9,7 +9,7 @@ import OSCKitCore
 
 // NOTE:
 // In this basic example, we've chosen to use the underlying OSC Type "blob", which is essentially raw data, as our
-// underlying data storage chunk within an OSC message, since our object conforms to Codable and it's easily converted
+// underlying data storage chunk within an OSC message, since our type conforms to Codable and it's easily converted
 // to/from Data.
 //
 // Since we've chosen to use JSONEncoder, and JSON is technically text (string) block, we could have also chosen

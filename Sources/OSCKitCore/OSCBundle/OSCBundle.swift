@@ -14,7 +14,7 @@ import Foundation
 /// packet along with an OSC time tag. Bundles may recursively nest as long as the total data size
 /// fits within a single packet.
 public struct OSCBundle {
-    /// Enum describing the OSC object/packet type.
+    /// Enum describing the OSC packet type.
     public static let packetType: OSCPacketType = .bundle
     
     /// Time tag.

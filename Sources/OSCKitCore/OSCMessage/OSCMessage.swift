@@ -66,7 +66,7 @@ extension OSCMessage: CustomStringConvertible {
 // MARK: - Static
 
 extension OSCMessage {
-    /// Enum describing the OSC object/packet type.
+    /// Enum describing the OSC packet type.
     public static let packetType: OSCPacketType = .message
 }
 

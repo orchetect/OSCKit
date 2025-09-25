@@ -29,7 +29,7 @@ extension OSCBundle {
             throw OSCDecodeError.malformed("Bundle header is not present or is malformed.")
         }
         
-        // set up object array
+        // set up packet array
         var extractedElements: [OSCPacket] = []
         
         offset += 8

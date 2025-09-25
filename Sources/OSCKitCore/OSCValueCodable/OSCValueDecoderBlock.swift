@@ -6,7 +6,7 @@
 
 import Foundation
 
-/// Protocol that ``OSCValue`` decoder block encapsulation objects adopt.
+/// Protocol that ``OSCValue`` decoder block encapsulation structs adopt.
 public protocol OSCValueDecoderBlock where Self: Sendable {
     associatedtype OSCDecoded: OSCValueDecodable
 }

@@ -429,8 +429,8 @@ extension Data {
 // MARK: - Data Bytes
 
 extension Collection<UInt8> {
-    /// Same as `Data(self)`
-    /// Returns a Data object using the array as bytes.
+    /// Returns a `Data` instance using the array as bytes.
+    /// Same as `Data(self)`.
     package var data: Data {
         Data(self)
     }

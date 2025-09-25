@@ -51,7 +51,7 @@ extension _OSCTCPHandlerProtocol {
         
         guard !oscPackets.isEmpty else {
             #if DEBUG
-            print("Failed to parse OSC objects from incoming TCP data.")
+            print("Failed to parse OSC packets from incoming TCP data.")
             #endif
             
             return
@@ -63,7 +63,7 @@ extension _OSCTCPHandlerProtocol {
             do {
                 guard let oscPacket = try OSCPacket(from: oscPacketData) else {
                     #if DEBUG
-                    print("Error parsing OSC object from incoming TCP data; it may not be OSC data or may be malformed.")
+                    print("Error parsing OSC packet from incoming TCP data; it may not be OSC data or may be malformed.")
                     #endif
                     
                     continue
