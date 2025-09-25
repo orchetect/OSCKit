@@ -73,3 +73,43 @@ extension OSCPacket {
         }
     }
 }
+
+// MARK: - Static Constructors
+
+extension OSCPacket {
+    /// Construct a new OSC bundle.
+    public static func bundle(
+        timeTag: OSCTimeTag? = nil,
+        _ elements: [OSCPacket] = []
+    ) -> Self {
+        let bundle = OSCBundle(
+            timeTag: timeTag,
+            elements.map(\.oscObject)
+        )
+        return .bundle(bundle)
+    }
+    
+    /// Construct a new OSC message.
+    public static func message(
+        _ addressPattern: String,
+        values: OSCValues = []
+    ) -> Self {
+        let message = OSCMessage(
+            OSCAddressPattern(addressPattern),
+            values: values
+        )
+        return .message(message)
+    }
+    
+    /// Construct a new OSC message.
+    public static func message(
+        _ addressPattern: OSCAddressPattern,
+        values: OSCValues = []
+    ) -> Self {
+        let message = OSCMessage(
+            addressPattern,
+            values: values
+        )
+        return .message(message)
+    }
+}
