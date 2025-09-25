@@ -169,11 +169,51 @@ extension OSCUDPClient {
     /// The default port for OSC communication is 8000 but may change depending on device/software
     /// manufacturer.
     public func send(
-        _ oscObject: any OSCObject,
+        _ oscPacket: OSCPacket,
         to host: String,
         port: UInt16 = 8000
     ) throws {
-        let data = try oscObject.rawData()
+        let data = try oscPacket.rawData()
+        
+        udpSocket.send(
+            data,
+            toHost: host,
+            port: port,
+            withTimeout: 1.0,
+            tag: 0
+        )
+    }
+    
+    /// Send an OSC bundle ad-hoc to a recipient on the network.
+    ///
+    /// The default port for OSC communication is 8000 but may change depending on device/software
+    /// manufacturer.
+    public func send(
+        _ oscBundle: OSCBundle,
+        to host: String,
+        port: UInt16 = 8000
+    ) throws {
+        let data = try oscBundle.rawData()
+        
+        udpSocket.send(
+            data,
+            toHost: host,
+            port: port,
+            withTimeout: 1.0,
+            tag: 0
+        )
+    }
+    
+    /// Send an OSC message ad-hoc to a recipient on the network.
+    ///
+    /// The default port for OSC communication is 8000 but may change depending on device/software
+    /// manufacturer.
+    public func send(
+        _ oscMessage: OSCMessage,
+        to host: String,
+        port: UInt16 = 8000
+    ) throws {
+        let data = try oscMessage.rawData()
         
         udpSocket.send(
             data,

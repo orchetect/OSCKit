@@ -66,7 +66,7 @@ import Testing
         }
         
         let remainingData = Data(knownGoodOSCRawBytes)
-        let _oscPacket = try remainingData.parseOSCPacket()
+        let _oscPacket = try OSCPacket(from: remainingData)
         let oscPacket = try #require(_oscPacket)
         handleOSCPacket(oscPacket)
     }
@@ -95,7 +95,7 @@ import Testing
         
         let remainingData = Data(knownGoodOSCRawBytes)
         
-        let _oscPacket = try remainingData.parseOSCPacket()
+        let _oscPacket = try OSCPacket(from: remainingData)
         let oscPacket = try #require(_oscPacket)
             
         switch oscPacket {
@@ -141,7 +141,7 @@ import Testing
         // parse block
         
         let remainingData = Data(knownGoodOSCRawBytes)
-        let oscPacket = try remainingData.parseOSCPacket()
+        let oscPacket = try OSCPacket(from: remainingData)
             
         switch oscPacket {
         case let .bundle(bundle):
@@ -149,7 +149,10 @@ import Testing
             #expect(bundle.timeTag.rawValue == 1)
             #expect(bundle.elements.count == 1)
                 
-            let msg = try #require(bundle.elements.first as? OSCMessage)
+            guard case let .message(msg) = bundle.elements.first else {
+                Issue.record()
+                return
+            }
                 
             #expect(msg.addressPattern.stringValue == "/testaddress")
             #expect(msg.values.count == 1)
@@ -187,7 +190,7 @@ import Testing
         let remainingData = Data(knownBadOSCRawBytes)
         
         do {
-            _ = try remainingData.parseOSCPacket()
+            _ = try OSCPacket(from: remainingData)
             Issue.record("Should throw an error.")
         } catch _ as OSCDecodeError {
             // handle decode errors
@@ -230,7 +233,7 @@ import Testing
         let remainingData = Data(knownGoodOSCRawBytes)
         
         do {
-            _ = try remainingData.parseOSCPacket()
+            _ = try OSCPacket(from: remainingData)
             Issue.record("Should throw an error.")
         } catch _ as OSCDecodeError {
             // handle decode errors
@@ -273,7 +276,7 @@ import Testing
         let remainingData = Data(knownGoodOSCRawBytes)
         
         do {
-            _ = try remainingData.parseOSCPacket()
+            _ = try OSCPacket(from: remainingData)
             Issue.record("Should throw an error.")
         } catch _ as OSCDecodeError {
             // handle decode errors

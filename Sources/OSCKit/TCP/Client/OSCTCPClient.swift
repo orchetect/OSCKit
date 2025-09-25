@@ -119,8 +119,18 @@ extension OSCTCPClient {
 
 extension OSCTCPClient: _OSCTCPSendProtocol {
     /// Send an OSC bundle or message to the host.
-    public func send(_ oscObject: any OSCObject) throws {
-        try _send(oscObject, tag: 0)
+    public func send(_ oscPacket: OSCPacket) throws {
+        try _send(oscPacket, tag: 0)
+    }
+    
+    /// Send an OSC bundle to the host.
+    public func send(_ oscBundle: OSCBundle) throws {
+        try _send(oscBundle, tag: 0)
+    }
+    
+    /// Send an OSC message to the host.
+    public func send(_ oscMessage: OSCMessage) throws {
+        try _send(oscMessage, tag: 0)
     }
 }
 

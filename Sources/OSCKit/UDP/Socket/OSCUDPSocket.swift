@@ -172,7 +172,7 @@ extension OSCUDPSocket {
     /// The default port for OSC communication is 8000 but may change depending on device/software
     /// manufacturer.
     public func send(
-        _ oscObject: any OSCObject,
+        _ oscPacket: OSCPacket,
         to host: String? = nil,
         port: UInt16? = nil
     ) throws {
@@ -193,7 +193,7 @@ extension OSCUDPSocket {
             )
         }
         
-        let data = try oscObject.rawData()
+        let data = try oscPacket.rawData()
         
         udpSocket.send(
             data,
@@ -202,6 +202,34 @@ extension OSCUDPSocket {
             withTimeout: 1.0,
             tag: 0
         )
+    }
+    
+    /// Send an OSC bundle to the remote host.
+    /// The ``remoteHost`` and ``remotePort`` properties are used unless one or both are
+    /// overridden in this call.
+    ///
+    /// The default port for OSC communication is 8000 but may change depending on device/software
+    /// manufacturer.
+    public func send(
+        _ oscBundle: OSCBundle,
+        to host: String? = nil,
+        port: UInt16? = nil
+    ) throws {
+        try send(.bundle(oscBundle), to: host, port: port)
+    }
+    
+    /// Send an OSC message to the remote host.
+    /// The ``remoteHost`` and ``remotePort`` properties are used unless one or both are
+    /// overridden in this call.
+    ///
+    /// The default port for OSC communication is 8000 but may change depending on device/software
+    /// manufacturer.
+    public func send(
+        _ oscMessage: OSCMessage,
+        to host: String? = nil,
+        port: UInt16? = nil
+    ) throws {
+        try send(.message(oscMessage), to: host, port: port)
     }
 }
 

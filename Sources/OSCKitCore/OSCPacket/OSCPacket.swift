@@ -15,11 +15,36 @@ public enum OSCPacket {
     case message(_ message: OSCMessage)
 }
 
+// MARK: - Equatable
+
 extension OSCPacket: Equatable { }
+
+// MARK: - Hashable
 
 extension OSCPacket: Hashable { }
 
+// MARK: - Sendable
+
 extension OSCPacket: Sendable { }
+
+// MARK: - CustomStringConvertible
+
+extension OSCPacket: CustomStringConvertible {
+    public var description: String {
+        switch self {
+        case let .bundle(bundle): bundle.description
+        case let .message(message): message.description
+        }
+    }
+    
+    /// Same as `description` but values are separated with new-line characters and indented.
+    public var descriptionPretty: String {
+        switch self {
+        case let .bundle(bundle): bundle.descriptionPretty
+        case let .message(message): message.descriptionPretty
+        }
+    }
+}
 
 // MARK: - Raw Data
 
@@ -34,11 +59,15 @@ extension OSCPacket {
     ///   and a new instance will be created. If the packet data is not an OSC packet, `nil` will
     ///   be returned.
     public init?(from rawData: Data) throws {
-        guard let oscPacket = try rawData.parseOSCPacket() else {
+        if rawData.appearsToBeOSCBundle {
+            let bundle = try OSCBundle(from: rawData)
+            self = .bundle(bundle)
+        } else if rawData.appearsToBeOSCMessage {
+            let message = try OSCMessage(from: rawData)
+            self = .message(message)
+        } else {
             return nil
         }
-        
-        self = oscPacket
     }
     
     /// Returns raw OSC packet data constructed from the struct's properties.
@@ -60,21 +89,29 @@ extension OSCPacket {
         case .bundle: .bundle
         }
     }
-}
-
-// MARK: - Internal
-
-extension OSCPacket {
-    /// Returns the enum case unwrapped, typed as ``OSCObject``.
-    package var oscObject: any OSCObject {
+    
+    /// A convenience to access all messages within the packet.
+    ///
+    /// If the packet is an OSC message, an array of one message will be returned.
+    ///
+    /// If the packet is an OSC bundle, all messages contained within it will be returned, preserving order.
+    public var messages: [OSCMessage] {
         switch self {
-        case let .bundle(bundle): bundle
-        case let .message(message): message
+        case let .bundle(bundle):
+            bundle.elements.reduce(into: []) { base, element in
+                base.append(contentsOf: element.messages)
+            }
+        case let .message(message):
+            [message]
         }
     }
 }
 
 // MARK: - Static Constructors
+
+// NOTE: Overloads that take variadic values were tested,
+// however for code consistency and proper indentation, it is
+// undesirable to have variadic parameters.
 
 extension OSCPacket {
     /// Construct a new OSC bundle.
@@ -84,7 +121,7 @@ extension OSCPacket {
     ) -> Self {
         let bundle = OSCBundle(
             timeTag: timeTag,
-            elements.map(\.oscObject)
+            elements
         )
         return .bundle(bundle)
     }

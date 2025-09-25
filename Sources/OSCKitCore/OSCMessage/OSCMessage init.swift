@@ -6,11 +6,7 @@
 
 import Foundation
 
-#if compiler(>=6.0)
-internal import SwiftASCII // internal inits
-#else
-@_implementationOnly import SwiftASCII // internal inits
-#endif
+internal import SwiftASCII
 
 // NOTE: Overloads that take variadic values were tested,
 // however for code consistency and proper indentation, it is

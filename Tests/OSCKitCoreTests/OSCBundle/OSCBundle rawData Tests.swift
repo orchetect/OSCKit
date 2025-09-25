@@ -73,7 +73,7 @@ import Testing
         #expect(bundle.timeTag.rawValue == 1)
         #expect(bundle.elements.count == 1)
         
-        let msg = try #require(bundle.elements.first as? OSCMessage)
+        guard case let .message(msg) = bundle.elements.first else { Issue.record(); return }
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values.first as? Int32)

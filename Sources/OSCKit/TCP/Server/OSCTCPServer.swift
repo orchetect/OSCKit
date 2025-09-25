@@ -110,21 +110,41 @@ extension OSCTCPServer {
 
 extension OSCTCPServer: _OSCTCPSendProtocol {
     /// Send an OSC bundle or message to all connected clients.
-    public func send(_ oscObject: any OSCObject) throws {
+    public func send(_ oscPacket: OSCPacket) throws {
         let clientIDs = Array(tcpDelegate.clients.keys)
         
-        try send(oscObject, toClientIDs: clientIDs)
+        try send(oscPacket, toClientIDs: clientIDs)
+    }
+    
+    /// Send an OSC bundle to all connected clients.
+    public func send(_ oscBundle: OSCBundle) throws {
+        try send(.bundle(oscBundle))
+    }
+    
+    /// Send an OSC message to all connected clients.
+    public func send(_ oscMessage: OSCMessage) throws {
+        try send(.message(oscMessage))
     }
     
     /// Send an OSC bundle or message to one or more connected clients.
-    public func send(_ oscObject: any OSCObject, toClientIDs clientIDs: [Int]) throws {
+    public func send(_ oscPacket: OSCPacket, toClientIDs clientIDs: [Int]) throws {
         for clientID in clientIDs {
-            try _send(oscObject, toClientID: clientID)
+            try _send(oscPacket, toClientID: clientID)
         }
     }
     
+    /// Send an OSC bundle to one or more connected clients.
+    public func send(_ oscBundle: OSCBundle, toClientIDs clientIDs: [Int]) throws {
+        try send(.bundle(oscBundle), toClientIDs: clientIDs)
+    }
+    
+    /// Send an OSC message to one or more connected clients.
+    public func send(_ oscMessage: OSCMessage, toClientIDs clientIDs: [Int]) throws {
+        try send(.message(oscMessage), toClientIDs: clientIDs)
+    }
+    
     /// Send an OSC bundle or message to an individual connected client.
-    func _send(_ oscObject: any OSCObject, toClientID clientID: Int) throws {
+    func _send(_ oscPacket: OSCPacket, toClientID clientID: Int) throws {
         guard let connection = tcpDelegate.clients[clientID] else {
             throw GCDAsyncUdpSocketError(
                 .badParamError,
@@ -132,7 +152,17 @@ extension OSCTCPServer: _OSCTCPSendProtocol {
             )
         }
         
-        try connection.send(oscObject)
+        try connection.send(oscPacket)
+    }
+    
+    /// Send an OSC bundle to an individual connected client.
+    func _send(_ oscBundle: OSCBundle, toClientID clientID: Int) throws {
+        try _send(.bundle(oscBundle), toClientID: clientID)
+    }
+    
+    /// Send an OSC message to an individual connected client.
+    func _send(_ oscMessage: OSCMessage, toClientID clientID: Int) throws {
+        try _send(.message(oscMessage), toClientID: clientID)
     }
 }
 

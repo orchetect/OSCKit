@@ -13,16 +13,16 @@ import Foundation
 /// An OSC bundle can contain zero or more OSC messages and/or OSC bundles, sent in a single
 /// packet along with an OSC time tag. Bundles may recursively nest as long as the total data size
 /// fits within a single packet.
-public struct OSCBundle: OSCObject {
+public struct OSCBundle {
+    /// Enum describing the OSC object/packet type.
     public static let packetType: OSCPacketType = .bundle
     
     /// Time tag.
     /// Default value 1: means "immediate" in OSC spec.
     public var timeTag: OSCTimeTag
     
-    /// Elements contained within the bundle. These can be ``OSCBundle`` or ``OSCMessage``
-    /// instances.
-    public var elements: [any OSCObject]
+    /// Bundles and/or messages contained within the bundle.
+    public var elements: [OSCPacket]
     
     @usableFromInline
     let _rawData: Data?
@@ -31,45 +31,18 @@ public struct OSCBundle: OSCObject {
 // MARK: - Equatable
 
 extension OSCBundle: Equatable {
-    public static func == (lhs: Self, rhs: Self) -> Bool {
+    public func elementsEqual(to other: Self) -> Bool {
         // don't factor timeTag into equality
         
-        guard lhs.elements.count == rhs.elements.count else { return false }
+        guard elements.count == other.elements.count else { return false }
         
-        for (lhsIndex, rhsIndex) in zip(lhs.elements.indices, rhs.elements.indices) {
-            switch lhs.elements[lhsIndex] {
-            case let lhsElementTyped as OSCBundle:
-                guard let rhsElementTyped = rhs.elements[rhsIndex] as? OSCBundle
-                else { return false }
-                
-                guard lhsElementTyped == rhsElementTyped else { return false }
-                
-            case let lhsElementTyped as OSCMessage:
-                guard let rhsElementTyped = rhs.elements[rhsIndex] as? OSCMessage
-                else { return false }
-                
-                guard lhsElementTyped == rhsElementTyped else { return false }
-                
-            default:
-                return false
-            }
-        }
-        
-        return true
+        return elements == other.elements
     }
 }
 
 // MARK: - Hashable
 
-extension OSCBundle: Hashable {
-    public func hash(into hasher: inout Hasher) {
-        // don't factor timeTag into hash
-        
-        for element in elements {
-            hasher.combine(element)
-        }
-    }
-}
+extension OSCBundle: Hashable { }
 
 // MARK: - Sendable
 
@@ -106,28 +79,6 @@ extension OSCBundle: CustomStringConvertible {
         }
     }
 }
-
-// TODO: Codable - fix or remove; would require OSCValue to conform to Codable too
-
-// extension OSCBundle: Codable {
-//    enum CodingKeys: String, CodingKey {
-//        case timeTag
-//        case elements
-//    }
-//
-//    public init(from decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//        let timeTag = try container.decode(OSCTimeTag.RawValue.self, forKey: .timeTag)
-//        let elements = try container.decode([any OSCObject].self, forKey: .elements)
-//        self.init(elements: elements, timeTag: OSCTimeTag(timeTag))
-//    }
-//
-//    public func encode(to encoder: Encoder) throws {
-//        var container = encoder.container(keyedBy: CodingKeys.self)
-//        try container.encode(timeTag.rawValue, forKey: .timeTag)
-//        try container.encode(elements, forKey: .elements)
-//    }
-// }
 
 // MARK: - Header
 

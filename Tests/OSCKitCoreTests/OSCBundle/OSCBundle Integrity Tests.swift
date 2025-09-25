@@ -104,19 +104,19 @@ import Testing
         #expect(decodedOSCbundle.timeTag.rawValue == 1)
         #expect(decodedOSCbundle.elements.count == 4)
         
-        let element1 = try #require(decodedOSCbundle.elements[0] as? OSCBundle)
+        guard case let .bundle(element1) = decodedOSCbundle.elements[0] else { Issue.record(); return }
         #expect(element1.timeTag.rawValue == 1)
         #expect(element1.elements.count == 1)
         
-        let element1A = try #require(element1.elements[0] as? OSCMessage)
+        guard case let .message(element1A) = element1.elements[0] else { Issue.record(); return }
         #expect(element1A.addressPattern.stringValue == "/bundle1/msg")
         #expect(element1A.values.isEmpty)
         
-        let element2 = try #require(decodedOSCbundle.elements[1] as? OSCBundle)
+        guard case let .bundle(element2) = decodedOSCbundle.elements[1] else { Issue.record(); return }
         #expect(element2.timeTag.rawValue == 1)
         #expect(element2.elements.count == 2)
         
-        let element2A = try #require(element2.elements[0] as? OSCMessage)
+        guard case let .message(element2A) = element2.elements[0] else { Issue.record(); return }
         #expect(element2A.addressPattern.stringValue == "/bundle2/msg1")
         #expect(element2A.values.count == 2)
         
@@ -126,7 +126,7 @@ import Testing
         let element2A2 = try #require(element2A.values[1] as? String)
         #expect(element2A2 == "some string here")
         
-        let element2B = try #require(element2.elements[1] as? OSCMessage)
+        guard case let .message(element2B) = element2.elements[1] else { Issue.record(); return }
         #expect(element2B.addressPattern.stringValue == "/bundle2/msg2")
         #expect(element2B.values.count == 2)
         
@@ -136,12 +136,12 @@ import Testing
         let element2B2 = try #require(element2B.values[1] as? Int32)
         #expect(element2B2 == 75)
         
-        let element3 = try #require(decodedOSCbundle.elements[2] as? OSCMessage)
+        guard case let .message(element3) = decodedOSCbundle.elements[2] else { Issue.record(); return }
         #expect(element3.addressPattern.stringValue == "/msg1")
         #expect(element3.values.count == 1)
         
         // element 4
-        let element4 = try #require(decodedOSCbundle.elements[3] as? OSCBundle)
+        guard case let .bundle(element4) = decodedOSCbundle.elements[3] else { Issue.record(); return }
         #expect(element4.timeTag.rawValue == 1)
         #expect(element4.elements.isEmpty)
     }

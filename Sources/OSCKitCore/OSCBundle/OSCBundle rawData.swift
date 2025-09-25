@@ -30,7 +30,7 @@ extension OSCBundle {
         }
         
         // set up object array
-        var extractedElements: [any OSCObject] = []
+        var extractedElements: [OSCPacket] = []
         
         offset += 8
         
@@ -69,11 +69,11 @@ extension OSCBundle {
             switch oscPacketType {
             case .bundle:
                 let newBundle = try OSCBundle(from: elementContents)
-                extractedElements.append(newBundle)
+                extractedElements.append(.bundle(newBundle))
                 
             case .message:
                 let newMessage = try OSCMessage(from: elementContents)
-                extractedElements.append(newMessage)
+                extractedElements.append(.message(newMessage))
             }
             
             offset += elementSize
@@ -84,7 +84,7 @@ extension OSCBundle {
         elements = extractedElements
     }
     
-    // (inline docs inherited from OSCObject protocol)
+    /// Returns raw OSC packet data constructed from the bundle content.
     public func rawData() throws -> Data {
         // return cached data if struct was originally initialized from raw data
         // so we don't needlessly church CPU cycles to generate the data

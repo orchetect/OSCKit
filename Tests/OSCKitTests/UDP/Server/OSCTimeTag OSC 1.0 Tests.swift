@@ -23,7 +23,7 @@ import Testing
                 [.message("/test", values: [Int32(123)])]
             )
             
-            server._handle(payload: bundle, remoteHost: "localhost", remotePort: 8000)
+            server._handle(packet: .bundle(bundle), remoteHost: "localhost", remotePort: 8000)
             
             try await Task.sleep(seconds: 0.5)
         }
@@ -43,7 +43,7 @@ import Testing
                 [.message("/test", values: [Int32(123)])]
             )
             
-            server._handle(payload: bundle, remoteHost: "localhost", remotePort: 8000)
+            server._handle(packet: .bundle(bundle), remoteHost: "localhost", remotePort: 8000)
             
             try await Task.sleep(seconds: 0.5)
         }
@@ -63,7 +63,7 @@ import Testing
                 [.message("/test", values: [Int32(123)])]
             )
             
-            server._handle(payload: bundle, remoteHost: "localhost", remotePort: 8000)
+            server._handle(packet: .bundle(bundle), remoteHost: "localhost", remotePort: 8000)
             
             try await Task.sleep(seconds: 0.5)
         }
@@ -84,7 +84,7 @@ import Testing
                 [.message("/test", values: [Int32(123)])]
             )
             
-            server._handle(payload: bundle, remoteHost: "localhost", remotePort: 8000)
+            server._handle(packet: .bundle(bundle), remoteHost: "localhost", remotePort: 8000)
             
             try await Task.sleep(seconds: 0.9) // just under 1 second
         }
@@ -106,7 +106,7 @@ import Testing
                 [.message("/test", values: [Int32(123)])]
             )
             
-            server._handle(payload: bundle, remoteHost: "localhost", remotePort: 8000)
+            server._handle(packet: .bundle(bundle), remoteHost: "localhost", remotePort: 8000)
             
             // Note: this may be flaky on slow CI systems
             try await Task.sleep(seconds: 1.1) // just over 1 second
@@ -127,7 +127,7 @@ import Testing
                 [.message("/test", values: [Int32(123)])]
             )
             
-            server._handle(payload: bundle, remoteHost: "localhost", remotePort: 8000)
+            server._handle(packet: .bundle(bundle), remoteHost: "localhost", remotePort: 8000)
             
             try await Task.sleep(seconds: 0.5)
         }

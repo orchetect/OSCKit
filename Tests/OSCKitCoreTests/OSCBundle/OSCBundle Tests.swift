@@ -17,12 +17,12 @@ import Testing
         let msg2 = OSCMessage("/msg2")
         let msg3 = OSCMessage("/msg1", values: [Int32(123)])
         
-        let bundle1 = OSCBundle([msg1])
-        let bundle2 = OSCBundle([msg3])
+        let bundle1 = OSCBundle([.message(msg1)])
+        let bundle2 = OSCBundle([.message(msg3)])
         let bundle3 = OSCBundle([
-            bundle1,
-            bundle2,
-            msg2
+            .bundle(bundle1),
+            .bundle(bundle2),
+            .message(msg2)
         ])
         
         #expect(bundle1 == bundle1)
@@ -43,12 +43,12 @@ import Testing
         let msg2 = OSCMessage("/msg2")
         let msg3 = OSCMessage("/msg1", values: [Int32(123)])
         
-        let bundle1 = OSCBundle([msg1])
-        let bundle2 = OSCBundle([msg3])
+        let bundle1 = OSCBundle([.message(msg1)])
+        let bundle2 = OSCBundle([.message(msg3)])
         let bundle3 = OSCBundle([
-            bundle1,
-            bundle2,
-            msg2
+            .bundle(bundle1),
+            .bundle(bundle2),
+            .message(msg2)
         ])
         
         let set: Set<OSCBundle> = [bundle1, bundle1, bundle2, bundle2, bundle3, bundle3]

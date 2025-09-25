@@ -1,5 +1,5 @@
 //
-//  OSCObject Static Constructors Tests.swift
+//  OSCPacket Static Constructors Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
@@ -8,18 +8,21 @@ import OSCKitCore
 import SwiftASCII
 import Testing
 
-@Suite struct OSCObject_StaticConstructors_Tests {
+@Suite struct OSCPacket_StaticConstructors_Tests {
     // MARK: - OSCMessage
     
     @Test
     func oscMessage_AddressPatternString() throws {
         let addr = String("/msg1")
-        let obj: any OSCObject = .message(
+        let packet: OSCPacket = .message(
             addr,
             values: [Int32(123)]
         )
         
-        let msg: OSCMessage = try #require(obj as? OSCMessage)
+        guard case let .message(msg) = packet else {
+            Issue.record()
+            return
+        }
         
         #expect(msg.addressPattern.stringValue == "/msg1")
         #expect(msg.values[0] as? Int32 == Int32(123))
@@ -27,12 +30,15 @@ import Testing
     
     @Test
     func oscMessage_AddressPattern() throws {
-        let obj: any OSCObject = .message(
+        let packet: OSCPacket = .message(
             OSCAddressPattern("/msg1"),
             values: [Int32(123)]
         )
         
-        let msg: OSCMessage = try #require(obj as? OSCMessage)
+        guard case let .message(msg) = packet else {
+            Issue.record()
+            return
+        }
         
         #expect(msg.addressPattern.stringValue == "/msg1")
         #expect(msg.values[0] as? Int32 == Int32(123))
@@ -42,15 +48,22 @@ import Testing
     
     @Test
     func oscBundle() throws {
-        let obj: any OSCObject = .bundle([
+        let packet: OSCPacket = .bundle([
             .message("/", values: [Int32(123)])
         ])
         
-        let bundle: OSCBundle = try #require(obj as? OSCBundle)
+        guard case let .bundle(bundle) = packet else {
+            Issue.record()
+            return
+        }
         
         #expect(bundle.elements.count == 1)
         
-        let msg = try #require(bundle.elements[0] as? OSCMessage)
+        guard case let .message(msg) = bundle.elements[0] else {
+            Issue.record()
+            return
+        }
+        
         #expect(msg.values[0] as? Int32 == Int32(123))
     }
 }
