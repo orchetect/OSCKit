@@ -8,7 +8,7 @@ import Foundation
 import OSCKit
 
 /// OSC lifecycle and send/receive manager.
-final class OSCManager: ObservableObject, Sendable {
+@MainActor final class OSCManager: ObservableObject {
     private let client = OSCUDPClient()
     private let server = OSCUDPServer(port: 8000)
     
@@ -27,7 +27,9 @@ extension OSCManager {
         
         // setup server
         server.setReceiveHandler { [weak self] message, timeTag, host, port in
-            self?.handle(message: message, timeTag: timeTag, host: host, port: port)
+            Task { @MainActor in
+                self?.handle(message: message, timeTag: timeTag, host: host, port: port)
+            }
         }
         do { try server.start() } catch { print(error) }
     }

@@ -8,8 +8,7 @@ import Foundation
 import OSCKit
 
 /// OSC lifecycle and send/receive manager.
-@MainActor
-final class OSCManager: ObservableObject {
+@MainActor final class OSCManager: ObservableObject {
     private var client: OSCTCPClient?
     private var server: OSCTCPServer?
     
