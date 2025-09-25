@@ -13,8 +13,8 @@ public protocol OSCValueDecoderBlock where Self: Sendable {
 
 // MARK: - Decoder Blocks
 
-/// ``OSCValue`` atomic value decoder block encapsulation.
-public struct OSCValueAtomicDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDecoderBlock {
+/// ``OSCValue`` statically-tagged value decoder block encapsulation.
+public struct OSCValueStaticTagDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDecoderBlock {
     public typealias Block = @Sendable (
         _ decoder: inout OSCValueDecoder
     ) throws -> OSCDecoded

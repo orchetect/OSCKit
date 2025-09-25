@@ -27,7 +27,7 @@ extension Int32: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension Int32: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
+    public typealias OSCValueDecodingBlock = OSCValueStaticTagDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { decoder in
         try decoder.readInt32()
     }

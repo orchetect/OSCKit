@@ -67,7 +67,7 @@ extension OSCImpulseValue: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension OSCImpulseValue: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
+    public typealias OSCValueDecodingBlock = OSCValueStaticTagDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { decoder in
         OSCImpulseValue()
     }

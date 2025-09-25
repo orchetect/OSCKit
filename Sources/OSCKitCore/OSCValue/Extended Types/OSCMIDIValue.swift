@@ -147,7 +147,7 @@ extension OSCMIDIValue: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension OSCMIDIValue: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
+    public typealias OSCValueDecodingBlock = OSCValueStaticTagDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { decoder in
         let bytes = try decoder.read(byteLength: 4)
         

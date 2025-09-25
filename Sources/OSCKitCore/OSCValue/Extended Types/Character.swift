@@ -41,7 +41,7 @@ extension Character: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension Character: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
+    public typealias OSCValueDecodingBlock = OSCValueStaticTagDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { decoder in
         let asciiCharNum = try decoder.readInt32().int
         guard let asciiChar = ASCIICharacter(asciiCharNum) else {

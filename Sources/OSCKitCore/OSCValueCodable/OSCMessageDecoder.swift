@@ -129,7 +129,7 @@ enum OSCMessageDecoder {
         decoder: inout OSCValueDecoder
     ) throws -> (tagCount: Int, value: any OSCValue)? {
         switch T.oscDecoding {
-        case let d as OSCValueAtomicDecoder<T>:
+        case let d as OSCValueStaticTagDecoder<T>:
             let decoded = try d.block(&decoder)
             return (tagCount: 1, value: decoded)
             

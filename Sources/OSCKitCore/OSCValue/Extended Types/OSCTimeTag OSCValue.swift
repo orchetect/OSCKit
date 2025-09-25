@@ -30,7 +30,7 @@ extension OSCTimeTag: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension OSCTimeTag: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
+    public typealias OSCValueDecodingBlock = OSCValueStaticTagDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { decoder in
         let rawValue = try decoder.readUInt64()
         return OSCTimeTag(rawValue)

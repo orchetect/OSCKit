@@ -13,9 +13,9 @@ extension OSCInterpolatedValue
     where Self: BinaryInteger,
     CoreOSCValue: BinaryInteger,
     OSCValueEncodingBlock == OSCValueStaticTagEncoder<Self>,
-    OSCValueDecodingBlock == OSCValueAtomicDecoder<Self>,
+    OSCValueDecodingBlock == OSCValueStaticTagDecoder<Self>,
     CoreOSCValue.OSCValueEncodingBlock == OSCValueStaticTagEncoder<CoreOSCValue>,
-    CoreOSCValue.OSCValueDecodingBlock == OSCValueAtomicDecoder<CoreOSCValue>
+    CoreOSCValue.OSCValueDecodingBlock == OSCValueStaticTagDecoder<CoreOSCValue>
 {
     public static var oscEncoding: OSCValueEncodingBlock { OSCValueEncodingBlock { value in
         try CoreOSCValue.oscEncoding.block(CoreOSCValue(value))

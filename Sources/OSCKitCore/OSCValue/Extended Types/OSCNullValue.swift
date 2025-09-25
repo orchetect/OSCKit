@@ -67,7 +67,7 @@ extension OSCNullValue: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension OSCNullValue: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
+    public typealias OSCValueDecodingBlock = OSCValueStaticTagDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { decoder in
         OSCNullValue()
     }

@@ -96,7 +96,7 @@ extension OSCStringAltValue: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension OSCStringAltValue: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
+    public typealias OSCValueDecodingBlock = OSCValueStaticTagDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { decoder in
         try OSCStringAltValue(String.oscDecoding.block(&decoder))
     }

@@ -30,7 +30,7 @@ extension Double: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension Double: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
+    public typealias OSCValueDecodingBlock = OSCValueStaticTagDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { decoder in
         try decoder.readDouble()
     }

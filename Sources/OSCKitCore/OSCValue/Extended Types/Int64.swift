@@ -30,7 +30,7 @@ extension Int64: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension Int64: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
+    public typealias OSCValueDecodingBlock = OSCValueStaticTagDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { decoder in
         try decoder.readInt64()
     }

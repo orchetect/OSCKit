@@ -54,7 +54,7 @@ extension CustomType: OSCValueEncodable {
 }
 
 extension CustomType: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
+    public typealias OSCValueDecodingBlock = OSCValueStaticTagDecoder<OSCDecoded>
     static let oscDecoding = OSCValueDecodingBlock { dataReader in
         let decoder = JSONDecoder()
         

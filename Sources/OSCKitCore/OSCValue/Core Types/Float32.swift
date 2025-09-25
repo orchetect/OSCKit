@@ -27,7 +27,7 @@ extension Float32: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension Float32: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
+    public typealias OSCValueDecodingBlock = OSCValueStaticTagDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { decoder in
         try decoder.readFloat32()
     }
