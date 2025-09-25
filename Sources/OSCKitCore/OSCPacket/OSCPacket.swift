@@ -6,7 +6,7 @@
 
 import Foundation
 
-/// Packet enum containing an OSC bundle or message.
+/// OSC packet containing a bundle or message.
 public enum OSCPacket {
     /// OSC bundle.
     case bundle(_ bundle: OSCBundle)
@@ -48,7 +48,11 @@ extension OSCPacket {
         case let .message(message): try message.rawData()
         }
     }
-    
+}
+
+// MARK: - Properties
+
+extension OSCPacket {
     /// Returns an enum case describing the OSC object type.
     public var oscObjectType: OSCObjectType {
         switch self {
@@ -56,7 +60,11 @@ extension OSCPacket {
         case .bundle: .bundle
         }
     }
-    
+}
+
+// MARK: - Internal
+
+extension OSCPacket {
     /// Returns the enum case unwrapped, typed as ``OSCObject``.
     package var oscObject: any OSCObject {
         switch self {
