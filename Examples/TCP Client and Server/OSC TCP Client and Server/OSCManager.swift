@@ -137,17 +137,17 @@ extension OSCManager {
 // MARK: - Send
 
 extension OSCManager {
-    func sendToServer(_ message: OSCMessage) {
+    func sendToServer(_ packet: OSCPacket) {
         do {
-            try client?.send(message)
+            try client?.send(packet)
         } catch {
             print(error)
         }
     }
     
-    func sendToAllClients(_ message: OSCMessage) {
+    func sendToAllClients(_ packet: OSCPacket) {
         do {
-            try server?.send(message)
+            try server?.send(packet)
         } catch {
             print(error)
         }

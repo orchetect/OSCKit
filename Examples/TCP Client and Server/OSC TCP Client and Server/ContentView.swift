@@ -118,13 +118,13 @@ struct ContentView: View {
     
     private func sendTestOSCMessageToServer() {
         oscManager.sendToServer(
-            .message("/some/address/method", values: ["Test string", 123])
+            .message("/some/address/method", values: ["Hello from client", 123])
         )
     }
     
     private func sendTestOSCMessageToAllClients() {
         oscManager.sendToAllClients(
-            .message("/some/address/method", values: ["Test string", 123])
+            .message("/some/address/method", values: ["Hi from server", 123])
         )
     }
 }

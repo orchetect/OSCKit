@@ -66,9 +66,9 @@ extension OSCManager {
 // MARK: - Send
 
 extension OSCManager {
-    func send(_ message: OSCMessage, to host: String, port: UInt16) {
+    func send(_ packet: OSCPacket, to host: String, port: UInt16) {
         do {
-            try client.send(message, to: host, port: port)
+            try client.send(packet, to: host, port: port)
         } catch {
             print(error)
         }

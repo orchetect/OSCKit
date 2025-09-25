@@ -28,7 +28,7 @@ struct ContentView: View {
                 sendTestOSCMessageCWithOptionalValue()
             }
             
-            Button("Send Test OSC Message C With No Optional Value") {
+            Button("Send Test OSC Message C With Missing Optional Value") {
                 sendTestOSCMessageCWithNoOptionalValue()
             }
         }
