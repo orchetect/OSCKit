@@ -40,12 +40,12 @@ public struct OSCValueVariableTagDecoder<OSCDecoded: OSCValueDecodable>: OSCValu
     }
 }
 
-/// ``OSCValue`` variadic value decoder block encapsulation.
+/// ``OSCValue`` variadic-tagged value decoder block encapsulation.
 ///
 /// Return `nil` if no expected tags are encountered.
 /// Only throw an error if at least one expected tag is encountered but any other tags or value data
 /// is malformed.
-public struct OSCValueVariadicDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDecoderBlock {
+public struct OSCValueVariadicTagDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDecoderBlock {
     public typealias Block = @Sendable (
         _ tags: [Character],
         _ decoder: inout OSCValueDecoder

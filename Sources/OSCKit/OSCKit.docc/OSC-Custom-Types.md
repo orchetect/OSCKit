@@ -54,7 +54,7 @@ In order for a custom type to be usable as an OSC message value:
 - ``OSCValueStaticTagEncoder``
 - ``OSCValueVariableTagDecoder``
 - ``OSCValueVariableTagEncoder``
-- ``OSCValueVariadicDecoder``
+- ``OSCValueVariadicTagDecoder``
 - ``OSCValueVariadicEncoder``
 
 ### Errors

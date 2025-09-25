@@ -144,7 +144,7 @@ extension OSCArrayValue: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension OSCArrayValue: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueVariadicDecoder<OSCDecoded>
+    public typealias OSCValueDecodingBlock = OSCValueVariadicTagDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { tags, decoder in
         guard tags.first == oscTypeTagOpen else {
             return nil
