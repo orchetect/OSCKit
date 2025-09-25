@@ -12,7 +12,7 @@ import Testing
     // MARK: - OSCMessage
     
     @Test
-    func oscMessage_AddressPatternString() throws {
+    func oscPacket_message_AddressPatternString() throws {
         let addr = String("/msg1")
         let packet: OSCPacket = .message(
             addr,
@@ -29,7 +29,7 @@ import Testing
     }
     
     @Test
-    func oscMessage_AddressPattern() throws {
+    func oscPacket_message_AddressPattern() throws {
         let packet: OSCPacket = .message(
             OSCAddressPattern("/msg1"),
             values: [Int32(123)]
@@ -47,7 +47,7 @@ import Testing
     // MARK: - OSCBundle
     
     @Test
-    func oscBundle() throws {
+    func oscPacket_bundle() throws {
         let packet: OSCPacket = .bundle([
             .message("/", values: [Int32(123)])
         ])

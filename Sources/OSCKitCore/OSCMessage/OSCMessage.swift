@@ -62,17 +62,3 @@ extension OSCMessage: CustomStringConvertible {
                 .trimmed
     }
 }
-
-// MARK: - Static
-
-extension OSCMessage {
-    /// Enum describing the OSC packet type.
-    public static let packetType: OSCPacketType = .message
-}
-
-// MARK: - Header
-
-extension OSCMessage {
-    /// Constant caching an OSCMessage header.
-    public static let header: Data = "/".toData(using: .nonLossyASCII) ?? Data()
-}
