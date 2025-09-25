@@ -11,6 +11,9 @@ import Foundation
 /// OSC Message.
 extension OSCMessage {
     /// Initialize by parsing raw OSC message data bytes.
+    ///
+    /// This method assumes that the data is expected to be an OSC message and an error will be thrown
+    /// if the data is not the expected format.
     public init(from rawData: Data) throws {
         // cache raw data
         _rawData = rawData

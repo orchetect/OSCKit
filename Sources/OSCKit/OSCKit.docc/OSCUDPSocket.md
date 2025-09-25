@@ -4,7 +4,7 @@
 
 If not specified during initialization, the local port will be randomly assigned by the system. The same port will be used to both listen for incoming events and send outgoing events from. This port may only be configured at the time of initialization.
 
-The remote port may be omitted, in which case the same port number as the local port will be used. The remote port may be overridden if supplied as a parameter when calling ``OSCUDPSocket/send(_:to:port:)``.
+The remote port may be omitted, in which case the same port number as the local port will be used. The remote port may be overridden if supplied as a parameter when calling ``OSCUDPSocket/send(_:to:port:)-(OSCPacket,_,_)``.
 
 ```swift
 let oscSocket: OSCUDPSocket
@@ -34,7 +34,7 @@ See <doc:Sending-OSC> and <doc:Receiving-OSC> for details on how to send and rec
 
 ### Addenda on Sending using OSCUDPSocket
 
-The ``OSCUDPSocket/send(_:to:port:)`` method has a slightly different behavior on ``OSCUDPSocket`` than it does on ``OSCUDPClient``.
+The ``OSCUDPSocket/send(_:to:port:)-(OSCPacket,_,_)`` method has a slightly different behavior on ``OSCUDPSocket`` than it does on ``OSCUDPClient``.
 
 ```swift
 // The `remoteHost` and/or `remotePort` supplied at the time of

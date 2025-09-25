@@ -31,8 +31,8 @@ public final class OSCUDPSocket {
     public var timeTagMode: OSCTimeTagMode
     
     /// Remote network hostname.
-    /// If non-nil, this host will be used in calls to ``send(_:to:port:)``. The host may still be
-    /// overridden using the `host` parameter in the call to ``send(_:to:port:)``..
+    /// If non-nil, this host will be used in calls to ``send(_:to:port:)-(OSCPacket,_,_)``. The host may still be
+    /// overridden using the `host` parameter in the call to ``send(_:to:port:)-(OSCPacket,_,_)``..
     public var remoteHost: String?
     
     /// Local UDP port used to both send OSC packets from and listen for incoming packets.
@@ -44,7 +44,7 @@ public final class OSCUDPSocket {
     /// > Note:
     /// >
     /// > If `localPort` was not specified at the time of initialization, reading this
-    /// > property may return a value of `0` until the first successful call to ``send(_:to:port:)``
+    /// > property may return a value of `0` until the first successful call to ``send(_:to:port:)-(OSCPacket,_,_)``
     /// > is made.
     public var localPort: UInt16 {
         udpSocket.localPort()
@@ -52,8 +52,8 @@ public final class OSCUDPSocket {
     private var _localPort: UInt16?
     
     /// UDP port used by to send OSC packets. This may be set at any time.
-    /// This port will be used in calls to ``send(_:to:port:)``. The port may still be overridden
-    /// using the `port` parameter in the call to ``send(_:to:port:)``.
+    /// This port will be used in calls to ``send(_:to:port:)-(OSCPacket,_,_)``. The port may still be overridden
+    /// using the `port` parameter in the call to ``send(_:to:port:)-(OSCPacket,_,_)``.
     ///
     /// The default port for OSC communication is 8000 but may change depending on device/software
     /// manufacturer.

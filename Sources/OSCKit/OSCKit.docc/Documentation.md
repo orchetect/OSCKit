@@ -50,6 +50,11 @@ Open Sound Control (OSC) library for macOS, iOS, tvOS and visionOS.
 - ``OSCTCPPacketLengthHeaderDecodingError``
 - ``OSCTCPSLIPDecodingError``
 
+### OSC Packets
+
+- ``OSCPacket``
+- ``OSCPacketType``
+
 ### OSC Bundles
 
 - ``OSCBundle``
@@ -61,11 +66,6 @@ Open Sound Control (OSC) library for macOS, iOS, tvOS and visionOS.
 - <doc:OSC-Address-Pattern-Parsing>
 - <doc:OSC-Value-Types>
 - <doc:OSC-Value-Parsing>
-
-### OSC Data Protocol
-
-- ``OSCPacket``
-- ``OSCPacketType``
 
 ### Advanced
 

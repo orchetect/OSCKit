@@ -8,6 +8,9 @@ import Foundation
 
 extension OSCBundle {
     /// Initialize by parsing raw OSC bundle data bytes.
+    ///
+    /// This method assumes that the data is expected to be an OSC bundle and an error will be thrown
+    /// if the data is not the expected format.
     public init(from rawData: Data) throws {
         // cache raw data
         _rawData = rawData

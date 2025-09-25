@@ -18,13 +18,13 @@ public final class OSCUDPClient {
     private let udpDelegate = OSCUDPClientDelegate()
     
     /// Local UDP port used by the client from which to send OSC packets. (This is not the remote port
-    /// which is specified each time a call to ``send(_:to:port:)`` is made.)
+    /// which is specified each time a call to ``send(_:to:port:)-(OSCPacket,_,_)`` is made.)
     /// This may only be set at the time of initialization.
     ///
     /// > Note:
     /// >
     /// > If `localPort` was not specified at the time of initialization, reading this
-    /// > property may return a value of `0` until the first successful call to ``send(_:to:port:)``
+    /// > property may return a value of `0` until the first successful call to ``send(_:to:port:)-(OSCPacket,_,_)``
     /// > is made.
     public var localPort: UInt16 {
         udpSocket.localPort()

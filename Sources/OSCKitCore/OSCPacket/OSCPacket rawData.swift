@@ -13,8 +13,8 @@ extension OSCPacket {
     ///   malformed. Errors thrown will typically be a case of ``OSCDecodeError`` but other
     ///   errors may be thrown.
     ///
-    /// - Returns: If the packet data is a valid OSC message or bundle, the data will be decoded
-    ///   and a new instance will be created. If the packet data is not an OSC packet, `nil` will
+    /// - Returns: If the packet data is a valid OSC bundle or message, the data will be decoded
+    ///   and a new instance will be returned. If the packet data is not an OSC packet, `nil` will
     ///   be returned.
     public init?(from rawData: Data) throws {
         if rawData.appearsToBeOSCBundle {

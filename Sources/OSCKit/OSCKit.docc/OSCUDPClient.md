@@ -3,7 +3,11 @@
 ### Setup
 
 ```swift
-let oscClient = OSCUDPClient()
+let oscClient: OSCUDPClient
+
+init() {
+    oscClient = OSCUDPClient()
+}
 ```
 
 ### Sending OSC Messages
