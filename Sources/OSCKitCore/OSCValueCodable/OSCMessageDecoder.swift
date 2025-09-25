@@ -133,7 +133,7 @@ enum OSCMessageDecoder {
             let decoded = try d.block(&decoder)
             return (tagCount: 1, value: decoded)
             
-        case let d as OSCValueVariableDecoder<T>:
+        case let d as OSCValueVariableTagDecoder<T>:
             let decoded = try d.block(char, &decoder)
             return (tagCount: 1, value: decoded)
             

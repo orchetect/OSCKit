@@ -34,7 +34,7 @@ extension Bool: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension Bool: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueVariableDecoder<OSCDecoded>
+    public typealias OSCValueDecodingBlock = OSCValueVariableTagDecoder<OSCDecoded>
     public static let oscDecoding = OSCValueDecodingBlock { tag, decoder in
         switch tag {
         case oscTypeTagTrue:

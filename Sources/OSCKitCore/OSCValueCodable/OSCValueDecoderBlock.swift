@@ -26,8 +26,8 @@ public struct OSCValueStaticTagDecoder<OSCDecoded: OSCValueDecodable>: OSCValueD
     }
 }
 
-/// ``OSCValue`` variable value decoder block encapsulation.
-public struct OSCValueVariableDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDecoderBlock {
+/// ``OSCValue`` variably-tagged value decoder block encapsulation.
+public struct OSCValueVariableTagDecoder<OSCDecoded: OSCValueDecodable>: OSCValueDecoderBlock {
     public typealias Block = @Sendable (
         _ tag: Character,
         _ decoder: inout OSCValueDecoder
