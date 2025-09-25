@@ -6,6 +6,8 @@
 
 import Foundation
 
+// MARK: - OSCSerialization/OSCValueTagIdentity.swift
+
 extension OSCValueTagIdentity {
     @_documentation(visibility: internal)
     @available(*, deprecated, renamed: "tag")
@@ -14,7 +16,7 @@ extension OSCValueTagIdentity {
     }
 }
 
-// MARK: - OSCValueDecoderBlock.swift
+// MARK: - OSCValueCodable/OSCValueDecoderBlock.swift
 
 @_documentation(visibility: internal)
 @available(*, deprecated, renamed: "OSCValueStaticTagDecoder")
@@ -28,7 +30,7 @@ public typealias OSCValueVariableDecoder = OSCValueVariableTagDecoder
 @available(*, deprecated, renamed: "OSCValueVariadicTagDecoder")
 public typealias OSCValueVariadicDecoder = OSCValueVariadicTagDecoder
 
-// MARK: - OSCValueEncoderBlock.swift
+// MARK: - OSCValueCodable/OSCValueEncoderBlock.swift
 
 @_documentation(visibility: internal)
 @available(*, deprecated, renamed: "OSCValueStaticTagEncoder")
