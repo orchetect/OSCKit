@@ -62,11 +62,11 @@ extension OSCBundle {
             
             let elementContents = rawData[offset ..< offset + elementSize]
             
-            guard let oscObject = elementContents.oscObjectType else {
+            guard let oscPacketType = elementContents.oscPacketType else {
                 throw OSCDecodeError.malformed("Unrecognized bundle element encountered.")
             }
             
-            switch oscObject {
+            switch oscPacketType {
             case .bundle:
                 let newBundle = try OSCBundle(from: elementContents)
                 extractedElements.append(newBundle)

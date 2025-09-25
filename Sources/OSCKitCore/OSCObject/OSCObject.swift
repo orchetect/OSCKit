@@ -8,8 +8,8 @@ import Foundation
 
 /// Protocol adopted by all OSC data objects, namely ``OSCMessage`` and ``OSCBundle``.
 public protocol OSCObject: Equatable, Hashable, Sendable {
-    /// Enum case describing the OSC object type.
-    static var oscObjectType: OSCObjectType { get }
+    /// Enum case describing the OSC packet type.
+    static var packetType: OSCPacketType { get }
     
     /// Returns raw OSC data constructed from the struct's properties.
     func rawData() throws -> Data
@@ -20,5 +20,5 @@ public protocol OSCObject: Equatable, Hashable, Sendable {
 
 extension OSCObject {
     /// Enum case describing the OSC object type.
-    public var oscObjectType: OSCObjectType { Self.oscObjectType }
+    public var packetType: OSCPacketType { Self.packetType }
 }

@@ -53,8 +53,8 @@ extension OSCPacket {
 // MARK: - Properties
 
 extension OSCPacket {
-    /// Returns an enum case describing the OSC object type.
-    public var oscObjectType: OSCObjectType {
+    /// Returns an enum case describing the OSC packet type.
+    public var packetType: OSCPacketType {
         switch self {
         case .message: .message
         case .bundle: .bundle

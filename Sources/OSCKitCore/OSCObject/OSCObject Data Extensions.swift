@@ -28,8 +28,8 @@ extension Data {
     
     /// Test if data appears to be an OSC bundle or OSC message. (Basic validation)
     ///
-    /// - Returns: An ``OSCObjectType`` case if validation succeeds.
-    package var oscObjectType: OSCObjectType? {
+    /// - Returns: An ``OSCPacketType`` case if validation succeeds.
+    package var oscPacketType: OSCPacketType? {
         if appearsToBeOSCBundle {
             return .bundle
         } else if appearsToBeOSCMessage {
