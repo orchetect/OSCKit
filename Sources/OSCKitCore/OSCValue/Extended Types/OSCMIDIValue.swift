@@ -27,7 +27,7 @@ public struct OSCMIDIValue {
     ///   - data1: MIDI status message data byte 1 (optional).
     ///   - data2: MIDI status message data byte 2 (optional).
     public init(
-        portID: UInt8,
+        portID: UInt8 = 0,
         status: UInt8,
         data1: UInt8 = 0x00,
         data2: UInt8 = 0x00
@@ -54,7 +54,7 @@ extension OSCValue where Self == OSCMIDIValue {
     ///   - data1: MIDI status message data byte 1 (optional).
     ///   - data2: MIDI status message data byte 2 (optional).
     public static func midi(
-        portID: UInt8,
+        portID: UInt8 = 0,
         status: UInt8,
         data1: UInt8 = 0x00,
         data2: UInt8 = 0x00
