@@ -1,5 +1,5 @@
 //
-//  OSCKitCore-API-1.4.1.swift
+//  OSCKitCore-API-2.0.0.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
