@@ -117,7 +117,7 @@ extension OSCArrayValue: OSCValueCodable {
 
 @_documentation(visibility: internal)
 extension OSCArrayValue: OSCValueEncodable {
-    public typealias OSCValueEncodingBlock = OSCValueVariadicEncoder<OSCEncoded>
+    public typealias OSCValueEncodingBlock = OSCValueVariadicTagEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
         var tags: [ASCIICharacter] = []
         tags.reserveCapacity(value.elements.count + 2)

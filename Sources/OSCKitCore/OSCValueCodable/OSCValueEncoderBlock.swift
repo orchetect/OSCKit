@@ -45,8 +45,8 @@ public struct OSCValueVariableTagEncoder<OSCEncoded: OSCValueEncodable>: OSCValu
     }
 }
 
-/// ``OSCValue`` variadic value encoder block encapsulation.
-public struct OSCValueVariadicEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEncoderBlock {
+/// ``OSCValue`` variadic-tagged value encoder block encapsulation.
+public struct OSCValueVariadicTagEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEncoderBlock {
     public typealias Block = @Sendable (
         _ value: OSCEncoded
     ) throws -> (
