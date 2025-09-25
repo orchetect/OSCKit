@@ -64,6 +64,7 @@ Open Sound Control (OSC) library for macOS, iOS, tvOS and visionOS.
 
 ### OSC Data Protocol
 
+- ``OSCPacket``
 - ``OSCObject``
 - ``OSCObjectType``
 
