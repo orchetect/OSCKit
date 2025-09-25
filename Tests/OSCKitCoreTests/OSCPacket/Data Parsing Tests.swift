@@ -1,5 +1,5 @@
 //
-//  OSCObject rawData Tests.swift
+//  Data Parsing Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
@@ -8,13 +8,35 @@ import Foundation
 import OSCKitCore
 import Testing
 
-@Suite struct OSCObject_rawData_Tests {
+@Suite struct Data_Extensions_Tests {
     // swiftformat:options --wrapcollections preserve
+    
+    // MARK: - OSC Packet Type Detection
+    
+    @Test
+    func oscPacketType() throws {
+        let bundle = try OSCBundle([]).rawData()
+        let msg = try OSCMessage("/").rawData()
+        
+        // OSC bundle
+        #expect(bundle.oscPacketType == .bundle)
+        #expect(bundle.oscPacketType != .message)
+        
+        // OSC message
+        #expect(msg.oscPacketType == .message)
+        #expect(msg.oscPacketType != .bundle)
+        
+        // empty bytes
+        #expect(Data().oscPacketType == nil)
+        
+        // garbage bytes
+        #expect(Data([0x98, 0x42, 0x01, 0x7E]).oscPacketType == nil)
+    }
     
     // MARK: - Model UDP data receiver pattern
     
     @Test
-    func parseOSC_Model() async throws {
+    func parseOSCPacket_Model() async throws {
         // (Raw data taken from testInt32() of "OSCMessage rawData Tests.swift")
         
         // manually build a raw OSC message
@@ -33,9 +55,9 @@ import Testing
         
         // parse block
         
-        func handleOSCObject(_ oscObject: any OSCObject) {
-            switch oscObject {
-            case let message as OSCMessage:
+        func handleOSCPacket(_ oscPacket: OSCPacket) {
+            switch oscPacket {
+            case let .message(message):
                 // handle message
                 _ = message
             default:
@@ -44,15 +66,15 @@ import Testing
         }
         
         let remainingData = Data(knownGoodOSCRawBytes)
-        let _oscObject = try remainingData.parseOSC()
-        let oscObject = try #require(_oscObject)
-        handleOSCObject(oscObject)
+        let _oscPacket = try remainingData.parseOSCPacket()
+        let oscPacket = try #require(_oscPacket)
+        handleOSCPacket(oscPacket)
     }
     
     // MARK: - Variations
     
     @Test
-    func parseOSC_Message() async throws {
+    func parseOSCPacket_Message() async throws {
         // (Raw data taken from testInt32() of "OSCMessage rawData Tests.swift")
         
         // manually build a raw OSC message
@@ -73,11 +95,11 @@ import Testing
         
         let remainingData = Data(knownGoodOSCRawBytes)
         
-        let _oscObject = try remainingData.parseOSC()
-        let oscObject = try #require(_oscObject)
+        let _oscPacket = try remainingData.parseOSCPacket()
+        let oscPacket = try #require(_oscPacket)
             
-        switch oscObject {
-        case let message as OSCMessage:
+        switch oscPacket {
+        case let .message(message):
             // handle message
             #expect(message.addressPattern.stringValue == "/testaddress")
             #expect(message.values[0] as? Int32 == Int32(255))
@@ -88,7 +110,7 @@ import Testing
     }
     
     @Test
-    func parseOSC_Bundle() async throws {
+    func parseOSCPacket_Bundle() async throws {
         // (Raw data taken from testSingleOSCMessage() of "OSCBundle rawData Tests.swift")
         
         // manually build a raw OSC bundle
@@ -119,10 +141,10 @@ import Testing
         // parse block
         
         let remainingData = Data(knownGoodOSCRawBytes)
-        let oscObject = try remainingData.parseOSC()
+        let oscPacket = try remainingData.parseOSCPacket()
             
-        switch oscObject {
-        case let bundle as OSCBundle:
+        switch oscPacket {
+        case let .bundle(bundle):
             // handle bundle
             #expect(bundle.timeTag.rawValue == 1)
             #expect(bundle.elements.count == 1)
@@ -134,7 +156,7 @@ import Testing
             
             #expect(msg.values[0] as? Int32 == Int32(255))
                 
-        case let message as OSCMessage:
+        case let .message(message):
             // handle message
             _ = message
             Issue.record()
@@ -145,7 +167,7 @@ import Testing
     }
     
     @Test
-    func parseOSC_Message_Error() async {
+    func parseOSCPacket_Message_Error() async {
         // manually build a MALFORMED raw OSC message
         
         var knownBadOSCRawBytes: [UInt8] = []
@@ -165,7 +187,7 @@ import Testing
         let remainingData = Data(knownBadOSCRawBytes)
         
         do {
-            _ = try remainingData.parseOSC()
+            _ = try remainingData.parseOSCPacket()
             Issue.record("Should throw an error.")
         } catch _ as OSCDecodeError {
             // handle decode errors
@@ -177,7 +199,7 @@ import Testing
     }
     
     @Test
-    func parseOSC_Bundle_Error() async {
+    func parseOSCPacket_Bundle_Error() async {
         // manually build a MALFORMED raw OSC bundle
         
         var knownGoodOSCRawBytes: [UInt8] = []
@@ -208,7 +230,7 @@ import Testing
         let remainingData = Data(knownGoodOSCRawBytes)
         
         do {
-            _ = try remainingData.parseOSC()
+            _ = try remainingData.parseOSCPacket()
             Issue.record("Should throw an error.")
         } catch _ as OSCDecodeError {
             // handle decode errors
@@ -220,7 +242,7 @@ import Testing
     }
     
     @Test
-    func parseOSC_Bundle_ErrorInContainedMessage() async {
+    func parseOSCPacket_Bundle_ErrorInContainedMessage() async {
         // manually build a MALFORMED raw OSC bundle
         
         var knownGoodOSCRawBytes: [UInt8] = []
@@ -251,7 +273,7 @@ import Testing
         let remainingData = Data(knownGoodOSCRawBytes)
         
         do {
-            _ = try remainingData.parseOSC()
+            _ = try remainingData.parseOSCPacket()
             Issue.record("Should throw an error.")
         } catch _ as OSCDecodeError {
             // handle decode errors
