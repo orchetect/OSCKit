@@ -68,7 +68,7 @@ public struct OSCMessageEncoder {
         builderValuesChunk: inout Data
     ) throws {
         switch T.oscEncoding {
-        case let e as OSCValueAtomicEncoder<T>:
+        case let e as OSCValueStaticTagEncoder<T>:
             let encoded = try e.block(value)
             
             builderTags += ASCIICharacter(encoded.tag)

@@ -12,9 +12,9 @@ import Foundation
 extension OSCInterpolatedValue
     where Self: BinaryInteger,
     CoreOSCValue: BinaryInteger,
-    OSCValueEncodingBlock == OSCValueAtomicEncoder<Self>,
+    OSCValueEncodingBlock == OSCValueStaticTagEncoder<Self>,
     OSCValueDecodingBlock == OSCValueAtomicDecoder<Self>,
-    CoreOSCValue.OSCValueEncodingBlock == OSCValueAtomicEncoder<CoreOSCValue>,
+    CoreOSCValue.OSCValueEncodingBlock == OSCValueStaticTagEncoder<CoreOSCValue>,
     CoreOSCValue.OSCValueDecodingBlock == OSCValueAtomicDecoder<CoreOSCValue>
 {
     public static var oscEncoding: OSCValueEncodingBlock { OSCValueEncodingBlock { value in

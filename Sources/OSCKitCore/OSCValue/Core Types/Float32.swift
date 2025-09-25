@@ -19,7 +19,7 @@ extension Float32: OSCValueCodable {
 
 @_documentation(visibility: internal)
 extension Float32: OSCValueEncodable {
-    public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
+    public typealias OSCValueEncodingBlock = OSCValueStaticTagEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
         (tag: oscTag, data: value.toData(.bigEndian))
     }

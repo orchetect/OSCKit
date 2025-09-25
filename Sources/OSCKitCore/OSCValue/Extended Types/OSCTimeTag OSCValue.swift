@@ -19,7 +19,7 @@ extension OSCTimeTag: OSCValueCodable {
 
 @_documentation(visibility: internal)
 extension OSCTimeTag: OSCValueEncodable {
-    public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
+    public typealias OSCValueEncodingBlock = OSCValueStaticTagEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
         (
             tag: oscTag,

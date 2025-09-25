@@ -27,7 +27,7 @@ extension Character: OSCValueCodable {
 
 @_documentation(visibility: internal)
 extension Character: OSCValueEncodable {
-    public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
+    public typealias OSCValueEncodingBlock = OSCValueStaticTagEncoder<OSCEncoded>
     public static let oscEncoding = OSCValueEncodingBlock { value in
         (
             tag: oscTag,

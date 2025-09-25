@@ -39,7 +39,7 @@ extension CustomType: OSCValueCodable {
 }
 
 extension CustomType: OSCValueEncodable {
-    public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
+    public typealias OSCValueEncodingBlock = OSCValueStaticTagEncoder<OSCEncoded>
     static let oscEncoding = OSCValueEncodingBlock { value in
         // Encode our Codable type instance into raw data
         let encoder = JSONEncoder()
