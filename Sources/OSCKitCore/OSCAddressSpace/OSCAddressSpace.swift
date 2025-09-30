@@ -106,7 +106,16 @@ extension OSCAddressSpace {
         )
     }
     
-    // TODO: add unregister(methodID: MethodID) method
+    /// Unregister an OSC address with the given method ID.
+    ///
+    /// - Returns: `true` if the operation was successful, `false` if unsuccessful or the method ID does
+    ///   not exist.
+    @discardableResult
+    public func unregister(methodID: MethodID) -> Bool {
+        removeMethodNode(
+            methodID: methodID
+        )
+    }
     
     /// Unregister an OSC method by supplying its local address.
     ///

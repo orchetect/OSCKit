@@ -4,7 +4,7 @@
 //  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
-import OSCKitCore
+@testable import OSCKitCore
 import Testing
 
 @Suite struct OSCAddressSpace_Tests {
@@ -120,6 +120,36 @@ import Testing
         #expect(
             await addressSpace.methods(matching: .init("/test1/test3")).isEmpty
         )
+    }
+    
+    @Test
+    func unregisterAddress_MethodID() async throws {
+        let addressSpace = OSCAddressSpace()
+        
+        let t1ID = await addressSpace.register(localAddress: "/test1/test3/methodA"); _ = t1ID
+        let t2ID = await addressSpace.register(localAddress: "/test2/test4/methodB")
+        
+        #expect(
+            await addressSpace.unregister(methodID: t1ID)
+        )
+        
+        #expect(
+            await addressSpace.methods(matching: .init("/test1/test3/methodA")) ==
+                []
+        )
+        
+        #expect(
+            await addressSpace.methods(matching: .init("/test2/test4/methodB")) ==
+                [t2ID]
+        )
+        
+        // cannot unregister a node that is a container
+        let test2ID = try #require(await addressSpace.methodID(path: ["test2"]))
+        #expect(await !addressSpace.unregister(methodID: test2ID))
+        
+        // cannot unregister root
+        let rootID = try #require(await addressSpace.methodID(path: [] as [String]))
+        #expect(await !addressSpace.unregister(methodID: rootID))
     }
     
     @Test

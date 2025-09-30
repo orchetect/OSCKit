@@ -101,4 +101,29 @@ import Testing
             !OSCAddressSpace.Node.validate(name: "abcDEF1234/", strict: true)
         )
     }
+    
+    @Test
+    func methodID_Path() async throws {
+        let addressSpace = OSCAddressSpace()
+        
+        let t0ID = await addressSpace.register(localAddress: "/test1/test2")
+        let t1ID = await addressSpace.register(localAddress: "/test1/test2/methodA"); _ = t1ID
+        
+        #expect(
+            await addressSpace.methodID(path: ["test1", "test2"]) ==
+                t0ID
+        )
+        #expect(
+            await addressSpace.methodID(path: ["test1", "test2", "methodA"]) ==
+                t1ID
+        )
+        
+        // edge cases
+        
+        // root
+        #expect(await addressSpace.methodID(path: [] as [String]) != nil)
+        
+        // containers have a method ID even though they are not a method
+        #expect(await addressSpace.methodID(path: ["test1"]) != nil)
+    }
 }
