@@ -23,7 +23,7 @@ extension OSCManager {
     /// Call this once on app launch.
     func start() {
         // setup client
-        do { try client.start() } catch { print(error) }
+        do { try client.start() } catch { print(error.localizedDescription) }
         
         // setup server
         server.setReceiveHandler { [weak self] message, timeTag, host, port in
@@ -31,7 +31,7 @@ extension OSCManager {
                 self?.handle(message: message, timeTag: timeTag, host: host, port: port)
             }
         }
-        do { try server.start() } catch { print(error) }
+        do { try server.start() } catch { print(error.localizedDescription) }
     }
     
     func stop() {
@@ -55,7 +55,7 @@ extension OSCManager {
         do {
             try client.send(packet, to: host, port: port)
         } catch {
-            print(error)
+            print(error.localizedDescription)
         }
     }
 }

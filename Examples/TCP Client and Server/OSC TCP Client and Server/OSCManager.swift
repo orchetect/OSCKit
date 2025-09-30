@@ -47,7 +47,7 @@ extension OSCManager {
             try newServer.start()
             isServerStarted = true
         } catch {
-            print(error)
+            print(error.localizedDescription)
             isServerStarted = false
         }
     }
@@ -71,7 +71,7 @@ extension OSCManager {
         do {
             try newClient.connect(timeout: 5)
         } catch {
-            print(error)
+            print(error.localizedDescription)
             isClientConnected = false
         }
     }
@@ -140,7 +140,7 @@ extension OSCManager {
         do {
             try client?.send(packet)
         } catch {
-            print(error)
+            print(error.localizedDescription)
         }
     }
     
@@ -148,7 +148,7 @@ extension OSCManager {
         do {
             try server?.send(packet)
         } catch {
-            print(error)
+            print(error.localizedDescription)
         }
     }
 }

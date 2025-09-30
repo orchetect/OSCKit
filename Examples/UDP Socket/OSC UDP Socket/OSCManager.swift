@@ -69,7 +69,7 @@ extension OSCManager {
         do {
             try socket?.send(packet)
         } catch {
-            print(error)
+            print(error.localizedDescription)
         }
     }
 }

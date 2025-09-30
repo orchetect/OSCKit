@@ -18,13 +18,13 @@ final class OSCReceiver: Sendable {
     }
     
     private func setup() async {
-        // Register local OSC method and supply a closure block
+        // A) Register local OSC method and supply a closure block
         await addressSpace.register(localAddress: "/methodA") { values, host, port in
             guard let str = try? values.masked(String.self) else { return }
             print("Received methodA from \(host) port \(port) with value: \"\(str)\"")
         }
         
-        // Register local OSC method and supply a closure block
+        // B) Register local OSC method and supply a closure block
         await addressSpace.register(localAddress: "/some/address/methodB") { values, host, port in
             guard let (str, int) = try? values.masked(String.self, Int.self) else { return }
             print("Received methodB from \(host) port \(port) with values: [\"\(str)\", \(int)]")
@@ -32,7 +32,7 @@ final class OSCReceiver: Sendable {
         
         // Instead of supplying a closure, it's also possible to forward to a function:
         
-        // Option 1: weak reference (recommended):
+        // C) Option 1: weak reference (recommended):
         await addressSpace.register(
             localAddress: "/some/address/methodC",
             block: { [weak self] values, host, port in
@@ -40,7 +40,7 @@ final class OSCReceiver: Sendable {
             }
         )
         
-        // Option 2: strong reference (discouraged):
+        // C) Option 2: strong reference (discouraged):
         // await addressSpace.register(
         //     localAddress: "/some/address/methodC",
         //     block: handleMethodC
@@ -52,7 +52,7 @@ final class OSCReceiver: Sendable {
         print("Received methodC from \(host) port \(port) with values: [\"\(str)\", \(dbl as Any)]")
     }
     
-    public func handle(message: OSCMessage, timeTag: OSCTimeTag, host: String, port: UInt16) async throws {
+    public func handle(message: OSCMessage, timeTag: OSCTimeTag, host: String, port: UInt16) async {
         // Execute closures for matching methods, and returns the matching method IDs
         let methodIDs = await addressSpace.dispatch(message: message, host: host, port: port)
         
