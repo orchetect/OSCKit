@@ -167,28 +167,4 @@ import Testing
                 """#
         )
     }
-    
-    // TODO: test is written correctly but Codable conformance on OSCBundle needs to be fixed
-    // @Test func codable() throws {
-    //     let encoder = JSONEncoder()
-    //     let decoder = JSONDecoder()
-    //
-    //     let str = OSCBundle(timeTag: .init(123_456), [
-    //         .bundle([
-    //             .message(
-    //                 "/test/address1",
-    //                 values: [Int32(123), String("A string.")]
-    //             )
-    //         ]),
-    //         .message(
-    //             "/test/address2",
-    //             values: [Int32(456), String("Another string.")]
-    //         )
-    //     ])
-    //
-    //     let encoded = try encoder.encode(str)
-    //     let decoded = try decoder.decode(OSCBundle.self, from: encoded)
-    //
-    //     #expect(str == decoded)
-    // }
 }
