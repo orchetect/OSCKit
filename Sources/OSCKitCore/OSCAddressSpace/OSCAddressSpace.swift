@@ -23,9 +23,9 @@ import Foundation
 ///     /methodname
 ///     /container1/container2/methodname
 ///
-///  Any other path components besides the last are referred to as _containers_.
+/// Any other path components besides the last are referred to as _containers_.
 ///
-///  A container may also be a method. Simply register it the same way as other methods.
+/// A container may also be a method. Simply register it the same way as other methods.
 ///
 public actor OSCAddressSpace {
     var root: Node = .rootNodeFactory()
@@ -51,7 +51,7 @@ extension OSCAddressSpace {
     ///     /methodname
     ///     /container1/container2/methodname
     ///
-    ///  Any other path components besides the last are referred to as _containers_.
+    /// Any other path components besides the last are referred to as _containers_.
     ///
     @discardableResult
     public func register(
@@ -73,7 +73,7 @@ extension OSCAddressSpace {
     ///     /methodname
     ///     /container1/container2/methodname
     ///
-    ///  Any other path components besides the last are referred to as _containers_.
+    /// Any other path components besides the last are referred to as _containers_.
     ///
     @discardableResult
     public func register<S>(
@@ -154,9 +154,9 @@ extension OSCAddressSpace {
     ///     /methodname
     ///     /container1/container2/methodname
     ///
-    ///  Any other path components besides the last are referred to as _containers_.
+    /// Any other path components besides the last are referred to as _containers_.
     ///
-    ///  A container may also be a method. Simply register it the same way as other methods.
+    /// A container may also be a method. Simply register it the same way as other methods.
     ///
     public func methods(matching address: OSCAddressPattern) -> [MethodID] {
         methodNodes(patternMatching: address)
@@ -179,9 +179,9 @@ extension OSCAddressSpace {
     ///     /methodname
     ///     /container1/container2/methodname
     ///
-    ///  Any other path components besides the last are referred to as _containers_.
+    /// Any other path components besides the last are referred to as _containers_.
     ///
-    ///  A container may also be a method. Simply register it the same way as other methods.
+    /// A container may also be a method. Simply register it the same way as other methods.
     ///
     /// - Returns: The OSC method IDs that were matched (the same as calling
     ///   ``methods(matching:)``).
