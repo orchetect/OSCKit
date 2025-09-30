@@ -6,7 +6,44 @@
 
 import Foundation
 
-// TODO: It is likely possible to refactor all of the masking methods to use newer Swift Parameter Packs
+// 💡 Note:
+//
+// It is possible to refactor all of the masking methods using newer Swift Parameter Packs,
+// however the API would change slightly due to limitations on method parameter lists.
+//
+// For parameter lists which are exclusively non-Optional types, the API is able to remain identical to existing API.
+//
+//     public func masked<each T: OSCValueMaskable>(_ v: repeat (each T).Type) throws -> (repeat each T) {
+//         var index = -1
+//         func inc() -> Int { index += 1; return index }
+//
+//         let tuple = (repeat try unwrapValue((each v).self, index: inc()))
+//         try validateCount(index + 1)
+//
+//         return tuple
+//     }
+//
+//     let values = try [123, "string"].masked(Int.self, String.self)
+//
+// However, for parameter lists that including one or more trailing Optional types, a parameter label is required.
+//
+//     public func masked<each T: OSCValueMaskable, each O: OSCValueMaskable>(
+//         _ v: repeat (each T).Type,
+//         optional: repeat (each O)?.Type
+//     ) throws -> (repeat each T, repeat (each O)?) {
+//         var index = -1
+//         var optCount = 0
+//         func inc() -> Int { index += 1; return index }
+//         func incOpt() -> Int { optCount += 1; return index + optCount }
+//
+//         let tuple = (repeat try unwrapValue((each v).self, index: inc()),
+//                      repeat try unwrapValue((each optional).self, index: incOpt()))
+//         try validateCount(index + 1 ... (index + 1 + optCount))
+//
+//         return tuple
+//     }
+//
+//     let values = try [123, true, "string"].masked(Int.self, Bool.self, optional: String?.self, Double?.self)
 
 extension OSCValues {
     /// Returns the OSC value sequence as a strongly typed tuple
