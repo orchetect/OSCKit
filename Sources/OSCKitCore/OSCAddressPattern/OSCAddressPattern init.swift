@@ -5,12 +5,7 @@
 //
 
 import Foundation
-
-#if compiler(>=6.0)
 internal import SwiftASCII // ASCIIString
-#else
-@_implementationOnly import SwiftASCII // ASCIIString
-#endif
 
 extension OSCAddressPattern {
     /// Create an OSC address from a raw `String` address.

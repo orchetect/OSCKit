@@ -5,12 +5,7 @@
 //
 
 import Foundation
-
-#if compiler(>=6.0)
 internal import SwiftASCII // ASCIIString
-#else
-@_implementationOnly import SwiftASCII // ASCIIString
-#endif
 
 /// ``OSCValue`` decoder.
 public struct OSCValueDecoder {

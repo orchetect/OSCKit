@@ -5,12 +5,7 @@
 //
 
 import Foundation
-
-#if compiler(>=6.0)
 internal import SwiftASCII // ASCIIString
-#else
-@_implementationOnly import SwiftASCII // ASCIIString
-#endif
 
 @_documentation(visibility: internal)
 extension String: OSCValue {

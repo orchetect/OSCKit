@@ -5,12 +5,7 @@
 //
 
 import Foundation
-
-#if compiler(>=6.0)
 internal import SwiftASCII // ASCIICharacter
-#else
-@_implementationOnly import SwiftASCII // ASCIICharacter
-#endif
 
 // MARK: - OSC Encoding
 
