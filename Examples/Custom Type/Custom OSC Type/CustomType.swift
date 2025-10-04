@@ -40,10 +40,12 @@ extension CustomType: OSCValueCodable {
 
 extension CustomType: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueStaticTagEncoder<OSCEncoded>
-    static let oscEncoding = OSCValueEncodingBlock { value in
+    static let oscEncoding = OSCValueEncodingBlock { value throws(OSCEncodeError) in
         // Encode our Codable type instance into raw data
         let encoder = JSONEncoder()
-        let jsonData = try encoder.encode(value)
+        let jsonData: Data
+        do { jsonData = try encoder.encode(value) }
+        catch { throw .valueEncodingError(error.localizedDescription) }
         
         // OSCValueEncodingBlock makes it our responsibility to make sure OSB blob (data) is encoded correctly,
         // including a 4-byte big-endian Int32 length header and trailing null-byte padding to an alignment of 4 bytes.
@@ -55,7 +57,7 @@ extension CustomType: OSCValueEncodable {
 
 extension CustomType: OSCValueDecodable {
     public typealias OSCValueDecodingBlock = OSCValueStaticTagDecoder<OSCDecoded>
-    static let oscDecoding = OSCValueDecodingBlock { dataReader in
+    static let oscDecoding = OSCValueDecodingBlock { dataReader throws(OSCDecodeError) in
         let decoder = JSONDecoder()
         
         // Gets entire data chunk from the OSC blob, stripping the length bytes and null padding suffix
@@ -63,7 +65,9 @@ extension CustomType: OSCValueDecodable {
         let data = try dataReader.readBlob()
         
         // Decode into a new instance of our Codable type
-        let decoded = try decoder.decode(CustomType.self, from: data)
+        let decoded: CustomType
+        do { decoded = try decoder.decode(CustomType.self, from: data) }
+        catch { throw .valueDecodingError(error.localizedDescription) }
         return decoded
     }
 }
