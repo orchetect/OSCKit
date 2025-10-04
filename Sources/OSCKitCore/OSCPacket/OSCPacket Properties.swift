@@ -8,6 +8,7 @@ import Foundation
 
 extension OSCPacket {
     /// Returns an enum case describing the OSC packet type.
+    @inline(__always)
     public var packetType: OSCPacketType {
         switch self {
         case .message: .message

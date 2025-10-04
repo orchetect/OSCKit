@@ -10,6 +10,7 @@ extension Data {
     /// Test if data appears to be an OSC bundle or OSC message. (Basic validation)
     ///
     /// - Returns: An ``OSCPacketType`` case if validation succeeds.
+    @inlinable
     package var oscPacketType: OSCPacketType? {
         if appearsToBeOSCBundle {
             return .bundle
