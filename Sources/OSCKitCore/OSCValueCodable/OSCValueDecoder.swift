@@ -308,18 +308,18 @@ extension OSCValueDecoder {
     public mutating func read(byteLength: Int) throws(OSCDecodeError) -> Data {
         assert(
             byteLength != 0,
-            "Requested byte read length of 0 bytes is not an error condition but may indicate faulty logic."
+            "Requested byte read length of 0 bytes while parsing data is not an error condition but may indicate faulty logic."
         )
         
         guard byteLength >= 0 else {
             throw .internalInconsistency(
-                "Negative byte count requested: \(byteLength)"
+                "Negative byte count requested while parsing data: \(byteLength)"
             )
         }
         
         guard byteLength <= remainingByteCount else {
             throw .malformed(
-                "Not enough bytes remain in data stream."
+                "Not enough bytes remain in data stream while parsing data."
                     + " Attempted to read \(byteLength) bytes but only \(remainingData) bytes remain."
             )
         }

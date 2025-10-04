@@ -91,7 +91,9 @@ public struct OSCMessageEncoder {
             }
             
         default:
-            throw .unexpectedEncoder
+            throw .internalInconsistency(
+                "Unexpected encoder: \(type(of: T.self)). Only encoder types supplied by OSCKit can be used."
+            )
         }
     }
     
