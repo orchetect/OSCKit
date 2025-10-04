@@ -20,7 +20,7 @@ extension Int64: OSCValueCodable {
 @_documentation(visibility: internal)
 extension Int64: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueStaticTagEncoder<OSCEncoded>
-    public static let oscEncoding = OSCValueEncodingBlock { value in
+    public static let oscEncoding = OSCValueEncodingBlock { value throws(OSCEncodeError) in
         (
             tag: oscTag,
             data: value.toData(.bigEndian)
@@ -31,7 +31,7 @@ extension Int64: OSCValueEncodable {
 @_documentation(visibility: internal)
 extension Int64: OSCValueDecodable {
     public typealias OSCValueDecodingBlock = OSCValueStaticTagDecoder<OSCDecoded>
-    public static let oscDecoding = OSCValueDecodingBlock { decoder in
+    public static let oscDecoding = OSCValueDecodingBlock { decoder throws(OSCDecodeError) in
         try decoder.readInt64()
     }
 }

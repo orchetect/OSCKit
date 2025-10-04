@@ -30,7 +30,7 @@ public final class OSCSerialization {
     
     /// Register a concrete type that conforms to ``OSCValueCodable`` to make it available for OSC
     /// encoding, decoding and value masking.
-    public func registerType(_ concreteType: any OSCValueCodable.Type) throws {
+    public func registerType(_ concreteType: any OSCValueCodable.Type) throws(OSCSerializationError) {
         // throw an error if user attempts to register an already existing type tag
         try canRegisterType(concreteType)
         
@@ -40,7 +40,7 @@ public final class OSCSerialization {
         )
     }
     
-    private func canRegisterType(_ concreteType: any OSCValueCodable.Type) throws {
+    private func canRegisterType(_ concreteType: any OSCValueCodable.Type) throws(OSCSerializationError) {
         let staticTags = concreteType
             .oscTagIdentity
             .staticTags()
@@ -48,7 +48,7 @@ public final class OSCSerialization {
         if !staticTags.isEmpty {
             guard staticTags.allSatisfy(tagIdentities(contains:)) == false
             else {
-                throw OSCSerializationError.tagAlreadyRegistered
+                throw .tagAlreadyRegistered
             }
         }
     }

@@ -16,7 +16,7 @@ extension OSCPacket {
     /// - Returns: If the packet data is a valid OSC bundle or message, the data will be decoded
     ///   and a new instance will be returned. If the packet data is not an OSC packet, `nil` will
     ///   be returned.
-    public init?(from rawData: Data) throws {
+    public init?(from rawData: Data) throws(OSCDecodeError) {
         if rawData.appearsToBeOSCBundle {
             let bundle = try OSCBundle(from: rawData)
             self = .bundle(bundle)
@@ -29,7 +29,7 @@ extension OSCPacket {
     }
     
     /// Returns raw OSC packet data constructed from the packet content.
-    public func rawData() throws -> Data {
+    public func rawData() throws(OSCEncodeError) -> Data {
         switch self {
         case let .bundle(bundle): try bundle.rawData()
         case let .message(message): try message.rawData()

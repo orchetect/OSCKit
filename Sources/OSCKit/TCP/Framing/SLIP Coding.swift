@@ -52,7 +52,7 @@ extension Data {
     ///
     /// This can accommodate one or more packets in the same data stream. Each packet is
     /// returned as an element in the array.
-    func slipDecoded() throws -> [Data] {
+    func slipDecoded() throws(OSCTCPSLIPDecodingError) -> [Data] {
         var packets: [Data] = []
         
         var currentPacketData = Data()
@@ -62,7 +62,7 @@ extension Data {
             switch self[index] {
             case SLIPByte.end.rawValue:
                 // END should never come after an escape byte
-                guard !isEscaped else { throw OSCTCPSLIPDecodingError.missingEscapedCharacter}
+                guard !isEscaped else { throw .missingEscapedCharacter }
                 
                 // consider the END byte the end of the current packet
                 if !currentPacketData.isEmpty {
@@ -74,34 +74,34 @@ extension Data {
                 
             case SLIPByte.esc.rawValue:
                 // we should never get more than one consecutive ESC byte
-                guard !isEscaped else { throw OSCTCPSLIPDecodingError.doubleEscapeBytes}
+                guard !isEscaped else { throw .doubleEscapeBytes}
                 
                 isEscaped = true
                 
             case SLIPByte.escEnd.rawValue:
                 // must follow an ESC byte
-                guard isEscaped else { throw OSCTCPSLIPDecodingError.missingEscapeByte}
+                guard isEscaped else { throw .missingEscapeByte}
                 isEscaped = false // reset ESC
                 
                 currentPacketData.append(SLIPByte.end.rawValue)
                 
             case SLIPByte.escEsc.rawValue:
                 // must follow an ESC byte
-                guard isEscaped else { throw OSCTCPSLIPDecodingError.missingEscapeByte}
+                guard isEscaped else { throw .missingEscapeByte}
                 isEscaped = false // reset ESC
                 
                 currentPacketData.append(SLIPByte.esc.rawValue)
                 
             default:
                 // the only two bytes that should follow an ESC byte are ESC_END and ESC_ESC
-                guard !isEscaped else { throw OSCTCPSLIPDecodingError.missingEscapedCharacter}
+                guard !isEscaped else { throw .missingEscapedCharacter}
                 
                 currentPacketData.append(self[index])
             }
         }
         
         // failsafe: ensure we are not ending while escaped (check if final byte was ESC)
-        guard !isEscaped else { throw OSCTCPSLIPDecodingError.missingEscapedCharacter}
+        guard !isEscaped else { throw .missingEscapedCharacter}
         
         // add final packet if needed
         if !currentPacketData.isEmpty {

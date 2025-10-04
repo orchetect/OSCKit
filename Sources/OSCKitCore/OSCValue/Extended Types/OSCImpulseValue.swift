@@ -60,7 +60,7 @@ extension OSCImpulseValue: OSCValueCodable {
 @_documentation(visibility: internal)
 extension OSCImpulseValue: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueStaticTagEncoder<OSCEncoded>
-    public static let oscEncoding = OSCValueEncodingBlock { value in
+    public static let oscEncoding = OSCValueEncodingBlock { value throws(OSCEncodeError) in
         (tag: oscTag, data: nil)
     }
 }
@@ -68,7 +68,7 @@ extension OSCImpulseValue: OSCValueEncodable {
 @_documentation(visibility: internal)
 extension OSCImpulseValue: OSCValueDecodable {
     public typealias OSCValueDecodingBlock = OSCValueStaticTagDecoder<OSCDecoded>
-    public static let oscDecoding = OSCValueDecodingBlock { decoder in
+    public static let oscDecoding = OSCValueDecodingBlock { decoder throws(OSCDecodeError) in
         OSCImpulseValue()
     }
 }

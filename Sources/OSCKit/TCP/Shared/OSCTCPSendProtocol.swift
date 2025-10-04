@@ -53,7 +53,7 @@ extension _OSCTCPSendProtocol {
     ///   - oscObject: OSC bundle or message.
     ///   - tag: Server Connection Client Session ID. Applies only to TCP server to determine which connected socket to
     ///     send to.
-    private func _send(_ oscData: Data, tag: OSCTCPClientSessionID) throws {
+    private func _send(_ oscData: Data, tag: OSCTCPClientSessionID) {
         // guard isConnected else {
         //     throw GCDAsyncUdpSocketError(
         //         .closedError,

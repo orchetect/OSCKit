@@ -13,7 +13,7 @@ import Foundation
 //
 // For parameter lists which are exclusively non-Optional types, the API is able to remain identical to existing API.
 //
-//     public func masked<each T: OSCValueMaskable>(_ v: repeat (each T).Type) throws -> (repeat each T) {
+//     public func masked<each T: OSCValueMaskable>(_ v: repeat (each T).Type) throws(OSCValueMaskError) -> (repeat each T) {
 //         var index = -1
 //         func inc() -> Int { index += 1; return index }
 //
@@ -30,7 +30,7 @@ import Foundation
 //     public func masked<each T: OSCValueMaskable, each O: OSCValueMaskable>(
 //         _ v: repeat (each T).Type,
 //         optional: repeat (each O)?.Type
-//     ) throws -> (repeat each T, repeat (each O)?) {
+//     ) throws(OSCValueMaskError) -> (repeat each T, repeat (each O)?) {
 //         var index = -1
 //         var optCount = 0
 //         func inc() -> Int { index += 1; return index }
@@ -171,7 +171,7 @@ extension OSCValues {
     /// - Throws: ``OSCValueMaskError``
     public func masked<V>(
         _ v: V.Type
-    ) throws -> V
+    ) throws(OSCValueMaskError) -> V
     where V: OSCValueMaskable {
         try validateCount(1)
         let v = try unwrapValue(v.self, index: 0)
@@ -303,7 +303,7 @@ extension OSCValues {
     /// - Throws: ``OSCValueMaskError``
     public func masked<V>(
         _ v: V?.Type
-    ) throws -> V?
+    ) throws(OSCValueMaskError) -> V?
     where V: OSCValueMaskable {
         try validateCount(0 ... 1)
         let v = try unwrapValue(v.self, index: 0)

@@ -137,7 +137,7 @@ extension OSCValues {
         _ v3: V3.Type,
         _ v4: V4.Type,
         _ v5: V5.Type
-    ) throws -> (V0, V1, V2, V3, V4, V5)
+    ) throws(OSCValueMaskError) -> (V0, V1, V2, V3, V4, V5)
         where V0: OSCValueMaskable,
         V1: OSCValueMaskable,
         V2: OSCValueMaskable,
@@ -285,7 +285,7 @@ extension OSCValues {
         _ v3: V3.Type,
         _ v4: V4.Type,
         _ v5: V5?.Type
-    ) throws -> (V0, V1, V2, V3, V4, V5?)
+    ) throws(OSCValueMaskError) -> (V0, V1, V2, V3, V4, V5?)
         where V0: OSCValueMaskable,
         V1: OSCValueMaskable,
         V2: OSCValueMaskable,
@@ -433,7 +433,7 @@ extension OSCValues {
         _ v3: V3.Type,
         _ v4: V4?.Type,
         _ v5: V5?.Type
-    ) throws -> (V0, V1, V2, V3, V4?, V5?)
+    ) throws(OSCValueMaskError) -> (V0, V1, V2, V3, V4?, V5?)
         where V0: OSCValueMaskable,
         V1: OSCValueMaskable,
         V2: OSCValueMaskable,
@@ -581,7 +581,7 @@ extension OSCValues {
         _ v3: V3?.Type,
         _ v4: V4?.Type,
         _ v5: V5?.Type
-    ) throws -> (V0, V1, V2, V3?, V4?, V5?)
+    ) throws(OSCValueMaskError) -> (V0, V1, V2, V3?, V4?, V5?)
         where V0: OSCValueMaskable,
         V1: OSCValueMaskable,
         V2: OSCValueMaskable,
@@ -729,7 +729,7 @@ extension OSCValues {
         _ v3: V3?.Type,
         _ v4: V4?.Type,
         _ v5: V5?.Type
-    ) throws -> (V0, V1, V2?, V3?, V4?, V5?)
+    ) throws(OSCValueMaskError) -> (V0, V1, V2?, V3?, V4?, V5?)
         where V0: OSCValueMaskable,
         V1: OSCValueMaskable,
         V2: OSCValueMaskable,
@@ -877,7 +877,7 @@ extension OSCValues {
         _ v3: V3?.Type,
         _ v4: V4?.Type,
         _ v5: V5?.Type
-    ) throws -> (V0, V1?, V2?, V3?, V4?, V5?)
+    ) throws(OSCValueMaskError) -> (V0, V1?, V2?, V3?, V4?, V5?)
         where V0: OSCValueMaskable,
         V1: OSCValueMaskable,
         V2: OSCValueMaskable,
@@ -1025,7 +1025,7 @@ extension OSCValues {
         _ v3: V3?.Type,
         _ v4: V4?.Type,
         _ v5: V5?.Type
-    ) throws -> (V0?, V1?, V2?, V3?, V4?, V5?)
+    ) throws(OSCValueMaskError) -> (V0?, V1?, V2?, V3?, V4?, V5?)
         where V0: OSCValueMaskable,
         V1: OSCValueMaskable,
         V2: OSCValueMaskable,

@@ -167,15 +167,8 @@ import Testing
         
         let remainingData = Data(knownBadOSCRawBytes)
         
-        do {
+        #expect(throws: OSCDecodeError.self) {
             _ = try OSCPacket(from: remainingData)
-            Issue.record("Should throw an error.")
-        } catch _ as OSCDecodeError {
-            // handle decode errors
-            // ✅
-        } catch {
-            // handle other errors
-            Issue.record("Wrong error thrown.")
         }
     }
     
@@ -210,15 +203,8 @@ import Testing
         
         let remainingData = Data(knownGoodOSCRawBytes)
         
-        do {
+        #expect(throws: OSCDecodeError.self) {
             _ = try OSCPacket(from: remainingData)
-            Issue.record("Should throw an error.")
-        } catch _ as OSCDecodeError {
-            // handle decode errors
-            // ✅
-        } catch {
-            // handle other errors
-            Issue.record("Wrong error thrown.")
         }
     }
     
@@ -253,15 +239,8 @@ import Testing
         
         let remainingData = Data(knownGoodOSCRawBytes)
         
-        do {
-            _ = try OSCPacket(from: remainingData)
-            Issue.record("Should throw an error.")
-        } catch _ as OSCDecodeError {
-            // handle decode errors
-            // ✅
-        } catch {
-            // handle other errors
-            Issue.record("Wrong error thrown.")
+        #expect(throws: OSCDecodeError.self) {
+            _ = try OSCPacket(from: remainingData)   
         }
     }
 }

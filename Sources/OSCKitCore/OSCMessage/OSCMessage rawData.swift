@@ -14,7 +14,7 @@ extension OSCMessage {
     ///
     /// This method assumes that the data is expected to be an OSC message and an error will be thrown
     /// if the data is not the expected format.
-    public init(from rawData: Data) throws {
+    public init(from rawData: Data) throws(OSCDecodeError) {
         // cache raw data
         _rawData = rawData
         
@@ -26,7 +26,7 @@ extension OSCMessage {
     }
     
     /// Returns raw OSC packet data constructed from the message content.
-    public func rawData() throws -> Data {
+    public func rawData() throws(OSCEncodeError) -> Data {
         // return cached data if struct was originally initialized from raw data
         // so we don't needlessly church CPU cycles to generate the data
         if let cached = _rawData {

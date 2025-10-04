@@ -35,7 +35,7 @@ public struct OSCMessageEncoder {
     init(
         addressPattern: OSCAddressPattern,
         values: [any OSCValueEncodable]
-    ) throws {
+    ) throws(OSCEncodeError) {
         self.init(addressPattern: addressPattern)
         
         // note: doesn't account for arrays but we'll do it any way
@@ -48,7 +48,7 @@ public struct OSCMessageEncoder {
     }
     
     /// Add a value to the message encoder.
-    public mutating func encode(_ value: some OSCValueEncodable) throws {
+    public mutating func encode(_ value: some OSCValueEncodable) throws(OSCEncodeError) {
         try Self.encode(
             value,
             builderTags: &builderTags,
@@ -61,7 +61,7 @@ public struct OSCMessageEncoder {
         _ value: T,
         builderTags: inout [ASCIICharacter],
         builderValuesChunk: inout Data
-    ) throws {
+    ) throws(OSCEncodeError) {
         switch T.oscEncoding {
         case let e as OSCValueStaticTagEncoder<T>:
             let encoded = try e.block(value)
@@ -91,7 +91,7 @@ public struct OSCMessageEncoder {
             }
             
         default:
-            throw OSCEncodeError.unexpectedEncoder
+            throw .unexpectedEncoder
         }
     }
     

@@ -134,7 +134,7 @@ extension OSCValues {
         _ v0: V0.Type,
         _ v1: V1.Type,
         _ v2: V2.Type
-    ) throws -> (V0, V1, V2)
+    ) throws(OSCValueMaskError) -> (V0, V1, V2)
         where V0: OSCValueMaskable,
         V1: OSCValueMaskable,
         V2: OSCValueMaskable
@@ -273,7 +273,7 @@ extension OSCValues {
         _ v0: V0.Type,
         _ v1: V1.Type,
         _ v2: V2?.Type
-    ) throws -> (V0, V1, V2?)
+    ) throws(OSCValueMaskError) -> (V0, V1, V2?)
         where V0: OSCValueMaskable,
         V1: OSCValueMaskable,
         V2: OSCValueMaskable
@@ -412,7 +412,7 @@ extension OSCValues {
         _ v0: V0.Type,
         _ v1: V1?.Type,
         _ v2: V2?.Type
-    ) throws -> (V0, V1?, V2?)
+    ) throws(OSCValueMaskError) -> (V0, V1?, V2?)
         where V0: OSCValueMaskable,
         V1: OSCValueMaskable,
         V2: OSCValueMaskable
@@ -551,7 +551,7 @@ extension OSCValues {
         _ v0: V0?.Type,
         _ v1: V1?.Type,
         _ v2: V2?.Type
-    ) throws -> (V0?, V1?, V2?)
+    ) throws(OSCValueMaskError) -> (V0?, V1?, V2?)
         where V0: OSCValueMaskable,
         V1: OSCValueMaskable,
         V2: OSCValueMaskable

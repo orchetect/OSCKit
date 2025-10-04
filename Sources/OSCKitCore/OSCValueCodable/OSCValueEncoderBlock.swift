@@ -17,7 +17,7 @@ public protocol OSCValueEncoderBlock where Self: Sendable {
 public struct OSCValueStaticTagEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEncoderBlock {
     public typealias Block = @Sendable (
         _ value: OSCEncoded
-    ) throws -> (
+    ) throws(OSCEncodeError) -> (
         tag: Character,
         data: Data?
     )
@@ -33,7 +33,7 @@ public struct OSCValueStaticTagEncoder<OSCEncoded: OSCValueEncodable>: OSCValueE
 public struct OSCValueVariableTagEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEncoderBlock {
     public typealias Block = @Sendable (
         _ value: OSCEncoded
-    ) throws -> (
+    ) throws(OSCEncodeError) -> (
         tag: Character,
         data: Data?
     )
@@ -49,7 +49,7 @@ public struct OSCValueVariableTagEncoder<OSCEncoded: OSCValueEncodable>: OSCValu
 public struct OSCValueVariadicTagEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEncoderBlock {
     public typealias Block = @Sendable (
         _ value: OSCEncoded
-    ) throws -> (
+    ) throws(OSCEncodeError) -> (
         tags: [Character],
         data: Data?
     )

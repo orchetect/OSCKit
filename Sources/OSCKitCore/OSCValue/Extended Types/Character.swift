@@ -23,7 +23,7 @@ extension Character: OSCValueCodable {
 @_documentation(visibility: internal)
 extension Character: OSCValueEncodable {
     public typealias OSCValueEncodingBlock = OSCValueStaticTagEncoder<OSCEncoded>
-    public static let oscEncoding = OSCValueEncodingBlock { value in
+    public static let oscEncoding = OSCValueEncodingBlock { value throws(OSCEncodeError) in
         (
             tag: oscTag,
             data: ASCIICharacter(value)
@@ -37,10 +37,10 @@ extension Character: OSCValueEncodable {
 @_documentation(visibility: internal)
 extension Character: OSCValueDecodable {
     public typealias OSCValueDecodingBlock = OSCValueStaticTagDecoder<OSCDecoded>
-    public static let oscDecoding = OSCValueDecodingBlock { decoder in
+    public static let oscDecoding = OSCValueDecodingBlock { decoder throws(OSCDecodeError) in
         let asciiCharNum = try decoder.readInt32().int
         guard let asciiChar = ASCIICharacter(asciiCharNum) else {
-            throw OSCDecodeError.malformed(
+            throw .malformed(
                 "Character value couldn't be read. Could not form a Unicode scalar from the value."
             )
         }

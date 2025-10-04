@@ -133,7 +133,7 @@ extension OSCValues {
     public func masked<V0, V1>(
         _ v0: V0.Type,
         _ v1: V1.Type
-    ) throws -> (V0, V1)
+    ) throws(OSCValueMaskError) -> (V0, V1)
         where V0: OSCValueMaskable,
         V1: OSCValueMaskable
     {
@@ -269,7 +269,7 @@ extension OSCValues {
     public func masked<V0, V1>(
         _ v0: V0.Type,
         _ v1: V1?.Type
-    ) throws -> (V0, V1?)
+    ) throws(OSCValueMaskError) -> (V0, V1?)
         where V0: OSCValueMaskable,
         V1: OSCValueMaskable
     {
@@ -405,7 +405,7 @@ extension OSCValues {
     public func masked<V0, V1>(
         _ v0: V0?.Type,
         _ v1: V1?.Type
-    ) throws -> (V0?, V1?)
+    ) throws(OSCValueMaskError) -> (V0?, V1?)
         where V0: OSCValueMaskable,
         V1: OSCValueMaskable
     {

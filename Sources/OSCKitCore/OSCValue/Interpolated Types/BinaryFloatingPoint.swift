@@ -17,11 +17,11 @@ extension OSCInterpolatedValue
     CoreOSCValue.OSCValueEncodingBlock == OSCValueStaticTagEncoder<CoreOSCValue>,
     CoreOSCValue.OSCValueDecodingBlock == OSCValueStaticTagDecoder<CoreOSCValue>
 {
-    public static var oscEncoding: OSCValueEncodingBlock { OSCValueEncodingBlock { value in
+    public static var oscEncoding: OSCValueEncodingBlock { OSCValueEncodingBlock { value throws(OSCEncodeError) in
         try CoreOSCValue.oscEncoding.block(CoreOSCValue(value))
     } }
     
-    public static var oscDecoding: OSCValueDecodingBlock { OSCValueDecodingBlock { decoder in
+    public static var oscDecoding: OSCValueDecodingBlock { OSCValueDecodingBlock { decoder throws(OSCDecodeError) in
         try Self(CoreOSCValue.oscDecoding.block(&decoder))
     } }
 }

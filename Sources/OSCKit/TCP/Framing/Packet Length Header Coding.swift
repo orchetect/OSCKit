@@ -17,27 +17,27 @@ extension Data {
     /// Decodes data that may contain one or more packet-length header framed datagrams.
     ///
     /// The structure is one or more of: a UInt32 length value followed by a sequence of bytes of that length.
-    func packetLengthHeaderDecoded(endianness: NumberEndianness = .platformDefault) throws -> [Data] {
+    func packetLengthHeaderDecoded(endianness: NumberEndianness = .platformDefault) throws(OSCTCPPacketLengthHeaderDecodingError) -> [Data] {
         var sequences: [SubSequence] = []
         
         var offset: Index = startIndex
         
         while offset < endIndex {
             guard offset + 4 <= endIndex else {
-                throw OSCTCPPacketLengthHeaderDecodingError.notEnoughBytes
+                throw .notEnoughBytes
             }
             let lengthFieldRange = offset ..< offset + 4
             
             guard let length = self[lengthFieldRange]
                 .toUInt32(from: endianness)
             else {
-                throw OSCTCPPacketLengthHeaderDecodingError.notEnoughBytes
+                throw .notEnoughBytes
             }
             
             offset = lengthFieldRange.endIndex
             
             guard offset + Int(length) <= endIndex else {
-                throw OSCTCPPacketLengthHeaderDecodingError.notEnoughBytes
+                throw .notEnoughBytes
             }
             let packetRange = offset ..< offset + Int(length)
             
