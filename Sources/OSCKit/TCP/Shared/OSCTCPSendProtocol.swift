@@ -50,7 +50,7 @@ extension _OSCTCPSendProtocol {
     /// Send an OSC packet.
     ///
     /// - Parameters:
-    ///   - oscObject: OSC bundle or message.
+    ///   - oscData: Raw bytes of an OSC bundle or message.
     ///   - tag: Server Connection Client Session ID. Applies only to TCP server to determine which connected socket to
     ///     send to.
     private func _send(_ oscData: Data, tag: OSCTCPClientSessionID) {
