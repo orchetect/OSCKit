@@ -37,7 +37,10 @@ public final class OSCTCPServer {
     public var timeTagMode: OSCTimeTagMode
     
     /// Local network port.
-    public private(set) var localPort: UInt16
+    public var localPort: UInt16 {
+        tcpSocket.localPort
+    }
+    private var _localPort: UInt16?
     
     /// Network interface to restrict connections to.
     public let interface: String?
@@ -51,6 +54,7 @@ public final class OSCTCPServer {
     ///
     /// - Parameters:
     ///   - port: Local network port to listen for inbound connections.
+    ///     If `nil` or `0`, a random available port in the system will be chosen.
     ///   - interface: Optionally specify a network interface for which to constrain connections.
     ///   - timeTagMode: OSC TimeTag mode. Default is recommended.
     ///   - framingMode: TCP framing mode. Both server and client must use the same framing mode. (Default is recommended.)
@@ -58,14 +62,14 @@ public final class OSCTCPServer {
     ///     handler callback closure. If `nil`, a dedicated internal background queue will be used.
     ///   - receiveHandler: Handler to call when OSC bundles or messages are received.
     public init(
-        port: UInt16,
+        port: UInt16?,
         interface: String? = nil,
         timeTagMode: OSCTimeTagMode = .ignore,
         framingMode: OSCTCPFramingMode = .osc1_1,
         queue: DispatchQueue? = nil,
         receiveHandler: OSCHandlerBlock? = nil
     ) {
-        self.localPort = port
+        _localPort = (port == nil || port == 0) ? nil : port
         self.interface = interface
         self.timeTagMode = timeTagMode
         self.framingMode = framingMode
@@ -90,10 +94,10 @@ extension OSCTCPServer: @unchecked Sendable { } // TODO: unchecked
 extension OSCTCPServer {
     /// Starts listening for inbound connections.
     public func start() throws {
-        try tcpSocket.accept(onInterface: interface, port: localPort)
-        
-        // update local port in case port 0 was passed and the system assigned a new port
-        localPort = tcpSocket.localPort
+        try tcpSocket.accept(
+            onInterface: interface,
+            port: _localPort ?? 0 // 0 causes system to assign random open port
+        )
     }
     
     /// Closes any open client connections and stops listening for inbound connection requests.
@@ -110,21 +114,41 @@ extension OSCTCPServer {
 
 extension OSCTCPServer: _OSCTCPSendProtocol {
     /// Send an OSC bundle or message to all connected clients.
-    public func send(_ oscObject: any OSCObject) throws {
+    public func send(_ oscPacket: OSCPacket) throws {
         let clientIDs = Array(tcpDelegate.clients.keys)
         
-        try send(oscObject, toClientIDs: clientIDs)
+        try send(oscPacket, toClientIDs: clientIDs)
+    }
+    
+    /// Send an OSC bundle to all connected clients.
+    public func send(_ oscBundle: OSCBundle) throws {
+        try send(.bundle(oscBundle))
+    }
+    
+    /// Send an OSC message to all connected clients.
+    public func send(_ oscMessage: OSCMessage) throws {
+        try send(.message(oscMessage))
     }
     
     /// Send an OSC bundle or message to one or more connected clients.
-    public func send(_ oscObject: any OSCObject, toClientIDs clientIDs: [Int]) throws {
+    public func send(_ oscPacket: OSCPacket, toClientIDs clientIDs: [Int]) throws {
         for clientID in clientIDs {
-            try _send(oscObject, toClientID: clientID)
+            try _send(oscPacket, toClientID: clientID)
         }
     }
     
+    /// Send an OSC bundle to one or more connected clients.
+    public func send(_ oscBundle: OSCBundle, toClientIDs clientIDs: [Int]) throws {
+        try send(.bundle(oscBundle), toClientIDs: clientIDs)
+    }
+    
+    /// Send an OSC message to one or more connected clients.
+    public func send(_ oscMessage: OSCMessage, toClientIDs clientIDs: [Int]) throws {
+        try send(.message(oscMessage), toClientIDs: clientIDs)
+    }
+    
     /// Send an OSC bundle or message to an individual connected client.
-    func _send(_ oscObject: any OSCObject, toClientID clientID: Int) throws {
+    func _send(_ oscPacket: OSCPacket, toClientID clientID: Int) throws {
         guard let connection = tcpDelegate.clients[clientID] else {
             throw GCDAsyncUdpSocketError(
                 .badParamError,
@@ -132,7 +156,17 @@ extension OSCTCPServer: _OSCTCPSendProtocol {
             )
         }
         
-        try connection.send(oscObject)
+        try connection.send(oscPacket)
+    }
+    
+    /// Send an OSC bundle to an individual connected client.
+    func _send(_ oscBundle: OSCBundle, toClientID clientID: Int) throws {
+        try _send(.bundle(oscBundle), toClientID: clientID)
+    }
+    
+    /// Send an OSC message to an individual connected client.
+    func _send(_ oscMessage: OSCMessage, toClientID clientID: Int) throws {
+        try _send(.message(oscMessage), toClientID: clientID)
     }
 }
 

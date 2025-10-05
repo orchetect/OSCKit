@@ -14,13 +14,12 @@ extension Data: OSCValue {
 @_documentation(visibility: internal)
 extension Data: OSCValueCodable {
     static let oscTag: Character = "b"
-    public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
+    public static let oscTagIdentity: OSCValueTagIdentity = .tag(oscTag)
 }
 
 @_documentation(visibility: internal)
 extension Data: OSCValueEncodable {
-    public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
-    public static let oscEncoding = OSCValueEncodingBlock { value in
+    public static let oscEncoding = OSCValueStaticTagEncoder<Self> { value throws(OSCEncodeError) in
         let lengthData = value.count.int32.toData(.bigEndian)
         let blobData = OSCMessageEncoder.fourNullBytePadded(value)
         
@@ -33,8 +32,7 @@ extension Data: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension Data: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
-    public static let oscDecoding = OSCValueDecodingBlock { decoder in
+    public static let oscDecoding = OSCValueStaticTagDecoder<Self> { decoder throws(OSCDecodeError) in
         try decoder.readBlob()
     }
 }

@@ -23,11 +23,11 @@ import Foundation
 ///     /methodname
 ///     /container1/container2/methodname
 ///
-///  Any other path components besides the last are referred to as _containers_.
+/// Any other path components besides the last are referred to as _containers_.
 ///
-///  A container may also be a method. Simply register it the same way as other methods.
+/// A container may also be a method. Simply register it the same way as other methods.
 ///
-public final class OSCAddressSpace: @unchecked Sendable {
+public actor OSCAddressSpace {
     var root: Node = .rootNodeFactory()
     
     public init() { }
@@ -51,7 +51,7 @@ extension OSCAddressSpace {
     ///     /methodname
     ///     /container1/container2/methodname
     ///
-    ///  Any other path components besides the last are referred to as _containers_.
+    /// Any other path components besides the last are referred to as _containers_.
     ///
     @discardableResult
     public func register(
@@ -73,7 +73,7 @@ extension OSCAddressSpace {
     ///     /methodname
     ///     /container1/container2/methodname
     ///
-    ///  Any other path components besides the last are referred to as _containers_.
+    /// Any other path components besides the last are referred to as _containers_.
     ///
     @discardableResult
     public func register<S>(
@@ -106,7 +106,16 @@ extension OSCAddressSpace {
         )
     }
     
-    // TODO: add unregister(methodID: MethodID) method
+    /// Unregister an OSC address with the given method ID.
+    ///
+    /// - Returns: `true` if the operation was successful, `false` if unsuccessful or the method ID does
+    ///   not exist.
+    @discardableResult
+    public func unregister(methodID: MethodID) -> Bool {
+        removeMethodNode(
+            methodID: methodID
+        )
+    }
     
     /// Unregister an OSC method by supplying its local address.
     ///
@@ -145,9 +154,9 @@ extension OSCAddressSpace {
     ///     /methodname
     ///     /container1/container2/methodname
     ///
-    ///  Any other path components besides the last are referred to as _containers_.
+    /// Any other path components besides the last are referred to as _containers_.
     ///
-    ///  A container may also be a method. Simply register it the same way as other methods.
+    /// A container may also be a method. Simply register it the same way as other methods.
     ///
     public func methods(matching address: OSCAddressPattern) -> [MethodID] {
         methodNodes(patternMatching: address)
@@ -160,7 +169,6 @@ extension OSCAddressSpace {
 extension OSCAddressSpace {
     /// Executes the closure blocks (and passes the OSC message values to them) for all local OSC
     /// address nodes matching the address pattern in the OSC message.
-    /// address nodes matching the address pattern in the OSC message.
     ///
     /// - Remark: An OSC Method is defined as being the last path component in the address. OSC
     ///   Methods are the potential destinations of OSC messages received by the OSC server and
@@ -171,9 +179,9 @@ extension OSCAddressSpace {
     ///     /methodname
     ///     /container1/container2/methodname
     ///
-    ///  Any other path components besides the last are referred to as _containers_.
+    /// Any other path components besides the last are referred to as _containers_.
     ///
-    ///  A container may also be a method. Simply register it the same way as other methods.
+    /// A container may also be a method. Simply register it the same way as other methods.
     ///
     /// - Returns: The OSC method IDs that were matched (the same as calling
     ///   ``methods(matching:)``).

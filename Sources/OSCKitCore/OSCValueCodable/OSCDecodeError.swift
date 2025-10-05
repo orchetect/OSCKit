@@ -15,6 +15,10 @@ public enum OSCDecodeError: LocalizedError {
     /// `tag` contains the OSC Type Tag encountered.
     case unexpectedType(tag: Character)
     
+    /// Error encountered while decoding an OSC value.
+    /// `verboseError` contains the specific reason.
+    case valueDecodingError(_ verboseError: String)
+    
     /// Internal inconsistency; decoding logic is in an unexpected state and cannot continue.
     /// `verboseError` contains the specific reason.
     case internalInconsistency(_ verboseError: String)
@@ -23,6 +27,7 @@ public enum OSCDecodeError: LocalizedError {
         switch self {
         case let .malformed(verboseError): "Malformed data: \(verboseError)"
         case let .unexpectedType(tag: tag): "Unexpected OSC Type Tag: \(tag)"
+        case let .valueDecodingError(verboseError): "OSC value decoding error: \(verboseError)"
         case let .internalInconsistency(verboseError): "Internal inconsistency: \(verboseError)"
         }
     }

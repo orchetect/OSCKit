@@ -126,13 +126,8 @@ extension Float32 {
     package func toData(_ endianness: NumberEndianness = .platformDefault) -> Data {
         var number = self
         
-        // TODO: Remove bindMemory(to:)
-        // In Swift 5.7, `.bindMemory(to: UInt8.self)` is not necessary;
-        // directly using .`withMemoryRebound` is supported on UnsafeRawBufferPointer.
-        // Until Xcode 14 / Swift 5.7 is a minimum requirement we have to keep it this way:
         return withUnsafeBytes(of: &number) { rawBuffer in
             rawBuffer
-                .bindMemory(to: UInt8.self)
                 .withMemoryRebound(to: UInt8.self) { buffer in
                     switch endianness {
                     case .platformDefault:
@@ -232,13 +227,8 @@ extension Double {
     package func toData(_ endianness: NumberEndianness = .platformDefault) -> Data {
         var number = self
         
-        // TODO: Remove bindMemory(to:)
-        // In Swift 5.7, `.bindMemory(to: UInt8.self)` is not necessary;
-        // directly using .`withMemoryRebound` is supported on UnsafeRawBufferPointer.
-        // Until Xcode 14 / Swift 5.7 is a minimum requirement we have to keep it this way:
         return withUnsafeBytes(of: &number) { rawBuffer in
             rawBuffer
-                .bindMemory(to: UInt8.self)
                 .withMemoryRebound(to: UInt8.self) { buffer in
                     switch endianness {
                     case .platformDefault:
@@ -343,13 +333,8 @@ extension FixedWidthInteger {
         case .bigEndian:       bigEndian
         }
         
-        // TODO: Remove bindMemory(to:)
-        // In Swift 5.7, `.bindMemory(to: UInt8.self)` is not necessary;
-        // directly using .`withMemoryRebound` is supported on UnsafeRawBufferPointer.
-        // Until Xcode 14 / Swift 5.7 is a minimum requirement we have to keep it this way:
         return withUnsafeBytes(of: &int) { rawBuffer in
             rawBuffer
-                .bindMemory(to: UInt8.self)
                 .withMemoryRebound(to: UInt8.self) { buffer in
                     Data(buffer: buffer)
                 }
@@ -429,8 +414,8 @@ extension Data {
 // MARK: - Data Bytes
 
 extension Collection<UInt8> {
-    /// Same as `Data(self)`
-    /// Returns a Data object using the array as bytes.
+    /// Returns a `Data` instance using the array as bytes.
+    /// Same as `Data(self)`.
     package var data: Data {
         Data(self)
     }

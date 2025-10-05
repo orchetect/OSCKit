@@ -12,18 +12,22 @@ import Foundation
 extension OSCInterpolatedValue
     where Self: BinaryFloatingPoint,
     CoreOSCValue: BinaryFloatingPoint,
-    OSCValueEncodingBlock == OSCValueAtomicEncoder<Self>,
-    OSCValueDecodingBlock == OSCValueAtomicDecoder<Self>,
-    CoreOSCValue.OSCValueEncodingBlock == OSCValueAtomicEncoder<CoreOSCValue>,
-    CoreOSCValue.OSCValueDecodingBlock == OSCValueAtomicDecoder<CoreOSCValue>
+    OSCValueEncodingBlock == OSCValueStaticTagEncoder<Self>,
+    OSCValueDecodingBlock == OSCValueStaticTagDecoder<Self>,
+    CoreOSCValue.OSCValueEncodingBlock == OSCValueStaticTagEncoder<CoreOSCValue>,
+    CoreOSCValue.OSCValueDecodingBlock == OSCValueStaticTagDecoder<CoreOSCValue>
 {
-    public static var oscEncoding: OSCValueEncodingBlock { OSCValueEncodingBlock { value in
-        try CoreOSCValue.oscEncoding.block(CoreOSCValue(value))
-    } }
+    public static var oscEncoding: OSCValueEncodingBlock {
+        OSCValueEncodingBlock { value throws(OSCEncodeError) in
+            try CoreOSCValue.oscEncoding.block(CoreOSCValue(value))
+        }
+    }
     
-    public static var oscDecoding: OSCValueDecodingBlock { OSCValueDecodingBlock { decoder in
-        try Self(CoreOSCValue.oscDecoding.block(&decoder))
-    } }
+    public static var oscDecoding: OSCValueDecodingBlock {
+        OSCValueDecodingBlock { decoder throws(OSCDecodeError) in
+            try Self(CoreOSCValue.oscDecoding.block(&decoder))
+        }
+    }
 }
 
 // `Float` (aka `Float32`) is already a core type

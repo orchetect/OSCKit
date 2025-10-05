@@ -8,13 +8,13 @@ import Foundation
 import OSCKit
 
 /// OSC lifecycle and send/receive manager.
-final class OSCManager: ObservableObject, Sendable {
+@MainActor final class OSCManager: ObservableObject {
     private let client = OSCUDPClient()
     private let server = OSCUDPServer(port: 8000)
-    private let receiver = OSCReceiver()
+    private var receiver: OSCReceiver?
     
     init() {
-        start()
+        Task { await start() }
     }
 }
 
@@ -22,19 +22,23 @@ final class OSCManager: ObservableObject, Sendable {
 
 extension OSCManager {
     /// Call once at app startup.
-    func start() {
+    func start() async {
         // setup client
-        do { try client.start() } catch { print(error) }
+        do { try client.start() } catch { print(error.localizedDescription) }
+        
+        receiver = await OSCReceiver()
         
         // setup server
         server.setReceiveHandler { [weak self] message, timeTag, host, port in
-            do {
-                try self?.receiver.handle(message: message, timeTag: timeTag, host: host, port: port)
-            } catch {
-                print(error)
+            Task {
+                do {
+                    try await self?.receiver?.handle(message: message, timeTag: timeTag, host: host, port: port)
+                } catch {
+                    print(error.localizedDescription)
+                }
             }
         }
-        do { try server.start() } catch { print(error) }
+        do { try server.start() } catch { print(error.localizedDescription) }
     }
     
     func stop() {
@@ -50,7 +54,7 @@ extension OSCManager {
         do {
             try client.send(message, to: host, port: port)
         } catch {
-            print(error)
+            print(error.localizedDescription)
         }
     }
 }

@@ -5,12 +5,9 @@
 //
 
 import Foundation
-
-#if compiler(>=6.0)
 internal import SwiftASCII // ASCIIString
-#else
-@_implementationOnly import SwiftASCII // ASCIIString
-#endif
+
+// MARK: - String
 
 extension OSCAddressPattern {
     /// Create an OSC address from a raw `String` address.
@@ -27,7 +24,11 @@ extension OSCAddressPattern {
         rawAddress = address.stringValue
         rawData = address.rawData
     }
-    
+}
+
+// MARK: - Path Components
+
+extension OSCAddressPattern {
     /// Create an OSC address from individual path components.
     /// The path component strings will be converted to valid ASCII, lossily converting or removing
     /// invalid non-ASCII characters if necessary.

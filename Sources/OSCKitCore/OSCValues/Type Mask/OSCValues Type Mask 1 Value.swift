@@ -6,7 +6,44 @@
 
 import Foundation
 
-// TODO: It is likely possible to refactor all of the masking methods to use newer Swift Parameter Packs
+// 💡 Note:
+//
+// It is possible to refactor all of the masking methods using newer Swift Parameter Packs,
+// however the API would change slightly due to limitations on method parameter lists.
+//
+// For parameter lists which are exclusively non-Optional types, the API is able to remain identical to existing API.
+//
+//     public func masked<each T: OSCValueMaskable>(_ v: repeat (each T).Type) throws(OSCValueMaskError) -> (repeat each T) {
+//         var index = -1
+//         func inc() -> Int { index += 1; return index }
+//
+//         let tuple = (repeat try unwrapValue((each v).self, index: inc()))
+//         try validateCount(index + 1)
+//
+//         return tuple
+//     }
+//
+//     let values = try [123, "string"].masked(Int.self, String.self)
+//
+// However, for parameter lists that including one or more trailing Optional types, a parameter label is required.
+//
+//     public func masked<each T: OSCValueMaskable, each O: OSCValueMaskable>(
+//         _ v: repeat (each T).Type,
+//         optional: repeat (each O)?.Type
+//     ) throws(OSCValueMaskError) -> (repeat each T, repeat (each O)?) {
+//         var index = -1
+//         var optCount = 0
+//         func inc() -> Int { index += 1; return index }
+//         func incOpt() -> Int { optCount += 1; return index + optCount }
+//
+//         let tuple = (repeat try unwrapValue((each v).self, index: inc()),
+//                      repeat try unwrapValue((each optional).self, index: incOpt()))
+//         try validateCount(index + 1 ... (index + 1 + optCount))
+//
+//         return tuple
+//     }
+//
+//     let values = try [123, true, "string"].masked(Int.self, Bool.self, optional: String?.self, Double?.self)
 
 extension OSCValues {
     /// Returns the OSC value sequence as a strongly typed tuple
@@ -17,50 +54,56 @@ extension OSCValues {
     ///
     /// Common usage:
     ///
-    ///     // as a tuple
-    ///     let tuple = try values.masked(String.self, Int.self)
-    ///     print(tuple.0, tuple.1)
+    /// ```swift
+    /// // as a tuple
+    /// let tuple = try values.masked(String.self, Int.self)
+    /// print(tuple.0, tuple.1)
     ///
-    ///     // unwrapped into local variables
-    ///     let (string, int) = try values.masked(String.self, Int.self)
-    ///     print(string, int)
+    /// // unwrapped into local variables
+    /// let (string, int) = try values.masked(String.self, Int.self)
+    /// print(string, int)
+    /// ```
     ///
     /// Basic examples:
     ///
-    ///     // present optional value
-    ///     ["Test", 123, Int32(456)].masked(String.self, Int32.self, Int32?.self)
-    ///     tuple.0 // "Test" as String
-    ///     tuple.1 // 123 as Int
-    ///     tuple.2 // 456 as Int32?
+    /// ```swift
+    /// // present optional value
+    /// ["Test", 123, Int32(456)].masked(String.self, Int32.self, Int32?.self)
+    /// tuple.0 // "Test" as String
+    /// tuple.1 // 123 as Int
+    /// tuple.2 // 456 as Int32?
     ///
-    ///     // missing optional value
-    ///     ["Test", 123].masked(String.self, Int32.self, Int32?.self)
-    ///     tuple.0 // "Test" as String
-    ///     tuple.1 // 123 as Int
-    ///     tuple.2 // nil as Int32?
+    /// // missing optional value
+    /// ["Test", 123].masked(String.self, Int32.self, Int32?.self)
+    /// tuple.0 // "Test" as String
+    /// tuple.1 // 123 as Int
+    /// tuple.2 // nil as Int32?
     ///
-    ///     // mismatching types
-    ///     [123, 456].masked(String.self, Int32.self)
-    ///     // throws OSCValueMaskError.mismatchedTypes
+    /// // mismatching types
+    /// [123, 456].masked(String.self, Int32.self)
+    /// // throws OSCValueMaskError.mismatchedTypes
     ///
-    ///     // mismatched element count, regardless of types
-    ///     [123, 456].masked(String.self, Int32.self, Int32.self)
-    ///     // throws OSCValueMaskError.invalidCount
+    /// // mismatched element count, regardless of types
+    /// [123, 456].masked(String.self, Int32.self, Int32.self)
+    /// // throws OSCValueMaskError.invalidCount
+    /// ```
     ///
     /// `Int.self` is a special common-use interpolated type for convenience:
     ///
-    ///     // any integer may match against Int.self and is converted to Int
-    ///     [Int32(123) Int64(456)].masked(Int.self, Int.self)
-    ///     tuple.0 // 123 as Int
-    ///     tuple.1 // 456 as Int
+    /// ```swift
+    /// // any integer may match against Int.self and is converted to Int
+    /// [Int32(123) Int64(456)].masked(Int.self, Int.self)
+    /// tuple.0 // 123 as Int
+    /// tuple.1 // 456 as Int
     ///
-    ///     // all other integer types must match themself exactly
-    ///     [Int32(123) Int64(456)].masked(Int32.self, Int32.self)
-    ///     // throws error; mask does not match
+    /// // all other integer types must match themself exactly
+    /// [Int32(123) Int64(456)].masked(Int32.self, Int32.self)
+    /// // throws error; mask does not match
     ///
-    ///     // same with optionals; specific integer types must match if present
-    ///     [123, 456, 789].masked(String.self, Int.self, Int32?.self)
-    ///     // throws error; mask does not match
+    /// // same with optionals; specific integer types must match if present
+    /// [123, 456, 789].masked(String.self, Int.self, Int32?.self)
+    /// // throws error; mask does not match
+    /// ```
     ///
     /// In addition to core OSC concrete types, various non-standard OSC types can be used and will
     /// be transparently encoded as their closest related OSC core type when encoding in an
@@ -74,24 +117,28 @@ extension OSCValues {
     ///
     /// (Note that `Int32`, `Int64`, `Float32` are already core `OSCValue` types.)
     ///
-    ///     let values: OSCValues = [Int8(123), Int16(123)]
+    /// ```swift
+    /// let values: OSCValues = [Int8(123), Int16(123)]
+    /// ```
     ///
     /// `AnyOSCNumberValue` is a special type to match and box any OSC numeric value.
     ///
-    ///     [Int8(123)]
-    ///         .masked(AnyOSCNumberValue.self)
-    ///         // (AnyOSCNumberValue(Int8(123)))
+    /// ```swift
+    /// [Int8(123)]
+    ///     .masked(AnyOSCNumberValue.self)
+    ///     // (AnyOSCNumberValue(Int8(123)))
     ///
-    ///     [Double(123.45)]
-    ///         .masked(AnyOSCNumberValue.self)
-    ///         // (AnyOSCNumberValue(Double(123.45)))
+    /// [Double(123.45)]
+    ///     .masked(AnyOSCNumberValue.self)
+    ///     // (AnyOSCNumberValue(Double(123.45)))
     ///
-    ///     // which can be accessed as either typed:
-    ///     AnyOSCNumberValue(Int8(123)).base // .int(Int8)
+    /// // which can be accessed as either typed:
+    /// AnyOSCNumberValue(Int8(123)).base // .int(Int8)
     ///
-    ///     // or interpolated:
-    ///     AnyOSCNumberValue(Int8(123)).intValue // 123 as Int
-    ///     AnyOSCNumberValue(Int8(123)).doubleValue // 123.0 as Double
+    /// // or interpolated:
+    /// AnyOSCNumberValue(Int8(123)).intValue // 123 as Int
+    /// AnyOSCNumberValue(Int8(123)).doubleValue // 123.0 as Double
+    /// ```
     ///
     /// One or more trailing types can also be expressed as as an `Optional` (ie: `Int32?.self`)
     /// which will match that value type or return `nil` if the value is missing in the base value
@@ -124,7 +171,7 @@ extension OSCValues {
     /// - Throws: ``OSCValueMaskError``
     public func masked<V>(
         _ v: V.Type
-    ) throws -> V
+    ) throws(OSCValueMaskError) -> V
     where V: OSCValueMaskable {
         try validateCount(1)
         let v = try unwrapValue(v.self, index: 0)
@@ -139,50 +186,56 @@ extension OSCValues {
     ///
     /// Common usage:
     ///
-    ///     // as a tuple
-    ///     let tuple = try values.masked(String.self, Int.self)
-    ///     print(tuple.0, tuple.1)
+    /// ```swift
+    /// // as a tuple
+    /// let tuple = try values.masked(String.self, Int.self)
+    /// print(tuple.0, tuple.1)
     ///
-    ///     // unwrapped into local variables
-    ///     let (string, int) = try values.masked(String.self, Int.self)
-    ///     print(string, int)
+    /// // unwrapped into local variables
+    /// let (string, int) = try values.masked(String.self, Int.self)
+    /// print(string, int)
+    /// ```
     ///
     /// Basic examples:
     ///
-    ///     // present optional value
-    ///     ["Test", 123, Int32(456)].masked(String.self, Int32.self, Int32?.self)
-    ///     tuple.0 // "Test" as String
-    ///     tuple.1 // 123 as Int
-    ///     tuple.2 // 456 as Int32?
+    /// ```swift
+    /// // present optional value
+    /// ["Test", 123, Int32(456)].masked(String.self, Int32.self, Int32?.self)
+    /// tuple.0 // "Test" as String
+    /// tuple.1 // 123 as Int
+    /// tuple.2 // 456 as Int32?
     ///
-    ///     // missing optional value
-    ///     ["Test", 123].masked(String.self, Int32.self, Int32?.self)
-    ///     tuple.0 // "Test" as String
-    ///     tuple.1 // 123 as Int
-    ///     tuple.2 // nil as Int32?
+    /// // missing optional value
+    /// ["Test", 123].masked(String.self, Int32.self, Int32?.self)
+    /// tuple.0 // "Test" as String
+    /// tuple.1 // 123 as Int
+    /// tuple.2 // nil as Int32?
     ///
-    ///     // mismatching types
-    ///     [123, 456].masked(String.self, Int32.self)
-    ///     // throws OSCValueMaskError.mismatchedTypes
+    /// // mismatching types
+    /// [123, 456].masked(String.self, Int32.self)
+    /// // throws OSCValueMaskError.mismatchedTypes
     ///
-    ///     // mismatched element count, regardless of types
-    ///     [123, 456].masked(String.self, Int32.self, Int32.self)
-    ///     // throws OSCValueMaskError.invalidCount
+    /// // mismatched element count, regardless of types
+    /// [123, 456].masked(String.self, Int32.self, Int32.self)
+    /// // throws OSCValueMaskError.invalidCount
+    /// ```
     ///
     /// `Int.self` is a special common-use interpolated type for convenience:
     ///
-    ///     // any integer may match against Int.self and is converted to Int
-    ///     [Int32(123) Int64(456)].masked(Int.self, Int.self)
-    ///     tuple.0 // 123 as Int
-    ///     tuple.1 // 456 as Int
+    /// ```swift
+    /// // any integer may match against Int.self and is converted to Int
+    /// [Int32(123) Int64(456)].masked(Int.self, Int.self)
+    /// tuple.0 // 123 as Int
+    /// tuple.1 // 456 as Int
     ///
-    ///     // all other integer types must match themself exactly
-    ///     [Int32(123) Int64(456)].masked(Int32.self, Int32.self)
-    ///     // throws error; mask does not match
+    /// // all other integer types must match themself exactly
+    /// [Int32(123) Int64(456)].masked(Int32.self, Int32.self)
+    /// // throws error; mask does not match
     ///
-    ///     // same with optionals; specific integer types must match if present
-    ///     [123, 456, 789].masked(String.self, Int.self, Int32?.self)
-    ///     // throws error; mask does not match
+    /// // same with optionals; specific integer types must match if present
+    /// [123, 456, 789].masked(String.self, Int.self, Int32?.self)
+    /// // throws error; mask does not match
+    /// ```
     ///
     /// In addition to core OSC concrete types, various non-standard OSC types can be used and will
     /// be transparently encoded as their closest related OSC core type when encoding in an
@@ -196,24 +249,28 @@ extension OSCValues {
     ///
     /// (Note that `Int32`, `Int64`, `Float32` are already core `OSCValue` types.)
     ///
-    ///     let values: OSCValues = [Int8(123), Int16(123)]
+    /// ```swift
+    /// let values: OSCValues = [Int8(123), Int16(123)]
+    /// ```
     ///
     /// `AnyOSCNumberValue` is a special type to match and box any OSC numeric value.
     ///
-    ///     [Int8(123)]
-    ///         .masked(AnyOSCNumberValue.self)
-    ///         // (AnyOSCNumberValue(Int8(123)))
+    /// ```swift
+    /// [Int8(123)]
+    ///     .masked(AnyOSCNumberValue.self)
+    ///     // (AnyOSCNumberValue(Int8(123)))
     ///
-    ///     [Double(123.45)]
-    ///         .masked(AnyOSCNumberValue.self)
-    ///         // (AnyOSCNumberValue(Double(123.45)))
+    /// [Double(123.45)]
+    ///     .masked(AnyOSCNumberValue.self)
+    ///     // (AnyOSCNumberValue(Double(123.45)))
     ///
-    ///     // which can be accessed as either typed:
-    ///     AnyOSCNumberValue(Int8(123)).base // .int(Int8)
+    /// // which can be accessed as either typed:
+    /// AnyOSCNumberValue(Int8(123)).base // .int(Int8)
     ///
-    ///     // or interpolated:
-    ///     AnyOSCNumberValue(Int8(123)).intValue // 123 as Int
-    ///     AnyOSCNumberValue(Int8(123)).doubleValue // 123.0 as Double
+    /// // or interpolated:
+    /// AnyOSCNumberValue(Int8(123)).intValue // 123 as Int
+    /// AnyOSCNumberValue(Int8(123)).doubleValue // 123.0 as Double
+    /// ```
     ///
     /// One or more trailing types can also be expressed as as an `Optional` (ie: `Int32?.self`)
     /// which will match that value type or return `nil` if the value is missing in the base value
@@ -246,7 +303,7 @@ extension OSCValues {
     /// - Throws: ``OSCValueMaskError``
     public func masked<V>(
         _ v: V?.Type
-    ) throws -> V?
+    ) throws(OSCValueMaskError) -> V?
     where V: OSCValueMaskable {
         try validateCount(0 ... 1)
         let v = try unwrapValue(v.self, index: 0)

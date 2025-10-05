@@ -18,13 +18,13 @@ public final class OSCUDPClient {
     private let udpDelegate = OSCUDPClientDelegate()
     
     /// Local UDP port used by the client from which to send OSC packets. (This is not the remote port
-    /// which is specified each time a call to ``send(_:to:port:)`` is made.)
+    /// which is specified each time a call to ``send(_:to:port:)-(OSCPacket,_,_)`` is made.)
     /// This may only be set at the time of initialization.
     ///
     /// > Note:
     /// >
     /// > If `localPort` was not specified at the time of initialization, reading this
-    /// > property may return a value of `0` until the first successful call to ``send(_:to:port:)``
+    /// > property may return a value of `0` until the first successful call to ``send(_:to:port:)-(OSCPacket,_,_)``
     /// > is made.
     public var localPort: UInt16 {
         udpSocket.localPort()
@@ -108,18 +108,19 @@ public final class OSCUDPClient {
     ///
     /// - Parameters:
     ///   - localPort: Local UDP port used by the client from which to send OSC packets.
+    ///     If `nil` or `0`, a random available port in the system will be chosen.
     ///   - interface: Optionally specify a network interface for which to constrain communication.
     ///   - isPortReuseEnabled: Enable local UDP port reuse by other processes.
     ///   - isIPv4BroadcastEnabled: Enable sending IPv4 broadcast messages from the socket.
     public convenience init(
-        localPort: UInt16,
+        localPort: UInt16?,
         interface: String? = nil,
         isPortReuseEnabled: Bool = false,
         isIPv4BroadcastEnabled: Bool = false
     ) {
         self.init()
         
-        _localPort = localPort
+        _localPort = (localPort == nil || localPort == 0) ? nil : localPort
         self.interface = interface
         self.isPortReuseEnabled = isPortReuseEnabled
         self.isIPv4BroadcastEnabled = isIPv4BroadcastEnabled
@@ -169,11 +170,51 @@ extension OSCUDPClient {
     /// The default port for OSC communication is 8000 but may change depending on device/software
     /// manufacturer.
     public func send(
-        _ oscObject: any OSCObject,
+        _ oscPacket: OSCPacket,
         to host: String,
         port: UInt16 = 8000
     ) throws {
-        let data = try oscObject.rawData()
+        let data = try oscPacket.rawData()
+        
+        udpSocket.send(
+            data,
+            toHost: host,
+            port: port,
+            withTimeout: 1.0,
+            tag: 0
+        )
+    }
+    
+    /// Send an OSC bundle ad-hoc to a recipient on the network.
+    ///
+    /// The default port for OSC communication is 8000 but may change depending on device/software
+    /// manufacturer.
+    public func send(
+        _ oscBundle: OSCBundle,
+        to host: String,
+        port: UInt16 = 8000
+    ) throws {
+        let data = try oscBundle.rawData()
+        
+        udpSocket.send(
+            data,
+            toHost: host,
+            port: port,
+            withTimeout: 1.0,
+            tag: 0
+        )
+    }
+    
+    /// Send an OSC message ad-hoc to a recipient on the network.
+    ///
+    /// The default port for OSC communication is 8000 but may change depending on device/software
+    /// manufacturer.
+    public func send(
+        _ oscMessage: OSCMessage,
+        to host: String,
+        port: UInt16 = 8000
+    ) throws {
+        let data = try oscMessage.rawData()
         
         udpSocket.send(
             data,

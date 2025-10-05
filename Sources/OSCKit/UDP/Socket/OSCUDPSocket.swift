@@ -31,8 +31,8 @@ public final class OSCUDPSocket {
     public var timeTagMode: OSCTimeTagMode
     
     /// Remote network hostname.
-    /// If non-nil, this host will be used in calls to ``send(_:to:port:)``. The host may still be
-    /// overridden using the `host` parameter in the call to ``send(_:to:port:)``..
+    /// If non-nil, this host will be used in calls to ``send(_:to:port:)-(OSCPacket,_,_)``. The host may still be
+    /// overridden using the `host` parameter in the call to ``send(_:to:port:)-(OSCPacket,_,_)``..
     public var remoteHost: String?
     
     /// Local UDP port used to both send OSC packets from and listen for incoming packets.
@@ -44,7 +44,7 @@ public final class OSCUDPSocket {
     /// > Note:
     /// >
     /// > If `localPort` was not specified at the time of initialization, reading this
-    /// > property may return a value of `0` until the first successful call to ``send(_:to:port:)``
+    /// > property may return a value of `0` until the first successful call to ``send(_:to:port:)-(OSCPacket,_,_)``
     /// > is made.
     public var localPort: UInt16 {
         udpSocket.localPort()
@@ -52,14 +52,14 @@ public final class OSCUDPSocket {
     private var _localPort: UInt16?
     
     /// UDP port used by to send OSC packets. This may be set at any time.
-    /// This port will be used in calls to ``send(_:to:port:)``. The port may still be overridden
-    /// using the `port` parameter in the call to ``send(_:to:port:)``.
+    /// This port will be used in calls to ``send(_:to:port:)-(OSCPacket,_,_)``. The port may still be overridden
+    /// using the `port` parameter in the call to ``send(_:to:port:)-(OSCPacket,_,_)``.
     ///
     /// The default port for OSC communication is 8000 but may change depending on device/software
     /// manufacturer.
     public var remotePort: UInt16 {
         get { _remotePort ?? localPort }
-        set { _remotePort = newValue }
+        set { _remotePort = (newValue == 0) ? nil : newValue }
     }
     private var _remotePort: UInt16?
     
@@ -99,10 +99,10 @@ public final class OSCUDPSocket {
     ///
     /// - Parameters:
     ///   - localPort: Local port to listen on for inbound OSC packets.
-    ///     If `nil`, a random available port in the system will be chosen.
+    ///     If `nil` or `0`, a random available port in the system will be chosen.
     ///   - remoteHost: Remote hostname or IP address.
     ///   - remotePort: Remote port on the remote host machine to send outbound OSC packets to.
-    ///     If `nil`, the `localPort` value will be used.
+    ///     If `nil` or `0`, the `localPort` value will be used.
     ///   - interface: Optionally specify a network interface for which to constrain communication.
     ///   - timeTagMode: OSC time-tag mode. The default is recommended.
     ///   - isIPv4BroadcastEnabled: Enable sending IPv4 broadcast messages from the socket.
@@ -121,8 +121,8 @@ public final class OSCUDPSocket {
         receiveHandler: OSCHandlerBlock? = nil
     ) {
         self.remoteHost = remoteHost
-        _localPort = localPort
-        _remotePort = remotePort
+        _localPort = (localPort == nil || localPort == 0) ? nil : localPort
+        _remotePort = (remotePort == nil || remotePort == 0) ? nil : remotePort
         self.interface = interface
         self.timeTagMode = timeTagMode
         self.isIPv4BroadcastEnabled = isIPv4BroadcastEnabled
@@ -172,7 +172,7 @@ extension OSCUDPSocket {
     /// The default port for OSC communication is 8000 but may change depending on device/software
     /// manufacturer.
     public func send(
-        _ oscObject: any OSCObject,
+        _ oscPacket: OSCPacket,
         to host: String? = nil,
         port: UInt16? = nil
     ) throws {
@@ -193,7 +193,7 @@ extension OSCUDPSocket {
             )
         }
         
-        let data = try oscObject.rawData()
+        let data = try oscPacket.rawData()
         
         udpSocket.send(
             data,
@@ -202,6 +202,34 @@ extension OSCUDPSocket {
             withTimeout: 1.0,
             tag: 0
         )
+    }
+    
+    /// Send an OSC bundle to the remote host.
+    /// The ``remoteHost`` and ``remotePort`` properties are used unless one or both are
+    /// overridden in this call.
+    ///
+    /// The default port for OSC communication is 8000 but may change depending on device/software
+    /// manufacturer.
+    public func send(
+        _ oscBundle: OSCBundle,
+        to host: String? = nil,
+        port: UInt16? = nil
+    ) throws {
+        try send(.bundle(oscBundle), to: host, port: port)
+    }
+    
+    /// Send an OSC message to the remote host.
+    /// The ``remoteHost`` and ``remotePort`` properties are used unless one or both are
+    /// overridden in this call.
+    ///
+    /// The default port for OSC communication is 8000 but may change depending on device/software
+    /// manufacturer.
+    public func send(
+        _ oscMessage: OSCMessage,
+        to host: String? = nil,
+        port: UInt16? = nil
+    ) throws {
+        try send(.message(oscMessage), to: host, port: port)
     }
 }
 

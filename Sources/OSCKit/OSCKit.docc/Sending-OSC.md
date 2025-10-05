@@ -72,7 +72,7 @@ To send multiple OSC messages or nested OSC bundles to the same destination at t
 // Option 1: build elements separately
 let msg1 = OSCMessage("/msg1")
 let msg2 = OSCMessage("/msg2", values: ["string", 123])
-let bundle = OSCBundle([msg1, msg2])
+let bundle = OSCBundle([.message(msg1), .message(msg2)])
 
 // Option 2: build elements inline
 let bundle = OSCBundle([

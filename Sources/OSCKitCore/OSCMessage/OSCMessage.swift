@@ -11,9 +11,7 @@ import Foundation
 /// An OSC message contains an address pattern string, and zero or more values.
 /// An OSC message may be sent to a recipient by itself, or one or more messages may be packed into
 /// an OSC bundle and sent in a single packet.
-public struct OSCMessage: OSCObject {
-    public static let oscObjectType: OSCObjectType = .message
-    
+public struct OSCMessage {
     /// OSC message address pattern.
     public var addressPattern: OSCAddressPattern
     
@@ -64,34 +62,3 @@ extension OSCMessage: CustomStringConvertible {
                 .trimmed
     }
 }
-
-// MARK: - Header
-
-extension OSCMessage {
-    /// Constant caching an OSCMessage header.
-    public static let header: Data = "/".toData(using: .nonLossyASCII) ?? Data()
-}
-
-// MARK: - Codable
-
-// TODO: Codable - fix or remove; would require OSCValue to conform to Codable too
-
-// extension OSCMessage: Codable {
-//    enum CodingKeys: String, CodingKey {
-//        case address
-//        case values
-//    }
-//
-//    public init(from decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//        let address = try container.decode(OSCAddressPattern.self, forKey: .address)
-//        let values = try container.decode(OSCValues.self, forKey: .values)
-//        self.init(address: address, values: values)
-//    }
-//
-//    public func encode(to encoder: Encoder) throws {
-//        var container = encoder.container(keyedBy: CodingKeys.self)
-//        try container.encode(address, forKey: .address)
-//        try container.encode(values, forKey: .values)
-//    }
-// }

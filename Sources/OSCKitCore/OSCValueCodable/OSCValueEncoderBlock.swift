@@ -6,18 +6,18 @@
 
 import Foundation
 
-/// Protocol that ``OSCValue`` encoder block encapsulation objects adopt.
+/// Protocol that ``OSCValue`` encoder block encapsulation structs adopt.
 public protocol OSCValueEncoderBlock where Self: Sendable {
     associatedtype OSCEncoded: OSCValueEncodable
 }
 
 // MARK: - Encoder Blocks
 
-/// ``OSCValue`` atomic value encoder block encapsulation.
-public struct OSCValueAtomicEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEncoderBlock {
+/// ``OSCValue`` statically-tagged value encoder block encapsulation.
+public struct OSCValueStaticTagEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEncoderBlock {
     public typealias Block = @Sendable (
         _ value: OSCEncoded
-    ) throws -> (
+    ) throws(OSCEncodeError) -> (
         tag: Character,
         data: Data?
     )
@@ -29,11 +29,11 @@ public struct OSCValueAtomicEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEnco
     }
 }
 
-/// ``OSCValue`` variable value encoder block encapsulation.
-public struct OSCValueVariableEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEncoderBlock {
+/// ``OSCValue`` variably-tagged value encoder block encapsulation.
+public struct OSCValueVariableTagEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEncoderBlock {
     public typealias Block = @Sendable (
         _ value: OSCEncoded
-    ) throws -> (
+    ) throws(OSCEncodeError) -> (
         tag: Character,
         data: Data?
     )
@@ -45,11 +45,11 @@ public struct OSCValueVariableEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEn
     }
 }
 
-/// ``OSCValue`` variadic value encoder block encapsulation.
-public struct OSCValueVariadicEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEncoderBlock {
+/// ``OSCValue`` variadic-tagged value encoder block encapsulation.
+public struct OSCValueVariadicTagEncoder<OSCEncoded: OSCValueEncodable>: OSCValueEncoderBlock {
     public typealias Block = @Sendable (
         _ value: OSCEncoded
-    ) throws -> (
+    ) throws(OSCEncodeError) -> (
         tags: [Character],
         data: Data?
     )

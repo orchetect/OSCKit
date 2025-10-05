@@ -28,6 +28,11 @@ Open Sound Control (OSC) library for macOS, iOS tvOS, and visionOS.
 
 ## Topics
 
+### OSC Packets
+
+- ``OSCPacket``
+- ``OSCPacketType``
+
 ### OSC Bundles
 
 - ``OSCBundle``
@@ -39,11 +44,6 @@ Open Sound Control (OSC) library for macOS, iOS tvOS, and visionOS.
 - <doc:OSC-Address-Pattern-Parsing>
 - <doc:OSC-Value-Types>
 - <doc:OSC-Value-Parsing>
-
-### OSC Data Protocol
-
-- ``OSCObject``
-- ``OSCObjectType``
 
 ### Advanced
 

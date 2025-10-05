@@ -17,12 +17,12 @@ import Testing
         let msg2 = OSCMessage("/msg2")
         let msg3 = OSCMessage("/msg1", values: [Int32(123)])
         
-        let bundle1 = OSCBundle([msg1])
-        let bundle2 = OSCBundle([msg3])
+        let bundle1 = OSCBundle([.message(msg1)])
+        let bundle2 = OSCBundle([.message(msg3)])
         let bundle3 = OSCBundle([
-            bundle1,
-            bundle2,
-            msg2
+            .bundle(bundle1),
+            .bundle(bundle2),
+            .message(msg2)
         ])
         
         #expect(bundle1 == bundle1)
@@ -43,12 +43,12 @@ import Testing
         let msg2 = OSCMessage("/msg2")
         let msg3 = OSCMessage("/msg1", values: [Int32(123)])
         
-        let bundle1 = OSCBundle([msg1])
-        let bundle2 = OSCBundle([msg3])
+        let bundle1 = OSCBundle([.message(msg1)])
+        let bundle2 = OSCBundle([.message(msg3)])
         let bundle3 = OSCBundle([
-            bundle1,
-            bundle2,
-            msg2
+            .bundle(bundle1),
+            .bundle(bundle2),
+            .message(msg2)
         ])
         
         let set: Set<OSCBundle> = [bundle1, bundle1, bundle2, bundle2, bundle3, bundle3]
@@ -167,28 +167,4 @@ import Testing
                 """#
         )
     }
-    
-    // TODO: test is written correctly but Codable conformance on OSCBundle needs to be fixed
-    // @Test func codable() throws {
-    //     let encoder = JSONEncoder()
-    //     let decoder = JSONDecoder()
-    //
-    //     let str = OSCBundle(timeTag: .init(123_456), [
-    //         .bundle([
-    //             .message(
-    //                 "/test/address1",
-    //                 values: [Int32(123), String("A string.")]
-    //             )
-    //         ]),
-    //         .message(
-    //             "/test/address2",
-    //             values: [Int32(456), String("Another string.")]
-    //         )
-    //     ])
-    //
-    //     let encoded = try encoder.encode(str)
-    //     let decoded = try decoder.decode(OSCBundle.self, from: encoded)
-    //
-    //     #expect(str == decoded)
-    // }
 }

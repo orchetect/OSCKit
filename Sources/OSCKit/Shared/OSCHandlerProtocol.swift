@@ -19,33 +19,30 @@ protocol _OSCHandlerProtocol: AnyObject where Self: Sendable {
 extension _OSCHandlerProtocol {
     /// Handle incoming OSC data recursively.
     func _handle(
-        payload: any OSCObject,
+        packet: OSCPacket,
         timeTag: OSCTimeTag = .immediate(),
         remoteHost: String,
         remotePort: UInt16
     ) {
         queue.async {
-            switch payload {
-            case let bundle as OSCBundle:
+            switch packet {
+            case let .bundle(bundle):
                 for element in bundle.elements {
                     self._handle(
-                        payload: element,
+                        packet: element,
                         timeTag: bundle.timeTag,
                         remoteHost: remoteHost,
                         remotePort: remotePort
                     )
                 }
                 
-            case let message as OSCMessage:
+            case let .message(message):
                 self._schedule(
                     message,
                     at: timeTag,
                     remoteHost: remoteHost,
                     remotePort: remotePort
                 )
-                
-            default:
-                assertionFailure("Unexpected OSCObject type encountered.")
             }
         }
     }

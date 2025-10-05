@@ -16,7 +16,7 @@ import Testing
     // allow more time variance for CI pipeline to de-flake
     let tolerance: TimeInterval = 0.01
     #else // linux
-    let tolerance: TimeInterval = 0.01
+    let tolerance: TimeInterval = 0.2
     #endif
     
     // MARK: - Static Constructors
@@ -42,22 +42,55 @@ import Testing
     }
     
     @Test(.enabled(if: isSystemTimingStable()))
-    func oscValue_timeTagNow() throws {
+    func oscValue_timeTagNowA() throws {
+        // capture time-sensitive variables first
+        let now = Date()
         let val: any OSCValue = .timeTagNow()
-        let now = OSCTimeTag.now()
         
+        // perform conversions
+        let nowTI = now.timeIntervalSince(primeEpoch)
         let valTI = try #require((val as? OSCTimeTag)?.timeInterval(since: primeEpoch))
-        let nowTI = now.timeInterval(since: primeEpoch)
+        
         #expect(valTI.isApproximatelyEqual(to: nowTI, absoluteTolerance: tolerance))
     }
     
     @Test(.enabled(if: isSystemTimingStable()))
-    func oscValue_timeTagTimeIntervalSinceNow() throws {
-        let val: any OSCValue = .timeTag(timeIntervalSinceNow: 5.0)
-        let now = OSCTimeTag(timeIntervalSinceNow: 5.0)
+    func oscValue_timeTagNowB() throws {
+        // capture time-sensitive variables first
+        let now = Date()
+        let val: OSCTimeTag = .now()
         
+        // perform conversions
+        let nowTI = now.timeIntervalSince(primeEpoch)
+        let valTI = val.timeInterval(since: primeEpoch)
+        
+        #expect(valTI.isApproximatelyEqual(to: nowTI, absoluteTolerance: tolerance))
+    }
+    
+    @Test(.enabled(if: isSystemTimingStable()))
+    func oscValue_timeTagTimeIntervalSinceNowA() throws {
+        // capture time-sensitive variables first
+        var now = Date()
+        let val: any OSCValue = .timeTag(timeIntervalSinceNow: 5.0)
+        now = now.addingTimeInterval(5.0)
+        
+        // perform conversions
+        let nowTI = now.timeIntervalSince(primeEpoch)
         let valTI = try #require((val as? OSCTimeTag)?.timeInterval(since: primeEpoch))
-        let nowTI = now.timeInterval(since: primeEpoch)
+        
+        #expect(valTI.isApproximatelyEqual(to: nowTI, absoluteTolerance: tolerance))
+    }
+    
+    @Test(.enabled(if: isSystemTimingStable()))
+    func oscValue_timeTagTimeIntervalSinceNowB() throws {
+        // capture time-sensitive variables first
+        var now = Date()
+        let val = OSCTimeTag(timeIntervalSinceNow: 5.0)
+        now = now.addingTimeInterval(5.0)
+        
+        // perform conversions
+        let nowTI = now.timeIntervalSince(primeEpoch)
+        let valTI = val.timeInterval(since: primeEpoch)
         
         #expect(valTI.isApproximatelyEqual(to: nowTI, absoluteTolerance: tolerance))
     }

@@ -17,15 +17,15 @@ final class OSCReceiver: Sendable {
     private let idMethodB: OSCAddressSpace.MethodID
     private let idMethodC: OSCAddressSpace.MethodID
     
-    public init() {
+    public init() async {
         // register local OSC methods and store the ID tokens once before receiving OSC messages
-        idMethodA = addressSpace.register(localAddress: "/methodA")
-        idMethodB = addressSpace.register(localAddress: "/some/address/methodB")
-        idMethodC = addressSpace.register(localAddress: "/some/address/methodC")
+        idMethodA = await addressSpace.register(localAddress: "/methodA")
+        idMethodB = await addressSpace.register(localAddress: "/some/address/methodB")
+        idMethodC = await addressSpace.register(localAddress: "/some/address/methodC")
     }
     
-    public func handle(message: OSCMessage, timeTag: OSCTimeTag, host: String, port: UInt16) throws {
-        let ids = addressSpace.methods(matching: message.addressPattern)
+    public func handle(message: OSCMessage, timeTag: OSCTimeTag, host: String, port: UInt16) async throws {
+        let ids = await addressSpace.methods(matching: message.addressPattern)
         
         guard !ids.isEmpty else {
             // No matches against any registered local OSC addresses.

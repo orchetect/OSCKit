@@ -5,12 +5,7 @@
 //
 
 import Foundation
-
-#if compiler(>=6.0)
 internal import SwiftASCII // ASCIICharacter
-#else
-@_implementationOnly import SwiftASCII // ASCIICharacter
-#endif
 
 // MARK: - OSC Encoding
 
@@ -22,13 +17,12 @@ extension Character: OSCValue {
 @_documentation(visibility: internal)
 extension Character: OSCValueCodable {
     static let oscTag: Character = "c"
-    public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
+    public static let oscTagIdentity: OSCValueTagIdentity = .tag(oscTag)
 }
 
 @_documentation(visibility: internal)
 extension Character: OSCValueEncodable {
-    public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
-    public static let oscEncoding = OSCValueEncodingBlock { value in
+    public static let oscEncoding = OSCValueStaticTagEncoder<Self> { value throws(OSCEncodeError) in
         (
             tag: oscTag,
             data: ASCIICharacter(value)
@@ -41,11 +35,10 @@ extension Character: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension Character: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
-    public static let oscDecoding = OSCValueDecodingBlock { decoder in
+    public static let oscDecoding = OSCValueStaticTagDecoder<Self> { decoder throws(OSCDecodeError) in
         let asciiCharNum = try decoder.readInt32().int
         guard let asciiChar = ASCIICharacter(asciiCharNum) else {
-            throw OSCDecodeError.malformed(
+            throw .malformed(
                 "Character value couldn't be read. Could not form a Unicode scalar from the value."
             )
         }

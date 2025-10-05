@@ -3,14 +3,17 @@
 ### Setup
 
 ```swift
+let oscClient: OSCTCPClient
 let tcpFramingMode: OSCTCPFramingMode = .osc1_1
 
-let oscClient = OSCTCPClient(
-    remoteHost: "192.168.1.20",
-    remotePort: 3032,
-    framingMode: tcpFramingMode
-) { [weak self] message, timeTag, host, port in
-    print("Received \(message) from server")
+init() {
+    oscClient = OSCTCPClient(
+        remoteHost: "192.168.1.20",
+        remotePort: 3032,
+        framingMode: tcpFramingMode
+    ) { [weak self] message, timeTag, host, port in
+        print("Received \(message) from server")
+    }
 }
 ```
 

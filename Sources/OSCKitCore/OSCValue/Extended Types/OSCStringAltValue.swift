@@ -68,10 +68,6 @@ extension OSCStringAltValue: CustomStringConvertible {
     }
 }
 
-// MARK: - Codable
-
-extension OSCStringAltValue: Codable { }
-
 // MARK: - OSC Encoding
 
 @_documentation(visibility: internal)
@@ -82,13 +78,12 @@ extension OSCStringAltValue: OSCValue {
 @_documentation(visibility: internal)
 extension OSCStringAltValue: OSCValueCodable {
     static let oscTag: Character = "S"
-    public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
+    public static let oscTagIdentity: OSCValueTagIdentity = .tag(oscTag)
 }
 
 @_documentation(visibility: internal)
 extension OSCStringAltValue: OSCValueEncodable {
-    public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
-    public static let oscEncoding = OSCValueEncodingBlock { value in
+    public static let oscEncoding = OSCValueStaticTagEncoder<Self> { value throws(OSCEncodeError) in
         let encoded = try String.oscEncoding.block(value.string)
         return (tag: oscTag, data: encoded.data)
     }
@@ -96,8 +91,7 @@ extension OSCStringAltValue: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension OSCStringAltValue: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
-    public static let oscDecoding = OSCValueDecodingBlock { decoder in
+    public static let oscDecoding = OSCValueStaticTagDecoder<Self> { decoder throws(OSCDecodeError) in
         try OSCStringAltValue(String.oscDecoding.block(&decoder))
     }
 }

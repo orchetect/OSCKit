@@ -101,7 +101,3 @@ extension AnyOSCNumberValue: CustomStringConvertible {
         "\(base)"
     }
 }
-
-// MARK: - Codable
-
-// extension OSCNumberValue: Codable { }

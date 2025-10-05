@@ -129,19 +129,19 @@ import Testing
     func dataSlipDecoded_MissingEscapeByte() throws {
         #expect(
             try Data([END, 0x01, ESC_ESC, 0x02, END]).slipDecoded()
-            == [Data([0x01, ESC_ESC, 0x02])]
+                == [Data([0x01, ESC_ESC, 0x02])]
         )
         #expect(
             try Data([END, 0x01, ESC_END, 0x02, END]).slipDecoded()
-            == [Data([0x01, ESC_END, 0x02])]
+                == [Data([0x01, ESC_END, 0x02])]
         )
         #expect(
             try Data([END, ESC_ESC, END]).slipDecoded()
-            == [Data([ESC_ESC])]
+                == [Data([ESC_ESC])]
         )
         #expect(
             try Data([END, ESC_END, END]).slipDecoded()
-            == [Data([ESC_END])]
+                == [Data([ESC_END])]
         )
     }
     

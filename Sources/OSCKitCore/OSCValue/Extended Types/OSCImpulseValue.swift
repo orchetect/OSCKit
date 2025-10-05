@@ -40,10 +40,6 @@ extension OSCImpulseValue: CustomStringConvertible {
     }
 }
 
-// MARK: - Codable
-
-extension OSCImpulseValue: Codable { }
-
 // MARK: - OSC Encoding
 
 @_documentation(visibility: internal)
@@ -54,21 +50,19 @@ extension OSCImpulseValue: OSCValue {
 @_documentation(visibility: internal)
 extension OSCImpulseValue: OSCValueCodable {
     static let oscTag: Character = "I"
-    public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
+    public static let oscTagIdentity: OSCValueTagIdentity = .tag(oscTag)
 }
 
 @_documentation(visibility: internal)
 extension OSCImpulseValue: OSCValueEncodable {
-    public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
-    public static let oscEncoding = OSCValueEncodingBlock { value in
+    public static let oscEncoding = OSCValueStaticTagEncoder<Self> { value throws(OSCEncodeError) in
         (tag: oscTag, data: nil)
     }
 }
 
 @_documentation(visibility: internal)
 extension OSCImpulseValue: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
-    public static let oscDecoding = OSCValueDecodingBlock { decoder in
+    public static let oscDecoding = OSCValueStaticTagDecoder<Self> { decoder throws(OSCDecodeError) in
         OSCImpulseValue()
     }
 }

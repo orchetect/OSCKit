@@ -6,30 +6,28 @@
 
 /// Declarative description of how an OSC value represents itself with OSC message type tag(s).
 public enum OSCValueTagIdentity: Equatable, Hashable {
-    /// Atomic:
     /// The OSC value is identified with a single static OSC-type tag character.
     ///
     /// Most OSC values are represented in this manner. ie: `i` for `Int32`, `s` for `String`, etc.
-    case atomic(Character)
+    case tag(Character)
     
-    /// Variable:
-    /// The OSC value occupies a single static OSC-type tag character but it varies depending on the
-    /// content of the value.
+    /// The OSC value occupies a single OSC-type tag character when encoded but it varies depending
+    /// on the nature of the value or the content of the value's data payload.
     /// All possible type tags must be finite and known at compile time.
     ///
     /// An example is Boolean (true/false). A single instance of the concrete type (`Bool`) occupies
-    /// a single tag character but the character may be `T` or `F`.
+    /// a single tag character when encoded but the character may be `T` or `F`. Variable is how OSCKit
+    /// itself internally implements `Bool` encoding and decoding.
     case variable([Character])
     
-    /// Variadic:
     /// The OSC "value" may be complex in nature and occupies one or more OSC-type tag characters
     /// and they are not reasonably known at compile time. This scenario requires manual parsing and
     /// validation. Very few implementations will require this pattern.
     ///
     /// One (perhaps the only) example of a variadic implementation is an OSC value array. It starts
-    /// with the `[` tag and ends with the `]` tag and may contain zero or more atomic values. It
-    /// would have a `minCount` of 2 and a `maxCount` of `nil`. Variadic is how OSCKit itself
-    /// internally implements OSC array encoding and decoding.
+    /// with the `[` tag and ends with the `]` tag and may contain zero or more value tags. Its
+    /// definition would have a `minCount` of `2` and a `maxCount` of `nil`. Variadic is how OSCKit
+    /// itself internally implements OSC array encoding and decoding.
     case variadic(minCount: Int?, maxCount: Int?)
 }
 
@@ -44,7 +42,7 @@ extension OSCValueTagIdentity {
     /// If the identity is variadic, `false` is always returned.
     public func isEqual(to otherTag: Character) -> Bool {
         switch self {
-        case let .atomic(character):
+        case let .tag(character):
             otherTag == character
         case let .variable(array):
             array.contains(otherTag)
@@ -53,12 +51,12 @@ extension OSCValueTagIdentity {
         }
     }
     
-    /// Returns static tag(s) of the tag identity.
+    /// Returns known static tag(s) of the tag identity.
     /// If the identity is variadic, an empty array is always returned since the tags are known only
-    /// to the type's `OSCValueCodable` implementation.
+    /// to the type's ``OSCValueCodable`` implementation.
     func staticTags() -> [Character] {
         switch self {
-        case let .atomic(character):
+        case let .tag(character):
             [character]
         case let .variable(array):
             array

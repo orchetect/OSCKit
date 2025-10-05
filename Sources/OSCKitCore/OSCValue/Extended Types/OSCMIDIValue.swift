@@ -27,7 +27,7 @@ public struct OSCMIDIValue {
     ///   - data1: MIDI status message data byte 1 (optional).
     ///   - data2: MIDI status message data byte 2 (optional).
     public init(
-        portID: UInt8,
+        portID: UInt8 = 0,
         status: UInt8,
         data1: UInt8 = 0x00,
         data2: UInt8 = 0x00
@@ -54,7 +54,7 @@ extension OSCValue where Self == OSCMIDIValue {
     ///   - data1: MIDI status message data byte 1 (optional).
     ///   - data2: MIDI status message data byte 2 (optional).
     public static func midi(
-        portID: UInt8,
+        portID: UInt8 = 0,
         status: UInt8,
         data1: UInt8 = 0x00,
         data2: UInt8 = 0x00
@@ -131,13 +131,12 @@ extension OSCMIDIValue: OSCValue {
 @_documentation(visibility: internal)
 extension OSCMIDIValue: OSCValueCodable {
     static let oscTag: Character = "m"
-    public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
+    public static let oscTagIdentity: OSCValueTagIdentity = .tag(oscTag)
 }
 
 @_documentation(visibility: internal)
 extension OSCMIDIValue: OSCValueEncodable {
-    public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
-    public static let oscEncoding = OSCValueEncodingBlock { value in
+    public static let oscEncoding = OSCValueStaticTagEncoder<Self> { value throws(OSCEncodeError) in
         (
             tag: oscTag,
             data: [value.portID, value.status, value.data1, value.data2].data
@@ -147,8 +146,7 @@ extension OSCMIDIValue: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension OSCMIDIValue: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
-    public static let oscDecoding = OSCValueDecodingBlock { decoder in
+    public static let oscDecoding = OSCValueStaticTagDecoder<Self> { decoder throws(OSCDecodeError) in
         let bytes = try decoder.read(byteLength: 4)
         
         let startIndex = bytes.startIndex

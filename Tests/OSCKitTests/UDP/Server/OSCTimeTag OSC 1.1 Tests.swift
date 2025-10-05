@@ -23,7 +23,7 @@ import Testing
                 .message("/test", values: [Int32(123)])
             ])
             
-            server._handle(payload: bundle, remoteHost: "localhost", remotePort: 8000)
+            server._handle(packet: .bundle(bundle), remoteHost: "localhost", remotePort: 8000)
             
             try await Task.sleep(seconds: 0.5)
         }
@@ -43,7 +43,7 @@ import Testing
                 [.message("/test", values: [Int32(123)])]
             )
             
-            server._handle(payload: bundle, remoteHost: "localhost", remotePort: 8000)
+            server._handle(packet: .bundle(bundle), remoteHost: "localhost", remotePort: 8000)
             
             try await Task.sleep(seconds: 0.5)
         }
@@ -63,7 +63,7 @@ import Testing
                 [.message("/test", values: [Int32(123)])]
             )
             
-            server._handle(payload: bundle, remoteHost: "localhost", remotePort: 8000)
+            server._handle(packet: .bundle(bundle), remoteHost: "localhost", remotePort: 8000)
             
             try await Task.sleep(seconds: 0.5)
         }
@@ -83,7 +83,7 @@ import Testing
                 [.message("/test", values: [Int32(123)])]
             )
             
-            server._handle(payload: bundle, remoteHost: "localhost", remotePort: 8000)
+            server._handle(packet: .bundle(bundle), remoteHost: "localhost", remotePort: 8000)
             
             try await Task.sleep(seconds: 0.5)
         }
@@ -103,7 +103,7 @@ import Testing
                 [.message("/test", values: [Int32(123)])]
             )
             
-            server._handle(payload: bundle, remoteHost: "localhost", remotePort: 8000)
+            server._handle(packet: .bundle(bundle), remoteHost: "localhost", remotePort: 8000)
             
             try await Task.sleep(seconds: 0.5)
         }

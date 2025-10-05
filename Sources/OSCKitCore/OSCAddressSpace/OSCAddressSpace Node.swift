@@ -12,9 +12,9 @@ extension OSCAddressSpace {
     final class Node {
         var nodeType: NodeType
         
-        let id = MethodID()
+        nonisolated let id = MethodID()
         
-        let name: String
+        nonisolated let name: String
         
         var block: MethodBlock?
         

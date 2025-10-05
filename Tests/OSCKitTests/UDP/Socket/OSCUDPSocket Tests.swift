@@ -24,7 +24,7 @@ struct OSCUDPSocket_Tests {
             
             let bundle = OSCBundle()
             
-            socket._handle(payload: bundle, remoteHost: "localhost", remotePort: 8000)
+            socket._handle(packet: .bundle(bundle), remoteHost: "localhost", remotePort: 8000)
             
             try await Task.sleep(seconds: 1)
         }
@@ -59,9 +59,9 @@ struct OSCUDPSocket_Tests {
         
         // use global thread to simulate internal network thread being a dedicated thread
         DispatchQueue.global().async {
-            server._handle(payload: msg1, remoteHost: "localhost", remotePort: 8000)
-            server._handle(payload: msg2, remoteHost: "192.168.0.25", remotePort: 8001)
-            server._handle(payload: msg3, remoteHost: "10.0.0.50", remotePort: 8080)
+            server._handle(packet: .message(msg1), remoteHost: "localhost", remotePort: 8000)
+            server._handle(packet: .message(msg2), remoteHost: "192.168.0.25", remotePort: 8001)
+            server._handle(packet: .message(msg3), remoteHost: "10.0.0.50", remotePort: 8080)
         }
         
         try await wait(require: { await receiver.messages.count == 3 }, timeout: 5.0)
@@ -125,7 +125,7 @@ struct OSCUDPSocket_Tests {
         // use global thread to simulate internal network thread being a dedicated thread
         DispatchQueue.global().async {
             for message in sourceMessages {
-                socket._handle(payload: message, remoteHost: "localhost", remotePort: 8000)
+                socket._handle(packet: .message(message), remoteHost: "localhost", remotePort: 8000)
             }
         }
         
@@ -140,9 +140,9 @@ struct OSCUDPSocket_Tests {
         let isFlakey = !isSystemTimingStable()
         
         let socket = OSCUDPSocket(
-            localPort: nil,
+            localPort: nil, // selects a random available port
             remoteHost: "localhost",
-            remotePort: nil,
+            remotePort: nil, // gets set to same port as localPort
             timeTagMode: .ignore,
             isIPv4BroadcastEnabled: false,
             queue: nil,

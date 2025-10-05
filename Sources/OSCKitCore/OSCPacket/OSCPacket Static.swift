@@ -1,52 +1,51 @@
 //
-//  OSCObject Static Constructors.swift
+//  OSCPacket Static.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
 
+// MARK: - Static Constructors
+
 // NOTE: Overloads that take variadic values were tested,
 // however for code consistency and proper indentation, it is
 // undesirable to have variadic parameters.
 
-// MARK: - OSCMessage
-
-extension OSCObject where Self == OSCMessage {
-    /// OSC Message.
+extension OSCPacket {
+    /// Construct a new OSC bundle.
+    public static func bundle(
+        timeTag: OSCTimeTag? = nil,
+        _ elements: [OSCPacket] = []
+    ) -> Self {
+        let bundle = OSCBundle(
+            timeTag: timeTag,
+            elements
+        )
+        return .bundle(bundle)
+    }
+    
+    /// Construct a new OSC message.
     public static func message(
         _ addressPattern: String,
         values: OSCValues = []
     ) -> Self {
-        OSCMessage(
+        let message = OSCMessage(
             OSCAddressPattern(addressPattern),
             values: values
         )
+        return .message(message)
     }
     
-    /// OSC Message.
+    /// Construct a new OSC message.
     public static func message(
         _ addressPattern: OSCAddressPattern,
         values: OSCValues = []
     ) -> Self {
-        OSCMessage(
+        let message = OSCMessage(
             addressPattern,
             values: values
         )
-    }
-}
-
-// MARK: - OSCBundle
-
-extension OSCObject where Self == OSCBundle {
-    /// OSC Bundle.
-    public static func bundle(
-        timeTag: OSCTimeTag? = nil,
-        _ elements: [any OSCObject] = []
-    ) -> Self {
-        OSCBundle(
-            timeTag: timeTag,
-            elements
-        )
+        return .message(message)
     }
 }

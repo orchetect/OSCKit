@@ -5,12 +5,7 @@
 //
 
 import Foundation
-
-#if compiler(>=6.0)
 internal import SwiftASCII // ASCIICharacter
-#else
-@_implementationOnly import SwiftASCII // ASCIICharacter
-#endif
 
 /// ``OSCMessage`` encoder.
 ///
@@ -40,7 +35,7 @@ public struct OSCMessageEncoder {
     init(
         addressPattern: OSCAddressPattern,
         values: [any OSCValueEncodable]
-    ) throws {
+    ) throws(OSCEncodeError) {
         self.init(addressPattern: addressPattern)
         
         // note: doesn't account for arrays but we'll do it any way
@@ -53,7 +48,7 @@ public struct OSCMessageEncoder {
     }
     
     /// Add a value to the message encoder.
-    public mutating func encode(_ value: some OSCValueEncodable) throws {
+    public mutating func encode(_ value: some OSCValueEncodable) throws(OSCEncodeError) {
         try Self.encode(
             value,
             builderTags: &builderTags,
@@ -66,9 +61,9 @@ public struct OSCMessageEncoder {
         _ value: T,
         builderTags: inout [ASCIICharacter],
         builderValuesChunk: inout Data
-    ) throws {
+    ) throws(OSCEncodeError) {
         switch T.oscEncoding {
-        case let e as OSCValueAtomicEncoder<T>:
+        case let e as OSCValueStaticTagEncoder<T>:
             let encoded = try e.block(value)
             
             builderTags += ASCIICharacter(encoded.tag)
@@ -77,7 +72,7 @@ public struct OSCMessageEncoder {
                 builderValuesChunk += data
             }
             
-        case let e as OSCValueVariableEncoder<T>:
+        case let e as OSCValueVariableTagEncoder<T>:
             let encoded = try e.block(value)
             
             builderTags += ASCIICharacter(encoded.tag)
@@ -86,7 +81,7 @@ public struct OSCMessageEncoder {
                 builderValuesChunk += data
             }
             
-        case let e as OSCValueVariadicEncoder<T>:
+        case let e as OSCValueVariadicTagEncoder<T>:
             let encoded = try e.block(value)
             
             builderTags += encoded.tags.map { ASCIICharacter($0) }
@@ -96,7 +91,9 @@ public struct OSCMessageEncoder {
             }
             
         default:
-            throw OSCEncodeError.unexpectedEncoder
+            throw .internalInconsistency(
+                "Unexpected encoder: \(type(of: T.self)). Only encoder types supplied by OSCKit can be used."
+            )
         }
     }
     

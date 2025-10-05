@@ -8,16 +8,16 @@ import Foundation
 
 extension OSCValues {
     @usableFromInline
-    func validateCount(_ validCount: Index) throws {
+    func validateCount(_ validCount: Index) throws(OSCValueMaskError) {
         guard count == validCount else {
-            throw OSCValueMaskError.invalidCount
+            throw .invalidCount
         }
     }
 
     @usableFromInline
-    func validateCount(_ validRange: ClosedRange<Index>) throws {
+    func validateCount(_ validRange: ClosedRange<Index>) throws(OSCValueMaskError) {
         guard validRange.contains(count) else {
-            throw OSCValueMaskError.invalidCount
+            throw .invalidCount
         }
     }
 
@@ -28,17 +28,17 @@ extension OSCValues {
         _: MaskType.Type,
         index: Index,
         asOptional: Bool = false
-    ) throws -> MaskType
+    ) throws(OSCValueMaskError) -> MaskType
         where MaskType: OSCValueMaskable
     {
         guard indices.contains(index) else {
-            throw OSCValueMaskError.invalidCount
+            throw .invalidCount
         }
         
         switch MaskType.self {
         case is Int.Type:
             guard let typed = self[index] as? (any BinaryInteger) else {
-                throw OSCValueMaskError.mismatchedTypes
+                throw .mismatchedTypes
             }
             
             return Int(typed) as! MaskType // guaranteed
@@ -54,12 +54,12 @@ extension OSCValues {
             case let bool as Bool:
                 return AnyOSCNumberValue(bool) as! MaskType // guaranteed
             default:
-                throw OSCValueMaskError.mismatchedTypes
+                throw .mismatchedTypes
             }
             
         default:
             guard let typed = self[index] as? MaskType else {
-                throw OSCValueMaskError.mismatchedTypes
+                throw .mismatchedTypes
             }
             
             return typed
@@ -72,7 +72,7 @@ extension OSCValues {
     func unwrapValue<MaskType>(
         _ type: MaskType?.Type,
         index: Index
-    ) throws -> MaskType?
+    ) throws(OSCValueMaskError) -> MaskType?
         where MaskType: OSCValueMaskable
     {
         guard indices.contains(index) else {

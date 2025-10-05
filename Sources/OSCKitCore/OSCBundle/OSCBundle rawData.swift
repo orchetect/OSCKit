@@ -8,7 +8,10 @@ import Foundation
 
 extension OSCBundle {
     /// Initialize by parsing raw OSC bundle data bytes.
-    public init(from rawData: Data) throws {
+    ///
+    /// This method assumes that the data is expected to be an OSC bundle and an error will be thrown
+    /// if the data is not the expected format.
+    public init(from rawData: Data) throws(OSCDecodeError) {
         // cache raw data
         _rawData = rawData
         
@@ -29,8 +32,8 @@ extension OSCBundle {
             throw OSCDecodeError.malformed("Bundle header is not present or is malformed.")
         }
         
-        // set up object array
-        var extractedElements: [any OSCObject] = []
+        // set up packet array
+        var extractedElements: [OSCPacket] = []
         
         offset += 8
         
@@ -62,18 +65,18 @@ extension OSCBundle {
             
             let elementContents = rawData[offset ..< offset + elementSize]
             
-            guard let oscObject = elementContents.oscObjectType else {
+            guard let oscPacketType = elementContents.oscPacketType else {
                 throw OSCDecodeError.malformed("Unrecognized bundle element encountered.")
             }
             
-            switch oscObject {
+            switch oscPacketType {
             case .bundle:
                 let newBundle = try OSCBundle(from: elementContents)
-                extractedElements.append(newBundle)
+                extractedElements.append(.bundle(newBundle))
                 
             case .message:
                 let newMessage = try OSCMessage(from: elementContents)
-                extractedElements.append(newMessage)
+                extractedElements.append(.message(newMessage))
             }
             
             offset += elementSize
@@ -84,8 +87,8 @@ extension OSCBundle {
         elements = extractedElements
     }
     
-    // (inline docs inherited from OSCObject protocol)
-    public func rawData() throws -> Data {
+    /// Returns raw OSC packet data constructed from the bundle content.
+    public func rawData() throws(OSCEncodeError) -> Data {
         // return cached data if struct was originally initialized from raw data
         // so we don't needlessly church CPU cycles to generate the data
         if let cached = _rawData {

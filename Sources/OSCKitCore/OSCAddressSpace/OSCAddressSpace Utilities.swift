@@ -23,7 +23,7 @@ extension OSCAddressSpace {
         var pathRef = root
         
         for idx in path.indices {
-            let isLast = idx == path.indices.last!
+            let isLast = idx == path.indices.last! // guaranteed non-nil
             
             if let existingNode = pathRef.children
                 .first(where: { $0.name == path[idx] })
@@ -56,16 +56,34 @@ extension OSCAddressSpace {
     ///
     /// - Returns: `true` if the operation was successful, `false` if unsuccessful or the path does
     ///   not exist.
-    @discardableResult
+    @discardableResult @_disfavoredOverload
     func removeMethodNode<S>(
         path: S
     ) -> Bool where S: BidirectionalCollection, S.Element: StringProtocol {
         guard !path.isEmpty,
-              let nodes = nodePath(for: path, includeRoot: true)
+              let nodes = nodePath(path: path, includeRoot: true)
         else { return false }
         
-        let lastPathComponentNode = nodes.last!
-        let parentNode = nodes.dropLast().last
+        return removeMethodNode(path: nodes)
+    }
+    
+    /// Internal:
+    /// Remove a method node if it is a method, or convert it to a container if it has children.
+    ///
+    /// To ensure tree integrity, a method node should only be removed if:
+    ///   1) it is marked as a method
+    ///   2) is has zero children; if children are present, downgrade node to be a container
+    ///
+    /// - Returns: `true` if the operation was successful, `false` if unsuccessful or the path does
+    ///   not exist.
+    @discardableResult
+    func removeMethodNode(
+        path: [Node]
+    ) -> Bool {
+        guard let lastPathComponentNode = path.last
+        else { return false }
+        
+        let parentNode = path.dropLast().last
         
         // remove the node if
         //   1) it's marked as a method, and
@@ -85,10 +103,28 @@ extension OSCAddressSpace {
     }
     
     /// Internal:
+    /// Remove a method node with the given method ID if it is a method, or convert it to a container
+    /// if it has children.
+    ///
+    /// To ensure tree integrity, a method node should only be removed if:
+    ///   1) it is marked as a method
+    ///   2) is has zero children; if children are present, downgrade node to be a container
+    ///
+    /// - Returns: `true` if the operation was successful, `false` if unsuccessful or the path does
+    ///   not exist.
+    @discardableResult
+    func removeMethodNode(methodID: MethodID) -> Bool {
+        guard let nodes = nodePath(methodID: methodID, includeRoot: true)
+        else { return false }
+        
+        return removeMethodNode(path: nodes)
+    }
+    
+    /// Internal:
     /// Returns the `Node` for the last path component of the given path if it is a method.
     /// Returns `nil` if the node does not exist or if the node is a container.
     func methodNode<S>(
-        at path: S
+        path: S
     ) -> Node? where S: BidirectionalCollection, S.Element: StringProtocol {
         var pathRef = root
         for idx in path.indices {
@@ -104,10 +140,10 @@ extension OSCAddressSpace {
     
     /// Internal:
     /// Returns the `Node` for the last path component of the given path.
-    /// May be a partial path.
-    /// Returns `nil` if the node does not exist.
+    /// - May be a partial path.
+    /// - Returns `nil` if the node does not exist.
     func node<S>(
-        at path: S
+        path: S
     ) -> Node? where S: BidirectionalCollection, S.Element: StringProtocol {
         var pathRef = root
         for idx in path.indices {
@@ -124,10 +160,10 @@ extension OSCAddressSpace {
     /// Internal:
     /// Returns an array representing the path comprised of `Node` references for each path
     /// component.
-    /// May be a partial path.
-    /// Returns `nil` if the complete path does not exist.
+    /// - May be a partial path.
+    /// - Returns `nil` if the complete path does not exist.
     func nodePath<S>(
-        for path: S,
+        path: S,
         includeRoot: Bool = false
     ) -> [Node]? where S: BidirectionalCollection, S.Element: StringProtocol {
         var nodes: [Node] = []
@@ -141,6 +177,51 @@ extension OSCAddressSpace {
             nodes.append(node)
         }
         return nodes
+    }
+    
+    /// Internal:
+    /// Returns an array representing the path comprised of `Node` references for each path
+    /// component.
+    /// - May be a partial path; all nodes are assigned a method ID regardless whether they are
+    ///   a container or a method.
+    /// - Returns `nil` if the complete path does not exist.
+    func nodePath(
+        methodID: MethodID,
+        includeRoot: Bool = false
+    ) -> [Node]? {
+        var nodes: [Node] = []
+        if includeRoot { nodes.append(root) }
+        
+        func visit(node: Node, path: [Node], isRoot: Bool) -> [Node]? {
+            let nodePath = if !isRoot || (isRoot && includeRoot) {
+                path + [node]
+            } else {
+                path
+            }
+            
+            if node.id == methodID {
+                return nodePath
+            }
+            for child in node.children {
+                if let path = visit(node: child, path: nodePath, isRoot: false) {
+                    return path
+                }
+            }
+            return nil
+        }
+        
+        return visit(node: root, path: [], isRoot: true)
+    }
+    
+    /// Internal:
+    /// Returns the method ID corresponding to the node at the given path.
+    func methodID<S>(
+        path: S
+    ) -> MethodID? where S: BidirectionalCollection, S.Element: StringProtocol {
+        guard let nodes = nodePath(path: path, includeRoot: true)
+        else { return nil }
+        
+        return nodes.last?.id
     }
 }
 

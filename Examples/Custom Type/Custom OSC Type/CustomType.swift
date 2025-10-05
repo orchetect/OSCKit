@@ -9,7 +9,7 @@ import OSCKitCore
 
 // NOTE:
 // In this basic example, we've chosen to use the underlying OSC Type "blob", which is essentially raw data, as our
-// underlying data storage chunk within an OSC message, since our object conforms to Codable and it's easily converted
+// underlying data storage chunk within an OSC message, since our type conforms to Codable and it's easily converted
 // to/from Data.
 //
 // Since we've chosen to use JSONEncoder, and JSON is technically text (string) block, we could have also chosen
@@ -33,16 +33,18 @@ extension CustomType: OSCValueCodable {
     // uses an OSC Type Tag that already exists.
     // For a reference of existing OSC Type Tags, see the OSC 1.0 spec online.
     static let oscTag: Character = "j"
-    // atomic indicates that the tag is static and will never change based on its data content
-    static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
+    
+    // establishes that the tag is static and will never change based on its data payload
+    static let oscTagIdentity: OSCValueTagIdentity = .tag(oscTag)
 }
 
 extension CustomType: OSCValueEncodable {
-    public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
-    static let oscEncoding = OSCValueEncodingBlock { value in
+    static let oscEncoding = OSCValueStaticTagEncoder<Self> { value throws(OSCEncodeError) in
         // Encode our Codable type instance into raw data
         let encoder = JSONEncoder()
-        let jsonData = try encoder.encode(value)
+        let jsonData: Data
+        do { jsonData = try encoder.encode(value) }
+        catch { throw .valueEncodingError(error.localizedDescription) }
         
         // OSCValueEncodingBlock makes it our responsibility to make sure OSB blob (data) is encoded correctly,
         // including a 4-byte big-endian Int32 length header and trailing null-byte padding to an alignment of 4 bytes.
@@ -53,8 +55,7 @@ extension CustomType: OSCValueEncodable {
 }
 
 extension CustomType: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
-    static let oscDecoding = OSCValueDecodingBlock { dataReader in
+    static let oscDecoding = OSCValueStaticTagDecoder<Self> { dataReader throws(OSCDecodeError) in
         let decoder = JSONDecoder()
         
         // Gets entire data chunk from the OSC blob, stripping the length bytes and null padding suffix
@@ -62,7 +63,9 @@ extension CustomType: OSCValueDecodable {
         let data = try dataReader.readBlob()
         
         // Decode into a new instance of our Codable type
-        let decoded = try decoder.decode(CustomType.self, from: data)
+        let decoded: CustomType
+        do { decoded = try decoder.decode(CustomType.self, from: data) }
+        catch { throw .valueDecodingError(error.localizedDescription) }
         return decoded
     }
 }

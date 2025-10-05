@@ -14,14 +14,10 @@ If not already set during initialization, you may set the receiver handler using
 
 ```swift
 oscServer.setReceiveHandler { [weak self] message, timeTag, host, port in
-    do {
-        try self?.handle(message: message, host: host, port: port)
-    } catch {
-        print(error)
-    }
+    self?.handle(message: message, host: host, port: port)
 }
 
-private func handle(message: OSCMessage, host: String, port: UInt16) throws {
+private func handle(message: OSCMessage, host: String, port: UInt16) {
     // handle received messages here
 }
 ```
@@ -45,14 +41,10 @@ If not already set during initialization, you may set the receiver handler using
 
 ```swift
 oscServer.setReceiveHandler { [weak self] message, timeTag, host, port in
-    do {
-        try self?.handle(message: message, host: host, port: port)
-    } catch {
-        print(error)
-    }
+    self?.handle(message: message, host: host, port: port)
 }
 
-private func handle(message: OSCMessage, host: String, port: UInt16) throws {
+private func handle(message: OSCMessage, host: String, port: UInt16) {
     // handle received messages here
 }
 ```

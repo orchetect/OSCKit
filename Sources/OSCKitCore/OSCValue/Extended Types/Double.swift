@@ -14,13 +14,12 @@ extension Double: OSCValue {
 @_documentation(visibility: internal)
 extension Double: OSCValueCodable {
     static let oscTag: Character = "d"
-    public static let oscTagIdentity: OSCValueTagIdentity = .atomic(oscTag)
+    public static let oscTagIdentity: OSCValueTagIdentity = .tag(oscTag)
 }
 
 @_documentation(visibility: internal)
 extension Double: OSCValueEncodable {
-    public typealias OSCValueEncodingBlock = OSCValueAtomicEncoder<OSCEncoded>
-    public static let oscEncoding = OSCValueEncodingBlock { value in
+    public static let oscEncoding = OSCValueStaticTagEncoder<Self> { value throws(OSCEncodeError) in
         (
             tag: oscTag,
             data: value.toData(.bigEndian)
@@ -30,8 +29,7 @@ extension Double: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension Double: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueAtomicDecoder<OSCDecoded>
-    public static let oscDecoding = OSCValueDecodingBlock { decoder in
+    public static let oscDecoding = OSCValueStaticTagDecoder<Self> { decoder throws(OSCDecodeError) in
         try decoder.readDouble()
     }
 }

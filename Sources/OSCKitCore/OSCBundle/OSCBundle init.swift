@@ -14,7 +14,7 @@ extension OSCBundle {
     /// OSC Bundle.
     public init(
         timeTag: OSCTimeTag? = nil,
-        _ elements: [any OSCObject] = []
+        _ elements: [OSCPacket] = []
     ) {
         self.timeTag = timeTag ?? .init(1)
         self.elements = elements

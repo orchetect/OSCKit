@@ -8,7 +8,7 @@ import Foundation
 import OSCKit
 
 /// OSC lifecycle and send/receive manager.
-final class OSCManager: ObservableObject {
+@MainActor final class OSCManager: ObservableObject {
     private var socket: OSCUDPSocket?
     
     @Published var localPort: UInt16 = 8000
@@ -65,11 +65,11 @@ extension OSCManager {
 // MARK: - Send
 
 extension OSCManager {
-    func send(_ message: OSCMessage) {
+    func send(_ packet: OSCPacket) {
         do {
-            try socket?.send(message)
+            try socket?.send(packet)
         } catch {
-            print(error)
+            print(error.localizedDescription)
         }
     }
 }

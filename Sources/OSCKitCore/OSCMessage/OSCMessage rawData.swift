@@ -11,7 +11,10 @@ import Foundation
 /// OSC Message.
 extension OSCMessage {
     /// Initialize by parsing raw OSC message data bytes.
-    public init(from rawData: Data) throws {
+    ///
+    /// This method assumes that the data is expected to be an OSC message and an error will be thrown
+    /// if the data is not the expected format.
+    public init(from rawData: Data) throws(OSCDecodeError) {
         // cache raw data
         _rawData = rawData
         
@@ -22,8 +25,8 @@ extension OSCMessage {
         values = decoded.values
     }
     
-    // (inline docs inherited from OSCObject protocol)
-    public func rawData() throws -> Data {
+    /// Returns raw OSC packet data constructed from the message content.
+    public func rawData() throws(OSCEncodeError) -> Data {
         // return cached data if struct was originally initialized from raw data
         // so we don't needlessly church CPU cycles to generate the data
         if let cached = _rawData {

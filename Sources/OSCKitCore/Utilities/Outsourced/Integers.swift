@@ -217,10 +217,11 @@ extension BinaryInteger {
     ///
     /// Example:
     ///
-    ///        1.roundedAwayFromZero(toMultiplesOf: 2) // 2
-    ///        5.roundedAwayFromZero(toMultiplesOf: 4) // 8
-    ///     (-1).roundedAwayFromZero(toMultiplesOf: 2) // -2
-    ///
+    /// ```swift
+    ///    1.roundedAwayFromZero(toMultiplesOf: 2) // 2
+    ///    5.roundedAwayFromZero(toMultiplesOf: 4) // 8
+    /// (-1).roundedAwayFromZero(toMultiplesOf: 2) // -2
+    /// ```
     @inlinable
     package func roundedAwayFromZero(toMultiplesOf: Self) -> Self {
         let source: Self = self >= 0 ? self : 0 - self
@@ -235,10 +236,11 @@ extension BinaryInteger {
     ///
     /// Example:
     ///
-    ///        1.roundedUp(toMultiplesOf: 2) // 2
-    ///        5.roundedUp(toMultiplesOf: 4) // 8
-    ///     (-3).roundedUp(toMultiplesOf: 2) // -2
-    ///
+    /// ```swift
+    ///    1.roundedUp(toMultiplesOf: 2) // 2
+    ///    5.roundedUp(toMultiplesOf: 4) // 8
+    /// (-3).roundedUp(toMultiplesOf: 2) // -2
+    /// ```
     @inlinable
     package func roundedUp(toMultiplesOf: Self) -> Self {
         if toMultiplesOf < 1 { return self }
@@ -255,11 +257,12 @@ extension BinaryInteger {
     ///
     /// Example:
     ///
-    ///        1.roundedDown(toMultiplesOf: 2) // 0
-    ///        3.roundedDown(toMultiplesOf: 4) // 0
-    ///        5.roundedDown(toMultiplesOf: 4) // 4
-    ///     (-1).roundedDown(toMultiplesOf: 4) // -4
-    ///
+    /// ```swift
+    ///    1.roundedDown(toMultiplesOf: 2) // 0
+    ///    3.roundedDown(toMultiplesOf: 4) // 0
+    ///    5.roundedDown(toMultiplesOf: 4) // 4
+    /// (-1).roundedDown(toMultiplesOf: 4) // -4
+    /// ```
     @inlinable
     package func roundedDown(toMultiplesOf: Self) -> Self {
         let source: Self = self >= 0 ? self : 0 - self

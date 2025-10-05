@@ -8,8 +8,7 @@ import Foundation
 import OSCKit
 
 /// OSC lifecycle and send/receive manager.
-@MainActor
-final class OSCManager: ObservableObject {
+@MainActor final class OSCManager: ObservableObject {
     private var client: OSCTCPClient?
     private var server: OSCTCPServer?
     
@@ -48,7 +47,7 @@ extension OSCManager {
             try newServer.start()
             isServerStarted = true
         } catch {
-            print(error)
+            print(error.localizedDescription)
             isServerStarted = false
         }
     }
@@ -72,7 +71,7 @@ extension OSCManager {
         do {
             try newClient.connect(timeout: 5)
         } catch {
-            print(error)
+            print(error.localizedDescription)
             isClientConnected = false
         }
     }
@@ -137,19 +136,19 @@ extension OSCManager {
 // MARK: - Send
 
 extension OSCManager {
-    func sendToServer(_ message: OSCMessage) {
+    func sendToServer(_ packet: OSCPacket) {
         do {
-            try client?.send(message)
+            try client?.send(packet)
         } catch {
-            print(error)
+            print(error.localizedDescription)
         }
     }
     
-    func sendToAllClients(_ message: OSCMessage) {
+    func sendToAllClients(_ packet: OSCPacket) {
         do {
-            try server?.send(message)
+            try server?.send(packet)
         } catch {
-            print(error)
+            print(error.localizedDescription)
         }
     }
 }

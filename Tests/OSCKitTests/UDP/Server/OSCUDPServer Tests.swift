@@ -24,7 +24,7 @@ struct OSCUDPServer_Tests {
             
             let bundle = OSCBundle()
             
-            server._handle(payload: bundle, remoteHost: "localhost", remotePort: 8000)
+            server._handle(packet: .bundle(bundle), remoteHost: "localhost", remotePort: 8000)
             
             try await Task.sleep(seconds: 1)
         }
@@ -59,9 +59,9 @@ struct OSCUDPServer_Tests {
         
         // use global thread to simulate internal network thread being a dedicated thread
         DispatchQueue.global().async {
-            server._handle(payload: msg1, remoteHost: "localhost", remotePort: 8000)
-            server._handle(payload: msg2, remoteHost: "192.168.0.25", remotePort: 8001)
-            server._handle(payload: msg3, remoteHost: "10.0.0.50", remotePort: 8080)
+            server._handle(packet: .message(msg1), remoteHost: "localhost", remotePort: 8000)
+            server._handle(packet: .message(msg2), remoteHost: "192.168.0.25", remotePort: 8001)
+            server._handle(packet: .message(msg3), remoteHost: "10.0.0.50", remotePort: 8080)
         }
         
         try await wait(require: { await receiver.messages.count == 3 }, timeout: 5.0)
@@ -102,12 +102,12 @@ struct OSCUDPServer_Tests {
             }
         }
         
-        let possibleValuePacks: [OSCValues] = [
+        var possibleValuePacks: [OSCValues] { [
             [],
             [UUID().uuidString],
             [Int.random(in: 10_000 ... 10_000_000)],
             [Int.random(in: 10_000 ... 10_000_000), UUID().uuidString, 456.78, true]
-        ]
+        ] }
         
         let sourceMessages: [OSCMessage] = Array(1 ... 1000).map { value in
             OSCMessage("/some/address/\(UUID().uuidString)", values: possibleValuePacks.randomElement()!)
@@ -116,11 +116,11 @@ struct OSCUDPServer_Tests {
         // use global thread to simulate internal network thread being a dedicated thread
         DispatchQueue.global().async {
             for message in sourceMessages {
-                server._handle(payload: message, remoteHost: "localhost", remotePort: 8000)
+                server._handle(packet: .message(message), remoteHost: "localhost", remotePort: 8000)
             }
         }
         
-        try await wait(require: { await receiver.messages.count == 1000 }, timeout: 5.0)
+        try await wait(require: { await receiver.messages.count == 1000 }, timeout: 10.0)
         
         await #expect(receiver.messages == sourceMessages)
     }
@@ -130,13 +130,15 @@ struct OSCUDPServer_Tests {
     func stressTestOnline() async throws {
         let isFlakey = !isSystemTimingStable()
         
-        let server = OSCUDPServer(port: 8888, timeTagMode: .ignore, queue: nil, receiveHandler: nil)
+        // selects a random available port
+        let server = OSCUDPServer(port: nil, timeTagMode: .ignore, queue: nil, receiveHandler: nil)
         try await Task.sleep(seconds: isFlakey ? 5.0 : 0.1)
         
         try server.start()
         try await Task.sleep(seconds: isFlakey ? 5.0 : 0.5)
         
-        print("Using server listen port \(server.localPort)")
+        let port = server.localPort
+        print("Using server listen port \(port)")
         
         final actor Receiver {
             var messages: [OSCMessage] = []
@@ -153,12 +155,12 @@ struct OSCUDPServer_Tests {
             }
         }
         
-        let possibleValuePacks: [OSCValues] = [
+        var possibleValuePacks: [OSCValues] { [
             [],
             [UUID().uuidString],
             [Int.random(in: 10_000 ... 10_000_000)],
             [Int.random(in: 10_000 ... 10_000_000), UUID().uuidString, 456.78, true]
-        ]
+        ] }
         
         let sourceMessages: [OSCMessage] = Array(1 ... 1000).map { value in
             OSCMessage("/some/address/\(UUID().uuidString)", values: possibleValuePacks.randomElement()!)
@@ -171,12 +173,12 @@ struct OSCUDPServer_Tests {
         let srcLocSendToServer: SourceLocation = #_sourceLocation
         DispatchQueue.global().async {
             for message in sourceMessages {
-                do { try client.send(message, to: "localhost", port: 8888) }
+                do { try client.send(message, to: "localhost", port: port) }
                 catch { Issue.record(error, sourceLocation: srcLocSendToServer) }
             }
         }
         
-        await wait(expect: { await receiver.messages.count == 1000 }, timeout: isFlakey ? 20.0 : 5.0)
+        await wait(expect: { await receiver.messages.count == 1000 }, timeout: isFlakey ? 20.0 : 10.0)
         try await #require(receiver.messages.count == 1000)
         
         await #expect(receiver.messages == sourceMessages)

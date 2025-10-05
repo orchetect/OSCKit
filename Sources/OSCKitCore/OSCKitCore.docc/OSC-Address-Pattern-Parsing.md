@@ -72,13 +72,13 @@ Method IDs, method closures, or a combination of both may be used for maximum fl
 ```swift
 // instance address space and register methods only once, usually at app startup.
 let addressSpace = OSCAddressSpace()
-let idMethodA = addressSpace.register(localAddress: "/methodA")
-let idMethodB = addressSpace.register(localAddress: "/some/address/methodB")
+let idMethodA = await addressSpace.register(localAddress: "/methodA")
+let idMethodB = await addressSpace.register(localAddress: "/some/address/methodB")
 ```
 
 ```swift
-func handle(message: OSCMessage, host: String, port: UInt16) throws {
-    let ids = addressSpace.methods(matching: message.addressPattern)
+func handle(message: OSCMessage, host: String, port: UInt16) async throws {
+    let ids = await addressSpace.methods(matching: message.addressPattern)
     
     for id in ids {
         switch id {
@@ -110,19 +110,19 @@ func performMethodB(_ str: String, _ int: Int?) { }
 ```swift
 // instance address space and register methods only once, usually at app startup.
 let addressSpace = OSCAddressSpace()
-addressSpace.register(localAddress: "/methodA") { values, host, port in
+await addressSpace.register(localAddress: "/methodA") { values, host, port in
     guard let str = try? message.values.masked(String.self) else { return }
     performMethodA(str)
 }
-addressSpace.register(localAddress: "/some/address/methodB") { values, host, port in
+await addressSpace.register(localAddress: "/some/address/methodB") { values, host, port in
     guard let (str, int) = try message.values.masked(String.self, Int?.self) else { return }
     performMethodB(str, int)
 }
 ```
 
 ```swift
-func handle(message: OSCMessage, host: String, port: UInt16) throws {
-    let ids = addressSpace.dispatch(message: message, host: host, port: port)
+func handle(message: OSCMessage, host: String, port: UInt16) async throws {
+    let ids = await addressSpace.dispatch(message: message, host: host, port: port)
     if ids.isEmpty {
         print("Received unhandled OSC message:", message)
     }

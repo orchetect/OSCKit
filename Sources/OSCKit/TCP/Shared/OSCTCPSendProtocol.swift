@@ -20,10 +20,40 @@ extension _OSCTCPSendProtocol {
     /// Send an OSC packet.
     ///
     /// - Parameters:
-    ///   - oscObject: OSC bundle or message.
+    ///   - oscPacket: OSC bundle or message.
     ///   - tag: Server Connection Client Session ID. Applies only to TCP server to determine which connected socket to
     ///     send to.
-    func _send(_ oscObject: any OSCObject, tag: OSCTCPClientSessionID) throws {
+    func _send(_ oscPacket: OSCPacket, tag: OSCTCPClientSessionID) throws {
+        try _send(oscPacket.rawData(), tag: tag)
+    }
+    
+    /// Send an OSC bundle.
+    ///
+    /// - Parameters:
+    ///   - oscBundle: OSC bundle.
+    ///   - tag: Server Connection Client Session ID. Applies only to TCP server to determine which connected socket to
+    ///     send to.
+    func _send(_ oscBundle: OSCBundle, tag: OSCTCPClientSessionID) throws {
+        try _send(oscBundle.rawData(), tag: tag)
+    }
+    
+    /// Send an OSC message.
+    ///
+    /// - Parameters:
+    ///   - oscMessage: OSC message.
+    ///   - tag: Server Connection Client Session ID. Applies only to TCP server to determine which connected socket to
+    ///     send to.
+    func _send(_ oscMessage: OSCMessage, tag: OSCTCPClientSessionID) throws {
+        try _send(oscMessage.rawData(), tag: tag)
+    }
+    
+    /// Send an OSC packet.
+    ///
+    /// - Parameters:
+    ///   - oscData: Raw bytes of an OSC bundle or message.
+    ///   - tag: Server Connection Client Session ID. Applies only to TCP server to determine which connected socket to
+    ///     send to.
+    private func _send(_ oscData: Data, tag: OSCTCPClientSessionID) {
         // guard isConnected else {
         //     throw GCDAsyncUdpSocketError(
         //         .closedError,
@@ -31,20 +61,20 @@ extension _OSCTCPSendProtocol {
         //     )
         // }
         
-        // pack data
+        // frame data
         let data: Data = switch framingMode {
         case .osc1_0:
             // OSC packet framed using a packet-length header
             // 4-byte int for size
-            try oscObject.rawData().packetLengthHeaderEncoded(endianness: .bigEndian)
+            oscData.packetLengthHeaderEncoded(endianness: .bigEndian)
             
         case .osc1_1:
             // OSC packet framed using SLIP (double END) protocol: http://www.rfc-editor.org/rfc/rfc1055.txt
-            try oscObject.rawData().slipEncoded()
+            oscData.slipEncoded()
             
         case .none:
             // no framing, send OSC bytes as-is
-            try oscObject.rawData()
+            oscData
         }
         
         // send packet
