@@ -14,19 +14,20 @@ import Foundation
 /// Received OSC messages can have their address patterns passed to the ``methods(matching:)``
 /// method which will return all OSC Methods that match.
 ///
-/// An OSC Method is defined as being the last path component in the address. OSC Methods are the
-/// potential destinations of OSC messages received by the OSC server and correspond to each of the
-/// points of control that the application makes available.
-///
-/// The `methodname` path component is the method name in the following address examples:
-///
-///     /methodname
-///     /container1/container2/methodname
-///
-/// Any other path components besides the last are referred to as _containers_.
-///
-/// A container may also be a method. Simply register it the same way as other methods.
-///
+/// > OSC Methods:
+/// >
+/// > An OSC Method is defined as being the last path component in the address. OSC Methods are the
+/// > potential destinations of OSC messages received by the OSC server and correspond to each of the
+/// > points of control that the application makes available.
+/// >
+/// > The `methodname` path component is the method name in the following address examples:
+/// >
+/// >     /methodname
+/// >     /container1/container2/methodname
+/// >
+/// > Any other path components besides the last are referred to as _containers_.
+/// >
+/// > A container may also be a method. Simply register it the same way as other methods.
 public actor OSCAddressSpace {
     var root: Node = .rootNodeFactory()
     
@@ -42,17 +43,22 @@ extension OSCAddressSpace {
     /// Register an OSC address.
     /// Returns a unique identifier assigned to the address's method.
     /// Replaces existing reference if one exists for that method already.
-    /// Optionally supply a closure that will be invoked when calling ``methods(matching:)``.
+    /// Optionally supply a closure that will be invoked when calling ``dispatch(message:host:port:)``.
     ///
-    /// - Remark: An OSC _method_ is defined as being the last path component in the address.
-    ///
-    /// `methodname` is the method name in the following address examples:
-    ///
-    ///     /methodname
-    ///     /container1/container2/methodname
-    ///
-    /// Any other path components besides the last are referred to as _containers_.
-    ///
+    /// > OSC Methods:
+    /// >
+    /// > An OSC Method is defined as being the last path component in the address. OSC Methods are the
+    /// > potential destinations of OSC messages received by the OSC server and correspond to each of the
+    /// > points of control that the application makes available.
+    /// >
+    /// > The `methodname` path component is the method name in the following address examples:
+    /// >
+    /// >     /methodname
+    /// >     /container1/container2/methodname
+    /// >
+    /// > Any other path components besides the last are referred to as _containers_.
+    /// >
+    /// > A container may also be a method. Simply register it the same way as other methods.
     @discardableResult
     public func register(
         localAddress address: String,
@@ -64,17 +70,22 @@ extension OSCAddressSpace {
     /// Register an OSC address.
     /// Returns a unique identifier assigned to the address's method.
     /// Replaces existing reference if one exists for that method already.
-    /// Optionally supply a closure that will be invoked when calling ``methods(matching:)``.
+    /// Optionally supply a closure that will be invoked when calling ``dispatch(message:host:port:)``.
     ///
-    /// - Remark: An OSC _method_ is defined as being the last path component in the address.
-    ///
-    /// `methodname` is the method name in the following address examples:
-    ///
-    ///     /methodname
-    ///     /container1/container2/methodname
-    ///
-    /// Any other path components besides the last are referred to as _containers_.
-    ///
+    /// > OSC Methods:
+    /// >
+    /// > An OSC Method is defined as being the last path component in the address. OSC Methods are the
+    /// > potential destinations of OSC messages received by the OSC server and correspond to each of the
+    /// > points of control that the application makes available.
+    /// >
+    /// > The `methodname` path component is the method name in the following address examples:
+    /// >
+    /// >     /methodname
+    /// >     /container1/container2/methodname
+    /// >
+    /// > Any other path components besides the last are referred to as _containers_.
+    /// >
+    /// > A container may also be a method. Simply register it the same way as other methods.
     @discardableResult
     public func register<S>(
         localAddress pathComponents: S,
@@ -141,23 +152,26 @@ extension OSCAddressSpace {
 extension OSCAddressSpace {
     /// Returns all OSC address nodes matching the address pattern.
     ///
-    /// - Note: This will not automatically execute the closure blocks that may be associated with
-    ///   the methods. To execute the closures, invoke the ``dispatch(message:host:port:)`` function
-    ///   instead.
+    /// > Note:
+    /// >
+    /// > This will not automatically execute the closure blocks that may be associated with
+    /// > the methods. To execute the closures, invoke the ``dispatch(message:host:port:)`` function
+    /// > instead.
     ///
-    /// - Remark: An OSC Method is defined as being the last path component in the address. OSC
-    ///   Methods are the potential destinations of OSC messages received by the OSC server and
-    ///   correspond to each of the points of control that the application makes available.
-    ///
-    /// `methodname` is the method name in the following address examples:
-    ///
-    ///     /methodname
-    ///     /container1/container2/methodname
-    ///
-    /// Any other path components besides the last are referred to as _containers_.
-    ///
-    /// A container may also be a method. Simply register it the same way as other methods.
-    ///
+    /// > OSC Methods:
+    /// >
+    /// > An OSC Method is defined as being the last path component in the address. OSC Methods are the
+    /// > potential destinations of OSC messages received by the OSC server and correspond to each of the
+    /// > points of control that the application makes available.
+    /// >
+    /// > The `methodname` path component is the method name in the following address examples:
+    /// >
+    /// >     /methodname
+    /// >     /container1/container2/methodname
+    /// >
+    /// > Any other path components besides the last are referred to as _containers_.
+    /// >
+    /// > A container may also be a method. Simply register it the same way as other methods.
     public func methods(matching address: OSCAddressPattern) -> [MethodID] {
         methodNodes(patternMatching: address)
             .map { $0.id }
@@ -170,18 +184,20 @@ extension OSCAddressSpace {
     /// Executes the closure blocks (and passes the OSC message values to them) for all local OSC
     /// address nodes matching the address pattern in the OSC message.
     ///
-    /// - Remark: An OSC Method is defined as being the last path component in the address. OSC
-    ///   Methods are the potential destinations of OSC messages received by the OSC server and
-    ///   correspond to each of the points of control that the application makes available.
-    ///
-    /// `methodname` is the method name in the following address examples:
-    ///
-    ///     /methodname
-    ///     /container1/container2/methodname
-    ///
-    /// Any other path components besides the last are referred to as _containers_.
-    ///
-    /// A container may also be a method. Simply register it the same way as other methods.
+    /// > OSC Methods:
+    /// >
+    /// > An OSC Method is defined as being the last path component in the address. OSC Methods are the
+    /// > potential destinations of OSC messages received by the OSC server and correspond to each of the
+    /// > points of control that the application makes available.
+    /// >
+    /// > The `methodname` path component is the method name in the following address examples:
+    /// >
+    /// >     /methodname
+    /// >     /container1/container2/methodname
+    /// >
+    /// > Any other path components besides the last are referred to as _containers_.
+    /// >
+    /// > A container may also be a method. Simply register it the same way as other methods.
     ///
     /// - Returns: The OSC method IDs that were matched (the same as calling
     ///   ``methods(matching:)``).
