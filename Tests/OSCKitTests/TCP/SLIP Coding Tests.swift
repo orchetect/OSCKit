@@ -170,4 +170,20 @@ import Testing
         let decodedData = try encodedData.slipDecoded()
         #expect(decodedData == [oscRawData])
     }
+    
+    /// Test encoding all possible byte values.
+    @Test
+    func allByteValuesSlipEncodeDecode() throws {
+        for value in UInt8(0) ... UInt8(255) {
+            let valueByte = Data([value])
+            let byteDescription = "Byte \(value.hexString(prefix: true))"
+            let encoded = valueByte.slipEncoded()
+            do {
+                let decoded = try encoded.slipDecoded()
+                #expect(decoded == [valueByte], "\(byteDescription)")
+            } catch {
+                Issue.record("\(byteDescription) error: \(error.localizedDescription)")
+            }
+        }
+    }
 }
