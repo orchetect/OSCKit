@@ -26,7 +26,10 @@ public final class OSCUDPServer {
     
     /// UDP port used by the OSC server to listen for inbound OSC packets.
     /// This may only be set at the time of initialization.
-    public private(set) var localPort: UInt16
+    public var localPort: UInt16 {
+        udpSocket.localPort()
+    }
+    private var _localPort: UInt16?
     
     /// Network interface to restrict connections to.
     public private(set) var interface: String?
@@ -45,19 +48,20 @@ public final class OSCUDPServer {
     ///
     /// - Parameters:
     ///   - port: Local port to listen on for inbound OSC packets.
+    ///     If `nil` or `0`, a random available port in the system will be chosen.
     ///   - interface: Optionally specify a network interface for which to constrain communication.
     ///   - timeTagMode: OSC TimeTag mode. (Default is recommended.)
     ///   - queue: Optionally supply a custom dispatch queue for receiving OSC packets and dispatching the
     ///     handler callback closure. If `nil`, a dedicated internal background queue will be used.
     ///   - receiveHandler: Handler to call when OSC bundles or messages are received.
     public init(
-        port: UInt16 = 8000,
+        port: UInt16? = 8000,
         interface: String? = nil,
         timeTagMode: OSCTimeTagMode = .ignore,
         queue: DispatchQueue? = nil,
         receiveHandler: OSCHandlerBlock? = nil
     ) {
-        localPort = port
+        _localPort = (port == nil || port == 0) ? nil : port
         self.interface = interface
         self.timeTagMode = timeTagMode
         let queue = queue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCUDPServer.queue")
@@ -80,7 +84,10 @@ extension OSCUDPServer {
         
         stop()
         
-        try udpSocket.bind(toPort: localPort, interface: interface)
+        try udpSocket.bind(
+            toPort: _localPort ?? 0, // 0 causes system to assign random open port
+            interface: interface
+        )
         try udpSocket.beginReceiving()
         
         isStarted = true
