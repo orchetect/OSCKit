@@ -17,8 +17,8 @@ struct OSCTCPServer_Tests {
     func messageOrdering(iteration: Int) async throws {
         _ = iteration // argument value not used, just a mechanism to repeat the test X number of times
         
-        // we aren't starting the server, so passing port 0 has no meaningful effect
-        let server = OSCTCPServer(port: 0, timeTagMode: .ignore)
+        // we aren't starting the server, so passing port 0 or nil has no meaningful effect
+        let server = OSCTCPServer(port: nil, timeTagMode: .ignore)
         
         final actor Receiver {
             var messages: [(message: OSCMessage, host: String, port: UInt16)] = []
@@ -68,8 +68,8 @@ struct OSCTCPServer_Tests {
     /// Offline stress-test to ensure a large volume of OSC packets are received and dispatched in order.
     @MainActor @Test
     func stressTestOffline() async throws {
-        // we aren't starting the server, so passing port 0 has no meaningful effect
-        let server = OSCTCPServer(port: 0, timeTagMode: .ignore)
+        // we aren't starting the server, so passing port 0 or nil has no meaningful effect
+        let server = OSCTCPServer(port: nil, timeTagMode: .ignore)
         
         final actor Receiver {
             var messages: [OSCMessage] = []
@@ -119,8 +119,8 @@ struct OSCTCPServer_Tests {
         
         // setup server
         
-        // binding to port 0 will cause the system to assign a random available port
-        let server = OSCTCPServer(port: 0, timeTagMode: .ignore, framingMode: framingMode)
+        // binding to port 0 or nil will cause the system to assign a random available port
+        let server = OSCTCPServer(port: nil, timeTagMode: .ignore, framingMode: framingMode)
         try await Task.sleep(seconds: isStable ? 0.1 : 5.0)
         
         try server.start()
@@ -220,8 +220,8 @@ struct OSCTCPServer_Tests {
         
         // setup server
         
-        // binding to port 0 will cause the system to assign a random available port
-        let server = OSCTCPServer(port: 0, timeTagMode: .ignore, framingMode: .osc1_1)
+        // binding to port 0 or nil will cause the system to assign a random available port
+        let server = OSCTCPServer(port: nil, timeTagMode: .ignore, framingMode: .osc1_1)
         try await Task.sleep(seconds: isStable ? 0.1 : 5.0)
         
         try server.start()
@@ -271,7 +271,8 @@ struct OSCTCPServer_Tests {
     func startStopTCPServer() async throws {
         let isStable = isSystemTimingStable()
         
-        let server = OSCTCPServer(port: 0, timeTagMode: .ignore, framingMode: .osc1_1)
+        // binding to port 0 or nil will cause the system to assign a random available port
+        let server = OSCTCPServer(port: nil, timeTagMode: .ignore, framingMode: .osc1_1)
         try await Task.sleep(seconds: isStable ? 0.1 : 5.0)
         
         try server.start()
@@ -305,8 +306,8 @@ struct OSCTCPServer_Tests {
         
         // setup server
         
-        // binding to port 0 will cause the system to assign a random available port
-        let server = OSCTCPServer(port: 0, timeTagMode: .ignore, framingMode: framingMode)
+        // binding to port 0 or nil will cause the system to assign a random available port
+        let server = OSCTCPServer(port: nil, timeTagMode: .ignore, framingMode: framingMode)
         try await Task.sleep(seconds: isStable ? 0.1 : 5.0)
         
         try server.start()
