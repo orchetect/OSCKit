@@ -140,9 +140,9 @@ struct OSCUDPSocket_Tests {
         let isFlakey = !isSystemTimingStable()
         
         let socket = OSCUDPSocket(
-            localPort: nil,
+            localPort: nil, // selects a random available port
             remoteHost: "localhost",
-            remotePort: nil,
+            remotePort: nil, // gets set to same port as localPort
             timeTagMode: .ignore,
             isIPv4BroadcastEnabled: false,
             queue: nil,

@@ -37,7 +37,10 @@ public final class OSCTCPServer {
     public var timeTagMode: OSCTimeTagMode
     
     /// Local network port.
-    public private(set) var localPort: UInt16
+    public var localPort: UInt16 {
+        tcpSocket.localPort
+    }
+    private var _localPort: UInt16?
     
     /// Network interface to restrict connections to.
     public let interface: String?
@@ -51,6 +54,7 @@ public final class OSCTCPServer {
     ///
     /// - Parameters:
     ///   - port: Local network port to listen for inbound connections.
+    ///     If `nil` or `0`, a random available port in the system will be chosen.
     ///   - interface: Optionally specify a network interface for which to constrain connections.
     ///   - timeTagMode: OSC TimeTag mode. Default is recommended.
     ///   - framingMode: TCP framing mode. Both server and client must use the same framing mode. (Default is recommended.)
@@ -58,14 +62,14 @@ public final class OSCTCPServer {
     ///     handler callback closure. If `nil`, a dedicated internal background queue will be used.
     ///   - receiveHandler: Handler to call when OSC bundles or messages are received.
     public init(
-        port: UInt16,
+        port: UInt16?,
         interface: String? = nil,
         timeTagMode: OSCTimeTagMode = .ignore,
         framingMode: OSCTCPFramingMode = .osc1_1,
         queue: DispatchQueue? = nil,
         receiveHandler: OSCHandlerBlock? = nil
     ) {
-        self.localPort = port
+        _localPort = (port == nil || port == 0) ? nil : port
         self.interface = interface
         self.timeTagMode = timeTagMode
         self.framingMode = framingMode
@@ -90,10 +94,10 @@ extension OSCTCPServer: @unchecked Sendable { } // TODO: unchecked
 extension OSCTCPServer {
     /// Starts listening for inbound connections.
     public func start() throws {
-        try tcpSocket.accept(onInterface: interface, port: localPort)
-        
-        // update local port in case port 0 was passed and the system assigned a new port
-        localPort = tcpSocket.localPort
+        try tcpSocket.accept(
+            onInterface: interface,
+            port: _localPort ?? 0 // 0 causes system to assign random open port
+        )
     }
     
     /// Closes any open client connections and stops listening for inbound connection requests.
