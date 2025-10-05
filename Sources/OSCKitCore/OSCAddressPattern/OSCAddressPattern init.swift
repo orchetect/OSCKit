@@ -7,6 +7,8 @@
 import Foundation
 internal import SwiftASCII // ASCIIString
 
+// MARK: - String
+
 extension OSCAddressPattern {
     /// Create an OSC address from a raw `String` address.
     /// The string will be converted to valid ASCII, lossily converting or removing invalid
@@ -22,7 +24,11 @@ extension OSCAddressPattern {
         rawAddress = address.stringValue
         rawData = address.rawData
     }
-    
+}
+
+// MARK: - Path Components
+
+extension OSCAddressPattern {
     /// Create an OSC address from individual path components.
     /// The path component strings will be converted to valid ASCII, lossily converting or removing
     /// invalid non-ASCII characters if necessary.

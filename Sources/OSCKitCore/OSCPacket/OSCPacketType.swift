@@ -5,7 +5,13 @@
 //
 
 /// Enum describing an OSC packet type.
-public enum OSCPacketType: Equatable, Hashable, Sendable {
+public enum OSCPacketType {
     case message
     case bundle
 }
+
+extension OSCPacketType: Equatable { }
+
+extension OSCPacketType: Hashable { }
+
+extension OSCPacketType: Sendable { }
