@@ -39,8 +39,7 @@ extension CustomType: OSCValueCodable {
 }
 
 extension CustomType: OSCValueEncodable {
-    public typealias OSCValueEncodingBlock = OSCValueStaticTagEncoder<OSCEncoded>
-    static let oscEncoding = OSCValueEncodingBlock { value throws(OSCEncodeError) in
+    static let oscEncoding = OSCValueStaticTagEncoder<Self> { value throws(OSCEncodeError) in
         // Encode our Codable type instance into raw data
         let encoder = JSONEncoder()
         let jsonData: Data
@@ -56,8 +55,7 @@ extension CustomType: OSCValueEncodable {
 }
 
 extension CustomType: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueStaticTagDecoder<OSCDecoded>
-    static let oscDecoding = OSCValueDecodingBlock { dataReader throws(OSCDecodeError) in
+    static let oscDecoding = OSCValueStaticTagDecoder<Self> { dataReader throws(OSCDecodeError) in
         let decoder = JSONDecoder()
         
         // Gets entire data chunk from the OSC blob, stripping the length bytes and null padding suffix
