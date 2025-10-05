@@ -108,18 +108,19 @@ public final class OSCUDPClient {
     ///
     /// - Parameters:
     ///   - localPort: Local UDP port used by the client from which to send OSC packets.
+    ///     If `nil` or `0`, a random available port in the system will be chosen.
     ///   - interface: Optionally specify a network interface for which to constrain communication.
     ///   - isPortReuseEnabled: Enable local UDP port reuse by other processes.
     ///   - isIPv4BroadcastEnabled: Enable sending IPv4 broadcast messages from the socket.
     public convenience init(
-        localPort: UInt16,
+        localPort: UInt16?,
         interface: String? = nil,
         isPortReuseEnabled: Bool = false,
         isIPv4BroadcastEnabled: Bool = false
     ) {
         self.init()
         
-        _localPort = localPort
+        _localPort = (localPort == nil || localPort == 0) ? nil : localPort
         self.interface = interface
         self.isPortReuseEnabled = isPortReuseEnabled
         self.isIPv4BroadcastEnabled = isIPv4BroadcastEnabled
