@@ -123,21 +123,26 @@ import Testing
         }
     }
     
-    /// Test for error: encountering an escaped character without first receiving an ESC byte.
+    /// Encountering an escaped character without first receiving an ESC byte
+    /// should treat the byte as-is.
     @Test
     func dataSlipDecoded_MissingEscapeByte() throws {
-        #expect(throws: OSCTCPSLIPDecodingError.missingEscapeByte) {
+        #expect(
             try Data([END, 0x01, ESC_ESC, 0x02, END]).slipDecoded()
-        }
-        #expect(throws: OSCTCPSLIPDecodingError.missingEscapeByte) {
+            == [Data([0x01, ESC_ESC, 0x02])]
+        )
+        #expect(
             try Data([END, 0x01, ESC_END, 0x02, END]).slipDecoded()
-        }
-        #expect(throws: OSCTCPSLIPDecodingError.missingEscapeByte) {
+            == [Data([0x01, ESC_END, 0x02])]
+        )
+        #expect(
             try Data([END, ESC_ESC, END]).slipDecoded()
-        }
-        #expect(throws: OSCTCPSLIPDecodingError.missingEscapeByte) {
+            == [Data([ESC_ESC])]
+        )
+        #expect(
             try Data([END, ESC_END, END]).slipDecoded()
-        }
+            == [Data([ESC_END])]
+        )
     }
     
     /// Test for error: missing valid escaped character after receiving ESC byte.
@@ -169,5 +174,21 @@ import Testing
         
         let decodedData = try encodedData.slipDecoded()
         #expect(decodedData == [oscRawData])
+    }
+    
+    /// Test encoding all possible byte values.
+    @Test
+    func allByteValuesSlipEncodeDecode() throws {
+        for value in UInt8(0) ... UInt8(255) {
+            let valueByte = Data([value])
+            let byteDescription = "Byte \(value.hexString(prefix: true))"
+            let encoded = valueByte.slipEncoded()
+            do {
+                let decoded = try encoded.slipDecoded()
+                #expect(decoded == [valueByte], "\(byteDescription)")
+            } catch {
+                Issue.record("\(byteDescription) error: \(error.localizedDescription)")
+            }
+        }
     }
 }
