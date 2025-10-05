@@ -20,8 +20,7 @@ extension String: OSCValueCodable {
 
 @_documentation(visibility: internal)
 extension String: OSCValueEncodable {
-    public typealias OSCValueEncodingBlock = OSCValueStaticTagEncoder<OSCEncoded>
-    public static let oscEncoding = OSCValueEncodingBlock { value throws(OSCEncodeError) in
+    public static let oscEncoding = OSCValueStaticTagEncoder<Self> { value throws(OSCEncodeError) in
         (
             tag: oscTag,
             data: OSCMessageEncoder.fourNullBytePadded(value.asciiStringLossy.rawData)
@@ -31,8 +30,7 @@ extension String: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension String: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueStaticTagDecoder<OSCDecoded>
-    public static let oscDecoding = OSCValueDecodingBlock { decoder throws(OSCDecodeError) in
+    public static let oscDecoding = OSCValueStaticTagDecoder<Self> { decoder throws(OSCDecodeError) in
         try decoder.read4ByteAlignedNullTerminatedASCIIString()
     }
 }

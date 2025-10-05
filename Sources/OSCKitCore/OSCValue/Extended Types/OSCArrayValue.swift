@@ -112,8 +112,7 @@ extension OSCArrayValue: OSCValueCodable {
 
 @_documentation(visibility: internal)
 extension OSCArrayValue: OSCValueEncodable {
-    public typealias OSCValueEncodingBlock = OSCValueVariadicTagEncoder<OSCEncoded>
-    public static let oscEncoding = OSCValueEncodingBlock { value throws(OSCEncodeError) in
+    public static let oscEncoding = OSCValueVariadicTagEncoder<Self> { value throws(OSCEncodeError) in
         var tags: [ASCIICharacter] = []
         tags.reserveCapacity(value.elements.count + 2)
         tags += ASCIICharacter(oscTypeTagOpen)
@@ -139,8 +138,7 @@ extension OSCArrayValue: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension OSCArrayValue: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueVariadicTagDecoder<OSCDecoded>
-    public static let oscDecoding = OSCValueDecodingBlock { tags, decoder throws(OSCDecodeError) in
+    public static let oscDecoding = OSCValueVariadicTagDecoder<Self> { tags, decoder throws(OSCDecodeError) in
         guard tags.first == oscTypeTagOpen else {
             return nil
         }

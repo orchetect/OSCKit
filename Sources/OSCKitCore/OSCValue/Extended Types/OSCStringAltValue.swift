@@ -87,8 +87,7 @@ extension OSCStringAltValue: OSCValueCodable {
 
 @_documentation(visibility: internal)
 extension OSCStringAltValue: OSCValueEncodable {
-    public typealias OSCValueEncodingBlock = OSCValueStaticTagEncoder<OSCEncoded>
-    public static let oscEncoding = OSCValueEncodingBlock { value throws(OSCEncodeError) in
+    public static let oscEncoding = OSCValueStaticTagEncoder<Self> { value throws(OSCEncodeError) in
         let encoded = try String.oscEncoding.block(value.string)
         return (tag: oscTag, data: encoded.data)
     }
@@ -96,8 +95,7 @@ extension OSCStringAltValue: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension OSCStringAltValue: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueStaticTagDecoder<OSCDecoded>
-    public static let oscDecoding = OSCValueDecodingBlock { decoder throws(OSCDecodeError) in
+    public static let oscDecoding = OSCValueStaticTagDecoder<Self> { decoder throws(OSCDecodeError) in
         try OSCStringAltValue(String.oscDecoding.block(&decoder))
     }
 }

@@ -23,8 +23,7 @@ extension Bool: OSCValueCodable {
 
 @_documentation(visibility: internal)
 extension Bool: OSCValueEncodable {
-    public typealias OSCValueEncodingBlock = OSCValueVariableTagEncoder<OSCEncoded>
-    public static let oscEncoding = OSCValueEncodingBlock { value throws(OSCEncodeError) in
+    public static let oscEncoding = OSCValueVariableTagEncoder<Self> { value throws(OSCEncodeError) in
         (
             tag: value ? oscTypeTagTrue : oscTypeTagFalse,
             data: nil
@@ -34,8 +33,7 @@ extension Bool: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension Bool: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueVariableTagDecoder<OSCDecoded>
-    public static let oscDecoding = OSCValueDecodingBlock { tag, decoder throws(OSCDecodeError) in
+    public static let oscDecoding = OSCValueVariableTagDecoder<Self> { tag, decoder throws(OSCDecodeError) in
         switch tag {
         case oscTypeTagTrue:
             return true

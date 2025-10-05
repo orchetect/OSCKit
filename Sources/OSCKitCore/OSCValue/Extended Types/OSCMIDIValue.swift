@@ -136,8 +136,7 @@ extension OSCMIDIValue: OSCValueCodable {
 
 @_documentation(visibility: internal)
 extension OSCMIDIValue: OSCValueEncodable {
-    public typealias OSCValueEncodingBlock = OSCValueStaticTagEncoder<OSCEncoded>
-    public static let oscEncoding = OSCValueEncodingBlock { value throws(OSCEncodeError) in
+    public static let oscEncoding = OSCValueStaticTagEncoder<Self> { value throws(OSCEncodeError) in
         (
             tag: oscTag,
             data: [value.portID, value.status, value.data1, value.data2].data
@@ -147,8 +146,7 @@ extension OSCMIDIValue: OSCValueEncodable {
 
 @_documentation(visibility: internal)
 extension OSCMIDIValue: OSCValueDecodable {
-    public typealias OSCValueDecodingBlock = OSCValueStaticTagDecoder<OSCDecoded>
-    public static let oscDecoding = OSCValueDecodingBlock { decoder throws(OSCDecodeError) in
+    public static let oscDecoding = OSCValueStaticTagDecoder<Self> { decoder throws(OSCDecodeError) in
         let bytes = try decoder.read(byteLength: 4)
         
         let startIndex = bytes.startIndex
