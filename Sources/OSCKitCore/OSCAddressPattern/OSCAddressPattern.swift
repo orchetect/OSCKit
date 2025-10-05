@@ -79,7 +79,7 @@ extension OSCAddressPattern: Sendable { }
 extension OSCAddressPattern: ExpressibleByStringLiteral {
     public typealias StringLiteralType = String
 
-    public init(stringLiteral: Self.StringLiteralType) {
+    public init(stringLiteral: StringLiteralType) {
         self.init(stringLiteral)
     }
 }

@@ -40,10 +40,6 @@ extension OSCImpulseValue: CustomStringConvertible {
     }
 }
 
-// MARK: - Codable
-
-extension OSCImpulseValue: Codable { }
-
 // MARK: - OSC Encoding
 
 @_documentation(visibility: internal)

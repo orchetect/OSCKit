@@ -40,10 +40,6 @@ extension OSCNullValue: CustomStringConvertible {
     }
 }
 
-// MARK: - Codable
-
-extension OSCNullValue: Codable { }
-
 // MARK: - OSC Encoding
 
 @_documentation(visibility: internal)

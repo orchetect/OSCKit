@@ -68,10 +68,6 @@ extension OSCStringAltValue: CustomStringConvertible {
     }
 }
 
-// MARK: - Codable
-
-extension OSCStringAltValue: Codable { }
-
 // MARK: - OSC Encoding
 
 @_documentation(visibility: internal)
