@@ -26,7 +26,8 @@ extension Data {
     
     /// Returns the data encoded as a SLIP packet.
     func slipEncoded() -> Data {
-        var output = Data()
+        // estimate encoded size to be 10% larger than raw data size
+        var output = Data(capacity: count + (count / 10))
         
         output.append(SLIPByte.end.rawValue)
         
@@ -62,7 +63,9 @@ extension Data {
             switch self[index] {
             case SLIPByte.end.rawValue:
                 // END should never come after an escape byte
-                guard !isEscaped else { throw .missingEscapedCharacter }
+                guard !isEscaped else {
+                    throw .missingEscapedCharacter
+                }
                 
                 // consider the END byte the end of the current packet
                 if !currentPacketData.isEmpty {
@@ -74,34 +77,44 @@ extension Data {
                 
             case SLIPByte.esc.rawValue:
                 // we should never get more than one consecutive ESC byte
-                guard !isEscaped else { throw .doubleEscapeBytes}
+                guard !isEscaped else {
+                    throw .doubleEscapeBytes
+                }
                 
                 isEscaped = true
                 
             case SLIPByte.escEnd.rawValue:
-                // must follow an ESC byte
-                guard isEscaped else { throw .missingEscapeByte}
-                isEscaped = false // reset ESC
-                
-                currentPacketData.append(SLIPByte.end.rawValue)
+                // if following an ESC byte, translate it
+                if isEscaped {
+                    isEscaped = false // reset ESC
+                    currentPacketData.append(SLIPByte.end.rawValue)
+                } else {
+                    currentPacketData.append(SLIPByte.escEnd.rawValue)
+                }
                 
             case SLIPByte.escEsc.rawValue:
-                // must follow an ESC byte
-                guard isEscaped else { throw .missingEscapeByte}
-                isEscaped = false // reset ESC
-                
-                currentPacketData.append(SLIPByte.esc.rawValue)
+                // if following an ESC byte, translate it
+                if isEscaped  {
+                    isEscaped = false // reset ESC
+                    currentPacketData.append(SLIPByte.esc.rawValue)
+                } else {
+                    currentPacketData.append(SLIPByte.escEsc.rawValue)
+                }
                 
             default:
                 // the only two bytes that should follow an ESC byte are ESC_END and ESC_ESC
-                guard !isEscaped else { throw .missingEscapedCharacter}
+                guard !isEscaped else {
+                    throw .missingEscapedCharacter
+                }
                 
                 currentPacketData.append(self[index])
             }
         }
         
         // failsafe: ensure we are not ending while escaped (check if final byte was ESC)
-        guard !isEscaped else { throw .missingEscapedCharacter}
+        guard !isEscaped else {
+            throw .missingEscapedCharacter
+        }
         
         // add final packet if needed
         if !currentPacketData.isEmpty {
