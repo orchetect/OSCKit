@@ -128,15 +128,12 @@ extension Data {
 /// Error cases thrown while decoding packet data encoded with the SLIP protocol (RFC 1055).
 public enum OSCTCPSLIPDecodingError: LocalizedError, Equatable, Hashable {
     case doubleEscapeBytes
-    case missingEscapeByte
     case missingEscapedCharacter
     
     public var errorDescription: String? {
         switch self {
         case .doubleEscapeBytes:
             "SLIP packet data is malformed. Double escape bytes encountered."
-        case .missingEscapeByte:
-            "SLIP packet data is malformed. Encountered an escaped character but missing preceding escape byte."
         case .missingEscapedCharacter:
             "SLIP packet data is malformed. Encountered an escape byte but missing subsequent escaped character."
         }
