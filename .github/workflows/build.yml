@@ -25,7 +25,7 @@ on:
 #    - cron: '40 11 * * *'   # once a day @ 11:40am UTC (4:40am PST)
 
 env:
-  SCHEME: "OSCKit-CI"
+  SCHEME: "OSCKit"
 
 jobs:
   macOS:
