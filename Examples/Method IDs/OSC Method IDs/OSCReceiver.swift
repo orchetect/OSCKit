@@ -13,9 +13,9 @@ import OSCKit
 final class OSCReceiver: Sendable {
     private let addressSpace = OSCAddressSpace()
     
-    private let idMethodA: OSCAddressSpace.MethodID
-    private let idMethodB: OSCAddressSpace.MethodID
-    private let idMethodC: OSCAddressSpace.MethodID
+    private let idMethodA: UUID
+    private let idMethodB: UUID
+    private let idMethodC: UUID
     
     public init() async {
         // register local OSC methods and store the ID tokens once before receiving OSC messages
