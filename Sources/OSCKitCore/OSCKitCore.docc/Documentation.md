@@ -1,30 +1,16 @@
 # ``OSCKitCore``
 
-Open Sound Control (OSC) library for macOS, iOS tvOS, and visionOS.
+Core OSC value types, address parsing, and value type masking. 
 
 ## Overview
 
 ![OSCKit](osckit-banner.png)
 
-- OSC address pattern matching and dispatch
-- Convenient OSC message value type masking, validation and strong-typing
-- Modular: use the provided UDP or TCP network layer by default, or use your own
-- Support for custom OSC types
-- Supports Swift 6 Concurrency
-- Fully unit tested
-- Full DocC documentation
+This target contains documentation on using OSC value types.
 
 > Tip:
 >
-> For a Getting Started guide, see the `OSCKit` module documentation.
-
-@Comment {
-    // -------------------------------------------------------------------
-    // NOTE: The following is identical between the OSCKit and OSCKitCore
-    // docc bundles, except that the OSCKit docc adds 'Welcome' and 'I/O'
-    // topic sections at the top of the Topics list.
-    // -------------------------------------------------------------------
-}
+> For a Getting Started guide and I/O documentation, see the `OSCKit` module documentation.
 
 ## Topics
 

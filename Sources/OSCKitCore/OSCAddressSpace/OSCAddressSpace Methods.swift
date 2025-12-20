@@ -12,10 +12,9 @@ extension OSCAddressSpace {
     /// A closure executed when an inbound OSC message address pattern matches a local OSC method.
     public typealias MethodBlock = @Sendable (_ values: OSCValues, _ host: String, _ port: UInt16) async -> Void
     
-    /// Register an OSC address.
-    /// Returns a unique identifier assigned to the address's method.
+    /// Register an OSC method by supplying its local address.
+    ///
     /// Replaces existing reference if one exists for that method already.
-    /// Optionally supply a closure that will be invoked when calling ``dispatch(message:host:port:)``.
     ///
     /// > OSC Methods:
     /// >
@@ -31,6 +30,12 @@ extension OSCAddressSpace {
     /// > Any other path components besides the last are referred to as _containers_.
     /// >
     /// > A container may also be a method. Simply register it the same way as other methods.
+    ///
+    /// - Parameters:
+    ///   - address: Local OSC address.
+    ///   - block: Optionally supply a closure that will be invoked when calling ``dispatch(message:host:port:)``.
+    ///
+    /// - Returns: A unique identifier assigned to the address's method.
     @discardableResult
     public func register(
         localAddress address: String,
@@ -39,9 +44,9 @@ extension OSCAddressSpace {
         register(localAddress: OSCAddressPattern(address).pathComponents, block: block)
     }
     
-    /// Register an OSC address, associating a custom unique identifier assigned to the address's method.
+    /// Register an OSC method by supplying its local address, assigning a custom unique identifier.
+    ///
     /// Replaces existing reference if one exists for that method already.
-    /// Optionally supply a closure that will be invoked when calling ``dispatch(message:host:port:)``.
     ///
     /// > OSC Methods:
     /// >
@@ -57,6 +62,11 @@ extension OSCAddressSpace {
     /// > Any other path components besides the last are referred to as _containers_.
     /// >
     /// > A container may also be a method. Simply register it the same way as other methods.
+    ///
+    /// - Parameters:
+    ///   - address: Local OSC address.
+    ///   - id: Unique ID assigned to the OSC method.
+    ///   - block: Optionally supply a closure that will be invoked when calling ``dispatch(message:host:port:)``.
     public func register(
         localAddress address: String,
         id: MethodID,
@@ -65,10 +75,9 @@ extension OSCAddressSpace {
         register(localAddress: OSCAddressPattern(address).pathComponents, id: id, block: block)
     }
     
-    /// Register an OSC address.
-    /// Returns a unique identifier assigned to the address's method.
+    /// Register an OSC method by supplying its local address.
+    ///
     /// Replaces existing reference if one exists for that method already.
-    /// Optionally supply a closure that will be invoked when calling ``dispatch(message:host:port:)``.
     ///
     /// > OSC Methods:
     /// >
@@ -84,6 +93,12 @@ extension OSCAddressSpace {
     /// > Any other path components besides the last are referred to as _containers_.
     /// >
     /// > A container may also be a method. Simply register it the same way as other methods.
+    ///
+    /// - Parameters:
+    ///   - pathComponents: Local OSC address components.
+    ///   - block: Optionally supply a closure that will be invoked when calling ``dispatch(message:host:port:)``.
+    ///
+    /// - Returns: A unique identifier assigned to the address's method.
     @discardableResult
     public func register<S>(
         localAddress pathComponents: S,
@@ -113,9 +128,9 @@ extension OSCAddressSpace {
         return returnedID
     }
     
-    /// Register an OSC address, associating a custom unique identifier assigned to the address's method.
+    /// Register an OSC method by supplying its local address, assigning a custom unique identifier.
+    ///
     /// Replaces existing reference if one exists for that method already.
-    /// Optionally supply a closure that will be invoked when calling ``dispatch(message:host:port:)``.
     ///
     /// > OSC Methods:
     /// >
@@ -131,6 +146,11 @@ extension OSCAddressSpace {
     /// > Any other path components besides the last are referred to as _containers_.
     /// >
     /// > A container may also be a method. Simply register it the same way as other methods.
+    ///
+    /// - Parameters:
+    ///   - pathComponents: Local OSC address components.
+    ///   - id: Unique ID assigned to the OSC method.
+    ///   - block: Optionally supply a closure that will be invoked when calling ``dispatch(message:host:port:)``.
     public func register<S>(
         localAddress pathComponents: S,
         id: MethodID,
@@ -151,7 +171,7 @@ extension OSCAddressSpace {
         )
     }
     
-    /// Unregister an OSC address.
+    /// Unregister an OSC method by supplying its local address.
     ///
     /// - Returns: `true` if the operation was successful, `false` if unsuccessful or the path does
     ///   not exist.

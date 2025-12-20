@@ -26,14 +26,14 @@ import OSCKitCore
 
 ## Value Types
 
-- <doc:OSC-Value-Types>
+- <doc://OSCKit/OSCKitCore/OSC-Value-Types>
 
 ## Sending and Receiving
 
 - <doc:Sending-OSC>
 - <doc:Receiving-OSC>
-  - <doc:OSC-Address-Pattern-Parsing>
-  - <doc:OSC-Value-Parsing>
+  - <doc://OSCKit/OSCKitCore/OSC-Address-Pattern-Parsing>
+  - <doc://OSCKit/OSCKitCore/OSC-Value-Parsing>
 
 ## Example Code
 

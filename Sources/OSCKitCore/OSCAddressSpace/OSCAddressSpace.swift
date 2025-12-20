@@ -36,6 +36,7 @@ public actor OSCAddressSpace<MethodID> where MethodID: Equatable & Hashable & Se
     
     // Allows constructing the object with inline generics, ie:
     // let addressSpace = OSCAddressSpace<String>()
+    @_documentation(visibility: internal)
     @_disfavoredOverload
     public init() { }
     
