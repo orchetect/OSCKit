@@ -18,28 +18,39 @@ extension OSCAddressSpace {
     /// Children, if any, are unaffected.
     func createMethodNode<S>(
         path: S,
+        id: MethodID,
         block: MethodBlock? = nil
-    ) -> Node where S: BidirectionalCollection, S.Element: StringProtocol {
-        var pathRef = root
+    ) -> Node? where S: BidirectionalCollection, S.Element: StringProtocol {
+        guard !path.isEmpty else { return nil }
+        
+        var pathRef: Node? = nil // start at root
         
         for idx in path.indices {
             let isLast = idx == path.indices.last! // guaranteed non-nil
             
-            if let existingNode = pathRef.children
+            let peers = (pathRef?.children ?? root)
+            
+            func appendPeer(_ newNode: Node) {
+                if let pathRef {
+                    pathRef.children.append(newNode)
+                } else {
+                    root.append(newNode)
+                }
+            }
+            
+            if let existingNode = peers
                 .first(where: { $0.name == path[idx] })
             {
                 pathRef = existingNode
                 if isLast {
-                    pathRef.nodeType = .method
-                    pathRef.block = block
+                    existingNode.nodeType = .method(id: id, block: block)
                 }
             } else {
                 let newNode = Node(
                     name: path[idx],
-                    type: isLast ? .method : .container,
-                    block: block
+                    type: isLast ? .method(id: id, block: block) : .container
                 )
-                pathRef.children.append(newNode)
+                appendPeer(newNode)
                 pathRef = newNode
             }
         }
@@ -61,7 +72,7 @@ extension OSCAddressSpace {
         path: S
     ) -> Bool where S: BidirectionalCollection, S.Element: StringProtocol {
         guard !path.isEmpty,
-              let nodes = nodePath(path: path, includeRoot: true)
+              let nodes = nodePath(path: path)
         else { return false }
         
         return removeMethodNode(path: nodes)
@@ -83,16 +94,23 @@ extension OSCAddressSpace {
         guard let lastPathComponentNode = path.last
         else { return false }
         
-        let parentNode = path.dropLast().last
+        func removeParentChild(_ child: Node) {
+            if let parentNode = path.dropLast().last {
+                parentNode.children.removeAll(where: { $0 == child })
+            } else {
+                // root
+                root.removeAll(where: { $0 == child })
+            }
+        }
         
         // remove the node if
         //   1) it's marked as a method, and
         //   2) it has no children
         if lastPathComponentNode.isMethod {
             if lastPathComponentNode.children.isEmpty {
-                parentNode?.children.remove(lastPathComponentNode)
+                removeParentChild(lastPathComponentNode)
             } else {
-                lastPathComponentNode.convertToContainer()
+                lastPathComponentNode.convert(to: .container)
             }
         } else {
             // not a method node; nothing can be done
@@ -114,7 +132,7 @@ extension OSCAddressSpace {
     ///   not exist.
     @discardableResult
     func removeMethodNode(methodID: MethodID) -> Bool {
-        guard let nodes = nodePath(methodID: methodID, includeRoot: true)
+        guard let nodes = nodePath(methodID: methodID)
         else { return false }
         
         return removeMethodNode(path: nodes)
@@ -126,9 +144,9 @@ extension OSCAddressSpace {
     func methodNode<S>(
         path: S
     ) -> Node? where S: BidirectionalCollection, S.Element: StringProtocol {
-        var pathRef = root
+        var pathRef: Node? = nil // start at root
         for idx in path.indices {
-            guard let node = pathRef.children
+            guard let node = (pathRef?.children ?? root)
                 .first(where: { $0.isMethod && $0.name == path[idx] })
             else {
                 return nil
@@ -145,9 +163,9 @@ extension OSCAddressSpace {
     func node<S>(
         path: S
     ) -> Node? where S: BidirectionalCollection, S.Element: StringProtocol {
-        var pathRef = root
+        var pathRef: Node? = nil // start at root
         for idx in path.indices {
-            guard let node = pathRef.children
+            guard let node = (pathRef?.children ?? root)
                 .first(where: { $0.name == path[idx] })
             else {
                 return nil
@@ -164,13 +182,11 @@ extension OSCAddressSpace {
     /// - Returns `nil` if the complete path does not exist.
     func nodePath<S>(
         path: S,
-        includeRoot: Bool = false
     ) -> [Node]? where S: BidirectionalCollection, S.Element: StringProtocol {
         var nodes: [Node] = []
-        var pathRef = root
-        if includeRoot { nodes.append(pathRef) }
+        var pathRef: Node? = nil // start at root
         for idx in path.indices {
-            guard let node = pathRef.children
+            guard let node = (pathRef?.children ?? root)
                 .first(where: { $0.name == path[idx] })
             else { return nil }
             pathRef = node
@@ -187,30 +203,33 @@ extension OSCAddressSpace {
     /// - Returns `nil` if the complete path does not exist.
     func nodePath(
         methodID: MethodID,
-        includeRoot: Bool = false
     ) -> [Node]? {
-        var nodes: [Node] = []
-        if includeRoot { nodes.append(root) }
-        
-        func visit(node: Node, path: [Node], isRoot: Bool) -> [Node]? {
-            let nodePath = if !isRoot || (isRoot && includeRoot) {
-                path + [node]
+        // Context ==`nil` represents root.
+        func visit(context: (node: Node, path: [Node])?) -> [Node]? {
+            var nodePath: [Node]
+            if let context {
+                nodePath = context.path + [context.node]
             } else {
-                path
+                nodePath = []
             }
             
-            if node.id == methodID {
+            if let lastNode = nodePath.last,
+               case let .method(id: lastNodeID, block: _) = lastNode.nodeType,
+               lastNodeID == methodID
+            {
                 return nodePath
             }
-            for child in node.children {
-                if let path = visit(node: child, path: nodePath, isRoot: false) {
+
+            for child in (context?.node.children ?? root) {
+                if let path = visit(context: (node: child, path: nodePath)) {
                     return path
                 }
             }
+            
             return nil
         }
         
-        return visit(node: root, path: [], isRoot: true)
+        return visit(context: nil)
     }
     
     /// Internal:
@@ -218,10 +237,14 @@ extension OSCAddressSpace {
     func methodID<S>(
         path: S
     ) -> MethodID? where S: BidirectionalCollection, S.Element: StringProtocol {
-        guard let nodes = nodePath(path: path, includeRoot: true)
+        guard let nodes = nodePath(path: path)
         else { return nil }
         
-        return nodes.last?.id
+        guard let lastNode = nodes.last,
+              case let .method(id: id, block: _) = lastNode.nodeType
+        else { return nil }
+        
+        return id
     }
 }
 
@@ -235,32 +258,27 @@ extension OSCAddressSpace {
         let patternComponents = address.components
         guard !patternComponents.isEmpty else { return [] }
         
-        var nodes: [Node] = [root]
+        var isRoot = true
+        var nodes: [Node] = []
+        
         var idx = patternComponents.startIndex
         while idx < patternComponents.endIndex {
             let isLast = idx == patternComponents.indices.last
-            nodes = nodes.reduce(into: []) {
-                let m = $1.children(matching: patternComponents[idx])
-                if isLast {
-                    $0.append(contentsOf: m.filter(\.isMethod))
-                } else {
-                    $0.append(contentsOf: m)
-                }
+            
+            let peers = isRoot ? root : nodes.lazy.flatMap { $0.children }
+            
+            let matches = peers.filter(matching: patternComponents[idx])
+
+            if isLast {
+                nodes = matches.filter(\.isMethod)
+            } else {
+                nodes = matches
             }
+            
             idx += 1
+            isRoot = false
         }
         
         return nodes
-    }
-}
-
-// MARK: - Category Methods
-
-extension RangeReplaceableCollection where Element == OSCAddressSpace.Node {
-    /// Internal convenience:
-    /// Remove an element from the collection.
-    @_disfavoredOverload
-    mutating func remove(_ element: Element) {
-        removeAll(where: { $0 == element })
     }
 }

@@ -28,8 +28,21 @@ import Foundation
 /// > Any other path components besides the last are referred to as _containers_.
 /// >
 /// > A container may also be a method. Simply register it the same way as other methods.
-public actor OSCAddressSpace {
-    var root: Node = .rootNodeFactory()
+public actor OSCAddressSpace<MethodID> where MethodID: Equatable & Hashable & Sendable {
+    var root: [Node] = []
     
+    // Allows constructing the object with inline generics, ie:
+    // let addressSpace = OSCAddressSpace<String>()
+    @_disfavoredOverload
     public init() { }
+    
+    // In the absence of a custom method ID type, the default `UUID` type will be used.
+    // This allows for a default constructor to be used without specifying generics:
+    // let addressSpace = OSCAddressSpace()
+    /// Initialize using default method ID type `UUID`.
+    public init() where MethodID == UUID { }
+    
+    // Additionally, make it possible to supply the custom type existential as a parameter.
+    /// Initialize specifying a concrete method ID type.
+    public init(methodIDs: MethodID.Type) { }
 }

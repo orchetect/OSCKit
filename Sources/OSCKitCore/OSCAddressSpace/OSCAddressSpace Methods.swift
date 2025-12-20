@@ -35,8 +35,34 @@ extension OSCAddressSpace {
     public func register(
         localAddress address: String,
         block: MethodBlock? = nil
-    ) -> MethodID {
+    ) -> MethodID where MethodID == UUID {
         register(localAddress: OSCAddressPattern(address).pathComponents, block: block)
+    }
+    
+    /// Register an OSC address, associating a custom unique identifier assigned to the address's method.
+    /// Replaces existing reference if one exists for that method already.
+    /// Optionally supply a closure that will be invoked when calling ``dispatch(message:host:port:)``.
+    ///
+    /// > OSC Methods:
+    /// >
+    /// > An OSC Method is defined as being the last path component in the address. OSC Methods are the
+    /// > potential destinations of OSC messages received by the OSC server and correspond to each of the
+    /// > points of control that the application makes available.
+    /// >
+    /// > The `methodname` path component is the method name in the following address examples:
+    /// >
+    /// >     /methodname
+    /// >     /container1/container2/methodname
+    /// >
+    /// > Any other path components besides the last are referred to as _containers_.
+    /// >
+    /// > A container may also be a method. Simply register it the same way as other methods.
+    public func register(
+        localAddress address: String,
+        id: MethodID,
+        block: MethodBlock? = nil
+    ) {
+        register(localAddress: OSCAddressPattern(address).pathComponents, id: id, block: block)
     }
     
     /// Register an OSC address.
@@ -62,7 +88,7 @@ extension OSCAddressSpace {
     public func register<S>(
         localAddress pathComponents: S,
         block: MethodBlock? = nil
-    ) -> MethodID where S: BidirectionalCollection, S.Element: StringProtocol {
+    ) -> MethodID where MethodID == UUID, S: BidirectionalCollection, S.Element: StringProtocol {
         guard !pathComponents.isEmpty else {
             // instead of returning nil, return a bogus ID
             assertionFailure(
@@ -71,11 +97,58 @@ extension OSCAddressSpace {
             return MethodID()
         }
         
-        return createMethodNode(
+        guard let node = createMethodNode(
             path: pathComponents,
+            id: MethodID(),
+            block: block
+        ),
+            case let .method(id: returnedID, block: _) = node.nodeType
+        else {
+            assertionFailure(
+                "Local address failed to register. Returning random method ID as failsafe that will never be matched."
+            )
+            return MethodID()
+        }
+
+        return returnedID
+    }
+    
+    /// Register an OSC address, associating a custom unique identifier assigned to the address's method.
+    /// Replaces existing reference if one exists for that method already.
+    /// Optionally supply a closure that will be invoked when calling ``dispatch(message:host:port:)``.
+    ///
+    /// > OSC Methods:
+    /// >
+    /// > An OSC Method is defined as being the last path component in the address. OSC Methods are the
+    /// > potential destinations of OSC messages received by the OSC server and correspond to each of the
+    /// > points of control that the application makes available.
+    /// >
+    /// > The `methodname` path component is the method name in the following address examples:
+    /// >
+    /// >     /methodname
+    /// >     /container1/container2/methodname
+    /// >
+    /// > Any other path components besides the last are referred to as _containers_.
+    /// >
+    /// > A container may also be a method. Simply register it the same way as other methods.
+    public func register<S>(
+        localAddress pathComponents: S,
+        id: MethodID,
+        block: MethodBlock? = nil
+    ) where S: BidirectionalCollection, S.Element: StringProtocol {
+        guard !pathComponents.isEmpty else {
+            // instead of returning nil, return a bogus ID
+            assertionFailure(
+                "Local address is empty and cannot be registered."
+            )
+            return
+        }
+        
+        _ = createMethodNode(
+            path: pathComponents,
+            id: id,
             block: block
         )
-        .id
     }
     
     /// Unregister an OSC address.
@@ -115,7 +188,7 @@ extension OSCAddressSpace {
     
     /// Unregister all registered OSC methods.
     public func unregisterAll() {
-        root = Node.rootNodeFactory()
+        root.removeAll()
     }
 }
 
@@ -146,7 +219,10 @@ extension OSCAddressSpace {
     /// > A container may also be a method. Simply register it the same way as other methods.
     public func methods(matching address: OSCAddressPattern) -> [MethodID] {
         methodNodes(patternMatching: address)
-            .map { $0.id }
+            .compactMap {
+                guard case let .method(id: id, block: _) = $0.nodeType else { return nil }
+                return id
+            }
     }
 }
 
@@ -182,11 +258,14 @@ extension OSCAddressSpace {
         let nodes = methodNodes(patternMatching: message.addressPattern)
         
         for node in nodes {
-            guard let block = node.block else { continue }
+            guard case let .method(id: _, block: block) = node.nodeType, let block else { continue }
             Task { await block(message.values, host, port) }
         }
         
         return nodes
-            .map { $0.id }
+            .compactMap {
+                guard case let .method(id: id, block: _) = $0.nodeType else { return nil }
+                return id
+            }
     }
 }

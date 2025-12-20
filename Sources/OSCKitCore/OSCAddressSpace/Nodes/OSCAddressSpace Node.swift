@@ -9,31 +9,28 @@ import Foundation
 extension OSCAddressSpace {
     /// Internal:
     /// Represents an OSC address space container or method.
-    final class Node {
-        var nodeType: NodeType
+    final class Node: OSCAddressSpaceNode {
+        /// Class instance identity. (Not node ID).
+        let internalNodeID = UUID()
         
-        nonisolated let id = MethodID()
+        var nodeType: OSCAddressSpaceNodeType<MethodID>
         
         nonisolated let name: String
-        
-        var block: MethodBlock?
         
         var children: [Node] = []
         
         required init(
             name: any StringProtocol,
-            type nodeType: NodeType,
-            block: MethodBlock? = nil
+            type nodeType: OSCAddressSpaceNodeType<MethodID>
         ) {
             self.name = String(name)
-            self.block = block
             self.nodeType = nodeType
         }
         
         /// Returns `true` if node is a method.
         /// (Note that a method can also be a container if it has children.)
         var isMethod: Bool {
-            nodeType == .method
+            nodeType.isMethod
         }
     }
 }
@@ -45,7 +42,7 @@ extension OSCAddressSpace.Node: Equatable {
         lhs: OSCAddressSpace.Node,
         rhs: OSCAddressSpace.Node
     ) -> Bool {
-        lhs.id == rhs.id
+        lhs.internalNodeID == rhs.internalNodeID
     }
 }
 
@@ -53,7 +50,7 @@ extension OSCAddressSpace.Node: Equatable {
 
 extension OSCAddressSpace.Node: Hashable {
     func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
+        hasher.combine(internalNodeID)
     }
 }
 
@@ -61,27 +58,10 @@ extension OSCAddressSpace.Node: Hashable {
 
 extension OSCAddressSpace.Node {
     /// Internal:
-    /// Returns a new root node.
-    static func rootNodeFactory() -> Self {
-        .init(name: "", type: .container)
-    }
-    
-    /// Internal:
     /// Converts the node to a container.
     /// Children remain unaffected.
-    func convertToContainer() {
-        nodeType = .container
-        block = nil
-    }
-    
-    /// Internal:
-    /// Converts the node to a method.
-    /// Children remain unaffected.
-    func convertToMethod(
-        block: OSCAddressSpace.MethodBlock? = nil
-    ) {
-        nodeType = .method
-        self.block = block
+    func convert(to newNodeType: OSCAddressSpaceNodeType<MethodID>) {
+        nodeType = newNodeType
     }
     
     /// Internal:
@@ -89,7 +69,7 @@ extension OSCAddressSpace.Node {
     func children(
         matching pattern: OSCAddressPattern.Component
     ) -> [OSCAddressSpace.Node] {
-        children.filter { pattern.evaluate(matching: $0.name) }
+        children.filter(matching: pattern)
     }
     
     /// Internal:
@@ -137,17 +117,5 @@ extension OSCAddressSpace.Node {
         }
         
         return true
-    }
-}
-
-// MARK: - NodeType
-
-extension OSCAddressSpace.Node {
-    /// Node type.
-    /// A container does not carry a method ID since it is not a method.
-    /// A container may become a method if it is also registered as one.
-    enum NodeType: Equatable, Hashable {
-        case container
-        case method
     }
 }
