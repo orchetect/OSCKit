@@ -1,8 +1,11 @@
 //
-//  OSCKit.swift
+//  OSCMethodID.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
-@_documentation(visibility: internal)
-@_exported public import OSCKitCore
+enum OSCMethodID {
+    case methodA
+    case methodB
+    case methodC
+}

@@ -4,6 +4,7 @@
 //  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
+import struct Foundation.UUID
 @testable import OSCKitCore
 import Testing
 
@@ -11,94 +12,94 @@ import Testing
     @Test
     func nodeValidateName() {
         #expect(
-            !OSCAddressSpace.Node.validate(name: "")
+            !OSCAddressSpace<UUID>.Node.validate(name: "")
         )
         
         #expect(
-            OSCAddressSpace.Node.validate(name: " ")
+            OSCAddressSpace<UUID>.Node.validate(name: " ")
         )
         
         #expect(
-            OSCAddressSpace.Node.validate(name: "abcDEF1234")
+            OSCAddressSpace<UUID>.Node.validate(name: "abcDEF1234")
         )
         
         #expect(
-            OSCAddressSpace.Node.validate(name: "abc]p} ,.DEF1234-")
+            OSCAddressSpace<UUID>.Node.validate(name: "abc]p} ,.DEF1234-")
         )
         
         #expect(
-            !OSCAddressSpace.Node.validate(name: "abc?d")
+            !OSCAddressSpace<UUID>.Node.validate(name: "abc?d")
         )
         
         #expect(
-            !OSCAddressSpace.Node.validate(name: "abc*")
+            !OSCAddressSpace<UUID>.Node.validate(name: "abc*")
         )
         
         #expect(
-            OSCAddressSpace.Node.validate(name: "a bc")
+            OSCAddressSpace<UUID>.Node.validate(name: "a bc")
         )
         
         #expect(
-            !OSCAddressSpace.Node.validate(name: "abc{d,e}f")
+            !OSCAddressSpace<UUID>.Node.validate(name: "abc{d,e}f")
         )
         
         #expect(
-            !OSCAddressSpace.Node.validate(name: "abc{d,e}f")
+            !OSCAddressSpace<UUID>.Node.validate(name: "abc{d,e}f")
         )
         
         #expect(
-            !OSCAddressSpace.Node.validate(name: "/abcDEF1234")
+            !OSCAddressSpace<UUID>.Node.validate(name: "/abcDEF1234")
         )
         
         #expect(
-            !OSCAddressSpace.Node.validate(name: "abcDEF1234/")
+            !OSCAddressSpace<UUID>.Node.validate(name: "abcDEF1234/")
         )
     }
     
     @Test
     func nodeValidateNameStrict() {
         #expect(
-            !OSCAddressSpace.Node.validate(name: "", strict: true)
+            !OSCAddressSpace<UUID>.Node.validate(name: "", strict: true)
         )
         
         #expect(
-            !OSCAddressSpace.Node.validate(name: " ", strict: true)
+            !OSCAddressSpace<UUID>.Node.validate(name: " ", strict: true)
         )
         
         #expect(
-            OSCAddressSpace.Node.validate(name: "abcDEF1234", strict: true)
+            OSCAddressSpace<UUID>.Node.validate(name: "abcDEF1234", strict: true)
         )
         
         #expect(
-            !OSCAddressSpace.Node.validate(name: "abc]p} ,.DEF1234-", strict: true)
+            !OSCAddressSpace<UUID>.Node.validate(name: "abc]p} ,.DEF1234-", strict: true)
         )
         
         #expect(
-            !OSCAddressSpace.Node.validate(name: "abc?d", strict: true)
+            !OSCAddressSpace<UUID>.Node.validate(name: "abc?d", strict: true)
         )
         
         #expect(
-            !OSCAddressSpace.Node.validate(name: "abc*", strict: true)
+            !OSCAddressSpace<UUID>.Node.validate(name: "abc*", strict: true)
         )
         
         #expect(
-            !OSCAddressSpace.Node.validate(name: "a bc", strict: true)
+            !OSCAddressSpace<UUID>.Node.validate(name: "a bc", strict: true)
         )
         
         #expect(
-            !OSCAddressSpace.Node.validate(name: "abc{d,e}f", strict: true)
+            !OSCAddressSpace<UUID>.Node.validate(name: "abc{d,e}f", strict: true)
         )
         
         #expect(
-            !OSCAddressSpace.Node.validate(name: "abc{d,e}f", strict: true)
+            !OSCAddressSpace<UUID>.Node.validate(name: "abc{d,e}f", strict: true)
         )
         
         #expect(
-            !OSCAddressSpace.Node.validate(name: "/abcDEF1234", strict: true)
+            !OSCAddressSpace<UUID>.Node.validate(name: "/abcDEF1234", strict: true)
         )
         
         #expect(
-            !OSCAddressSpace.Node.validate(name: "abcDEF1234/", strict: true)
+            !OSCAddressSpace<UUID>.Node.validate(name: "abcDEF1234/", strict: true)
         )
     }
     
@@ -121,9 +122,9 @@ import Testing
         // edge cases
         
         // root
-        #expect(await addressSpace.methodID(path: [] as [String]) != nil)
+        #expect(await addressSpace.methodID(path: [] as [String]) == nil)
         
-        // containers have a method ID even though they are not a method
-        #expect(await addressSpace.methodID(path: ["test1"]) != nil)
+        // containers do not have method IDs
+        #expect(await addressSpace.methodID(path: ["test1"]) == nil)
     }
 }

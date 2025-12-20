@@ -22,7 +22,7 @@ extension OSCAddressSpace {
     public func register(
         localAddress address: String,
         block: @escaping LegacyMethodBlock
-    ) -> MethodID {
+    ) -> MethodID where MethodID == UUID {
         register(localAddress: address) { values, host, port in
             await block(values)
         }

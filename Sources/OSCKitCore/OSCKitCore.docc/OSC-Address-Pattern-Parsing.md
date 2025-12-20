@@ -2,13 +2,6 @@
 
 Methods for parsing OSC Message address patterns.
 
-@Comment {
-    // -------------------------------------------------------------------
-    // NOTE: This file is duplicated in both OSCKit and OSCKitCore targets.
-    //         Ensure both files are updated when making changes.
-    // -------------------------------------------------------------------
-}
-
 ## Overview
 
 There are a few approaches to parsing OSC message address patterns, depending on your needs.
@@ -46,7 +39,7 @@ private func handle(message: OSCMessage, host: String, port: UInt16) throws {
         // (will match in this example)
         // ... perform methodB action using message.values ...
     }
-    if pattern.matches(localAddress: "/different/methodC") {
+    if pattern.matches(localAddress: "/different/address/methodC") {
         // (won't match in this example)
         // ... perform methodC action using message.values ...
     }
@@ -57,24 +50,53 @@ private func handle(message: OSCMessage, host: String, port: UInt16) throws {
 
 OSCKit provides an abstraction called ``OSCAddressSpace``. This object is generally instanced once and stored globally.
 
-Each local OSC address (OSC Method) is registered once with this object in order to enable it to perform matching against received OSC message address patterns. Each method is assigned an ID, and can optionally store a closure.
+Each local OSC address (OSC Method) must be registered once with this object in order to enable it to perform matching against received OSC message address patterns. Each method is assigned an ID, and can optionally store a closure.
 
 Method IDs, method closures, or a combination of both may be used for maximum flexibility.
 
 #### OSCAddressSpace with Method IDs
 
-- Registration will return a unique ID token to correspond to each method that is registered. This can be stored and used to identify methods that ``OSCAddressSpace`` matches for you.
-- When an OSC message is received:
-  - Pass its address pattern to ``OSCAddressSpace/methods(matching:)``.
-  - This method will pattern-match it against all registered local addresses and return an array of local method IDs that match.
-  - You can then compare the IDs to ones you stored while registering the local methods.
+- Using Default UUID Method ID Type
 
-```swift
-// instance address space and register methods only once, usually at app startup.
-let addressSpace = OSCAddressSpace()
-let idMethodA = await addressSpace.register(localAddress: "/methodA")
-let idMethodB = await addressSpace.register(localAddress: "/some/address/methodB")
-```
+  If not specified, the method ID type used is `UUID`.
+
+  ```swift
+  // instance address space and register methods only once, usually at app startup.
+  let addressSpace = OSCAddressSpace() // uses UUID method ID type
+  ```
+
+  Registration will return a unique ID token to correspond to each method that is registered. This can be stored and used to identify methods that ``OSCAddressSpace`` matches for you.
+
+  ```swift
+  let idMethodA = await addressSpace.register(localAddress: "/methodA")
+  let idMethodB = await addressSpace.register(localAddress: "/some/address/methodB")
+  ```
+
+- Using a Custom Method ID Type
+
+  A custom type may be used to identify methods instead of the default `UUID`.
+  
+  ```swift
+  enum OSCMethodID: Equatable, Hashable, Sendable {
+      case methodA
+      case methodB
+  }
+  
+  // instance address space and register methods only once, usually at app startup.
+  let addressSpace = OSCAddressSpace<OSCMethodID>()
+  ```
+  
+  Registration will not return an ID. Instead, supply the ID to be used to the registration method.
+  
+  ```swift
+  await addressSpace.register(localAddress: "/methodA", id: .methodA)
+  await addressSpace.register(localAddress: "/some/address/methodB", id: .methodB)
+  ```
+
+When an OSC message is received:
+- Pass its address pattern to ``OSCAddressSpace/methods(matching:)``.
+- This method will pattern-match it against all registered local addresses and return an array of local method IDs that match.
+- You can then compare the IDs to ones you stored while registering the local methods.
 
 ```swift
 func handle(message: OSCMessage, host: String, port: UInt16) async throws {
@@ -100,12 +122,13 @@ func performMethodB(_ str: String, _ int: Int?) { }
 
 #### OSCAddressSpace with Method Closure Blocks
 
-- When registering a local method, it can also store a closure. This closure can be executed automatically when matching against a received OSC message's address pattern.
-- When an OSC message is received:
-  - Pass its address pattern to the ``OSCAddressSpace/dispatch(message:host:port:)``.
-  - This method will pattern-match it against all registered local addresses and execute their closures.
-  - It also returns an array of local method IDs that match exactly like ``OSCAddressSpace/methods(matching:)`` (which may be discarded if handling of unregistered/unrecognized methods is not needed).
-  - If the returned method ID array is empty, that indicates that no methods matched the address pattern. In this case you may want to handle the unhandled message in a special way.
+When registering a local method, it can also store a closure. This closure can be executed automatically when matching against a received OSC message's address pattern. In this case you may discard the method ID returned by the registration method.
+
+When an OSC message is received:
+- Pass its address pattern to the ``OSCAddressSpace/dispatch(message:host:port:)``.
+- This method will pattern-match it against all registered local addresses and execute their closures.
+- It also returns an array of local method IDs that match exactly like ``OSCAddressSpace/methods(matching:)`` (which may be discarded if handling of unregistered/unrecognized methods is not needed).
+- If the returned method ID array is empty, that indicates that no methods matched the address pattern. In this case you may want to handle the unhandled message in a special way.
 
 ```swift
 // instance address space and register methods only once, usually at app startup.

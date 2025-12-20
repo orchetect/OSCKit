@@ -4,10 +4,26 @@
 //  © 2020-2025 Steffan Andrews • Licensed under MIT License
 //
 
+import struct Foundation.UUID
 @testable import OSCKitCore
 import Testing
 
 @Suite struct OSCAddressSpace_Tests {
+    // MARK: - Method ID Generics
+    
+    /// This test just ensures expected init syntax works and the compiler does not complain.
+    @Test
+    func initMethodIDTypes() {
+        // defaults to `UUID` method ID type
+        let _ = OSCAddressSpace()
+        
+        // use `String` as method ID type, with explicit type notation
+        let _ = OSCAddressSpace<String>()
+        
+        // use `String` as method ID type using designated initializer overload
+        let _ = OSCAddressSpace(methodIDs: String.self)
+    }
+    
     // MARK: - Address Registration
     
     @Test
@@ -21,18 +37,50 @@ import Testing
         // basic verbatim match to check if register worked
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1")) ==
                 [t1ID]
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2")) ==
                 [t2ID]
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test3/test4")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test3/test4")) ==
                 [t3ID]
+        )
+    }
+    
+    @Test
+    func registerAddress_PathComponents_CustomMethodIDType() async throws {
+        enum MyMethodID /* : Equatable, Hashable, Sendable */ {
+            case one
+            case two
+            case three
+        }
+        
+        let addressSpace = OSCAddressSpace<MyMethodID>()
+        
+        await addressSpace.register(localAddress: ["test1"], id: .one)
+        await addressSpace.register(localAddress: ["test1", "test2"], id: .two)
+        await addressSpace.register(localAddress: ["test3", "test4"], id: .three)
+        
+        // basic verbatim match to check if register worked
+        
+        #expect(
+            await addressSpace.methods(matching: OSCAddressPattern("/test1")) ==
+            [.one]
+        )
+        
+        #expect(
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2")) ==
+            [.two]
+        )
+        
+        #expect(
+            await addressSpace.methods(matching: OSCAddressPattern("/test3/test4")) ==
+            [.three]
         )
     }
     
@@ -70,23 +118,23 @@ import Testing
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test3/methodA")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test3/methodA")) ==
                 []
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test2/test4/methodB")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test2/test4/methodB")) ==
                 [t2ID]
         )
         
         // should not match containers which are not also methods
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1")).isEmpty
+            await addressSpace.methods(matching: OSCAddressPattern("/test1")).isEmpty
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test3")).isEmpty
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test3")).isEmpty
         )
     }
     
@@ -102,23 +150,23 @@ import Testing
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test3/methodA")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test3/methodA")) ==
                 []
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test2/test4/methodB")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test2/test4/methodB")) ==
                 [t2ID]
         )
         
         // should not match containers which are not also methods
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1")).isEmpty
+            await addressSpace.methods(matching: OSCAddressPattern("/test1")).isEmpty
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test3")).isEmpty
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test3")).isEmpty
         )
     }
     
@@ -134,22 +182,17 @@ import Testing
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test3/methodA")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test3/methodA")) ==
                 []
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test2/test4/methodB")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test2/test4/methodB")) ==
                 [t2ID]
         )
         
-        // cannot unregister a node that is a container
-        let test2ID = try #require(await addressSpace.methodID(path: ["test2"]))
-        #expect(await !addressSpace.unregister(methodID: test2ID))
-        
-        // cannot unregister root
-        let rootID = try #require(await addressSpace.methodID(path: [] as [String]))
-        #expect(await !addressSpace.unregister(methodID: rootID))
+        // cannot unregister a node that is a container, since we can't get a method ID for a contianer
+        #expect(await addressSpace.methodID(path: ["test2"]) == nil)
     }
     
     @Test
@@ -161,11 +204,11 @@ import Testing
         
         // confirm registrations worked and match as methods
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2")) ==
                 [t0ID]
         )
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2/methodA")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2/methodA")) ==
                 [t1ID]
         )
     }
@@ -179,11 +222,11 @@ import Testing
         
         // confirm registrations worked and match as methods
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2")) ==
                 [t0ID]
         )
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2/methodA")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2/methodA")) ==
                 [t1ID]
         )
     }
@@ -201,13 +244,13 @@ import Testing
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2/methodA")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2/methodA")) ==
                 []
         )
         
         // should not modify pre-existing methods that were also containers
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2")) ==
                 [t0ID]
         )
         
@@ -230,13 +273,13 @@ import Testing
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2/methodA")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2/methodA")) ==
                 []
         )
         
         // should not modify pre-existing methods that were also containers
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2")) ==
                 [t0ID]
         )
         
@@ -259,13 +302,13 @@ import Testing
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2")) ==
                 []
         )
         
         // should not modify pre-existing downstream methods or containers
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2/methodA")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2/methodA")) ==
                 [t1ID]
         )
         
@@ -288,19 +331,46 @@ import Testing
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2")) ==
                 []
         )
         
         // should not modify pre-existing downstream methods or containers
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2/methodA")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2/methodA")) ==
                 [t1ID]
         )
         
         // attempt to unregister again
         #expect(
             await !addressSpace.unregister(localAddress: ["test1", "test2"])
+        )
+    }
+    
+    @Test
+    func unregisterAddress_CustomMethodIDType() async throws {
+        enum MyMethodID /* : Equatable, Hashable, Sendable */ {
+            case one
+            case two
+            case three
+        }
+        
+        let addressSpace = OSCAddressSpace<MyMethodID>()
+        
+        await addressSpace.register(localAddress: ["test1"], id: .one)
+        await addressSpace.register(localAddress: ["test1", "test2"], id: .two)
+        await addressSpace.register(localAddress: ["test3", "test4"], id: .three)
+        
+        #expect(
+            await addressSpace.methods(matching: OSCAddressPattern("/test1")) ==
+                [.one]
+        )
+        
+        #expect(await addressSpace.unregister(methodID: .one))
+        
+        #expect(
+            await addressSpace.methods(matching: OSCAddressPattern("/test1")) ==
+                []
         )
     }
     
@@ -314,24 +384,24 @@ import Testing
         await addressSpace.unregisterAll()
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test3/methodA")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test3/methodA")) ==
                 []
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test2/test4/methodB")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test2/test4/methodB")) ==
                 []
         )
         
         // containers still exist
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1")) ==
                 []
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test3")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test3")) ==
                 []
         )
     }
@@ -349,68 +419,68 @@ import Testing
         // non-matches
         
         #expect(
-            await addressSpace.methods(matching: .init("/test")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test")) ==
                 []
         )
         
         // verbatim matches
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1")) ==
                 [t1ID]
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test2")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test2")) ==
                 [t2ID]
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/")) ==
                 [t1ID]
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test2/")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test2/")) ==
                 [t2ID]
         )
         
         // wildcards
         
         #expect(
-            await addressSpace.methods(matching: .init("/test?")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test?")) ==
                 [t1ID, t2ID]
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test*")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test*")) ==
                 [t1ID, t2ID]
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test[12]")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test[12]")) ==
                 [t1ID, t2ID]
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test[!3]")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test[!3]")) ==
                 [t1ID, t2ID]
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test{1,2}")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test{1,2}")) ==
                 [t1ID, t2ID]
         )
         
         // edge cases
         
         #expect(
-            await addressSpace.methods(matching: .init("")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("")) ==
                 []
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/")) ==
                 []
         )
     }
@@ -425,90 +495,90 @@ import Testing
         // non-matches
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2/method")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2/method")) ==
                 []
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2/methodAA")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2/methodAA")) ==
                 []
         )
         
         // verbatim matches
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2/methodA")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2/methodA")) ==
                 [t1ID]
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2/methodB")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2/methodB")) ==
                 [t2ID]
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2/methodA/")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2/methodA/")) ==
                 [t1ID]
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2/methodB/")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2/methodB/")) ==
                 [t2ID]
         )
         
         // wildcards
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2/method?")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2/method?")) ==
                 [t1ID, t2ID]
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2/method*")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2/method*")) ==
                 [t1ID, t2ID]
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2/method[AB]")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2/method[AB]")) ==
                 [t1ID, t2ID]
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2/method[!C]")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2/method[!C]")) ==
                 [t1ID, t2ID]
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1/test2/method{A,B}")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1/test2/method{A,B}")) ==
                 [t1ID, t2ID]
         )
         
         // partial path matches should not return containers
         
         #expect(
-            await addressSpace.methods(matching: .init("/test1")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test1")) ==
                 []
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test?")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test?")) ==
                 []
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test*")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test*")) ==
                 []
         )
         
         // edge cases
         
         #expect(
-            await addressSpace.methods(matching: .init("")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("")) ==
                 []
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/")) ==
                 []
         )
     }
@@ -523,27 +593,27 @@ import Testing
         // wildcard matches
         
         #expect(
-            await addressSpace.methods(matching: .init("/test?/test?/method?")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test?/test?/method?")) ==
                 [t1ID, t2ID]
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/*/test?/method?")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/*/test?/method?")) ==
                 [t1ID, t2ID]
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test?/*/method?")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test?/*/method?")) ==
                 [t1ID, t2ID]
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/*/*/method?")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/*/*/method?")) ==
                 [t1ID, t2ID]
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/*/*/*")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/*/*/*")) ==
                 [t1ID, t2ID]
         )
         
@@ -551,7 +621,7 @@ import Testing
         // (don't test for equal arrays since the ordering may differ on each execution)
         
         do {
-            let matches = await addressSpace.methods(matching: .init("/*/*/*"))
+            let matches = await addressSpace.methods(matching: OSCAddressPattern("/*/*/*"))
             
             #expect(matches.count == 2)
             #expect(matches.contains(t1ID))
@@ -559,17 +629,17 @@ import Testing
         }
         
         #expect(
-            await addressSpace.methods(matching: .init("/*")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/*")) ==
                 []
         )
            
         #expect(
-            await addressSpace.methods(matching: .init("/*/*")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/*/*")) ==
                 []
         )
         
         #expect(
-            await addressSpace.methods(matching: .init("/test?/test?")) ==
+            await addressSpace.methods(matching: OSCAddressPattern("/test?/test?")) ==
                 []
         )
     }
@@ -584,21 +654,21 @@ import Testing
             let addr = "/test1/test3/vol-"
             let id = await addressSpace.register(localAddress: addr)
             #expect(
-                await addressSpace.methods(matching: .init(addr)) == [id]
+                await addressSpace.methods(matching: OSCAddressPattern(addr)) == [id]
             )
         }
         do {
             let addr = "/test2/test4/vol+"
             let id = await addressSpace.register(localAddress: addr)
             #expect(
-                await addressSpace.methods(matching: .init(addr)) == [id]
+                await addressSpace.methods(matching: OSCAddressPattern(addr)) == [id]
             )
         }
         do {
             let addr = #"/test2/test4/ajL_-du &@!)(}].,;:%$|\-"#
             let id = await addressSpace.register(localAddress: addr)
             #expect(
-                await addressSpace.methods(matching: .init(addr)) == [id]
+                await addressSpace.methods(matching: OSCAddressPattern(addr)) == [id]
             )
         }
     }
@@ -607,10 +677,10 @@ import Testing
     func dispatchMatching() async throws {
         let addressSpace = OSCAddressSpace()
         
-        var id1: OSCAddressSpace.MethodID!
-        var id2: OSCAddressSpace.MethodID!
-        var id3: OSCAddressSpace.MethodID!
-        var methodIDs: [OSCAddressSpace.MethodID]!
+        var id1: UUID!
+        var id2: UUID!
+        var id3: UUID!
+        var methodIDs: [UUID]!
         
         try await confirmation(expectedCount: 11) { confirmation in
             id1 = await addressSpace.register(localAddress: "/base/test1") { values, host, port in
@@ -641,5 +711,65 @@ import Testing
         #expect(methodIDs.contains(id1))
         #expect(methodIDs.contains(id2))
         _ = id3
+    }
+    
+    @Test
+    func nodePath() async throws {
+        let addressSpace = OSCAddressSpace()
+        
+        let t1ID = await addressSpace.register(localAddress: ["test1"])
+        let t2ID = await addressSpace.register(localAddress: ["test1", "test2"])
+        let t3ID = await addressSpace.register(localAddress: ["test3", "test4"])
+        
+        await addressSpace.withIsolation { addressSpace in
+            #expect(addressSpace.nodePath(methodID: t1ID)?.map(\.name) == ["test1"])
+            #expect(addressSpace.nodePath(methodID: t2ID)?.map(\.name) == ["test1", "test2"])
+            #expect(addressSpace.nodePath(methodID: t3ID)?.map(\.name) == ["test3", "test4"])
+            
+            // edge cases
+            #expect(addressSpace.nodePath(methodID: UUID()) == nil)
+        }
+    }
+    
+    @Test
+    func methodNodes() async throws {
+        let addressSpace = OSCAddressSpace()
+        
+        let t1ID = await addressSpace.register(localAddress: ["test1"])
+        let t2ID = await addressSpace.register(localAddress: ["test1", "test2"])
+        let t3ID = await addressSpace.register(localAddress: ["test3", "test4"])
+        
+        await addressSpace.withIsolation { addressSpace in
+            #expect(addressSpace.methodNodes(patternMatching: OSCAddressPattern("/test1")).map(\.methodID) == [t1ID])
+            #expect(addressSpace.methodNodes(patternMatching: OSCAddressPattern("/test1/test2")).map(\.methodID) == [t2ID])
+            #expect(addressSpace.methodNodes(patternMatching: OSCAddressPattern("/test3/test4")).map(\.methodID) == [t3ID])
+            
+            // edge cases
+            #expect(addressSpace.methodNodes(patternMatching: OSCAddressPattern("")) == [])
+            #expect(addressSpace.methodNodes(patternMatching: OSCAddressPattern("/")) == [])
+            #expect(addressSpace.methodNodes(patternMatching: OSCAddressPattern("/foo")) == [])
+            #expect(addressSpace.methodNodes(patternMatching: OSCAddressPattern("/test1/foo")) == [])
+        }
+    }
+}
+
+// MARK: - Helpers
+
+extension OSCAddressSpace {
+    func dumpRoot() {
+        dump(root)
+    }
+    
+    // Mechanism to introspect actor contents that are non-Sendable.
+    typealias IsolationBlock = @Sendable (_ addressSpace: isolated OSCAddressSpace) throws -> ()
+    func withIsolation(_ block: IsolationBlock) rethrows {
+        try block(self)
+    }
+}
+
+extension OSCAddressSpaceNode {
+    var methodID: MethodID? {
+        guard case let .method(id: id, block: _) = nodeType else { return nil }
+        return id
     }
 }

@@ -11,17 +11,13 @@ import OSCKit
 /// Registers local OSC addresses that our app is capable of recognizing and
 /// handles received messages and bundles.
 final class OSCReceiver: Sendable {
-    private let addressSpace = OSCAddressSpace()
-    
-    private let idMethodA: UUID
-    private let idMethodB: UUID
-    private let idMethodC: UUID
+    private let addressSpace = OSCAddressSpace<OSCMethodID>()
     
     public init() async {
-        // register local OSC methods and store the ID tokens once before receiving OSC messages
-        idMethodA = await addressSpace.register(localAddress: "/methodA")
-        idMethodB = await addressSpace.register(localAddress: "/some/address/methodB")
-        idMethodC = await addressSpace.register(localAddress: "/some/address/methodC")
+        // register local OSC methods once before receiving OSC messages
+        await addressSpace.register(localAddress: "/methodA", id: .methodA)
+        await addressSpace.register(localAddress: "/some/address/methodB", id: .methodB)
+        await addressSpace.register(localAddress: "/some/address/methodC", id: .methodC)
     }
     
     public func handle(message: OSCMessage, timeTag: OSCTimeTag, host: String, port: UInt16) async throws {
@@ -35,20 +31,17 @@ final class OSCReceiver: Sendable {
         
         for id in ids {
             switch id {
-            case idMethodA:
+            case .methodA:
                 let str = try message.values.masked(String.self)
                 performMethodA(str)
                 
-            case idMethodB:
+            case .methodB:
                 let (str, int) = try message.values.masked(String.self, Int.self)
                 performMethodB(str, int)
                 
-            case idMethodC:
+            case .methodC:
                 let (str, dbl) = try message.values.masked(String.self, Double?.self)
                 performMethodC(str, dbl)
-                
-            default:
-                break
             }
         }
     }

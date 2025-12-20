@@ -2,13 +2,6 @@
 
 OSC Message value types.
 
-@Comment {
-    // -------------------------------------------------------------------
-    // NOTE: This file is duplicated in both OSCKit and OSCKitCore targets.
-    //         Ensure both files are updated when making changes.
-    // -------------------------------------------------------------------
-}
-
 ## Overview
 
 The following OSC value types are available, conforming to the [Open Sound Control 1.0 specification](http://opensoundcontrol.org/spec-1_0.html).

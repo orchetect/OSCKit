@@ -2,13 +2,6 @@
 
 OSCKit supports custom OSC message value types.
 
-@Comment {
-    // -------------------------------------------------------------------
-    // NOTE: This file is duplicated in both OSCKit and OSCKitCore targets.
-    //         Ensure both files are updated when making changes.
-    // -------------------------------------------------------------------
-}
-
 ## Overview
 
 Implementing custom OSC value types is possible but is an advanced feature and not recommended unless there are special use cases.

@@ -60,3 +60,15 @@ package.targets += [
     )
 ]
 #endif
+
+// Documentation Dependency
+#if canImport(Foundation)
+import class Foundation.ProcessInfo
+
+/// Conditionally opt-in to Swift DocC Plugin when an environment flag is present.
+if ProcessInfo.processInfo.environment["ENABLE_DOCC_PLUGIN"] != nil {
+    package.dependencies += [
+        .package(url: "https://github.com/apple/swift-docc-plugin.git", from: "1.4.5")
+    ]
+}
+#endif

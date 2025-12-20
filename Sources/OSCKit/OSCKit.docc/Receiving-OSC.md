@@ -63,5 +63,5 @@ try oscServer.start()
 
 ## Topics
 
-- <doc:OSC-Address-Pattern-Parsing>
-- <doc:OSC-Value-Parsing>
+- <doc://OSCKit/OSCKitCore/OSC-Address-Pattern-Parsing>
+- <doc://OSCKit/OSCKitCore/OSC-Value-Parsing>

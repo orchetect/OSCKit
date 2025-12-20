@@ -1,6 +1,6 @@
 # ``OSCKit``
 
-Open Sound Control (OSC) library for macOS, iOS, tvOS and visionOS.
+Adds network I/O layer on top of OSCKitCore. Contains a Getting Started guide.
 
 ## Overview
 
@@ -26,7 +26,6 @@ Open Sound Control (OSC) library for macOS, iOS, tvOS and visionOS.
 
 ### Welcome
 - <doc:Getting-Started>
-- <doc:OSC-Value-Types>
 - <doc:Sending-OSC>
 - <doc:Receiving-OSC>
 
@@ -49,24 +48,3 @@ Open Sound Control (OSC) library for macOS, iOS, tvOS and visionOS.
 - ``OSCTCPClientSessionID``
 - ``OSCTCPPacketLengthHeaderDecodingError``
 - ``OSCTCPSLIPDecodingError``
-
-### OSC Packets
-
-- ``OSCPacket``
-- ``OSCPacketType``
-
-### OSC Bundles
-
-- ``OSCBundle``
-- ``OSCTimeTag``
-
-### OSC Messages
-
-- ``OSCMessage``
-- <doc:OSC-Address-Pattern-Parsing>
-- <doc:OSC-Value-Types>
-- <doc:OSC-Value-Parsing>
-
-### Advanced
-
-- <doc:OSC-Custom-Types>

@@ -56,7 +56,7 @@ See [OSC Messages](#OSC-Messages) and [OSC Bundles](#OSC-Bundles) below for deta
 
 ## OSC Messages
 
-To send a single message, construct an ``OSCMessage`` and send it using the client or socket instance.
+To send a single message, construct an <doc://OSCKit/OSCKitCore/OSCMessage> and send it using the client or socket instance.
 
 ```swift
 let msg = OSCMessage("/test", values: ["string", 123])
