@@ -29,6 +29,9 @@ import Foundation
 /// >
 /// > A container may also be a method. Simply register it the same way as other methods.
 public actor OSCAddressSpace<MethodID> where MethodID: Equatable & Hashable & Sendable {
+    /// The concrete type used for method IDs.
+    public typealias MethodID = MethodID
+    
     var root: [Node] = []
     
     // Allows constructing the object with inline generics, ie:
