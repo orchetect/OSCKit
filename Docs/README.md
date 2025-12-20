@@ -4,7 +4,7 @@
 
 The docs generation procedure is mostly automated, but requires a handful of manual procedures that are not yet automated in order to build and publish.
 
-1.  Run the `dev/Scripts/build-docc-cached-preview.sh` command from Terminal from within the repo directory
+1.  Run the `build-docc-cached-preview.sh` command from Terminal from within the repo directory
 
     - If any DocC warnings are shown:
 
