@@ -123,7 +123,7 @@
 			mainGroup = E2D003C8289882820073ED8F;
 			packageReferences = (
 				E2D003F2289884030073ED8F /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */,
-				E2CE6F0C2CCF242200F81BCE /* XCLocalSwiftPackageReference "../../../OSCKit" */,
+				E2CE6F0C2CCF242200F81BCE /* XCLocalSwiftPackageReference "../../" */,
 			);
 			productRefGroup = E2D003D2289882820073ED8F /* Products */;
 			projectDirPath = "";
@@ -379,9 +379,9 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		E2CE6F0C2CCF242200F81BCE /* XCLocalSwiftPackageReference "../../../OSCKit" */ = {
+		E2CE6F0C2CCF242200F81BCE /* XCLocalSwiftPackageReference "../../" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = ../../../OSCKit;
+			relativePath = ../../;
 		};
 /* End XCLocalSwiftPackageReference section */
 
