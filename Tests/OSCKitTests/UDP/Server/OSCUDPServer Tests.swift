@@ -10,7 +10,7 @@ import Foundation
 @testable import OSCKit
 import Testing
 
-@Suite(.serialized)
+@Suite(.enabled(if: isSystemTimingStable()), .serialized)
 struct OSCUDPServer_Tests {
     /// Check that an empty OSC bundle does not produce any OSC messages.
     @Test

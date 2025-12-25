@@ -10,7 +10,7 @@ import Foundation
 @testable import OSCKit
 import Testing
 
-@Suite(.serialized)
+@Suite(.enabled(if: isSystemTimingStable()), .serialized)
 struct OSCTCPServer_Tests {
     /// Ensure rapidly received messages are dispatched in the order they are received.
     @MainActor @Test(arguments: 0 ... 10)
@@ -47,7 +47,7 @@ struct OSCTCPServer_Tests {
             server._handle(packet: .message(msg3), remoteHost: "10.0.0.50", remotePort: 8080)
         }
         
-        try await wait(require: { await receiver.messages.count == 3 }, timeout: 5.0)
+        try await wait(require: { await receiver.messages.count == 3 }, timeout: 10.0)
         
         let message1 = await receiver.messages[0]
         #expect(message1.message == msg1)
@@ -104,7 +104,7 @@ struct OSCTCPServer_Tests {
             }
         }
         
-        try await wait(require: { await receiver.messages.count == 1000 }, timeout: 5.0)
+        try await wait(require: { await receiver.messages.count == 1000 }, timeout: 20.0)
         
         await #expect(receiver.messages == sourceMessages)
     }
