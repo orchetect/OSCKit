@@ -45,6 +45,9 @@ public final class OSCTCPServer {
     /// Network interface to restrict connections to.
     public let interface: String?
     
+    /// Returns a boolean indicating whether the OSC server has been started.
+    public private(set) var isStarted: Bool = false
+    
     /// Initialize with a remote hostname and UDP port.
     /// 
     /// > Note:
@@ -94,10 +97,14 @@ extension OSCTCPServer: @unchecked Sendable { } // TODO: unchecked
 extension OSCTCPServer {
     /// Starts listening for inbound connections.
     public func start() throws {
+        guard !isStarted else { return }
+        
         try tcpSocket.accept(
             onInterface: interface,
             port: _localPort ?? 0 // 0 causes system to assign random open port
         )
+        
+        isStarted = true
     }
     
     /// Closes any open client connections and stops listening for inbound connection requests.
@@ -107,6 +114,8 @@ extension OSCTCPServer {
         
         // close server
         tcpSocket.disconnectAfterWriting()
+        
+        isStarted = false
     }
 }
 
