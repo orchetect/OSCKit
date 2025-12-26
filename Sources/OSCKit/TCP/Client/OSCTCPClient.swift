@@ -25,7 +25,6 @@ public final class OSCTCPClient {
     let tcpSocket: GCDAsyncSocket
     let tcpDelegate: OSCTCPClientDelegate
     let queue: DispatchQueue
-    let framingMode: OSCTCPFramingMode
     var receiveHandler: OSCHandlerBlock?
     var notificationHandler: NotificationHandlerBlock?
     
@@ -46,6 +45,9 @@ public final class OSCTCPClient {
     
     /// Returns a boolean indicating whether the OSC socket is connected to the remote host.
     public var isConnected: Bool { tcpSocket.isConnected }
+    
+    /// TCP packet framing mode.
+    public let framingMode: OSCTCPFramingMode
     
     /// Initialize with a remote hostname and UDP port.
     /// 
