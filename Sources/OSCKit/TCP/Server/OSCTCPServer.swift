@@ -26,7 +26,6 @@ public final class OSCTCPServer {
     let tcpSocket: GCDAsyncSocket
     let tcpDelegate: OSCTCPServerDelegate
     let queue: DispatchQueue
-    let framingMode: OSCTCPFramingMode
     var receiveHandler: OSCHandlerBlock?
     var notificationHandler: NotificationHandlerBlock?
     
@@ -48,6 +47,9 @@ public final class OSCTCPServer {
     /// Returns a boolean indicating whether the OSC server has been started.
     public private(set) var isStarted: Bool = false
     
+    /// TCP packet framing mode.
+    public let framingMode: OSCTCPFramingMode
+
     /// Initialize with a remote hostname and UDP port.
     /// 
     /// > Note:
