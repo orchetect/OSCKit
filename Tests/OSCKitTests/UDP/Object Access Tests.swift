@@ -33,6 +33,8 @@ import Testing
         _ = oscServer.isStarted
         _ = oscServer.localPort
         // oscServer.localPort = 9000 // immutable actor
+        oscServer.isPortReuseEnabled = true
+        oscServer.isPortReuseEnabled = false
         oscServer.setReceiveHandler { message, timeTag, host, port in
             print(message)
         }
