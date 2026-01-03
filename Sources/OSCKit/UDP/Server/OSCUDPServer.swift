@@ -41,6 +41,10 @@ public final class OSCUDPServer {
     /// multiple processes to simultaneously bind to the same address & port, you need to enable
     /// this functionality in the socket. All processes that wish to use the address & port
     /// simultaneously must all enable reuse port on the socket bound to that port.
+    ///
+    /// Due to limitations of `SO_REUSEPORT` on Apple platforms, enabling this only permits receipt of broadcast
+    /// or multicast messages for any additional sockets which bind to the same address and port. Unicast
+    /// messages are only received by the first socket to bind.
     public var isPortReuseEnabled: Bool = false
     
     /// Returns a boolean indicating whether the OSC server has been started.
@@ -59,7 +63,7 @@ public final class OSCUDPServer {
     ///   - port: Local port to listen on for inbound OSC packets.
     ///     If `nil` or `0`, a random available port in the system will be chosen.
     ///   - interface: Optionally specify a network interface for which to constrain communication.
-    ///   - isPortReuseEnabled: Enable local UDP port reuse by other processes.
+    ///   - isPortReuseEnabled: Enable local UDP port reuse by other processes to receive broadcast packets.
     ///   - timeTagMode: OSC TimeTag mode. (Default is recommended.)
     ///   - queue: Optionally supply a custom dispatch queue for receiving OSC packets and dispatching the
     ///     handler callback closure. If `nil`, a dedicated internal background queue will be used.
