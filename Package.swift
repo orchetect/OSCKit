@@ -31,44 +31,75 @@ let package = Package(
     ]
 )
 
-// OSCKit Networking Layer Target is currently only available on Apple platforms.
+// MARK: - OSCKit Networking Layer Target is currently only available on Apple platforms.
+
 #if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
-package.products += [
-    .library(name: "OSCKit", targets: ["OSCKit"])
-]
+    package.products += [
+        .library(name: "OSCKit", targets: ["OSCKit"])
+    ]
 
-package.dependencies += [
-    .package(url: "https://github.com/robbiehanson/CocoaAsyncSocket", from: "7.0.0")
-]
+    package.dependencies += [
+        .package(url: "https://github.com/robbiehanson/CocoaAsyncSocket", from: "7.0.0")
+    ]
 
-package.targets += [
-    .target(
-        name: "OSCKit",
-        dependencies: [
-            "OSCKitCore",
-            .product(
-                name: "CocoaAsyncSocket",
-                package: "CocoaAsyncSocket",
-                condition: .when(platforms: [.macOS, .macCatalyst, .iOS, .tvOS, .visionOS, .driverKit])
-            )
-        ],
-        swiftSettings: [.define("DEBUG", .when(configuration: .debug))]
-    ),
-    .testTarget(
-        name: "OSCKitTests",
-        dependencies: ["OSCKit"]
-    )
-]
+    package.targets += [
+        .target(
+            name: "OSCKit",
+            dependencies: [
+                "OSCKitCore",
+                .product(
+                    name: "CocoaAsyncSocket",
+                    package: "CocoaAsyncSocket",
+                    condition: .when(platforms: [.macOS, .macCatalyst, .iOS, .tvOS, .visionOS, .driverKit])
+                )
+            ],
+            swiftSettings: [.define("DEBUG", .when(configuration: .debug))]
+        ),
+        .testTarget(
+            name: "OSCKitTests",
+            dependencies: ["OSCKit"]
+        )
+    ]
 #endif
 
-// Documentation Dependency
-#if canImport(Foundation)
-import class Foundation.ProcessInfo
+#if canImport(Foundation) || canImport(CoreFoundation)
+    #if canImport(Foundation)
+        import class Foundation.ProcessInfo
 
-/// Conditionally opt-in to Swift DocC Plugin when an environment flag is present.
-if ProcessInfo.processInfo.environment["ENABLE_DOCC_PLUGIN"] != nil {
-    package.dependencies += [
-        .package(url: "https://github.com/apple/swift-docc-plugin.git", from: "1.4.5")
-    ]
-}
+        func getEnvironmentVar(_ name: String) -> String? {
+            ProcessInfo.processInfo.environment[name]
+        }
+    #elseif canImport(CoreFoundation)
+        import CoreFoundation
+
+        func getEnvironmentVar(_ name: String) -> String? {
+            guard let rawValue = getenv(name) else { return nil }
+            return String(utf8String: rawValue)
+        }
+    #endif
+
+    func isEnvironmentVarTrue(_ name: String) -> Bool {
+        guard let value = getEnvironmentVar(name)?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        else { return false }
+        return ["true", "yes", "1"].contains(value.lowercased())
+    }
+
+    // MARK: - DocC Dependency
+
+    /// Conditionally opt-in to Swift DocC Plugin when an environment flag is present.
+    if isEnvironmentVarTrue("ENABLE_DOCC_PLUGIN") {
+        package.dependencies += [
+            .package(url: "https://github.com/apple/swift-docc-plugin.git", from: "1.4.5")
+        ]
+    }
+
+    // MARK: - CI Pipeline
+
+    if isEnvironmentVarTrue("GITHUB_ACTIONS") {
+        for target in package.targets.filter(\.isTest) {
+            if target.swiftSettings == nil { target.swiftSettings = [] }
+            target.swiftSettings? += [.define("GITHUB_ACTIONS", .when(configuration: .debug))]
+        }
+    }
 #endif

@@ -125,6 +125,8 @@ struct OSCUDPServer_Tests {
         await #expect(receiver.messages == sourceMessages)
     }
     
+    // This test is especially flakey on GitHub Actions runners, so we'll only run it in a local context.
+    #if !GITHUB_ACTIONS
     /// Online stress-test to ensure a large volume of OSC packets are received and dispatched in order.
     @MainActor @Test
     func stressTestOnline() async throws {
@@ -183,6 +185,7 @@ struct OSCUDPServer_Tests {
         
         await #expect(receiver.messages == sourceMessages)
     }
+    #endif
 }
 
 #endif

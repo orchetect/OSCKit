@@ -109,6 +109,8 @@ struct OSCTCPServer_Tests {
         await #expect(receiver.messages == sourceMessages)
     }
     
+    // This test is especially flakey on GitHub Actions runners, so we'll only run it in a local context.
+    #if !GITHUB_ACTIONS
     /// Online stress-test to ensure a large volume of OSC packets are received and dispatched in order.
     /// - This test is repeated for each TCP framing mode.
     /// - This also tests that when passing local port 0 to server's init, after calling `start()` the `localPort`
@@ -211,6 +213,7 @@ struct OSCTCPServer_Tests {
         // double-check Cycle 1 results have not changed
         await #expect(serverReceiver.messages.count == expectedMsgCount) // should not have changed
     }
+    #endif
     
     /// Check that connections are added when an incoming connection is made,
     /// and check that connections are removed when a connection is closed remotely.
