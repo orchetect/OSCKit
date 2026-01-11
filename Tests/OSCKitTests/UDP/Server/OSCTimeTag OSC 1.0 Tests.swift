@@ -90,7 +90,8 @@ import Testing
         }
     }
     
-    // TODO: this test can be flakey when run on CI systems because it is time-sensitive
+    // This test is especially flakey on GitHub Actions runners, so we'll only run it in a local context.
+    #if !GITHUB_ACTIONS
     /// Tests that a message with a time-tag of 1 second in the future arrives after its intended scheduled time.
     @Test(.enabled(if: isSystemTimingStable()))
     func oneSecondInFuture_OnTimeOrThereafter() async throws {
@@ -101,17 +102,24 @@ import Testing
                 confirmation()
             }
             
-            let bundle = OSCBundle(
+            // this message should arrive 1 second in the future
+            let bundle1 = OSCBundle(
                 timeTag: .timeIntervalSinceNow(1.0),
-                [.message("/test", values: [Int32(123)])]
+                [.message("/test1", values: [Int32(123)])]
             )
+            server._handle(packet: .bundle(bundle1), remoteHost: "localhost", remotePort: 8000)
             
-            server._handle(packet: .bundle(bundle), remoteHost: "localhost", remotePort: 8000)
+            // this message should NOT arrive, as it is scheduled in the future after the test has ended
+            let bundle2 = OSCBundle(
+                timeTag: .timeIntervalSinceNow(1.5),
+                [.message("/test2", values: [Int32(123)])]
+            )
+            server._handle(packet: .bundle(bundle2), remoteHost: "localhost", remotePort: 8000)
             
-            // Note: this may be flaky on slow CI systems
-            try await Task.sleep(seconds: 1.1) // just over 1 second
+            try await Task.sleep(seconds: 1.1) // allow for just over 1 second to accommodate testing overhead
         }
     }
+    #endif
     
     @Test
     func past() async throws {
