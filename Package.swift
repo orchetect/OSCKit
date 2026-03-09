@@ -11,7 +11,7 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/orchetect/swift-ascii", from: "1.3.0"),
-        .package(url: "https://github.com/apple/swift-numerics", from: "1.1.0")
+        .package(url: "https://github.com/apple/swift-numerics", from: "1.1.1")
     ],
     targets: [
         .target(
