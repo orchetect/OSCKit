@@ -55,7 +55,9 @@
 --smarttabs enabled
 --stripunusedargs always
 --structthreshold 0
+--suite-name-format standard-identifiers
 --tabwidth unspecified
+--test-case-name-format raw-identifiers
 --trailingclosures 
 --trimwhitespace nonblank-lines
 --typeattributes preserve
@@ -71,5 +73,5 @@
 --wraptypealiases before-first
 --xcodeindentation enabled
 --yodaswap always
---disable blankLinesAroundMark,consecutiveSpaces,preferKeyPath,redundantParens,sortDeclarations,sortedImports,unusedArguments
+--disable blankLinesAroundMark,docComments,consecutiveSpaces,preferKeyPath,redundantParens,sortDeclarations,sortedImports,unusedArguments
 --enable blankLinesBetweenImports,blockComments,isEmpty,wrapEnumCases
