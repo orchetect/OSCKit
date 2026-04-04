@@ -1,11 +1,10 @@
 // swift-tools-version: 6.0
-// (be sure to update the .swift-version file when this Swift version changes)
 
 import PackageDescription
 
 let package = Package(
     name: "OSCKit",
-    platforms: [.macOS(.v10_15), .iOS(.v13), .tvOS(.v13) /* .linux */],
+    platforms: [.macOS(.v10_15), .iOS(.v13), .tvOS(.v13)],
     products: [
         .library(name: "OSCKitCore", targets: ["OSCKitCore"])
     ],
