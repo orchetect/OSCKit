@@ -1,7 +1,7 @@
 //
 //  OSCUDPSocket.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if !os(watchOS)
@@ -49,6 +49,7 @@ public final class OSCUDPSocket {
     public var localPort: UInt16 {
         udpSocket.localPort()
     }
+
     private var _localPort: UInt16?
     
     /// UDP port used by to send OSC packets. This may be set at any time.
@@ -61,6 +62,7 @@ public final class OSCUDPSocket {
         get { _remotePort ?? localPort }
         set { _remotePort = (newValue == 0) ? nil : newValue }
     }
+
     private var _remotePort: UInt16?
     
     /// Network interface to restrict connections to.

@@ -1,7 +1,7 @@
 //
 //  OSCAddressSpace Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 import struct Foundation.UUID
@@ -15,13 +15,13 @@ import Testing
     @Test
     func initMethodIDTypes() {
         // defaults to `UUID` method ID type
-        let _ = OSCAddressSpace()
+        _ = OSCAddressSpace()
         
         // use `String` as method ID type, with explicit type notation
-        let _ = OSCAddressSpace<String>()
+        _ = OSCAddressSpace<String>()
         
         // use `String` as method ID type using designated initializer overload
-        let _ = OSCAddressSpace(methodIDs: String.self)
+        _ = OSCAddressSpace(methodIDs: String.self)
     }
     
     // MARK: - Address Registration
@@ -70,17 +70,17 @@ import Testing
         
         #expect(
             await addressSpace.methods(matching: OSCAddressPattern("/test1")) ==
-            [.one]
+                [.one]
         )
         
         #expect(
             await addressSpace.methods(matching: OSCAddressPattern("/test1/test2")) ==
-            [.two]
+                [.two]
         )
         
         #expect(
             await addressSpace.methods(matching: OSCAddressPattern("/test3/test4")) ==
-            [.three]
+                [.three]
         )
     }
     
@@ -90,7 +90,7 @@ import Testing
         #if os(macOS) && DEBUG && compiler(>=6.2)
         await #expect(processExitsWith: .failure) {
             let addressSpace = OSCAddressSpace()
-            let _ = await addressSpace.register(localAddress: "")
+            _ = await addressSpace.register(localAddress: "")
         }
         #endif
     }
@@ -101,7 +101,7 @@ import Testing
         #if os(macOS) && DEBUG && compiler(>=6.2)
         await #expect(processExitsWith: .failure) {
             let addressSpace = OSCAddressSpace()
-            let _ = await addressSpace.register(localAddress: [] as [String])
+            _ = await addressSpace.register(localAddress: [] as [String])
         }
         #endif
     }
@@ -761,7 +761,7 @@ extension OSCAddressSpace {
     }
     
     // Mechanism to introspect actor contents that are non-Sendable.
-    typealias IsolationBlock = @Sendable (_ addressSpace: isolated OSCAddressSpace) throws -> ()
+    typealias IsolationBlock = @Sendable (_ addressSpace: isolated OSCAddressSpace) throws -> Void
     func withIsolation(_ block: IsolationBlock) rethrows {
         try block(self)
     }

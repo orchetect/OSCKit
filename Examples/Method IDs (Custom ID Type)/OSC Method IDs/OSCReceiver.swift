@@ -1,7 +1,7 @@
 //
 //  OSCReceiver.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -13,14 +13,14 @@ import OSCKit
 final class OSCReceiver: Sendable {
     private let addressSpace = OSCAddressSpace<OSCMethodID>()
     
-    public init() async {
+    init() async {
         // register local OSC methods once before receiving OSC messages
         await addressSpace.register(localAddress: "/methodA", id: .methodA)
         await addressSpace.register(localAddress: "/some/address/methodB", id: .methodB)
         await addressSpace.register(localAddress: "/some/address/methodC", id: .methodC)
     }
     
-    public func handle(message: OSCMessage, timeTag: OSCTimeTag, host: String, port: UInt16) async throws {
+    func handle(message: OSCMessage, timeTag: OSCTimeTag, host: String, port: UInt16) async throws {
         let ids = await addressSpace.methods(matching: message.addressPattern)
         
         guard !ids.isEmpty else {

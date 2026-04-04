@@ -1,14 +1,14 @@
 //
 //  OSCUDPClientDelegate.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if !os(watchOS)
 
 @preconcurrency import CocoaAsyncSocket
-import OSCKitCore
 import Foundation
+import OSCKitCore
 
 final class OSCUDPClientDelegate: NSObject { }
 

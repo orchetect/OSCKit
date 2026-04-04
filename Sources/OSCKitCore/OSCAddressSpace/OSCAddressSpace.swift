@@ -1,7 +1,7 @@
 //
 //  OSCAddressSpace.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -28,7 +28,7 @@ import Foundation
 /// > Any other path components besides the last are referred to as _containers_.
 /// >
 /// > A container may also be a method. Simply register it the same way as other methods.
-public actor OSCAddressSpace<MethodID> where MethodID: Equatable & Hashable & Sendable {
+public actor OSCAddressSpace<MethodID: Equatable & Hashable & Sendable> {
     /// The concrete type used for method IDs.
     public typealias MethodID = MethodID
     

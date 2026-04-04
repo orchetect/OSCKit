@@ -1,13 +1,13 @@
-/// ----------------------------------------------
-/// ----------------------------------------------
-/// Extensions/Swift/Integers.swift
-///
-/// Borrowed from swift-extensions 1.4.10 under MIT license.
-/// https://github.com/orchetect/swift-extensions
-/// Methods herein are unit tested at their source
-/// so no unit tests are necessary.
-/// ----------------------------------------------
-/// ----------------------------------------------
+// ----------------------------------------------
+// ----------------------------------------------
+// Extensions/Swift/Integers.swift
+//
+// Borrowed from swift-extensions 1.4.10 under MIT license.
+// https://github.com/orchetect/swift-extensions
+// Methods herein are unit tested at their source
+// so no unit tests are necessary.
+// ----------------------------------------------
+// ----------------------------------------------
 
 // MARK: - Convenience type conversion methods
 
@@ -15,137 +15,189 @@ extension BinaryInteger {
     /// Same as `Int`
     /// (Functional convenience method)
     @inlinable
-    package var int: Int { Int(self) }
+    package var int: Int {
+        Int(self)
+    }
     
     /// Same as `UInt`
     /// (Functional convenience method)
     @inlinable
-    package var uInt: UInt { UInt(self) }
+    package var uInt: UInt {
+        UInt(self)
+    }
     
     /// Same as `Int8`
     /// (Functional convenience method)
     @inlinable
-    package var int8: Int8 { Int8(self) }
+    package var int8: Int8 {
+        Int8(self)
+    }
     
     /// Same as `UInt8`
     /// (Functional convenience method)
     @inlinable
-    package var uInt8: UInt8 { UInt8(self) }
+    package var uInt8: UInt8 {
+        UInt8(self)
+    }
     
     /// Same as `Int16`
     /// (Functional convenience method)
     @inlinable
-    package var int16: Int16 { Int16(self) }
+    package var int16: Int16 {
+        Int16(self)
+    }
     
     /// Same as `UInt16`
     /// (Functional convenience method)
     @inlinable
-    package var uInt16: UInt16 { UInt16(self) }
+    package var uInt16: UInt16 {
+        UInt16(self)
+    }
     
     /// Same as `Int32`
     /// (Functional convenience method)
     @inlinable
-    package var int32: Int32 { Int32(self) }
+    package var int32: Int32 {
+        Int32(self)
+    }
     
     /// Same as `UInt32`
     /// (Functional convenience method)
     @inlinable
-    package var uInt32: UInt32 { UInt32(self) }
+    package var uInt32: UInt32 {
+        UInt32(self)
+    }
     
     /// Same as `Int64`
     /// (Functional convenience method)
     @inlinable
-    package var int64: Int64 { Int64(self) }
+    package var int64: Int64 {
+        Int64(self)
+    }
     
     /// Same as `UInt64`
     /// (Functional convenience method)
     @inlinable
-    package var uInt64: UInt64 { UInt64(self) }
+    package var uInt64: UInt64 {
+        UInt64(self)
+    }
 }
 
 extension BinaryInteger {
     /// Same as `Int(exactly:)`
     /// (Functional convenience method)
     @inlinable
-    package var intExactly: Int? { Int(exactly: self) }
+    package var intExactly: Int? {
+        Int(exactly: self)
+    }
     
     /// Same as `UInt(exactly:)`
     /// (Functional convenience method)
     @inlinable
-    package var uIntExactly: UInt? { UInt(exactly: self) }
+    package var uIntExactly: UInt? {
+        UInt(exactly: self)
+    }
     
     /// Same as `Int8(exactly:)`
     /// (Functional convenience method)
     @inlinable
-    package var int8Exactly: Int8? { Int8(exactly: self) }
+    package var int8Exactly: Int8? {
+        Int8(exactly: self)
+    }
     
     /// Same as `UInt8(exactly:)`
     /// (Functional convenience method)
     @inlinable
-    package var uInt8Exactly: UInt8? { UInt8(exactly: self) }
+    package var uInt8Exactly: UInt8? {
+        UInt8(exactly: self)
+    }
     
     /// Same as `Int16(exactly:)`
     /// (Functional convenience method)
     @inlinable
-    package var int16Exactly: Int16? { Int16(exactly: self) }
+    package var int16Exactly: Int16? {
+        Int16(exactly: self)
+    }
     
     /// Same as `UInt16(exactly:)`
     /// (Functional convenience method)
     @inlinable
-    package var uInt16Exactly: UInt16? { UInt16(exactly: self) }
+    package var uInt16Exactly: UInt16? {
+        UInt16(exactly: self)
+    }
     
     /// Same as `Int32(exactly:)`
     /// (Functional convenience method)
     @inlinable
-    package var int32Exactly: Int32? { Int32(exactly: self) }
+    package var int32Exactly: Int32? {
+        Int32(exactly: self)
+    }
     
     /// Same as `UInt32(exactly:)`
     /// (Functional convenience method)
     @inlinable
-    package var uInt32Exactly: UInt32? { UInt32(exactly: self) }
+    package var uInt32Exactly: UInt32? {
+        UInt32(exactly: self)
+    }
     
     /// Same as `Int64(exactly:)`
     /// (Functional convenience method)
     @inlinable
-    package var int64Exactly: Int64? { Int64(exactly: self) }
+    package var int64Exactly: Int64? {
+        Int64(exactly: self)
+    }
     
     /// Same as `UInt64(exactly:)`
     /// (Functional convenience method)
     @inlinable
-    package var uInt64Exactly: UInt64? { UInt64(exactly: self) }
+    package var uInt64Exactly: UInt64? {
+        UInt64(exactly: self)
+    }
 }
 
 extension BinaryInteger {
     /// Same as `Double()`
     /// (Functional convenience method)
     @inlinable
-    package var double: Double { Double(self) }
+    package var double: Double {
+        Double(self)
+    }
     
     /// Same as `Double(exactly:)`
     /// (Functional convenience method)
     @inlinable
-    package var doubleExactly: Double? { Double(exactly: self) }
+    package var doubleExactly: Double? {
+        Double(exactly: self)
+    }
     
     /// Same as `Float()`
     /// (Functional convenience method)
     @inlinable
-    package var float: Float { Float(self) }
+    package var float: Float {
+        Float(self)
+    }
     
     /// Same as `Float(exactly:)`
     /// (Functional convenience method)
     @inlinable
-    package var floatExactly: Float? { Float(exactly: self) }
+    package var floatExactly: Float? {
+        Float(exactly: self)
+    }
     
     /// Same as `Float32()`
     /// (Functional convenience method)
     @inlinable
-    package var float32: Float32 { Float32(self) }
+    package var float32: Float32 {
+        Float32(self)
+    }
     
     #if !(arch(arm64) || arch(arm) || os(watchOS)) // Float80 is now removed for ARM
     /// Same as `Float80()`
     /// (Functional convenience method)
     @inlinable
-    package var float80: Float80 { Float80(self) }
+    package var float80: Float80 {
+        Float80(self)
+    }
     #endif
 }
 
@@ -153,52 +205,72 @@ extension StringProtocol {
     /// Same as `Int()`
     /// (Functional convenience method)
     @inlinable
-    package var int: Int? { Int(self) }
+    package var int: Int? {
+        Int(self)
+    }
     
     /// Same as `Int()`
     /// (Functional convenience method)
     @inlinable
-    package var uInt: UInt? { UInt(self) }
+    package var uInt: UInt? {
+        UInt(self)
+    }
     
     /// Same as `Int8()`
     /// (Functional convenience method)
     @inlinable
-    package var int8: Int8? { Int8(self) }
+    package var int8: Int8? {
+        Int8(self)
+    }
     
     /// Same as `UInt8()`
     /// (Functional convenience method)
     @inlinable
-    package var uInt8: UInt8? { UInt8(self) }
+    package var uInt8: UInt8? {
+        UInt8(self)
+    }
     
     /// Same as `Int16()`
     /// (Functional convenience method)
     @inlinable
-    package var int16: Int16? { Int16(self) }
+    package var int16: Int16? {
+        Int16(self)
+    }
     
     /// Same as `UInt16()`
     /// (Functional convenience method)
     @inlinable
-    package var uInt16: UInt16? { UInt16(self) }
+    package var uInt16: UInt16? {
+        UInt16(self)
+    }
     
     /// Same as `Int32()`
     /// (Functional convenience method)
     @inlinable
-    package var int32: Int32? { Int32(self) }
+    package var int32: Int32? {
+        Int32(self)
+    }
     
     /// Same as `UInt32()`
     /// (Functional convenience method)
     @inlinable
-    package var uInt32: UInt32? { UInt32(self) }
+    package var uInt32: UInt32? {
+        UInt32(self)
+    }
     
     /// Same as `Int64()`
     /// (Functional convenience method)
     @inlinable
-    package var int64: Int64? { Int64(self) }
+    package var int64: Int64? {
+        Int64(self)
+    }
     
     /// Same as `UInt64()`
     /// (Functional convenience method)
     @inlinable
-    package var uInt64: UInt64? { UInt64(self) }
+    package var uInt64: UInt64? {
+        UInt64(self)
+    }
 }
 
 // MARK: - String Formatting
@@ -207,7 +279,9 @@ extension BinaryInteger {
     /// Same as `String(describing: self)`
     /// (Functional convenience method)
     @inlinable
-    package var string: String { String(describing: self) }
+    package var string: String {
+        String(describing: self)
+    }
 }
 
 // MARK: - Rounding
@@ -249,8 +323,7 @@ extension BinaryInteger {
         let isNegative: Bool = self < 0
         
         let rem = source % toMultiplesOf
-        let divisions = rem == 0 ? self : self + (isNegative ? rem : toMultiplesOf - rem)
-        return divisions
+        return rem == 0 ? self : self + (isNegative ? rem : toMultiplesOf - rem)
     }
     
     /// Rounds an integer down to the nearest multiple of `toMultiplesOf`.
@@ -269,7 +342,6 @@ extension BinaryInteger {
         let isNegative: Bool = self < 0
         
         let rem = source % toMultiplesOf
-        let divisions = rem == 0 ? self : self - (isNegative ? toMultiplesOf - rem : rem)
-        return divisions
+        return rem == 0 ? self : self - (isNegative ? toMultiplesOf - rem : rem)
     }
 }

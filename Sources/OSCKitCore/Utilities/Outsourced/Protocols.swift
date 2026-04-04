@@ -1,13 +1,13 @@
-/// ----------------------------------------------
-/// ----------------------------------------------
-/// Protocols/Protocols.swift
-///
-/// Borrowed from swift-extensions 1.4.10 under MIT license.
-/// https://github.com/orchetect/swift-extensions
-/// Methods herein are unit tested at their source
-/// so no unit tests are necessary.
-/// ----------------------------------------------
-/// ----------------------------------------------
+// ----------------------------------------------
+// ----------------------------------------------
+// Protocols/Protocols.swift
+//
+// Borrowed from swift-extensions 1.4.10 under MIT license.
+// https://github.com/orchetect/swift-extensions
+// Methods herein are unit tested at their source
+// so no unit tests are necessary.
+// ----------------------------------------------
+// ----------------------------------------------
 
 // MARK: - NumberEndianness
 

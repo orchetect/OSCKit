@@ -1,7 +1,7 @@
 //
 //  OSCKit-API-1.2.0.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if !os(watchOS)
@@ -20,8 +20,8 @@ extension OSCUDPServer {
     @_documentation(visibility: internal)
     @available(
         *,
-         deprecated,
-         message: "Handler closure now takes 4 parameters: message, timeTag, host, port."
+        deprecated,
+        message: "Handler closure now takes 4 parameters: message, timeTag, host, port."
     )
     @_disfavoredOverload
     public convenience init(
@@ -41,8 +41,8 @@ extension OSCUDPServer {
     @_documentation(visibility: internal)
     @available(
         *,
-         deprecated,
-         message: "Handler closure now takes 4 parameters: message, timeTag, host, port."
+        deprecated,
+        message: "Handler closure now takes 4 parameters: message, timeTag, host, port."
     )
     @_disfavoredOverload
     public func setHandler(
@@ -83,8 +83,8 @@ extension OSCUDPSocket {
     @_documentation(visibility: internal)
     @available(
         *,
-         deprecated,
-         message: "Handler closure now takes 4 parameters: message, timeTag, host, port."
+        deprecated,
+        message: "Handler closure now takes 4 parameters: message, timeTag, host, port."
     )
     @_disfavoredOverload
     public func setHandler(

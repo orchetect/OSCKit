@@ -1,7 +1,7 @@
 //
 //  OSCValues Type Mask 10 Values.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -130,7 +130,18 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    public func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+    public func masked<
+        V0: OSCValueMaskable,
+        V1: OSCValueMaskable,
+        V2: OSCValueMaskable,
+        V3: OSCValueMaskable,
+        V4: OSCValueMaskable,
+        V5: OSCValueMaskable,
+        V6: OSCValueMaskable,
+        V7: OSCValueMaskable,
+        V8: OSCValueMaskable,
+        V9: OSCValueMaskable
+    >(
         _ v0: V0.Type,
         _ v1: V1.Type,
         _ v2: V2.Type,
@@ -141,18 +152,7 @@ extension OSCValues {
         _ v7: V7.Type,
         _ v8: V8.Type,
         _ v9: V9.Type
-    ) throws(OSCValueMaskError) -> (V0, V1, V2, V3, V4, V5, V6, V7, V8, V9)
-        where V0: OSCValueMaskable,
-        V1: OSCValueMaskable,
-        V2: OSCValueMaskable,
-        V3: OSCValueMaskable,
-        V4: OSCValueMaskable,
-        V5: OSCValueMaskable,
-        V6: OSCValueMaskable,
-        V7: OSCValueMaskable,
-        V8: OSCValueMaskable,
-        V9: OSCValueMaskable
-    {
+    ) throws(OSCValueMaskError) -> (V0, V1, V2, V3, V4, V5, V6, V7, V8, V9) {
         try validateCount(10)
         let v0 = try unwrapValue(v0.self, index: 0)
         let v1 = try unwrapValue(v1.self, index: 1)
@@ -290,7 +290,18 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    public func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+    public func masked<
+        V0: OSCValueMaskable,
+        V1: OSCValueMaskable,
+        V2: OSCValueMaskable,
+        V3: OSCValueMaskable,
+        V4: OSCValueMaskable,
+        V5: OSCValueMaskable,
+        V6: OSCValueMaskable,
+        V7: OSCValueMaskable,
+        V8: OSCValueMaskable,
+        V9: OSCValueMaskable
+    >(
         _ v0: V0.Type,
         _ v1: V1.Type,
         _ v2: V2.Type,
@@ -301,18 +312,7 @@ extension OSCValues {
         _ v7: V7.Type,
         _ v8: V8.Type,
         _ v9: V9?.Type
-    ) throws(OSCValueMaskError) -> (V0, V1, V2, V3, V4, V5, V6, V7, V8, V9?)
-        where V0: OSCValueMaskable,
-        V1: OSCValueMaskable,
-        V2: OSCValueMaskable,
-        V3: OSCValueMaskable,
-        V4: OSCValueMaskable,
-        V5: OSCValueMaskable,
-        V6: OSCValueMaskable,
-        V7: OSCValueMaskable,
-        V8: OSCValueMaskable,
-        V9: OSCValueMaskable
-    {
+    ) throws(OSCValueMaskError) -> (V0, V1, V2, V3, V4, V5, V6, V7, V8, V9?) {
         try validateCount(9 ... 10)
         let v0 = try unwrapValue(v0.self, index: 0)
         let v1 = try unwrapValue(v1.self, index: 1)
@@ -450,7 +450,18 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    public func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+    public func masked<
+        V0: OSCValueMaskable,
+        V1: OSCValueMaskable,
+        V2: OSCValueMaskable,
+        V3: OSCValueMaskable,
+        V4: OSCValueMaskable,
+        V5: OSCValueMaskable,
+        V6: OSCValueMaskable,
+        V7: OSCValueMaskable,
+        V8: OSCValueMaskable,
+        V9: OSCValueMaskable
+    >(
         _ v0: V0.Type,
         _ v1: V1.Type,
         _ v2: V2.Type,
@@ -461,18 +472,7 @@ extension OSCValues {
         _ v7: V7.Type,
         _ v8: V8?.Type,
         _ v9: V9?.Type
-    ) throws(OSCValueMaskError) -> (V0, V1, V2, V3, V4, V5, V6, V7, V8?, V9?)
-        where V0: OSCValueMaskable,
-        V1: OSCValueMaskable,
-        V2: OSCValueMaskable,
-        V3: OSCValueMaskable,
-        V4: OSCValueMaskable,
-        V5: OSCValueMaskable,
-        V6: OSCValueMaskable,
-        V7: OSCValueMaskable,
-        V8: OSCValueMaskable,
-        V9: OSCValueMaskable
-    {
+    ) throws(OSCValueMaskError) -> (V0, V1, V2, V3, V4, V5, V6, V7, V8?, V9?) {
         try validateCount(8 ... 10)
         let v0 = try unwrapValue(v0.self, index: 0)
         let v1 = try unwrapValue(v1.self, index: 1)
@@ -610,7 +610,18 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    public func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+    public func masked<
+        V0: OSCValueMaskable,
+        V1: OSCValueMaskable,
+        V2: OSCValueMaskable,
+        V3: OSCValueMaskable,
+        V4: OSCValueMaskable,
+        V5: OSCValueMaskable,
+        V6: OSCValueMaskable,
+        V7: OSCValueMaskable,
+        V8: OSCValueMaskable,
+        V9: OSCValueMaskable
+    >(
         _ v0: V0.Type,
         _ v1: V1.Type,
         _ v2: V2.Type,
@@ -621,18 +632,7 @@ extension OSCValues {
         _ v7: V7?.Type,
         _ v8: V8?.Type,
         _ v9: V9?.Type
-    ) throws(OSCValueMaskError) -> (V0, V1, V2, V3, V4, V5, V6, V7?, V8?, V9?)
-        where V0: OSCValueMaskable,
-        V1: OSCValueMaskable,
-        V2: OSCValueMaskable,
-        V3: OSCValueMaskable,
-        V4: OSCValueMaskable,
-        V5: OSCValueMaskable,
-        V6: OSCValueMaskable,
-        V7: OSCValueMaskable,
-        V8: OSCValueMaskable,
-        V9: OSCValueMaskable
-    {
+    ) throws(OSCValueMaskError) -> (V0, V1, V2, V3, V4, V5, V6, V7?, V8?, V9?) {
         try validateCount(7 ... 10)
         let v0 = try unwrapValue(v0.self, index: 0)
         let v1 = try unwrapValue(v1.self, index: 1)
@@ -770,7 +770,18 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    public func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+    public func masked<
+        V0: OSCValueMaskable,
+        V1: OSCValueMaskable,
+        V2: OSCValueMaskable,
+        V3: OSCValueMaskable,
+        V4: OSCValueMaskable,
+        V5: OSCValueMaskable,
+        V6: OSCValueMaskable,
+        V7: OSCValueMaskable,
+        V8: OSCValueMaskable,
+        V9: OSCValueMaskable
+    >(
         _ v0: V0.Type,
         _ v1: V1.Type,
         _ v2: V2.Type,
@@ -781,18 +792,7 @@ extension OSCValues {
         _ v7: V7?.Type,
         _ v8: V8?.Type,
         _ v9: V9?.Type
-    ) throws(OSCValueMaskError) -> (V0, V1, V2, V3, V4, V5, V6?, V7?, V8?, V9?)
-        where V0: OSCValueMaskable,
-        V1: OSCValueMaskable,
-        V2: OSCValueMaskable,
-        V3: OSCValueMaskable,
-        V4: OSCValueMaskable,
-        V5: OSCValueMaskable,
-        V6: OSCValueMaskable,
-        V7: OSCValueMaskable,
-        V8: OSCValueMaskable,
-        V9: OSCValueMaskable
-    {
+    ) throws(OSCValueMaskError) -> (V0, V1, V2, V3, V4, V5, V6?, V7?, V8?, V9?) {
         try validateCount(6 ... 10)
         let v0 = try unwrapValue(v0.self, index: 0)
         let v1 = try unwrapValue(v1.self, index: 1)
@@ -930,7 +930,18 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    public func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+    public func masked<
+        V0: OSCValueMaskable,
+        V1: OSCValueMaskable,
+        V2: OSCValueMaskable,
+        V3: OSCValueMaskable,
+        V4: OSCValueMaskable,
+        V5: OSCValueMaskable,
+        V6: OSCValueMaskable,
+        V7: OSCValueMaskable,
+        V8: OSCValueMaskable,
+        V9: OSCValueMaskable
+    >(
         _ v0: V0.Type,
         _ v1: V1.Type,
         _ v2: V2.Type,
@@ -941,18 +952,7 @@ extension OSCValues {
         _ v7: V7?.Type,
         _ v8: V8?.Type,
         _ v9: V9?.Type
-    ) throws(OSCValueMaskError) -> (V0, V1, V2, V3, V4, V5?, V6?, V7?, V8?, V9?)
-        where V0: OSCValueMaskable,
-        V1: OSCValueMaskable,
-        V2: OSCValueMaskable,
-        V3: OSCValueMaskable,
-        V4: OSCValueMaskable,
-        V5: OSCValueMaskable,
-        V6: OSCValueMaskable,
-        V7: OSCValueMaskable,
-        V8: OSCValueMaskable,
-        V9: OSCValueMaskable
-    {
+    ) throws(OSCValueMaskError) -> (V0, V1, V2, V3, V4, V5?, V6?, V7?, V8?, V9?) {
         try validateCount(5 ... 10)
         let v0 = try unwrapValue(v0.self, index: 0)
         let v1 = try unwrapValue(v1.self, index: 1)
@@ -1090,7 +1090,18 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    public func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+    public func masked<
+        V0: OSCValueMaskable,
+        V1: OSCValueMaskable,
+        V2: OSCValueMaskable,
+        V3: OSCValueMaskable,
+        V4: OSCValueMaskable,
+        V5: OSCValueMaskable,
+        V6: OSCValueMaskable,
+        V7: OSCValueMaskable,
+        V8: OSCValueMaskable,
+        V9: OSCValueMaskable
+    >(
         _ v0: V0.Type,
         _ v1: V1.Type,
         _ v2: V2.Type,
@@ -1101,18 +1112,7 @@ extension OSCValues {
         _ v7: V7?.Type,
         _ v8: V8?.Type,
         _ v9: V9?.Type
-    ) throws(OSCValueMaskError) -> (V0, V1, V2, V3, V4?, V5?, V6?, V7?, V8?, V9?)
-        where V0: OSCValueMaskable,
-        V1: OSCValueMaskable,
-        V2: OSCValueMaskable,
-        V3: OSCValueMaskable,
-        V4: OSCValueMaskable,
-        V5: OSCValueMaskable,
-        V6: OSCValueMaskable,
-        V7: OSCValueMaskable,
-        V8: OSCValueMaskable,
-        V9: OSCValueMaskable
-    {
+    ) throws(OSCValueMaskError) -> (V0, V1, V2, V3, V4?, V5?, V6?, V7?, V8?, V9?) {
         try validateCount(4 ... 10)
         let v0 = try unwrapValue(v0.self, index: 0)
         let v1 = try unwrapValue(v1.self, index: 1)
@@ -1250,7 +1250,18 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    public func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+    public func masked<
+        V0: OSCValueMaskable,
+        V1: OSCValueMaskable,
+        V2: OSCValueMaskable,
+        V3: OSCValueMaskable,
+        V4: OSCValueMaskable,
+        V5: OSCValueMaskable,
+        V6: OSCValueMaskable,
+        V7: OSCValueMaskable,
+        V8: OSCValueMaskable,
+        V9: OSCValueMaskable
+    >(
         _ v0: V0.Type,
         _ v1: V1.Type,
         _ v2: V2.Type,
@@ -1261,18 +1272,7 @@ extension OSCValues {
         _ v7: V7?.Type,
         _ v8: V8?.Type,
         _ v9: V9?.Type
-    ) throws(OSCValueMaskError) -> (V0, V1, V2, V3?, V4?, V5?, V6?, V7?, V8?, V9?)
-        where V0: OSCValueMaskable,
-        V1: OSCValueMaskable,
-        V2: OSCValueMaskable,
-        V3: OSCValueMaskable,
-        V4: OSCValueMaskable,
-        V5: OSCValueMaskable,
-        V6: OSCValueMaskable,
-        V7: OSCValueMaskable,
-        V8: OSCValueMaskable,
-        V9: OSCValueMaskable
-    {
+    ) throws(OSCValueMaskError) -> (V0, V1, V2, V3?, V4?, V5?, V6?, V7?, V8?, V9?) {
         try validateCount(3 ... 10)
         let v0 = try unwrapValue(v0.self, index: 0)
         let v1 = try unwrapValue(v1.self, index: 1)
@@ -1410,7 +1410,18 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    public func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+    public func masked<
+        V0: OSCValueMaskable,
+        V1: OSCValueMaskable,
+        V2: OSCValueMaskable,
+        V3: OSCValueMaskable,
+        V4: OSCValueMaskable,
+        V5: OSCValueMaskable,
+        V6: OSCValueMaskable,
+        V7: OSCValueMaskable,
+        V8: OSCValueMaskable,
+        V9: OSCValueMaskable
+    >(
         _ v0: V0.Type,
         _ v1: V1.Type,
         _ v2: V2?.Type,
@@ -1421,18 +1432,7 @@ extension OSCValues {
         _ v7: V7?.Type,
         _ v8: V8?.Type,
         _ v9: V9?.Type
-    ) throws(OSCValueMaskError) -> (V0, V1, V2?, V3?, V4?, V5?, V6?, V7?, V8?, V9?)
-        where V0: OSCValueMaskable,
-        V1: OSCValueMaskable,
-        V2: OSCValueMaskable,
-        V3: OSCValueMaskable,
-        V4: OSCValueMaskable,
-        V5: OSCValueMaskable,
-        V6: OSCValueMaskable,
-        V7: OSCValueMaskable,
-        V8: OSCValueMaskable,
-        V9: OSCValueMaskable
-    {
+    ) throws(OSCValueMaskError) -> (V0, V1, V2?, V3?, V4?, V5?, V6?, V7?, V8?, V9?) {
         try validateCount(2 ... 10)
         let v0 = try unwrapValue(v0.self, index: 0)
         let v1 = try unwrapValue(v1.self, index: 1)
@@ -1570,7 +1570,18 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    public func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+    public func masked<
+        V0: OSCValueMaskable,
+        V1: OSCValueMaskable,
+        V2: OSCValueMaskable,
+        V3: OSCValueMaskable,
+        V4: OSCValueMaskable,
+        V5: OSCValueMaskable,
+        V6: OSCValueMaskable,
+        V7: OSCValueMaskable,
+        V8: OSCValueMaskable,
+        V9: OSCValueMaskable
+    >(
         _ v0: V0.Type,
         _ v1: V1?.Type,
         _ v2: V2?.Type,
@@ -1581,18 +1592,7 @@ extension OSCValues {
         _ v7: V7?.Type,
         _ v8: V8?.Type,
         _ v9: V9?.Type
-    ) throws(OSCValueMaskError) -> (V0, V1?, V2?, V3?, V4?, V5?, V6?, V7?, V8?, V9?)
-        where V0: OSCValueMaskable,
-        V1: OSCValueMaskable,
-        V2: OSCValueMaskable,
-        V3: OSCValueMaskable,
-        V4: OSCValueMaskable,
-        V5: OSCValueMaskable,
-        V6: OSCValueMaskable,
-        V7: OSCValueMaskable,
-        V8: OSCValueMaskable,
-        V9: OSCValueMaskable
-    {
+    ) throws(OSCValueMaskError) -> (V0, V1?, V2?, V3?, V4?, V5?, V6?, V7?, V8?, V9?) {
         try validateCount(1 ... 10)
         let v0 = try unwrapValue(v0.self, index: 0)
         let v1 = try unwrapValue(v1.self, index: 1)
@@ -1730,7 +1730,18 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    public func masked<V0, V1, V2, V3, V4, V5, V6, V7, V8, V9>(
+    public func masked<
+        V0: OSCValueMaskable,
+        V1: OSCValueMaskable,
+        V2: OSCValueMaskable,
+        V3: OSCValueMaskable,
+        V4: OSCValueMaskable,
+        V5: OSCValueMaskable,
+        V6: OSCValueMaskable,
+        V7: OSCValueMaskable,
+        V8: OSCValueMaskable,
+        V9: OSCValueMaskable
+    >(
         _ v0: V0?.Type,
         _ v1: V1?.Type,
         _ v2: V2?.Type,
@@ -1741,18 +1752,7 @@ extension OSCValues {
         _ v7: V7?.Type,
         _ v8: V8?.Type,
         _ v9: V9?.Type
-    ) throws(OSCValueMaskError) -> (V0?, V1?, V2?, V3?, V4?, V5?, V6?, V7?, V8?, V9?)
-        where V0: OSCValueMaskable,
-        V1: OSCValueMaskable,
-        V2: OSCValueMaskable,
-        V3: OSCValueMaskable,
-        V4: OSCValueMaskable,
-        V5: OSCValueMaskable,
-        V6: OSCValueMaskable,
-        V7: OSCValueMaskable,
-        V8: OSCValueMaskable,
-        V9: OSCValueMaskable
-    {
+    ) throws(OSCValueMaskError) -> (V0?, V1?, V2?, V3?, V4?, V5?, V6?, V7?, V8?, V9?) {
         try validateCount(0 ... 10)
         let v0 = try unwrapValue(v0.self, index: 0)
         let v1 = try unwrapValue(v1.self, index: 1)

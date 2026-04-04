@@ -1,7 +1,7 @@
 //
 //  OSCValueToken Methods Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -482,7 +482,7 @@ import Testing
     
     /// `AnyOSCNumberValue` will always carry the OSC value token `numberOrBool`, which means
     /// the `includingOpaque` parameter will have no effect.
-    /// 
+    ///
     /// Note that even though `Int32` is a core OSC type, it's still type-erased here.
     @Test(
         arguments: [

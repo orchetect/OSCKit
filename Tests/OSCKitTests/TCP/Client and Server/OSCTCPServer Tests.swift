@@ -1,7 +1,7 @@
 //
 //  OSCTCPServer Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if !os(watchOS)
@@ -86,12 +86,14 @@ struct OSCTCPServer_Tests {
             }
         }
         
-        var possibleValuePacks: [OSCValues] { [
-            [],
-            [UUID().uuidString],
-            [Int.random(in: 10_000 ... 10_000_000)],
-            [Int.random(in: 10_000 ... 10_000_000), UUID().uuidString, 456.78, true]
-        ] }
+        var possibleValuePacks: [OSCValues] {
+            [
+                [],
+                [UUID().uuidString],
+                [Int.random(in: 10_000 ... 10_000_000)],
+                [Int.random(in: 10_000 ... 10_000_000), UUID().uuidString, 456.78, true]
+            ]
+        }
         
         let sourceMessages: [OSCMessage] = Array(1 ... 1000).map { value in
             OSCMessage("/some/address/\(UUID().uuidString)", values: possibleValuePacks.randomElement()!)
@@ -150,12 +152,14 @@ struct OSCTCPServer_Tests {
             }
         }
         
-        var possibleValuePacks: [OSCValues] { [
-            [],
-            [UUID().uuidString],
-            [Int.random(in: 10_000 ... 10_000_000)],
-            [Int.random(in: 10_000 ... 10_000_000), UUID().uuidString, 456.78, true]
-        ] }
+        var possibleValuePacks: [OSCValues] {
+            [
+                [],
+                [UUID().uuidString],
+                [Int.random(in: 10_000 ... 10_000_000)],
+                [Int.random(in: 10_000 ... 10_000_000), UUID().uuidString, 456.78, true]
+            ]
+        }
         
         let expectedMsgCount = 1000
         let sourceMessages: [OSCMessage] = Array(1 ... expectedMsgCount).map { value in
@@ -266,7 +270,7 @@ struct OSCTCPServer_Tests {
         client2.close()
         try await Task.sleep(seconds: isStable ? 1.0 : 5.0)
         
-        #expect(server.clients.count == 0)
+        #expect(server.clients.isEmpty)
     }
     
     /// Tests starting TCP server, then stopping it, then restarting it again.
@@ -350,7 +354,10 @@ struct OSCTCPServer_Tests {
             func received(_ message: OSCMessage) {
                 messages.append(message)
             }
-            func reset() { messages.removeAll() }
+
+            func reset() {
+                messages.removeAll()
+            }
         }
         
         let serverReceiver = Receiver()
@@ -363,7 +370,7 @@ struct OSCTCPServer_Tests {
         
         let client1Receiver = Receiver()
         
-        client1.setReceiveHandler{ message, timeTag, host, port in
+        client1.setReceiveHandler { message, timeTag, host, port in
             Task { @MainActor in
                 await client1Receiver.received(message)
             }
@@ -371,7 +378,7 @@ struct OSCTCPServer_Tests {
         
         let client2Receiver = Receiver()
         
-        client2.setReceiveHandler{ message, timeTag, host, port in
+        client2.setReceiveHandler { message, timeTag, host, port in
             Task { @MainActor in
                 await client2Receiver.received(message)
             }

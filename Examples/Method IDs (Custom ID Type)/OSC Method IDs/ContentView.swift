@@ -1,7 +1,7 @@
 //
 //  ContentView.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 import OSCKit
@@ -12,7 +12,9 @@ struct ContentView: View {
     
     var body: some View {
         VStack(spacing: 20) {
-            Text("In this example, UDP port 8000 is opened by the OSC server to listen for incoming OSC packets. The OSC client sends the test messages to local port 8000.")
+            Text(
+                "In this example, UDP port 8000 is opened by the OSC server to listen for incoming OSC packets. The OSC client sends the test messages to local port 8000."
+            )
             
             Text("Received OSC messages are logged to the console.")
             

@@ -1,7 +1,7 @@
 //
 //  OSCValueDecoder Read Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -263,7 +263,8 @@ import Testing
     @Test
     func readBytesCount() async throws {
         // (test harness)
-        @Sendable func newDecoder(readByteLength: Int) throws -> Data {
+        @Sendable
+        func newDecoder(readByteLength: Int) throws -> Data {
             let data = Data([0x01, 0x02, 0x03, 0x04])
             var decoder = OSCValueDecoder(data: data)
             return try decoder.read(byteLength: readByteLength)

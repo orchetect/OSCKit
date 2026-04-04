@@ -1,7 +1,7 @@
 //
 //  OSCReceiver.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -13,7 +13,7 @@ import OSCKit
 final class OSCReceiver: Sendable {
     private let addressSpace = OSCAddressSpace()
     
-    public init() {
+    init() {
         Task { await setup() }
     }
     
@@ -52,7 +52,7 @@ final class OSCReceiver: Sendable {
         print("Received methodC from \(host) port \(port) with values: [\"\(str)\", \(dbl as Any)]")
     }
     
-    public func handle(message: OSCMessage, timeTag: OSCTimeTag, host: String, port: UInt16) async {
+    func handle(message: OSCMessage, timeTag: OSCTimeTag, host: String, port: UInt16) async {
         // Execute closures for matching methods, and returns the matching method IDs
         let methodIDs = await addressSpace.dispatch(message: message, host: host, port: port)
         

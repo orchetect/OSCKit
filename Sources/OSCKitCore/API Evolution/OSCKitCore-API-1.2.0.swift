@@ -1,7 +1,7 @@
 //
 //  OSCKitCore-API-1.2.0.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -14,8 +14,8 @@ extension OSCAddressSpace {
     @_documentation(visibility: internal)
     @available(
         *,
-         deprecated,
-         message: "Handler closure now takes 3 parameters: values, host, port."
+        deprecated,
+        message: "Handler closure now takes 3 parameters: values, host, port."
     )
     @_disfavoredOverload
     @discardableResult

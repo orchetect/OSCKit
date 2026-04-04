@@ -1,7 +1,7 @@
 //
 //  OSCArrayValue.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -102,7 +102,9 @@ private let oscTypeTagClose: Character = "]"
 
 @_documentation(visibility: internal)
 extension OSCArrayValue: OSCValue {
-    public static var oscValueToken: OSCValueToken { .array }
+    public static var oscValueToken: OSCValueToken {
+        .array
+    }
 }
 
 @_documentation(visibility: internal)

@@ -1,14 +1,14 @@
 //
 //  OSCTCPServer.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if !os(watchOS)
 
 @preconcurrency import CocoaAsyncSocket
-import OSCKitCore
 import Foundation
+import OSCKitCore
 
 /// Listens on a local port for TCP connections in order to send and receive OSC packets over the network.
 ///
@@ -39,6 +39,7 @@ public final class OSCTCPServer {
     public var localPort: UInt16 {
         tcpSocket.localPort
     }
+
     private var _localPort: UInt16?
     
     /// Network interface to restrict connections to.
@@ -51,7 +52,7 @@ public final class OSCTCPServer {
     public let framingMode: OSCTCPFramingMode
 
     /// Initialize with a remote hostname and UDP port.
-    /// 
+    ///
     /// > Note:
     /// >
     /// > Call ``start()`` to begin listening for connections.
@@ -191,7 +192,12 @@ extension OSCTCPServer: _OSCTCPGeneratesServerNotificationsProtocol {
         notificationHandler?(notif)
     }
     
-    func _generateDisconnectedNotification(remoteHost: String, remotePort: UInt16, clientID: OSCTCPClientSessionID, error: GCDAsyncSocketError?) {
+    func _generateDisconnectedNotification(
+        remoteHost: String,
+        remotePort: UInt16,
+        clientID: OSCTCPClientSessionID,
+        error: GCDAsyncSocketError?
+    ) {
         let notif: Notification = .disconnected(remoteHost: remoteHost, remotePort: remotePort, clientID: clientID, error: error)
         notificationHandler?(notif)
     }

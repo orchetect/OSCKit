@@ -1,14 +1,14 @@
 //
 //  OSCTCPClient.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if !os(watchOS)
 
 @preconcurrency import CocoaAsyncSocket
-import OSCKitCore
 import Foundation
+import OSCKitCore
 
 /// Connects to a remote host via TCP connection in order to send and receive OSC packets over the network.
 ///
@@ -44,13 +44,15 @@ public final class OSCTCPClient {
     public let interface: String?
     
     /// Returns a boolean indicating whether the OSC socket is connected to the remote host.
-    public var isConnected: Bool { tcpSocket.isConnected }
+    public var isConnected: Bool {
+        tcpSocket.isConnected
+    }
     
     /// TCP packet framing mode.
     public let framingMode: OSCTCPFramingMode
     
     /// Initialize with a remote hostname and UDP port.
-    /// 
+    ///
     /// > Note:
     /// >
     /// > Call ``connect(timeout:)`` to connect to the remote host in order to begin sending messages.

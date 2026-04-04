@@ -1,7 +1,7 @@
 //
 //  OSCValues Type Mask Helpers.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -24,13 +24,11 @@ extension OSCValues {
     // MARK: - Concrete Values
 
     @usableFromInline
-    func unwrapValue<MaskType>(
+    func unwrapValue<MaskType: OSCValueMaskable>(
         _: MaskType.Type,
         index: Index,
         asOptional: Bool = false
-    ) throws(OSCValueMaskError) -> MaskType
-        where MaskType: OSCValueMaskable
-    {
+    ) throws(OSCValueMaskError) -> MaskType {
         guard indices.contains(index) else {
             throw .invalidCount
         }
@@ -69,12 +67,10 @@ extension OSCValues {
     // MARK: - Optionals
 
     @usableFromInline
-    func unwrapValue<MaskType>(
+    func unwrapValue<MaskType: OSCValueMaskable>(
         _ type: MaskType?.Type,
         index: Index
-    ) throws(OSCValueMaskError) -> MaskType?
-        where MaskType: OSCValueMaskable
-    {
+    ) throws(OSCValueMaskError) -> MaskType? {
         guard indices.contains(index) else {
             return nil
         }

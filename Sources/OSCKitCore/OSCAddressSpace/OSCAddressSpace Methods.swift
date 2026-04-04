@@ -1,7 +1,7 @@
 //
 //  OSCAddressSpace Methods.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -100,10 +100,10 @@ extension OSCAddressSpace {
     ///
     /// - Returns: A unique identifier assigned to the address's method.
     @discardableResult
-    public func register<S>(
+    public func register<S: BidirectionalCollection>(
         localAddress pathComponents: S,
         block: MethodBlock? = nil
-    ) -> MethodID where MethodID == UUID, S: BidirectionalCollection, S.Element: StringProtocol {
+    ) -> MethodID where MethodID == UUID, S.Element: StringProtocol {
         guard !pathComponents.isEmpty else {
             // instead of returning nil, return a bogus ID
             assertionFailure(
@@ -151,11 +151,11 @@ extension OSCAddressSpace {
     ///   - pathComponents: Local OSC address components.
     ///   - id: Unique ID assigned to the OSC method.
     ///   - block: Optionally supply a closure that will be invoked when calling ``dispatch(message:host:port:)``.
-    public func register<S>(
+    public func register<S: BidirectionalCollection>(
         localAddress pathComponents: S,
         id: MethodID,
         block: MethodBlock? = nil
-    ) where S: BidirectionalCollection, S.Element: StringProtocol {
+    ) where S.Element: StringProtocol {
         guard !pathComponents.isEmpty else {
             // instead of returning nil, return a bogus ID
             assertionFailure(
@@ -198,9 +198,9 @@ extension OSCAddressSpace {
     /// - Returns: `true` if the operation was successful, `false` if unsuccessful or the path does
     ///   not exist.
     @discardableResult
-    public func unregister<S>(
+    public func unregister<S: BidirectionalCollection>(
         localAddress pathComponents: S
-    ) -> Bool where S: BidirectionalCollection, S.Element: StringProtocol {
+    ) -> Bool where S.Element: StringProtocol {
         removeMethodNode(
             path: pathComponents
         )

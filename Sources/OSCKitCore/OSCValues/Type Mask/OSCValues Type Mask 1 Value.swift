@@ -1,7 +1,7 @@
 //
 //  OSCValues Type Mask 1 Value.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -169,13 +169,11 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    public func masked<V>(
+    public func masked<V: OSCValueMaskable>(
         _ v: V.Type
-    ) throws(OSCValueMaskError) -> V
-    where V: OSCValueMaskable {
+    ) throws(OSCValueMaskError) -> V {
         try validateCount(1)
-        let v = try unwrapValue(v.self, index: 0)
-        return v
+        return try unwrapValue(v.self, index: 0)
     }
     
     /// Returns the OSC value sequence as a strongly typed tuple
@@ -301,12 +299,10 @@ extension OSCValues {
     /// - `AnyOSCNumberValue.self` (boxes any OSC integer or float number)
     ///
     /// - Throws: ``OSCValueMaskError``
-    public func masked<V>(
+    public func masked<V: OSCValueMaskable>(
         _ v: V?.Type
-    ) throws(OSCValueMaskError) -> V?
-    where V: OSCValueMaskable {
+    ) throws(OSCValueMaskError) -> V? {
         try validateCount(0 ... 1)
-        let v = try unwrapValue(v.self, index: 0)
-        return v
+        return try unwrapValue(v.self, index: 0)
     }
 }

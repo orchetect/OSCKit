@@ -1,7 +1,7 @@
 //
 //  OSCValueMaskable.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -14,5 +14,7 @@ public protocol OSCValueMaskable: SendableMetatype {
 
 extension OSCValueMaskable {
     /// Token describing the OSC value's OSC type.
-    public var oscValueToken: OSCValueToken { Self.oscValueToken }
+    public var oscValueToken: OSCValueToken {
+        Self.oscValueToken
+    }
 }

@@ -1,13 +1,13 @@
-/// ----------------------------------------------
-/// ----------------------------------------------
-/// Extensions/Darwin/FloatingPoint.swift
-///
-/// Borrowed from swift-extensions 2.1.6 under MIT license.
-/// https://github.com/orchetect/swift-extensions
-/// Methods herein are unit tested at their source
-/// so no unit tests are necessary.
-/// ----------------------------------------------
-/// ----------------------------------------------
+// ----------------------------------------------
+// ----------------------------------------------
+// Extensions/Darwin/FloatingPoint.swift
+//
+// Borrowed from swift-extensions 2.1.6 under MIT license.
+// https://github.com/orchetect/swift-extensions
+// Methods herein are unit tested at their source
+// so no unit tests are necessary.
+// ----------------------------------------------
+// ----------------------------------------------
 
 extension FloatingPoint {
     /// Similar to `Int.quotientAndRemainder(dividingBy:)` from the standard Swift library.

@@ -1,7 +1,7 @@
 //
 //  OSCUDPServer Tests.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if !os(watchOS)
@@ -102,12 +102,14 @@ struct OSCUDPServer_Tests {
             }
         }
         
-        var possibleValuePacks: [OSCValues] { [
-            [],
-            [UUID().uuidString],
-            [Int.random(in: 10_000 ... 10_000_000)],
-            [Int.random(in: 10_000 ... 10_000_000), UUID().uuidString, 456.78, true]
-        ] }
+        var possibleValuePacks: [OSCValues] {
+            [
+                [],
+                [UUID().uuidString],
+                [Int.random(in: 10_000 ... 10_000_000)],
+                [Int.random(in: 10_000 ... 10_000_000), UUID().uuidString, 456.78, true]
+            ]
+        }
         
         let sourceMessages: [OSCMessage] = Array(1 ... 1000).map { value in
             OSCMessage("/some/address/\(UUID().uuidString)", values: possibleValuePacks.randomElement()!)
@@ -157,12 +159,14 @@ struct OSCUDPServer_Tests {
             }
         }
         
-        var possibleValuePacks: [OSCValues] { [
-            [],
-            [UUID().uuidString],
-            [Int.random(in: 10_000 ... 10_000_000)],
-            [Int.random(in: 10_000 ... 10_000_000), UUID().uuidString, 456.78, true]
-        ] }
+        var possibleValuePacks: [OSCValues] {
+            [
+                [],
+                [UUID().uuidString],
+                [Int.random(in: 10_000 ... 10_000_000)],
+                [Int.random(in: 10_000 ... 10_000_000), UUID().uuidString, 456.78, true]
+            ]
+        }
         
         let sourceMessages: [OSCMessage] = Array(1 ... 1000).map { value in
             OSCMessage("/some/address/\(UUID().uuidString)", values: possibleValuePacks.randomElement()!)

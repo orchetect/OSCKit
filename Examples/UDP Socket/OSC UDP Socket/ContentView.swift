@@ -1,7 +1,7 @@
 //
 //  ContentView.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 import OSCKit
@@ -36,7 +36,6 @@ struct ContentView: View {
         .frame(maxWidth: 600)
     }
     
-    @ViewBuilder
     private var configurationView: some View {
         VStack(spacing: 20) {
             Group {

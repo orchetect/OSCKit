@@ -1,7 +1,7 @@
 //
 //  OSCUDPClient.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 #if !os(watchOS)
@@ -29,6 +29,7 @@ public final class OSCUDPClient {
     public var localPort: UInt16 {
         udpSocket.localPort()
     }
+
     private var _localPort: UInt16?
     
     /// Network interface to restrict connections to.
@@ -71,6 +72,7 @@ public final class OSCUDPClient {
             try? udpSocket.enableBroadcast(newValue)
         }
     }
+
     private var _isIPv4BroadcastEnabled: Bool = false
     
     /// Returns a boolean indicating whether the OSC client has been started.

@@ -1,7 +1,7 @@
 //
 //  OSCAddressSpace Utilities.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
-//  © 2020-2025 Steffan Andrews • Licensed under MIT License
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -16,11 +16,11 @@ extension OSCAddressSpace {
     /// marked as a method and its block closure will be replaced.
     ///
     /// Children, if any, are unaffected.
-    func createMethodNode<S>(
+    func createMethodNode<S: BidirectionalCollection>(
         path: S,
         id: MethodID,
         block: MethodBlock? = nil
-    ) -> Node? where S: BidirectionalCollection, S.Element: StringProtocol {
+    ) -> Node? where S.Element: StringProtocol {
         guard !path.isEmpty else { return nil }
         
         var pathRef: Node? = nil // start at root
@@ -68,9 +68,9 @@ extension OSCAddressSpace {
     /// - Returns: `true` if the operation was successful, `false` if unsuccessful or the path does
     ///   not exist.
     @discardableResult @_disfavoredOverload
-    func removeMethodNode<S>(
+    func removeMethodNode<S: BidirectionalCollection>(
         path: S
-    ) -> Bool where S: BidirectionalCollection, S.Element: StringProtocol {
+    ) -> Bool where S.Element: StringProtocol {
         guard !path.isEmpty,
               let nodes = nodePath(path: path)
         else { return false }
@@ -141,9 +141,9 @@ extension OSCAddressSpace {
     /// Internal:
     /// Returns the `Node` for the last path component of the given path if it is a method.
     /// Returns `nil` if the node does not exist or if the node is a container.
-    func methodNode<S>(
+    func methodNode<S: BidirectionalCollection>(
         path: S
-    ) -> Node? where S: BidirectionalCollection, S.Element: StringProtocol {
+    ) -> Node? where S.Element: StringProtocol {
         var pathRef: Node? = nil // start at root
         for idx in path.indices {
             guard let node = (pathRef?.children ?? root)
@@ -160,9 +160,9 @@ extension OSCAddressSpace {
     /// Returns the `Node` for the last path component of the given path.
     /// - May be a partial path.
     /// - Returns `nil` if the node does not exist.
-    func node<S>(
+    func node<S: BidirectionalCollection>(
         path: S
-    ) -> Node? where S: BidirectionalCollection, S.Element: StringProtocol {
+    ) -> Node? where S.Element: StringProtocol {
         var pathRef: Node? = nil // start at root
         for idx in path.indices {
             guard let node = (pathRef?.children ?? root)
@@ -180,9 +180,9 @@ extension OSCAddressSpace {
     /// component.
     /// - May be a partial path.
     /// - Returns `nil` if the complete path does not exist.
-    func nodePath<S>(
-        path: S,
-    ) -> [Node]? where S: BidirectionalCollection, S.Element: StringProtocol {
+    func nodePath<S: BidirectionalCollection>(
+        path: S
+    ) -> [Node]? where S.Element: StringProtocol {
         var nodes: [Node] = []
         var pathRef: Node? = nil // start at root
         for idx in path.indices {
@@ -202,15 +202,14 @@ extension OSCAddressSpace {
     ///   a container or a method.
     /// - Returns `nil` if the complete path does not exist.
     func nodePath(
-        methodID: MethodID,
+        methodID: MethodID
     ) -> [Node]? {
         // Context ==`nil` represents root.
         func visit(context: (node: Node, path: [Node])?) -> [Node]? {
-            var nodePath: [Node]
-            if let context {
-                nodePath = context.path + [context.node]
+            let nodePath: [Node] = if let context {
+                context.path + [context.node]
             } else {
-                nodePath = []
+                []
             }
             
             if let lastNode = nodePath.last,
@@ -234,9 +233,9 @@ extension OSCAddressSpace {
     
     /// Internal:
     /// Returns the method ID corresponding to the node at the given path.
-    func methodID<S>(
+    func methodID<S: BidirectionalCollection>(
         path: S
-    ) -> MethodID? where S: BidirectionalCollection, S.Element: StringProtocol {
+    ) -> MethodID? where S.Element: StringProtocol {
         guard let nodes = nodePath(path: path)
         else { return nil }
         
