@@ -100,3 +100,12 @@ jobs:
       run: swift build
     - name: Unit Tests
       run: swift test
+      
+  android:
+    name: Build (Android)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+    - uses: actions/checkout@main
+    - name: Build
+      run: swift build --swift-sdk aarch64-unknown-linux-android28 --static-swift-stdlib
