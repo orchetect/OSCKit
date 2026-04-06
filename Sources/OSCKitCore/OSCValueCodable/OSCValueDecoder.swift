@@ -19,7 +19,7 @@ import SwiftDataParsing
 public typealias OSCValueDecoder = PointerDataParser<Data>
 
 extension OSCValueDecoder {
-    /// Read an encoded `Int32` value.
+    /// Read an encoded `Int32` value from an OSC value data payload.
     /// (32-bit big-endian two's complement integer.)
     public mutating func readOSCInt32() throws(OSCDecodeError) -> Int32 {
         let chunk = try readOSC(bytes: 4)
@@ -34,7 +34,7 @@ extension OSCValueDecoder {
         return value
     }
     
-    /// Read an encoded `Int64` value.
+    /// Read an encoded `Int64` value from an OSC value data payload.
     /// (64-bit big-endian two's complement integer.)
     public mutating func readOSCInt64() throws(OSCDecodeError) -> Int64 {
         let chunk = try readOSC(bytes: 8)
@@ -49,7 +49,7 @@ extension OSCValueDecoder {
         return value
     }
     
-    /// Read an encoded `UInt64` value.
+    /// Read an encoded `UInt64` value from an OSC value data payload.
     /// (64-bit big-endian fixed-point integer.)
     public mutating func readOSCUInt64() throws(OSCDecodeError) -> UInt64 {
         let chunk = try readOSC(bytes: 8)
@@ -64,7 +64,7 @@ extension OSCValueDecoder {
         return value
     }
     
-    /// Read an encoded `Float32` value.
+    /// Read an encoded `Float32` value from an OSC value data payload.
     /// a.k.a. "Float"
     /// (32-bit big-endian IEEE 754 floating point number)
     public mutating func readOSCFloat32() throws(OSCDecodeError) -> Float32 {
@@ -80,7 +80,7 @@ extension OSCValueDecoder {
         return value
     }
     
-    /// Read an encoded `Double` value.
+    /// Read an encoded `Double` value from an OSC value data payload.
     /// a.k.a. "Float64"
     /// (64-bit ("double") IEEE 754 floating point number)
     public mutating func readOSCDouble() throws(OSCDecodeError) -> Double {
@@ -96,7 +96,7 @@ extension OSCValueDecoder {
         return value
     }
     
-    /// Read a 4-byte padded null-terminated ASCII string chunk.
+    /// Read a 4-byte padded null-terminated ASCII string chunk from an OSC value data payload.
     ///
     /// The string is validated and an error is thrown if it contains non-ASCII characters which may
     /// be a sign the data is malformed. (OSC string encoding allows only ASCII characters.)
@@ -115,7 +115,7 @@ extension OSCValueDecoder {
         return value
     }
     
-    /// Read a 4-byte padded null-terminated data chunk.
+    /// Read a 4-byte padded null-terminated data chunk from an OSC value data payload.
     public mutating func readOSCNullTerminatedData() throws(OSCDecodeError) -> DataRange {
         // ensure minimum of 4 bytes to work with
         if remainingByteCount < 4 {
@@ -157,7 +157,7 @@ extension OSCValueDecoder {
         return dataBytes
     }
     
-    /// Read an OSC blob data chunk.
+    /// Read an OSC blob data chunk from an OSC value data payload.
     public mutating func readOSCBlob() throws(OSCDecodeError) -> DataRange {
         // check for int32 length chunk
         // note: theoretical max IPv4 UDP packet size is 65507.
@@ -206,8 +206,11 @@ extension OSCValueDecoder {
     }
 }
 
+// MARK: - Utilities
+
 extension OSCValueDecoder {
-    public mutating func readOSC(advance: Bool) throws(OSCDecodeError) -> DataRange {
+    /// Wrapper for `read(advance:)` that throws ``OSCDecodeError``.
+    mutating func readOSC(advance: Bool) throws(OSCDecodeError) -> DataRange {
         do throws(DataParserError) {
             return try read(advance: advance)
         } catch {
@@ -215,7 +218,8 @@ extension OSCValueDecoder {
         }
     }
     
-    public mutating func readOSC(bytes count: Int?) throws(OSCDecodeError) -> DataRange {
+    /// Wrapper for `read(bytes:)` that throws ``OSCDecodeError``.
+    mutating func readOSC(bytes count: Int?) throws(OSCDecodeError) -> DataRange {
         do throws(DataParserError) {
             return try read(bytes: count)
         } catch {
@@ -223,7 +227,8 @@ extension OSCValueDecoder {
         }
     }
     
-    public mutating func seekOSC(by count: Int) throws(OSCDecodeError) {
+    /// Wrapper for `seek(by:)` that throws ``OSCDecodeError``.
+    mutating func seekOSC(by count: Int) throws(OSCDecodeError) {
         do throws(DataParserError) {
             return try seek(by: count)
         } catch {
