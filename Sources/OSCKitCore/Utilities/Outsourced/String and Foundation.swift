@@ -12,7 +12,7 @@
 #if canImport(Darwin)
 import Foundation
 #else
-import FoundationEssentials
+import Foundation
 #endif
 
 extension StringProtocol {

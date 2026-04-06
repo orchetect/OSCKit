@@ -12,7 +12,7 @@
 #if canImport(Darwin)
 import struct Foundation.CharacterSet
 #else
-import struct FoundationEssentials.CharacterSet
+import struct Foundation.CharacterSet
 #endif
 
 extension CharacterSet {
