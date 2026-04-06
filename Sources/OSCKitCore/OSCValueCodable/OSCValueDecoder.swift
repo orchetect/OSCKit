@@ -165,55 +165,50 @@ extension OSCValueDecoder {
     }
     
     /// Read an OSC blob data chunk.
-    public mutating func readOSCBlob() throws(OSCDecodeError) -> DataRange.SubSequence {
+    public mutating func readOSCBlob() throws(OSCDecodeError) -> DataRange {
         // check for int32 length chunk
         // note: theoretical max IPv4 UDP packet size is 65507.
         // this not a definitive check but can at least protect against malformed data
-        guard let blobSize = try? readOSCInt32().int, blobSize < 65507 else {
+        guard let blobDataSize = try? readOSCInt32().int, blobDataSize < 65507 else {
             throw .malformed(
                 "Failed to read Int32 length chunk at start of 4-byte aligned null-terminated blob data chunk."
             )
         }
         
-        let data = try readOSC(advance: false)
-        
         // blob OSC chunk length
-        let blobRawSize = data.count.roundedUp(toMultiplesOf: 4)
+        let paddedBlobDataSize = blobDataSize.roundedUp(toMultiplesOf: 4)
         
-        // check if data is indeed at least as long as the int32 length claims it is
-        if blobRawSize > data.count {
+        // check if data is at least as long as the int32 length claims it is
+        if paddedBlobDataSize > remainingByteCount {
             throw .malformed(
                 "Not enough bytes in 4-byte aligned null-terminated blob data chunk."
             )
         }
         
+        // grab data bytes
+        let dataBytes = try readOSC(bytes: blobDataSize)
+        
         // sanity check to guard against crash
-        guard blobSize <= blobRawSize else {
+        guard blobDataSize <= paddedBlobDataSize else {
             throw .malformed(
                 "Encoded blob chunk length is greater than the available data length."
             )
         }
         
         // check to see if any pad bytes are all nulls
-        
-        guard data[
-            data.startIndex + blobSize ..< data.startIndex + blobRawSize
-        ]
-            .allSatisfy({ $0 == 0x00 })
-        else {
-            throw .malformed(
-                "Expected 4-byte null terminated data but expected null bytes were not found."
-            )
+        let nullBytePaddingCount = paddedBlobDataSize - blobDataSize
+        assert((0 ... 3).contains(nullBytePaddingCount))
+        if nullBytePaddingCount > 0 {
+            guard try readOSC(bytes: nullBytePaddingCount)
+                .allSatisfy({ $0 == 0x00 })
+            else {
+                throw .malformed(
+                    "Expected 4-byte null terminated data but expected null bytes were not found."
+                )
+            }
         }
         
-        let chunk = data[
-            data.startIndex ..< data.startIndex + blobSize
-        ]
-        
-        let byteCount = blobRawSize
-        try seekOSC(by: byteCount)
-        
-        return chunk
+        return dataBytes
     }
 }
 
