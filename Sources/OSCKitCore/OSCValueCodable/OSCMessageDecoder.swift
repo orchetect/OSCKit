@@ -22,31 +22,28 @@ enum OSCMessageDecoder {
     ) throws(OSCDecodeError) -> (addressPattern: String, values: OSCValues) {
         // validation: length
         if rawData.count % 4 != 0 { // isn't a multiple of 4 bytes (as per OSC spec)
-            throw OSCDecodeError.malformed("Length not a multiple of 4 bytes.")
+            throw .malformed("Length not a multiple of 4 bytes.")
         }
         
         // validation: check header
         guard rawData.appearsToBeOSCMessage else {
-            throw OSCDecodeError.malformed("Does not start with an address pattern.")
+            throw .malformed("Does not start with an address pattern.")
         }
         
         return try rawData.withPointerDataParser { decoder throws(OSCDecodeError) in
             // OSC address
             
-            guard let extractedAddressPattern = try? decoder
-                .readOSC4ByteAlignedNullTerminatedASCIIString()
+            guard let extractedAddressPattern = try? decoder.readOSC4ByteAlignedNullTerminatedASCIIString()
             else {
-                throw OSCDecodeError.malformed("Address pattern string could not be parsed.")
+                throw .malformed("Address pattern string could not be parsed.")
             }
             
             // OSC-type chunk
             
-            guard var extractedOSCtags = (
-                try? decoder.readOSC4ByteAlignedNullTerminatedASCIIString()
-            )?
+            guard var extractedOSCtags = (try? decoder.readOSC4ByteAlignedNullTerminatedASCIIString())?
                 .map({ Character(extendedGraphemeClusterLiteral: $0) })
             else {
-                throw OSCDecodeError.malformed("Couldn't extract OSC-type chunk.")
+                throw .malformed("Couldn't extract OSC-type chunk.")
             }
             
             // set up value array
@@ -90,7 +87,7 @@ enum OSCMessageDecoder {
             .compactMap { $0 as? (any OSCValue.Type) }
         
         guard !concreteTypes.isEmpty else {
-            throw OSCDecodeError.malformed(
+            throw .malformed(
                 "No concrete type found to decode OSC type tag: \(initialChar)"
             )
         }

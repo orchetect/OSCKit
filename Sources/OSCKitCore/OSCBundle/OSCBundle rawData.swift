@@ -30,14 +30,14 @@ extension OSCBundle {
         
         // validation: length. all bundles must include the header (8 bytes) and timetag (8 bytes).
         if length < 16 {
-            throw OSCDecodeError.malformed("Data length too short. (Length is \(length))")
+            throw .malformed("Data length too short. (Length is \(length))")
         }
         
         // validation: check header
         if rawData[offset ..< offset + 8]
             != OSCBundle.header
         {
-            throw OSCDecodeError.malformed("Bundle header is not present or is malformed.")
+            throw .malformed("Bundle header is not present or is malformed.")
         }
         
         // set up packet array
@@ -48,7 +48,7 @@ extension OSCBundle {
         guard let extractedTimeTag = rawData[offset ..< offset + 8]
             .toUInt64(from: .bigEndian)
         else {
-            throw OSCDecodeError.malformed("Could not convert timetag to UInt64.")
+            throw .malformed("Could not convert timetag to UInt64.")
         }
         
         offset += 8
@@ -56,25 +56,25 @@ extension OSCBundle {
         while offset < rawData.endIndex {
             // int32 size chunk
             guard offset + 4 <= rawData.endIndex else {
-                throw OSCDecodeError.malformed("Data bytes ended earlier than expected.")
+                throw .malformed("Data bytes ended earlier than expected.")
             }
             guard let elementSize = rawData[offset ..< offset + 4]
                 .toInt32(from: .bigEndian)?.int
             else {
-                throw OSCDecodeError.malformed("Could not convert element size to Int32.")
+                throw .malformed("Could not convert element size to Int32.")
             }
             
             offset += 4
             
             // test for bundle or message
             guard (offset + elementSize) <= rawData.endIndex else {
-                throw OSCDecodeError.malformed("Data bytes ended earlier than expected.")
+                throw .malformed("Data bytes ended earlier than expected.")
             }
             
             let elementContents = rawData[offset ..< offset + elementSize]
             
             guard let oscPacketType = elementContents.oscPacketType else {
-                throw OSCDecodeError.malformed("Unrecognized bundle element encountered.")
+                throw .malformed("Unrecognized bundle element encountered.")
             }
             
             switch oscPacketType {
