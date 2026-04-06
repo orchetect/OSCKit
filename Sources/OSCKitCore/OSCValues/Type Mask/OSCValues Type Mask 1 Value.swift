@@ -4,8 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-
 // 💡 Note:
 //
 // It is possible to refactor all of the masking methods using newer Swift Parameter Packs,

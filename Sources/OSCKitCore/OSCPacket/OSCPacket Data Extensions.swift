@@ -4,9 +4,13 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+#if canImport(Darwin)
+import protocol Foundation.DataProtocol
+#else
+import protocol FoundationEssentials.DataProtocol
+#endif
 
-extension Data {
+extension DataProtocol {
     /// Test if data appears to be an OSC bundle or OSC message. (Basic validation)
     ///
     /// - Returns: An ``OSCPacketType`` case if validation succeeds.

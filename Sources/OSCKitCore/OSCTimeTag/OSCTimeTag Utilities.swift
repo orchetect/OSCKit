@@ -4,7 +4,15 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+#if canImport(Darwin)
+import struct Foundation.Date
+import struct Foundation.DateComponents
+import typealias Foundation.TimeInterval
+#else
+import struct FoundationEssentials.Date
+import struct FoundationEssentials.DateComponents
+import typealias FoundationEssentials.TimeInterval
+#endif
 
 extension OSCTimeTag {
     /// Prime epoch (NTP era 0).
@@ -17,7 +25,10 @@ extension OSCTimeTag {
         hour: 0,
         minute: 0,
         second: 0
-    ).date ?? Date()
+    ).date ?? {
+        assertionFailure("Failed to form date from date components.")
+        return Date()
+    }()
     
     /// Duration in seconds of an NTP era (approx 136.1 years).
     static let eraDuration = TimeInterval(UInt32.max)

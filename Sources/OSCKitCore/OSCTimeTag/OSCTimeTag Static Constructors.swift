@@ -4,7 +4,13 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+#if canImport(Darwin)
+import struct Foundation.Date
+import typealias Foundation.TimeInterval
+#else
+import struct FoundationEssentials.Date
+import typealias FoundationEssentials.TimeInterval
+#endif
 
 extension OSCTimeTag {
     /// Returns a Time Tag with value of `1`, a special time value indicating "now" in the OSC spec.

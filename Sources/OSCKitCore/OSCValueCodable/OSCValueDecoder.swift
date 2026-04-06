@@ -4,7 +4,12 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+#if canImport(Darwin)
+import struct Foundation.Data
+#else
+import struct FoundationEssentials.Data
+#endif
+
 internal import SwiftASCII // ASCIIString
 
 /// ``OSCValue`` decoder.

@@ -4,8 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-
 extension OSCValues {
     /// Returns `true` if an array of ``OSCValue`` values matches an expected value type mask (order
     /// and type of values).

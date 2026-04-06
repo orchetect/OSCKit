@@ -4,8 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-
 /// Impulse OSC value (also known as Infinitum or Bang) as defined by the OSC 1.0 spec.
 /// This type carries no data.
 public struct OSCImpulseValue {

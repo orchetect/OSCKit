@@ -4,8 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-
 @_documentation(visibility: internal)
 extension Double: OSCValue {
     public static let oscValueToken: OSCValueToken = .double

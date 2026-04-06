@@ -4,8 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-
 // NOTE: Overloads that take variadic values were tested,
 // however for code consistency and conventional indentation, it is
 // undesirable to have variadic parameters.

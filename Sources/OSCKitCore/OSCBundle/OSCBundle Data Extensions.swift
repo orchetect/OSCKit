@@ -4,9 +4,13 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+#if canImport(Darwin)
+import protocol Foundation.DataProtocol
+#else
+import protocol FoundationEssentials.DataProtocol
+#endif
 
-extension Data {
+extension DataProtocol {
     /// A fast function to test if Data() begins with an OSC bundle header
     /// (Note: Does NOT do extensive checks to ensure data block isn't malformed)
     @inlinable

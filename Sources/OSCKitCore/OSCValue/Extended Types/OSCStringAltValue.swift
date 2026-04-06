@@ -4,8 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-
 /// Alternative String OSC value as defined by the OSC 1.0 spec.
 /// This is encoded identically as to the normal String type except it carries a unique OSC tag that
 /// differentiates it as an alternative string type.

@@ -4,8 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-
 extension OSCValues {
     /// Returns the OSC value sequence as a strongly typed tuple
     /// if it matches the given mask of concrete value types.

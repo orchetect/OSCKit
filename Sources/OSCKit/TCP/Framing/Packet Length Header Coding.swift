@@ -8,7 +8,7 @@ import Foundation
 
 extension Data {
     /// Returns the data encoded as a packet-length header framed datagram.
-    func packetLengthHeaderEncoded(endianness: NumberEndianness = .platformDefault) -> Data {
+    func packetLengthHeaderEncoded(endianness: ByteOrder = .platformDefault) -> Data {
         let length = UInt32(count)
             .toData(endianness)
         return length + self
@@ -17,7 +17,7 @@ extension Data {
     /// Decodes data that may contain one or more packet-length header framed datagrams.
     ///
     /// The structure is one or more of: a UInt32 length value followed by a sequence of bytes of that length.
-    func packetLengthHeaderDecoded(endianness: NumberEndianness = .platformDefault) throws(OSCTCPPacketLengthHeaderDecodingError) -> [Data] {
+    func packetLengthHeaderDecoded(endianness: ByteOrder = .platformDefault) throws(OSCTCPPacketLengthHeaderDecodingError) -> [Data] {
         var sequences: [SubSequence] = []
         
         var offset: Index = startIndex

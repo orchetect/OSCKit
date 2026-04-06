@@ -1,6 +1,6 @@
 // ----------------------------------------------
 // ----------------------------------------------
-// Extensions/Darwin/FloatingPoint.swift
+// Extensions/Swift/FloatingPoint.swift
 //
 // Borrowed from swift-extensions 2.1.6 under MIT license.
 // https://github.com/orchetect/swift-extensions

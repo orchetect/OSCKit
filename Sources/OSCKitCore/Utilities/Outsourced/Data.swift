@@ -9,15 +9,27 @@
 // ----------------------------------------------
 // ----------------------------------------------
 
-import CoreFoundation
-import Foundation
+#if canImport(Darwin)
+import struct Foundation.Data
+import func Darwin.memcpy
+#else
+import struct FoundationEssentials.Data
+import func CoreFoundation.memcpy
+#endif
+
+import func CoreFoundation.CFConvertFloat32HostToSwapped
+import func CoreFoundation.CFConvertFloat32SwappedToHost
+import func CoreFoundation.CFConvertDoubleHostToSwapped
+import func CoreFoundation.CFConvertDoubleSwappedToHost
+import struct CoreFoundation.CFSwappedFloat32
+import struct CoreFoundation.CFSwappedFloat64
 
 // MARK: - Int
 
 extension Data {
     /// Returns an Int64 value from Data
     /// Returns nil if Data is not the correct length.
-    package func toInt(from endianness: NumberEndianness = .platformDefault) -> Int? {
+    package func toInt(from endianness: ByteOrder = .platformDefault) -> Int? {
         toNumber(from: endianness, toType: Int.self)
     }
 }
@@ -43,7 +55,7 @@ extension Data {
 extension Data {
     /// Returns an Int16 value from Data
     /// Returns nil if Data is not the correct length.
-    package func toInt16(from endianness: NumberEndianness = .platformDefault) -> Int16? {
+    package func toInt16(from endianness: ByteOrder = .platformDefault) -> Int16? {
         toNumber(from: endianness, toType: Int16.self)
     }
 }
@@ -53,7 +65,7 @@ extension Data {
 extension Data {
     /// Returns an Int32 value from Data
     /// Returns nil if Data is not the correct length.
-    package func toInt32(from endianness: NumberEndianness = .platformDefault) -> Int32? {
+    package func toInt32(from endianness: ByteOrder = .platformDefault) -> Int32? {
         toNumber(from: endianness, toType: Int32.self)
     }
 }
@@ -63,7 +75,7 @@ extension Data {
 extension Data {
     /// Returns an Int64 value from Data
     /// Returns nil if Data is not the correct length.
-    package func toInt64(from endianness: NumberEndianness = .platformDefault) -> Int64? {
+    package func toInt64(from endianness: ByteOrder = .platformDefault) -> Int64? {
         toNumber(from: endianness, toType: Int64.self)
     }
 }
@@ -73,7 +85,7 @@ extension Data {
 extension Data {
     /// Returns a UInt value from Data.
     /// Returns nil if Data is not the correct length.
-    package func toUInt(from endianness: NumberEndianness = .platformDefault) -> UInt? {
+    package func toUInt(from endianness: ByteOrder = .platformDefault) -> UInt? {
         toNumber(from: endianness, toType: UInt.self)
     }
 }
@@ -94,7 +106,7 @@ extension Data {
 extension Data {
     /// Returns a UInt16 value from Data.
     /// Returns nil if Data is not the correct length.
-    package func toUInt16(from endianness: NumberEndianness = .platformDefault) -> UInt16? {
+    package func toUInt16(from endianness: ByteOrder = .platformDefault) -> UInt16? {
         toNumber(from: endianness, toType: UInt16.self)
     }
 }
@@ -104,7 +116,7 @@ extension Data {
 extension Data {
     /// Returns a UInt32 value from Data.
     /// Returns nil if Data is not the correct length.
-    package func toUInt32(from endianness: NumberEndianness = .platformDefault) -> UInt32? {
+    package func toUInt32(from endianness: ByteOrder = .platformDefault) -> UInt32? {
         toNumber(from: endianness, toType: UInt32.self)
     }
 }
@@ -114,7 +126,7 @@ extension Data {
 extension Data {
     /// Returns a UInt64 value from Data.
     /// Returns nil if Data is not the correct length.
-    package func toUInt64(from endianness: NumberEndianness = .platformDefault) -> UInt64? {
+    package func toUInt64(from endianness: ByteOrder = .platformDefault) -> UInt64? {
         toNumber(from: endianness, toType: UInt64.self)
     }
 }
@@ -123,7 +135,7 @@ extension Data {
 
 extension Float32 {
     /// Returns Data representation of a Float32 value.
-    package func toData(_ endianness: NumberEndianness = .platformDefault) -> Data {
+    package func toData(_ endianness: ByteOrder = .platformDefault) -> Data {
         var number = self
         
         return withUnsafeBytes(of: &number) { rawBuffer in
@@ -134,7 +146,7 @@ extension Float32 {
                         Data(buffer: buffer)
                         
                     case .littleEndian:
-                        switch NumberEndianness.system {
+                        switch ByteOrder.system {
                         case .littleEndian:
                             Data(buffer: buffer)
                         case .bigEndian:
@@ -144,7 +156,7 @@ extension Float32 {
                         }
                         
                     case .bigEndian:
-                        switch NumberEndianness.system {
+                        switch ByteOrder.system {
                         case .littleEndian:
                             Data(Data(buffer: buffer).reversed())
                         case .bigEndian:
@@ -161,7 +173,7 @@ extension Float32 {
 extension Data {
     /// Returns a Float32 value from Data
     /// Returns nil if Data is != 4 bytes.
-    package func toFloat32(from endianness: NumberEndianness = .platformDefault) -> Float32? {
+    package func toFloat32(from endianness: ByteOrder = .platformDefault) -> Float32? {
         guard count == 4 else { return nil }
         
         // define conversions
@@ -198,7 +210,7 @@ extension Data {
             return number
             
         case .littleEndian:
-            switch NumberEndianness.system {
+            switch ByteOrder.system {
             case .littleEndian:
                 return number
             case .bigEndian:
@@ -208,7 +220,7 @@ extension Data {
             }
             
         case .bigEndian:
-            switch NumberEndianness.system {
+            switch ByteOrder.system {
             case .littleEndian:
                 return numberSwapped
             case .bigEndian:
@@ -224,7 +236,7 @@ extension Data {
 
 extension Double {
     /// Returns Data representation of a Double value.
-    package func toData(_ endianness: NumberEndianness = .platformDefault) -> Data {
+    package func toData(_ endianness: ByteOrder = .platformDefault) -> Data {
         var number = self
         
         return withUnsafeBytes(of: &number) { rawBuffer in
@@ -235,7 +247,7 @@ extension Double {
                         Data(buffer: buffer)
                         
                     case .littleEndian:
-                        switch NumberEndianness.system {
+                        switch ByteOrder.system {
                         case .littleEndian:
                             Data(buffer: buffer)
                         case .bigEndian:
@@ -245,7 +257,7 @@ extension Double {
                         }
                         
                     case .bigEndian:
-                        switch NumberEndianness.system {
+                        switch ByteOrder.system {
                         case .littleEndian:
                             Data(Data(buffer: buffer).reversed())
                         case .bigEndian:
@@ -262,7 +274,7 @@ extension Double {
 extension Data {
     /// Returns a Double value from Data
     /// Returns nil if Data is != 8 bytes.
-    package func toDouble(from endianness: NumberEndianness = .platformDefault) -> Double? {
+    package func toDouble(from endianness: ByteOrder = .platformDefault) -> Double? {
         guard count == 8 else { return nil }
         
         // define conversions
@@ -299,7 +311,7 @@ extension Data {
             return number
             
         case .littleEndian:
-            switch NumberEndianness.system {
+            switch ByteOrder.system {
             case .littleEndian:
                 return number
             case .bigEndian:
@@ -309,7 +321,7 @@ extension Data {
             }
             
         case .bigEndian:
-            switch NumberEndianness.system {
+            switch ByteOrder.system {
             case .littleEndian:
                 return numberSwapped
             case .bigEndian:
@@ -326,7 +338,7 @@ extension Data {
 extension FixedWidthInteger {
     /// Returns Data representation of an integer. (Endianness has no effect on single-byte
     /// integers.)
-    package func toData(_ endianness: NumberEndianness = .platformDefault) -> Data {
+    package func toData(_ endianness: ByteOrder = .platformDefault) -> Data {
         var int: Self = switch endianness {
         case .platformDefault: self
         case .littleEndian:    littleEndian
@@ -347,7 +359,7 @@ extension FixedWidthInteger {
 extension Data {
     /// Internal use.
     package func toNumber<T: FixedWidthInteger>(
-        from endianness: NumberEndianness = .platformDefault,
+        from endianness: ByteOrder = .platformDefault,
         toType: T.Type
     ) -> T? {
         guard count == MemoryLayout<T>.size else { return nil }
@@ -373,7 +385,7 @@ extension Data {
             return int
             
         case .littleEndian:
-            switch NumberEndianness.system {
+            switch ByteOrder.system {
             case .littleEndian:
                 return int
             case .bigEndian:
@@ -383,7 +395,7 @@ extension Data {
             }
             
         case .bigEndian:
-            switch NumberEndianness.system {
+            switch ByteOrder.system {
             case .littleEndian:
                 return int.byteSwapped
             case .bigEndian:

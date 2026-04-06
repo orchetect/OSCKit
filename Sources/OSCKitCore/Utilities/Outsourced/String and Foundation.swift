@@ -9,7 +9,11 @@
 // ----------------------------------------------
 // ----------------------------------------------
 
+#if canImport(Darwin)
 import Foundation
+#else
+import FoundationEssentials
+#endif
 
 extension StringProtocol {
     /// Convenience function to return a new string with whitespaces and newlines trimmed off start

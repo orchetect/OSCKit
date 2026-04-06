@@ -4,8 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-
 /// Protocol requirements for ``OSCValue`` encoding.
 public protocol OSCValueEncodable: SendableMetatype {
     associatedtype OSCEncoded: OSCValueEncodable

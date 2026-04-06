@@ -4,7 +4,11 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+#if canImport(Darwin)
+import struct Foundation.Data
+#else
+import struct FoundationEssentials.Data
+#endif
 
 /// ``OSCValue`` type tokens, including optional variants and opaque types.
 /// Useful for abstractions that mask sequences of values.

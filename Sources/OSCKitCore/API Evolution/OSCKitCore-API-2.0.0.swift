@@ -4,8 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-
 // MARK: - OSCSerialization/OSCValueTagIdentity.swift
 
 extension OSCValueTagIdentity {

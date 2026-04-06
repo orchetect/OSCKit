@@ -4,7 +4,13 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+#if canImport(Darwin)
+import struct Foundation.Date
+import typealias Foundation.TimeInterval
+#else
+import struct FoundationEssentials.Date
+import typealias FoundationEssentials.TimeInterval
+#endif
 
 extension Date {
     /// Returns total seconds elapsed since 1990 (prime epoch, NTP era 0).

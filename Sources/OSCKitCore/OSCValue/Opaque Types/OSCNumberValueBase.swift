@@ -4,8 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-
 /// Type-erased OSC number value encapsulation.
 public enum OSCNumberValueBase {
     /// Boolean value.

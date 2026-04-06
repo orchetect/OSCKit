@@ -4,8 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-
 private let oscTypeTagTrue: Character = "T"
 private let oscTypeTagFalse: Character = "F"
 

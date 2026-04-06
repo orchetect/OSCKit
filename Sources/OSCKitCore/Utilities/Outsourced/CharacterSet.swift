@@ -9,7 +9,11 @@
 // ----------------------------------------------
 // ----------------------------------------------
 
-import Foundation
+#if canImport(Darwin)
+import struct Foundation.CharacterSet
+#else
+import struct FoundationEssentials.CharacterSet
+#endif
 
 extension CharacterSet {
     /// Initialize a `CharacterSet` from one or more `Character`.

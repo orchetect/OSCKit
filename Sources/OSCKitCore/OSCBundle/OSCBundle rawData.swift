@@ -4,14 +4,22 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+#if canImport(Darwin)
+import struct Foundation.Data
+import protocol Foundation.DataProtocol
+#else
+import struct FoundationEssentials.Data
+import protocol FoundationEssentials.DataProtocol
+#endif
 
 extension OSCBundle {
     /// Initialize by parsing raw OSC bundle data bytes.
     ///
     /// This method assumes that the data is expected to be an OSC bundle and an error will be thrown
     /// if the data is not the expected format.
-    public init(from rawData: Data) throws(OSCDecodeError) {
+    public init(from rawData: some DataProtocol) throws(OSCDecodeError) {
+        let rawData = Data(rawData)
+        
         // cache raw data
         _rawData = rawData
         

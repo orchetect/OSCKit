@@ -4,8 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-
 extension OSCAddressPattern {
     /// OSC Address Component.
     /// A tokenized pattern of an individual path component in an OSC address pattern.

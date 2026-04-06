@@ -4,8 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-
 extension String {
     /// Returns the address as individual path components (strings between `/` separators).
     package var oscAddressPathComponents: [Substring] {

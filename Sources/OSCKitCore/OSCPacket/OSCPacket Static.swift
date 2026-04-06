@@ -4,8 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-
 // MARK: - Static Constructors
 
 // NOTE: Overloads that take variadic values were tested,

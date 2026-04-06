@@ -4,8 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-
 extension OSCAddressPattern.Component {
     /// Initializes a new OSC address pattern ``Component`` instance tokenizing an individual path
     /// component of an OSC address.

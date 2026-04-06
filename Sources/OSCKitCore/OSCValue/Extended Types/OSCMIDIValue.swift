@@ -4,8 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-
 /// MIDI 1.0 message OSC value as defined by the OSC 1.0 spec.
 ///
 /// The message is built as 1-3 raw MIDI 1.0 message bytes, along with a port ID.

@@ -4,7 +4,13 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+#if canImport(Darwin)
+import struct Foundation.Data
+import protocol Foundation.DataProtocol
+#else
+import struct FoundationEssentials.Data
+import protocol FoundationEssentials.DataProtocol
+#endif
 
 extension OSCPacket {
     /// Initialize by parsing raw OSC packet data bytes.
@@ -16,7 +22,7 @@ extension OSCPacket {
     /// - Returns: If the packet data is a valid OSC bundle or message, the data will be decoded
     ///   and a new instance will be returned. If the packet data is not an OSC packet, `nil` will
     ///   be returned.
-    public init?(from rawData: Data) throws(OSCDecodeError) {
+    public init?(from rawData: some DataProtocol) throws(OSCDecodeError) {
         if rawData.appearsToBeOSCBundle {
             let bundle = try OSCBundle(from: rawData)
             self = .bundle(bundle)

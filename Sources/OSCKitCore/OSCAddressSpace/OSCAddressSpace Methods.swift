@@ -4,7 +4,11 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+#if canImport(Darwin)
+import struct Foundation.UUID
+#else
+import struct FoundationEssentials.UUID
+#endif
 
 // MARK: - Address Registration
 

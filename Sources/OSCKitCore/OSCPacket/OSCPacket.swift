@@ -4,8 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-
 /// OSC packet containing a bundle or message.
 public enum OSCPacket {
     /// OSC bundle.

@@ -4,8 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-
 extension OSCTimeTag: Codable {
     public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()

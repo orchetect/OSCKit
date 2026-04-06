@@ -4,7 +4,11 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+#if canImport(Darwin)
+import protocol Foundation.LocalizedError
+#else
+import protocol Foundation.LocalizedError
+#endif
 
 /// Error type returned by ``OSCSerialization`` methods.
 public enum OSCSerializationError: LocalizedError {

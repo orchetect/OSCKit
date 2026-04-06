@@ -4,7 +4,11 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+#if canImport(Darwin)
+import struct Foundation.Data
+#else
+import struct FoundationEssentials.Data
+#endif
 
 /// Protocol that ``OSCValue`` encoder block encapsulation structs adopt.
 public protocol OSCValueEncoderBlock where Self: Sendable {

@@ -4,7 +4,11 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+#if canImport(Darwin)
+import struct Foundation.UUID
+#else
+import struct FoundationEssentials.UUID
+#endif
 
 /// OSC address space populated with a local address tree by registering OSC methods, offering
 /// methods to match and dispatch against received OSC address patterns.

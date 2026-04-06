@@ -27,7 +27,11 @@ public final class OSCSerialization {
             )
         }
     }
-    
+}
+
+// MARK: - Type Registration
+
+extension OSCSerialization {
     /// Register a concrete type that conforms to ``OSCValueCodable`` to make it available for OSC
     /// encoding, decoding and value masking.
     public func registerType(_ concreteType: any OSCValueCodable.Type) throws(OSCSerializationError) {
@@ -53,6 +57,8 @@ public final class OSCSerialization {
         }
     }
 }
+
+// MARK: - Tag Identities
 
 extension OSCSerialization {
     static let standardTypes: [any OSCValueCodable.Type] = [

@@ -4,8 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-
 extension OSCAddressPattern.Component {
     /// Evaluate pattern matching against a single path component in an OSC address.
     ///

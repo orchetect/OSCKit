@@ -4,7 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
 internal import SwiftASCII // ASCIICharacter
 
 // MARK: - OSC Encoding

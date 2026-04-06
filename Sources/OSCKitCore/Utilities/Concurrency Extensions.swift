@@ -4,7 +4,11 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+#if canImport(Darwin)
+import typealias Foundation.TimeInterval
+#else
+import typealias FoundationEssentials.TimeInterval
+#endif
 
 private let maxSeconds = TimeInterval(UInt64.max / 1_000_000_000)
 

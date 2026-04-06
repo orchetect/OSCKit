@@ -4,8 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-
 /// OSC Time Tag.
 ///
 /// A special timestamp used in an OSC bundle. In most situations, it is recommended to ignore this

@@ -4,9 +4,13 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+#if canImport(Darwin)
+import protocol Foundation.DataProtocol
+#else
+import protocol FoundationEssentials.DataProtocol
+#endif
 
-extension Data {
+extension DataProtocol {
     /// A fast test if `Data` appears to be an OSC message.
     /// (Note: Does NOT do extensive checks to ensure message isn't malformed.)
     @inlinable
