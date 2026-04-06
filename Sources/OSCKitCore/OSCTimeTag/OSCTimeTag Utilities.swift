@@ -18,7 +18,7 @@ extension OSCTimeTag {
     /// Prime epoch (NTP era 0).
     static let primeEpoch: Date = DateComponents(
         calendar: .current,
-        timeZone: .current,
+        timeZone: .utc,
         year: 1900,
         month: 1,
         day: 1,

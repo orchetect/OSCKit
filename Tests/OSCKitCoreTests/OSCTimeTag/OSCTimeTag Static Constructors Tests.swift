@@ -115,7 +115,7 @@ import Testing
 /// NTP prime epoch, a.k.a. era 0.
 private let primeEpoch: Date = DateComponents(
     calendar: .current,
-    timeZone: .current,
+    timeZone: .utc,
     year: 1900,
     month: 1,
     day: 1,

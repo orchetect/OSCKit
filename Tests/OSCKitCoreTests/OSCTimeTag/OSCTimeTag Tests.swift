@@ -225,7 +225,7 @@ import Testing
 /// NTP prime epoch, a.k.a. era 0.
 private let primeEpoch: Date = DateComponents(
     calendar: .current,
-    timeZone: .current,
+    timeZone: .utc,
     year: 1900,
     month: 1,
     day: 1,
@@ -239,7 +239,7 @@ private let timeTag1Jan2022: UInt64 = 16_535_555_370_123_264_000
 private let seconds1Jan2022 = 3_849_984_000.0
 private let date1Jan2022: Date = DateComponents(
     calendar: .current,
-    timeZone: .current,
+    timeZone: .utc,
     year: 2022,
     month: 1,
     day: 1,
@@ -253,7 +253,7 @@ private let timeTag1Jan2050: UInt64 = 1_883_899_379_035_668_480
 private let seconds1Jan2050 = 4_733_596_800.0
 private let date1Jan2050: Date = DateComponents(
     calendar: .current,
-    timeZone: .current,
+    timeZone: .utc,
     year: 2050,
     month: 1,
     day: 1,
@@ -267,7 +267,7 @@ private let timeTag1Jan2200: UInt64 = 3_767_427_672_896_962_560
 private let seconds1Jan2200 = 9_467_107_200.0
 private let date1Jan2200: Date = DateComponents(
     calendar: .current,
-    timeZone: .current,
+    timeZone: .utc,
     year: 2200,
     month: 1,
     day: 1,

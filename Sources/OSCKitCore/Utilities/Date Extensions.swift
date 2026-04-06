@@ -7,9 +7,11 @@
 #if canImport(Darwin)
 import struct Foundation.Date
 import typealias Foundation.TimeInterval
+import struct Foundation.TimeZone
 #else
 import struct FoundationEssentials.Date
 import typealias FoundationEssentials.TimeInterval
+import struct FoundationEssentials.TimeZone
 #endif
 
 extension Date {
@@ -24,4 +26,16 @@ extension Date {
     package var ntpEra: Int {
         Int(timeIntervalSince(OSCTimeTag.primeEpoch) / OSCTimeTag.eraDuration)
     }
+}
+
+extension TimeZone {
+    /// UTC timezone.
+    package static let utc: TimeZone = TimeZone(abbreviation: "UTC") ?? {
+        assertionFailure("Failed to create UTC timezone.")
+        return if #available(macOS 13, iOS 16, tvOS 16, watchOS 9, *) {
+            .gmt
+        } else {
+            .current
+        }
+    }()
 }
