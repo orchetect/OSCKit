@@ -2,11 +2,11 @@
 
 # OSCKit
 
-[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2FOSCKit%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/orchetect/OSCKit) [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2FOSCKit%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/orchetect/OSCKit) [![Xcode 16](https://img.shields.io/badge/Xcode-16-blue.svg?style=flat)](https://developer.apple.com/swift) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/OSCKit/blob/main/LICENSE)
+[![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2FOSCKit%2Fbadge%3Ftype%3Dplatforms)](https://swiftpackageindex.com/orchetect/OSCKit) [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2Forchetect%2FOSCKit%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/orchetect/OSCKit) [![License: MIT](http://img.shields.io/badge/license-MIT-lightgrey.svg?style=flat)](https://github.com/orchetect/OSCKit/blob/main/LICENSE)
 
-Open Sound Control ([OSC](https://opensoundcontrol.stanford.edu)) library written in Swift.
+Open Sound Control ([OSC](https://opensoundcontrol.stanford.edu)) library written in Swift for Apple platforms, Linux, and Android.
 
-The core library is compatible with Apple platforms and Linux. The network layer is currently built for only Apple platforms.
+(Note that the network layer is currently only built for Apple platforms.)
 
 - OSC address pattern matching and dispatch
 - Convenient OSC message value type masking, validation and strong-typing
@@ -34,8 +34,9 @@ This includes a getting started guide, links to examples, and troubleshooting ti
 
 ## Dependencies
 
-- [CocoaAsyncSocket](https://github.com/robbiehanson/CocoaAsyncSocket) is used by the `OSCKit` target for network sockets.
-- [SwiftASCII](https://github.com/orchetect/SwiftASCII) is used for ASCII string and character formatting and validation.
+- [CocoaAsyncSocket](https://github.com/robbiehanson/CocoaAsyncSocket) is used by the `OSCKit` target for network sockets (Apple platforms only).
+- [swift-ascii](https://github.com/orchetect/SwiftASCII) is used for ASCII string and character formatting and validation.
+- [swift-data-parsing](https://github.com/orchetect/swift-data-parsing) is used for binary data decoding.
 
 ## Author
 
