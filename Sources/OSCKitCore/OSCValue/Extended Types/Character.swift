@@ -35,7 +35,7 @@ extension Character: OSCValueEncodable {
 @_documentation(visibility: internal)
 extension Character: OSCValueDecodable {
     public static let oscDecoding = OSCValueStaticTagDecoder<Self> { decoder throws(OSCDecodeError) in
-        let asciiCharNum = try decoder.readInt32().int
+        let asciiCharNum = try decoder.readOSCInt32().int
         guard let asciiChar = ASCIICharacter(asciiCharNum) else {
             throw .malformed(
                 "Character value couldn't be read. Could not form a Unicode scalar from the value."

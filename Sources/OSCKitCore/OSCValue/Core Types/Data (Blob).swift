@@ -37,6 +37,6 @@ extension Data: OSCValueEncodable {
 @_documentation(visibility: internal)
 extension Data: OSCValueDecodable {
     public static let oscDecoding = OSCValueStaticTagDecoder<Self> { decoder throws(OSCDecodeError) in
-        try decoder.readBlob()
+        try decoder.readOSCBlob().toData()
     }
 }

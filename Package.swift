@@ -10,13 +10,15 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/orchetect/swift-ascii", from: "1.3.0"),
+        .package(url: "https://github.com/orchetect/swift-data-parsing", from: "0.1.1"),
         .package(url: "https://github.com/apple/swift-numerics", from: "1.1.1")
     ],
     targets: [
         .target(
             name: "OSCKitCore",
             dependencies: [
-                .product(name: "SwiftASCII", package: "swift-ascii")
+                .product(name: "SwiftASCII", package: "swift-ascii"),
+                .product(name: "SwiftDataParsing", package: "swift-data-parsing")
             ],
             swiftSettings: [.define("DEBUG", .when(configuration: .debug))]
         ),

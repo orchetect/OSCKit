@@ -25,6 +25,6 @@ extension Float32: OSCValueEncodable {
 @_documentation(visibility: internal)
 extension Float32: OSCValueDecodable {
     public static let oscDecoding = OSCValueStaticTagDecoder<Self> { decoder throws(OSCDecodeError) in
-        try decoder.readFloat32()
+        try decoder.readOSCFloat32()
     }
 }

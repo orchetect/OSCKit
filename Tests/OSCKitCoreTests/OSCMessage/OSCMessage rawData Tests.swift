@@ -32,14 +32,14 @@ import Testing
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.isEmpty)
         
         // re-encode
         
         let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
-        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
+        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.toData())
     }
     
     @Test
@@ -62,7 +62,7 @@ import Testing
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values.first as? Int32)
@@ -71,7 +71,7 @@ import Testing
         // re-encode
         
         let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
-        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
+        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.toData())
     }
     
     @Test
@@ -94,7 +94,7 @@ import Testing
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values.first as? Float32)
@@ -103,7 +103,7 @@ import Testing
         // re-encode
         
         let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
-        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
+        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.toData())
     }
     
     @Test
@@ -132,7 +132,7 @@ import Testing
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val: String = try #require(msg.values.first as? String)
@@ -141,7 +141,7 @@ import Testing
         // re-encode
         
         let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
-        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
+        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.toData())
     }
     
     @Test
@@ -166,7 +166,7 @@ import Testing
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values.first as? Data)
@@ -175,7 +175,7 @@ import Testing
         // re-encode
         
         let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
-        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
+        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.toData())
     }
     
     // MARK: - Extended Types
@@ -201,7 +201,7 @@ import Testing
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values.first as? Int64)
@@ -210,7 +210,7 @@ import Testing
         // re-encode
         
         let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
-        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
+        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.toData())
     }
     
     @Test
@@ -234,7 +234,7 @@ import Testing
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values.first as? OSCTimeTag)
@@ -243,7 +243,7 @@ import Testing
         // re-encode
         
         let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
-        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
+        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.toData())
     }
     
     @Test
@@ -267,7 +267,7 @@ import Testing
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values.first as? Double)
@@ -276,7 +276,7 @@ import Testing
         // re-encode
         
         let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
-        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
+        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.toData())
     }
     
     @Test
@@ -305,7 +305,7 @@ import Testing
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values.first as? OSCStringAltValue)
@@ -314,7 +314,7 @@ import Testing
         // re-encode
         
         let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
-        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
+        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.toData())
     }
     
     @Test
@@ -337,7 +337,7 @@ import Testing
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values.first as? Character)
@@ -346,7 +346,7 @@ import Testing
         // re-encode
         
         let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
-        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
+        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.toData())
     }
     
     @Test
@@ -369,7 +369,7 @@ import Testing
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values.first as? OSCMIDIValue)
@@ -378,7 +378,7 @@ import Testing
         // re-encode
         
         let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
-        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
+        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.toData())
     }
     
     @Test
@@ -399,7 +399,7 @@ import Testing
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 2)
         #expect(msg.values[0] as? Bool == true)
@@ -408,7 +408,7 @@ import Testing
         // re-encode
         
         let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
-        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
+        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.toData())
     }
     
     @Test
@@ -429,7 +429,7 @@ import Testing
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values.first as? OSCNullValue)
@@ -438,7 +438,7 @@ import Testing
         // re-encode
         
         let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
-        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
+        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.toData())
     }
     
     @Test
@@ -459,7 +459,7 @@ import Testing
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values[0] as? OSCImpulseValue)
@@ -468,7 +468,7 @@ import Testing
         // re-encode
         
         let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
-        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
+        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.toData())
     }
     
     @Test
@@ -494,7 +494,7 @@ import Testing
         
         // decode
         
-        let msg = try OSCMessage(from: knownGoodOSCRawBytes.data)
+        let msg = try OSCMessage(from: knownGoodOSCRawBytes)
         #expect(msg.addressPattern.stringValue == "/testaddress")
         #expect(msg.values.count == 1)
         let val = try #require(msg.values[0] as? OSCArrayValue)
@@ -503,6 +503,6 @@ import Testing
         // re-encode
         
         let newMsg = OSCMessage(msg.addressPattern.stringValue, values: msg.values)
-        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.data)
+        #expect(try newMsg.rawData() == knownGoodOSCRawBytes.toData())
     }
 }

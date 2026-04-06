@@ -30,6 +30,6 @@ extension String: OSCValueEncodable {
 @_documentation(visibility: internal)
 extension String: OSCValueDecodable {
     public static let oscDecoding = OSCValueStaticTagDecoder<Self> { decoder throws(OSCDecodeError) in
-        try decoder.read4ByteAlignedNullTerminatedASCIIString()
+        try decoder.readOSC4ByteAlignedNullTerminatedASCIIString()
     }
 }

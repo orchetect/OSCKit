@@ -5,19 +5,20 @@
 //
 
 import Foundation
+import SwiftDataParsing
 
 extension Data {
     /// Returns the data encoded as a packet-length header framed datagram.
-    func packetLengthHeaderEncoded(endianness: ByteOrder = .platformDefault) -> Data {
+    func packetLengthHeaderEncoded(byteOrder: ByteOrder = .platformDefault) -> Data {
         let length = UInt32(count)
-            .toData(endianness)
+            .toData(byteOrder)
         return length + self
     }
     
     /// Decodes data that may contain one or more packet-length header framed datagrams.
     ///
     /// The structure is one or more of: a UInt32 length value followed by a sequence of bytes of that length.
-    func packetLengthHeaderDecoded(endianness: ByteOrder = .platformDefault) throws(OSCTCPPacketLengthHeaderDecodingError) -> [Data] {
+    func packetLengthHeaderDecoded(byteOrder: ByteOrder = .platformDefault) throws(OSCTCPPacketLengthHeaderDecodingError) -> [Data] {
         var sequences: [SubSequence] = []
         
         var offset: Index = startIndex
@@ -29,7 +30,7 @@ extension Data {
             let lengthFieldRange = offset ..< offset + 4
             
             guard let length = self[lengthFieldRange]
-                .toUInt32(from: endianness)
+                .toUInt32(from: byteOrder)
             else {
                 throw .notEnoughBytes
             }

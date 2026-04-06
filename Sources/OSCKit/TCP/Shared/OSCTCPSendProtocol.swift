@@ -66,7 +66,7 @@ extension _OSCTCPSendProtocol {
         case .osc1_0:
             // OSC packet framed using a packet-length header
             // 4-byte int for size
-            oscData.packetLengthHeaderEncoded(endianness: .bigEndian)
+            oscData.packetLengthHeaderEncoded(byteOrder: .bigEndian)
             
         case .osc1_1:
             // OSC packet framed using SLIP (double END) protocol: http://www.rfc-editor.org/rfc/rfc1055.txt

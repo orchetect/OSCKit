@@ -28,6 +28,6 @@ extension Double: OSCValueEncodable {
 @_documentation(visibility: internal)
 extension Double: OSCValueDecodable {
     public static let oscDecoding = OSCValueStaticTagDecoder<Self> { decoder throws(OSCDecodeError) in
-        try decoder.readDouble()
+        try decoder.readOSCDouble()
     }
 }

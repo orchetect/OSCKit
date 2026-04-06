@@ -28,6 +28,6 @@ extension Int64: OSCValueEncodable {
 @_documentation(visibility: internal)
 extension Int64: OSCValueDecodable {
     public static let oscDecoding = OSCValueStaticTagDecoder<Self> { decoder throws(OSCDecodeError) in
-        try decoder.readInt64()
+        try decoder.readOSCInt64()
     }
 }

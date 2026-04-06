@@ -27,14 +27,14 @@ import Testing
         
         // decode
         
-        let bundle = try OSCBundle(from: knownGoodOSCRawBytes.data)
+        let bundle = try OSCBundle(from: knownGoodOSCRawBytes)
         
         #expect(bundle.timeTag.rawValue == 1)
         #expect(bundle.elements.isEmpty)
         
         // re-encode
         
-        #expect(try bundle.rawData() == knownGoodOSCRawBytes.data)
+        #expect(try bundle.rawData() == knownGoodOSCRawBytes.toData())
     }
     
     @Test
@@ -68,7 +68,7 @@ import Testing
         
         // decode
         
-        let bundle = try OSCBundle(from: knownGoodOSCRawBytes.data)
+        let bundle = try OSCBundle(from: knownGoodOSCRawBytes)
         
         #expect(bundle.timeTag.rawValue == 1)
         #expect(bundle.elements.count == 1)
@@ -81,6 +81,6 @@ import Testing
         
         // re-encode
         
-        #expect(try bundle.rawData() == knownGoodOSCRawBytes.data)
+        #expect(try bundle.rawData() == knownGoodOSCRawBytes.toData())
     }
 }

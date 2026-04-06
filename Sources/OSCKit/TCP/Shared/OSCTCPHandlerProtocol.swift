@@ -24,7 +24,7 @@ extension _OSCTCPHandlerProtocol {
         switch framingMode {
         case .osc1_0:
             do {
-                oscPackets = try data.packetLengthHeaderDecoded(endianness: .bigEndian)
+                oscPackets = try data.packetLengthHeaderDecoded(byteOrder: .bigEndian)
             } catch {
                 #if DEBUG
                 print("OSC 1.0 packet-length header decoding error:", error.localizedDescription)

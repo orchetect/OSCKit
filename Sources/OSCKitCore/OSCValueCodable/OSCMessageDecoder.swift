@@ -30,51 +30,51 @@ enum OSCMessageDecoder {
             throw OSCDecodeError.malformed("Does not start with an address pattern.")
         }
         
-        var decoder = OSCValueDecoder(data: rawData)
-        
-        // OSC address
-        
-        guard let extractedAddressPattern = try? decoder
-            .read4ByteAlignedNullTerminatedASCIIString()
-        else {
-            throw OSCDecodeError.malformed("Address pattern string could not be parsed.")
-        }
-        
-        // OSC-type chunk
-        
-        guard var extractedOSCtags = (
-            try? decoder.read4ByteAlignedNullTerminatedASCIIString()
-        )?
-            .map({ Character(extendedGraphemeClusterLiteral: $0) })
-        else {
-            throw OSCDecodeError.malformed("Couldn't extract OSC-type chunk.")
-        }
-        
-        // set up value array
-        var extractedValues: OSCValues = []
-        
-        var currentTagIndex = 0
-        while currentTagIndex < extractedOSCtags.count {
-            var char = extractedOSCtags[currentTagIndex]
+        return try rawData.withPointerDataParser { decoder throws(OSCDecodeError) in
+            // OSC address
             
-            switch char {
-            case ",", "\0":
-                // ignore
-                currentTagIndex += 1
-                
-            default:
-                let tagsToAdvance = try decodeValue(
-                    initialChar: &char,
-                    currentTagIndex: &currentTagIndex,
-                    tags: &extractedOSCtags,
-                    extractedValues: &extractedValues,
-                    decoder: &decoder
-                )
-                currentTagIndex += tagsToAdvance
+            guard let extractedAddressPattern = try? decoder
+                .readOSC4ByteAlignedNullTerminatedASCIIString()
+            else {
+                throw OSCDecodeError.malformed("Address pattern string could not be parsed.")
             }
+            
+            // OSC-type chunk
+            
+            guard var extractedOSCtags = (
+                try? decoder.readOSC4ByteAlignedNullTerminatedASCIIString()
+            )?
+                .map({ Character(extendedGraphemeClusterLiteral: $0) })
+            else {
+                throw OSCDecodeError.malformed("Couldn't extract OSC-type chunk.")
+            }
+            
+            // set up value array
+            var extractedValues: OSCValues = []
+            
+            var currentTagIndex = 0
+            while currentTagIndex < extractedOSCtags.count {
+                var char = extractedOSCtags[currentTagIndex]
+                
+                switch char {
+                case ",", "\0":
+                    // ignore
+                    currentTagIndex += 1
+                    
+                default:
+                    let tagsToAdvance = try decodeValue(
+                        initialChar: &char,
+                        currentTagIndex: &currentTagIndex,
+                        tags: &extractedOSCtags,
+                        extractedValues: &extractedValues,
+                        decoder: &decoder
+                    )
+                    currentTagIndex += tagsToAdvance
+                }
+            }
+            
+            return (extractedAddressPattern, extractedValues)
         }
-        
-        return (extractedAddressPattern, extractedValues)
     }
     
     /// Decode a series of values.

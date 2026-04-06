@@ -28,7 +28,7 @@ extension OSCTimeTag: OSCValueEncodable {
 @_documentation(visibility: internal)
 extension OSCTimeTag: OSCValueDecodable {
     public static let oscDecoding = OSCValueStaticTagDecoder<Self> { decoder throws(OSCDecodeError) in
-        let rawValue = try decoder.readUInt64()
+        let rawValue = try decoder.readOSCUInt64()
         return OSCTimeTag(rawValue)
     }
 }
