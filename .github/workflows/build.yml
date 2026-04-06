@@ -105,18 +105,26 @@ jobs:
     name: Build (Android)
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    env:
+      SDK_ID: swift-6.3-RELEASE_android
+      SDK_URL: https://download.swift.org/swift-6.3-release/android-sdk/swift-6.3-RELEASE/swift-6.3-RELEASE_android.artifactbundle.tar.gz
+      SDK_CHECKSUM: 2f2942c4bcea7965a08665206212c66991dabe23725aeec7c4365fc91acad088
+      TARGET_TRIPLE: aarch64-unknown-linux-android28
     steps:
     - uses: actions/checkout@main
     # AFAIK, the SDK is not pre-installed on the runner images
     - name: Install Android SDK for Swift
       run: |
-        swift sdk install \
-          https://download.swift.org/swift-6.3-release/android-sdk/swift-6.3-RELEASE/swift-6.3-RELEASE_android.artifactbundle.tar.gz \
-          --checksum 2f2942c4bcea7965a08665206212c66991dabe23725aeec7c4365fc91acad088
+        swift sdk install "$SDK_URL" --checksum "$SDK_CHECKSUM"
     # Android NDK is pre-installed on runner image, we just need to run the SDK setup script to link it
     - name: Setup Android SDK for Swift
       run: |
-        cd ~/.swiftpm/swift-sdks/swift-6.3-RELEASE_android.artifactbundle/swift-android/
+        SDK_INFO=$(swift sdk configure --show-configuration "${SDK_ID}" "${TARGET_TRIPLE}")
+        SDK_PATH_REGEX="m/sdkRootPath\:\s(\S*\/swift\-android)/g"
+        SDK_PATH=$(echo "${SDK_INFO}" | perl -nle 'if ('$SDK_PATH_REGEX') { ($path) = ($1); print "${path}"; }')
+        if [[ -z $SDK_PATH ]]; then echo "⛔️ Error: SDK Path not found."; exit 1; fi
+        echo Android Swift SDK Path: "$SDK_PATH"
+        cd "$SDK_PATH"
         ./scripts/setup-android-sdk.sh
     - name: Build
-      run: swift build --swift-sdk aarch64-unknown-linux-android28 --static-swift-stdlib
+      run: swift build --swift-sdk "$TARGET_TRIPLE" --static-swift-stdlib
