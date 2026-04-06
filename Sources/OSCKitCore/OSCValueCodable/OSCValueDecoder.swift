@@ -104,7 +104,7 @@ extension OSCValueDecoder {
         // readOSCNullTerminatedData takes care of data size validation so we don't need to do it here
         let chunk = try readOSCNullTerminatedData()
         
-        guard let value = ASCIIString(exactly: chunk.toData())?.stringValue
+        guard let value = ASCIIString(exactly: chunk)?.stringValue
         else {
             throw .malformed(
                 "Failed to form valid ASCII string from 4-byte aligned null-terminated ASCII string chunk."
@@ -116,7 +116,7 @@ extension OSCValueDecoder {
     }
     
     /// Read a 4-byte padded null-terminated data chunk from an OSC value data payload.
-    public mutating func readOSCNullTerminatedData() throws(OSCDecodeError) -> DataRange {
+    public mutating func readOSCNullTerminatedData() throws(OSCDecodeError) -> Data {
         // ensure minimum of 4 bytes to work with
         if remainingByteCount < 4 {
             throw .malformed(
@@ -154,11 +154,11 @@ extension OSCValueDecoder {
             }
         }
         
-        return dataBytes
+        return dataBytes.toData()
     }
     
     /// Read an OSC blob data chunk from an OSC value data payload.
-    public mutating func readOSCBlob() throws(OSCDecodeError) -> DataRange {
+    public mutating func readOSCBlob() throws(OSCDecodeError) -> Data {
         // check for int32 length chunk
         // note: theoretical max IPv4 UDP packet size is 65507.
         // this not a definitive check but can at least protect against malformed data
@@ -202,7 +202,7 @@ extension OSCValueDecoder {
             }
         }
         
-        return dataBytes
+        return dataBytes.toData()
     }
 }
 
