@@ -11,7 +11,7 @@ import protocol Foundation.LocalizedError
 #endif
 
 /// Error type thrown from OSC decode methods.
-public enum OSCDecodeError: LocalizedError {
+public enum OSCDecodeError: LocalizedError, Equatable, Hashable {
     /// Malformed data. `verboseError` contains the specific reason.
     case malformed(_ verboseError: String)
         

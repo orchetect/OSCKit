@@ -1,5 +1,5 @@
 //
-//  OSCValueMaskError.swift
+//  OSCTCPPacketLengthHeaderDecodingError.swift
 //  OSCKit • https://github.com/orchetect/OSCKit
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
@@ -10,17 +10,14 @@ import protocol Foundation.LocalizedError
 import protocol Foundation.LocalizedError
 #endif
 
-/// Error thrown by ``OSCValues`` `masked(...)` methods.
-public enum OSCValueMaskError: LocalizedError, Equatable, Hashable {
-    case invalidCount
-    case mismatchedTypes
+/// Error cases thrown while decoding packet data encoded with packet-length header framing.
+public enum OSCTCPPacketLengthHeaderDecodingError: LocalizedError, Equatable, Hashable {
+    case notEnoughBytes
     
     public var errorDescription: String? {
         switch self {
-        case .invalidCount:
-            "Invalid argument count"
-        case .mismatchedTypes:
-            "Mismatched types"
+        case .notEnoughBytes:
+            "Note enough bytes."
         }
     }
 }

@@ -4,6 +4,8 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
+#if canImport(Darwin) && !os(watchOS)
+
 import Foundation
 import OSCKitCore
 
@@ -113,3 +115,5 @@ extension _OSCHandlerProtocol {
         }
     }
 }
+
+#endif

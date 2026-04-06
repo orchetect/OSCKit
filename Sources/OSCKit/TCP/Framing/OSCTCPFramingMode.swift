@@ -4,8 +4,6 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
-
 /// Packet framing modes for TCP-based OSC sockets.
 public enum OSCTCPFramingMode {
     /// OSC 1.0 mode: Packet length header.

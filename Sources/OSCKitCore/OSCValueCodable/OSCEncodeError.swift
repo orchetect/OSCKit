@@ -11,7 +11,7 @@ import protocol Foundation.LocalizedError
 #endif
 
 /// Error type thrown from OSC encode methods.
-public enum OSCEncodeError: LocalizedError {
+public enum OSCEncodeError: LocalizedError, Equatable, Hashable {
     /// General encoding error.
     case general(_ verboseError: String)
     

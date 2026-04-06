@@ -4,7 +4,8 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-import Foundation
+#if canImport(Darwin) && !os(watchOS)
+
 import OSCKitCore
 
 /// Received-message handler closure used by OSCKit socket classes.
@@ -14,3 +15,5 @@ public typealias OSCHandlerBlock = @Sendable (
     _ host: String,
     _ port: UInt16
 ) -> Void
+
+#endif
