@@ -4,7 +4,7 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-enum OSCMethodID {
+enum OSCMethodID: Equatable, Hashable, Sendable {
     case methodA
     case methodB
     case methodC

@@ -60,7 +60,7 @@ extension CustomType: OSCValueDecodable {
         
         // Gets entire data chunk from the OSC blob, stripping the length bytes and null padding suffix
         // and returning the actual data content
-        let data = try dataReader.readBlob()
+        let data = try dataReader.readOSCBlob()
         
         // Decode into a new instance of our Codable type
         let decoded: CustomType

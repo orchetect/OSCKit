@@ -122,7 +122,6 @@
 			);
 			mainGroup = E2D003C8289882820073ED8F;
 			packageReferences = (
-				E2D003F2289884030073ED8F /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */,
 				E2CE6F062CCF22A800F81BCE /* XCLocalSwiftPackageReference "../../" */,
 			);
 			productRefGroup = E2D003D2289882820073ED8F /* Products */;
@@ -384,17 +383,6 @@
 			relativePath = ../../;
 		};
 /* End XCLocalSwiftPackageReference section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		E2D003F2289884030073ED8F /* XCRemoteSwiftPackageReference "CocoaAsyncSocket" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/robbiehanson/CocoaAsyncSocket";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		E2CE6F072CCF22A800F81BCE /* OSCKit */ = {
