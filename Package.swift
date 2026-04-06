@@ -9,7 +9,7 @@ let package = Package(
         .library(name: "OSCKitCore", targets: ["OSCKitCore"])
     ],
     dependencies: [
-        .package(url: "https://github.com/orchetect/swift-ascii", from: "1.3.0"),
+        .package(url: "https://github.com/orchetect/swift-ascii", from: "1.3.1"),
         .package(url: "https://github.com/orchetect/swift-data-parsing", from: "0.1.2"),
         .package(url: "https://github.com/apple/swift-numerics", from: "1.1.1")
     ],
