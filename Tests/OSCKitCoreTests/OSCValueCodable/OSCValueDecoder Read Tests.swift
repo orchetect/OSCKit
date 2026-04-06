@@ -110,12 +110,12 @@ import Testing
     }
     
     @Test
-    func readOSC4ByteAlignedNullTerminatedASCIIString() throws {
+    func readOSCNullTerminatedString() throws {
         // empty string
         
         let data1 = Data([0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04])
         try data1.withPointerDataParser { parser in
-            try #expect(parser.readOSC4ByteAlignedNullTerminatedASCIIString() == "")
+            try #expect(parser.readOSCNullTerminatedString() == "")
             #expect(parser.readOffset == 4)
         }
         
@@ -123,42 +123,42 @@ import Testing
         
         let data2 = Data([0x53, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x00, 0x00]) // "String" null null
         try data2.withPointerDataParser { parser in
-            try #expect(parser.readOSC4ByteAlignedNullTerminatedASCIIString() == "String")
+            try #expect(parser.readOSCNullTerminatedString() == "String")
             #expect(parser.readOffset == 8)
         }
         
         // malformed (valid ascii string data, multiple of 4 bytes, but pad is not all nulls)
         let data3 = Data([0x53, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x00, 0x01]) // "String" null 1
         data3.withPointerDataParser { parser in
-            #expect(throws: OSCDecodeError.self) { _ = try parser.readOSC4ByteAlignedNullTerminatedASCIIString() }
+            #expect(throws: OSCDecodeError.self) { _ = try parser.readOSCNullTerminatedString() }
         }
         
         // malformed (valid ascii string data, but not multiple of 4 bytes and no null pad)
         let data4 = Data([0x53, 0x74, 0x72, 0x69, 0x6E, 0x67]) // "String"
         data4.withPointerDataParser { parser in
-            #expect(throws: OSCDecodeError.self) { _ = try parser.readOSC4ByteAlignedNullTerminatedASCIIString() }
+            #expect(throws: OSCDecodeError.self) { _ = try parser.readOSCNullTerminatedString() }
         }
         
         // malformed (valid ascii string data, null terminated, but not multiple of 4 bytes)
         let data5 = Data([0x53, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x00]) // "String" null
         data5.withPointerDataParser { parser in
-            #expect(throws: OSCDecodeError.self) { _ = try parser.readOSC4ByteAlignedNullTerminatedASCIIString() }
+            #expect(throws: OSCDecodeError.self) { _ = try parser.readOSCNullTerminatedString() }
         }
         
         // malformed (valid ascii string data, null terminated, but less than 4 bytes)
         let data6 = Data([0x53, 0x74, 0x00]) // "St" null
         data6.withPointerDataParser { parser in
-            #expect(throws: OSCDecodeError.self) { _ = try parser.readOSC4ByteAlignedNullTerminatedASCIIString() }
+            #expect(throws: OSCDecodeError.self) { _ = try parser.readOSCNullTerminatedString() }
         }
     }
     
     @Test
-    func readOSC4ByteAlignedNullTerminatedData() throws {
+    func readOSCNullTerminatedData() throws {
         // empty string
         
         let data1 = Data([0x00, 0x00, 0x00, 0x00, 0x01, 0x02, 0x03, 0x04])
         try data1.withPointerDataParser { parser in
-            try #expect(parser.readOSC4ByteAlignedNullTerminatedData().toData() == Data())
+            try #expect(parser.readOSCNullTerminatedData().toData() == Data())
             #expect(parser.readOffset == 4)
         }
         
@@ -167,7 +167,7 @@ import Testing
         let data2 = Data([0x53, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x00, 0x00]) // "String" null null
         try data2.withPointerDataParser { parser in
             try #expect(
-                parser.readOSC4ByteAlignedNullTerminatedData().toData()
+                parser.readOSCNullTerminatedData().toData()
                     == Data([0x53, 0x74, 0x72, 0x69, 0x6E, 0x67])
             )
             #expect(parser.readOffset == 8)
@@ -176,25 +176,25 @@ import Testing
         // malformed (multiple of 4 bytes, but pad is not all nulls)
         let data3 = Data([0x53, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x00, 0x01]) // "String" null 1
         data3.withPointerDataParser { parser in
-            #expect(throws: OSCDecodeError.self) { _ = try parser.readOSC4ByteAlignedNullTerminatedData() }
+            #expect(throws: OSCDecodeError.self) { _ = try parser.readOSCNullTerminatedData() }
         }
         
         // malformed (not multiple of 4 bytes and no null pad)
         let data4 = Data([0x53, 0x74, 0x72, 0x69, 0x6E, 0x67]) // "String"
         data4.withPointerDataParser { parser in
-            #expect(throws: OSCDecodeError.self) { _ = try parser.readOSC4ByteAlignedNullTerminatedData() }
+            #expect(throws: OSCDecodeError.self) { _ = try parser.readOSCNullTerminatedData() }
         }
         
         // malformed (null terminated, but not multiple of 4 bytes)
         let data5 = Data([0x53, 0x74, 0x72, 0x69, 0x6E, 0x67, 0x00]) // "String" null
         data5.withPointerDataParser { parser in
-            #expect(throws: OSCDecodeError.self) { _ = try parser.readOSC4ByteAlignedNullTerminatedData() }
+            #expect(throws: OSCDecodeError.self) { _ = try parser.readOSCNullTerminatedData() }
         }
         
         // malformed (valid ascii string data, null terminated, but less than 4 bytes)
         let data6 = Data([0x53, 0x74, 0x00]) // "St" null
         data6.withPointerDataParser { parser in
-            #expect(throws: OSCDecodeError.self) { _ = try parser.readOSC4ByteAlignedNullTerminatedData() }
+            #expect(throws: OSCDecodeError.self) { _ = try parser.readOSCNullTerminatedData() }
         }
     }
     

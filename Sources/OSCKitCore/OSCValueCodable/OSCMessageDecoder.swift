@@ -33,14 +33,14 @@ enum OSCMessageDecoder {
         return try rawData.withPointerDataParser { decoder throws(OSCDecodeError) in
             // OSC address
             
-            guard let extractedAddressPattern = try? decoder.readOSC4ByteAlignedNullTerminatedASCIIString()
+            guard let extractedAddressPattern = try? decoder.readOSCNullTerminatedString()
             else {
                 throw .malformed("Address pattern string could not be parsed.")
             }
             
             // OSC-type chunk
             
-            guard var extractedOSCtags = (try? decoder.readOSC4ByteAlignedNullTerminatedASCIIString())?
+            guard var extractedOSCtags = (try? decoder.readOSCNullTerminatedString())?
                 .map({ Character(extendedGraphemeClusterLiteral: $0) })
             else {
                 throw .malformed("Couldn't extract OSC-type chunk.")

@@ -96,14 +96,13 @@ extension OSCValueDecoder {
         return value
     }
     
-    /// Read a 4-byte aligned null-terminated ASCII string chunk.
+    /// Read a 4-byte padded null-terminated ASCII string chunk.
     ///
     /// The string is validated and an error is thrown if it contains non-ASCII characters which may
     /// be a sign the data is malformed. (OSC string encoding allows only ASCII characters.)
-    public mutating func readOSC4ByteAlignedNullTerminatedASCIIString() throws(OSCDecodeError) -> String {
-        // readOSC4ByteAlignedNullTerminatedData takes care of data size validation so we don't need to
-        // do it here
-        let chunk = try readOSC4ByteAlignedNullTerminatedData()
+    public mutating func readOSCNullTerminatedString() throws(OSCDecodeError) -> String {
+        // readOSCNullTerminatedData takes care of data size validation so we don't need to do it here
+        let chunk = try readOSCNullTerminatedData()
         
         guard let value = ASCIIString(exactly: chunk.toData())?.stringValue
         else {
@@ -113,13 +112,11 @@ extension OSCValueDecoder {
             )
         }
         
-        // seek(by:) was already called by readOSC4ByteAlignedNullTerminatedData()
-        
         return value
     }
     
-    /// Read a 4-byte aligned null-terminated data chunk.
-    public mutating func readOSC4ByteAlignedNullTerminatedData() throws(OSCDecodeError) -> DataRange.SubSequence {
+    /// Read a 4-byte padded null-terminated data chunk.
+    public mutating func readOSCNullTerminatedData() throws(OSCDecodeError) -> DataRange {
         // ensure minimum of 4 bytes to work with
         if remainingByteCount < 4 {
             throw .malformed(
@@ -128,6 +125,7 @@ extension OSCValueDecoder {
         }
         
         let data = try readOSC(advance: false)
+        assert(data.startIndex == 0)
         
         // check for first null
         guard let nullIndex = data
@@ -138,30 +136,25 @@ extension OSCValueDecoder {
             )
         }
         
+        // grab data bytes
+        let dataBytes = try readOSC(bytes: nullIndex)
+        
         // calculate theoretical position after first null that is a multiple of 4 bytes
-        let nullIndexOffsetToZeroStart = nullIndex - data.startIndex
-        let byteCount = nullIndexOffsetToZeroStart + (4 - (nullIndexOffsetToZeroStart % 4))
-        let byteCountIndexOffset = byteCount + data.startIndex
-        
-        // check to see if there actually are enough bytes
-        guard data.count >= byteCount else {
-            throw .malformed(
-                "Not enough bytes in 4-byte aligned null-terminated data chunk."
-            )
+        let nullBytePaddingCount = 4 - (nullIndex % 4)
+        assert((1 ... 4).contains(nullBytePaddingCount))
+        if nullBytePaddingCount > 0 {
+            // check to see if pad bytes are all nulls
+            let nullBytes = try readOSC(bytes: nullBytePaddingCount)
+            guard nullBytes
+                .allSatisfy({ $0 == 0x00 })
+            else {
+                throw .malformed(
+                    "4-byte aligned null-terminated data chunk does not terminate in null bytes as expected."
+                )
+            }
         }
         
-        // check to see if any pad bytes are all nulls
-        guard data[nullIndex ..< byteCountIndexOffset]
-            .allSatisfy({ $0 == 0x00 })
-        else {
-            throw .malformed(
-                "4-byte aligned null-terminated data chunk does not terminate in null bytes as expected."
-            )
-        }
-        
-        try seekOSC(by: byteCount)
-        
-        return data[data.startIndex ..< nullIndex]
+        return dataBytes
     }
     
     /// Read an OSC blob data chunk.
@@ -199,7 +192,8 @@ extension OSCValueDecoder {
         let nullBytePaddingCount = paddedBlobDataSize - blobDataSize
         assert((0 ... 3).contains(nullBytePaddingCount))
         if nullBytePaddingCount > 0 {
-            guard try readOSC(bytes: nullBytePaddingCount)
+            let nullBytes = try readOSC(bytes: nullBytePaddingCount)
+            guard nullBytes
                 .allSatisfy({ $0 == 0x00 })
             else {
                 throw .malformed(
