@@ -41,6 +41,7 @@ extension OSCTCPClient.Notification: Equatable {
         }
     }
 }
+
 extension OSCTCPClient.Notification: Hashable {
     public func hash(into hasher: inout Hasher) {
         switch self {
@@ -55,6 +56,7 @@ extension OSCTCPClient.Notification: Hashable {
         }
     }
 }
+
 extension OSCTCPClient.Notification: Sendable { }
 
 #endif

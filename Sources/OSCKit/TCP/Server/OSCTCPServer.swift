@@ -196,7 +196,7 @@ extension OSCTCPServer: _OSCTCPGeneratesServerNotificationsProtocol {
         remoteHost: String,
         remotePort: UInt16,
         clientID: OSCTCPClientSessionID,
-        error: GCDAsyncSocketError?
+        error: (any Error)?
     ) {
         let notif: Notification = .disconnected(remoteHost: remoteHost, remotePort: remotePort, clientID: clientID, error: error)
         notificationHandler?(notif)

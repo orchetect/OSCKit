@@ -19,7 +19,7 @@ protocol _OSCTCPGeneratesServerNotificationsProtocol {
         remoteHost: String,
         remotePort: UInt16,
         clientID: OSCTCPClientSessionID,
-        error: GCDAsyncSocketError?
+        error: (any Error)?
     )
 }
 
