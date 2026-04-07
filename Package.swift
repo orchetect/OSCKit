@@ -40,7 +40,8 @@ package.products += [
 ]
 
 package.dependencies += [
-    .package(url: "https://github.com/robbiehanson/CocoaAsyncSocket", from: "7.0.0")
+    .package(url: "https://github.com/robbiehanson/CocoaAsyncSocket", from: "7.0.0"),
+    .package(url: "https://github.com/apple/swift-nio", from: "2.0.0")
 ]
 
 package.targets += [
@@ -52,7 +53,8 @@ package.targets += [
                 name: "CocoaAsyncSocket",
                 package: "CocoaAsyncSocket",
                 condition: .when(platforms: [.macOS, .macCatalyst, .iOS, .tvOS, .visionOS, .driverKit])
-            )
+            ),
+            .product(name: "NIO", package: "swift-nio")
         ],
         swiftSettings: [.define("DEBUG", .when(configuration: .debug))]
     ),
