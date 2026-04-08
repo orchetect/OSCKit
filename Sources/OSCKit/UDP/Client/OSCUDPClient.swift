@@ -6,16 +6,15 @@
 
 #if canImport(Darwin) && !os(watchOS)
 
-@preconcurrency import CocoaAsyncSocket
 import Foundation
+import NIO
 
 /// Sends OSC packets over the network using the UDP network protocol.
 ///
 /// A single global OSC client instance created once at app startup is often all that is needed. It
 /// can be used to send OSC messages to one or more receivers on the network.
 public final class OSCUDPClient {
-    private let udpSocket = GCDAsyncUdpSocket()
-    private let udpDelegate = OSCUDPClientDelegate()
+    private var channel: (any Channel)?
     
     /// Local UDP port used by the client from which to send OSC packets. (This is not the remote port
     /// which is specified each time a call to ``send(_:to:port:)-(OSCPacket,_,_)`` is made.)
@@ -27,7 +26,10 @@ public final class OSCUDPClient {
     /// > property may return a value of `0` until the first successful call to ``send(_:to:port:)-(OSCPacket,_,_)``
     /// > is made.
     public var localPort: UInt16 {
-        udpSocket.localPort()
+        if let port = channel?.localAddress?.port {
+            return UInt16(port)
+        }
+        return _localPort ?? 0
     }
 
     private var _localPort: UInt16?
@@ -69,24 +71,25 @@ public final class OSCUDPClient {
         get { _isIPv4BroadcastEnabled }
         set {
             _isIPv4BroadcastEnabled = newValue
-            try? udpSocket.enableBroadcast(newValue)
+            let broadcast: ChannelOptions.Types.SocketOption.Value = newValue ? 1 : 0
+
+            channel?.setOption(ChannelOptions.socketOption(.so_broadcast), value: broadcast).whenComplete { error in }
         }
     }
 
     private var _isIPv4BroadcastEnabled: Bool = false
     
     /// Returns a boolean indicating whether the OSC client has been started.
-    public private(set) var isStarted: Bool = false
+    public var isStarted: Bool {
+        channel?.isActive ?? false
+    }
     
     /// Initialize an OSC client to send messages using the UDP network protocol.
     ///
     /// A random available port in the system will be chosen.
     ///
     /// Using this initializer does not require calling ``start()``.
-    public init() {
-        // delegate needed for local port binding and enable broadcast
-        udpSocket.setDelegate(udpDelegate, delegateQueue: .global())
-    }
+    public init() { }
     
     /// Initialize an OSC client to send messages using the UDP network protocol using a specific local port.
     ///
@@ -146,21 +149,32 @@ extension OSCUDPClient {
         
         stop()
         
-        try udpSocket.enableReusePort(isPortReuseEnabled)
-        try udpSocket.enableBroadcast(isIPv4BroadcastEnabled)
-        try udpSocket.bind(
-            toPort: _localPort ?? 0, // 0 causes system to assign random open port
-            interface: interface
-        )
+        let reuseAddress: ChannelOptions.Types.SocketOption.Value = isPortReuseEnabled ? 1 : 0
+        let broadcast: ChannelOptions.Types.SocketOption.Value = _isIPv4BroadcastEnabled ? 1 : 0
+        let host: String = interface ?? "0.0.0.0"
+        let port: Int = _localPort?.int ?? 0
         
-        isStarted = true
+        //Channel Setup
+        channel = try DatagramBootstrap(group: MultiThreadedEventLoopGroup.singleton)
+        //configure port reuse
+            .channelOption(.socketOption(.so_reuseaddr), value: reuseAddress)
+        //configure ipv4 broadcast
+            .channelOption(.socketOption(.so_broadcast), value: broadcast)
+        //initialize the channel
+            .channelInitializer { channel in
+                channel.eventLoop.makeSucceededVoidFuture()
+            }
+        //bin to host and port
+            .bind(host: host, port: port)
+        //wait for resolution of the `EventLoopFuture`
+            .wait()
     }
     
     /// Closes the OSC port.
     public func stop() {
-        udpSocket.close()
-        
-        isStarted = false
+        //close channel -> opportunity for completion handler
+        channel?.close().whenComplete { _ in }
+        channel = nil
     }
 }
 
@@ -178,13 +192,15 @@ extension OSCUDPClient {
     ) throws {
         let data = try oscPacket.rawData()
         
-        udpSocket.send(
-            data,
-            toHost: host,
-            port: port,
-            withTimeout: 1.0,
-            tag: 0
-        )
+        guard let channel else { return /*TODO: throw clientNotStarted error*/}
+        
+        //resolve host and port to `SocketAddress`
+        let remoteAddress = try SocketAddress.makeAddressResolvingHost(host, port: port.int)
+        //create buffer from data
+        let buffer: ByteBuffer = channel.allocator.buffer(bytes: data)
+
+        let envelope = AddressedEnvelope(remoteAddress: remoteAddress, data: buffer)
+        channel.writeAndFlush(envelope, promise: nil)
     }
     
     /// Send an OSC bundle ad-hoc to a recipient on the network.
@@ -196,15 +212,7 @@ extension OSCUDPClient {
         to host: String,
         port: UInt16 = 8000
     ) throws {
-        let data = try oscBundle.rawData()
-        
-        udpSocket.send(
-            data,
-            toHost: host,
-            port: port,
-            withTimeout: 1.0,
-            tag: 0
-        )
+        try send(.bundle(oscBundle), to: host, port: port)
     }
     
     /// Send an OSC message ad-hoc to a recipient on the network.
@@ -216,15 +224,7 @@ extension OSCUDPClient {
         to host: String,
         port: UInt16 = 8000
     ) throws {
-        let data = try oscMessage.rawData()
-        
-        udpSocket.send(
-            data,
-            toHost: host,
-            port: port,
-            withTimeout: 1.0,
-            tag: 0
-        )
+        try send(.message(oscMessage), to: host, port: port)
     }
 }
 
