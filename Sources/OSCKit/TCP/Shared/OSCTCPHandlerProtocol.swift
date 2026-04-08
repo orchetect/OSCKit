@@ -16,7 +16,7 @@ protocol _OSCTCPHandlerProtocol: _OSCHandlerProtocol {
 }
 
 extension _OSCTCPHandlerProtocol {
-    func _handle(receivedData data: Data, on sock: GCDAsyncSocket, tag: Int) {
+    func _handle(receivedData data: Data, remoteHost: String, remotePort: UInt16, tag: Int) {
         // This routine must accommodate more than one consecutive packet contained in the data
         // which may happen when multiple packets are sent rapidly from a client.
         
@@ -57,8 +57,6 @@ extension _OSCTCPHandlerProtocol {
             return
         }
         
-        let remoteHost = sock.connectedHost ?? ""
-        let remotePort = sock.connectedPort
         for oscPacketData in oscPackets {
             do {
                 guard let oscPacket = try OSCPacket(from: oscPacketData) else {

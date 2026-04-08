@@ -37,7 +37,7 @@ extension OSCTCPClientDelegate: GCDAsyncSocketDelegate {
             sock.readData(withTimeout: -1, tag: tag)
         }
         
-        oscServer?._handle(receivedData: data, on: sock, tag: tag)
+        oscServer?._handle(receivedData: data, remoteHost: sock.connectedHost ?? "", remotePort: sock.connectedPort, tag: tag)
     }
     
     func socketDidDisconnect(_ sock: GCDAsyncSocket, withError err: (any Error)?) {
