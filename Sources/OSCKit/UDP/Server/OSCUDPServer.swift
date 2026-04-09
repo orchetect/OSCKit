@@ -100,7 +100,7 @@ extension OSCUDPServer {
         
         stop()
         
-        let handler = _OSCUDPChannelHandler(oscServer: self)
+        let handler = OSCUDPChannelHandler(oscServer: self)
         let host: String = interface ?? "0.0.0.0"
         let port: Int = _localPort?.int ?? 0
         

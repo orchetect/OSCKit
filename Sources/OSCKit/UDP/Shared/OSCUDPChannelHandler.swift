@@ -9,7 +9,7 @@
 import Foundation
 import NIO
 
-final class _OSCUDPChannelHandler {
+final class OSCUDPChannelHandler {
     weak var oscServer: (any _OSCHandlerProtocol)?
     
     init(oscServer: (any _OSCHandlerProtocol)? = nil) {
@@ -17,7 +17,7 @@ final class _OSCUDPChannelHandler {
     }
 }
 
-extension _OSCUDPChannelHandler: ChannelInboundHandler {
+extension OSCUDPChannelHandler: ChannelInboundHandler {
     typealias InboundIn = AddressedEnvelope<ByteBuffer>
     typealias OutboundOut = AddressedEnvelope<ByteBuffer>
     
@@ -40,7 +40,7 @@ extension _OSCUDPChannelHandler: ChannelInboundHandler {
     }
 }
 
-extension _OSCUDPChannelHandler {
+extension OSCUDPChannelHandler {
     /// Stub required to take `oscServer` as sending.
     private func _handle(
         oscServer: any _OSCHandlerProtocol,
@@ -60,4 +60,4 @@ extension _OSCUDPChannelHandler {
 }
 
 
-extension _OSCUDPChannelHandler: @unchecked Sendable { }
+extension OSCUDPChannelHandler: @unchecked Sendable { }

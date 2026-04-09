@@ -155,7 +155,7 @@ extension OSCUDPSocket {
         let bootstrap = DatagramBootstrap(group: group)
             .channelOption(.socketOption(.so_broadcast), value: broadcast)
             .channelInitializer { channel in
-                channel.pipeline.addHandler(_OSCUDPChannelHandler(oscServer: self))
+                channel.pipeline.addHandler(OSCUDPChannelHandler(oscServer: self))
             }
         
         channel = try bootstrap.bind(host: host, port: port).wait()
