@@ -160,10 +160,6 @@ extension OSCUDPClient {
             .channelOption(.socketOption(.so_reuseaddr), value: reuseAddress)
         //configure ipv4 broadcast
             .channelOption(.socketOption(.so_broadcast), value: broadcast)
-        //initialize the channel
-            .channelInitializer { channel in
-                channel.eventLoop.makeSucceededVoidFuture()
-            }
         //bin to host and port
             .bind(host: host, port: port)
         //wait for resolution of the `EventLoopFuture`
@@ -192,7 +188,13 @@ extension OSCUDPClient {
     ) throws {
         let data = try oscPacket.rawData()
         
-        guard let channel else { return /*TODO: throw clientNotStarted error*/}
+        if !isStarted {
+            try start()
+        }
+        
+        guard let channel else {
+            throw OSCSocketError.notStarted
+        }
         
         //resolve host and port to `SocketAddress`
         let remoteAddress = try SocketAddress.makeAddressResolvingHost(host, port: port.int)

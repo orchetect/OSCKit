@@ -179,7 +179,7 @@ struct OSCUDPServer_Tests {
         let srcLocSendToServer: SourceLocation = #_sourceLocation
         DispatchQueue.global().async {
             for message in sourceMessages {
-                do { try client.send(message, to: "localhost", port: port) }
+                do { try client.send(message, to: "127.0.0.1" /*swift-nio does not support localhost, 127.0.0.1 instead*/, port: port) }
                 catch { Issue.record(error, sourceLocation: srcLocSendToServer) }
             }
         }

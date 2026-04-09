@@ -41,7 +41,7 @@ package.products += [
 
 package.dependencies += [
     .package(url: "https://github.com/robbiehanson/CocoaAsyncSocket", from: "7.0.0"),
-    .package(url: "https://github.com/apple/swift-nio", from: "2.0.0")
+    .package(url: "https://github.com/apple/swift-nio", from: "2.87.0") //lowest version that supports swift 6.0
 ]
 
 package.targets += [

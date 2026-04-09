@@ -143,7 +143,7 @@ struct OSCUDPSocket_Tests {
         
         let socket = OSCUDPSocket(
             localPort: nil, // selects a random available port
-            remoteHost: "localhost",
+            remoteHost: "127.0.0.1",  // swift-nio does not support localhost, 127.0.0.1 instead
             remotePort: nil, // gets set to same port as localPort
             timeTagMode: .ignore,
             isIPv4BroadcastEnabled: false,
