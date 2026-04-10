@@ -117,7 +117,7 @@ extension OSCUDPServer {
     
     /// Stops listening for data and closes the OSC server port.
     public func stop() {
-        channel?.close().whenComplete { _ in }
+        channel?.close(promise: nil)
         channel = nil
     }
 }

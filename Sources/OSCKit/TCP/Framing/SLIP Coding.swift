@@ -14,7 +14,7 @@ extension Data {
     /// SLIP protocol (RFC 1055) byte codes.
     ///
     /// See https://www.rfc-editor.org/rfc/rfc1055.txt
-    enum SLIPByte: UInt8 {
+    enum SLIPByte: UInt8, Sendable {
         /// END (Packet end byte)
         case end = 0xC0
         

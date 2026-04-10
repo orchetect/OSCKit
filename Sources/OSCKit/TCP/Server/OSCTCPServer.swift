@@ -123,7 +123,7 @@ extension OSCTCPServer {
         closeClients()
         
         // close server
-        channel?.close().whenComplete { _ in }
+        channel?.close(promise: nil)
         channel = nil
     }
 }

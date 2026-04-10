@@ -101,22 +101,26 @@ extension OSCTCPClient {
     public func connect(timeout: TimeInterval = 5.0) throws {
         // negative values mean indefinite (no timeout) which is a bit dangerous
         let timeout = Int64(max(1.0, timeout))
+        
         let handler = OSCTCPClientChannelHandler(oscServer: self)
         // create the client bootstrap
         let bootstrap = ClientBootstrap(group: .singletonMultiThreadedEventLoopGroup)
             .connectTimeout(.seconds(timeout))
             .channelInitializer { channel in
                 channel.eventLoop.makeCompletedFuture {
+                    // chose which decoder to use
                     switch self.framingMode {
-                    case .osc1_0:
+                    case .osc1_0: // Length Header
                         try channel.pipeline.syncOperations.addHandler(ByteToMessageHandler(OSCTCPLengthHeaderFrameDecoder()))
-                    case .osc1_1:
+                    case .osc1_1: // SLIP
                         try channel.pipeline.syncOperations.addHandler(ByteToMessageHandler(OSCTCPSLIPFrameDecoder()))
                     }
+                    // add client handler
                     try channel.pipeline.syncOperations.addHandler(handler)
                 }
             }
         
+        // connect to host
         channel = try bootstrap
             .connect(host: remoteHost, port: remotePort.int)
             .wait()
@@ -124,7 +128,9 @@ extension OSCTCPClient {
     
     /// Close the connection, if any.
     public func close() {
+        //close the connection
         channel?.close(promise: nil)
+        //deallocate channel
         channel = nil
     }
 }

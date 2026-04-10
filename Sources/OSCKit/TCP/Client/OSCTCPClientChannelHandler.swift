@@ -13,6 +13,9 @@ import NIO
 final class OSCTCPClientChannelHandler {
     weak var oscServer: (any _OSCTCPHandlerProtocol & _OSCTCPGeneratesClientNotificationsProtocol)?
     
+    /// Stores an error captured in `errorCaught` for use in `channelInactive`.
+    private var pendingError: (any Error)?
+    
     init(oscServer: (any _OSCTCPHandlerProtocol & _OSCTCPGeneratesClientNotificationsProtocol)? = nil) {
         self.oscServer = oscServer
     }
@@ -47,10 +50,15 @@ extension OSCTCPClientChannelHandler: ChannelInboundHandler {
         oscServer._handle(receivedData: data, remoteHost: remoteHost, remotePort: remotePort)
     }
     
-    func errorCaught(context: ChannelHandlerContext, error: any Error) {
-        // send notification
+    func channelInactive(context: ChannelHandlerContext) {
+        let error = pendingError
+        pendingError = nil
+        
         oscServer?._generateDisconnectedNotification(error: error)
-        // close connection
+    }
+    
+    func errorCaught(context: ChannelHandlerContext, error: any Error) {
+        pendingError = error
         context.close(promise: nil)
     }
 }

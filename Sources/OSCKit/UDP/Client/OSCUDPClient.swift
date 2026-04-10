@@ -169,7 +169,7 @@ extension OSCUDPClient {
     /// Closes the OSC port.
     public func stop() {
         // close channel -> opportunity for completion handler
-        channel?.close().whenComplete { _ in }
+        channel?.close(promise: nil)
         channel = nil
     }
 }
