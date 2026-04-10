@@ -79,9 +79,6 @@ extension OSCTCPServer.ClientConnection: _OSCTCPHandlerProtocol {
 }
 
 extension OSCTCPServer.ClientConnection: _OSCTCPGeneratesClientNotificationsProtocol {
-    // note that this is never called because when a remote connection closes, its socket does not fire
-    // `socketDidDisconnect(...)` in GCDAsyncSocketDelegate, but we have to implement this due to
-    // other protocol requirements
     func _generateConnectedNotification() {
         oscServer?._generateConnectedNotification(
             remoteHost: remoteHost,
@@ -90,9 +87,6 @@ extension OSCTCPServer.ClientConnection: _OSCTCPGeneratesClientNotificationsProt
         )
     }
     
-    // note that this is never called because when a remote connection closes, its socket does not fire
-    // `socketDidDisconnect(...)` in GCDAsyncSocketDelegate, but we have to implement this due to
-    // other protocol requirements
     func _generateDisconnectedNotification(error: (any Error)?) {
         oscServer?._generateDisconnectedNotification(
             remoteHost: remoteHost,

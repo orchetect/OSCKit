@@ -13,7 +13,7 @@ import OSCKit
     private var server: OSCTCPServer?
     
     @Published var serverPort: UInt16 = 3032
-    @Published var clientHost: String = "localhost"
+    @Published var clientHost: String = "127.0.0.1"
     @Published var clientPort: UInt16 = 3032
     @Published var framingMode: OSCTCPFramingMode = .osc1_1
     @Published private(set) var isServerStarted: Bool = false

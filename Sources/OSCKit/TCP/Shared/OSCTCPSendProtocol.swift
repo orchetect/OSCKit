@@ -53,13 +53,6 @@ extension _OSCTCPSendProtocol {
     ///   - tag: Server Connection Client Session ID. Applies only to TCP server to determine which connected socket to
     ///     send to.
     private func _send(_ oscData: Data) throws {
-        // guard isConnected else {
-        //     throw GCDAsyncUdpSocketError(
-        //         .closedError,
-        //         userInfo: ["Reason": "OSC TCP client socket is not connected to a remote host."]
-        //     )
-        // }
-        
         guard let channel else {
             throw OSCSocketError.notStarted
         }

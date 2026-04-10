@@ -24,7 +24,7 @@ struct OSCUDPServer_Tests {
             
             let bundle = OSCBundle()
             
-            server._handle(packet: .bundle(bundle), remoteHost: "localhost", remotePort: 8000)
+            server._handle(packet: .bundle(bundle), remoteHost: "127.0.0.1", remotePort: 8000)
             
             try await Task.sleep(seconds: 1)
         }
@@ -59,7 +59,7 @@ struct OSCUDPServer_Tests {
         
         // use global thread to simulate internal network thread being a dedicated thread
         DispatchQueue.global().async {
-            server._handle(packet: .message(msg1), remoteHost: "localhost", remotePort: 8000)
+            server._handle(packet: .message(msg1), remoteHost: "127.0.0.1", remotePort: 8000)
             server._handle(packet: .message(msg2), remoteHost: "192.168.0.25", remotePort: 8001)
             server._handle(packet: .message(msg3), remoteHost: "10.0.0.50", remotePort: 8080)
         }
@@ -68,7 +68,7 @@ struct OSCUDPServer_Tests {
         
         let message1 = await receiver.messages[0]
         #expect(message1.message == msg1)
-        #expect(message1.host == "localhost")
+        #expect(message1.host == "127.0.0.1")
         #expect(message1.port == 8000)
         
         let message2 = await receiver.messages[1]
@@ -118,7 +118,7 @@ struct OSCUDPServer_Tests {
         // use global thread to simulate internal network thread being a dedicated thread
         DispatchQueue.global().async {
             for message in sourceMessages {
-                server._handle(packet: .message(message), remoteHost: "localhost", remotePort: 8000)
+                server._handle(packet: .message(message), remoteHost: "127.0.0.1", remotePort: 8000)
             }
         }
         
