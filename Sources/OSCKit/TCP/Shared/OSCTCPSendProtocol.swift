@@ -6,13 +6,12 @@
 
 #if canImport(Darwin) && !os(watchOS)
 
-@preconcurrency import CocoaAsyncSocket
 import Foundation
-import OSCKitCore
+import NIO
 
 /// Internal protocol that TCP-based OSC classes adopt in order to send OSC packets.
 protocol _OSCTCPSendProtocol: AnyObject where Self: Sendable {
-    var tcpSocket: GCDAsyncSocket { get }
+    var channel: (any Channel)? { get }
     var framingMode: OSCTCPFramingMode { get }
 }
 
@@ -23,8 +22,8 @@ extension _OSCTCPSendProtocol {
     ///   - oscPacket: OSC bundle or message.
     ///   - tag: Server Connection Client Session ID. Applies only to TCP server to determine which connected socket to
     ///     send to.
-    func _send(_ oscPacket: OSCPacket, tag: OSCTCPClientSessionID) throws {
-        try _send(oscPacket.rawData(), tag: tag)
+    func _send(_ oscPacket: OSCPacket) throws {
+        try _send(oscPacket.rawData())
     }
     
     /// Send an OSC bundle.
@@ -33,8 +32,8 @@ extension _OSCTCPSendProtocol {
     ///   - oscBundle: OSC bundle.
     ///   - tag: Server Connection Client Session ID. Applies only to TCP server to determine which connected socket to
     ///     send to.
-    func _send(_ oscBundle: OSCBundle, tag: OSCTCPClientSessionID) throws {
-        try _send(oscBundle.rawData(), tag: tag)
+    func _send(_ oscBundle: OSCBundle) throws {
+        try _send(oscBundle.rawData())
     }
     
     /// Send an OSC message.
@@ -43,8 +42,8 @@ extension _OSCTCPSendProtocol {
     ///   - oscMessage: OSC message.
     ///   - tag: Server Connection Client Session ID. Applies only to TCP server to determine which connected socket to
     ///     send to.
-    func _send(_ oscMessage: OSCMessage, tag: OSCTCPClientSessionID) throws {
-        try _send(oscMessage.rawData(), tag: tag)
+    func _send(_ oscMessage: OSCMessage) throws {
+        try _send(oscMessage.rawData())
     }
     
     /// Send an OSC packet.
@@ -53,13 +52,17 @@ extension _OSCTCPSendProtocol {
     ///   - oscData: Raw bytes of an OSC bundle or message.
     ///   - tag: Server Connection Client Session ID. Applies only to TCP server to determine which connected socket to
     ///     send to.
-    private func _send(_ oscData: Data, tag: OSCTCPClientSessionID) {
+    private func _send(_ oscData: Data) throws {
         // guard isConnected else {
         //     throw GCDAsyncUdpSocketError(
         //         .closedError,
         //         userInfo: ["Reason": "OSC TCP client socket is not connected to a remote host."]
         //     )
         // }
+        
+        guard let channel else {
+            throw OSCSocketError.notStarted
+        }
         
         // frame data
         let data: Data = switch framingMode {
@@ -78,7 +81,9 @@ extension _OSCTCPSendProtocol {
         }
         
         // send packet
-        tcpSocket.write(data, withTimeout: -1, tag: tag)
+        var buffer = channel.allocator.buffer(capacity: data.count)
+        buffer.writeBytes(data)
+        channel.writeAndFlush(buffer, promise: nil)
     }
 }
 

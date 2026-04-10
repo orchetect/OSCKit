@@ -17,7 +17,7 @@ public enum OSCTCPPacketLengthHeaderDecodingError: LocalizedError, Equatable, Ha
     public var errorDescription: String? {
         switch self {
         case .notEnoughBytes:
-            "Note enough bytes."
+            "Not enough bytes."
         }
     }
 }

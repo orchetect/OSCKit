@@ -6,9 +6,8 @@
 
 #if canImport(Darwin) && !os(watchOS)
 
-@preconcurrency import CocoaAsyncSocket
 import Foundation
-import OSCKitCore
+import NIO
 
 /// Connects to a remote host via TCP connection in order to send and receive OSC packets over the network.
 ///
@@ -22,8 +21,7 @@ import OSCKitCore
 /// What differentiates this client class from the server class is that the client class is designed to connect to a
 /// remote TCP server. (Whereas, the server is designed to listen for inbound connections.)
 public final class OSCTCPClient {
-    let tcpSocket: GCDAsyncSocket
-    let tcpDelegate: OSCTCPClientDelegate
+    var channel: (any Channel)?
     let queue: DispatchQueue
     var receiveHandler: OSCHandlerBlock?
     var notificationHandler: NotificationHandlerBlock?
@@ -45,7 +43,7 @@ public final class OSCTCPClient {
     
     /// Returns a boolean indicating whether the OSC socket is connected to the remote host.
     public var isConnected: Bool {
-        tcpSocket.isConnected
+        channel?.isActive ?? false
     }
     
     /// TCP packet framing mode.
@@ -84,10 +82,6 @@ public final class OSCTCPClient {
         let queue = queue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCTCPClient.queue")
         self.queue = queue
         self.receiveHandler = receiveHandler
-        
-        tcpDelegate = OSCTCPClientDelegate()
-        tcpSocket = GCDAsyncSocket(delegate: tcpDelegate, delegateQueue: queue, socketQueue: nil)
-        tcpDelegate.oscServer = self
     }
     
     deinit {
@@ -105,17 +99,33 @@ extension OSCTCPClient {
     /// - Parameters:
     ///   - timeout: Supply a timeout period in seconds.
     public func connect(timeout: TimeInterval = 5.0) throws {
-        try tcpSocket.connect(
-            toHost: remoteHost,
-            onPort: remotePort,
-            viaInterface: interface,
-            withTimeout: max(1.0, timeout) // negative values mean indefinite (no timeout) which is a bit dangerous
-        )
+        // negative values mean indefinite (no timeout) which is a bit dangerous
+        let timeout = Int64(max(1.0, timeout))
+        let handler = OSCTCPClientChannelHandler(oscServer: self)
+        //create the client bootstrap
+        let bootstrap = ClientBootstrap(group: .singletonMultiThreadedEventLoopGroup)
+            .connectTimeout(.seconds(timeout))
+            .channelInitializer { channel in
+                channel.eventLoop.makeCompletedFuture {
+                    switch self.framingMode {
+                    case .osc1_0:
+                        try channel.pipeline.syncOperations.addHandler(ByteToMessageHandler(OSCTCPLengthHeaderFrameDecoder()))
+                    case .osc1_1:
+                        try channel.pipeline.syncOperations.addHandler(ByteToMessageHandler(OSCTCPSLIPFrameDecoder()))
+                    }
+                    try channel.pipeline.syncOperations.addHandler(handler)
+                }
+            }
+        
+        channel = try bootstrap
+            .connect(host: remoteHost, port: remotePort.int)
+            .wait()
     }
     
     /// Close the connection, if any.
     public func close() {
-        tcpSocket.disconnectAfterWriting()
+        channel?.close(promise: nil)
+        channel = nil
     }
 }
 
@@ -124,17 +134,17 @@ extension OSCTCPClient {
 extension OSCTCPClient: _OSCTCPSendProtocol {
     /// Send an OSC bundle or message to the host.
     public func send(_ oscPacket: OSCPacket) throws {
-        try _send(oscPacket, tag: 0)
+        try _send(oscPacket)
     }
     
     /// Send an OSC bundle to the host.
     public func send(_ oscBundle: OSCBundle) throws {
-        try _send(oscBundle, tag: 0)
+        try _send(oscBundle)
     }
     
     /// Send an OSC message to the host.
     public func send(_ oscMessage: OSCMessage) throws {
-        try _send(oscMessage, tag: 0)
+        try _send(oscMessage)
     }
 }
 
@@ -144,7 +154,7 @@ extension OSCTCPClient: _OSCTCPGeneratesClientNotificationsProtocol {
         notificationHandler?(notif)
     }
     
-    func _generateDisconnectedNotification(error: GCDAsyncSocketError?) {
+    func _generateDisconnectedNotification(error: (any Error)?) {
         let notif: Notification = .disconnected(error: error)
         notificationHandler?(notif)
     }

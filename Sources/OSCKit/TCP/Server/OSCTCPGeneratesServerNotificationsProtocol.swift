@@ -6,8 +6,6 @@
 
 #if canImport(Darwin) && !os(watchOS)
 
-@preconcurrency import CocoaAsyncSocket
-
 protocol _OSCTCPGeneratesServerNotificationsProtocol {
     func _generateConnectedNotification(
         remoteHost: String,

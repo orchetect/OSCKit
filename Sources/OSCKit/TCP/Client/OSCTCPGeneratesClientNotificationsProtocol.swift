@@ -6,13 +6,11 @@
 
 #if canImport(Darwin) && !os(watchOS)
 
-@preconcurrency import CocoaAsyncSocket
-
 protocol _OSCTCPGeneratesClientNotificationsProtocol {
     func _generateConnectedNotification()
     
     func _generateDisconnectedNotification(
-        error: GCDAsyncSocketError?
+        error: (any Error)?
     )
 }
 
