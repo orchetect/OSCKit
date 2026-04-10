@@ -14,6 +14,7 @@ extension OSCTCPServer {
     final class ClientConnection {
         let channel: (any Channel)?
         let oscServer: (any _OSCTCPHandlerProtocol & _OSCTCPGeneratesServerNotificationsProtocol)?
+        let clientID: OSCTCPClientSessionID
         let remoteHost: String // cached, since Channel resets it upon disconnection
         let remotePort: UInt16 // cached, since Channel resets it upon disconnection
         let framingMode: OSCTCPFramingMode
@@ -21,6 +22,7 @@ extension OSCTCPServer {
         init(
             server: (any _OSCTCPHandlerProtocol & _OSCTCPGeneratesServerNotificationsProtocol),
             channel: any Channel,
+            clientID: OSCTCPClientSessionID,
             framingMode: OSCTCPFramingMode
         ) {
             self.channel = channel
@@ -29,6 +31,7 @@ extension OSCTCPServer {
             remoteHost = host
             let port = channel.remoteAddress?.port?.uInt16 ?? 0
             remotePort = port
+            self.clientID = clientID
             self.framingMode = framingMode
         }
         
@@ -83,7 +86,7 @@ extension OSCTCPServer.ClientConnection: _OSCTCPGeneratesClientNotificationsProt
         oscServer?._generateConnectedNotification(
             remoteHost: remoteHost,
             remotePort: remotePort,
-            clientID: 0
+            clientID: clientID
         )
     }
     
@@ -91,7 +94,7 @@ extension OSCTCPServer.ClientConnection: _OSCTCPGeneratesClientNotificationsProt
         oscServer?._generateDisconnectedNotification(
             remoteHost: remoteHost,
             remotePort: remotePort,
-            clientID: 0,
+            clientID: clientID,
             error: error
         )
     }

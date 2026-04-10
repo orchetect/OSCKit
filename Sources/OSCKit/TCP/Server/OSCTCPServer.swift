@@ -264,7 +264,7 @@ extension OSCTCPServer {
     
     func addClient(channel: any Channel) -> OSCTCPClientSessionID {
         let clientID = newClientID()
-        let connection = ClientConnection(server: self, channel: channel, framingMode: framingMode)
+        let connection = ClientConnection(server: self, channel: channel, clientID: clientID, framingMode: framingMode)
         _clients[clientID] = connection
         
         return clientID
