@@ -5,6 +5,8 @@
 //  Created by Joshua Wolfson on 9/4/2026.
 //
 
+#if !os(watchOS)
+
 import Foundation
 import NIO
 
@@ -54,3 +56,5 @@ extension OSCTCPClientChannelHandler: ChannelInboundHandler {
     }
     
 }
+
+#endif

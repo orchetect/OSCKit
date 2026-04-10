@@ -5,6 +5,8 @@
 //  Created by Joshua Wolfson on 8/4/2026.
 //
 
+#if !os(watchOS)
+
 import Foundation
 
 public enum OSCSocketError: LocalizedError, Equatable, Hashable, Sendable {
@@ -23,3 +25,5 @@ public enum OSCSocketError: LocalizedError, Equatable, Hashable, Sendable {
         }
     }
 }
+
+#endif

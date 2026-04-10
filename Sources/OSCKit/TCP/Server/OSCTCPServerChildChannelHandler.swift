@@ -5,6 +5,8 @@
 //  Created by Joshua Wolfson on 9/4/2026.
 //
 
+#if !os(watchOS)
+
 import Foundation
 import NIO
 
@@ -66,3 +68,5 @@ extension OSCTCPServerChildChannelHandler: ChannelInboundHandler {
 }
 
 extension OSCTCPServerChildChannelHandler: @unchecked Sendable { }
+
+#endif

@@ -6,6 +6,8 @@
 //
 //  Derived from OSCKit/Sources/OSCKit/UDP/Server/OSCUDPServerDelegate.swift
 
+#if !os(watchOS)
+
 import Foundation
 import NIO
 
@@ -61,3 +63,5 @@ extension OSCUDPChannelHandler {
 
 
 extension OSCUDPChannelHandler: @unchecked Sendable { }
+
+#endif

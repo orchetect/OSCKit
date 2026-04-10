@@ -5,6 +5,8 @@
 //  Created by Joshua Wolfson on 10/4/2026.
 //
 
+#if !os(watchOS)
+
 import Foundation
 import NIOCore
 
@@ -39,3 +41,5 @@ final class OSCTCPSLIPFrameDecoder: ByteToMessageDecoder {
         return .continue
     }
 }
+
+#endif
