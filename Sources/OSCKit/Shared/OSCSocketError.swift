@@ -1,8 +1,7 @@
 //
-//  File.swift
-//  OSCKit
-//
-//  Created by Joshua Wolfson on 8/4/2026.
+//  OSCSocketError.swift
+//  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -18,7 +17,7 @@ public enum OSCSocketError: LocalizedError, Equatable, Hashable, Sendable {
             "The OSC socket has not been started yet."
         case .noRemoteHost:
             "A remote host was specified at initialization or in call to send()."
-        case .clientNotFound(let id):
+        case let .clientNotFound(id):
             "OSC TCP client socket with ID \(id) not found (not connected)."
         }
     }

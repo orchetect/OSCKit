@@ -1,8 +1,7 @@
 //
-//  File.swift
-//  OSCKit
-//
-//  Created by Joshua Wolfson on 9/4/2026.
+//  OSCTCPServerChildChannelHandler.swift
+//  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -37,7 +36,7 @@ extension OSCTCPServerChildChannelHandler: ChannelInboundHandler {
         var buffer = unwrapInboundIn(data)
         
         let byteLength = buffer.readableBytes
-        guard let bytes = buffer.readBytes(length: byteLength) else { return /*throw error*/ }
+        guard let bytes = buffer.readBytes(length: byteLength) else { return /* throw error */ }
         let data = Data(bytes)
                 
         guard let server else { return }

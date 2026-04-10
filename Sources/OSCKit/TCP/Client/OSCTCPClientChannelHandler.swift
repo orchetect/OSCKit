@@ -1,8 +1,7 @@
 //
-//  File.swift
-//  OSCKit
-//
-//  Created by Joshua Wolfson on 9/4/2026.
+//  OSCTCPClientChannelHandler.swift
+//  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -30,11 +29,11 @@ extension OSCTCPClientChannelHandler: ChannelInboundHandler {
     func channelRead(context: ChannelHandlerContext, data: NIOAny) {
         var envelope = unwrapInboundIn(data)
         
-        //get byte length of envelope
+        // get byte length of envelope
         let byteLength = envelope.readableBytes
-        //read bytes from envelope
-        guard let bytes = envelope.readBytes(length: byteLength) else { return /*throw error*/ }
-        //convert bytes into data
+        // read bytes from envelope
+        guard let bytes = envelope.readBytes(length: byteLength) else { return /* throw error */ }
+        // convert bytes into data
         let data = Data(bytes)
                 
         guard let oscServer else { return }
@@ -49,8 +48,7 @@ extension OSCTCPClientChannelHandler: ChannelInboundHandler {
     func errorCaught(context: ChannelHandlerContext, error: any Error) {
         // send notification
         oscServer?._generateDisconnectedNotification(error: error)
-        //close connection
+        // close connection
         context.close(promise: nil)
     }
-    
 }

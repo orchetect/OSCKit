@@ -22,18 +22,21 @@ extension OSCTCPServer.Notification: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         switch (lhs, rhs) {
         case let (.connected(leftHost, leftPort, leftClientID), .connected(rightHost, rightPort, rightClientID)):
-            //if all variables the same then true (notifications are equal), else false
+            // if all variables the same then true (notifications are equal), else false
             return (leftHost == rightHost) && (leftPort == rightPort) && (leftClientID == rightClientID)
-        case let (.disconnected(leftHost, leftPort, leftClientID, leftError), .disconnected(rightHost, rightPort, rightClientID, rightError)):
-            //all variables (except error) must be the same to continue, else false
+        case let (
+            .disconnected(leftHost, leftPort, leftClientID, leftError),
+            .disconnected(rightHost, rightPort, rightClientID, rightError)
+        ):
+            // all variables (except error) must be the same to continue, else false
             guard (leftHost == rightHost), leftPort == rightPort, leftClientID == rightClientID else { return false }
-            //check if errors are the same
+            // check if errors are the same
             switch (leftError, rightError) {
-                //if both nil, then true
+            // if both nil, then true
             case (nil, nil): return true
-                //if one nil, one error, then false
+            // if one nil, one error, then false
             case (nil, _), (_, nil): return false
-                //if localizedDescription is the same then true
+            // if localizedDescription is the same then true
             case let (left?, right?): return left.localizedDescription == right.localizedDescription
             }
         default:
@@ -46,16 +49,16 @@ extension OSCTCPServer.Notification: Hashable {
     public func hash(into hasher: inout Hasher) {
         switch self {
         case let .connected(host, port, id):
-            //combine 0 to distinguish from .disconnected
+            // combine 0 to distinguish from .disconnected
             hasher.combine(0)
-            //combine variables for unique hash
+            // combine variables for unique hash
             hasher.combine(host)
             hasher.combine(port)
             hasher.combine(id)
         case let .disconnected(host, port, id, err):
-            //combine 1 to distinguish from .connected
+            // combine 1 to distinguish from .connected
             hasher.combine(1)
-            //combine variables for unique hash
+            // combine variables for unique hash
             hasher.combine(host)
             hasher.combine(port)
             hasher.combine(id)

@@ -1,10 +1,8 @@
 //
-//  File.swift
-//  OSCKit
+//  OSCUDPChannelHandler.swift
+//  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
-//  Created by Joshua Wolfson on 8/4/2026.
-//
-//  Derived from OSCKit/Sources/OSCKit/UDP/Server/OSCUDPServerDelegate.swift
 
 import Foundation
 import NIO
@@ -24,11 +22,11 @@ extension OSCUDPChannelHandler: ChannelInboundHandler {
     func channelRead(context: ChannelHandlerContext, data: NIOAny) {
         var envelope: InboundIn = unwrapInboundIn(data)
         
-        //get byte length of envelope
+        // get byte length of envelope
         let byteLength = envelope.data.readableBytes
-        //read bytes from envelope
-        guard let bytes = envelope.data.readBytes(length: byteLength) else { return /*throw error*/ }
-        //convert bytes into data
+        // read bytes from envelope
+        guard let bytes = envelope.data.readBytes(length: byteLength) else { return /* throw error */ }
+        // convert bytes into data
         let data = Data(bytes)
         
         guard let oscServer else { return }
@@ -58,6 +56,5 @@ extension OSCUDPChannelHandler {
         }
     }
 }
-
 
 extension OSCUDPChannelHandler: @unchecked Sendable { }

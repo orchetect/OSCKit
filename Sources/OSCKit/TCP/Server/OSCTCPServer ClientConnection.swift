@@ -21,14 +21,14 @@ extension OSCTCPServer {
         init(
             server: (any _OSCTCPHandlerProtocol & _OSCTCPGeneratesServerNotificationsProtocol),
             channel: any Channel,
-            framingMode: OSCTCPFramingMode,
+            framingMode: OSCTCPFramingMode
         ) {
             self.channel = channel
-            self.oscServer = server
+            oscServer = server
             let host = channel.remoteAddress?.ipAddress ?? ""
-            self.remoteHost = host
+            remoteHost = host
             let port = channel.remoteAddress?.port?.uInt16 ?? 0
-            self.remotePort = port
+            remotePort = port
             self.framingMode = framingMode
         }
         

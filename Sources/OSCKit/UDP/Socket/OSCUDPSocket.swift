@@ -194,7 +194,6 @@ extension OSCUDPSocket {
         
         let port = (port ?? remotePort).int
         
-        
         let remoteAddress = try SocketAddress.makeAddressResolvingHost(toHost, port: port)
                 
         let buffer: ByteBuffer = channel.allocator.buffer(bytes: data)

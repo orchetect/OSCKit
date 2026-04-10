@@ -1,8 +1,7 @@
 //
-//  File.swift
-//  OSCKit
-//
-//  Created by Joshua Wolfson on 10/4/2026.
+//  OSCTCPLengthHeaderFrameDecoder.swift
+//  OSCKit • https://github.com/orchetect/OSCKit
+//  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
 import Foundation
@@ -22,14 +21,14 @@ final class OSCTCPLengthHeaderFrameDecoder: ByteToMessageDecoder {
             return .needMoreData
         }
         
-        //expected frame size
+        // expected frame size
         let totalLength = 4 + Int(length)
-        //if readable bytes is greater than the expected size then continue, else it hasn't fully arrived
+        // if readable bytes is greater than the expected size then continue, else it hasn't fully arrived
         guard buffer.readableBytes >= totalLength else {
             return .needMoreData
         }
         
-        //advance the reader index past the frame and return as ByteBuffer
+        // advance the reader index past the frame and return as ByteBuffer
         guard let frame = buffer.readSlice(length: totalLength) else {
             return .needMoreData
         }

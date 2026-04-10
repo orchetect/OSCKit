@@ -154,21 +154,21 @@ extension OSCUDPClient {
         let host: String = interface ?? "0.0.0.0"
         let port: Int = _localPort?.int ?? 0
         
-        //Channel Setup
+        // Channel Setup
         channel = try DatagramBootstrap(group: .singletonMultiThreadedEventLoopGroup)
-        //configure port reuse
-            .channelOption(.socketOption(.so_reuseaddr), value: reuseAddress)
-        //configure ipv4 broadcast
-            .channelOption(.socketOption(.so_broadcast), value: broadcast)
-        //bin to host and port
-            .bind(host: host, port: port)
-        //wait for resolution of the `EventLoopFuture`
-            .wait()
+            // configure port reuse
+                .channelOption(.socketOption(.so_reuseaddr), value: reuseAddress)
+                // configure ipv4 broadcast
+                .channelOption(.socketOption(.so_broadcast), value: broadcast)
+                // bin to host and port
+                .bind(host: host, port: port)
+                // wait for resolution of the `EventLoopFuture`
+                .wait()
     }
     
     /// Closes the OSC port.
     public func stop() {
-        //close channel -> opportunity for completion handler
+        // close channel -> opportunity for completion handler
         channel?.close().whenComplete { _ in }
         channel = nil
     }
@@ -196,9 +196,9 @@ extension OSCUDPClient {
             throw OSCSocketError.notStarted
         }
         
-        //resolve host and port to `SocketAddress`
+        // resolve host and port to `SocketAddress`
         let remoteAddress = try SocketAddress.makeAddressResolvingHost(host, port: port.int)
-        //create buffer from data
+        // create buffer from data
         let buffer: ByteBuffer = channel.allocator.buffer(bytes: data)
 
         let envelope = AddressedEnvelope(remoteAddress: remoteAddress, data: buffer)

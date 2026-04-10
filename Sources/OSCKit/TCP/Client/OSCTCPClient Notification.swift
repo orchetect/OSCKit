@@ -21,19 +21,20 @@ extension OSCTCPClient {
 extension OSCTCPClient.Notification: Equatable {
     public static func == (lhs: Self, rhs: Self) -> Bool {
         switch (lhs, rhs) {
-            // Both are connected
+        // Both are connected
         case (.connected, .connected):
             return true
             
         case let (.disconnected(leftErr), .disconnected(rightErr)):
             switch (leftErr, rightErr) {
-                //Both Errors are nil
+            // Both Errors are nil
             case (nil, nil): return true
-                //One Error is nil, Other is not.
+            // One Error is nil, Other is not.
             case (nil, _), (_, nil): return false
-                //If both are Errors, check if localizedDescription is the same
+            // If both are Errors, check if localizedDescription is the same
             case let (left?, right?): return left.localizedDescription == right.localizedDescription
             }
+
         default:
             return false
         }
@@ -43,13 +44,13 @@ extension OSCTCPClient.Notification: Equatable {
 extension OSCTCPClient.Notification: Hashable {
     public func hash(into hasher: inout Hasher) {
         switch self {
-            //no associated values, hash as normal
+        // no associated values, hash as normal
         case .connected:
             hasher.combine(0)
-        case .disconnected(let error):
-            //combine 1 in has to distinguish from `.connected`
+        case let .disconnected(error):
+            // combine 1 in has to distinguish from `.connected`
             hasher.combine(1)
-            //combine error.localizedDescription in hash to distinguish errors
+            // combine error.localizedDescription in hash to distinguish errors
             hasher.combine(error?.localizedDescription)
         }
     }

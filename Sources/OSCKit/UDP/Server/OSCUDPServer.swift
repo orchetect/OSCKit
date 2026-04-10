@@ -53,6 +53,7 @@ public final class OSCUDPServer {
     public var isStarted: Bool {
         channel?.isActive ?? false
     }
+
     /// Initialize an OSC server.
     ///
     /// The default port for OSC communication is 8000 but may change depending on device/software

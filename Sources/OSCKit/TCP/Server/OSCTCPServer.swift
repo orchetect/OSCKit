@@ -272,7 +272,7 @@ extension OSCTCPServer {
     
     /// Generate a new client ID that is not currently in use by any connected client(s).
     private func newClientID() -> OSCTCPClientSessionID {
-        var clientID: Int = 0
+        var clientID = 0
         while clientID == 0 || _clients.keys.contains(clientID) {
             // don't allow 0 or negative numbers
             clientID = Int.random(in: 1 ... Int.max)
