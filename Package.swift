@@ -34,6 +34,7 @@ let package = Package(
 
 // MARK: - OSCKit Networking Layer Target
 
+#if !os(watchOS)
 package.products += [
     .library(name: "OSCKit", targets: ["OSCKit"])
 ]
@@ -56,6 +57,7 @@ package.targets += [
         dependencies: ["OSCKit"]
     )
 ]
+#endif
 
 #if canImport(Foundation) || canImport(CoreFoundation)
 #if canImport(Foundation)
