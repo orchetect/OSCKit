@@ -128,3 +128,5 @@ jobs:
         ./scripts/setup-android-sdk.sh
     - name: Build
       run: swift build --swift-sdk "$TARGET_TRIPLE" --static-swift-stdlib
+    - name: Unit Tests
+      run: swift test --swift-sdk "$TARGET_TRIPLE" --static-swift-stdlib
