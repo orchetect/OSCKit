@@ -4,6 +4,8 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
+#if !os(watchOS)
+
 import Foundation
 
 public enum OSCSocketError: LocalizedError, Equatable, Hashable, Sendable {
@@ -22,3 +24,5 @@ public enum OSCSocketError: LocalizedError, Equatable, Hashable, Sendable {
         }
     }
 }
+
+#endif

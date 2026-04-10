@@ -4,6 +4,8 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
+#if !os(watchOS)
+
 import Foundation
 import NIOCore
 
@@ -38,3 +40,5 @@ final class OSCTCPLengthHeaderFrameDecoder: ByteToMessageDecoder {
         return .continue
     }
 }
+
+#endif
