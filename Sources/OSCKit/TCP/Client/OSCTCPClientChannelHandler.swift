@@ -36,9 +36,7 @@ extension OSCTCPClientChannelHandler: ChannelInboundHandler {
         guard let bytes = envelope.readBytes(length: byteLength) else { return /*throw error*/ }
         //convert bytes into data
         let data = Data(bytes)
-        
-        print("[ClientChannelHandler] channelRead: \(byteLength) bytes | hex: \(data.prefix(16).map { String(format: "%02x", $0) }.joined(separator: " "))")
-        
+                
         guard let oscServer else { return }
         
         let remoteAddress = context.remoteAddress

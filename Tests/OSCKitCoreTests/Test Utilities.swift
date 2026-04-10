@@ -8,22 +8,13 @@ import CoreFoundation
 import Foundation
 import Testing
 
-#if canImport(Darwin)
-import Darwin
-#elseif canImport(Glibc)
-import Glibc
-private let USEC_PER_SEC = 1_000_000
-#endif
-
 /// Use as a condition for individual tests that rely on stable/precise system timing.
 func isSystemTimingStable(
     duration: TimeInterval = 0.1,
     tolerance: TimeInterval = 0.01
-) -> Bool {
-    let durationUS = UInt32(duration * TimeInterval(USEC_PER_SEC))
-    
+) -> Bool {    
     let start = Date()
-    usleep(durationUS)
+    Thread.sleep(forTimeInterval: duration)
     let end = Date()
     let diff = end.timeIntervalSince(start)
     

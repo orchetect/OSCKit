@@ -32,15 +32,13 @@ let package = Package(
     ]
 )
 
-// MARK: - OSCKit Networking Layer Target is currently only available on Apple platforms.
+// MARK: - OSCKit Networking Layer Target
 
-#if os(macOS) || os(iOS) || os(tvOS) || os(watchOS) || os(visionOS)
 package.products += [
     .library(name: "OSCKit", targets: ["OSCKit"])
 ]
 
 package.dependencies += [
-    .package(url: "https://github.com/robbiehanson/CocoaAsyncSocket", from: "7.0.0"),
     .package(url: "https://github.com/apple/swift-nio", from: "2.87.0") //lowest version that supports swift 6.0
 ]
 
@@ -49,11 +47,6 @@ package.targets += [
         name: "OSCKit",
         dependencies: [
             "OSCKitCore",
-            .product(
-                name: "CocoaAsyncSocket",
-                package: "CocoaAsyncSocket",
-                condition: .when(platforms: [.macOS, .macCatalyst, .iOS, .tvOS, .visionOS, .driverKit])
-            ),
             .product(name: "NIO", package: "swift-nio")
         ],
         swiftSettings: [.define("DEBUG", .when(configuration: .debug))]
@@ -63,7 +56,6 @@ package.targets += [
         dependencies: ["OSCKit"]
     )
 ]
-#endif
 
 #if canImport(Foundation) || canImport(CoreFoundation)
 #if canImport(Foundation)

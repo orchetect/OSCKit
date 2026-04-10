@@ -39,9 +39,7 @@ extension OSCTCPServerChildChannelHandler: ChannelInboundHandler {
         let byteLength = buffer.readableBytes
         guard let bytes = buffer.readBytes(length: byteLength) else { return /*throw error*/ }
         let data = Data(bytes)
-        
-        print("[ServerChildChannelHandler] channelRead: \(byteLength) bytes | hex: \(data.prefix(16).map { String(format: "%02x", $0) }.joined(separator: " "))")
-        
+                
         guard let server else { return }
         
         let port = context.channel.remoteAddress?.port?.uInt16 ?? 0
