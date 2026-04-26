@@ -4,19 +4,19 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-#if canImport(Darwin) && !os(watchOS)
+#if !os(watchOS)
 
-@preconcurrency import CocoaAsyncSocket
 import Foundation
+import NIO
 
 /// Internal protocol that TCP-based OSC classes adopt in order to handle incoming OSC data.
 protocol _OSCTCPHandlerProtocol: _OSCHandlerProtocol {
-    var tcpSocket: GCDAsyncSocket { get }
+    var channel: (any Channel)? { get }
     var framingMode: OSCTCPFramingMode { get }
 }
 
 extension _OSCTCPHandlerProtocol {
-    func _handle(receivedData data: Data, on sock: GCDAsyncSocket, tag: Int) {
+    func _handle(receivedData data: Data, remoteHost: String, remotePort: UInt16) {
         // This routine must accommodate more than one consecutive packet contained in the data
         // which may happen when multiple packets are sent rapidly from a client.
         
@@ -57,8 +57,6 @@ extension _OSCTCPHandlerProtocol {
             return
         }
         
-        let remoteHost = sock.connectedHost ?? ""
-        let remotePort = sock.connectedPort
         for oscPacketData in oscPackets {
             do {
                 guard let oscPacket = try OSCPacket(from: oscPacketData) else {

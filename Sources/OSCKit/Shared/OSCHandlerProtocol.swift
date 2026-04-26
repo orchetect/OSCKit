@@ -4,7 +4,7 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-#if canImport(Darwin) && !os(watchOS)
+#if !os(watchOS)
 
 import Foundation
 import OSCKitCore
@@ -109,7 +109,7 @@ extension _OSCHandlerProtocol {
             return
         }
         
-        let usec = Int(secondsFromNow * TimeInterval(USEC_PER_SEC))
+        let usec = Int(secondsFromNow * TimeInterval(1_000_000))
         queue.asyncAfter(deadline: .now() + .microseconds(usec)) { [weak self] in
             self?.receiveHandler?(message, timeTag, remoteHost, remotePort)
         }

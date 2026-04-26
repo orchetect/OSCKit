@@ -45,7 +45,7 @@ struct ContentView: View {
             values: ["Test string"]
         )
         
-        oscManager.send(oscMessage, to: "localhost", port: 8000)
+        oscManager.send(oscMessage, to: "127.0.0.1", port: 8000)
     }
     
     private func sendTestOSCMessageB() {
@@ -54,7 +54,7 @@ struct ContentView: View {
             values: ["Test string", 123]
         )
         
-        oscManager.send(oscMessage, to: "localhost", port: 8000)
+        oscManager.send(oscMessage, to: "127.0.0.1", port: 8000)
     }
     
     private func sendTestOSCMessageCWithOptionalValue() {
@@ -63,7 +63,7 @@ struct ContentView: View {
             values: ["Test string", 123.5]
         )
         
-        oscManager.send(oscMessage, to: "localhost", port: 8000)
+        oscManager.send(oscMessage, to: "127.0.0.1", port: 8000)
     }
 
     private func sendTestOSCMessageCWithNoOptionalValue() {
@@ -72,6 +72,6 @@ struct ContentView: View {
             values: ["Test string"]
         )
         
-        oscManager.send(oscMessage, to: "localhost", port: 8000)
+        oscManager.send(oscMessage, to: "127.0.0.1", port: 8000)
     }
 }

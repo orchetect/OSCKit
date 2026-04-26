@@ -4,10 +4,10 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-#if canImport(Darwin) && !os(watchOS)
+#if !os(watchOS)
 
-@preconcurrency import CocoaAsyncSocket
 import Foundation
+import NIO
 
 /// Sends and receives OSC packets over the network by binding a single local UDP port to both send
 /// OSC packets from and listen for incoming packets.
@@ -22,8 +22,7 @@ import Foundation
 /// example: if an OSC message was sent from port 8000 to the X32's port 10023, the X32 will respond
 /// by sending OSC messages back to you on port 8000.
 public final class OSCUDPSocket {
-    let udpSocket: GCDAsyncUdpSocket
-    let udpDelegate = OSCUDPServerDelegate()
+    private var channel: (any Channel)?
     let queue: DispatchQueue
     var receiveHandler: OSCHandlerBlock?
     
@@ -47,7 +46,10 @@ public final class OSCUDPSocket {
     /// > property may return a value of `0` until the first successful call to ``send(_:to:port:)-(OSCPacket,_,_)``
     /// > is made.
     public var localPort: UInt16 {
-        udpSocket.localPort()
+        if let port = channel?.localAddress?.port {
+            return UInt16(port)
+        }
+        return _localPort ?? 0
     }
 
     private var _localPort: UInt16?
@@ -91,7 +93,9 @@ public final class OSCUDPSocket {
     public let isIPv4BroadcastEnabled: Bool
     
     /// Returns a boolean indicating whether the OSC socket has been started.
-    public private(set) var isStarted: Bool = false
+    public var isStarted: Bool {
+        channel?.isActive ?? false
+    }
     
     /// Initialize with a remote hostname and UDP port.
     ///
@@ -131,9 +135,6 @@ public final class OSCUDPSocket {
         let queue = queue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCUDPSocket.queue")
         self.queue = queue
         self.receiveHandler = receiveHandler
-        
-        udpSocket = GCDAsyncUdpSocket(delegate: udpDelegate, delegateQueue: queue, socketQueue: nil)
-        udpDelegate.oscServer = self
     }
 }
 
@@ -146,21 +147,24 @@ extension OSCUDPSocket {
     public func start() throws {
         guard !isStarted else { return }
         
-        try udpSocket.enableBroadcast(isIPv4BroadcastEnabled)
-        try udpSocket.bind(
-            toPort: _localPort ?? 0, // 0 causes system to assign random open port
-            interface: interface
-        )
-        try udpSocket.beginReceiving()
+        let host: String = interface ?? "0.0.0.0"
+        let port: Int = _localPort?.int ?? 0
         
-        isStarted = true
+        let group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
+        let broadcast: ChannelOptions.Types.SocketOption.Value = isIPv4BroadcastEnabled ? 1 : 0
+        let bootstrap = DatagramBootstrap(group: group)
+            .channelOption(.socketOption(.so_broadcast), value: broadcast)
+            .channelInitializer { channel in
+                channel.pipeline.addHandler(OSCUDPChannelHandler(oscServer: self))
+            }
+        
+        channel = try bootstrap.bind(host: host, port: port).wait()
     }
     
     /// Stops listening for data and closes the OSC port.
     public func stop() {
-        udpSocket.close()
-        
-        isStarted = false
+        try? channel?.close().wait()
+        channel = nil
     }
 }
 
@@ -178,32 +182,25 @@ extension OSCUDPSocket {
         to host: String? = nil,
         port: UInt16? = nil
     ) throws {
-        guard isStarted else {
-            throw GCDAsyncUdpSocketError(
-                .closedError,
-                userInfo: ["Reason": "OSC socket has not been started yet."]
-            )
+        guard let channel, isStarted else {
+            throw OSCSocketError.notStarted
         }
         
         guard let toHost = host ?? remoteHost else {
-            throw GCDAsyncUdpSocketError(
-                .badParamError,
-                userInfo: [
-                    "Reason":
-                        "Remote host is not specified in OSCUDPSocket.remoteHost property or in host parameter in call to send()."
-                ]
-            )
+            throw OSCSocketError.noRemoteHost
         }
         
         let data = try oscPacket.rawData()
         
-        udpSocket.send(
-            data,
-            toHost: toHost,
-            port: port ?? remotePort,
-            withTimeout: 1.0,
-            tag: 0
-        )
+        let port = (port ?? remotePort).int
+        
+        let remoteAddress = try SocketAddress.makeAddressResolvingHost(toHost, port: port)
+                
+        let buffer: ByteBuffer = channel.allocator.buffer(bytes: data)
+        
+        let envelope = AddressedEnvelope(remoteAddress: remoteAddress, data: buffer)
+                
+        try channel.writeAndFlush(envelope).wait()
     }
     
     /// Send an OSC bundle to the remote host.

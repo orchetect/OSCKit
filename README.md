@@ -6,8 +6,6 @@
 
 Open Sound Control ([OSC](https://opensoundcontrol.stanford.edu)) library written in Swift for Apple platforms, Linux, and Android.
 
-(Note that the network layer is currently only built for Apple platforms.)
-
 - OSC address pattern matching and dispatch
 - Convenient OSC message value type masking, validation and strong-typing
 - Modular: use the provided UDP or TCP network layer by default, or use your own
@@ -34,7 +32,7 @@ This includes a getting started guide, links to examples, and troubleshooting ti
 
 ## Dependencies
 
-- [CocoaAsyncSocket](https://github.com/robbiehanson/CocoaAsyncSocket) is used by the `OSCKit` target for network sockets (Apple platforms only).
+- [swift-nio](https://github.com/apple/swift-nio) is used by the `OSCKit` target for network sockets.
 - [swift-ascii](https://github.com/orchetect/SwiftASCII) is used for ASCII string and character formatting and validation.
 - [swift-data-parsing](https://github.com/orchetect/swift-data-parsing) is used for binary data decoding.
 

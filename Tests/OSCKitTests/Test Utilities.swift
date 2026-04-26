@@ -4,7 +4,7 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-#if canImport(Darwin) && !os(watchOS)
+#if !os(watchOS)
 
 import Foundation
 import Testing
@@ -47,11 +47,9 @@ func wait(
 func isSystemTimingStable(
     duration: TimeInterval = 0.1,
     tolerance: TimeInterval = 0.01
-) -> Bool {
-    let durationMS = UInt32(duration * TimeInterval(USEC_PER_SEC))
-    
+) -> Bool {    
     let start = Date()
-    usleep(durationMS)
+    Thread.sleep(forTimeInterval: duration)
     let end = Date()
     let diff = end.timeIntervalSince(start)
     

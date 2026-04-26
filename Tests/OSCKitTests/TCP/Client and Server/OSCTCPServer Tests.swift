@@ -4,7 +4,7 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-#if canImport(Darwin) && !os(watchOS)
+#if !os(watchOS)
 
 import Foundation
 @testable import OSCKit
@@ -42,7 +42,7 @@ struct OSCTCPServer_Tests {
         
         // use global thread to simulate internal network thread being a dedicated thread
         DispatchQueue.global().async {
-            server._handle(packet: .message(msg1), remoteHost: "localhost", remotePort: 8000)
+            server._handle(packet: .message(msg1), remoteHost: "127.0.0.1", remotePort: 8000)
             server._handle(packet: .message(msg2), remoteHost: "192.168.0.25", remotePort: 8001)
             server._handle(packet: .message(msg3), remoteHost: "10.0.0.50", remotePort: 8080)
         }
@@ -51,7 +51,7 @@ struct OSCTCPServer_Tests {
         
         let message1 = await receiver.messages[0]
         #expect(message1.message == msg1)
-        #expect(message1.host == "localhost")
+        #expect(message1.host == "127.0.0.1")
         #expect(message1.port == 8000)
         
         let message2 = await receiver.messages[1]
@@ -102,7 +102,7 @@ struct OSCTCPServer_Tests {
         // use global thread to simulate internal network thread being a dedicated thread
         DispatchQueue.global().async {
             for message in sourceMessages {
-                server._handle(packet: .message(message), remoteHost: "localhost", remotePort: 8000)
+                server._handle(packet: .message(message), remoteHost: "127.0.0.1", remotePort: 8000)
             }
         }
         
@@ -135,7 +135,7 @@ struct OSCTCPServer_Tests {
         // setup client
         // (must be done after calling start on server so we have a non-zero local server port to use)
         
-        let client = OSCTCPClient(remoteHost: "localhost", remotePort: server.localPort, timeTagMode: .ignore, framingMode: framingMode)
+        let client = OSCTCPClient(remoteHost: "127.0.0.1", remotePort: server.localPort, timeTagMode: .ignore, framingMode: framingMode)
         try await Task.sleep(seconds: isStable ? 0.1 : 5.0)
         
         try client.connect()
@@ -239,7 +239,7 @@ struct OSCTCPServer_Tests {
         // setup client 1
         // (must be done after calling start on server so we have a non-zero local server port to use)
         
-        let client1 = OSCTCPClient(remoteHost: "localhost", remotePort: server.localPort, timeTagMode: .ignore, framingMode: .osc1_1)
+        let client1 = OSCTCPClient(remoteHost: "127.0.0.1", remotePort: server.localPort, timeTagMode: .ignore, framingMode: .osc1_1)
         try await Task.sleep(seconds: isStable ? 0.1 : 5.0)
         
         try client1.connect()
@@ -250,7 +250,7 @@ struct OSCTCPServer_Tests {
         // setup client 2
         // (must be done after calling start on server so we have a non-zero local server port to use)
         
-        let client2 = OSCTCPClient(remoteHost: "localhost", remotePort: server.localPort, timeTagMode: .ignore, framingMode: .osc1_1)
+        let client2 = OSCTCPClient(remoteHost: "127.0.0.1", remotePort: server.localPort, timeTagMode: .ignore, framingMode: .osc1_1)
         try await Task.sleep(seconds: isStable ? 0.1 : 5.0)
         
         try client2.connect()
@@ -296,7 +296,7 @@ struct OSCTCPServer_Tests {
         // setup client 1
         // (must be done after calling start on server so we have a non-zero local server port to use)
         
-        let client1 = OSCTCPClient(remoteHost: "localhost", remotePort: server.localPort, timeTagMode: .ignore, framingMode: .osc1_1)
+        let client1 = OSCTCPClient(remoteHost: "127.0.0.1", remotePort: server.localPort, timeTagMode: .ignore, framingMode: .osc1_1)
         try await Task.sleep(seconds: isStable ? 0.1 : 5.0)
         
         try client1.connect()
@@ -327,7 +327,7 @@ struct OSCTCPServer_Tests {
         
         // client 1
         
-        let client1 = OSCTCPClient(remoteHost: "localhost", remotePort: server.localPort, timeTagMode: .ignore, framingMode: framingMode)
+        let client1 = OSCTCPClient(remoteHost: "127.0.0.1", remotePort: server.localPort, timeTagMode: .ignore, framingMode: framingMode)
         try await Task.sleep(seconds: isStable ? 0.1 : 5.0)
         
         try client1.connect()
@@ -338,7 +338,7 @@ struct OSCTCPServer_Tests {
         
         // client 2
         
-        let client2 = OSCTCPClient(remoteHost: "localhost", remotePort: server.localPort, timeTagMode: .ignore, framingMode: framingMode)
+        let client2 = OSCTCPClient(remoteHost: "127.0.0.1", remotePort: server.localPort, timeTagMode: .ignore, framingMode: framingMode)
         try await Task.sleep(seconds: isStable ? 0.1 : 5.0)
         
         try client2.connect()

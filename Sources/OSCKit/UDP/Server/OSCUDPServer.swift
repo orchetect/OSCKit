@@ -4,11 +4,10 @@
 //  © 2020-2026 Steffan Andrews • Licensed under MIT License
 //
 
-#if canImport(Darwin) && !os(watchOS)
+#if !os(watchOS)
 
-@preconcurrency import CocoaAsyncSocket
 import Foundation
-import OSCKitCore
+import NIO
 
 /// Receives OSC packets from the network on a specific UDP listen port.
 ///
@@ -16,8 +15,7 @@ import OSCKitCore
 /// on a specific local port. The default OSC port is 8000 but it may be set to any open port if
 /// desired.
 public final class OSCUDPServer {
-    let udpSocket: GCDAsyncUdpSocket
-    let udpDelegate = OSCUDPServerDelegate()
+    private var channel: (any Channel)?
     let queue: DispatchQueue
     var receiveHandler: OSCHandlerBlock?
     
@@ -27,7 +25,10 @@ public final class OSCUDPServer {
     /// UDP port used by the OSC server to listen for inbound OSC packets.
     /// This may only be set at the time of initialization.
     public var localPort: UInt16 {
-        udpSocket.localPort()
+        if let port = channel?.localAddress?.port {
+            return UInt16(port)
+        }
+        return _localPort ?? 0
     }
 
     private var _localPort: UInt16?
@@ -49,8 +50,10 @@ public final class OSCUDPServer {
     public var isPortReuseEnabled: Bool = false
     
     /// Returns a boolean indicating whether the OSC server has been started.
-    public private(set) var isStarted: Bool = false
-    
+    public var isStarted: Bool {
+        channel?.isActive ?? false
+    }
+
     /// Initialize an OSC server.
     ///
     /// The default port for OSC communication is 8000 but may change depending on device/software
@@ -84,9 +87,6 @@ public final class OSCUDPServer {
         let queue = queue ?? DispatchQueue(label: "com.orchetect.OSCKit.OSCUDPServer.queue")
         self.queue = queue
         self.receiveHandler = receiveHandler
-        
-        udpSocket = GCDAsyncUdpSocket(delegate: udpDelegate, delegateQueue: queue, socketQueue: nil)
-        udpDelegate.oscServer = self
     }
 }
 
@@ -101,21 +101,24 @@ extension OSCUDPServer {
         
         stop()
         
-        try udpSocket.enableReusePort(isPortReuseEnabled)
-        try udpSocket.bind(
-            toPort: _localPort ?? 0, // 0 causes system to assign random open port
-            interface: interface
-        )
-        try udpSocket.beginReceiving()
+        let handler = OSCUDPChannelHandler(oscServer: self)
+        let host: String = interface ?? "0.0.0.0"
+        let port: Int = _localPort?.int ?? 0
         
-        isStarted = true
+        let reuseAddress: ChannelOptions.Types.SocketOption.Value = isPortReuseEnabled ? 1 : 0
+        channel = try DatagramBootstrap(group: .singletonMultiThreadedEventLoopGroup)
+            .channelOption(.socketOption(.so_reuseaddr), value: reuseAddress)
+            .channelInitializer { channel in
+                channel.pipeline.addHandler(handler)
+            }
+            .bind(host: host, port: port)
+            .wait()
     }
     
     /// Stops listening for data and closes the OSC server port.
     public func stop() {
-        udpSocket.close()
-        
-        isStarted = false
+        channel?.close(promise: nil)
+        channel = nil
     }
 }
 
