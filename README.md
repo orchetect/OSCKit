@@ -6,8 +6,6 @@
 
 Open Sound Control ([OSC](https://opensoundcontrol.stanford.edu)) toolkit written in Swift for Apple platforms, Linux, and Android.
 
-(Note that the network layer is currently only built for Apple platforms.)
-
 - OSC address pattern matching and dispatch
 - Convenient OSC message value type masking, validation and strong-typing
 - Modular: use the provided network I/O layer by default, or use your own
@@ -18,7 +16,7 @@ Open Sound Control ([OSC](https://opensoundcontrol.stanford.edu)) toolkit writte
 
 ## Core Repository
 
-All extension repositories depend on **SwiftOSC Core**. It provides value types, encoding/decoding logic and message dispatch abstractions.
+All network I/O extension repositories depend on **SwiftOSC Core**. It provides value types, encoding/decoding logic and message dispatch abstractions.
 
 | Repository                                                   | Description                        | Apple | Linux | Android | Windows |
 | :----------------------------------------------------------- | :--------------------------------- | :---: | :---: | :-----: | :-----: |
