@@ -1,5 +1,0 @@
-# ``OSCKitCore/AnyOSCNumberValue``
-
-## Topics
-
-- ``OSCNumberValueBase``
