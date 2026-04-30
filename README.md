@@ -71,11 +71,6 @@ Full online documentation is available for all of the extension repositories. Ch
 
 For new users, see the [getting started guide](https://swiftpackageindex.com/orchetect/swift-osc/main/documentation) and the [code examples](https://github.com/orchetect/swift-osc-io-cocoa/tree/main/Examples) for the default network I/O module to see the library in action.
 
-## Dependencies
-
-- [swift-ascii](https://github.com/orchetect/swift-ascii) is used for ASCII string and character formatting and validation.
-- [swift-data-parsing](https://github.com/orchetect/swift-data-parsing) is used for message decoding.
-
 ## Author
 
 Coded by a bunch of 🐹 hamsters in a trenchcoat that calls itself [@orchetect](https://github.com/orchetect).
