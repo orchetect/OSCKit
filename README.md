@@ -44,7 +44,7 @@ To get started with all extensions:
 1. Add the **swift-osc** umbrella repo as a dependency.
 
    ```swift
-   .package(url: "https://github.com/orchetect/swift-osc", from: "1.0.0")
+   .package(url: "https://github.com/orchetect/swift-osc", from: "3.0.0")
    ```
 
 2. Add **SwiftOSC** to your target.
