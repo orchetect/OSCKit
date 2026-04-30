@@ -1,4 +1,4 @@
---header "\n {file}\n OSCKit • https://github.com/orchetect/OSCKit\n © {year} Steffan Andrews • Licensed under MIT License\n"
+--header "\n {file}\n SwiftOSC • https://github.com/orchetect/swift-osc\n © {year} Steffan Andrews • Licensed under MIT License\n"
 --allow-partial-wrapping false
 --binary-grouping 8,8
 --call-site-paren balanced
