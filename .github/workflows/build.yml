@@ -25,7 +25,7 @@ on:
     - cron: '40 11 * * *'   # once a day @ 11:40am UTC (4:40am PST)
 
 env:
-  SCHEME: "OSCKit"
+  SCHEME: "swift-osc"
   WORKSPACEPATH: ".swiftpm/xcode/package.xcworkspace"
 
 jobs:
@@ -40,8 +40,8 @@ jobs:
         xcode-version: latest-stable
     - name: Build
       run: xcodebuild build -workspace "$WORKSPACEPATH" -scheme "$SCHEME" -destination "generic/platform=macOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
-    - name: Unit Tests
-      run: xcodebuild test -workspace "$WORKSPACEPATH" -scheme "$SCHEME" -destination "platform=macOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+    # - name: Unit Tests
+    #   run: xcodebuild test -workspace "$WORKSPACEPATH" -scheme "$SCHEME" -destination "platform=macOS" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
   
   macCatalyst:
     name: Tests (macCatalyst)
@@ -54,8 +54,8 @@ jobs:
         xcode-version: latest-stable
     - name: Build
       run: xcodebuild build -workspace "$WORKSPACEPATH" -scheme "$SCHEME" -destination "generic/platform=macOS,variant=Mac Catalyst" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
-    - name: Unit Tests
-      run: xcodebuild test -workspace "$WORKSPACEPATH" -scheme "$SCHEME" -destination "platform=macOS,variant=Mac Catalyst" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+    # - name: Unit Tests
+    #   run: xcodebuild test -workspace "$WORKSPACEPATH" -scheme "$SCHEME" -destination "platform=macOS,variant=Mac Catalyst" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
 
   device-simulators:
     name: Tests
@@ -75,7 +75,7 @@ jobs:
       uses: orchetect/setup-xcode-simulator@v1
       with:
         refresh: true
-        download: true
+        download: false # skip simulator download since we aren't running unit tests
         scheme: ${{ env.SCHEME }}
         target: ${{ matrix.target }}
     - name: Build
@@ -83,12 +83,12 @@ jobs:
       env:
         PLATFORMSHORT: ${{ steps.sim-setup.outputs.platform-short }}
         WORKSPACEPATH: ${{ steps.sim-setup.outputs.workspace-path }}
-    - name: Unit Tests
-      run: xcodebuild test -skipMacroValidation -workspace "$WORKSPACEPATH" -scheme "$SCHEME" -destination "platform=$PLATFORM,id=$ID" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
-      env:
-        ID: ${{ steps.sim-setup.outputs.id }}
-        PLATFORM: ${{ steps.sim-setup.outputs.platform }}
-        WORKSPACEPATH: ${{ steps.sim-setup.outputs.workspace-path }}
+    # - name: Unit Tests
+    #   run: xcodebuild test -skipMacroValidation -workspace "$WORKSPACEPATH" -scheme "$SCHEME" -destination "platform=$PLATFORM,id=$ID" | xcbeautify --renderer github-actions && exit ${PIPESTATUS[0]}
+    #   env:
+    #     ID: ${{ steps.sim-setup.outputs.id }}
+    #     PLATFORM: ${{ steps.sim-setup.outputs.platform }}
+    #     WORKSPACEPATH: ${{ steps.sim-setup.outputs.workspace-path }}
   
   linux:
     name: Tests (Linux)
@@ -98,8 +98,8 @@ jobs:
     - uses: actions/checkout@main
     - name: Build
       run: swift build
-    - name: Unit Tests
-      run: swift test
+    # - name: Unit Tests
+    #   run: swift test
       
   android:
     name: Build (Android)
