@@ -1,17 +1,7 @@
 version: 1
 builder:
   configs:
-  - platform: macosSpm
-    scheme: OSCKit
-  - platform: macosXcodebuild
-    scheme: OSCKit
-  - platform: iOS
-    scheme: OSCKit
-  - platform: tvOS
-    scheme: OSCKit
+  - documentation_targets: [SwiftOSC]
+    scheme: swift-osc
   - platform: watchOS
     scheme: NOT-SUPPORTED
-  - platform: visionOS
-    scheme: OSCKit
-external_links:
-  documentation: "https://orchetect.github.io/OSCKit/"
