@@ -1,8 +1,8 @@
 blank_issues_enabled: true
 contact_links:
   - name: Feature request
-    url: https://github.com/orchetect/OSCKit/discussions
+    url: https://github.com/orchetect/swift-osc/discussions
     about: Suggest new features or improvements.
   - name: I need help setting up or troubleshooting
-    url: https://github.com/orchetect/OSCKit/discussions
+    url: https://github.com/orchetect/swift-osc/discussions
     about: Questions not answered in the documentation, discussions forum, or example projects.
