@@ -18,9 +18,9 @@ Open Sound Control ([OSC](https://opensoundcontrol.stanford.edu)) toolkit writte
 
 All network I/O extension repositories depend on **SwiftOSC Core**. It provides value types, encoding/decoding logic and message dispatch abstractions.
 
-| Repository                                                   | macOS | iOS  | tvOS | visionOS | watchOS | Linux | Android | WASM  | Windows |
-| :----------------------------------------------------------- | :---: | :--: | :--: | :------: | :-----: | :---: | :-----: | :---: | :-----: |
-| [swift-osc-core](https://github.com/orchetect/swift-osc-core) |   🟢   |  🟢   |  🟢   |    🟢     |    🟢    |   🟢   |    🟢    | 🚧[^1] |    -    |
+| Repository                                                   | macOS | iOS  | tvOS | visionOS | watchOS | Linux | Android | WASM  | Windows  |
+| :----------------------------------------------------------- | :---: | :--: | :--: | :------: | :-----: | :---: | :-----: | :---: | :------: |
+| [swift-osc-core](https://github.com/orchetect/swift-osc-core) |   🟢   |  🟢   |  🟢   |    🟢     |    🟢    |   🟢   |    🟢    | 🚧[^1] | Untested |
 
 ## Network I/O Extension Repositories
 
