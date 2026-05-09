@@ -44,7 +44,7 @@ extension CustomType: OSCValueEncodable {
         let encoder = JSONEncoder()
         let jsonData: Data
         do { jsonData = try encoder.encode(value) }
-        catch { throw .valueEncodingError(error.localizedDescription) }
+        catch { throw .valueEncodingError("\(error)") }
 
         // OSCValueEncodingBlock makes it our responsibility to make sure OSB blob (data) is encoded correctly,
         // including a 4-byte big-endian Int32 length header and trailing null-byte padding to an alignment of 4 bytes.
@@ -65,7 +65,7 @@ extension CustomType: OSCValueDecodable {
         // Decode into a new instance of our Codable type
         let decoded: CustomType
         do { decoded = try decoder.decode(CustomType.self, from: data) }
-        catch { throw .valueDecodingError(error.localizedDescription) }
+        catch { throw .valueDecodingError("\(error)") }
         return decoded
     }
 }

@@ -5,7 +5,7 @@
 //
 
 import Foundation
-import SwiftOSCIOCocoa
+import SwiftOSCIO
 
 /// OSC lifecycle and send/receive manager.
 @MainActor
@@ -25,7 +25,7 @@ extension OSCManager {
     /// Call once at app startup.
     func start() async {
         // setup client
-        do { try client.start() } catch { print(error.localizedDescription) }
+        do { try client.start() } catch { print(error) }
 
         receiver = await OSCReceiver()
 
@@ -35,11 +35,11 @@ extension OSCManager {
                 do {
                     try await self?.receiver?.handle(message: message, timeTag: timeTag, host: host, port: port)
                 } catch {
-                    print(error.localizedDescription)
+                    print(error)
                 }
             }
         }
-        do { try server.start() } catch { print(error.localizedDescription) }
+        do { try server.start() } catch { print(error) }
     }
 
     func stop() {
@@ -55,7 +55,7 @@ extension OSCManager {
         do {
             try client.send(message, to: host, port: port)
         } catch {
-            print(error.localizedDescription)
+            print(error)
         }
     }
 }

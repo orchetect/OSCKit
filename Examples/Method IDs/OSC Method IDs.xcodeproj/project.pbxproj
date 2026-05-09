@@ -9,11 +9,10 @@
 /* Begin PBXBuildFile section */
 		E20B015D2898F0B000950A28 /* OSCReceiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20B015C2898F0B000950A28 /* OSCReceiver.swift */; };
 		E22C84432CA8C9B500FA3C54 /* OSCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22C84422CA8C9B300FA3C54 /* OSCManager.swift */; };
-		E294B3752FA32D9700FE13DD /* SwiftOSCIOCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = E294B3742FA32D9700FE13DD /* SwiftOSCIOCocoa */; };
+		E2755DF92FAF1EAC0093CC34 /* SwiftOSC in Frameworks */ = {isa = PBXBuildFile; productRef = E2755DF82FAF1EAC0093CC34 /* SwiftOSC */; };
 		E2A34EBF2CD1FBAA00950E78 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A34EBE2CD1FBA900950E78 /* ContentView.swift */; };
 		E2D003D5289882820073ED8F /* OSCMethodIDsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D003D4289882820073ED8F /* OSCMethodIDsApp.swift */; };
 		E2D003E82898834E0073ED8F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2D003E52898834E0073ED8F /* Assets.xcassets */; };
-		E2DD592B2FAF0FDB00C78F93 /* SwiftOSC in Frameworks */ = {isa = PBXBuildFile; productRef = E2DD592A2FAF0FDB00C78F93 /* SwiftOSC */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,8 +30,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2DD592B2FAF0FDB00C78F93 /* SwiftOSC in Frameworks */,
-				E294B3752FA32D9700FE13DD /* SwiftOSCIOCocoa in Frameworks */,
+				E2755DF92FAF1EAC0093CC34 /* SwiftOSC in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,8 +91,7 @@
 			);
 			name = "OSC Method IDs";
 			packageProductDependencies = (
-				E294B3742FA32D9700FE13DD /* SwiftOSCIOCocoa */,
-				E2DD592A2FAF0FDB00C78F93 /* SwiftOSC */,
+				E2755DF82FAF1EAC0093CC34 /* SwiftOSC */,
 			);
 			productName = SwiftOSCMethodIDsExample;
 			productReference = E2D003D1289882820073ED8F /* OSC Method IDs.app */;
@@ -125,7 +122,7 @@
 			);
 			mainGroup = E2D003C8289882820073ED8F;
 			packageReferences = (
-				E2DD59292FAF0FDB00C78F93 /* XCLocalSwiftPackageReference "../../" */,
+				E2755DF72FAF1EAC0093CC34 /* XCLocalSwiftPackageReference "../../" */,
 			);
 			productRefGroup = E2D003D2289882820073ED8F /* Products */;
 			projectDirPath = "";
@@ -381,18 +378,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		E2DD59292FAF0FDB00C78F93 /* XCLocalSwiftPackageReference "../../" */ = {
+		E2755DF72FAF1EAC0093CC34 /* XCLocalSwiftPackageReference "../../" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "../../";
 		};
 /* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E294B3742FA32D9700FE13DD /* SwiftOSCIOCocoa */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SwiftOSCIOCocoa;
-		};
-		E2DD592A2FAF0FDB00C78F93 /* SwiftOSC */ = {
+		E2755DF82FAF1EAC0093CC34 /* SwiftOSC */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SwiftOSC;
 		};

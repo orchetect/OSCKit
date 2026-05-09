@@ -5,7 +5,7 @@
 //
 
 import Foundation
-import SwiftOSCIOCocoa
+import SwiftOSCIO
 
 /// OSC lifecycle and send/receive manager.
 @MainActor
@@ -17,7 +17,7 @@ final class OSCManager: ObservableObject {
         do {
             try OSCSerialization.shared.registerType(CustomType.self)
         } catch {
-            print(error.localizedDescription)
+            print(error)
         }
 
         start()
@@ -30,7 +30,7 @@ extension OSCManager {
     /// Call this once on app launch.
     func start() {
         // setup client
-        do { try client.start() } catch { print(error.localizedDescription) }
+        do { try client.start() } catch { print(error) }
 
         // setup server
         server.setReceiveHandler { [weak self] message, timeTag, host, port in
@@ -38,7 +38,7 @@ extension OSCManager {
                 self?.handle(message: message, timeTag: timeTag, host: host, port: port)
             }
         }
-        do { try server.start() } catch { print(error.localizedDescription) }
+        do { try server.start() } catch { print(error) }
     }
 
     func stop() {
@@ -73,7 +73,7 @@ extension OSCManager {
         do {
             try client.send(packet, to: host, port: port)
         } catch {
-            print(error.localizedDescription)
+            print(error)
         }
     }
 }

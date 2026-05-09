@@ -4,7 +4,7 @@
 //  © 2026 Steffan Andrews • Licensed under MIT License
 //
 
-import SwiftOSCIOCocoa
+import SwiftOSCIO
 import SwiftUI
 
 @main

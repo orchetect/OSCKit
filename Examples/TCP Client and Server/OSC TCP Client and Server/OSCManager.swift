@@ -5,7 +5,7 @@
 //
 
 import Foundation
-import SwiftOSCIOCocoa
+import SwiftOSCIO
 
 /// OSC lifecycle and send/receive manager.
 @MainActor
@@ -48,7 +48,7 @@ extension OSCManager {
             try newServer.start()
             isServerStarted = true
         } catch {
-            print(error.localizedDescription)
+            print(error)
             isServerStarted = false
         }
     }
@@ -72,7 +72,7 @@ extension OSCManager {
         do {
             try newClient.connect(timeout: 5)
         } catch {
-            print(error.localizedDescription)
+            print(error)
             isClientConnected = false
         }
     }
@@ -109,7 +109,7 @@ extension OSCManager {
         case let .disconnected(error: error):
             var logMessage = "Local client disconnected from remote server"
             if let error {
-                logMessage += " due to error: \(error.localizedDescription)"
+                logMessage += " due to error: \(error)"
             }
             print(logMessage)
 
@@ -125,7 +125,7 @@ extension OSCManager {
         case let .disconnected(remoteHost: remoteHost, remotePort: remotePort, clientID: _, error: error):
             var logMessage = "Local server was notified that remote client \(remoteHost) port \(remotePort) has disconnected"
             if let error {
-                logMessage += " due to error: \(error.localizedDescription)"
+                logMessage += " due to error: \(error)"
             }
             print(logMessage)
 
@@ -141,7 +141,7 @@ extension OSCManager {
         do {
             try client?.send(packet)
         } catch {
-            print(error.localizedDescription)
+            print(error)
         }
     }
 
@@ -149,7 +149,7 @@ extension OSCManager {
         do {
             try server?.send(packet)
         } catch {
-            print(error.localizedDescription)
+            print(error)
         }
     }
 }

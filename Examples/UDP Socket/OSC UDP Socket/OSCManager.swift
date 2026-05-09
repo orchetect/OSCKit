@@ -5,7 +5,7 @@
 //
 
 import Foundation
-import SwiftOSCIOCocoa
+import SwiftOSCIO
 
 /// OSC lifecycle and send/receive manager.
 @MainActor
@@ -70,7 +70,7 @@ extension OSCManager {
         do {
             try socket?.send(packet)
         } catch {
-            print(error.localizedDescription)
+            print(error)
         }
     }
 }

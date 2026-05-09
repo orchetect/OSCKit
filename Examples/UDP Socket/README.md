@@ -14,7 +14,7 @@ This also fulfils a niche requirement for communicating with OSC devices such as
 
 If you are adding SwiftOSC to a macOS project that has the Sandbox entitlement, ensure that the network options are enabled. These entitlement options are already set in the example project.
 
-![Sandbox Network Connections](../../Sources/SwiftOSCIOCocoa/SwiftOSCIOCocoa.docc/Resources/sandbox-network-connections.png)
+![Sandbox Network Connections](../../Images/sandbox-network-connections.png)
 
 ## Build Note
 

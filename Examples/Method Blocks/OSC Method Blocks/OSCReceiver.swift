@@ -5,7 +5,7 @@
 //
 
 import Foundation
-import SwiftOSCIOCocoa
+import SwiftOSCIO
 
 /// OSC receiver.
 /// Registers local OSC addresses that our app is capable of recognizing and
