@@ -9,19 +9,20 @@ let package = Package(
         .library(name: "SwiftOSC", targets: ["SwiftOSC"])
     ],
     dependencies: [
-        .package(url: "https://github.com/orchetect/swift-osc-core", exact: "1.0.0"),
-        .package(url: "https://github.com/orchetect/swift-osc-io-cocoa", exact: "1.0.0")
+        .package(url: "https://github.com/orchetect/swift-osc-core", branch: "standardized-io"), // TODO: exact: "1.0.0"), <-- update version!!
+        .package(url: "https://github.com/orchetect/swift-osc-io-cocoa", branch: "standardized-io") // TODO: exact: "1.0.0") <-- update version!!
     ],
     targets: [
         .target(
             name: "SwiftOSC",
             dependencies: [
                 .product(name: "SwiftOSCCore", package: "swift-osc-core"),
-                .product(name: "SwiftOSCIOCocoa", package: "swift-osc-io-cocoa")
+                .product(name: "SwiftOSCIO", package: "swift-osc-io-cocoa")
             ],
             swiftSettings: [.define("DEBUG", .when(configuration: .debug))]
         )
-    ]
+    ],
+    swiftLanguageModes: [.v5, .v6]
 )
 
 #if canImport(Foundation) || canImport(CoreFoundation)
