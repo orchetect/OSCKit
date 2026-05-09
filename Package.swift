@@ -10,14 +10,14 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/orchetect/swift-osc-core", branch: "standardized-io"), // TODO: exact: "1.0.0"), <-- update version!!
-        .package(url: "https://github.com/orchetect/swift-osc-io-cocoa", branch: "standardized-io") // TODO: exact: "1.0.0") <-- update version!!
+        .package(url: "https://github.com/orchetect/swift-osc-io-nio", branch: "standardized-io") // TODO: exact: "1.0.0") <-- update version!!
     ],
     targets: [
         .target(
             name: "SwiftOSC",
             dependencies: [
                 .product(name: "SwiftOSCCore", package: "swift-osc-core"),
-                .product(name: "SwiftOSCIO", package: "swift-osc-io-cocoa")
+                .product(name: "SwiftOSCIO", package: "swift-osc-io-nio")
             ],
             swiftSettings: [.define("DEBUG", .when(configuration: .debug))]
         )
