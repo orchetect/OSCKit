@@ -10,4 +10,4 @@
 @_exported public import SwiftOSCCore
 
 @_documentation(visibility: internal)
-@_exported public import SwiftOSCIOCocoa
+@_exported public import SwiftOSCIO

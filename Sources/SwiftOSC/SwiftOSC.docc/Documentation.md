@@ -8,7 +8,7 @@ Open Sound Control (OSC) toolkit written in Swift for Apple platforms, Linux, an
 
 - OSC address pattern matching and dispatch
 - Convenient OSC message value type masking, validation and strong-typing
-- Modular: use one of the provided network I/O extensions, or use your own
+- Modular: use one of the provided TCP/UDP network I/O layers, or implement your own
 - Support for custom OSC types
 - Supports Swift 6 Concurrency
 - Fully unit tested
@@ -26,30 +26,22 @@ Import the library using the default cross-platform network I/O extension:
 import SwiftOSC
 ```
 
-Or to import SwiftOSC without networking I/O in order to implement your own sockets:
-
-```swift
-import SwiftOSCCore
-```
-
 > Tip:
 >
-> You may use any of the alternative network I/O extensions available instead of the default by using any of them as a dependency directly.
+> To use SwiftOSC core types without networking I/O in order to implement your own sockets,
+> use [**swift-osc-core**](https://github.com/orchetect/swift-osc-core) as a dependency instead of **swift-osc**.
+>
+> You may also use any of the alternative network I/O extensions available instead of the default by using any of them as a dependency directly instead of **swift-osc**.
 > See the [`SwiftOSC` README file](https://github.com/orchetect/swift-osc) for links to all available extensions. 
 
 ### Value Types
 
-- See [OSC Value Types](https://swiftpackageindex.com/orchetect/swift-osc-core/main/documentation/swiftosccore/osc-value-types) in the SwiftOSCCore package documentation.
+- See [OSC Value Types](https://swiftpackageindex.com/orchetect/swift-osc-core/documentation/swiftosccore/osc-value-types) in the SwiftOSCCore package documentation.
 
-### Sending and Receiving
+### Sending and Receiving (I/O)
 
-- See the [Getting Started guide](https://swiftpackageindex.com/orchetect/swift-osc-io-cocoa/main/documentation/swiftosciococoa/getting-started) in the default network I/O extension repository.
+- See the I/O [Getting Started guide](https://swiftpackageindex.com/orchetect/swift-osc-core/documentation/swiftosciocore/getting-started) in the SwiftOSCCore repository.
 
 ### Example Code
 
-- See the [Examples](https://github.com/orchetect/swift-osc-io-cocoa/tree/main/Examples) folder in the default network I/O extension repository.
-
-> Tip:
->
-> Each network I/O extension repository contains their own example projects to quickly get started.
-> See the [`SwiftOSC` README file](https://github.com/orchetect/swift-osc) for links to all available extensions.
+- See the [Examples](https://github.com/orchetect/swift-osc/tree/main/Examples) folder in the main SwiftOSC repository for a demonstration of how to use SwiftOSC's core types and I/O.
