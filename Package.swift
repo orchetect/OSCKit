@@ -9,8 +9,8 @@ let package = Package(
         .library(name: "SwiftOSC", targets: ["SwiftOSC"])
     ],
     dependencies: [
-        .package(url: "https://github.com/orchetect/swift-osc-core", branch: "standardized-io"), // TODO: exact: "1.0.0"), <-- update version!!
-        .package(url: "https://github.com/orchetect/swift-osc-io-nio", branch: "standardized-io") // TODO: exact: "1.0.0") <-- update version!!
+        .package(url: "https://github.com/orchetect/swift-osc-core", branch: "main"), // TODO: exact: "1.0.0"), <-- update version!!
+        .package(url: "https://github.com/orchetect/swift-osc-io-nio", branch: "main") // TODO: exact: "1.0.0") <-- update version!!
     ],
     targets: [
         .target(
