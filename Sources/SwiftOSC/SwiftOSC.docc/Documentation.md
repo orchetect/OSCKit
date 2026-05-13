@@ -40,7 +40,7 @@ import SwiftOSC
 
 ### Sending and Receiving (I/O)
 
-- See the I/O [Getting Started guide](https://swiftpackageindex.com/orchetect/swift-osc-core/documentation/swiftosciocore/getting-started) in the SwiftOSCCore repository.
+- See the [I/O documentation](https://swiftpackageindex.com/orchetect/swift-osc-core/documentation/swiftosciocore) in the SwiftOSCCore package documentation.
 
 ### Example Code
 
