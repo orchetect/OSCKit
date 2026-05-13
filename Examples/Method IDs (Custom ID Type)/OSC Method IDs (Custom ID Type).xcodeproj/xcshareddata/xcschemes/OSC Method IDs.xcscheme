@@ -32,7 +32,7 @@
             BlueprintIdentifier = "E2D003D0289882820073ED8F"
             BuildableName = "OSC Method IDs.app"
             BlueprintName = "OSC Method IDs"
-            ReferencedContainer = "container:Method IDs (Custom ID Type).xcodeproj">
+            ReferencedContainer = "container:OSC Method IDs (Custom ID Type).xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -48,7 +48,7 @@
             BlueprintIdentifier = "E2D003D0289882820073ED8F"
             BuildableName = "OSC Method IDs.app"
             BlueprintName = "OSC Method IDs"
-            ReferencedContainer = "container:Method IDs (Custom ID Type).xcodeproj">
+            ReferencedContainer = "container:OSC Method IDs (Custom ID Type).xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>

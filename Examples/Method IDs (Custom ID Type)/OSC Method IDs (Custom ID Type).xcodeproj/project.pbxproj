@@ -115,7 +115,7 @@
 					};
 				};
 			};
-			buildConfigurationList = E2D003CC289882820073ED8F /* Build configuration list for PBXProject "Method IDs (Custom ID Type)" */;
+			buildConfigurationList = E2D003CC289882820073ED8F /* Build configuration list for PBXProject "OSC Method IDs (Custom ID Type)" */;
 			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -305,7 +305,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "OSC Method IDs";
+				INFOPLIST_KEY_CFBundleDisplayName = "OSC Method IDs (Custom)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -316,7 +316,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.orchetect.swift-osc.OSCMethodIDs${DEVELOPMENT_TEAM}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.orchetect.swift-osc.OSCMethodIDsCustomIDType${DEVELOPMENT_TEAM}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -338,7 +338,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_CFBundleDisplayName = "OSC Method IDs";
+				INFOPLIST_KEY_CFBundleDisplayName = "OSC Method IDs (Custom)";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
@@ -349,7 +349,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.orchetect.swift-osc.OSCMethodIDs${DEVELOPMENT_TEAM}";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.orchetect.swift-osc.OSCMethodIDsCustomIDType${DEVELOPMENT_TEAM}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "appletvos appletvsimulator iphoneos iphonesimulator macosx xros xrsimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -361,7 +361,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		E2D003CC289882820073ED8F /* Build configuration list for PBXProject "Method IDs (Custom ID Type)" */ = {
+		E2D003CC289882820073ED8F /* Build configuration list for PBXProject "OSC Method IDs (Custom ID Type)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E2D003DE289882850073ED8F /* Debug */,
@@ -384,7 +384,7 @@
 /* Begin XCLocalSwiftPackageReference section */
 		E2DD59202FAF0F4F00C78F93 /* XCLocalSwiftPackageReference "../../" */ = {
 			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../";
+			relativePath = ../../;
 		};
 /* End XCLocalSwiftPackageReference section */
 
