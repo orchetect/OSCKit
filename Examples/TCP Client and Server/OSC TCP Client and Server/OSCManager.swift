@@ -32,11 +32,11 @@ extension OSCManager {
         let newServer = OSCTCPServer(port: serverPort, framingMode: framingMode)
         server = newServer
 
-        newServer.setReceiveHandler { [weak self] message, timeTag, host, port in
+        newServer.setReceiveHandler(.messages { [weak self] message, timeTag, host, port in
             Task { @MainActor in
                 self?.handle(messageFromClient: message, timeTag: timeTag, host: host, port: port)
             }
-        }
+        })
 
         newServer.setNotificationHandler { [weak self] notification in
             Task { @MainActor in
@@ -57,11 +57,11 @@ extension OSCManager {
         let newClient = OSCTCPClient(remoteHost: clientHost, remotePort: clientPort, framingMode: framingMode)
         client = newClient
 
-        newClient.setReceiveHandler { [weak self] message, timeTag, host, port in
+        newClient.setReceiveHandler(.messages { [weak self] message, timeTag, host, port in
             Task { @MainActor in
                 self?.handle(messageFromServer: message, timeTag: timeTag, host: host, port: port)
             }
-        }
+        })
 
         newClient.setNotificationHandler { [weak self] notification in
             Task { @MainActor in
@@ -114,6 +114,15 @@ extension OSCManager {
             print(logMessage)
 
             isClientConnected = false
+
+        case let .socketClosed(error: error):
+            var logMessage = "Local client socket closed"
+            if let error {
+                logMessage += " due to error: \(error)"
+            }
+            print(logMessage)
+
+            isClientConnected = false
         }
     }
 
@@ -124,6 +133,15 @@ extension OSCManager {
 
         case let .disconnected(remoteHost: remoteHost, remotePort: remotePort, clientID: _, error: error):
             var logMessage = "Local server was notified that remote client \(remoteHost) port \(remotePort) has disconnected"
+            if let error {
+                logMessage += " due to error: \(error)"
+            }
+            print(logMessage)
+
+            isClientConnected = false
+
+        case let .socketClosed(error: error):
+            var logMessage = "Local server socket closed"
             if let error {
                 logMessage += " due to error: \(error)"
             }
@@ -146,10 +164,8 @@ extension OSCManager {
     }
 
     func sendToAllClients(_ packet: OSCPacket) {
-        do {
-            try server?.send(packet)
-        } catch {
-            print(error)
+        server?.send(packet) { clientID, error in
+            print("Error while sending to client with ID \(clientID):", error)
         }
     }
 }

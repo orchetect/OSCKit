@@ -28,11 +28,11 @@ extension OSCManager {
         do { try client.start() } catch { print(error) }
 
         // setup server
-        server.setReceiveHandler { [weak self] message, timeTag, host, port in
+        server.setReceiveHandler(.messages { [weak self] message, timeTag, host, port in
             Task {
                 await self?.receiver.handle(message: message, timeTag: timeTag, host: host, port: port)
             }
-        }
+        })
         do { try server.start() } catch { print(error) }
     }
 

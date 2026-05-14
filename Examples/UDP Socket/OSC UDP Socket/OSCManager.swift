@@ -37,9 +37,11 @@ extension OSCManager {
             )
             socket = newSocket
 
-            newSocket.setReceiveHandler { message, timeTag, host, port in
-                print("\(host) port \(port) - \(message) with time tag: \(timeTag)")
-            }
+            newSocket.setReceiveHandler(.messages { [weak self] message, timeTag, host, port in
+                Task { @MainActor in
+                    self?.handle(message: message, timeTag: timeTag, host: host, port: port)
+                }
+            })
 
             try newSocket.start()
 
@@ -66,6 +68,10 @@ extension OSCManager {
 // MARK: - Send
 
 extension OSCManager {
+    func handle(message: OSCMessage, timeTag: OSCTimeTag, host: String, port: UInt16) {
+        print("From client: \(message) with time tag: \(timeTag) from: \(host) port \(port)")
+    }
+    
     func send(_ packet: OSCPacket) {
         do {
             try socket?.send(packet)

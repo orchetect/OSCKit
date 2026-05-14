@@ -30,7 +30,7 @@ extension OSCManager {
         receiver = await OSCReceiver()
 
         // setup server
-        server.setReceiveHandler { [weak self] message, timeTag, host, port in
+        server.setReceiveHandler(.messages { [weak self] message, timeTag, host, port in
             Task {
                 do {
                     try await self?.receiver?.handle(message: message, timeTag: timeTag, host: host, port: port)
@@ -38,7 +38,7 @@ extension OSCManager {
                     print(error)
                 }
             }
-        }
+        })
         do { try server.start() } catch { print(error) }
     }
 
