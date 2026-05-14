@@ -59,7 +59,7 @@ To get started with all extensions:
    import SwiftOSC
    ```
 
-4. See the [getting started guide](https://swiftpackageindex.com/orchetect/swift-osc/documentation) and the [code examples](https://github.com/orchetect/swift-osc-io-cocoa/tree/main/Examples) for the default network I/O module to see the library in action.
+4. See the [getting started guide](https://swiftpackageindex.com/orchetect/swift-osc/documentation) and the [code examples](Examples) for the default network I/O module to see the library in action.
 
 ### Individual Extensions
 
@@ -69,7 +69,7 @@ To use a specific network I/O module, use the respective I/O repository as a dep
 
 Full online documentation is available for all of the extension repositories. Check the README in each repository for a link to its documentation.
 
-For new users, see the [getting started guide](https://swiftpackageindex.com/orchetect/swift-osc/documentation) and the [code examples](https://github.com/orchetect/swift-osc-io-cocoa/tree/main/Examples) for the default network I/O module to see the library in action.
+For new users, see the [getting started guide](https://swiftpackageindex.com/orchetect/swift-osc/documentation) and the [code examples](Examples) for the default network I/O module to see the library in action.
 
 ## Author
 
