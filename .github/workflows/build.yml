@@ -25,8 +25,8 @@ on:
     - cron: '40 11 * * *'   # once a day @ 11:40am UTC (4:40am PST)
 
 env:
-  SCHEME: "swift-osc"
-  WORKSPACEPATH: ".swiftpm/xcode/package.xcworkspace"
+  SCHEME: swift-osc # auto-synthesized by Xcode
+  WORKSPACEPATH: .swiftpm/xcode/package.xcworkspace
 
 jobs:
   macOS:
