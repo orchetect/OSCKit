@@ -13,7 +13,7 @@ final class OSCManager: ObservableObject {
     private var socket: OSCUDPSocket?
 
     @Published var localPort: UInt16 = 8000
-    @Published var remoteHost: String = "127.0.0.1"
+    @Published var remoteHost: String = "localhost"
     @Published var remotePort: UInt16 = 8000
     @Published var isIPv4BroadcastEnabled: Bool = false
     @Published private(set) var isStarted: Bool = false
