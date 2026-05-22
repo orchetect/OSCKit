@@ -21,8 +21,7 @@ let package = Package(
             ],
             swiftSettings: [.define("DEBUG", .when(configuration: .debug))]
         )
-    ],
-    swiftLanguageModes: [.v5, .v6]
+    ]
 )
 
 #if canImport(Foundation) || canImport(CoreFoundation)
